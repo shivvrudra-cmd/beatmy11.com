@@ -1,0 +1,122 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Meta } from '@/components/Meta.astro';
+
+const title = 'Beat My 11 - Build Your All-Time XI';
+const description = 'Test your cricket knowledge against the legends. Build your fantasy XI and see if you can beat the house team in a 5-match Test series.';
+const ogImage = '/og-image.png';
+const siteUrl = 'https://beatmy11.com';
+---
+<BaseLayout title={title} description={description}>
+  <Meta title={title} description={description} />
+
+  <main class="min-h-screen bg-gradient-to-b from-gray-50 to-white py-12">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <header class="text-center mb-16">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">
+          Beat My 11
+        </h1>
+        <p class="text-xl text-gray-600">
+          Build your all-time XI and see if you can beat the house team
+        </p>
+      </header>
+
+      <!-- Game Instructions -->
+      <section class="bg-white rounded-xl shadow-sm p-8 mb-12">
+        <h2 class="text-2xl font-semibold text-gray-900 mb-6">
+          How to Play
+        </p>
+        <ol class="list-decimal list-inside space-y-4 text-gray-700">
+          <li>
+            <strong>Spin the Wheel:</strong> Get 6 spins, each giving you a random cricket nation + era
+          </li>
+          <li>
+            <strong>Pick Players:</strong> Choose 2 players per spin (12 total) to build your XI
+          </li>
+          <li>
+            <strong>Follow the Rules:</strong> Max 1 opener, 1 wicketkeeper, 1 all-rounder per spin
+          </li>
+          <li>
+            <strong>Designate 12th Man:</strong> Choose which player sits out as your 12th man
+          </li>
+          <li>
+            <strong>Get Your Result:</strong> See if your XI beats Beat My 11 in a 5-match Test series
+          </li>
+        </ol>
+      </section>
+
+      <!-- Call to Action -->
+      <div class="text-center">
+        <button
+          class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+        >
+          Start Building Your XI
+        </button>
+      </div>
+
+      <!-- Features -->
+      <section class="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div class="text-center p-6 bg-white rounded-xl shadow-sm">
+          <div class="mb-4">
+            <svg class="h-8 w-8 text-primary-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-.806-3.138 3.42 3.42 0 000-4.438 3.42 3.42 0 01.806-1.946 3.42 3.42 0 003.138-3.138z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">
+            Strategic Gameplay
+          </h3>
+          <p class="text-sm text-gray-500">
+            Limited spins and role constraints force meaningful decisions every turn
+          </p>
+        </div>
+
+        <div class="text-center p-6 bg-white rounded-xl shadow-sm">
+          <div class="mb-4">
+            <svg class="h-8 w-8 text-primary-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2zm0 10c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2zm0-6c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">
+            Historical Depth
+          </h3>
+          <p class="text-sm text-gray-500">
+            From Bradman to Babar Azam - build XIs across cricket's rich history
+          </p>
+        </div>
+
+        <div class="text-center p-6 bg-white rounded-xl shadow-sm">
+          <div class="mb-4">
+            <svg class="h-8 w-8 text-primary-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h3m8 0h3M8 7a4.965 4.965 0 00-1.717.968m10-1.032A4.965 4.965 0 0117.717 7.968zm-3.434 6.032A11.94 11.94 0 018 19c-4.478 0-8.268-2.943-9.543-7a11.91 11.91 0 012.078-6.968m14.465 1.032A11.91 11.91 0 0021 12c0-4.478-2.943-8.268-7-9.543a11.91 11.91 0 01-6.968-2.078m-3.434 6.032a11.94 11.94 0 006.374 1.732M13 7h3" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">
+            Share & Compete
+          </h3>
+          <p class="text-sm text-gray-500">
+            Get a shareable result card and see how you stack up against others
+          </p>
+        </div>
+      </section>
+
+      <!-- Daily Seed Info -->
+      <section class="mt-16 p-8 bg-primary-50 rounded-xl border border-primary-200">
+        <div class="flex items-center space-x-4">
+          <div class="flex-shrink-0">
+            <svg class="h-6 w-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">
+              Daily Challenge
+            </h3>
+            <p class="text-sm text-gray-600">
+              Everyone gets the same 6 spins each day - compete for the daily leaderboard
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

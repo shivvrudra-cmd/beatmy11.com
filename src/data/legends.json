@@ -1,0 +1,658 @@
+[
+  {
+    "id": "don-bradman",
+    "name": "Don Bradman",
+    "nation": "Australia",
+    "era": "legends",
+    "primaryRole": "opener",
+    "secondaryRoles": ["middle-order"],
+    "stats": {
+      "testAverage": 99.94,
+      "testRuns": 6996,
+      "testWickets": 0,
+      "testMatches": 52,
+      "testCenturies": 29,
+      "testFifties": 13
+    }
+  },
+  {
+    "id": "jack-hobbs",
+    "name": "Jack Hobbs",
+    "nation": "England",
+    "era": "legends",
+    "primaryRole": "opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 56.95,
+      "testRuns": 5410,
+      "testWickets": 0,
+      "testMatches": 61,
+      "testCenturies": 15,
+      "testFifties": 28
+    }
+  },
+  {
+    "id": "len-hutton",
+    "name": "Len Hutton",
+    "nation": "England",
+    "era": "legends",
+    "primaryRole": "opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 56.67,
+      "testRuns": 6971,
+      "testWickets": 0,
+      "testMatches": 79,
+      "testCenturies": 19,
+      "testFifties": 33
+    }
+  },
+  {
+    "id": "sunil-gavaskar",
+    "name": "Sunil Gavaskar",
+    "nation": "India",
+    "era": "legends",
+    "primaryRole": "opener",
+    "secondaryRoles": ["middle-order"],
+    "stats": {
+      "testAverage": 51.12,
+      "testRuns": 10122,
+      "testWickets": 0,
+      "testMatches": 125,
+      "testCenturies": 34,
+      "testFifties": 45
+    }
+  },
+  {
+    "id": "gordon-greenidge",
+    "name": "Gordon Greenidge",
+    "nation": "West Indies",
+    "era": "legends",
+    "primaryRole": "opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 44.72,
+      "testRuns": 7558,
+      "testWickets": 0,
+      "testMatches": 108,
+      "testCenturies": 19,
+      "testFifties": 34
+    }
+  },
+  {
+    "id": "hanif-mohammad",
+    "name": "Hanif Mohammad",
+    "nation": "Pakistan",
+    "era": "legends",
+    "primaryRole": "opener",
+    "secondaryRoles": ["middle-order"],
+    "stats": {
+      "testAverage": 43.98,
+      "testRuns": 3915,
+      "testWickets": 0,
+      "testMatches": 55,
+      "testCenturies": 12,
+      "testFifties": 15
+    }
+  },
+  {
+    "id": "sachin-tendulkar",
+    "name": "Sachin Tendulkar",
+    "nation": "India",
+    "era": "legends",
+    "primaryRole": "middle-order",
+    "secondaryRoles": ["opener"],
+    "stats": {
+      "testAverage": 53.78,
+      "testRuns": 15921,
+      "testWickets": 46,
+      "testMatches": 200,
+      "testCenturies": 51,
+      "testFifties": 68
+    }
+  },
+  {
+    "id": "brian-lara",
+    "name": "Brian Lara",
+    "nation": "West Indies",
+    "era": "legends",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 52.88,
+      "testRuns": 11953,
+      "testWickets": 4,
+      "testMatches": 131,
+      "testCenturies": 34,
+      "testFifties": 48
+    }
+  },
+  {
+    "id": "ricky-ponting",
+    "name": "Ricky Ponting",
+    "nation": "Australia",
+    "era": "legends",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 51.85,
+      "testRuns": 13378,
+      "testWickets": 5,
+      "testMatches": 168,
+      "testCenturies": 41,
+      "testFifties": 62
+    }
+  },
+  {
+    "id": "jacques-kallis",
+    "name": "Jacques Kallis",
+    "nation": "South Africa",
+    "era": "legends",
+    "primaryRole": "all-rounder",
+    "secondaryRoles": ["middle-order"],
+    "stats": {
+      "testAverage": 55.37,
+      "testRuns": 13289,
+      "testWickets": 292,
+      "testMatches": 166,
+      "testCenturies": 45,
+      "testFifties": 58
+    }
+  },
+  {
+    "id": "rahul-dravid",
+    "name": "Rahul Dravid",
+    "nation": "India",
+    "era": "legends",
+    "primaryRole": "middle-order",
+    "secondaryRoles": ["opener"],
+    "stats": {
+      "testAverage": 52.31,
+      "testRuns": 13288,
+      "testWickets": 4,
+      "testMatches": 164,
+      "testCenturies": 36,
+      "testFifties": 63
+    }
+  },
+  {
+    "id": "viv-richards",
+    "name": "Viv Richards",
+    "nation": "West Indies",
+    "era": "legends",
+    "primaryRole": "middle-order",
+    "secondaryRoles": ["all-rounder"],
+    "stats": {
+      "testAverage": 50.24,
+      "testRuns": 8540,
+      "testWickets": 32,
+      "testMatches": 121,
+      "testCenturies": 24,
+      "testFifties": 45
+    }
+  },
+  {
+    "id": "greg-chappell",
+    "name": "Greg Chappell",
+    "nation": "Australia",
+    "era": "legends",
+    "primaryRole": "middle-order",
+    "secondaryRoles": ["opener"],
+    "stats": {
+      "testAverage": 53.86,
+      "testRuns": 7110,
+      "testWickets": 47,
+      "testMatches": 87,
+      "testCenturies": 24,
+      "testFifties": 42
+    }
+  },
+  {
+    "id": "javed-miandad",
+    "name": "Javed Miandad",
+    "nation": "Pakistan",
+    "era": "legends",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 52.57,
+      "testRuns": 8832,
+      "testWickets": 0,
+      "testMatches": 124,
+      "testCenturies": 23,
+      "testFifties": 43
+    }
+  },
+  {
+    "id": "martin-crowe",
+    "name": "Martin Crowe",
+    "nation": "New Zealand",
+    "era": "legends",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 45.36,
+      "testRuns": 4704,
+      "testWickets": 92,
+      "testMatches": 77,
+      "testCenturies": 17,
+      "testFifties": 21
+    }
+  },
+  {
+    "id": "kumar-sangakkara",
+    "name": "Kumar Sangakkara",
+    "nation": "Sri Lanka",
+    "era": "legends",
+    "primaryRole": "middle-order",
+    "secondaryRoles": ["wicketkeeper"],
+    "stats": {
+      "testAverage": 57.40,
+      "testRuns": 12400,
+      "testWickets": 0,
+      "testMatches": 134,
+      "testCenturies": 38,
+      "testFifties": 52
+    }
+  },
+  {
+    "id": "alan-knott",
+    "name": "Alan Knott",
+    "nation": "England",
+    "era": "legends",
+    "primaryRole": "wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 32.75,
+      "testRuns": 4389,
+      "testWickets": 0,
+      "testMatches": 95,
+      "testCenturies": 2,
+      "testFifties": 20
+    }
+  },
+  {
+    "id": "rod-marsh",
+    "name": "Rod Marsh",
+    "nation": "Australia",
+    "era": "legends",
+    "primaryRole": "wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 26.52,
+      "testRuns": 3633,
+      "testWickets": 0,
+      "testMatches": 96,
+      "testCenturies": 3,
+      "testFifties": 16
+    }
+  },
+  {
+    "id": "jeff-dujon",
+    "name": "Jeff Dujon",
+    "nation": "West Indies",
+    "era": "legends",
+    "primaryRole": "wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 31.94,
+      "testRuns": 3322,
+      "testWickets": 0,
+      "testMatches": 81,
+      "testCenturies": 2,
+      "testFifties": 24
+    }
+  },
+  {
+    "id": "adam-gilchrist",
+    "name": "Adam Gilchrist",
+    "nation": "Australia",
+    "era": "legends",
+    "primaryRole": "wicketkeeper",
+    "secondaryRoles": ["middle-order"],
+    "stats": {
+      "testAverage": 47.60,
+      "testRuns": 5570,
+      "testWickets": 0,
+      "testMatches": 96,
+      "testCenturies": 17,
+      "testFifties": 26
+    }
+  },
+  {
+    "id": "garfield-sobers",
+    "name": "Garfield Sobers",
+    "nation": "West Indies",
+    "era": "legends",
+    "primaryRole": "all-rounder",
+    "secondaryRoles": ["middle-order"],
+    "stats": {
+      "testAverage": 57.78,
+      "testRuns": 8032,
+      "testWickets": 235,
+      "testMatches": 93,
+      "testCenturies": 26,
+      "testFifties": 30
+    }
+  },
+  {
+    "id": "ian-botham",
+    "name": "Ian Botham",
+    "nation": "England",
+    "era": "legends",
+    "primaryRole": "all-rounder",
+    "secondaryRoles": ["middle-order"],
+    "stats": {
+      "testAverage": 33.54,
+      "testRuns": 5200,
+      "testWickets": 383,
+      "testMatches": 102,
+      "testCenturies": 14,
+      "testFifties": 22
+    }
+  },
+  {
+    "id": "kapil-dev",
+    "name": "Kapil Dev",
+    "nation": "India",
+    "era": "legends",
+    "primaryRole": "all-rounder",
+    "secondaryRoles": ["fast-bowler"],
+    "stats": {
+      "testAverage": 31.05,
+      "testRuns": 5248,
+      "testWickets": 434,
+      "testMatches": 131,
+      "testCenturies": 8,
+      "testFifties": 27
+    }
+  },
+  {
+    "id": "imran-khan",
+    "name": "Imran Khan",
+    "nation": "Pakistan",
+    "era": "legends",
+    "primaryRole": "all-rounder",
+    "secondaryRoles": ["fast-bowler"],
+    "stats": {
+      "testAverage": 37.69,
+      "testRuns": 3807,
+      "testWickets": 362,
+      "testMatches": 88,
+      "testCenturies": 6,
+      "testFifties": 18
+    }
+  },
+  {
+    "id": "richard-hadlee",
+    "name": "Richard Hadlee",
+    "nation": "New Zealand",
+    "era": "legends",
+    "primaryRole": "all-rounder",
+    "secondaryRoles": ["fast-bowler"],
+    "stats": {
+      "testAverage": 27.16,
+      "testRuns": 3114,
+      "testWickets": 431,
+      "testMatches": 86,
+      "testCenturies": 2,
+      "testFifties": 15
+    }
+  },
+  {
+    "id": "shakib-al-hasan",
+    "name": "Shakib Al Hasan",
+    "nation": "Bangladesh",
+    "era": "legends",
+    "primaryRole": "all-rounder",
+    "secondaryRoles": ["middle-order"],
+    "stats": {
+      "testAverage": 39.28,
+      "testRuns": 4600,
+      "testWickets": 246,
+      "testMatches": 63,
+      "testCenturies": 5,
+      "testFifties": 31
+    }
+  },
+  {
+    "id": "andrew-flintoff",
+    "name": "Andrew Flintoff",
+    "nation": "England",
+    "era": "legends",
+    "primaryRole": "all-rounder",
+    "secondaryRoles": ["middle-order"],
+    "stats": {
+      "testAverage": 31.77,
+      "testRuns": 3845,
+      "testWickets": 226,
+      "testMatches": 79,
+      "testCenturies": 5,
+      "testFifties": 24
+    }
+  },
+  {
+    "id": "daniel-vettori",
+    "name": "Daniel Vettori",
+    "nation": "New Zealand",
+    "era": "legends",
+    "primaryRole": "all-rounder",
+    "secondaryRoles": ["spinner"],
+    "stats": {
+      "testAverage": 30.01,
+      "testRuns": 4531,
+      "testWickets": 362,
+      "testMatches": 113,
+      "testCenturies": 6,
+      "testFifties": 22
+    }
+  },
+  {
+    "id": "sydney-barnes",
+    "name": "Sydney Barnes",
+    "nation": "England",
+    "era": "legends",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 16.43,
+      "testRuns": 317,
+      "testWickets": 189,
+      "testMatches": 27,
+      "testCenturies": 0,
+      "testFifties": 0
+    }
+  },
+  {
+    "id": "malcolm-marshall",
+    "name": "Malcolm Marshall",
+    "nation": "West Indies",
+    "era": "legends",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 20.94,
+      "testRuns": 788,
+      "testWickets": 376,
+      "testMatches": 81,
+      "testCenturies": 1,
+      "testFifties": 2
+    }
+  },
+  {
+    "id": "dennis-lillee",
+    "name": "Dennis Lillee",
+    "nation": "Australia",
+    "era": "legends",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 23.92,
+      "testRuns": 789,
+      "testWickets": 355,
+      "testMatches": 70,
+      "testCenturies": 0,
+      "testFifties": 2
+    }
+  },
+  {
+    "id": "dale-steyn",
+    "name": "Dale Steyn",
+    "nation": "South Africa",
+    "era": "legends",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 22.95,
+      "testRuns": 1251,
+      "testWickets": 439,
+      "testMatches": 93,
+      "testCenturies": 1,
+      "testFifties": 4
+    }
+  },
+  {
+    "id": "curtly-ambrose",
+    "name": "Curtly Ambrose",
+    "nation": "West Indies",
+    "era": "legends",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 20.99,
+      "testRuns": 847,
+      "testWickets": 405,
+      "testMatches": 98,
+      "testCenturies": 1,
+      "testFifties": 3
+    }
+  },
+  {
+    "id": "glenn-mcgrath",
+    "name": "Glenn McGrath",
+    "nation": "Australia",
+    "era": "legends",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 21.64,
+      "testRuns": 840,
+      "testWickets": 563,
+      "testMatches": 124,
+      "testCenturies": 0,
+      "testFifties": 2
+    }
+  },
+  {
+    "id": "waqar-younis",
+    "name": "Waqar Younis",
+    "nation": "Pakistan",
+    "era": "legends",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 23.56,
+      "testRuns": 1057,
+      "testWickets": 373,
+      "testMatches": 87,
+      "testCenturies": 0,
+      "testFifties": 1
+    }
+  },
+  {
+    "id": "wasim-akram",
+    "name": "Wasim Akram",
+    "nation": "Pakistan",
+    "era": "legends",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": ["all-rounder"],
+    "stats": {
+      "testAverage": 23.62,
+      "testRuns": 3717,
+      "testWickets": 414,
+      "testMatches": 104,
+      "testCenturies": 4,
+      "testFifties": 12
+    }
+  },
+  {
+    "id": "jim-laker",
+    "name": "Jim Laker",
+    "nation": "England",
+    "era": "legends",
+    "primaryRole": "spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 6.42,
+      "testRuns": 301,
+      "testWickets": 193,
+      "testMatches": 46,
+      "testCenturies": 0,
+      "testFifties": 0
+    }
+  },
+  {
+    "id": "shane-warne",
+    "name": "Shane Warne",
+    "nation": "Australia",
+    "era": "legends",
+    "primaryRole": "spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 25.41,
+      "testRuns": 3154,
+      "testWickets": 708,
+      "testMatches": 145,
+      "testCenturies": 11,
+      "testFifties": 26
+    }
+  },
+  {
+    "id": "muttiah-muralitharan",
+    "name": "Muttiah Muralitharan",
+    "nation": "Sri Lanka",
+    "era": "legends",
+    "primaryRole": "spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 22.72,
+      "testRuns": 671,
+      "testWickets": 800,
+      "testMatches": 133,
+      "testCenturies": 0,
+      "testFifties": 0
+    }
+  },
+  {
+    "id": "anil-kumble",
+    "name": "Anil Kumble",
+    "nation": "India",
+    "era": "legends",
+    "primaryRole": "spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 29.65,
+      "testRuns": 2506,
+      "testWickets": 619,
+      "testMatches": 132,
+      "testCenturies": 1,
+      "testFifties": 7
+    }
+  },
+  {
+    "id": "abdul-qadir",
+    "name": "Abdul Qadir",
+    "nation": "Pakistan",
+    "era": "legends",
+    "primaryRole": "spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 32.80,
+      "testRuns": 571,
+      "testWickets": 236,
+      "testMatches": 67,
+      "testCenturies": 0,
+      "testFifties": 2
+    }
+  }
+]

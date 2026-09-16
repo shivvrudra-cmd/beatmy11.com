@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom utilities for BeatMy11 */
+@layer utilities {
+  .content-auto {
+    content-visibility: auto;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .tap-highlight-color {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .img-zoomed {
+    @apply transition-transform duration-300;
+  }
+
+  .img-zoomed:hover {
+    @apply scale-[1.02];
+  }
+}
+
+/* Base styles */
+html {
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-gray-50 text-gray-900 antialiased;
+}
+
+.prose {
+  @prose lg:prose-xl;
+}
+
+/* Focus ring enhancements */
+:focus-visible {
+  @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-gray-50;
+}
+
+/* Dark mode support (prepare for future) */
+@media (prefers-color-scheme: dark) {
+  body {
+    @apply bg-gray-900 text-gray-100;
+  }
+
+  .prose {
+    @prose dark;
+  }
+}
+
+/* Animations */
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Glass morphism effect */
+.glass-bg {
+  @apply bg-white/80 backdrop-blur-sm border border-white/20 shadow-sm;
+}
+
+.dark .glass-bg {
+  @apply bg-gray-900/80 backdrop-blur-sm border border-gray-800/20;
+}

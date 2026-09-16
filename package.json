@@ -1,0 +1,22 @@
+{
+  "name": "beatmy11.com",
+  "version": "1.0.0",
+  "description": "Build your all-time cricket XI and see if you can beat the house team",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "keywords": ["cricket", "fantasy", "sports", "game"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.2",
+    "tailwindcss": "^4.0.0-beta.8",
+    "typescript": "^7.0.2"
+  }
+}

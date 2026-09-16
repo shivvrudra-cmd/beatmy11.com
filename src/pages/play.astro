@@ -1,0 +1,300 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SpinWheel from '@/components/SpinWheel.astro';
+import { initializeGame, processSpin, useTeamReroll, useEraReroll, addPlayerToTeam, isTeamComplete, getPlayingXI, getTwelfthMan } from '@/lib/game-engine';
+import { calculateTeamScore, simulateSeries } from '@/lib/ratings';
+
+// Import player data (in real implementation, these would be loaded asynchronously)
+import legendsData from '@/data/legends.json';
+import data1970s from '@/data/1970s.json';
+import data1980s from '@/data/1980s.json';
+import data1990s from '@/data/1990s.json';
+import data2000s from '@/data/2000s.json';
+import data2010s from '@/data/2010s.json';
+import data2020s from '@/data/2020s.json';
+
+// Initialize game state
+let gameState = initializeGame();
+let currentSpin = null;
+let selectedPlayers = new Set();
+let isSpinning = false;
+let teamRerollAvailable = true;
+let eraRerollAvailable = true;
+let showResults = false;
+let resultMessage = '';
+let houseXI = []; // This would be your fixed Beat My 11 team
+let userXI = [];  // This will be the user's team
+
+// Handle spin
+async function handleSpin() {
+  if (isSpinning || gameState.spinsRemaining <= 0) return;
+
+  isSpinning = true;
+
+  // Simulate spinning delay
+  await new Promise(resolve => setTimeout(resolve, 1500));
+
+  const spinResult = processSpin(gameState);
+  if (spinResult) {
+    currentSpin = spinResult;
+    // Reset selection for new spin
+    selectedPlayers.clear();
+  }
+
+  isSpinning = false;
+}
+
+// Handle team reroll
+function handleTeamReroll() {
+  if (!teamRerollAvailable || !currentSpin) return;
+
+  const newSpin = useTeamReroll(gameState, currentSpin);
+  if (newSpin) {
+    currentSpin = newSpin;
+    teamRerollAvailable = false;
+    selectedPlayers.clear();
+  }
+}
+
+// Handle era reroll
+function handleEraReroll() {
+  if (!eraRerollAvailable || !currentSpin) return;
+
+  const newSpin = useEraReroll(gameState, currentSpin);
+  if (newSpin) {
+    currentSpin = newSpin;
+    eraRerollAvailable = false;
+    selectedPlayers.clear();
+  }
+}
+
+// Toggle player selection
+function togglePlayerSelection(playerId) {
+  if (selectedPlayers.has(playerId)) {
+    selectedPlayers.delete(playerId);
+  } else {
+    if (selectedPlayers.size < 2) {
+      selectedPlayers.add(playerId);
+    }
+  }
+}
+
+// Check if selection is locked due to role constraints
+function isSelectionLocked(player) {
+  // This would check role constraints (max 1 opener, 1 keeper, 1 all-rounder per spin)
+  // Simplified for now
+  return false;
+}
+
+// Reset selection
+function resetSelection() {
+  selectedPlayers.clear();
+}
+
+// Confirm selection
+async function confirmSelection() {
+  if (selectedPlayers.size !== 2 || !currentSpin) return;
+
+  // Add selected players to team
+  const playerArray = Array.from(selectedPlayers);
+  for (const playerId of playerArray) {
+    const player = currentSpin.availablePlayers.find(p => p.id === playerId);
+    if (player) {
+      addPlayerToTeam(gameState, playerId, currentSpin.availablePlayers);
+    }
+  }
+
+  selectedPlayers.clear();
+
+  // Check if team is complete
+  if (isTeamComplete(gameState)) {
+    showResults = true;
+    await calculateResults();
+  }
+}
+
+// Calculate results
+async function calculateResults() {
+  // Get user's XI (12th man is last player added)
+  const playingXI = getPlayingXI(gameState);
+
+  // For demo, create a fixed house XI (Beat My 11)
+  // In real implementation, this would be your predefined team
+  houseXI = [
+    // Don Bradman (opener)
+    legendsData.find(p => p.id === 'don-bradman')!,
+    // Sachin Tendulkar (middle-order)
+    legendsData.find(p => p.id === 'sachin-tendulkar')!,
+    // Vivian Richards (middle-order)
+    legendsData.find(p => p.id === 'viv-richards')!,
+    // Garfield Sobers (all-rounder)
+    legendsData.find(p => p.id === 'garfield-sobers')!,
+    // Imran Khan (all-rounder)
+    legendsData.find(p => p.id === 'imran-khan')!,
+    // Malcolm Marshall (fast bowler)
+    legendsData.find(p => p.id === 'malcolm-marshall')!,
+    // Glenn McGrath (fast bowler)
+    legendsData.find(p => p.id === 'glenn-mcgrath')!,
+    // Shane Warne (spinner)
+    legendsData.find(p => p.id === 'shane-warne')!,
+    // Adam Gilchrist (wicketkeeper)
+    legendsData.find(p => p.id === 'adam-gilchrist')!,
+    // Ricky Ponting (middle-order)
+    legendsData.find(p => p.id === 'ricky-ponting')!,
+    // Steve Waugh (middle-order)
+    legendsData.find(p => p.id === 'steve-waugh')!,
+    // Wasim Akram (fast bowler)
+    legendsData.find(p => p.id === 'wasim-akram')!
+  ];
+
+  // Get user's XI (exclude 12th man)
+  userXI = playingXI;
+
+  // Calculate scores
+  const userScore = calculateTeamScore(userXI);
+  const houseScore = calculateTeamScore(houseXI);
+
+  // Simulate series
+  const [userWins, houseWins, draws] = simulateSeries(userXI, houseXI);
+
+  // Generate result message
+  if (userWins > houseWins) {
+    resultMessage = `Your XI beat Beat My 11 ${userWins}–${houseWins}`;
+  } else if (houseWins > userWins) {
+    resultMessage = `Beat My 11 beat your XI ${houseWins}–${userWins}`;
+  } else {
+    resultMessage = `Match drawn ${userWins}–${houseWins}`;
+  }
+}
+
+// Initialize sample data for available players (in real implementation, this would be filtered by nation/era)
+// For demo purposes, we'll show some players
+const samplePlayers = [
+  ...legendsData.slice(0, 5),
+  ...data1980s.slice(0, 5),
+  ...data1990s.slice(0, 5)
+];
+
+// If no current spin, show sample players
+if (!currentSpin) {
+  currentSpin = {
+    nation: 'Australia',
+    nationCode: 'AU',
+    nationFlag: '🇦🇺',
+    era: '1980s',
+    eraId: '1980s',
+    eraEmoji: '📻',
+    availablePlayers: samplePlayers
+  };
+}
+---
+<BaseLayout title="Play Beat My 11" description="Build your all-time XI and see if you can beat the house team">
+  {showResults ? (
+    <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white py-12">
+      <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h1 class="text-3xl font-bold text-gray-900 mb-4">
+            Game Complete!
+          </h1>
+          <p class="text-xl text-gray-600">
+            {resultMessage}
+          </p>
+        </div>
+
+        {/* Team Comparison */}
+        <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-6">
+            Team Comparison
+          </p>
+          <div class="grid gap-6 md:grid-cols-2">
+            {/* User XI */}
+            <div>
+              <h3 class="text-lg font-medium text-gray-900 mb-4">
+                Your XI
+              </p>
+              <div class="space-y-3">
+                {#each userXI as player}
+                  <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                    <img
+                      src={`https://ui-avatars.com/api/?name=${player.name.split(' ').map(n => n[0]).slice(0,2).join('').toUpperCase()}&background=random`}
+                      alt={player.name}
+                      class="w-10 h-10 rounded-full object-cover border border-gray-200"
+                    />
+                    <div>
+                      <div class="font-medium text-gray-900">{player.name}</div>
+                      <div class="text-sm text-gray-500">
+                        {getRoleDisplay(player)} • {player.nation}
+                      </div>
+                    </div>
+                  </div>
+                {/each}
+              </div>
+            </div>
+
+            {/* House XI */}
+            <div>
+              <h3 class="text-lg font-medium text-gray-900 mb-4">
+                Beat My 11
+              </p>
+              <div class="space-y-3">
+                {#each houseXI as player}
+                  <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                    <img
+                      src={`https://ui-avatars.com/api/?name=${player.name.split(' ').map(n => n[0]).slice(0,2).join('').toUpperCase()}&background=random`}
+                      alt={player.name}
+                      class="w-10 h-10 rounded-full object-cover border border-gray-200"
+                    />
+                    <div>
+                      <div class="font-medium text-gray-900">{player.name}</div>
+                      <div class="text-sm text-gray-500">
+                        {getRoleDisplay(player)} • {player.nation}
+                      </div>
+                    </div>
+                  </div>
+                {/each}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Play Again Button */}
+        <div class="text-center">
+          <button
+            class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+            on:click={() => {
+              // Reset game state
+              gameState = initializeGame();
+              currentSpin = null;
+              selectedPlayers = new Set();
+              teamRerollAvailable = true;
+              eraRerollAvailable = true;
+              showResults = false;
+              resultMessage = '';
+            }}
+          >
+            Play Again
+          </button>
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div class="min-h-screen bg-gray-50">
+      <BaseLayout title="Play Beat My 11" description="Build your all-time XI and see if you can beat the house team">
+        <SpinWheel
+          spinsRemaining={gameState.spinsRemaining}
+          isSpinning={isSpinning}
+          currentSpin={currentSpin}
+          selectedPlayers={selectedPlayers}
+          teamRerollAvailable={teamRerollAvailable}
+          eraRerollAvailable={eraRerollAvailable}
+          onSpin={handleSpin}
+          onTeamReroll={handleTeamReroll}
+          onEraReroll={handleEraReroll}
+          onToggleSelection={togglePlayerSelection}
+          onResetSelection={resetSelection}
+          onConfirmSelection={confirmSelection}
+          isSelectionLocked={isSelectionLocked}
+        />
+      </BaseLayout>
+    </div>
+  )}

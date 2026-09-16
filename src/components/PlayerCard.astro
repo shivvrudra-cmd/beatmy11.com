@@ -1,0 +1,56 @@
+---
+const { player, selected, disabled, onSelect } = Astro.props;
+
+// Determine player role display
+const getRoleDisplay = (player) => {
+  const roles = [];
+  if (player.primaryRole === 'opener' || player.secondaryRoles.includes('opener')) roles.push('Opener');
+  if (player.primaryRole === 'middle-order' || player.secondaryRoles.includes('middle-order')) roles.push('Middle');
+  if (player.primaryRole === 'wicketkeeper' || player.secondaryRoles.includes('wicketkeeper')) roles.push('WK');
+  if (player.primaryRole === 'all-rounder' || player.secondaryRoles.includes('all-rounder')) roles.push('All-rounder');
+  if (player.primaryRole === 'fast-bowler' || player.secondaryRoles.includes('fast-bowler')) roles.push('Pacer');
+  if (player.primaryRole === 'spinner' || player.secondaryRoles.includes('spinner')) roles.push('Spinner');
+
+  return roles.join(' / ');
+};
+
+// Get player image (placeholder for now)
+const getPlayerImage = (player) => {
+  // In real implementation, this would be actual player photos
+  // For now, using placeholder with initials
+  const initials = player.name
+    .split(' ')
+    .map(n => n[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
+
+  return `https://ui-avatars.com/api/?name=${initials}&background=random`;
+};
+---
+<div
+  class="PlayerCard"
+  class:selected={selected}
+  class:disabled={disabled}
+  on:click={() => !disabled && onSelect(player.id)}
+>
+  <img
+    src={getPlayerImage(player)}
+    alt={player.name}
+    class="PlayerCard-image"
+  />
+  <div class="PlayerCard-name">
+    {player.name}
+  </div>
+  <div class="PlayerCard-role">
+    {getRoleDisplay(player)}
+  </div>
+  <div class="PlayerCard-stats">
+    {player.nation} • {player.era.replace('s', "'s")}
+  </div>
+  {selected && (
+    <div class="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center bg-primary-600 text-white rounded-full text-xs">
+      ✓
+    </div>
+  )}
+</div>

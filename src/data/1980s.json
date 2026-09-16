@@ -1,0 +1,226 @@
+[
+  {
+    "id": "graeme-wood",
+    "name": "Graeme Wood",
+    "nation": "Australia",
+    "era": "1980s",
+    "primaryRole": "opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 34.41,
+      "testRuns": 2342,
+      "testWickets": 1,
+      "testMatches": 59,
+      "testCenturies": 4,
+      "testFifties": 11
+    }
+  },
+  {
+    "id": "kepler-wessels",
+    "name": "Kepler Wessels",
+    "nation": "Australia",
+    "era": "1980s",
+    "primaryRole": "opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 40.72,
+      "testRuns": 1629,
+      "testWickets": 0,
+      "testMatches": 24,
+      "testCenturies": 4,
+      "testFifties": 8
+    }
+  },
+  {
+    "id": "dean-jones",
+    "name": "Dean Jones",
+    "nation": "Australia",
+    "era": "1980s",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 46.55,
+      "testRuns": 3631,
+      "testWickets": 2,
+      "testMatches": 52,
+      "testCenturies": 11,
+      "testFifties": 17
+    }
+  },
+  {
+    "id": "david-boon",
+    "name": "David Boon",
+    "nation": "Australia",
+    "era": "1980s",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 43.65,
+      "testRuns": 7422,
+      "testWickets": 0,
+      "testMatches": 107,
+      "testCenturies": 21,
+      "testFifties": 36
+    }
+  },
+  {
+    "id": "allan-border",
+    "name": "Allan Border",
+    "nation": "Australia",
+    "era": "1980s",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 50.56,
+      "testRuns": 11174,
+      "testWickets": 39,
+      "testMatches": 156,
+      "testCenturies": 27,
+      "testFifties": 63
+    }
+  },
+  {
+    "id": "steve-waugh",
+    "name": "Steve Waugh",
+    "nation": "Australia",
+    "era": "1980s",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 51.06,
+      "testRuns": 10927,
+      "testWickets": 165,
+      "testMatches": 168,
+      "testCenturies": 32,
+      "testFifties": 50
+    }
+  },
+  {
+    "id": "mark-waugh",
+    "name": "Mark Waugh",
+    "nation": "Australia",
+    "era": "1980s",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 41.82,
+      "testRuns": 8029,
+      "testWickets": 18,
+      "testMatches": 128,
+      "testCenturies": 13,
+      "testFifties": 40
+    }
+  },
+  {
+    "id": "ian-healy",
+    "name": "Ian Healy",
+    "nation": "Australia",
+    "era": "1980s",
+    "primaryRole": "wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 27.39,
+      "testRuns": 4356,
+      "testWickets": 0,
+      "testMatches": 119,
+      "testCenturies": 4,
+      "testFifties": 19
+    }
+  },
+  {
+    "id": "greg-matthews",
+    "name": "Greg Matthews",
+    "nation": "Australia",
+    "era": "1980s",
+    "primaryRole": "all-rounder",
+    "secondaryRoles": ["middle-order"],
+    "stats": {
+      "testAverage": 22.39,
+      "testRuns": 1849,
+      "testWickets": 61,
+      "testMatches": 53,
+      "testCenturies": 2,
+      "testFifties": 8
+    }
+  },
+  {
+    "id": "bruce-reid",
+    "name": "Bruce Reid",
+    "nation": "Australia",
+    "era": "1980s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 24.62,
+      "testRuns": 563,
+      "testWickets": 113,
+      "testMatches": 27,
+      "testCenturies": 0,
+      "testFifties": 1
+    }
+  },
+  {
+    "id": "merv-hughes",
+    "name": "Merv Hughes",
+    "nation": "Australia",
+    "era": "1980s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 28.72,
+      "testRuns": 903,
+      "testWickets": 212,
+      "testMatches": 53,
+      "testCenturies": 1,
+      "testFifties": 8
+    }
+  },
+  {
+    "id": "terry-alderman",
+    "name": "Terry Alderman",
+    "nation": "Australia",
+    "era": "1980s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 27.15,
+      "testRuns": 699,
+      "testWickets": 170,
+      "testMatches": 41,
+      "testCenturies": 0,
+      "testFifties": 2
+    }
+  },
+  {
+    "id": "geoff-lawson",
+    "name": "Geoff Lawson",
+    "nation": "Australia",
+    "era": "1980s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 30.52,
+      "testRuns": 790,
+      "testWickets": 180,
+      "testMatches": 46,
+      "testCenturies": 1,
+      "testFifties": 5
+    }
+  },
+  {
+    "id": "peter-taylor",
+    "name": "Peter Taylor",
+    "nation": "Australia",
+    "era": "1980s",
+    "primaryRole": "spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 37.96,
+      "testRuns": 349,
+      "testWickets": 34,
+      "testMatches": 19,
+      "testCenturies": 0,
+      "testFifties": 1
+    }
+  }
+]
