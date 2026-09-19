@@ -35,8 +35,8 @@ CSV_DIR = Path("espn_csv")
 CSV_DIR.mkdir(exist_ok=True)
 
 # Base URL for Statsguru CSV export (career aggregates, Tests only)
-# Example: https://stats.espncricinfo.com/ci/engine/player/4188.csv?class=1;template=results;type=batting
-STATSGURU_BASE = "https://stats.espncricinfo.com/ci/engine/player/{}.csv"
+# Example: https://stats.cricinfo.com/ci/engine/player/4188.csv?class=1;template=results;type=batting
+STATSGURU_BASE = "https://stats.cricinfo.com/ci/engine/player/{}.csv"
 PARAMS_BATTING = "class=1;template=results;type=batting;view=innings"
 PARAMS_BOWLING = "class=1;template=results;type=bowling;view=innings"
 

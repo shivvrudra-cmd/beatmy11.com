@@ -1,0 +1,29 @@
+Loaded 176 mappings
+1990s: 130 players
+2000s: 149 players
+2010s: 150 players
+2020s: 149 players
+Total unique players: 452
+Missing players: 312
+
+First 20 missing players:
+1. aamer-sohail
+2. ab-de-villiers
+3. abdullah-shafique
+4. abdur-razzak
+5. abrar-ahmed
+6. adam-bacher
+7. adam-parore
+8. adil-rashid
+9. adrian-barath
+10. agha-salman
+11. aiden-markram
+12. ajantha-mendis
+13. ajaz-patel
+14. ajinkya-rahane
+15. ajit-agarkar
+16. alec-stewart
+17. alex-carey
+18. alex-lees
+19. alick-athanaze
+20. alistair-campbell
