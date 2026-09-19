@@ -12,7 +12,11 @@
       "testWickets": 1,
       "testMatches": 59,
       "testCenturies": 4,
-      "testFifties": 11
+      "testFifties": 11,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
     }
   },
   {
@@ -28,7 +32,11 @@
       "testWickets": 0,
       "testMatches": 24,
       "testCenturies": 4,
-      "testFifties": 8
+      "testFifties": 8,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
     }
   },
   {
@@ -44,7 +52,11 @@
       "testWickets": 2,
       "testMatches": 52,
       "testCenturies": 11,
-      "testFifties": 17
+      "testFifties": 17,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
     }
   },
   {
@@ -60,7 +72,11 @@
       "testWickets": 0,
       "testMatches": 107,
       "testCenturies": 21,
-      "testFifties": 36
+      "testFifties": 36,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
     }
   },
   {
@@ -76,7 +92,11 @@
       "testWickets": 39,
       "testMatches": 156,
       "testCenturies": 27,
-      "testFifties": 63
+      "testFifties": 63,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
     }
   },
   {
@@ -92,7 +112,11 @@
       "testWickets": 165,
       "testMatches": 168,
       "testCenturies": 32,
-      "testFifties": 50
+      "testFifties": 50,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
     }
   },
   {
@@ -108,7 +132,11 @@
       "testWickets": 18,
       "testMatches": 128,
       "testCenturies": 13,
-      "testFifties": 40
+      "testFifties": 40,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
     }
   },
   {
@@ -124,7 +152,11 @@
       "testWickets": 0,
       "testMatches": 119,
       "testCenturies": 4,
-      "testFifties": 19
+      "testFifties": 19,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
     }
   },
   {
@@ -133,14 +165,20 @@
     "nation": "Australia",
     "era": "1980s",
     "primaryRole": "all-rounder",
-    "secondaryRoles": ["middle-order"],
+    "secondaryRoles": [
+      "middle-order"
+    ],
     "stats": {
       "testAverage": 22.39,
       "testRuns": 1849,
       "testWickets": 61,
       "testMatches": 53,
       "testCenturies": 2,
-      "testFifties": 8
+      "testFifties": 8,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
     }
   },
   {
@@ -156,7 +194,11 @@
       "testWickets": 113,
       "testMatches": 27,
       "testCenturies": 0,
-      "testFifties": 1
+      "testFifties": 1,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
     }
   },
   {
@@ -172,7 +214,11 @@
       "testWickets": 212,
       "testMatches": 53,
       "testCenturies": 1,
-      "testFifties": 8
+      "testFifties": 8,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
     }
   },
   {
@@ -188,7 +234,11 @@
       "testWickets": 170,
       "testMatches": 41,
       "testCenturies": 0,
-      "testFifties": 2
+      "testFifties": 2,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
     }
   },
   {
@@ -204,7 +254,11 @@
       "testWickets": 180,
       "testMatches": 46,
       "testCenturies": 1,
-      "testFifties": 5
+      "testFifties": 5,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
     }
   },
   {
@@ -220,7 +274,11 @@
       "testWickets": 34,
       "testMatches": 19,
       "testCenturies": 0,
-      "testFifties": 1
+      "testFifties": 1,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
     }
   }
 ]

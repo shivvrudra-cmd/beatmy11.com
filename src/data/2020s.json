@@ -1,0 +1,2982 @@
+[
+  {
+    "id": "david-warner",
+    "name": "David Warner",
+    "nation": "Australia",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "usman-khawaja",
+    "name": "Usman Khawaja",
+    "nation": "Australia",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "marcus-harris",
+    "name": "Marcus Harris",
+    "nation": "Australia",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "steve-smith",
+    "name": "Steve Smith",
+    "nation": "Australia",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "marnus-labuschagne",
+    "name": "Marnus Labuschagne",
+    "nation": "Australia",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "travis-head",
+    "name": "Travis Head",
+    "nation": "Australia",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "cameron-green",
+    "name": "Cameron Green",
+    "nation": "Australia",
+    "era": "2020s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "alex-carey",
+    "name": "Alex Carey",
+    "nation": "Australia",
+    "era": "2020s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "nathan-lyon",
+    "name": "Nathan Lyon",
+    "nation": "Australia",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "todd-murphy",
+    "name": "Todd Murphy",
+    "nation": "Australia",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "matthew-kuhnemann",
+    "name": "Matthew Kuhnemann",
+    "nation": "Australia",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "pat-cummins",
+    "name": "Pat Cummins",
+    "nation": "Australia",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mitchell-starc",
+    "name": "Mitchell Starc",
+    "nation": "Australia",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "josh-hazlewood",
+    "name": "Josh Hazlewood",
+    "nation": "Australia",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "scott-boland",
+    "name": "Scott Boland",
+    "nation": "Australia",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "alex-lees",
+    "name": "Alex Lees",
+    "nation": "England",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "zak-crawley",
+    "name": "Zak Crawley",
+    "nation": "England",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ben-duckett",
+    "name": "Ben Duckett",
+    "nation": "England",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ollie-pope",
+    "name": "Ollie Pope",
+    "nation": "England",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "joe-root",
+    "name": "Joe Root",
+    "nation": "England",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "harry-brook",
+    "name": "Harry Brook",
+    "nation": "England",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ben-stokes",
+    "name": "Ben Stokes",
+    "nation": "England",
+    "era": "2020s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ben-foakes",
+    "name": "Ben Foakes",
+    "nation": "England",
+    "era": "2020s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "jack-leach",
+    "name": "Jack Leach",
+    "nation": "England",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "rehan-ahmed",
+    "name": "Rehan Ahmed",
+    "nation": "England",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "tom-hartley",
+    "name": "Tom Hartley",
+    "nation": "England",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "james-anderson",
+    "name": "James Anderson",
+    "nation": "England",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "stuart-broad",
+    "name": "Stuart Broad",
+    "nation": "England",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mark-wood",
+    "name": "Mark Wood",
+    "nation": "England",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ollie-robinson",
+    "name": "Ollie Robinson",
+    "nation": "England",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "rohit-sharma",
+    "name": "Rohit Sharma",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kl-rahul",
+    "name": "KL Rahul",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "shubman-gill",
+    "name": "Shubman Gill",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "virat-kohli",
+    "name": "Virat Kohli",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "cheteshwar-pujara",
+    "name": "Cheteshwar Pujara",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "shreyas-iyer",
+    "name": "Shreyas Iyer",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "rishabh-pant",
+    "name": "Rishabh Pant",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ravindra-jadeja",
+    "name": "Ravindra Jadeja",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ravichandran-ashwin",
+    "name": "Ravichandran Ashwin",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "axar-patel",
+    "name": "Axar Patel",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kuldeep-yadav",
+    "name": "Kuldeep Yadav",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "jasprit-bumrah",
+    "name": "Jasprit Bumrah",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mohammed-shami",
+    "name": "Mohammed Shami",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mohammed-siraj",
+    "name": "Mohammed Siraj",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "shardul-thakur",
+    "name": "Shardul Thakur",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "abdullah-shafique",
+    "name": "Abdullah Shafique",
+    "nation": "Pakistan",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "imam-ul-haq",
+    "name": "Imam-ul-Haq",
+    "nation": "Pakistan",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "shan-masood",
+    "name": "Shan Masood",
+    "nation": "Pakistan",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "babar-azam",
+    "name": "Babar Azam",
+    "nation": "Pakistan",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "saud-shakeel",
+    "name": "Saud Shakeel",
+    "nation": "Pakistan",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mohammad-rizwan",
+    "name": "Mohammad Rizwan",
+    "nation": "Pakistan",
+    "era": "2020s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "salman-ali-agha",
+    "name": "Salman Ali Agha",
+    "nation": "Pakistan",
+    "era": "2020s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "agha-salman",
+    "name": "Agha Salman",
+    "nation": "Pakistan",
+    "era": "2020s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "nauman-ali",
+    "name": "Nauman Ali",
+    "nation": "Pakistan",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "abrar-ahmed",
+    "name": "Abrar Ahmed",
+    "nation": "Pakistan",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "zahid-mahmood",
+    "name": "Zahid Mahmood",
+    "nation": "Pakistan",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "shaheen-shah-afridi",
+    "name": "Shaheen Shah Afridi",
+    "nation": "Pakistan",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "naseem-shah",
+    "name": "Naseem Shah",
+    "nation": "Pakistan",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "haris-rauf",
+    "name": "Haris Rauf",
+    "nation": "Pakistan",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mohammad-wasim-jr",
+    "name": "Mohammad Wasim Jr",
+    "nation": "Pakistan",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kraigg-brathwaite",
+    "name": "Kraigg Brathwaite",
+    "nation": "West Indies",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "tagenarine-chanderpaul",
+    "name": "Tagenarine Chanderpaul",
+    "nation": "West Indies",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mikyle-louis",
+    "name": "Mikyle Louis",
+    "nation": "West Indies",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "jermaine-blackwood",
+    "name": "Jermaine Blackwood",
+    "nation": "West Indies",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "alick-athanaze",
+    "name": "Alick Athanaze",
+    "nation": "West Indies",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kavem-hodge",
+    "name": "Kavem Hodge",
+    "nation": "West Indies",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "joshua-da-silva",
+    "name": "Joshua Da Silva",
+    "nation": "West Indies",
+    "era": "2020s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "jason-holder",
+    "name": "Jason Holder",
+    "nation": "West Indies",
+    "era": "2020s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "roston-chase",
+    "name": "Roston Chase",
+    "nation": "West Indies",
+    "era": "2020s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "jomel-warrican",
+    "name": "Jomel Warrican",
+    "nation": "West Indies",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "rahkeem-cornwall",
+    "name": "Rahkeem Cornwall",
+    "nation": "West Indies",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kevin-sinclair",
+    "name": "Kevin Sinclair",
+    "nation": "West Indies",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kemar-roach",
+    "name": "Kemar Roach",
+    "nation": "West Indies",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "alzarri-joseph",
+    "name": "Alzarri Joseph",
+    "nation": "West Indies",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "jayden-seales",
+    "name": "Jayden Seales",
+    "nation": "West Indies",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "tom-latham",
+    "name": "Tom Latham",
+    "nation": "New Zealand",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "devon-conway",
+    "name": "Devon Conway",
+    "nation": "New Zealand",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "will-young",
+    "name": "Will Young",
+    "nation": "New Zealand",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kane-williamson",
+    "name": "Kane Williamson",
+    "nation": "New Zealand",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "daryl-mitchell",
+    "name": "Daryl Mitchell",
+    "nation": "New Zealand",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "glenn-phillips",
+    "name": "Glenn Phillips",
+    "nation": "New Zealand",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "tom-blundell",
+    "name": "Tom Blundell",
+    "nation": "New Zealand",
+    "era": "2020s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "rachin-ravindra",
+    "name": "Rachin Ravindra",
+    "nation": "New Zealand",
+    "era": "2020s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mitchell-santner",
+    "name": "Mitchell Santner",
+    "nation": "New Zealand",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ajaz-patel",
+    "name": "Ajaz Patel",
+    "nation": "New Zealand",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ish-sodhi",
+    "name": "Ish Sodhi",
+    "nation": "New Zealand",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "tim-southee",
+    "name": "Tim Southee",
+    "nation": "New Zealand",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "trent-boult",
+    "name": "Trent Boult",
+    "nation": "New Zealand",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "matt-henry",
+    "name": "Matt Henry",
+    "nation": "New Zealand",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kyle-jamieson",
+    "name": "Kyle Jamieson",
+    "nation": "New Zealand",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "dean-elgar",
+    "name": "Dean Elgar",
+    "nation": "South Africa",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "sarel-erwee",
+    "name": "Sarel Erwee",
+    "nation": "South Africa",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "tony-de-zorzi",
+    "name": "Tony de Zorzi",
+    "nation": "South Africa",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "aiden-markram",
+    "name": "Aiden Markram",
+    "nation": "South Africa",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "temba-bavuma",
+    "name": "Temba Bavuma",
+    "nation": "South Africa",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "heinrich-klaasen",
+    "name": "Heinrich Klaasen",
+    "nation": "South Africa",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kyle-verreynne",
+    "name": "Kyle Verreynne",
+    "nation": "South Africa",
+    "era": "2020s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "marco-jansen",
+    "name": "Marco Jansen",
+    "nation": "South Africa",
+    "era": "2020s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "wiaan-mulder",
+    "name": "Wiaan Mulder",
+    "nation": "South Africa",
+    "era": "2020s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "keshav-maharaj",
+    "name": "Keshav Maharaj",
+    "nation": "South Africa",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "simon-harmer",
+    "name": "Simon Harmer",
+    "nation": "South Africa",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kagiso-rabada",
+    "name": "Kagiso Rabada",
+    "nation": "South Africa",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "anrich-nortje",
+    "name": "Anrich Nortje",
+    "nation": "South Africa",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "lungi-ngidi",
+    "name": "Lungi Ngidi",
+    "nation": "South Africa",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "gerald-coetzee",
+    "name": "Gerald Coetzee",
+    "nation": "South Africa",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "dimuth-karunaratne",
+    "name": "Dimuth Karunaratne",
+    "nation": "Sri Lanka",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "nishan-madushka",
+    "name": "Nishan Madushka",
+    "nation": "Sri Lanka",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "pathum-nissanka",
+    "name": "Pathum Nissanka",
+    "nation": "Sri Lanka",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "dinesh-chandimal",
+    "name": "Dinesh Chandimal",
+    "nation": "Sri Lanka",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kusal-mendis",
+    "name": "Kusal Mendis",
+    "nation": "Sri Lanka",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kamindu-mendis",
+    "name": "Kamindu Mendis",
+    "nation": "Sri Lanka",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "dhananjaya-de-silva",
+    "name": "Dhananjaya de Silva",
+    "nation": "Sri Lanka",
+    "era": "2020s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "sadeera-samarawickrama",
+    "name": "Sadeera Samarawickrama",
+    "nation": "Sri Lanka",
+    "era": "2020s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "prabath-jayasuriya",
+    "name": "Prabath Jayasuriya",
+    "nation": "Sri Lanka",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ramesh-mendis",
+    "name": "Ramesh Mendis",
+    "nation": "Sri Lanka",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "lakshan-sandakan",
+    "name": "Lakshan Sandakan",
+    "nation": "Sri Lanka",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "asitha-fernando",
+    "name": "Asitha Fernando",
+    "nation": "Sri Lanka",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kasun-rajitha",
+    "name": "Kasun Rajitha",
+    "nation": "Sri Lanka",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "vishwa-fernando",
+    "name": "Vishwa Fernando",
+    "nation": "Sri Lanka",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "lahiru-kumara",
+    "name": "Lahiru Kumara",
+    "nation": "Sri Lanka",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "shadman-islam",
+    "name": "Shadman Islam",
+    "nation": "Bangladesh",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mahmudul-hasan-joy",
+    "name": "Mahmudul Hasan Joy",
+    "nation": "Bangladesh",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "zakir-hasan",
+    "name": "Zakir Hasan",
+    "nation": "Bangladesh",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "najmul-hossain-shanto",
+    "name": "Najmul Hossain Shanto",
+    "nation": "Bangladesh",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mominul-haque",
+    "name": "Mominul Haque",
+    "nation": "Bangladesh",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mushfiqur-rahim",
+    "name": "Mushfiqur Rahim",
+    "nation": "Bangladesh",
+    "era": "2020s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "liton-das",
+    "name": "Liton Das",
+    "nation": "Bangladesh",
+    "era": "2020s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "shakib-al-hasan",
+    "name": "Shakib Al Hasan",
+    "nation": "Bangladesh",
+    "era": "2020s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mehidy-hasan",
+    "name": "Mehidy Hasan",
+    "nation": "Bangladesh",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "taijul-islam",
+    "name": "Taijul Islam",
+    "nation": "Bangladesh",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "nayeem-hasan",
+    "name": "Nayeem Hasan",
+    "nation": "Bangladesh",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "taskin-ahmed",
+    "name": "Taskin Ahmed",
+    "nation": "Bangladesh",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "khaled-ahmed",
+    "name": "Khaled Ahmed",
+    "nation": "Bangladesh",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "shoriful-islam",
+    "name": "Shoriful Islam",
+    "nation": "Bangladesh",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ebadot-hossain",
+    "name": "Ebadot Hossain",
+    "nation": "Bangladesh",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "tanunurwa-makoni",
+    "name": "Tanunurwa Makoni",
+    "nation": "Zimbabwe",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "takudzwanashe-kaitano",
+    "name": "Takudzwanashe Kaitano",
+    "nation": "Zimbabwe",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "joylord-gumbie",
+    "name": "Joylord Gumbie",
+    "nation": "Zimbabwe",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "craig-ervine",
+    "name": "Craig Ervine",
+    "nation": "Zimbabwe",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "sean-williams",
+    "name": "Sean Williams",
+    "nation": "Zimbabwe",
+    "era": "2020s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "milton-shumba",
+    "name": "Milton Shumba",
+    "nation": "Zimbabwe",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "sikandar-raza",
+    "name": "Sikandar Raza",
+    "nation": "Zimbabwe",
+    "era": "2020s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "regis-chakabva",
+    "name": "Regis Chakabva",
+    "nation": "Zimbabwe",
+    "era": "2020s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "brandon-mavuta",
+    "name": "Brandon Mavuta",
+    "nation": "Zimbabwe",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "wellington-masakadza",
+    "name": "Wellington Masakadza",
+    "nation": "Zimbabwe",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "tendai-chatara",
+    "name": "Tendai Chatara",
+    "nation": "Zimbabwe",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "richard-ngarava",
+    "name": "Richard Ngarava",
+    "nation": "Zimbabwe",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "victor-nyauchi",
+    "name": "Victor Nyauchi",
+    "nation": "Zimbabwe",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "blessing-muzarabani",
+    "name": "Blessing Muzarabani",
+    "nation": "Zimbabwe",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  }
+]

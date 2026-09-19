@@ -1,0 +1,3004 @@
+[
+  {
+    "id": "david-warner",
+    "name": "David Warner",
+    "nation": "Australia",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "chris-rogers",
+    "name": "Chris Rogers",
+    "nation": "Australia",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "joe-burns",
+    "name": "Joe Burns",
+    "nation": "Australia",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "steve-smith",
+    "name": "Steve Smith",
+    "nation": "Australia",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "usman-khawaja",
+    "name": "Usman Khawaja",
+    "nation": "Australia",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "peter-handscomb",
+    "name": "Peter Handscomb",
+    "nation": "Australia",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "travis-head",
+    "name": "Travis Head",
+    "nation": "Australia",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "tim-paine",
+    "name": "Tim Paine",
+    "nation": "Australia",
+    "era": "2010s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "nathan-lyon",
+    "name": "Nathan Lyon",
+    "nation": "Australia",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "steve-o-keefe",
+    "name": "Steve O'Keefe",
+    "nation": "Australia",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "pat-cummins",
+    "name": "Pat Cummins",
+    "nation": "Australia",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "josh-hazlewood",
+    "name": "Josh Hazlewood",
+    "nation": "Australia",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mitchell-starc",
+    "name": "Mitchell Starc",
+    "nation": "Australia",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "james-pattinson",
+    "name": "James Pattinson",
+    "nation": "Australia",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "peter-siddle",
+    "name": "Peter Siddle",
+    "nation": "Australia",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "alastair-cook",
+    "name": "Alastair Cook",
+    "nation": "England",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "keaton-jennings",
+    "name": "Keaton Jennings",
+    "nation": "England",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "rory-burns",
+    "name": "Rory Burns",
+    "nation": "England",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "joe-root",
+    "name": "Joe Root",
+    "nation": "England",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "jonny-bairstow",
+    "name": "Jonny Bairstow",
+    "nation": "England",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ben-stokes",
+    "name": "Ben Stokes",
+    "nation": "England",
+    "era": "2010s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "moeen-ali",
+    "name": "Moeen Ali",
+    "nation": "England",
+    "era": "2010s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "jos-buttler",
+    "name": "Jos Buttler",
+    "nation": "England",
+    "era": "2010s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "adil-rashid",
+    "name": "Adil Rashid",
+    "nation": "England",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "jack-leach",
+    "name": "Jack Leach",
+    "nation": "England",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "dom-bess",
+    "name": "Dom Bess",
+    "nation": "England",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "james-anderson",
+    "name": "James Anderson",
+    "nation": "England",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "stuart-broad",
+    "name": "Stuart Broad",
+    "nation": "England",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mark-wood",
+    "name": "Mark Wood",
+    "nation": "England",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "chris-woakes",
+    "name": "Chris Woakes",
+    "nation": "England",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "murali-vijay",
+    "name": "Murali Vijay",
+    "nation": "India",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "shikhar-dhawan",
+    "name": "Shikhar Dhawan",
+    "nation": "India",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kl-rahul",
+    "name": "KL Rahul",
+    "nation": "India",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "cheteshwar-pujara",
+    "name": "Cheteshwar Pujara",
+    "nation": "India",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "virat-kohli",
+    "name": "Virat Kohli",
+    "nation": "India",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ajinkya-rahane",
+    "name": "Ajinkya Rahane",
+    "nation": "India",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "rohit-sharma",
+    "name": "Rohit Sharma",
+    "nation": "India",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "rishabh-pant",
+    "name": "Rishabh Pant",
+    "nation": "India",
+    "era": "2010s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "wriddhiman-saha",
+    "name": "Wriddhiman Saha",
+    "nation": "India",
+    "era": "2010s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ravichandran-ashwin",
+    "name": "Ravichandran Ashwin",
+    "nation": "India",
+    "era": "2010s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ravindra-jadeja",
+    "name": "Ravindra Jadeja",
+    "nation": "India",
+    "era": "2010s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ishant-sharma",
+    "name": "Ishant Sharma",
+    "nation": "India",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mohammed-shami",
+    "name": "Mohammed Shami",
+    "nation": "India",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "jasprit-bumrah",
+    "name": "Jasprit Bumrah",
+    "nation": "India",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "umesh-yadav",
+    "name": "Umesh Yadav",
+    "nation": "India",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "shan-masood",
+    "name": "Shan Masood",
+    "nation": "Pakistan",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "sami-aslam",
+    "name": "Sami Aslam",
+    "nation": "Pakistan",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "imam-ul-haq",
+    "name": "Imam-ul-Haq",
+    "nation": "Pakistan",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "azhar-ali",
+    "name": "Azhar Ali",
+    "nation": "Pakistan",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "asad-shafiq",
+    "name": "Asad Shafiq",
+    "nation": "Pakistan",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "babar-azam",
+    "name": "Babar Azam",
+    "nation": "Pakistan",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "younis-khan",
+    "name": "Younis Khan",
+    "nation": "Pakistan",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "sarfraz-ahmed",
+    "name": "Sarfraz Ahmed",
+    "nation": "Pakistan",
+    "era": "2010s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mohammad-hafeez",
+    "name": "Mohammad Hafeez",
+    "nation": "Pakistan",
+    "era": "2010s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "shadab-khan",
+    "name": "Shadab Khan",
+    "nation": "Pakistan",
+    "era": "2010s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "yasir-shah",
+    "name": "Yasir Shah",
+    "nation": "Pakistan",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "saeed-ajmal",
+    "name": "Saeed Ajmal",
+    "nation": "Pakistan",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mohammad-abbas",
+    "name": "Mohammad Abbas",
+    "nation": "Pakistan",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "shaheen-shah-afridi",
+    "name": "Shaheen Shah Afridi",
+    "nation": "Pakistan",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "wahab-riaz",
+    "name": "Wahab Riaz",
+    "nation": "Pakistan",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kraigg-brathwaite",
+    "name": "Kraigg Brathwaite",
+    "nation": "West Indies",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kieran-powell",
+    "name": "Kieran Powell",
+    "nation": "West Indies",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "rajendra-chandrika",
+    "name": "Rajendra Chandrika",
+    "nation": "West Indies",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "jermaine-blackwood",
+    "name": "Jermaine Blackwood",
+    "nation": "West Indies",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "roston-chase",
+    "name": "Roston Chase",
+    "nation": "West Indies",
+    "era": "2010s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "shai-hope",
+    "name": "Shai Hope",
+    "nation": "West Indies",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "shane-dowrich",
+    "name": "Shane Dowrich",
+    "nation": "West Indies",
+    "era": "2010s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "jason-holder",
+    "name": "Jason Holder",
+    "nation": "West Indies",
+    "era": "2010s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "devendra-bishoo",
+    "name": "Devendra Bishoo",
+    "nation": "West Indies",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "roston-chase",
+    "name": "Roston Chase",
+    "nation": "West Indies",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "jomel-warrican",
+    "name": "Jomel Warrican",
+    "nation": "West Indies",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kemar-roach",
+    "name": "Kemar Roach",
+    "nation": "West Indies",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "shannon-gabriel",
+    "name": "Shannon Gabriel",
+    "nation": "West Indies",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "alzarri-joseph",
+    "name": "Alzarri Joseph",
+    "nation": "West Indies",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "miguel-cummins",
+    "name": "Miguel Cummins",
+    "nation": "West Indies",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "tom-latham",
+    "name": "Tom Latham",
+    "nation": "New Zealand",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "jeet-raval",
+    "name": "Jeet Raval",
+    "nation": "New Zealand",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "hamish-rutherford",
+    "name": "Hamish Rutherford",
+    "nation": "New Zealand",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kane-williamson",
+    "name": "Kane Williamson",
+    "nation": "New Zealand",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ross-taylor",
+    "name": "Ross Taylor",
+    "nation": "New Zealand",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "henry-nicholls",
+    "name": "Henry Nicholls",
+    "nation": "New Zealand",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "bj-watling",
+    "name": "BJ Watling",
+    "nation": "New Zealand",
+    "era": "2010s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "colin-de-grandhomme",
+    "name": "Colin de Grandhomme",
+    "nation": "New Zealand",
+    "era": "2010s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mitchell-santner",
+    "name": "Mitchell Santner",
+    "nation": "New Zealand",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [
+      "All-rounder"
+    ],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ish-sodhi",
+    "name": "Ish Sodhi",
+    "nation": "New Zealand",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mark-craig",
+    "name": "Mark Craig",
+    "nation": "New Zealand",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "tim-southee",
+    "name": "Tim Southee",
+    "nation": "New Zealand",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "trent-boult",
+    "name": "Trent Boult",
+    "nation": "New Zealand",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "neil-wagner",
+    "name": "Neil Wagner",
+    "nation": "New Zealand",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "matt-henry",
+    "name": "Matt Henry",
+    "nation": "New Zealand",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "dean-elgar",
+    "name": "Dean Elgar",
+    "nation": "South Africa",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "stephen-cook",
+    "name": "Stephen Cook",
+    "nation": "South Africa",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "aiden-markram",
+    "name": "Aiden Markram",
+    "nation": "South Africa",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "hashim-amla",
+    "name": "Hashim Amla",
+    "nation": "South Africa",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "faf-du-plessis",
+    "name": "Faf du Plessis",
+    "nation": "South Africa",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "temba-bavuma",
+    "name": "Temba Bavuma",
+    "nation": "South Africa",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "quinton-de-kock",
+    "name": "Quinton de Kock",
+    "nation": "South Africa",
+    "era": "2010s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "keshav-maharaj",
+    "name": "Keshav Maharaj",
+    "nation": "South Africa",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "dane-piedt",
+    "name": "Dane Piedt",
+    "nation": "South Africa",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "imran-tahir",
+    "name": "Imran Tahir",
+    "nation": "South Africa",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kagiso-rabada",
+    "name": "Kagiso Rabada",
+    "nation": "South Africa",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "vernon-philander",
+    "name": "Vernon Philander",
+    "nation": "South Africa",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "morne-morkel",
+    "name": "Morne Morkel",
+    "nation": "South Africa",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "dale-steyn",
+    "name": "Dale Steyn",
+    "nation": "South Africa",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "lungi-ngidi",
+    "name": "Lungi Ngidi",
+    "nation": "South Africa",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "dimuth-karunaratne",
+    "name": "Dimuth Karunaratne",
+    "nation": "Sri Lanka",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kaushal-silva",
+    "name": "Kaushal Silva",
+    "nation": "Sri Lanka",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "lahiru-thirimanne",
+    "name": "Lahiru Thirimanne",
+    "nation": "Sri Lanka",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "angelo-mathews",
+    "name": "Angelo Mathews",
+    "nation": "Sri Lanka",
+    "era": "2010s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "dinesh-chandimal",
+    "name": "Dinesh Chandimal",
+    "nation": "Sri Lanka",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kusal-mendis",
+    "name": "Kusal Mendis",
+    "nation": "Sri Lanka",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "niroshan-dickwella",
+    "name": "Niroshan Dickwella",
+    "nation": "Sri Lanka",
+    "era": "2010s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "dhananjaya-de-silva",
+    "name": "Dhananjaya de Silva",
+    "nation": "Sri Lanka",
+    "era": "2010s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "rangana-herath",
+    "name": "Rangana Herath",
+    "nation": "Sri Lanka",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "dilruwan-perera",
+    "name": "Dilruwan Perera",
+    "nation": "Sri Lanka",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "lakshan-sandakan",
+    "name": "Lakshan Sandakan",
+    "nation": "Sri Lanka",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "suranga-lakmal",
+    "name": "Suranga Lakmal",
+    "nation": "Sri Lanka",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "nuwan-pradeep",
+    "name": "Nuwan Pradeep",
+    "nation": "Sri Lanka",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "lahiru-kumara",
+    "name": "Lahiru Kumara",
+    "nation": "Sri Lanka",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "vishwa-fernando",
+    "name": "Vishwa Fernando",
+    "nation": "Sri Lanka",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "tamim-iqbal",
+    "name": "Tamim Iqbal",
+    "nation": "Bangladesh",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "imrul-kayes",
+    "name": "Imrul Kayes",
+    "nation": "Bangladesh",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "soumya-sarkar",
+    "name": "Soumya Sarkar",
+    "nation": "Bangladesh",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mominul-haque",
+    "name": "Mominul Haque",
+    "nation": "Bangladesh",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "shakib-al-hasan",
+    "name": "Shakib Al Hasan",
+    "nation": "Bangladesh",
+    "era": "2010s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mushfiqur-rahim",
+    "name": "Mushfiqur Rahim",
+    "nation": "Bangladesh",
+    "era": "2010s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mahmudullah",
+    "name": "Mahmudullah",
+    "nation": "Bangladesh",
+    "era": "2010s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "liton-das",
+    "name": "Liton Das",
+    "nation": "Bangladesh",
+    "era": "2010s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mehidy-hasan",
+    "name": "Mehidy Hasan",
+    "nation": "Bangladesh",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "taijul-islam",
+    "name": "Taijul Islam",
+    "nation": "Bangladesh",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "naeem-islam",
+    "name": "Naeem Islam",
+    "nation": "Bangladesh",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "mustafizur-rahman",
+    "name": "Mustafizur Rahman",
+    "nation": "Bangladesh",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "taskin-ahmed",
+    "name": "Taskin Ahmed",
+    "nation": "Bangladesh",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "ebadot-hossain",
+    "name": "Ebadot Hossain",
+    "nation": "Bangladesh",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "shafiul-islam",
+    "name": "Shafiul Islam",
+    "nation": "Bangladesh",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "brian-chari",
+    "name": "Brian Chari",
+    "nation": "Zimbabwe",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "chamu-chibhabha",
+    "name": "Chamu Chibhabha",
+    "nation": "Zimbabwe",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "tino-mawoyo",
+    "name": "Tino Mawoyo",
+    "nation": "Zimbabwe",
+    "era": "2010s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "hamilton-masakadza",
+    "name": "Hamilton Masakadza",
+    "nation": "Zimbabwe",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "craig-ervine",
+    "name": "Craig Ervine",
+    "nation": "Zimbabwe",
+    "era": "2010s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "sean-williams",
+    "name": "Sean Williams",
+    "nation": "Zimbabwe",
+    "era": "2010s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "sikandar-raza",
+    "name": "Sikandar Raza",
+    "nation": "Zimbabwe",
+    "era": "2010s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "brendan-taylor",
+    "name": "Brendan Taylor",
+    "nation": "Zimbabwe",
+    "era": "2010s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "richmond-mutumbami",
+    "name": "Richmond Mutumbami",
+    "nation": "Zimbabwe",
+    "era": "2010s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "graeme-cremer",
+    "name": "Graeme Cremer",
+    "nation": "Zimbabwe",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "tendai-chisoro",
+    "name": "Tendai Chisoro",
+    "nation": "Zimbabwe",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "wellington-masakadza",
+    "name": "Wellington Masakadza",
+    "nation": "Zimbabwe",
+    "era": "2010s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "kyle-jarvis",
+    "name": "Kyle Jarvis",
+    "nation": "Zimbabwe",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "tendai-chatara",
+    "name": "Tendai Chatara",
+    "nation": "Zimbabwe",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  },
+  {
+    "id": "donald-tiripano",
+    "name": "Donald Tiripano",
+    "nation": "Zimbabwe",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 0.0,
+      "testRuns": 0,
+      "testWickets": 0,
+      "testMatches": 0,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "ballsFaced": 0,
+      "deliveriesBowled": 0,
+      "fiveWs": 0,
+      "tenWs": 0
+    }
+  }
+]
