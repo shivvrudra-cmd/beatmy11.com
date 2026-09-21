@@ -13,10 +13,12 @@
       "testMatches": 59,
       "testCenturies": 4,
       "testFifties": 11,
-      "ballsFaced": 0,
-      "deliveriesBowled": 0,
       "fiveWs": 0,
-      "tenWs": 0
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
     }
   },
   {
@@ -33,10 +35,12 @@
       "testMatches": 24,
       "testCenturies": 4,
       "testFifties": 8,
-      "ballsFaced": 0,
-      "deliveriesBowled": 0,
       "fiveWs": 0,
-      "tenWs": 0
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
     }
   },
   {
@@ -53,10 +57,12 @@
       "testMatches": 52,
       "testCenturies": 11,
       "testFifties": 17,
-      "ballsFaced": 0,
-      "deliveriesBowled": 0,
       "fiveWs": 0,
-      "tenWs": 0
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
     }
   },
   {
@@ -73,10 +79,12 @@
       "testMatches": 107,
       "testCenturies": 21,
       "testFifties": 36,
-      "ballsFaced": 0,
-      "deliveriesBowled": 0,
       "fiveWs": 0,
-      "tenWs": 0
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
     }
   },
   {
@@ -93,10 +101,12 @@
       "testMatches": 156,
       "testCenturies": 27,
       "testFifties": 63,
-      "ballsFaced": 0,
-      "deliveriesBowled": 0,
       "fiveWs": 0,
-      "tenWs": 0
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
     }
   },
   {
@@ -113,10 +123,12 @@
       "testMatches": 168,
       "testCenturies": 32,
       "testFifties": 50,
-      "ballsFaced": 0,
-      "deliveriesBowled": 0,
       "fiveWs": 0,
-      "tenWs": 0
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
     }
   },
   {
@@ -133,10 +145,12 @@
       "testMatches": 128,
       "testCenturies": 13,
       "testFifties": 40,
-      "ballsFaced": 0,
-      "deliveriesBowled": 0,
       "fiveWs": 0,
-      "tenWs": 0
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
     }
   },
   {
@@ -153,10 +167,12 @@
       "testMatches": 119,
       "testCenturies": 4,
       "testFifties": 19,
-      "ballsFaced": 0,
-      "deliveriesBowled": 0,
       "fiveWs": 0,
-      "tenWs": 0
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
     }
   },
   {
@@ -175,10 +191,12 @@
       "testMatches": 53,
       "testCenturies": 2,
       "testFifties": 8,
-      "ballsFaced": 0,
-      "deliveriesBowled": 0,
       "fiveWs": 0,
-      "tenWs": 0
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
     }
   },
   {
@@ -195,10 +213,12 @@
       "testMatches": 27,
       "testCenturies": 0,
       "testFifties": 1,
-      "ballsFaced": 0,
-      "deliveriesBowled": 0,
       "fiveWs": 0,
-      "tenWs": 0
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
     }
   },
   {
@@ -215,10 +235,12 @@
       "testMatches": 53,
       "testCenturies": 1,
       "testFifties": 8,
-      "ballsFaced": 0,
-      "deliveriesBowled": 0,
       "fiveWs": 0,
-      "tenWs": 0
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
     }
   },
   {
@@ -235,10 +257,12 @@
       "testMatches": 41,
       "testCenturies": 0,
       "testFifties": 2,
-      "ballsFaced": 0,
-      "deliveriesBowled": 0,
       "fiveWs": 0,
-      "tenWs": 0
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
     }
   },
   {
@@ -255,10 +279,12 @@
       "testMatches": 46,
       "testCenturies": 1,
       "testFifties": 5,
-      "ballsFaced": 0,
-      "deliveriesBowled": 0,
       "fiveWs": 0,
-      "tenWs": 0
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
     }
   },
   {
@@ -275,10 +301,12 @@
       "testMatches": 19,
       "testCenturies": 0,
       "testFifties": 1,
-      "ballsFaced": 0,
-      "deliveriesBowled": 0,
       "fiveWs": 0,
-      "tenWs": 0
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
     }
   }
 ]
