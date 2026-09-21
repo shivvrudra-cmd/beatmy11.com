@@ -2734,21 +2734,23 @@
     "name": "Shakib Al Hasan",
     "nation": "Bangladesh",
     "era": "2010s",
-    "primaryRole": "All-rounder",
-    "secondaryRoles": [],
+    "primaryRole": "all-rounder",
+    "secondaryRoles": [
+      "middle-order"
+    ],
     "stats": {
-      "testAverage": 39.07,
-      "testRuns": 4454,
+      "testAverage": 37.8,
+      "testRuns": 4609,
       "testWickets": 246,
-      "testMatches": 66,
+      "testMatches": 71,
       "testCenturies": 5,
       "testFifties": 31,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0.0,
+      "fiveWs": 19,
+      "tenWs": 2,
+      "testBowlingAverage": 31.7,
       "battingStrikeRate": 0.0,
       "bowlingStrikeRate": 0.0,
-      "dismissals": 0
+      "dismissals": 34
     }
   },
   {
@@ -3299,6 +3301,102 @@
       "battingStrikeRate": 0.0,
       "bowlingStrikeRate": 0.0,
       "dismissals": 0
+    }
+  },
+  {
+    "id": "sachin-tendulkar",
+    "name": "Sachin Tendulkar",
+    "nation": "India",
+    "era": "2010s",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [
+      "opener"
+    ],
+    "stats": {
+      "testAverage": 53.8,
+      "testRuns": 15921,
+      "testWickets": 46,
+      "testMatches": 200,
+      "testCenturies": 51,
+      "testFifties": 68,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 54.2,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 123
+    }
+  },
+  {
+    "id": "jacques-kallis",
+    "name": "Jacques Kallis",
+    "nation": "South Africa",
+    "era": "2010s",
+    "primaryRole": "all-rounder",
+    "secondaryRoles": [
+      "middle-order"
+    ],
+    "stats": {
+      "testAverage": 55.4,
+      "testRuns": 13289,
+      "testWickets": 292,
+      "testMatches": 166,
+      "testCenturies": 45,
+      "testFifties": 58,
+      "fiveWs": 5,
+      "tenWs": 0,
+      "testBowlingAverage": 32.6,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 205
+    }
+  },
+  {
+    "id": "kumar-sangakkara",
+    "name": "Kumar Sangakkara",
+    "nation": "Sri Lanka",
+    "era": "2010s",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [
+      "wicketkeeper"
+    ],
+    "stats": {
+      "testAverage": 57.4,
+      "testRuns": 12400,
+      "testWickets": 0,
+      "testMatches": 134,
+      "testCenturies": 38,
+      "testFifties": 52,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 206
+    }
+  },
+  {
+    "id": "daniel-vettori",
+    "name": "Daniel Vettori",
+    "nation": "New Zealand",
+    "era": "2010s",
+    "primaryRole": "all-rounder",
+    "secondaryRoles": [
+      "spinner"
+    ],
+    "stats": {
+      "testAverage": 30.0,
+      "testRuns": 4531,
+      "testWickets": 362,
+      "testMatches": 113,
+      "testCenturies": 6,
+      "testFifties": 23,
+      "fiveWs": 20,
+      "tenWs": 3,
+      "testBowlingAverage": 34.4,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 66
     }
   }
 ]

@@ -2798,21 +2798,23 @@
     "name": "Shakib Al Hasan",
     "nation": "Bangladesh",
     "era": "2020s",
-    "primaryRole": "All-rounder",
-    "secondaryRoles": [],
+    "primaryRole": "all-rounder",
+    "secondaryRoles": [
+      "middle-order"
+    ],
     "stats": {
-      "testAverage": 39.07,
-      "testRuns": 4454,
+      "testAverage": 37.8,
+      "testRuns": 4609,
       "testWickets": 246,
-      "testMatches": 66,
+      "testMatches": 71,
       "testCenturies": 5,
       "testFifties": 31,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0.0,
+      "fiveWs": 19,
+      "tenWs": 2,
+      "testBowlingAverage": 31.7,
       "battingStrikeRate": 0.0,
       "bowlingStrikeRate": 0.0,
-      "dismissals": 0
+      "dismissals": 34
     }
   },
   {

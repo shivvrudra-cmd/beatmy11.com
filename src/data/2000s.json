@@ -70,21 +70,21 @@
     "name": "Ricky Ponting",
     "nation": "Australia",
     "era": "2000s",
-    "primaryRole": "Middle-order",
+    "primaryRole": "middle-order",
     "secondaryRoles": [],
     "stats": {
       "testAverage": 51.9,
       "testRuns": 13378,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testWickets": 5,
+      "testMatches": 168,
+      "testCenturies": 41,
+      "testFifties": 62,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0.0,
       "battingStrikeRate": 0.0,
       "bowlingStrikeRate": 0.0,
-      "dismissals": 0
+      "dismissals": 208
     }
   },
   {
@@ -158,21 +158,23 @@
     "name": "Adam Gilchrist",
     "nation": "Australia",
     "era": "2000s",
-    "primaryRole": "Wicketkeeper",
-    "secondaryRoles": [],
+    "primaryRole": "wicketkeeper",
+    "secondaryRoles": [
+      "middle-order"
+    ],
     "stats": {
-      "testAverage": 0.0,
+      "testAverage": 47.6,
       "testRuns": 5570,
-      "testWickets": 416,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testWickets": 0,
+      "testMatches": 96,
+      "testCenturies": 17,
+      "testFifties": 26,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
+      "battingStrikeRate": 82,
       "bowlingStrikeRate": 0.0,
-      "dismissals": 0
+      "dismissals": 420
     }
   },
   {
@@ -180,21 +182,21 @@
     "name": "Shane Warne",
     "nation": "Australia",
     "era": "2000s",
-    "primaryRole": "Spinner",
+    "primaryRole": "spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0.0,
-      "testRuns": 0,
+      "testAverage": 17.3,
+      "testRuns": 3154,
       "testWickets": 708,
-      "testMatches": 0,
+      "testMatches": 145,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0.0,
+      "testFifties": 12,
+      "fiveWs": 37,
+      "tenWs": 10,
+      "testBowlingAverage": 25.4,
       "battingStrikeRate": 0.0,
       "bowlingStrikeRate": 0.0,
-      "dismissals": 0
+      "dismissals": 125
     }
   },
   {
@@ -246,21 +248,21 @@
     "name": "Glenn McGrath",
     "nation": "Australia",
     "era": "2000s",
-    "primaryRole": "Fast bowler",
+    "primaryRole": "fast-bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0.0,
-      "testRuns": 0,
+      "testAverage": 7.4,
+      "testRuns": 641,
       "testWickets": 563,
-      "testMatches": 0,
+      "testMatches": 124,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0.0,
+      "testFifties": 1,
+      "fiveWs": 29,
+      "tenWs": 3,
+      "testBowlingAverage": 21.6,
       "battingStrikeRate": 0.0,
       "bowlingStrikeRate": 0.0,
-      "dismissals": 0
+      "dismissals": 42
     }
   },
   {
@@ -510,21 +512,23 @@
     "name": "Andrew Flintoff",
     "nation": "England",
     "era": "2000s",
-    "primaryRole": "All-rounder",
-    "secondaryRoles": [],
+    "primaryRole": "all-rounder",
+    "secondaryRoles": [
+      "middle-order"
+    ],
     "stats": {
-      "testAverage": 0.0,
+      "testAverage": 31.8,
       "testRuns": 3845,
       "testWickets": 226,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
+      "testMatches": 79,
+      "testCenturies": 5,
+      "testFifties": 26,
+      "fiveWs": 3,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
+      "testBowlingAverage": 32.8,
       "battingStrikeRate": 0.0,
       "bowlingStrikeRate": 0.0,
-      "dismissals": 0
+      "dismissals": 55
     }
   },
   {
@@ -730,21 +734,23 @@
     "name": "Rahul Dravid",
     "nation": "India",
     "era": "2000s",
-    "primaryRole": "Middle-order",
-    "secondaryRoles": [],
+    "primaryRole": "middle-order",
+    "secondaryRoles": [
+      "opener"
+    ],
     "stats": {
-      "testAverage": 0.0,
+      "testAverage": 52.3,
       "testRuns": 13288,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testWickets": 1,
+      "testMatches": 164,
+      "testCenturies": 36,
+      "testFifties": 63,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
+      "testBowlingAverage": 39,
       "battingStrikeRate": 0.0,
       "bowlingStrikeRate": 0.0,
-      "dismissals": 0
+      "dismissals": 218
     }
   },
   {
@@ -752,21 +758,23 @@
     "name": "Sachin Tendulkar",
     "nation": "India",
     "era": "2000s",
-    "primaryRole": "Middle-order",
-    "secondaryRoles": [],
+    "primaryRole": "middle-order",
+    "secondaryRoles": [
+      "opener"
+    ],
     "stats": {
-      "testAverage": 0.0,
+      "testAverage": 53.8,
       "testRuns": 15921,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testWickets": 46,
+      "testMatches": 200,
+      "testCenturies": 51,
+      "testFifties": 68,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
+      "testBowlingAverage": 54.2,
       "battingStrikeRate": 0.0,
       "bowlingStrikeRate": 0.0,
-      "dismissals": 0
+      "dismissals": 123
     }
   },
   {
@@ -840,21 +848,21 @@
     "name": "Anil Kumble",
     "nation": "India",
     "era": "2000s",
-    "primaryRole": "Spinner",
+    "primaryRole": "spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0.0,
-      "testRuns": 0,
+      "testAverage": 17.8,
+      "testRuns": 2506,
       "testWickets": 619,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0.0,
+      "testMatches": 132,
+      "testCenturies": 1,
+      "testFifties": 5,
+      "fiveWs": 35,
+      "tenWs": 8,
+      "testBowlingAverage": 29.6,
       "battingStrikeRate": 0.0,
       "bowlingStrikeRate": 0.0,
-      "dismissals": 0
+      "dismissals": 63
     }
   },
   {
@@ -1830,23 +1838,23 @@
     "name": "Daniel Vettori",
     "nation": "New Zealand",
     "era": "2000s",
-    "primaryRole": "Spinner",
+    "primaryRole": "all-rounder",
     "secondaryRoles": [
-      "All-rounder"
+      "spinner"
     ],
     "stats": {
-      "testAverage": 0.0,
+      "testAverage": 30.0,
       "testRuns": 4531,
       "testWickets": 362,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0.0,
+      "testMatches": 113,
+      "testCenturies": 6,
+      "testFifties": 23,
+      "fiveWs": 20,
+      "tenWs": 3,
+      "testBowlingAverage": 34.4,
       "battingStrikeRate": 0.0,
       "bowlingStrikeRate": 0.0,
-      "dismissals": 0
+      "dismissals": 66
     }
   },
   {
@@ -2052,21 +2060,23 @@
     "name": "Jacques Kallis",
     "nation": "South Africa",
     "era": "2000s",
-    "primaryRole": "All-rounder",
-    "secondaryRoles": [],
+    "primaryRole": "all-rounder",
+    "secondaryRoles": [
+      "middle-order"
+    ],
     "stats": {
-      "testAverage": 0.0,
+      "testAverage": 55.4,
       "testRuns": 13289,
       "testWickets": 292,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
+      "testMatches": 166,
+      "testCenturies": 45,
+      "testFifties": 58,
+      "fiveWs": 5,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
+      "testBowlingAverage": 32.6,
       "battingStrikeRate": 0.0,
       "bowlingStrikeRate": 0.0,
-      "dismissals": 0
+      "dismissals": 205
     }
   },
   {
@@ -2382,21 +2392,23 @@
     "name": "Kumar Sangakkara",
     "nation": "Sri Lanka",
     "era": "2000s",
-    "primaryRole": "Middle-order",
-    "secondaryRoles": [],
+    "primaryRole": "middle-order",
+    "secondaryRoles": [
+      "wicketkeeper"
+    ],
     "stats": {
-      "testAverage": 0.0,
+      "testAverage": 57.4,
       "testRuns": 12400,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 134,
+      "testCenturies": 38,
+      "testFifties": 52,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0.0,
       "battingStrikeRate": 0.0,
       "bowlingStrikeRate": 0.0,
-      "dismissals": 0
+      "dismissals": 206
     }
   },
   {
@@ -2514,21 +2526,21 @@
     "name": "Muttiah Muralitharan",
     "nation": "Sri Lanka",
     "era": "2000s",
-    "primaryRole": "Spinner",
+    "primaryRole": "spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0.0,
-      "testRuns": 0,
+      "testAverage": 11.7,
+      "testRuns": 1261,
       "testWickets": 800,
-      "testMatches": 0,
+      "testMatches": 133,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0.0,
+      "testFifties": 1,
+      "fiveWs": 67,
+      "tenWs": 22,
+      "testBowlingAverage": 22.7,
       "battingStrikeRate": 0.0,
       "bowlingStrikeRate": 0.0,
-      "dismissals": 0
+      "dismissals": 77
     }
   },
   {
@@ -3277,6 +3289,50 @@
       "battingStrikeRate": 0.0,
       "bowlingStrikeRate": 0.0,
       "dismissals": 0
+    }
+  },
+  {
+    "id": "brian-lara",
+    "name": "Brian Lara",
+    "nation": "West Indies",
+    "era": "2000s",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 52.9,
+      "testRuns": 11953,
+      "testWickets": 0,
+      "testMatches": 131,
+      "testCenturies": 34,
+      "testFifties": 48,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 165
+    }
+  },
+  {
+    "id": "waqar-younis",
+    "name": "Waqar Younis",
+    "nation": "Pakistan",
+    "era": "2000s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 10.2,
+      "testRuns": 1010,
+      "testWickets": 373,
+      "testMatches": 87,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "fiveWs": 22,
+      "tenWs": 5,
+      "testBowlingAverage": 23.6,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 18
     }
   }
 ]
