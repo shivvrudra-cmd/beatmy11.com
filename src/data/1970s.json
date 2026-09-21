@@ -112,52 +112,6 @@
     }
   },
   {
-    "id": "greg-chappell-1970s",
-    "name": "Greg Chappell",
-    "nation": "Australia",
-    "era": "1970s",
-    "primaryRole": "middle-order",
-    "secondaryRoles": [
-      "opener"
-    ],
-    "stats": {
-      "testAverage": 53.9,
-      "testRuns": 7110,
-      "testWickets": 47,
-      "testMatches": 87,
-      "testCenturies": 24,
-      "testFifties": 42,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
-      "dismissals": 0
-    }
-  },
-  {
-    "id": "rod-marsh-1970s",
-    "name": "Rod Marsh",
-    "nation": "Australia",
-    "era": "1970s",
-    "primaryRole": "wicketkeeper",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 26.52,
-      "testRuns": 3633,
-      "testWickets": 0,
-      "testMatches": 96,
-      "testCenturies": 3,
-      "testFifties": 16,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
-      "dismissals": 0
-    }
-  },
-  {
     "id": "max-walker",
     "name": "Max Walker",
     "nation": "Australia",
@@ -195,28 +149,6 @@
       "testMatches": 38,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
-      "dismissals": 0
-    }
-  },
-  {
-    "id": "dennis-lillee-1970s",
-    "name": "Dennis Lillee",
-    "nation": "Australia",
-    "era": "1970s",
-    "primaryRole": "fast-bowler",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 23.92,
-      "testRuns": 789,
-      "testWickets": 355,
-      "testMatches": 70,
-      "testCenturies": 0,
-      "testFifties": 2,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0.0,
@@ -406,28 +338,6 @@
     }
   },
   {
-    "id": "alan-knott-1970s",
-    "name": "Alan Knott",
-    "nation": "England",
-    "era": "1970s",
-    "primaryRole": "wicketkeeper",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 32.75,
-      "testRuns": 4389,
-      "testWickets": 0,
-      "testMatches": 95,
-      "testCenturies": 2,
-      "testFifties": 20,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
-      "dismissals": 0
-    }
-  },
-  {
     "id": "bob-taylor",
     "name": "Bob Taylor",
     "nation": "England",
@@ -573,30 +483,6 @@
       "testMatches": 40,
       "testCenturies": 4,
       "testFifties": 12,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
-      "dismissals": 0
-    }
-  },
-  {
-    "id": "sunil-gavaskar-1970s",
-    "name": "Sunil Gavaskar",
-    "nation": "India",
-    "era": "1970s",
-    "primaryRole": "opener",
-    "secondaryRoles": [
-      "middle-order"
-    ],
-    "stats": {
-      "testAverage": 51.1,
-      "testRuns": 10122,
-      "testWickets": 0,
-      "testMatches": 125,
-      "testCenturies": 34,
-      "testFifties": 45,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0.0,
@@ -970,28 +856,6 @@
     }
   },
   {
-    "id": "javed-miandad-1970s",
-    "name": "Javed Miandad",
-    "nation": "Pakistan",
-    "era": "1970s",
-    "primaryRole": "middle-order",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 52.57,
-      "testRuns": 8832,
-      "testWickets": 0,
-      "testMatches": 124,
-      "testCenturies": 23,
-      "testFifties": 43,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
-      "dismissals": 0
-    }
-  },
-  {
     "id": "wasim-bari",
     "name": "Wasim Bari",
     "nation": "Pakistan",
@@ -1082,30 +946,6 @@
     }
   },
   {
-    "id": "imran-khan-1970s",
-    "name": "Imran Khan",
-    "nation": "Pakistan",
-    "era": "1970s",
-    "primaryRole": "all-rounder",
-    "secondaryRoles": [
-      "fast-bowler"
-    ],
-    "stats": {
-      "testAverage": 2.28,
-      "testRuns": 16,
-      "testWickets": 362,
-      "testMatches": 10,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
-      "dismissals": 0
-    }
-  },
-  {
     "id": "sikander-bakht",
     "name": "Sikander Bakht",
     "nation": "Pakistan",
@@ -1163,28 +1003,6 @@
       "testMatches": 65,
       "testCenturies": 9,
       "testFifties": 18,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
-      "dismissals": 0
-    }
-  },
-  {
-    "id": "gordon-greenidge-1970s",
-    "name": "Gordon Greenidge",
-    "nation": "West Indies",
-    "era": "1970s",
-    "primaryRole": "opener",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 44.7,
-      "testRuns": 7558,
-      "testWickets": 0,
-      "testMatches": 108,
-      "testCenturies": 19,
-      "testFifties": 34,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0.0,
@@ -1482,7 +1300,7 @@
     }
   },
   {
-    "id": "john-wright-1970s",
+    "id": "john-wright",
     "name": "John Wright",
     "nation": "New Zealand",
     "era": "1970s",
