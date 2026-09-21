@@ -1,109 +1,85 @@
 import json
 import re
 import time
+import requests
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 
 
-def setup_driver():
-    """Sets up a headless Chrome browser instance."""
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")  # Run in background without window UI
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument(
-        "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
-    )
-
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=chrome_options)
-    return driver
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+}
 
 
 def parse_numeric(val_str):
-    """Utility function to clean string numbers into float or int."""
-    if not val_str:
+    """Clean string numbers into float or int safely."""
+    if not val_str or val_str.strip() in ["-", "", "N/A", null]:
         return 0
-    # Extract numeric pattern (handles floats like 42.4 and ints like 2683)
-    match = re.search(r"[-+]?\d*\.\d+|\d+", str(val_str))
+    clean_str = val_str.replace(",", "").strip()
+    match = re.search(r"[-+]?\d*\.\d+|\d+", clean_str)
     if match:
         val = match.group()
         return float(val) if "." in val else int(val)
     return 0
 
 
-def scrape_google_stats(driver, player_name):
-    """Executes search on Google and extracts Test cricket statistics."""
-    query = f"{player_name} stats"
-    search_url = f"https://www.google.com/search?q={query.replace(' ', '+')}"
+def get_cricinfo_stats(player_name):
+    """Searches ESPNCricinfo directly to extract player's Test career statistics."""
+    search_url = f"https://www.espncricinfo.com/ci/content/player/search.html?search={player_name.replace(' ', '+')}"
+    
+    try:
+        response = requests.get(search_url, headers=HEADERS, timeout=10)
+        soup = BeautifulSoup(response.text, "html.parser")
+        
+        # Find first matching player profile link
+        player_link = soup.find("a", href=re.compile(r"/cricket-players/"))
+        if not player_link:
+            print(f"  └─ Could not locate player profile on Cricinfo for {player_name}")
+            return {}
 
-    driver.get(search_url)
-    time.sleep(2)  # Allow dynamic DOM content to load
+        profile_url = "https://www.espncricinfo.com" + player_link["href"]
+        
+        # Request player profile page
+        prof_res = requests.get(profile_url, headers=HEADERS, timeout=10)
+        prof_soup = BeautifulSoup(prof_res.text, "html.parser")
+        
+        # Scrape Career Statistics Table
+        tables = prof_soup.find_all("table")
+        
+        fetched_stats = {}
+        
+        for table in tables:
+            rows = table.find_all("tr")
+            for row in rows:
+                cols = [td.get_text(strip=True) for td in row.find_all(["td", "th"])]
+                if len(cols) > 1 and "Tests" in cols[0]:
+                    # Format matches ESPNCricinfo standard table structure
+                    # Batting: [Format, Mat, Inns, NO, Runs, HS, Ave, BF, SR, 100s, 50s, 4s, 6s, Ct, St]
+                    if len(cols) >= 11:
+                        fetched_stats["testMatches"] = parse_numeric(cols[1])
+                        fetched_stats["testRuns"] = parse_numeric(cols[4])
+                        fetched_stats["testAverage"] = parse_numeric(cols[6])
+                        fetched_stats["battingStrikeRate"] = parse_numeric(cols[8])
+                        fetched_stats["testCenturies"] = parse_numeric(cols[9])
+                        fetched_stats["testFifties"] = parse_numeric(cols[10])
+                        
+                        # Extract Catches & Stumpings if present in batting table
+                        catches = parse_numeric(cols[13]) if len(cols) > 13 else 0
+                        stumpings = parse_numeric(cols[14]) if len(cols) > 14 else 0
+                        fetched_stats["dismissals"] = catches + stumpings
 
-    soup = BeautifulSoup(driver.page_source, "html.parser")
+                elif len(cols) > 1 and "Tests" in cols[0] and "testWickets" not in fetched_stats:
+                    # Bowling: [Format, Mat, Inns, Balls, Runs, Wkts, BBI, BBM, Ave, Econ, SR, 4w, 5w, 10w]
+                    if len(cols) >= 13:
+                        fetched_stats["testWickets"] = parse_numeric(cols[5])
+                        fetched_stats["testBowlingAverage"] = parse_numeric(cols[8])
+                        fetched_stats["bowlingStrikeRate"] = parse_numeric(cols[10])
+                        fetched_stats["fiveWs"] = parse_numeric(cols[12])
 
-    # Dictionary to store mapped values
-    extracted_stats = {
-        "testMatches": 0,
-        "testRuns": 0,
-        "testAverage": 0.0,
-        "testCenturies": 0,
-        "testFifties": 0,
-        "testWickets": 0,
-        "testBowlingAverage": 0.0,
-        "fiveWs": 0,
-        "battingStrikeRate": 0.0,
-        "bowlingStrikeRate": 0.0,
-        "dismissals": 0,
-    }
+        return fetched_stats
 
-    # Search Google table / grid rows for player stats
-    rows = soup.find_all(["tr", "div"], class_=True)
-
-    catches, run_outs, stumpings = 0, 0, 0
-
-    for row in rows:
-        text = row.get_text(" ", strip=True).lower()
-
-        # Filtering test cricket stats table row entries
-        if "test" in text or "tests" in text:
-            # Map statistical metrics from text labels
-            cells = [cell.get_text(strip=True) for cell in row.find_all(["td", "th", "span"])]
-            
-            for i, cell in enumerate(cells):
-                cell_lower = cell.lower()
-                
-                # Dynamic matching logic based on common Google layout tags
-                if "mat" in cell_lower or "matches" in cell_lower:
-                    if i + 1 < len(cells): extracted_stats["testMatches"] = parse_numeric(cells[i+1])
-                elif "runs" in cell_lower:
-                    if i + 1 < len(cells): extracted_stats["testRuns"] = parse_numeric(cells[i+1])
-                elif "hs" in cell_lower or "ave" in cell_lower or "avg" in cell_lower:
-                    if i + 1 < len(cells): extracted_stats["testAverage"] = parse_numeric(cells[i+1])
-                elif "100" in cell_lower or "100s" in cell_lower:
-                    if i + 1 < len(cells): extracted_stats["testCenturies"] = parse_numeric(cells[i+1])
-                elif "50" in cell_lower or "50s" in cell_lower:
-                    if i + 1 < len(cells): extracted_stats["testFifties"] = parse_numeric(cells[i+1])
-                elif "wkts" in cell_lower or "wickets" in cell_lower:
-                    if i + 1 < len(cells): extracted_stats["testWickets"] = parse_numeric(cells[i+1])
-                elif "5w" in cell_lower or "5i" in cell_lower:
-                    if i + 1 < len(cells): extracted_stats["fiveWs"] = parse_numeric(cells[i+1])
-                elif "sr" in cell_lower or "strike rate" in cell_lower:
-                    if i + 1 < len(cells): extracted_stats["battingStrikeRate"] = parse_numeric(cells[i+1])
-                elif "catches" in cell_lower or "ct" in cell_lower:
-                    if i + 1 < len(cells): catches = parse_numeric(cells[i+1])
-                elif "stumpings" in cell_lower or "st" in cell_lower:
-                    if i + 1 < len(cells): stumpings = parse_numeric(cells[i+1])
-                elif "run outs" in cell_lower:
-                    if i + 1 < len(cells): run_outs = parse_numeric(cells[i+1])
-
-    # Sum dismissals (Catches + Run Outs + Stumpings)
-    extracted_stats["dismissals"] = catches + run_outs + stumpings
-
-    return extracted_stats
+    except Exception as e:
+        print(f"  └─ Error fetching data for {player_name}: {e}")
+        return {}
 
 
 def process_json_file(input_filename, output_filename):
@@ -111,32 +87,31 @@ def process_json_file(input_filename, output_filename):
     with open(input_filename, "r", encoding="utf-8") as f:
         players = json.load(f)
 
-    driver = setup_driver()
+    updated_count = 0
 
-    try:
-        for idx, player in enumerate(players):
-            name = player.get("name")
-            print(f"[{idx+1}/{len(players)}] Fetching stats for: {name}...")
+    for idx, player in enumerate(players):
+        name = player.get("name")
+        print(f"[{idx+1}/{len(players)}] Fetching stats for: {name}...")
 
-            fetched_stats = scrape_google_stats(driver, name)
+        fetched_stats = get_cricinfo_stats(name)
 
-            # Update stats dictionary preserving existing tenWs
+        if fetched_stats:
+            updated_count += 1
             for key, val in fetched_stats.items():
-                if val != 0 or player["stats"].get(key) == 0:
+                # Update non-zero scraped values
+                if val != 0:
                     player["stats"][key] = val
 
-            time.sleep(1)  # Gentle delay between requests
+        # Friendly delay to prevent rate-limiting
+        time.sleep(1.5)
 
-    finally:
-        driver.quit()
-
-    # Write updated data back to file
+    # Save to new output file
     with open(output_filename, "w", encoding="utf-8") as f:
         json.dump(players, f, indent=2)
 
-    print(f"\nProcessing complete! File saved as: {output_filename}")
+    print(f"\nFinished! Updated {updated_count}/{len(players)} players.")
+    print(f"File saved as: {output_filename}")
 
 
 if __name__ == "__main__":
-    # Specify your JSON input file name
     process_json_file("1970s.json", "1970s_updated.json")
