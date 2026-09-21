@@ -47,7 +47,7 @@
     "primaryRole": "middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 46.55,
+      "testAverage": 46.6,
       "testRuns": 3631,
       "testWickets": 2,
       "testMatches": 52,
@@ -87,7 +87,7 @@
     "primaryRole": "middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 50.56,
+      "testAverage": 50.6,
       "testRuns": 11174,
       "testWickets": 39,
       "testMatches": 156,
@@ -149,7 +149,7 @@
     "stats": {
       "testAverage": 27.39,
       "testRuns": 4356,
-      "testWickets": 0,
+      "testWickets": 395,
       "testMatches": 119,
       "testCenturies": 4,
       "testFifties": 19,
