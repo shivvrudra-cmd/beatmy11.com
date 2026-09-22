@@ -18,8 +18,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 65.8,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 105
     }
   },
@@ -40,8 +40,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 66.7,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 47
     }
   },
@@ -61,9 +61,9 @@
       "testFifties": 9,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 21
     }
   },
@@ -84,8 +84,8 @@
       "fiveWs": 1,
       "tenWs": 0,
       "testBowlingAverage": 29.1,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 43
     }
   },
@@ -105,9 +105,9 @@
       "testFifties": 9,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 7
     }
   },
@@ -130,8 +130,8 @@
       "fiveWs": 6,
       "tenWs": 0,
       "testBowlingAverage": 27.5,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 12
     }
   },
@@ -152,8 +152,8 @@
       "fiveWs": 6,
       "tenWs": 1,
       "testBowlingAverage": 29.9,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 31
     }
   },
@@ -161,7 +161,10 @@
     "id": "jeff-thomson",
     "name": "Jeff Thomson",
     "nation": "Australia",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "fast-bowler",
     "secondaryRoles": [],
     "stats": {
@@ -173,9 +176,9 @@
       "testFifties": 0,
       "fiveWs": 8,
       "tenWs": 0,
-      "testBowlingAverage": 28.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 28,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 20
     }
   },
@@ -187,7 +190,7 @@
     "primaryRole": "fast-bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 6.0,
+      "testAverage": 6,
       "testRuns": 102,
       "testWickets": 43,
       "testMatches": 12,
@@ -196,8 +199,8 @@
       "fiveWs": 2,
       "tenWs": 0,
       "testBowlingAverage": 27.9,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 3
     }
   },
@@ -211,7 +214,7 @@
       "all-rounder"
     ],
     "stats": {
-      "testAverage": 23.0,
+      "testAverage": 23,
       "testRuns": 483,
       "testWickets": 54,
       "testMatches": 15,
@@ -219,9 +222,9 @@
       "testFifties": 3,
       "fiveWs": 3,
       "tenWs": 0,
-      "testBowlingAverage": 26.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 26,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 8
     }
   },
@@ -242,8 +245,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 54.6,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 33
     }
   },
@@ -263,9 +266,9 @@
       "testFifties": 24,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 43
     }
   },
@@ -285,9 +288,9 @@
       "testFifties": 11,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 24
     }
   },
@@ -308,8 +311,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 96.5,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 54
     }
   },
@@ -332,8 +335,8 @@
       "fiveWs": 6,
       "tenWs": 2,
       "testBowlingAverage": 32.2,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 87
     }
   },
@@ -341,7 +344,10 @@
     "id": "bob-taylor",
     "name": "Bob Taylor",
     "nation": "England",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "wicketkeeper",
     "secondaryRoles": [],
     "stats": {
@@ -350,12 +356,12 @@
       "testWickets": 0,
       "testMatches": 57,
       "testCenturies": 0,
-      "testFifties":3,
+      "testFifties": 3,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 167
     }
   },
@@ -363,7 +369,10 @@
     "id": "alan-knott",
     "name": "Alan Knott",
     "nation": "England",
-    "era": ["legends","1970s"],
+    "era": [
+      "legends",
+      "1970s"
+    ],
     "primaryRole": "wicketkeeper",
     "secondaryRoles": [],
     "stats": {
@@ -375,9 +384,9 @@
       "testFifties": 30,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 269
     }
   },
@@ -398,8 +407,8 @@
       "fiveWs": 17,
       "tenWs": 6,
       "testBowlingAverage": 25.8,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 44
     }
   },
@@ -420,8 +429,8 @@
       "fiveWs": 8,
       "tenWs": 1,
       "testBowlingAverage": 26.7,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 16
     }
   },
@@ -429,7 +438,10 @@
     "id": "bob-willis",
     "name": "Bob Willis",
     "nation": "England",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "fast-bowler",
     "secondaryRoles": [],
     "stats": {
@@ -442,8 +454,8 @@
       "fiveWs": 16,
       "tenWs": 0,
       "testBowlingAverage": 25.2,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 39
     }
   },
@@ -464,8 +476,8 @@
       "fiveWs": 4,
       "tenWs": 0,
       "testBowlingAverage": 28.1,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 22
     }
   },
@@ -486,8 +498,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 25.8,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 25
     }
   },
@@ -507,9 +519,9 @@
       "testFifties": 16,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 53.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 53,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 38
     }
   },
@@ -517,7 +529,10 @@
     "id": "anshuman-gaekwad",
     "name": "Anshuman Gaekwad",
     "nation": "India",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "opener",
     "secondaryRoles": [],
     "stats": {
@@ -530,8 +545,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 93.5,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 15
     }
   },
@@ -539,7 +554,10 @@
     "id": "gundappa-viswanath",
     "name": "Gundappa Viswanath",
     "nation": "India",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "middle-order",
     "secondaryRoles": [],
     "stats": {
@@ -551,9 +569,9 @@
       "testFifties": 35,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 46.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 46,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 63
     }
   },
@@ -561,7 +579,10 @@
     "id": "mohinder-amarnath",
     "name": "Mohinder Amarnath",
     "nation": "India",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "middle-order",
     "secondaryRoles": [
       "all-rounder"
@@ -576,8 +597,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 55.7,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 47
     }
   },
@@ -585,7 +606,10 @@
     "id": "dilip-vengsarkar",
     "name": "Dilip Vengsarkar",
     "nation": "India",
-    "era": ["1980s","1970s"],
+    "era": [
+      "1980s",
+      "1970s"
+    ],
     "primaryRole": "middle-order",
     "secondaryRoles": [],
     "stats": {
@@ -597,11 +621,11 @@
       "testFifties": 35,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 0
-    78
+    }
   },
   {
     "id": "farokh-engineer",
@@ -619,9 +643,9 @@
       "testFifties": 16,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 82
     }
   },
@@ -642,8 +666,8 @@
       "fiveWs": 10,
       "tenWs": 2,
       "testBowlingAverage": 30.4,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 18
     }
   },
@@ -664,8 +688,8 @@
       "fiveWs": 16,
       "tenWs": 0,
       "testBowlingAverage": 29.8,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 25
     }
   },
@@ -686,8 +710,8 @@
       "fiveWs": 3,
       "tenWs": 1,
       "testBowlingAverage": 36.1,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 44
     }
   },
@@ -699,7 +723,7 @@
     "primaryRole": "spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 9.0,
+      "testAverage": 9,
       "testRuns": 656,
       "testWickets": 266,
       "testMatches": 67,
@@ -708,8 +732,8 @@
       "fiveWs": 14,
       "tenWs": 1,
       "testBowlingAverage": 28.7,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 26
     }
   },
@@ -732,8 +756,8 @@
       "fiveWs": 4,
       "tenWs": 0,
       "testBowlingAverage": 33.5,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 16
     }
   },
@@ -741,7 +765,10 @@
     "id": "madan-lal",
     "name": "Madan Lal",
     "nation": "India",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "fast-bowler",
     "secondaryRoles": [
       "all-rounder"
@@ -756,8 +783,8 @@
       "fiveWs": 4,
       "tenWs": 0,
       "testBowlingAverage": 40.1,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 15
     }
   },
@@ -777,9 +804,9 @@
       "testFifties": 10,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 28
     }
   },
@@ -802,8 +829,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 53.9,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 70
     }
   },
@@ -811,7 +838,10 @@
     "id": "wasim-raja",
     "name": "Wasim Raja",
     "nation": "Pakistan",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "middle-order",
     "secondaryRoles": [
       "all-rounder"
@@ -826,8 +856,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 35.8,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 20
     }
   },
@@ -835,7 +865,10 @@
     "id": "zaheer-abbas",
     "name": "Zaheer Abbas",
     "nation": "Pakistan",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "middle-order",
     "secondaryRoles": [],
     "stats": {
@@ -847,9 +880,9 @@
       "testFifties": 20,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 44.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 44,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 34
     }
   },
@@ -872,8 +905,8 @@
       "fiveWs": 2,
       "tenWs": 0,
       "testBowlingAverage": 28.3,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 36
     }
   },
@@ -881,7 +914,10 @@
     "id": "wasim-bari",
     "name": "Wasim Bari",
     "nation": "Pakistan",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "wicketkeeper",
     "secondaryRoles": [],
     "stats": {
@@ -893,9 +929,9 @@
       "testFifties": 6,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 228
     }
   },
@@ -917,9 +953,9 @@
       "testFifties": 8,
       "fiveWs": 5,
       "tenWs": 2,
-      "testBowlingAverage": 36.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 36,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 20
     }
   },
@@ -940,8 +976,8 @@
       "fiveWs": 3,
       "tenWs": 0,
       "testBowlingAverage": 29.2,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 42
     }
   },
@@ -949,9 +985,14 @@
     "id": "sarfraz-nawaz",
     "name": "Sarfraz Nawaz",
     "nation": "Pakistan",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "fast-bowler",
-    "secondaryRoles": ["all-rounder"],
+    "secondaryRoles": [
+      "all-rounder"
+    ],
     "stats": {
       "testAverage": 17.71,
       "testRuns": 1045,
@@ -962,8 +1003,8 @@
       "fiveWs": 4,
       "tenWs": 1,
       "testBowlingAverage": 32.8,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 26
     }
   },
@@ -983,9 +1024,9 @@
       "testFifties": 0,
       "fiveWs": 3,
       "tenWs": 1,
-      "testBowlingAverage": 36.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 36,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 7
     }
   },
@@ -1006,8 +1047,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 37.2,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 3
     }
   },
@@ -1028,8 +1069,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 78.3,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 62
     }
   },
@@ -1049,9 +1090,9 @@
       "testFifties": 39,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 8.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 8,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 65
     }
   },
@@ -1072,8 +1113,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 39.5,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 51
     }
   },
@@ -1081,7 +1122,10 @@
     "id": "clive-lloyd",
     "name": "Clive Lloyd",
     "nation": "West Indies",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "middle-order",
     "secondaryRoles": [],
     "stats": {
@@ -1094,8 +1138,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 62.6,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 90
     }
   },
@@ -1103,7 +1147,10 @@
     "id": "viv-richards",
     "name": "Viv Richards",
     "nation": "West Indies",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "middle-order",
     "secondaryRoles": [
       "all-rounder"
@@ -1118,8 +1165,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 61.4,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 122
     }
   },
@@ -1139,9 +1186,9 @@
       "testFifties": 11,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 189
     }
   },
@@ -1162,8 +1209,8 @@
       "fiveWs": 1,
       "tenWs": 0,
       "testBowlingAverage": 37.4,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 14
     }
   },
@@ -1171,9 +1218,14 @@
     "id": "larry-gomes",
     "name": "Larry Gomes",
     "nation": "West Indies",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "middle-order",
-    "secondaryRoles": ["all-rounder"],
+    "secondaryRoles": [
+      "all-rounder"
+    ],
     "stats": {
       "testAverage": 39.6,
       "testRuns": 3171,
@@ -1183,9 +1235,9 @@
       "testFifties": 13,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 62.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 62,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 18
     }
   },
@@ -1193,7 +1245,10 @@
     "id": "andy-roberts",
     "name": "Andy Roberts",
     "nation": "West Indies",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "fast-bowler",
     "secondaryRoles": [],
     "stats": {
@@ -1206,8 +1261,8 @@
       "fiveWs": 11,
       "tenWs": 2,
       "testBowlingAverage": 25.6,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 9
     }
   },
@@ -1215,7 +1270,10 @@
     "id": "michael-holding",
     "name": "Michael Holding",
     "nation": "West Indies",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "fast-bowler",
     "secondaryRoles": [],
     "stats": {
@@ -1228,8 +1286,8 @@
       "fiveWs": 13,
       "tenWs": 2,
       "testBowlingAverage": 23.7,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 22
     }
   },
@@ -1250,8 +1308,8 @@
       "fiveWs": 3,
       "tenWs": 0,
       "testBowlingAverage": 23.4,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 8
     }
   },
@@ -1259,7 +1317,10 @@
     "id": "joel-garner",
     "name": "Joel Garner",
     "nation": "West Indies",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "fast-bowler",
     "secondaryRoles": [],
     "stats": {
@@ -1271,9 +1332,9 @@
       "testFifties": 1,
       "fiveWs": 7,
       "tenWs": 0,
-      "testBowlingAverage": 21.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 21,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 42
     }
   },
@@ -1281,7 +1342,10 @@
     "id": "glenn-turner",
     "name": "Glenn Turner",
     "nation": "New Zealand",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "opener",
     "secondaryRoles": [],
     "stats": {
@@ -1293,9 +1357,9 @@
       "testFifties": 14,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 42
     }
   },
@@ -1303,7 +1367,11 @@
     "id": "john-wright",
     "name": "John Wright",
     "nation": "New Zealand",
-    "era": ["1970s","1980s","1990s"],
+    "era": [
+      "1970s",
+      "1980s",
+      "1990s"
+    ],
     "primaryRole": "opener",
     "secondaryRoles": [],
     "stats": {
@@ -1315,9 +1383,9 @@
       "testFifties": 23,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 39
     }
   },
@@ -1340,8 +1408,8 @@
       "fiveWs": 1,
       "tenWs": 0,
       "testBowlingAverage": 36.5,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 44
     }
   },
@@ -1362,8 +1430,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 35.3,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 34
     }
   },
@@ -1383,9 +1451,9 @@
       "testFifties": 5,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 96
     }
   },
@@ -1406,8 +1474,8 @@
       "fiveWs": 3,
       "tenWs": 0,
       "testBowlingAverage": 29.2,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 10
     }
   },
@@ -1428,8 +1496,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 33.6,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 8
     }
   },
@@ -1437,7 +1505,10 @@
     "id": "ewen-chatfield",
     "name": "Ewen Chatfield",
     "nation": "New Zealand",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "fast-bowler",
     "secondaryRoles": [],
     "stats": {
@@ -1450,8 +1521,8 @@
       "fiveWs": 3,
       "tenWs": 1,
       "testBowlingAverage": 32.2,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 7
     }
   },
@@ -1459,7 +1530,10 @@
     "id": "sunil-gavaskar",
     "name": "Sunil Gavaskar",
     "nation": "India",
-    "era": ["1970s","1980s"],
+    "era": [
+      "1970s",
+      "1980s"
+    ],
     "primaryRole": "opener",
     "secondaryRoles": [
       "middle-order"
@@ -1474,8 +1548,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 206,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 108
     }
   },
@@ -1495,9 +1569,9 @@
       "testFifties": 34,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 96
     }
   },
@@ -1520,8 +1594,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 61.4,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 122
     }
   },
@@ -1544,8 +1618,8 @@
       "fiveWs": 1,
       "tenWs": 0,
       "testBowlingAverage": 40.7,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 122
     }
   },
@@ -1566,8 +1640,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 40.1,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 94
     }
   },
@@ -1587,9 +1661,9 @@
       "testFifties": 30,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 269
     }
   },
@@ -1609,9 +1683,9 @@
       "testFifties": 16,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0.0,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 356
     }
   },
@@ -1634,8 +1708,8 @@
       "fiveWs": 6,
       "tenWs": 0,
       "testBowlingAverage": 34,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 109
     }
   },
@@ -1658,8 +1732,8 @@
       "fiveWs": 27,
       "tenWs": 4,
       "testBowlingAverage": 28.4,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 120
     }
   },
@@ -1682,8 +1756,8 @@
       "fiveWs": 23,
       "tenWs": 6,
       "testBowlingAverage": 22.8,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 28
     }
   },
@@ -1706,8 +1780,8 @@
       "fiveWs": 36,
       "tenWs": 9,
       "testBowlingAverage": 22.3,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 39
     }
   },
@@ -1728,8 +1802,8 @@
       "fiveWs": 23,
       "tenWs": 7,
       "testBowlingAverage": 23.9,
-      "battingStrikeRate": 0.0,
-      "bowlingStrikeRate": 0.0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
       "dismissals": 23
     }
   }
