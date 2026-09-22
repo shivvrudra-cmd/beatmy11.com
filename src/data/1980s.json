@@ -1470,5 +1470,203 @@
       "bowlingStrikeRate": 0.0,
       "dismissals": 0
     }
+  },
+  {
+    "id": "anshuman-gaekwad",
+    "name": "Anshuman Gaekwad",
+    "nation": "India",
+    "era": "1980s",
+    "primaryRole": "opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 28.65,
+      "testRuns": 1985,
+      "testWickets": 3,
+      "testMatches": 40,
+      "testCenturies": 4,
+      "testFifties": 10,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
+    }
+  },
+  {
+    "id": "waqar-younis",
+    "name": "Waqar Younis",
+    "nation": "Pakistan",
+    "era": "1980s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 10.2,
+      "testRuns": 1010,
+      "testWickets": 373,
+      "testMatches": 87,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "fiveWs": 22,
+      "tenWs": 5,
+      "testBowlingAverage": 23.6,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 18
+    }
+  },
+  {
+    "id": "desmond-haynes",
+    "name": "Desmond Haynes",
+    "nation": "West Indies",
+    "era": "1980s",
+    "primaryRole": "opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 40.25,
+      "testRuns": 7487,
+      "testWickets": 9,
+      "testMatches": 112,
+      "testCenturies": 11,
+      "testFifties": 36,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
+    }
+  },
+  {
+    "id": "clive-lloyd",
+    "name": "Clive Lloyd",
+    "nation": "West Indies",
+    "era": "1980s",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 46.7,
+      "testRuns": 7515,
+      "testWickets": 71,
+      "testMatches": 110,
+      "testCenturies": 19,
+      "testFifties": 36,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
+    }
+  },
+  {
+    "id": "michael-holding",
+    "name": "Michael Holding",
+    "nation": "West Indies",
+    "era": "1980s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 22.79,
+      "testRuns": 945,
+      "testWickets": 249,
+      "testMatches": 32,
+      "testCenturies": 3,
+      "testFifties": 11,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
+    }
+  },
+  {
+    "id": "joel-garner",
+    "name": "Joel Garner",
+    "nation": "West Indies",
+    "era": "1980s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 21.79,
+      "testRuns": 1065,
+      "testWickets": 259,
+      "testMatches": 33,
+      "testCenturies": 2,
+      "testFifties": 8,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
+    }
+  },
+  {
+    "id": "curtly-ambrose",
+    "name": "Curtly Ambrose",
+    "nation": "West Indies",
+    "era": "1980s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 12.4,
+      "testRuns": 1439,
+      "testWickets": 405,
+      "testMatches": 98,
+      "testCenturies": 0,
+      "testFifties": 1,
+      "fiveWs": 22,
+      "tenWs": 3,
+      "testBowlingAverage": 21.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 19
+    }
+  },
+  {
+    "id": "john-wright",
+    "name": "John Wright",
+    "nation": "New Zealand",
+    "era": "1980s",
+    "primaryRole": "opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 25.38,
+      "testRuns": 533,
+      "testWickets": 2,
+      "testMatches": 13,
+      "testCenturies": 0,
+      "testFifties": 7,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
+    }
+  },
+  {
+    "id": "ewen-chatfield",
+    "name": "Ewen Chatfield",
+    "nation": "New Zealand",
+    "era": "1980s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 19.37,
+      "testRuns": 454,
+      "testWickets": 123,
+      "testMatches": 18,
+      "testCenturies": 1,
+      "testFifties": 3,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
+      "dismissals": 0
+    }
   }
 ]

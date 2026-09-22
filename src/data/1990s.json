@@ -1283,20 +1283,20 @@
       "dismissals": 0
     }
   },
-  {
-    "id": "philo-wallace",
-    "name": "Philo Wallace",
+ {
+    "id": "desmond-haynes",
+    "name": "Desmond Haynes",
     "nation": "West Indies",
-    "era": "1990s",
-    "primaryRole": "Opener",
+    "era": "1970s",
+    "primaryRole": "opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0.0,
-      "testRuns": 1038,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 40.25,
+      "testRuns": 7487,
+      "testWickets": 9,
+      "testMatches": 112,
+      "testCenturies": 11,
+      "testFifties": 36,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0.0,

@@ -1,7 +1,7 @@
-import json
 import re
+import json
 
-def get_roster_names():
+def get_roster_players():
     with open('beatmy11.md', 'r', encoding='utf-8') as f:
         content = f.read()
     # extract 1980s roster section
@@ -12,7 +12,7 @@ def get_roster_names():
     section = match.group(1)
     # split by nation headers
     nation_blocks = re.split(r'\n### ', section)
-    names = []
+    players = []
     for block in nation_blocks:
         if not block.strip():
             continue
@@ -38,42 +38,13 @@ def get_roster_names():
             parts = [p.strip() for p in line.split('|') if p.strip() != '']
             if parts:
                 player_name = parts[0]
-                names.append(player_name)
-    return names
-
-def load_json(filepath):
-    with open(filepath, 'r', encoding='utf-8') as f:
-        return json.load(f)
+                role = parts[1] if len(parts) > 1 else ''
+                # key stats = parts[2] if exists
+                players.append((player_name, role))
+    return players
 
 if __name__ == '__main__':
-    roster_names = get_roster_names()
-    print(f"Roster has {len(roster_names)} players")
-
-    # Load existing 1980s.json
-    existing_1980s = load_json('src/data/1980s.json')
-    existing_names = set(p['name'].lower() for p in existing_1980s)
-    print(f"Existing 1980s.json has {len(existing_names)} players")
-
-    # Load legends and 1970s for lookup
-    legends = load_json('src/data/legends.json')
-    seventies = load_json('src/data/1970s.json')
-    lookup = {}
-    for p in legends:
-        lookup[p['name'].lower()] = p
-    for p in seventies:
-        if p['name'].lower() not in lookup:
-            lookup[p['name'].lower()] = p
-
-    missing = []
-    for name in roster_names:
-        key = name.lower()
-        if key not in existing_names:
-            missing.append(name)
-
-    print(f"Missing players: {len(missing)}")
-    for name in missing:
-        print(f"  {name}")
-        if name.lower() in lookup:
-            print(f"    Found in lookup")
-        else:
-            print(f"    NOT FOUND in legends or 1970s")
+    players = get_roster_players()
+    print(f"Found {len(players)} players in roster")
+    for p in players:
+        print(f"{p[0]} ({p[1]})")
