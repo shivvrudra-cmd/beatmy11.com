@@ -251,6 +251,28 @@
     }
   },
   {
+    "id": "graham-gooch",
+    "name": "Graham Gooch",
+    "nation": "England",
+    "era": ["legends","1970s","1980s","1990s"],
+    "primaryRole": "opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 42.6,
+      "testRuns": 8900,
+      "testWickets": 23,
+      "testMatches": 118,
+      "testCenturies": 20,
+      "testFifties": 46,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 46.5,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 105
+    }
+  },
+  {
     "id": "john-edrich",
     "name": "John Edrich",
     "nation": "England",
@@ -1072,28 +1094,6 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 62
-    }
-  },
-  {
-    "id": "desmond-haynes",
-    "name": "Desmond Haynes",
-    "nation": "West Indies",
-    "era": "1970s",
-    "primaryRole": "opener",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 40.25,
-      "testRuns": 7487,
-      "testWickets": 1,
-      "testMatches": 116,
-      "testCenturies": 18,
-      "testFifties": 39,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 8,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 65
     }
   },
   {
