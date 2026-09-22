@@ -91,22 +91,26 @@
     "id": "steve-waugh",
     "name": "Steve Waugh",
     "nation": "Australia",
-    "era": "1990s",
-    "primaryRole": "Middle-order",
+    "era": [
+      "1980s",
+      "1990s",
+      "2000s"
+    ],
+    "primaryRole": "middle-order",
     "secondaryRoles": [],
     "stats": {
       "testAverage": 51.1,
       "testRuns": 10927,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
+      "testWickets": 92,
+      "testMatches": 168,
+      "testCenturies": 32,
+      "testFifties": 50,
+      "fiveWs": 3,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 37.5,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 119
     }
   },
   {
@@ -330,32 +334,13 @@
     }
   },
   {
-    "id": "graham-gooch",
-    "name": "Graham Gooch",
-    "nation": "England",
-    "era": ["legends","1970s","1980s","1990s"],
-    "primaryRole": "opener",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 42.6,
-      "testRuns": 8900,
-      "testWickets": 23,
-      "testMatches": 118,
-      "testCenturies": 20,
-      "testFifties": 46,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 46.5,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 105
-    }
-  },
-{
     "id": "jack-russell",
     "name": "Jack Russell",
     "nation": "England",
-    "era": ["1980s","1990s"],
+    "era": [
+      "1980s",
+      "1990s"
+    ],
     "primaryRole": "wicketkeeper",
     "secondaryRoles": [],
     "stats": {
@@ -571,28 +556,6 @@
       "dismissals": 0
     }
   },
-   {
-    "id": "john-emburey",
-    "name": "John Emburey",
-    "nation": "England",
-    "era": ["1980s","1990s"],
-    "primaryRole": "spinner",
-    "secondaryRoles": "all-rounder",
-    "stats": {
-      "testAverage": 22.5,
-      "testRuns": 1713,
-      "testWickets": 147,
-      "testMatches": 64,
-      "testCenturies": 0,
-      "testFifties": 10,
-      "fiveWs": 6,
-      "tenWs": 0,
-      "testBowlingAverage": 38.4,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 34
-    }
-  },
   {
     "id": "alec-stewart",
     "name": "Alec Stewart",
@@ -679,30 +642,6 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 0
-    }
-  },
-  {
-    "id": "manoj-prabhakar",
-    "name": "Manoj Prabhakar",
-    "nation": "India",
-    "era": ["1980s","1990s"],
-    "primaryRole": "all-rounder",
-    "secondaryRoles": [
-      "fast-bowler","middle-order"
-    ],
-    "stats": {
-      "testAverage": 32.6,
-      "testRuns": 1600,
-      "testWickets": 96,
-      "testMatches": 39,
-      "testCenturies": 1,
-      "testFifties": 9,
-      "fiveWs": 3,
-      "tenWs": 0,
-      "testBowlingAverage": 37.3,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 20
     }
   },
   {
@@ -795,28 +734,6 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 0
-    }
-  },
-  {
-    "id": "mohd-azharuddin",
-    "name": "Mohd. Azharuddin",
-    "nation": "India",
-    "era": ["1980s","1990s"],
-    "primaryRole": "middle-order",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 45,
-      "testRuns": 6215,
-      "testWickets": 40,
-      "testMatches": 99,
-      "testCenturies": 22,
-      "testFifties": 21,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 106
     }
   },
   {
@@ -1106,28 +1023,6 @@
     }
   },
   {
-    "id": "saleem-malik",
-    "name": "Saleem Malik",
-    "nation": "Pakistan",
-    "era": ["1980s","1990s"],
-    "primaryRole": "middle-order",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 43.7,
-      "testRuns": 5768,
-      "testWickets": 5,
-      "testMatches": 103,
-      "testCenturies": 15,
-      "testFifties": 29,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 82.8,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 66
-    }
-  },
-  {
     "id": "rashid-latif",
     "name": "Rashid Latif",
     "nation": "Pakistan",
@@ -1216,30 +1111,6 @@
     }
   },
   {
-    "id": "wasim-akram",
-    "name": "Wasim Akram",
-    "nation": "Pakistan",
-    "era": "1990s",
-    "primaryRole": "fast-bowler",
-    "secondaryRoles": [
-      "all-rounder"
-    ],
-    "stats": {
-      "testAverage": 22.6,
-      "testRuns": 2898,
-      "testWickets": 414,
-      "testMatches": 104,
-      "testCenturies": 3,
-      "testFifties": 7,
-      "fiveWs": 25,
-      "tenWs": 5,
-      "testBowlingAverage": 23.6,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 47
-    }
-  },
-  {
     "id": "waqar-younis",
     "name": "Waqar Younis",
     "nation": "Pakistan",
@@ -1325,28 +1196,6 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 0
-    }
-  },
- {
-    "id": "desmond-haynes",
-    "name": "Desmond Haynes",
-    "nation": "West Indies",
-    "era": ["1980s","1990s"],
-    "primaryRole": "opener",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 42.3,
-      "testRuns": 7487,
-      "testWickets": 1,
-      "testMatches": 116,
-      "testCenturies": 18,
-      "testFifties": 39,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 8,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 65
     }
   },
   {
@@ -2938,74 +2787,6 @@
     }
   },
   {
-    "id": "javed-miandad",
-    "name": "Javed Miandad",
-    "nation": "Pakistan",
-    "era": "1990s",
-    "primaryRole": "middle-order",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 52.6,
-      "testRuns": 8832,
-      "testWickets": 17,
-      "testMatches": 124,
-      "testCenturies": 23,
-      "testFifties": 43,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 40.1,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 94
-    }
-  },
-  {
-    "id": "martin-crowe",
-    "name": "Martin Crowe",
-    "nation": "New Zealand",
-    "era": "1990s",
-    "primaryRole": "middle-order",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 45.4,
-      "testRuns": 5444,
-      "testWickets": 14,
-      "testMatches": 77,
-      "testCenturies": 17,
-      "testFifties": 18,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 48.3,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 71
-    }
-  },
-  {
-    "id": "kapil-dev",
-    "name": "Kapil Dev",
-    "nation": "India",
-    "era": "1990s",
-    "primaryRole": "all-rounder",
-    "secondaryRoles": [
-      "fast-bowler"
-    ],
-    "stats": {
-      "testAverage": 31.1,
-      "testRuns": 5248,
-      "testWickets": 434,
-      "testMatches": 131,
-      "testCenturies": 8,
-      "testFifties": 27,
-      "fiveWs": 23,
-      "tenWs": 2,
-      "testBowlingAverage": 29.6,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 64
-    }
-  },
-  {
     "id": "andrew-flintoff",
     "name": "Andrew Flintoff",
     "nation": "England",
@@ -3027,6 +2808,372 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 55
+    }
+  },
+  {
+    "id": "kepler-wessels",
+    "name": "Kepler Wessels",
+    "nation": "Australia",
+    "era": [
+      "1980s",
+      "1990s"
+    ],
+    "primaryRole": "opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 41.0,
+      "testRuns": 2788,
+      "testWickets": 0,
+      "testMatches": 40,
+      "testCenturies": 6,
+      "testFifties": 15,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 30
+    }
+  },
+  {
+    "id": "david-boon",
+    "name": "David Boon",
+    "nation": "Australia",
+    "era": [
+      "1980s",
+      "1990s"
+    ],
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 43.7,
+      "testRuns": 7422,
+      "testWickets": 0,
+      "testMatches": 107,
+      "testCenturies": 21,
+      "testFifties": 32,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 100
+    }
+  },
+  {
+    "id": "allan-border",
+    "name": "Allan Border",
+    "nation": "Australia",
+    "era": [
+      "1980s",
+      "1990s"
+    ],
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 50.6,
+      "testRuns": 11174,
+      "testWickets": 39,
+      "testMatches": 156,
+      "testCenturies": 27,
+      "testFifties": 63,
+      "fiveWs": 2,
+      "tenWs": 0,
+      "testBowlingAverage": 39.1,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 157
+    }
+  },
+  {
+    "id": "greg-matthews",
+    "name": "Greg Matthews",
+    "nation": "Australia",
+    "era": [
+      "1980s",
+      "1990s"
+    ],
+    "primaryRole": "all-rounder",
+    "secondaryRoles": [
+      "middle-order"
+    ],
+    "stats": {
+      "testAverage": 41.1,
+      "testRuns": 1849,
+      "testWickets": 61,
+      "testMatches": 33,
+      "testCenturies": 4,
+      "testFifties": 12,
+      "fiveWs": 2,
+      "tenWs": 0,
+      "testBowlingAverage": 48.2,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 17
+    }
+  },
+  {
+    "id": "merv-hughes",
+    "name": "Merv Hughes",
+    "nation": "Australia",
+    "era": [
+      "1980s",
+      "1990s"
+    ],
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 16.6,
+      "testRuns": 1032,
+      "testWickets": 212,
+      "testMatches": 53,
+      "testCenturies": 0,
+      "testFifties": 2,
+      "fiveWs": 7,
+      "tenWs": 1,
+      "testBowlingAverage": 28.4,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 23
+    }
+  },
+  {
+    "id": "javed-miandad",
+    "name": "Javed Miandad",
+    "nation": "Pakistan",
+    "era": [
+      "legends",
+      "1970s",
+      "1980s",
+      "1990s"
+    ],
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 52.6,
+      "testRuns": 8832,
+      "testWickets": 17,
+      "testMatches": 124,
+      "testCenturies": 23,
+      "testFifties": 43,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 40.1,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 94
+    }
+  },
+  {
+    "id": "martin-crowe",
+    "name": "Martin Crowe",
+    "nation": "New Zealand",
+    "era": [
+      "legends",
+      "1980s",
+      "1990s"
+    ],
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 45.4,
+      "testRuns": 5444,
+      "testWickets": 14,
+      "testMatches": 77,
+      "testCenturies": 17,
+      "testFifties": 18,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 48.3,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 71
+    }
+  },
+  {
+    "id": "kapil-dev",
+    "name": "Kapil Dev",
+    "nation": "India",
+    "era": [
+      "legends",
+      "1980s",
+      "1990s"
+    ],
+    "primaryRole": "all-rounder",
+    "secondaryRoles": [
+      "fast-bowler"
+    ],
+    "stats": {
+      "testAverage": 31.1,
+      "testRuns": 5248,
+      "testWickets": 434,
+      "testMatches": 131,
+      "testCenturies": 8,
+      "testFifties": 27,
+      "fiveWs": 23,
+      "tenWs": 2,
+      "testBowlingAverage": 29.6,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 64
+    }
+  },
+  {
+    "id": "wasim-akram",
+    "name": "Wasim Akram",
+    "nation": "Pakistan",
+    "era": [
+      "legends",
+      "1980s",
+      "1990s"
+    ],
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [
+      "all-rounder"
+    ],
+    "stats": {
+      "testAverage": 22.6,
+      "testRuns": 2898,
+      "testWickets": 414,
+      "testMatches": 104,
+      "testCenturies": 3,
+      "testFifties": 7,
+      "fiveWs": 25,
+      "tenWs": 5,
+      "testBowlingAverage": 23.6,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 47
+    }
+  },
+  {
+    "id": "graham-gooch",
+    "name": "Graham Gooch",
+    "nation": "England",
+    "era": [
+      "legends",
+      "1970s",
+      "1980s",
+      "1990s"
+    ],
+    "primaryRole": "opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 42.6,
+      "testRuns": 8900,
+      "testWickets": 23,
+      "testMatches": 118,
+      "testCenturies": 20,
+      "testFifties": 46,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 46.5,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 105
+    }
+  },
+  {
+    "id": "mohd-azharuddin",
+    "name": "Mohd. Azharuddin",
+    "nation": "India",
+    "era": [
+      "1980s",
+      "1990s"
+    ],
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 45,
+      "testRuns": 6215,
+      "testWickets": 40,
+      "testMatches": 99,
+      "testCenturies": 22,
+      "testFifties": 21,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 106
+    }
+  },
+  {
+    "id": "manoj-prabhakar",
+    "name": "Manoj Prabhakar",
+    "nation": "India",
+    "era": [
+      "1980s",
+      "1990s"
+    ],
+    "primaryRole": "all-rounder",
+    "secondaryRoles": [
+      "fast-bowler",
+      "middle-order"
+    ],
+    "stats": {
+      "testAverage": 32.6,
+      "testRuns": 1600,
+      "testWickets": 96,
+      "testMatches": 39,
+      "testCenturies": 1,
+      "testFifties": 9,
+      "fiveWs": 3,
+      "tenWs": 0,
+      "testBowlingAverage": 37.3,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 20
+    }
+  },
+  {
+    "id": "desmond-haynes",
+    "name": "Desmond Haynes",
+    "nation": "West Indies",
+    "era": [
+      "1980s",
+      "1990s"
+    ],
+    "primaryRole": "opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 42.3,
+      "testRuns": 7487,
+      "testWickets": 1,
+      "testMatches": 116,
+      "testCenturies": 18,
+      "testFifties": 39,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 8,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 65
+    }
+  },
+  {
+    "id": "john-emburey",
+    "name": "John Emburey",
+    "nation": "England",
+    "era": [
+      "1980s",
+      "1990s"
+    ],
+    "primaryRole": "spinner",
+    "secondaryRoles": "all-rounder",
+    "stats": {
+      "testAverage": 22.5,
+      "testRuns": 1713,
+      "testWickets": 147,
+      "testMatches": 64,
+      "testCenturies": 0,
+      "testFifties": 10,
+      "fiveWs": 6,
+      "tenWs": 0,
+      "testBowlingAverage": 38.4,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 34
     }
   },
   {
@@ -3053,6 +3200,31 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 39
+    }
+  },
+  {
+    "id": "saleem-malik",
+    "name": "Saleem Malik",
+    "nation": "Pakistan",
+    "era": [
+      "1980s",
+      "1990s"
+    ],
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 43.7,
+      "testRuns": 5768,
+      "testWickets": 5,
+      "testMatches": 103,
+      "testCenturies": 15,
+      "testFifties": 29,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 82.8,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 66
     }
   }
 ]

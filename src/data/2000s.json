@@ -3334,5 +3334,31 @@
       "bowlingStrikeRate": 0,
       "dismissals": 18
     }
+  },
+  {
+    "id": "steve-waugh",
+    "name": "Steve Waugh",
+    "nation": "Australia",
+    "era": [
+      "1980s",
+      "1990s",
+      "2000s"
+    ],
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 51.1,
+      "testRuns": 10927,
+      "testWickets": 92,
+      "testMatches": 168,
+      "testCenturies": 32,
+      "testFifties": 50,
+      "fiveWs": 3,
+      "tenWs": 0,
+      "testBowlingAverage": 37.5,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 119
+    }
   }
 ]
