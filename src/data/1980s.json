@@ -1750,5 +1750,159 @@
       "bowlingStrikeRate": 0,
       "dismissals": 108
     }
+  },
+   {
+    "id": "bruce-edgar",
+    "name": "Bruce Edgar",
+    "nation": "New Zealand",
+    "era": "1980s",
+    "primaryRole": "opener",
+    "secondaryRoles": "wicketkeeper",
+    "stats": {
+      "testAverage": 30.6,
+      "testRuns": 1958,
+      "testWickets": 0,
+      "testMatches": 39,
+      "testCenturies": 3,
+      "testFifties": 12,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 14
+    }
+  },
+  {
+    "id": "andrew-jones",
+    "name": "Andrew Jones",
+    "nation": "New Zealand",
+    "era": "1980s",
+    "primaryRole": "opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 44.3,
+      "testRuns": 2922,
+      "testWickets": 1,
+      "testMatches": 39,
+      "testCenturies": 7,
+      "testFifties": 11,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 194,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 25
+    }
+  },
+  {
+    "id": "jeremy-coney",
+    "name": "Jeremy Coney",
+    "nation": "New Zealand",
+    "era": ["1980s","1970s"],
+    "primaryRole": "middle-order",
+    "secondaryRoles": "all-rounder",
+    "stats": {
+      "testAverage": 37.6,
+      "testRuns": 2668,
+      "testWickets": 27,
+      "testMatches": 40,
+      "testCenturies": 3,
+      "testFifties": 16,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 35.8,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 64
+    }
+  },
+  {
+    "id": "stephen-boock",
+    "name": "Stephen Boock",
+    "nation": "New Zealand",
+    "era": "1980s",
+    "primaryRole": "spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 6.3,
+      "testRuns": 207,
+      "testWickets": 74,
+      "testMatches": 30,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "fiveWs": 4,
+      "tenWs": 0,
+      "testBowlingAverage": 34.6,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 15
+    }
+  },
+  {
+    "id": "ian-smith",
+    "name": "Ian Smith",
+    "nation": "New Zealand",
+    "era": "1980s",
+    "primaryRole": "wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 25.6,
+      "testRuns": 1815,
+      "testWickets": 0,
+      "testMatches": 63,
+      "testCenturies": 2,
+      "testFifties": 6,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 176
+    }
+  },
+  {
+    "id": "martin-snedden",
+    "name": "Martin Snedden",
+    "nation": "New Zealand",
+    "era": "1980s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 14.9,
+      "testRuns": 327,
+      "testWickets": 58,
+      "testMatches": 25,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "fiveWs": 1,
+      "tenWs": 0,
+      "testBowlingAverage": 37.9,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 7
+    }
+  },
+  {
+    "id": "danny-morrison",
+    "name": "Danny Morrison",
+    "nation": "New Zealand",
+    "era": "1980s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 8.4,
+      "testRuns": 379,
+      "testWickets": 160,
+      "testMatches": 48,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "fiveWs": 10,
+      "tenWs": 0,
+      "testBowlingAverage": 34.7,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 14
+    }
   }
 ]
