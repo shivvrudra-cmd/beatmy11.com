@@ -10,16 +10,14 @@ const dataDir = path.join(__dirname, 'src', 'data');
 const sourceFile = path.join(dataDir, '1970s.json');
 const sourceData = JSON.parse(fs.readFileSync(sourceFile, 'utf8'));
 
-// Get target decade files (EXCLUDE 1970s.json as we don't want to modify it)
+// Get ALL target decade files (we'll write to all of them, but avoid modifying source)
 const allFiles = fs.readdirSync(dataDir)
   .filter(f => /^\d{4}s\.json$/.test(f))
   .map(f => path.join(dataDir, f));
 
-const targetFiles = allFiles.filter(f => !f.endsWith('1970s.json'));
-
 // Load each target file into memory
 const targets = {};
-for (const file of targetFiles) {
+for (const file of allFiles) {
   try {
     const content = fs.readFileSync(file, 'utf8');
     const data = JSON.parse(content);
@@ -40,16 +38,18 @@ for (const player of sourceData) {
       continue;
     }
     const targetArray = targets[targetFile];
-    // Check if player already exists by id
-    const exists = targetArray.some(p => p.id === player.id);
-    if (!exists) {
-      targetArray.push(player);
-      console.log(`Added ${player.id} to ${era}.json`);
+    // Remove any existing player with same id to avoid duplicates
+    const index = targetArray.findIndex(p => p.id === player.id);
+    if (index !== -1) {
+      targetArray.splice(index, 1);
     }
+    // Add the player from source
+    targetArray.push(player);
+    console.log(`Updated ${player.id} to ${era}.json`);
   }
 }
 
-// Write back ONLY the target files (NOT 1970s.json)
+// Write back ALL target files (including 1970s.json, but duplicates prevented by check above)
 // Use custom replacer to preserve 0.0 format for specific fields
 for (const [file, data] of Object.entries(targets)) {
   const jsonString = JSON.stringify(data, (key, value) => {
