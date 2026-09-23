@@ -81,9 +81,9 @@
       "testFifties": 62,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
+      "testBowlingAverage": 0.0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
       "dismissals": 208
     }
   },
@@ -139,18 +139,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
+      "testAverage": 46.4,
       "testRuns": 4406,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testWickets": 2,
+      "testMatches": 67,
+      "testCenturies": 13,
+      "testFifties": 23,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 84,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 44
     }
   },
   {
@@ -526,8 +526,8 @@
       "fiveWs": 3,
       "tenWs": 0,
       "testBowlingAverage": 32.8,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
       "dismissals": 55
     }
   },
@@ -748,8 +748,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 39,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
       "dismissals": 218
     }
   },
@@ -772,8 +772,8 @@
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 54.2,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
       "dismissals": 123
     }
   },
@@ -807,18 +807,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
+      "testAverage": 42.2,
       "testRuns": 7212,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testWickets": 32,
+      "testMatches": 113,
+      "testCenturies": 16,
+      "testFifties": 35,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 52.5,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 74
     }
   },
   {
@@ -860,8 +860,8 @@
       "fiveWs": 35,
       "tenWs": 8,
       "testBowlingAverage": 29.6,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
       "dismissals": 63
     }
   },
@@ -1126,7 +1126,7 @@
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 82
     }
   },
   {
@@ -1173,11 +1173,14 @@
       "dismissals": 0
     }
   },
-   {
+  {
     "id": "moin-khan",
     "name": "Moin Khan",
     "nation": "Pakistan",
-    "era": ["1990s","2000s"],
+    "era": [
+      "1990s",
+      "2000s"
+    ],
     "primaryRole": "Wicketkeeper",
     "secondaryRoles": [],
     "stats": {
@@ -1239,11 +1242,14 @@
       "dismissals": 0
     }
   },
-    {
+  {
     "id": "saqlain-mushtaq",
     "name": "Saqlain Mushtaq",
     "nation": "Pakistan",
-    "era": ["1990s","2000s"],
+    "era": [
+      "1990s",
+      "2000s"
+    ],
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
@@ -1423,18 +1429,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 51.4,
+      "testRuns": 11867,
+      "testWickets": 9,
+      "testMatches": 164,
+      "testCenturies": 30,
+      "testFifties": 66,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 98.1,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 76
     }
   },
   {
@@ -1536,28 +1542,6 @@
       "testAverage": 0,
       "testRuns": 2200,
       "testWickets": 86,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 0
-    }
-  },
-  {
-    "id": "shivnarine-chanderpaul",
-    "name": "Shivnarine Chanderpaul",
-    "nation": "West Indies",
-    "era": "2000s",
-    "primaryRole": "All-rounder",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 0,
-      "testRuns": 11867,
-      "testWickets": 0,
       "testMatches": 0,
       "testCenturies": 0,
       "testFifties": 0,
@@ -1749,7 +1733,10 @@
     "id": "stephen-fleming",
     "name": "Stephen Fleming",
     "nation": "New Zealand",
-    "era": ["1990s","2000s"],
+    "era": [
+      "1990s",
+      "2000s"
+    ],
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
@@ -1767,11 +1754,14 @@
       "dismissals": 171
     }
   },
-   {
+  {
     "id": "nathan-astle",
     "name": "Nathan Astle",
     "nation": "New Zealand",
-    "era": ["1990s","2000s"],
+    "era": [
+      "1990s",
+      "2000s"
+    ],
     "primaryRole": "Middle-order",
     "secondaryRoles": "all-rounder",
     "stats": {
@@ -2099,11 +2089,16 @@
       "dismissals": 0
     }
   },
- {
+  {
     "id": "jacques-kallis",
     "name": "Jacques Kallis",
     "nation": "South Africa",
-    "era": ["legends", "1990s","2000s","2010s"],
+    "era": [
+      "legends",
+      "1990s",
+      "2000s",
+      "2010s"
+    ],
     "primaryRole": "all-rounder",
     "secondaryRoles": [
       "middle-order"
@@ -3374,8 +3369,8 @@
       "fiveWs": 22,
       "tenWs": 5,
       "testBowlingAverage": 23.6,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
       "dismissals": 18
     }
   },

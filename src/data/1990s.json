@@ -2016,28 +2016,6 @@
       "dismissals": 12
     }
   },
-  // {
-  //   "id": "gavin-rennie",
-  //   "name": "Gavin Rennie",
-  //   "nation": "Zimbabwe",
-  //   "era": "1990s",
-    "primaryRole": "Middle-order",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 0,
-      "testRuns": 1147,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 0
-    }
-  },
   {
     "id": "heath-streak",
     "name": "Heath Streak",
@@ -2118,7 +2096,7 @@
       "testMatches": 15,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": ,
+      "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 31.4,
       "battingStrikeRate": 0,
