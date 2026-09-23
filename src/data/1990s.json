@@ -20,6 +20,51 @@
       "bowlingStrikeRate": 0,
       "dismissals": 158
     }
+    
+  },
+    {
+    "id": "justin-langer",
+    "name": "Justin Langer",
+    "nation": "Australia",
+    "era": ["1990s","2000s"],
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 45.3,
+      "testRuns": 7696,
+      "testWickets": 0,
+      "testMatches": 105,
+      "testCenturies": 23,
+      "testFifties": 30,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 77
+    }
+  },
+    {
+    "id": "matthew-hayden",
+    "name": "Matthew Hayden",
+    "nation": "Australia",
+    "era": ["1990s","2000s"],
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 50.7,
+      "testRuns": 8625,
+      "testWickets": 0,
+      "testMatches": 103,
+      "testCenturies": 30,
+      "testFifties": 29,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 128
+    }
   },
   {
     "id": "michael-slater",
@@ -1354,6 +1399,28 @@
       "dismissals": 19
     }
   },
+    {
+    "id": "herschelle-gibbs",
+    "name": "Herschelle Gibbs",
+    "nation": "South Africa",
+    "era": ["1990s","2000s"],
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 42,
+      "testRuns": 6167,
+      "testWickets": 0,
+      "testMatches": 90,
+      "testCenturies": 14,
+      "testFifties": 26,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 103
+    }
+  },
   {
     "id": "gary-kirsten",
     "name": "Gary Kirsten",
@@ -1734,7 +1801,7 @@
     "id": "hashan-tillakaratne",
     "name": "Hashan Tillakaratne",
     "nation": "Sri Lanka",
-    "era": "1990s",
+    "era": ["1990s","2000s"],
     "primaryRole": "wicketkeeper",
     "secondaryRoles": [],
     "stats": {
@@ -2433,6 +2500,28 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 105
+    }
+  },
+  {
+    "id": "vvs-laxman",
+    "name": "VVS Laxman",
+    "nation": "India",
+    "era": ["1990s","2000s"],
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 46,
+      "testRuns": 8781,
+      "testWickets": 2,
+      "testMatches": 134,
+      "testCenturies": 17,
+      "testFifties": 56,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 136
     }
   },
   {
