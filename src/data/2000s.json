@@ -273,18 +273,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
+      "testAverage": 20.1,
+      "testRuns": 1451,
       "testWickets": 310,
-      "testMatches": 0,
+      "testMatches": 76,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
+      "testFifties": 5,
+      "fiveWs": 10,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 30.8,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 27
     }
   },
   {
@@ -339,18 +339,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 5417,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 43.8,
+      "testRuns": 5825,
+      "testWickets": 1,
+      "testMatches": 76,
+      "testCenturies": 14,
+      "testFifties": 29,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 155,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 96
     }
   },
   {
@@ -1173,6 +1173,28 @@
       "dismissals": 0
     }
   },
+   {
+    "id": "moin-khan",
+    "name": "Moin Khan",
+    "nation": "Pakistan",
+    "era": ["1990s","2000s"],
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 28.6,
+      "testRuns": 2741,
+      "testWickets": 0,
+      "testMatches": 69,
+      "testCenturies": 4,
+      "testFifties": 15,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 149
+    }
+  },
   {
     "id": "shoaib-malik",
     "name": "Shoaib Malik",
@@ -1217,26 +1239,26 @@
       "dismissals": 0
     }
   },
-  {
-    "id": "saeed-ajmal",
-    "name": "Saeed Ajmal",
+    {
+    "id": "saqlain-mushtaq",
+    "name": "Saqlain Mushtaq",
     "nation": "Pakistan",
-    "era": "2000s",
+    "era": ["1990s","2000s"],
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 11,
-      "testRuns": 451,
-      "testWickets": 178,
-      "testMatches": 35,
-      "testCenturies": 0,
-      "testFifties": 1,
-      "fiveWs": 0,
-      "tenWs": 0,
+      "testAverage": 14.5,
+      "testRuns": 927,
+      "testWickets": 208,
+      "testMatches": 49,
+      "testCenturies": 1,
+      "testFifties": 2,
+      "fiveWs": 13,
+      "tenWs": 3,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 16
     }
   },
   {
@@ -1727,22 +1749,44 @@
     "id": "stephen-fleming",
     "name": "Stephen Fleming",
     "nation": "New Zealand",
-    "era": "2000s",
+    "era": ["1990s","2000s"],
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
+      "testAverage": 40.1,
       "testRuns": 7172,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 111,
+      "testCenturies": 9,
+      "testFifties": 46,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 171
+    }
+  },
+   {
+    "id": "nathan-astle",
+    "name": "Nathan Astle",
+    "nation": "New Zealand",
+    "era": ["1990s","2000s"],
+    "primaryRole": "Middle-order",
+    "secondaryRoles": "all-rounder",
+    "stats": {
+      "testAverage": 37,
+      "testRuns": 4702,
+      "testWickets": 51,
+      "testMatches": 81,
+      "testCenturies": 11,
+      "testFifties": 24,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 42,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 71
     }
   },
   {
@@ -2055,11 +2099,11 @@
       "dismissals": 0
     }
   },
-  {
+ {
     "id": "jacques-kallis",
     "name": "Jacques Kallis",
     "nation": "South Africa",
-    "era": "2000s",
+    "era": ["legends", "1990s","2000s","2010s"],
     "primaryRole": "all-rounder",
     "secondaryRoles": [
       "middle-order"
@@ -2074,8 +2118,8 @@
       "fiveWs": 5,
       "tenWs": 0,
       "testBowlingAverage": 32.6,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
       "dismissals": 205
     }
   },

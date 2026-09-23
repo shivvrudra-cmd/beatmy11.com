@@ -1287,6 +1287,28 @@
     }
   },
   {
+    "id": "navjot-sidhu",
+    "name": "Navjot Sidhu",
+    "nation": "India",
+    "era": ["1980s","1990s"],
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 42.1,
+      "testRuns": 3202,
+      "testWickets": 0,
+      "testMatches": 51,
+      "testCenturies": 9,
+      "testFifties": 15,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 9
+    }
+  },
+  {
     "id": "gundappa-viswanath",
     "name": "Gundappa Viswanath",
     "nation": "India",
@@ -1492,6 +1514,28 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 26
+    }
+  },
+  {
+    "id": "courtney-walsh",
+    "name": "Courtney Walsh",
+    "nation": "West Indies",
+    "era": ["1980s","1990s"],
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 7.5,
+      "testRuns": 936,
+      "testWickets": 519,
+      "testMatches": 132,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "fiveWs": 22,
+      "tenWs": 3,
+      "testBowlingAverage": 24.4,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 31
     }
   },
   {
@@ -1887,7 +1931,7 @@
     "id": "danny-morrison",
     "name": "Danny Morrison",
     "nation": "New Zealand",
-    "era": "1980s",
+    "era": ["1980s","1990s"],
     "primaryRole": "fast-bowler",
     "secondaryRoles": [],
     "stats": {
