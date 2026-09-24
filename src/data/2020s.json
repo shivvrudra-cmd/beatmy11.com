@@ -44,25 +44,25 @@
     }
   },
   {
-    "id": "marcus-harris",
-    "name": "Marcus Harris",
+    "id": "jake-weatherald",
+    "name": "Jake Weatherald",
     "nation": "Australia",
     "era": "2020s",
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 1078,
+      "testAverage": 20.4,
+      "testRuns": 224,
       "testWickets": 0,
-      "testMatches": 0,
+      "testMatches": 6,
       "testCenturies": 0,
-      "testFifties": 0,
+      "testFifties": 1,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 2
     }
   },
   {
@@ -95,18 +95,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 3471,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 43.8,
+      "testRuns": 4730,
+      "testWickets": 14,
+      "testMatches": 65,
+      "testCenturies": 11,
+      "testFifties": 25,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 60,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 63
     }
   },
   {
@@ -115,20 +115,20 @@
     "nation": "Australia",
     "era": "2020s",
     "primaryRole": "Middle-order",
-    "secondaryRoles": [],
+    "secondaryRoles": "opener",
     "stats": {
-      "testAverage": 0,
-      "testRuns": 2071,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 43.1,
+      "testRuns": 46235,
+      "testWickets": 16,
+      "testMatches": 67,
+      "testCenturies": 12,
+      "testFifties": 20,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 40,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 41
     }
   },
   {
@@ -139,18 +139,18 @@
     "primaryRole": "All-rounder",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 1106,
-      "testWickets": 35,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
+      "testAverage": 34.3,
+      "testRuns": 1920,
+      "testWickets": 39,
+      "testMatches": 39,
+      "testCenturies": 3,
+      "testFifties": 8,
+      "fiveWs": 1,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 39.8,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 41
     }
   },
   {
@@ -161,18 +161,18 @@
     "primaryRole": "Wicketkeeper",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 822,
-      "testWickets": 92,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 35.1,
+      "testRuns": 2387,
+      "testWickets": 0,
+      "testMatches": 50,
+      "testCenturies": 3,
+      "testFifties": 13,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 210
     }
   },
   {
@@ -198,25 +198,25 @@
     }
   },
   {
-    "id": "todd-murphy",
-    "name": "Todd Murphy",
+    "id": "beau-webster",
+    "name": "Beau Webster",
     "nation": "Australia",
     "era": "2020s",
-    "primaryRole": "Spinner",
+    "primaryRole": "all-rounder",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 34,
-      "testMatches": 0,
+      "testAverage": 33.5,
+      "testRuns": 469,
+      "testWickets": 11,
+      "testMatches": 10,
       "testCenturies": 0,
-      "testFifties": 0,
+      "testFifties": 5,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 28.9,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 15
     }
   },
   {
@@ -227,19 +227,19 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 16,
-      "testMatches": 0,
+      "testAverage": 4.5,
+      "testRuns": 18,
+      "testWickets": 25,
+      "testMatches": 5,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 2,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 22.2,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
-    }
+      "dismissals": 2
+  }
   },
   {
     "id": "pat-cummins",
@@ -267,22 +267,22 @@
     "id": "mitchell-starc",
     "name": "Mitchell Starc",
     "nation": "Australia",
-    "era": "2020s",
+    "era": ["2010s","2020s"],
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 339,
-      "testMatches": 0,
+      "testAverage": 20.1,
+      "testRuns": 2498,
+      "testWickets": 445,
+      "testMatches": 107,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testFifties": 13,
+      "fiveWs": 19,
+      "tenWs": 4,
+      "testBowlingAverage": 26.1,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 54
     }
   },
   {
@@ -315,18 +315,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 35,
-      "testMatches": 0,
+      "testAverage": 8.3,
+      "testRuns": 125,
+      "testWickets": 82,
+      "testMatches": 19,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "fiveWs": 2,
+      "tenWs": 1,
+      "testBowlingAverage": 18.6,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 9
     }
   },
   {
@@ -337,18 +337,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 567,
+      "testAverage": 23.8,
+      "testRuns": 453,
       "testWickets": 0,
-      "testMatches": 0,
+      "testMatches": 10,
       "testCenturies": 0,
-      "testFifties": 0,
+      "testFifties": 2,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 6
     }
   },
   {
@@ -359,40 +359,40 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 1805,
+      "testAverage": 31.2,
+      "testRuns": 3586,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 64,
+      "testCenturies": 5,
+      "testFifties": 21,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 64
     }
   },
   {
     "id": "ben-duckett",
     "name": "Ben Duckett",
     "nation": "England",
-    "era": "2020s",
+    "era": ["2010s","2020s"],
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 752,
+      "testAverage": 38.2,
+      "testRuns": 3364,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 49,
+      "testCenturies": 7,
+      "testFifties": 16,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 49
     }
   },
   {
@@ -401,20 +401,20 @@
     "nation": "England",
     "era": "2020s",
     "primaryRole": "Middle-order",
-    "secondaryRoles": [],
+    "secondaryRoles": "wicketkeeper",
     "stats": {
-      "testAverage": 0,
-      "testRuns": 2104,
+      "testAverage": 34.6,
+      "testRuns": 3732,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 64,
+      "testCenturies": 9,
+      "testFifties": 16,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 88
     }
   },
   {
@@ -447,18 +447,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 1181,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 53.1,
+      "testRuns": 3610,
+      "testWickets": 1,
+      "testMatches": 41,
+      "testCenturies": 10,
+      "testFifties": 20,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 127,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 67
     }
   },
   {
@@ -491,18 +491,18 @@
     "primaryRole": "Wicketkeeper",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 912,
-      "testWickets": 67,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 29.2,
+      "testRuns": 1139,
+      "testWickets": 0,
+      "testMatches": 25,
+      "testCenturies": 2,
+      "testFifties": 4,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 79
     }
   },
   {
@@ -513,62 +513,40 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 124,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 0
-    }
-  },
-  {
-    "id": "rehan-ahmed",
-    "name": "Rehan Ahmed",
-    "nation": "England",
-    "era": "2020s",
-    "primaryRole": "Spinner",
-    "secondaryRoles": [],
-    "stats": {
       "testAverage": 13.5,
-      "testRuns": 81,
-      "testWickets": 11,
-      "testMatches": 3,
+      "testRuns": 498,
+      "testWickets": 142,
+      "testMatches": 39,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testFifties": 1,
+      "fiveWs": 5,
+      "tenWs": 1,
+      "testBowlingAverage": 34.1,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 20
     }
   },
   {
-    "id": "tom-hartley",
-    "name": "Tom Hartley",
+    "id": "shoaib-bashir",
+    "name": "Shoaib Bashir",
     "nation": "England",
     "era": "2020s",
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 20,
-      "testMatches": 0,
+      "testAverage": 7.6,
+      "testRuns": 106,
+      "testWickets": 71,
+      "testMatches": 21,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 4,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 39.4,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 6
     }
   },
   {
@@ -645,18 +623,62 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 72,
-      "testMatches": 0,
+      "testAverage": 14.7,
+      "testRuns": 498,
+      "testWickets": 104,
+      "testMatches": 24,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
+      "testFifties": 2,
+      "fiveWs": 5,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 19.3,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 8
+    }
+  },
+    {
+    "id": "jofra-archer",
+    "name": "Jofra Archer",
+    "nation": "England",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 12.1,
+      "testRuns": 364,
+      "testWickets": 83,
+      "testMatches": 23,
+      "testCenturies": 0,
+      "testFifties": 1,
+      "fiveWs": 4,
+      "tenWs": 0,
+      "testBowlingAverage": 28.6,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 4
+    }
+  },
+      {
+    "id": "gus-atkinson",
+    "name": "Gus Atkinson",
+    "nation": "England",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 19.6,
+      "testRuns": 587,
+      "testWickets": 83,
+      "testMatches": 21,
+      "testCenturies": 1,
+      "testFifties": 0,
+      "fiveWs": 5,
+      "tenWs": 1,
+      "testBowlingAverage": 25.4,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 10
     }
   },
   {
@@ -679,6 +701,28 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 69
+    }
+  },
+    {
+    "id": "yashasvi-jaiswal ",
+    "name": "Yashasvi Jaiswal ",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 47.5,
+      "testRuns": 2612,
+      "testWickets": 0,
+      "testMatches": 31,
+      "testCenturies": 7,
+      "testFifties": 13,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 28
     }
   },
   {
@@ -708,21 +752,21 @@
     "name": "Shubman Gill",
     "nation": "India",
     "era": "2020s",
-    "primaryRole": "Opener",
-    "secondaryRoles": [],
+    "primaryRole": "Middle-order",
+    "secondaryRoles": "opener",
     "stats": {
-      "testAverage": 31.6,
-      "testRuns": 1201,
+      "testAverage": 42.9,
+      "testRuns": 3043,
       "testWickets": 0,
-      "testMatches": 22,
-      "testCenturies": 3,
-      "testFifties": 4,
+      "testMatches": 43,
+      "testCenturies": 11,
+      "testFifties": 9,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 35
     }
   },
   {
@@ -777,18 +821,40 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 783,
+      "testAverage": 36.9,
+      "testRuns": 811,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 14,
+      "testCenturies": 1,
+      "testFifties": 5,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 16
+    }
+  },
+    {
+    "id": "devdutt-padikkal",
+    "name": "Devdutt Padikkal",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 69.7,
+      "testRuns": 418,
+      "testWickets": 0,
+      "testMatches": 4,
+      "testCenturies": 2,
+      "testFifties": 1,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 4
     }
   },
   {
@@ -799,18 +865,40 @@
     "primaryRole": "Wicketkeeper",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 2271,
+      "testAverage": 43.8,
+      "testRuns": 3725,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 52,
+      "testCenturies": 8,
+      "testFifties": 21,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 187
+    }
+  },
+    {
+    "id": "dhruv-jurel",
+    "name": "Dhruv Jurel",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 40.7,
+      "testRuns": 651,
+      "testWickets": 0,
+      "testMatches": 12,
+      "testCenturies": 2,
+      "testFifties": 8,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 27
     }
   },
   {
@@ -819,7 +907,7 @@
     "nation": "India",
     "era": "2020s",
     "primaryRole": "All-rounder",
-    "secondaryRoles": [],
+    "secondaryRoles": "spinner",
     "stats": {
       "testAverage": 37.8,
       "testRuns": 4160,
@@ -835,13 +923,35 @@
       "dismissals": 58
     }
   },
+    {
+    "id": "washington-sundar ",
+    "name": "Washington Sundar ",
+    "nation": "India",
+    "era": "2020s",
+    "primaryRole": "All-rounder",
+    "secondaryRoles": "spinner",
+    "stats": {
+      "testAverage": 44.6,
+      "testRuns": 937,
+      "testWickets": 41,
+      "testMatches": 18,
+      "testCenturies": 1,
+      "testFifties": 6,
+      "fiveWs": 1,
+      "tenWs": 1,
+      "testBowlingAverage": 30.3,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 7
+    }
+  },
   {
     "id": "ravichandran-ashwin",
     "name": "Ravichandran Ashwin",
     "nation": "India",
     "era": "2020s",
     "primaryRole": "All-rounder",
-    "secondaryRoles": [],
+    "secondaryRoles": "spinner",
     "stats": {
       "testAverage": 25.8,
       "testRuns": 3503,
@@ -865,18 +975,18 @@
     "primaryRole": "All-rounder",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 555,
-      "testWickets": 55,
-      "testMatches": 0,
+      "testAverage": 34.4,
+      "testRuns": 688,
+      "testWickets": 57,
+      "testMatches": 15,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testFifties": 4,
+      "fiveWs": 5,
+      "tenWs": 1,
+      "testBowlingAverage": 19.7,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 4
     }
   },
   {
@@ -887,18 +997,18 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 10.2,
-      "testRuns": 102,
-      "testWickets": 34,
-      "testMatches": 9,
+      "testAverage": 12.6,
+      "testRuns": 252,
+      "testWickets": 80,
+      "testMatches": 19,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 5,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 23.4,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 7
     }
   },
   {
@@ -909,18 +1019,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 140,
-      "testMatches": 0,
+      "testAverage": 6.6,
+      "testRuns": 348,
+      "testWickets": 234,
+      "testMatches": 52,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 16,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 19.8,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 17
     }
   },
   {
@@ -953,40 +1063,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 4.8,
-      "testRuns": 101,
-      "testWickets": 74,
-      "testMatches": 24,
+      "testAverage": 5,
+      "testRuns": 192,
+      "testWickets": 144,
+      "testMatches": 48,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 5,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
-    }
-  },
-  {
-    "id": "shardul-thakur",
-    "name": "Shardul Thakur",
-    "nation": "India",
-    "era": "2020s",
-    "primaryRole": "Fast bowler",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 31,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 24
     }
   },
   {
@@ -997,18 +1085,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 44.33,
-      "testRuns": 1330,
+      "testAverage": 38.3,
+      "testRuns": 1878,
       "testWickets": 0,
-      "testMatches": 17,
-      "testCenturies": 4,
-      "testFifties": 5,
+      "testMatches": 28,
+      "testCenturies": 6,
+      "testFifties": 7,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 20
     }
   },
   {
@@ -1019,18 +1107,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 37.33,
-      "testRuns": 1568,
+      "testAverage": 34.5,
+      "testRuns": 1865,
       "testWickets": 0,
-      "testMatches": 24,
+      "testMatches": 31,
       "testCenturies": 3,
-      "testFifties": 9,
+      "testFifties": 11,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 23
     }
   },
   {
@@ -1085,18 +1173,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 60.43,
-      "testRuns": 967,
+      "testAverage": 42.7,
+      "testRuns": 2006,
       "testWickets": 0,
-      "testMatches": 10,
-      "testCenturies": 2,
-      "testFifties": 6,
+      "testMatches": 26,
+      "testCenturies": 4,
+      "testFifties": 11,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 15
     }
   },
   {
@@ -1107,18 +1195,18 @@
     "primaryRole": "Wicketkeeper",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 40.4,
-      "testRuns": 1616,
+      "testAverage": 37.8,
+      "testRuns": 2682,
       "testWickets": 0,
-      "testMatches": 30,
-      "testCenturies": 2,
-      "testFifties": 9,
+      "testMatches": 47,
+      "testCenturies": 3,
+      "testFifties": 14,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 137
     }
   },
   {
@@ -1126,43 +1214,21 @@
     "name": "Salman Ali Agha",
     "nation": "Pakistan",
     "era": "2020s",
-    "primaryRole": "All-rounder",
-    "secondaryRoles": [],
+    "primaryRole": "Middle-order",
+    "secondaryRoles": "all-rounder",
     "stats": {
-      "testAverage": 0,
-      "testRuns": 524,
-      "testWickets": 18,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 36.3,
+      "testRuns": 1708,
+      "testWickets": 20,
+      "testMatches": 28,
+      "testCenturies": 3,
+      "testFifties": 12,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 61.1,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
-    }
-  },
-  {
-    "id": "agha-salman",
-    "name": "Agha Salman",
-    "nation": "Pakistan",
-    "era": "2020s",
-    "primaryRole": "All-rounder",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 42.57,
-      "testRuns": 809,
-      "testWickets": 0,
-      "testMatches": 12,
-      "testCenturies": 2,
-      "testFifties": 6,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 43
     }
   },
   {
@@ -1173,18 +1239,18 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 57,
-      "testMatches": 0,
+      "testAverage": 14.5,
+      "testRuns": 391,
+      "testWickets": 101,
+      "testMatches": 22,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testFifties": 1,
+      "fiveWs": 9,
+      "tenWs": 3,
+      "testBowlingAverage": 25.1,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 2
     }
   },
   {
@@ -1195,18 +1261,40 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 13,
-      "testRuns": 52,
-      "testWickets": 32,
-      "testMatches": 6,
+      "testAverage": 8.5,
+      "testRuns": 68,
+      "testWickets": 46,
+      "testMatches": 10,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "fiveWs": 2,
+      "tenWs": 1,
+      "testBowlingAverage": 34.4,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 4
+    }
+  },
+   {
+    "id": "sajid-khan",
+    "name": "Sajid Khan",
+    "nation": "Pakistan",
+    "era": "2020s",
+    "primaryRole": "Spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 15.3,
+      "testRuns": 321,
+      "testWickets": 77,
+      "testMatches": 16,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "fiveWs": 4,
+      "tenWs": 2,
+      "testBowlingAverage": 28.8,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 11
     }
   },
   {
@@ -1239,18 +1327,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 6.5,
-      "testRuns": 182,
-      "testWickets": 99,
-      "testMatches": 29,
+      "testAverage": 7.3,
+      "testRuns": 269,
+      "testWickets": 126,
+      "testMatches": 34,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "fiveWs": 4,
+      "tenWs": 1,
+      "testBowlingAverage": 28.1,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 5
     }
   },
   {
@@ -1261,62 +1349,62 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 7.28,
-      "testRuns": 102,
-      "testWickets": 51,
-      "testMatches": 17,
+      "testAverage": 7.6,
+      "testRuns": 144,
+      "testWickets": 60,
+      "testMatches": 20,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 1,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 35.1,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 5
     }
   },
   {
-    "id": "haris-rauf",
-    "name": "Haris Rauf",
+    "id": "mohammad-abbas ",
+    "name": "Mohammad  Abbas ",
     "nation": "Pakistan",
     "era": "2020s",
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 6,
-      "testRuns": 12,
-      "testWickets": 29,
-      "testMatches": 1,
+      "testAverage": 8.6,
+      "testRuns": 240,
+      "testWickets": 131,
+      "testMatches": 33,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "fiveWs": 8,
+      "tenWs": 1,
+      "testBowlingAverage": 22.7,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 13
     }
   },
   {
-    "id": "mohammad-wasim-jr",
-    "name": "Mohammad Wasim Jr",
+    "id": "kurram-shahzad",
+    "name": "Kurram Shahzad",
     "nation": "Pakistan",
     "era": "2020s",
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 13,
-      "testMatches": 0,
+      "testAverage": 8.7,
+      "testRuns": 148,
+      "testWickets": 38,
+      "testMatches": 10,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 1,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 30.4,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 3
     }
   },
   {
@@ -1349,40 +1437,40 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 597,
+      "testAverage": 28.1,
+      "testRuns": 758,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 15,
+      "testCenturies": 1,
+      "testFifties": 2,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 9
     }
   },
   {
-    "id": "mikyle-louis",
-    "name": "Mikyle Louis",
+    "id": "john-campbell",
+    "name": "John Campbell",
     "nation": "West Indies",
     "era": "2020s",
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 262,
+      "testAverage": 27.6,
+      "testRuns": 1438,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 30,
+      "testCenturies": 1,
+      "testFifties": 5,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 21
     }
   },
   {
@@ -1415,18 +1503,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 563,
-      "testWickets": 0,
-      "testMatches": 0,
+      "testAverage": 23.7,
+      "testRuns": 781,
+      "testWickets": 1,
+      "testMatches": 17,
       "testCenturies": 0,
-      "testFifties": 0,
+      "testFifties": 4,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 14
     }
   },
   {
@@ -1437,18 +1525,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 419,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 28.7,
+      "testRuns": 889,
+      "testWickets": 6,
+      "testMatches": 17,
+      "testCenturies": 2,
+      "testFifties": 4,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 18
     }
   },
   {
@@ -1459,18 +1547,18 @@
     "primaryRole": "Wicketkeeper",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 738,
+      "testAverage": 24.7,
+      "testRuns": 1258,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 34,
+      "testCenturies": 1,
+      "testFifties": 5,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 129
     }
   },
   {
@@ -1547,40 +1635,18 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
+      "testAverage": 18.6,
+      "testRuns": 261,
       "testWickets": 38,
-      "testMatches": 0,
+      "testMatches": 10,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testFifties": 2,
+      "fiveWs": 2,
+      "tenWs": 1,
+      "testBowlingAverage": 37.6,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
-    }
-  },
-  {
-    "id": "kevin-sinclair",
-    "name": "Kevin Sinclair",
-    "nation": "West Indies",
-    "era": "2020s",
-    "primaryRole": "Spinner",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 14,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 15
     }
   },
   {
@@ -1635,18 +1701,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 40,
-      "testMatches": 0,
+      "testAverage": 8.4,
+      "testRuns": 251,
+      "testWickets": 110,
+      "testMatches": 30,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 4,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 25.9,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 11
     }
   },
   {
@@ -1679,18 +1745,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 1482,
+      "testAverage": 42.5,
+      "testRuns": 2761,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 36,
+      "testCenturies": 8,
+      "testFifties": 13,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 19
     }
   },
   {
@@ -1701,18 +1767,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 624,
+      "testAverage": 32,
+      "testRuns": 1215,
       "testWickets": 0,
-      "testMatches": 0,
+      "testMatches": 23,
       "testCenturies": 0,
-      "testFifties": 0,
+      "testFifties": 11,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 26
     }
   },
   {
@@ -1745,18 +1811,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 1694,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 43,
+      "testRuns": 2411,
+      "testWickets": 4,
+      "testMatches": 39,
+      "testCenturies": 6,
+      "testFifties": 16,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 102,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 62
     }
   },
   {
@@ -1765,20 +1831,20 @@
     "nation": "New Zealand",
     "era": "2020s",
     "primaryRole": "Middle-order",
-    "secondaryRoles": [],
+    "secondaryRoles": "all-rounder",
     "stats": {
-      "testAverage": 0,
-      "testRuns": 671,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
+      "testAverage": 35.4,
+      "testRuns": 956,
+      "testWickets": 33,
+      "testMatches": 19,
+      "testCenturies": 1,
+      "testFifties": 5,
+      "fiveWs": 1,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 31,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 21
     }
   },
   {
@@ -1789,18 +1855,18 @@
     "primaryRole": "Wicketkeeper",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 1194,
+      "testAverage": 34.5,
+      "testRuns": 2482,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 48,
+      "testCenturies": 6,
+      "testFifties": 12,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 140
     }
   },
   {
@@ -1808,21 +1874,21 @@
     "name": "Rachin Ravindra",
     "nation": "New Zealand",
     "era": "2020s",
-    "primaryRole": "All-rounder",
-    "secondaryRoles": [],
+    "primaryRole": "Middle-order",
+    "secondaryRoles": "All-rounder",
     "stats": {
-      "testAverage": 0,
-      "testRuns": 498,
-      "testWickets": 16,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 47.8,
+      "testRuns": 1865,
+      "testWickets": 11,
+      "testMatches": 24,
+      "testCenturies": 5,
+      "testFifties": 7,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 47.9,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 13
     }
   },
   {
@@ -1855,18 +1921,18 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 62,
-      "testMatches": 0,
+      "testAverage": 11.5,
+      "testRuns": 219,
+      "testWickets": 91,
+      "testMatches": 22,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "fiveWs": 7,
+      "tenWs": 2,
+      "testBowlingAverage": 28.8,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 12
     }
   },
   {
@@ -1914,25 +1980,25 @@
     }
   },
   {
-    "id": "trent-boult",
-    "name": "Trent Boult",
+    "id": "will-o'rourke",
+    "name": "Will O'Rourke",
     "nation": "New Zealand",
     "era": "2020s",
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 326,
-      "testMatches": 0,
+      "testAverage": 3.8,
+      "testRuns": 38,
+      "testWickets": 49,
+      "testMatches": 14,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 2,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 24.6,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 6
     }
   },
   {
@@ -1965,18 +2031,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 72,
-      "testMatches": 0,
+      "testAverage": 20.9,
+      "testRuns": 523,
+      "testWickets": 90,
+      "testMatches": 21,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testFifties": 1,
+      "fiveWs": 6,
+      "tenWs": 1,
+      "testBowlingAverage": 200.2,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 7
     }
   },
   {
@@ -2002,28 +2068,6 @@
     }
   },
   {
-    "id": "sarel-erwee",
-    "name": "Sarel Erwee",
-    "nation": "South Africa",
-    "era": "2020s",
-    "primaryRole": "Opener",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 0,
-      "testRuns": 363,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 0
-    }
-  },
-  {
     "id": "tony-de-zorzi",
     "name": "Tony de Zorzi",
     "nation": "South Africa",
@@ -2031,18 +2075,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 329,
+      "testAverage": 30.6,
+      "testRuns": 919,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 17,
+      "testCenturies": 2,
+      "testFifties": 3,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 13
     }
   },
   {
@@ -2053,18 +2097,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 2526,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 35.5,
+      "testRuns": 3192,
+      "testWickets": 6,
+      "testMatches": 50,
+      "testCenturies": 8,
+      "testFifties": 13,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 52.5,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 74
     }
   },
   {
@@ -2090,28 +2134,28 @@
     }
   },
   {
-    "id": "heinrich-klaasen",
-    "name": "Heinrich Klaasen",
+    "id": "ryan rickelton",
+    "name": "Ryan Rickelton",
     "nation": "South Africa",
     "era": "2020s",
-    "primaryRole": "Middle-order",
+    "primaryRole": "opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 698,
+      "testAverage": 37.4,
+      "testRuns": 897,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 15,
+      "testCenturies": 2,
+      "testFifties": 1,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 9
     }
   },
-  {
+    {
     "id": "kyle-verreynne",
     "name": "Kyle Verreynne",
     "nation": "South Africa",
@@ -2119,18 +2163,18 @@
     "primaryRole": "Wicketkeeper",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 680,
+      "testAverage": 30.1,
+      "testRuns": 1266,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 31,
+      "testCenturies": 4,
+      "testFifties": 3,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 106
     }
   },
   {
@@ -2141,18 +2185,18 @@
     "primaryRole": "All-rounder",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 498,
-      "testWickets": 47,
-      "testMatches": 0,
+      "testAverage": 23.1,
+      "testRuns": 624,
+      "testWickets": 89,
+      "testMatches": 21,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testFifties": 4,
+      "fiveWs": 4,
+      "tenWs": 1,
+      "testBowlingAverage": 21.1,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 23
     }
   },
   {
@@ -2163,18 +2207,18 @@
     "primaryRole": "All-rounder",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 378,
-      "testWickets": 30,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 35.8,
+      "testRuns": 1253,
+      "testWickets": 38,
+      "testMatches": 24,
+      "testCenturies": 3,
+      "testFifties": 1,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 26,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 33
     }
   },
   {
@@ -2207,18 +2251,18 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 23,
-      "testMatches": 0,
+      "testAverage": 17.1,
+      "testRuns": 273,
+      "testWickets": 68,
+      "testMatches": 14,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 2,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 21.8,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 7
     }
   },
   {
@@ -2251,18 +2295,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 127,
-      "testMatches": 0,
+      "testAverage": 7.8,
+      "testRuns": 187,
+      "testWickets": 70,
+      "testMatches": 19,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 4,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 26.7,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 6
     }
   },
   {
@@ -2273,40 +2317,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 79,
-      "testMatches": 0,
+      "testAverage": 4.8,
+      "testRuns": 97,
+      "testWickets": 58,
+      "testMatches": 20,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 3,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 23.4,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
-    }
-  },
-  {
-    "id": "gerald-coetzee",
-    "name": "Gerald Coetzee",
-    "nation": "South Africa",
-    "era": "2020s",
-    "primaryRole": "Fast bowler",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 31,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 8
     }
   },
   {
@@ -2337,20 +2359,20 @@
     "nation": "Sri Lanka",
     "era": "2020s",
     "primaryRole": "Opener",
-    "secondaryRoles": [],
+    "secondaryRoles": "wicketkeeper",
     "stats": {
-      "testAverage": 0,
-      "testRuns": 366,
+      "testAverage": 27.3,
+      "testRuns": 628,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 13,
+      "testCenturies": 1,
+      "testFifties": 2,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 18
     }
   },
   {
@@ -2361,18 +2383,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 754,
+      "testAverage": 42.3,
+      "testRuns": 1310,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 19,
+      "testCenturies": 4,
+      "testFifties": 7,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 13
     }
   },
   {
@@ -2427,18 +2449,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 711,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 53.7,
+      "testRuns": 1556,
+      "testWickets": 3,
+      "testMatches": 18,
+      "testCenturies": 5,
+      "testFifties": 7,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 52.7,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 16
     }
   },
   {
@@ -2471,18 +2493,18 @@
     "primaryRole": "Wicketkeeper",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 371,
+      "testAverage": 23.7,
+      "testRuns": 308,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
+      "testMatches": 9,
+      "testCenturies": 1,
       "testFifties": 0,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 17
     }
   },
   {
@@ -2493,18 +2515,18 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 77,
-      "testMatches": 0,
+      "testAverage": 7.9,
+      "testRuns": 293,
+      "testWickets": 134,
+      "testMatches": 25,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "fiveWs": 12,
+      "tenWs": 2,
+      "testBowlingAverage": 32,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 5
     }
   },
   {
@@ -2515,42 +2537,21 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 45,
-      "testMatches": 0,
+      "testAverage": 17.7,
+      "testRuns": 408,
+      "testWickets": 71,
+      "testMatches": 16,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "fiveWs": 5,
+      "tenWs": 1,
+      "testBowlingAverage": 31.1,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 8
     }
   },
-  {
-    "id": "lakshan-sandakan",
-    "name": "Lakshan Sandakan",
-    "nation": "Sri Lanka",
-    "era": "2020s",
-    "primaryRole": "Spinner",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 40,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 0
-    }
-  },
+
   {
     "id": "asitha-fernando",
     "name": "Asitha Fernando",
@@ -2559,18 +2560,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 47,
-      "testMatches": 0,
+      "testAverage": 2.9,
+      "testRuns": 59,
+      "testWickets": 97,
+      "testMatches": 28,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "fiveWs": 3,
+      "tenWs": 1,
+      "testBowlingAverage": 26.7,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 8
     }
   },
   {
@@ -2581,18 +2582,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 45,
-      "testMatches": 0,
+      "testAverage": 6.9,
+      "testRuns": 145,
+      "testWickets": 55,
+      "testMatches": 19,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 2,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 31.4,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 11
     }
   },
   {
@@ -2625,18 +2626,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 42,
-      "testMatches": 0,
+      "testAverage": 5.6,
+      "testRuns": 190,
+      "testWickets": 107,
+      "testMatches": 37,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 1,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 9
     }
   },
   {
@@ -2647,18 +2648,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 23.29,
-      "testRuns": 559,
+      "testAverage": 27.7,
+      "testRuns": 1498,
       "testWickets": 0,
-      "testMatches": 13,
-      "testCenturies": 1,
-      "testFifties": 2,
+      "testMatches": 30,
+      "testCenturies": 2,
+      "testFifties": 8,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 31
     }
   },
   {
@@ -2669,18 +2670,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 28.3,
-      "testRuns": 566,
+      "testAverage": 26.3,
+      "testRuns": 1129,
       "testWickets": 0,
-      "testMatches": 11,
-      "testCenturies": 1,
-      "testFifties": 4,
+      "testMatches": 23,
+      "testCenturies": 2,
+      "testFifties": 6,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 14
     }
   },
   {
@@ -2691,18 +2692,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 35.4,
-      "testRuns": 354,
+      "testAverage": 23.7,
+      "testRuns": 593,
       "testWickets": 0,
-      "testMatches": 5,
+      "testMatches": 13,
       "testCenturies": 1,
-      "testFifties": 3,
+      "testFifties": 4,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 11
     }
   },
   {
@@ -2713,18 +2714,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 30.82,
-      "testRuns": 1449,
+      "testAverage": 33.7,
+      "testRuns": 12694,
       "testWickets": 0,
-      "testMatches": 25,
-      "testCenturies": 5,
-      "testFifties": 3,
+      "testMatches": 44,
+      "testCenturies": 9,
+      "testFifties": 7,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 43
     }
   },
   {
@@ -2757,18 +2758,18 @@
     "primaryRole": "Wicketkeeper",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 38.09,
-      "testRuns": 5676,
+      "testAverage": 39.1,
+      "testRuns": 6876,
       "testWickets": 0,
-      "testMatches": 88,
-      "testCenturies": 10,
-      "testFifties": 27,
+      "testMatches": 105,
+      "testCenturies": 14,
+      "testFifties": 29,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 133
     }
   },
   {
@@ -2869,18 +2870,18 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 14.54,
-      "testRuns": 160,
-      "testWickets": 53,
-      "testMatches": 10,
+      "testAverage": 13.8,
+      "testRuns": 235,
+      "testWickets": 48,
+      "testMatches": 14,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 4,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 28.6,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 7
     }
   },
   {
@@ -2891,40 +2892,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 11.63,
-      "testRuns": 221,
-      "testWickets": 45,
-      "testMatches": 13,
+      "testAverage": 11.2,
+      "testRuns": 336,
+      "testWickets": 59,
+      "testMatches": 21,
       "testCenturies": 0,
       "testFifties": 1,
-      "fiveWs": 0,
+      "fiveWs": 1,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 39.2,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
-    }
-  },
-  {
-    "id": "khaled-ahmed",
-    "name": "Khaled Ahmed",
-    "nation": "Bangladesh",
-    "era": "2020s",
-    "primaryRole": "Fast bowler",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 1,
-      "testRuns": 13,
-      "testWickets": 26,
-      "testMatches": 12,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 2
     }
   },
   {
@@ -2935,18 +2914,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 7.41,
-      "testRuns": 89,
-      "testWickets": 26,
-      "testMatches": 9,
+      "testAverage": 9.1,
+      "testRuns": 182,
+      "testWickets": 34,
+      "testMatches": 14,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 1,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 30,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 8
     }
   },
   {
@@ -2957,18 +2936,40 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 3.12,
-      "testRuns": 50,
-      "testWickets": 31,
-      "testMatches": 20,
+      "testAverage": 5.2,
+      "testRuns": 105,
+      "testWickets": 45,
+      "testMatches": 25,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 1,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 52.2,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 2
+    }
+  },
+   {
+    "id": "hasan-Mahmud",
+    "name": "Hasan Mahmud",
+    "nation": "Bangladesh",
+    "era": "2020s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 11.7,
+      "testRuns": 199,
+      "testWickets": 45,
+      "testMatches": 16,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "fiveWs": 3,
+      "tenWs": 0,
+      "testBowlingAverage": 30.5,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 8
     }
   },
   {
@@ -2994,47 +2995,47 @@
     }
   },
   {
-    "id": "takudzwanashe-kaitano",
-    "name": "Takudzwanashe Kaitano",
+    "id": "innocent-kaia",
+    "name": "Innocent Kaia",
     "nation": "Zimbabwe",
     "era": "2020s",
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 254,
+      "testAverage": 62.4,
+      "testRuns": 312,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 3,
+      "testCenturies": 1,
+      "testFifties": 1,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 1
     }
   },
   {
-    "id": "joylord-gumbie",
-    "name": "Joylord Gumbie",
+    "id": "prince-masvaure",
+    "name": "Prince Masvaure",
     "nation": "Zimbabwe",
     "era": "2020s",
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 173,
+      "testAverage": 25.1,
+      "testRuns": 451,
       "testWickets": 0,
-      "testMatches": 0,
+      "testMatches": 10,
       "testCenturies": 0,
-      "testFifties": 0,
+      "testFifties": 4,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 2
     }
   },
   {
@@ -3082,25 +3083,25 @@
     }
   },
   {
-    "id": "milton-shumba",
-    "name": "Milton Shumba",
+    "id": "brian-bennett",
+    "name": "brian Bennett",
     "nation": "Zimbabwe",
     "era": "2020s",
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 260,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
+      "testAverage": 31.6,
+      "testRuns": 568,
+      "testWickets": 6,
+      "testMatches": 12,
+      "testCenturies": 2,
+      "testFifties": 3,
+      "fiveWs": 1,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 55.8,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 21
     }
   },
   {
@@ -3126,17 +3127,17 @@
     }
   },
   {
-    "id": "regis-chakabva",
-    "name": "Regis Chakabva",
+    "id": "tafadzwa-tsiga",
+    "name": "Tafadzwa Tsiga",
     "nation": "Zimbabwe",
     "era": "2020s",
     "primaryRole": "Wicketkeeper",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 983,
+      "testAverage": 13.8,
+      "testRuns": 207,
       "testWickets": 0,
-      "testMatches": 0,
+      "testMatches": 10,
       "testCenturies": 0,
       "testFifties": 0,
       "fiveWs": 0,
@@ -3144,29 +3145,7 @@
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
-    }
-  },
-  {
-    "id": "brandon-mavuta",
-    "name": "Brandon Mavuta",
-    "nation": "Zimbabwe",
-    "era": "2020s",
-    "primaryRole": "Spinner",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 22,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 23
     }
   },
   {
@@ -3177,18 +3156,18 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 16,
-      "testMatches": 0,
+      "testAverage": 13.2,
+      "testRuns": 159,
+      "testWickets": 19,
+      "testMatches": 7,
       "testCenturies": 0,
-      "testFifties": 0,
+      "testFifties": 1,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 19,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 5
     }
   },
   {
@@ -3221,18 +3200,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 34,
-      "testMatches": 0,
+      "testAverage": 9.3,
+      "testRuns": 139,
+      "testWickets": 30,
+      "testMatches": 12,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 1,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 33.8,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 1
     }
   },
   {
@@ -3243,18 +3222,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 21,
-      "testMatches": 0,
+      "testAverage": 7.7,
+      "testRuns": 77,
+      "testWickets": 23,
+      "testMatches": 11,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 1,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 41.7,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 4
     }
   },
   {
@@ -3265,18 +3244,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 33,
-      "testMatches": 0,
+      "testAverage": 12,
+      "testRuns": 288,
+      "testWickets": 73,
+      "testMatches": 19,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 3,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 25.2,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 4
     }
   },
   {

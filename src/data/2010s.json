@@ -119,6 +119,28 @@
     }
   },
   {
+    "id": "ben-duckett",
+    "name": "Ben Duckett",
+    "nation": "England",
+    "era": ["2010s","2020s"],
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 38.2,
+      "testRuns": 3364,
+      "testWickets": 0,
+      "testMatches": 49,
+      "testCenturies": 7,
+      "testFifties": 16,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 49
+    }
+  },
+  {
     "id": "alzarri-joseph",
     "name": "Alzarri Joseph",
     "nation": "West Indies",
@@ -295,6 +317,28 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 32
+    }
+  },
+    {
+    "id": "blessing-muzarabani",
+    "name": "Blessing Muzarabani",
+    "nation": "Zimbabwe",
+    "era": "2010s",
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 12,
+      "testRuns": 288,
+      "testWickets": 73,
+      "testMatches": 19,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "fiveWs": 3,
+      "tenWs": 0,
+      "testBowlingAverage": 25.2,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 4
     }
   },
   {
@@ -2614,7 +2658,7 @@
     "nation": "India",
     "era": ["2010s","2020s"],
     "primaryRole": "All-rounder",
-    "secondaryRoles": [],
+    "secondaryRoles": "spinner",
     "stats": {
       "testAverage": 37.8,
       "testRuns": 4160,
@@ -2859,6 +2903,28 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 182
+    }
+  },
+    {
+    "id": "mohammad-rizwan",
+    "name": "Mohammad Rizwan",
+    "nation": "Pakistan",
+    "era": ["2010s","2020s"],
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 37.8,
+      "testRuns": 2682,
+      "testWickets": 0,
+      "testMatches": 47,
+      "testCenturies": 3,
+      "testFifties": 14,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 137
     }
   },
   {
