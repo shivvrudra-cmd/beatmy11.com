@@ -1427,7 +1427,7 @@
     "stats": {
       "testAverage": 31.9,
       "testRuns": 2907,
-      "testWickets": ,
+      "testWickets": 0,
       "testMatches": 57,
       "testCenturies": 2,
       "testFifties": 18,
@@ -1708,7 +1708,7 @@
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0122
+      "dismissals": 122
     }
   },
   {

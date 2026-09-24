@@ -7,18 +7,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
+      "testAverage": 44.6,
       "testRuns": 8786,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testWickets": 4,
+      "testMatches": 112,
+      "testCenturies": 26,
+      "testFifties": 37,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 67.2,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 97
     }
   },
   {
@@ -29,18 +29,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 3227,
+      "testAverage": 43,
+      "testRuns": 6229,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 88,
+      "testCenturies": 16,
+      "testFifties": 28,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 68
     }
   },
   {
@@ -73,18 +73,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 9320,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 56,
+      "testRuns": 10920,
+      "testWickets": 19,
+      "testMatches": 125,
+      "testCenturies": 37,
+      "testFifties": 45,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 53,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 223
     }
   },
   {
@@ -183,18 +183,18 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 496,
-      "testMatches": 0,
+      "testAverage": 12.8,
+      "testRuns": 1705,
+      "testWickets": 571,
+      "testMatches": 143,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "fiveWs": 24,
+      "tenWs": 5,
+      "testBowlingAverage": 30.2,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 70
     }
   },
   {
@@ -249,18 +249,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 282,
-      "testMatches": 0,
+      "testAverage": 16.3,
+      "testRuns": 1584,
+      "testWickets": 322,
+      "testMatches": 74,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testFifties": 3,
+      "fiveWs": 14,
+      "tenWs": 2,
+      "testBowlingAverage": 21.9,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 40
     }
   },
   {
@@ -293,18 +293,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 258,
-      "testMatches": 0,
+      "testAverage": 11.5,
+      "testRuns": 575,
+      "testWickets": 303,
+      "testMatches": 78,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 14,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 24,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 33
     }
   },
   {
@@ -425,18 +425,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 11411,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
+      "testAverage": 50.5,
+      "testRuns": 14278,
+      "testWickets": 74,
+      "testMatches": 169,
+      "testCenturies": 41,
+      "testFifties": 69,
+      "fiveWs": 1,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 48.1,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 221
     }
   },
   {
@@ -469,18 +469,18 @@
     "primaryRole": "All-rounder",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 5879,
-      "testWickets": 197,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
+      "testAverage": 34.5,
+      "testRuns": 7273,
+      "testWickets": 252,
+      "testMatches": 122,
+      "testCenturies": 12,
+      "testFifties": 37,
+      "fiveWs": 6,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 31,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 123
     }
   },
   {
@@ -579,18 +579,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 675,
-      "testMatches": 0,
+      "testAverage": 9,
+      "testRuns": 1353,
+      "testWickets": 704,
+      "testMatches": 188,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testFifties": 1,
+      "fiveWs": 32,
+      "tenWs": 3,
+      "testBowlingAverage": 26.5,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 117
     }
   },
   {
@@ -601,18 +601,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 537,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testAverage": 18,
+      "testRuns": 3662,
+      "testWickets": 604,
+      "testMatches": 167,
+      "testCenturies": 1,
+      "testFifties": 13,
+      "fiveWs": 20,
+      "tenWs": 3,
+      "testBowlingAverage": 27.7,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 62
     }
   },
   {
@@ -623,18 +623,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 94,
-      "testMatches": 0,
+      "testAverage": 15.6,
+      "testRuns": 811,
+      "testWickets": 119,
+      "testMatches": 38,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
+      "testFifties": 1,
+      "fiveWs": 5,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 30.8,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 9
     }
   },
   {
@@ -667,18 +667,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 3639,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 40.6,
+      "testRuns": 4301,
+      "testWickets": 2,
+      "testMatches": 67,
+      "testCenturies": 12,
+      "testFifties": 18,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 112,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 69
     }
   },
   {
@@ -689,18 +689,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 34.08,
-      "testRuns": 2863,
+      "testAverage": 36.6,
+      "testRuns": 4288,
       "testWickets": 0,
-      "testMatches": 50,
-      "testCenturies": 8,
-      "testFifties": 14,
+      "testMatches": 70,
+      "testCenturies": 12,
+      "testFifties": 21,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 92
     }
   },
   {
@@ -733,18 +733,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 8848,
+      "testAverage": 46.9,
+      "testRuns": 9230,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 123,
+      "testCenturies": 30,
+      "testFifties": 31,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 125
     }
   },
   {
@@ -755,18 +755,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
+      "testAverage": 43.6,
       "testRuns": 7195,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 103,
+      "testCenturies": 19,
+      "testFifties": 35,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 68
     }
   },
   {
@@ -821,18 +821,18 @@
     "primaryRole": "All-rounder",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 2706,
-      "testWickets": 268,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testAverage": 37.8,
+      "testRuns": 4160,
+      "testWickets": 356,
+      "testMatches": 91,
+      "testCenturies": 6,
+      "testFifties": 28,
+      "fiveWs": 15,
+      "tenWs": 3,
+      "testBowlingAverage": 25.3,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 58
     }
   },
   {
@@ -843,18 +843,18 @@
     "primaryRole": "All-rounder",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 3371,
-      "testWickets": 474,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testAverage": 25.8,
+      "testRuns": 3503,
+      "testWickets": 537,
+      "testMatches": 106,
+      "testCenturies": 6,
+      "testFifties": 14,
+      "fiveWs": 37,
+      "tenWs": 8,
+      "testBowlingAverage": 24,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 41
     }
   },
   {
@@ -931,18 +931,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 12.09,
+      "testAverage": 12.1,
       "testRuns": 750,
       "testWickets": 229,
       "testMatches": 64,
       "testCenturies": 0,
       "testFifties": 2,
-      "fiveWs": 0,
+      "fiveWs": 6,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 27.7,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 19
     }
   },
   {
@@ -1041,18 +1041,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 28.67,
-      "testRuns": 1778,
-      "testWickets": 0,
-      "testMatches": 33,
-      "testCenturies": 4,
-      "testFifties": 9,
+      "testAverage": 30.8,
+      "testRuns": 2926,
+      "testWickets": 2,
+      "testMatches": 50,
+      "testCenturies": 7,
+      "testFifties": 15,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 46,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 38
     }
   },
   {
@@ -1063,18 +1063,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 45.85,
-      "testRuns": 3898,
-      "testWickets": 0,
-      "testMatches": 52,
+      "testAverage": 43,
+      "testRuns": 4771,
+      "testWickets": 2,
+      "testMatches": 66,
       "testCenturies": 9,
-      "testFifties": 26,
+      "testFifties": 34,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 21,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 57
     }
   },
   {
@@ -1327,18 +1327,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 4868,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
+      "testAverage": 32.5,
+      "testRuns": 5950,
+      "testWickets": 29,
+      "testMatches": 100,
+      "testCenturies": 12,
+      "testFifties": 31,
+      "fiveWs": 1,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 53.7,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 55
     }
   },
   {
@@ -1393,18 +1393,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 1889,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 30.2,
+      "testRuns": 2898,
+      "testWickets": 4,
+      "testMatches": 56,
+      "testCenturies": 3,
+      "testFifties": 18,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 66,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 49
     }
   },
   {
@@ -1481,18 +1481,18 @@
     "primaryRole": "All-rounder",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 1409,
-      "testWickets": 147,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testAverage": 29.8,
+      "testRuns": 3073,
+      "testWickets": 162,
+      "testMatches": 69,
+      "testCenturies": 3,
+      "testFifties": 14,
+      "fiveWs": 8,
+      "tenWs": 1,
+      "testBowlingAverage": 30.4,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 75
     }
   },
   {
@@ -1503,18 +1503,18 @@
     "primaryRole": "All-rounder",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 1607,
-      "testWickets": 61,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
+      "testAverage": 26,
+      "testRuns": 2808,
+      "testWickets": 96,
+      "testMatches": 61,
+      "testCenturies": 6,
+      "testFifties": 12,
+      "fiveWs": 4,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 49.2,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 34
     }
   },
   {
@@ -1525,18 +1525,18 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 29,
-      "testMatches": 0,
+      "testAverage": 13.2,
+      "testRuns": 371,
+      "testWickets": 84,
+      "testMatches": 25,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "fiveWs": 3,
+      "tenWs": 1,
+      "testBowlingAverage": 30,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 19
     }
   },
   {
@@ -1591,18 +1591,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 231,
-      "testMatches": 0,
+      "testAverage": 12.1,
+      "testRuns": 1403,
+      "testWickets": 304,
+      "testMatches": 91,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testFifties": 1,
+      "fiveWs": 12,
+      "tenWs": 1,
+      "testBowlingAverage": 26.9,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 29
     }
   },
   {
@@ -1613,18 +1613,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 100,
-      "testMatches": 0,
+      "testAverage": 12.4,
+      "testRuns": 804,
+      "testWickets": 130,
+      "testMatches": 42,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
+      "testFifties": 2,
+      "fiveWs": 2,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 33.6,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 19
     }
   },
   {
@@ -1657,18 +1657,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 5609,
+      "testAverage": 39.1,
+      "testRuns": 6450,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 95,
+      "testCenturies": 17,
+      "testFifties": 31,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 119
     }
   },
   {
@@ -1723,18 +1723,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 8124,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 54.1,
+      "testRuns": 9515,
+      "testWickets": 30,
+      "testMatches": 110,
+      "testCenturies": 33,
+      "testFifties": 38,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 40.2,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 101
     }
   },
   {
@@ -1833,18 +1833,18 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 50,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testAverage": 24.8,
+      "testRuns": 1089,
+      "testWickets": 80,
+      "testMatches": 33,
+      "testCenturies": 1,
+      "testFifties": 4,
+      "fiveWs": 2,
+      "tenWs": 1,
+      "testBowlingAverage": 34,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 33
     }
   },
   {
@@ -1877,18 +1877,18 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
+      "testAverage": 20.8,
       "testRuns": 0,
-      "testWickets": 64,
-      "testMatches": 0,
+      "testWickets": 58,
+      "testMatches": 21,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
+      "testFifties": 4,
+      "fiveWs": 1,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 43.1,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 12
     }
   },
   {
@@ -1899,18 +1899,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 372,
-      "testMatches": 0,
+      "testAverage": 15.5,
+      "testRuns": 2245,
+      "testWickets": 391,
+      "testMatches": 107,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testFifties": 7,
+      "fiveWs": 15,
+      "tenWs": 1,
+      "testBowlingAverage": 30.3,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 89
     }
   },
   {
@@ -1943,18 +1943,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 95,
-      "testMatches": 0,
+      "testAverage": 15.7,
+      "testRuns": 676,
+      "testWickets": 152,
+      "testMatches": 35,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testFifties": 4,
+      "fiveWs": 8,
+      "tenWs": 1,
+      "testBowlingAverage": 26.1,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 15
     }
   },
   {
@@ -1987,18 +1987,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 5146,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 37.9,
+      "testRuns": 5347,
+      "testWickets": 15,
+      "testMatches": 86,
+      "testCenturies": 14,
+      "testFifties": 23,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 44.9,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 93
     }
   },
   {
@@ -2075,18 +2075,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 2292,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 38.1,
+      "testRuns": 3810,
+      "testWickets": 1,
+      "testMatches": 66,
+      "testCenturies": 4,
+      "testFifties": 26,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 61,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 41
     }
   },
   {
@@ -2185,18 +2185,18 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 161,
-      "testMatches": 0,
+      "testAverage": 15.3,
+      "testRuns": 1334,
+      "testWickets": 218,
+      "testMatches": 62,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testFifties": 6,
+      "fiveWs": 12,
+      "tenWs": 1,
+      "testBowlingAverage": 29.2,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 24
     }
   },
   {
@@ -2229,18 +2229,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 267,
-      "testMatches": 0,
+      "testAverage": 12.2,
+      "testRuns": 1102,
+      "testWickets": 340,
+      "testMatches": 73,
       "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testFifties": 1,
+      "fiveWs": 17,
+      "tenWs": 4,
+      "testBowlingAverage": 22,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 36
     }
   },
   {
@@ -2317,18 +2317,18 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 4426,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 39.2,
+      "testRuns": 7222,
+      "testWickets": 2,
+      "testMatches": 100,
+      "testCenturies": 16,
+      "testFifties": 39,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 101,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 67
     }
   },
   {
@@ -2383,18 +2383,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 3097,
+      "testAverage": 43.3,
+      "testRuns": 6534,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 93,
+      "testCenturies": 16,
+      "testFifties": 36,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 108
     }
   },
   {
@@ -2405,18 +2405,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 2218,
+      "testAverage": 36.4,
+      "testRuns": 4836,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 75,
+      "testCenturies": 10,
+      "testFifties": 23,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 122
     }
   },
   {
@@ -2449,18 +2449,18 @@
     "primaryRole": "All-rounder",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 2237,
-      "testWickets": 37,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testAverage": 38.9,
+      "testRuns": 4431,
+      "testWickets": 43,
+      "testMatches": 69,
+      "testCenturies": 13,
+      "testFifties": 20,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 54.6,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 94
     }
   },
   {
@@ -2603,18 +2603,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 36,
-      "testMatches": 0,
+      "testAverage": 7,
+      "testRuns": 161,
+      "testWickets": 81,
+      "testMatches": 28,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 1,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 32,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 9
     }
   },
   {
@@ -2735,18 +2735,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 38.06,
-      "testRuns": 3883,
-      "testWickets": 0,
-      "testMatches": 59,
-      "testCenturies": 12,
-      "testFifties": 16,
+      "testAverage": 37.8,
+      "testRuns": 5219,
+      "testWickets": 11,
+      "testMatches": 80,
+      "testCenturies": 13,
+      "testFifties": 28,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 55.5,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 50
     }
   },
   {
@@ -2779,18 +2779,18 @@
     "primaryRole": "Wicketkeeper",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 1159,
+      "testAverage": 56,
+      "testRuns": 3356,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 56,
+      "testCenturies": 6,
+      "testFifties": 20,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 145
     }
   },
   {
@@ -2812,8 +2812,8 @@
       "fiveWs": 19,
       "tenWs": 2,
       "testBowlingAverage": 31.7,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
+      "battingStrikeRate": 0.0,
+      "bowlingStrikeRate": 0.0,
       "dismissals": 34
     }
   },
@@ -2825,18 +2825,18 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 161,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testAverage": 23.8,
+      "testRuns": 2308,
+      "testWickets": 225,
+      "testMatches": 60,
+      "testCenturies": 2,
+      "testFifties": 10,
+      "fiveWs": 15,
+      "tenWs": 3,
+      "testBowlingAverage": 31.7,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 49
     }
   },
   {
@@ -2847,18 +2847,18 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 8.96,
-      "testRuns": 565,
-      "testWickets": 127,
-      "testMatches": 44,
+      "testAverage": 10.4,
+      "testRuns": 955,
+      "testWickets": 272,
+      "testMatches": 62,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
+      "fiveWs": 19,
+      "tenWs": 2,
+      "testBowlingAverage": 30.3,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 31
     }
   },
   {
@@ -3045,18 +3045,18 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 1666,
+      "testAverage": 33.8,
+      "testRuns": 1991,
       "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 32,
+      "testCenturies": 4,
+      "testFifties": 8,
       "fiveWs": 0,
       "tenWs": 0,
       "testBowlingAverage": 0,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 31
     }
   },
   {
@@ -3067,18 +3067,18 @@
     "primaryRole": "All-rounder",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 1872,
+      "testAverage": 45.3,
+      "testRuns": 1946,
       "testWickets": 22,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
+      "testMatches": 24,
+      "testCenturies": 6,
+      "testFifties": 7,
       "fiveWs": 0,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 50.4,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 22
     }
   },
   {
@@ -3111,18 +3111,18 @@
     "primaryRole": "All-rounder",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 35.96,
-      "testRuns": 1187,
-      "testWickets": 31,
-      "testMatches": 17,
+      "testAverage": 34.1,
+      "testRuns": 1434,
+      "testWickets": 40,
+      "testMatches": 22,
       "testCenturies": 1,
-      "testFifties": 8,
-      "fiveWs": 0,
+      "testFifties": 11,
+      "fiveWs": 2,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 44.5,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 9
     }
   },
   {
@@ -3199,18 +3199,18 @@
     "primaryRole": "Fast bowler",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 0,
-      "testRuns": 0,
-      "testWickets": 89,
-      "testMatches": 0,
+      "testAverage": 6.3,
+      "testRuns": 94,
+      "testWickets": 26,
+      "testMatches": 10,
       "testCenturies": 0,
       "testFifties": 0,
-      "fiveWs": 0,
+      "fiveWs": 1,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 28,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
-      "dismissals": 0
+      "dismissals": 1
     }
   },
   {
@@ -3277,6 +3277,342 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 0
+    }
+  },
+  {
+    "id": "ajinkya-rahane",
+    "name": "Ajinkya Rahane",
+    "nation": "India",
+    "era": [
+      "2020s"
+    ],
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 38.5,
+      "testRuns": 5077,
+      "testWickets": 0,
+      "testMatches": 85,
+      "testCenturies": 12,
+      "testFifties": 26,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 104
+    }
+  },
+  {
+    "id": "angelo-mathews",
+    "name": "Angelo Mathews",
+    "nation": "Sri Lanka",
+    "era": [
+      "2020s"
+    ],
+    "primaryRole": "All-rounder",
+    "secondaryRoles": "middle-order",
+    "stats": {
+      "testAverage": 44.4,
+      "testRuns": 8214,
+      "testWickets": 33,
+      "testMatches": 119,
+      "testCenturies": 16,
+      "testFifties": 45,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 54.5,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 84
+    }
+  },
+  {
+    "id": "chris-woakes",
+    "name": "Chris Woakes",
+    "nation": "England",
+    "era": [
+      "2020s"
+    ],
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": "all-rounder",
+    "stats": {
+      "testAverage": 25.1,
+      "testRuns": 2034,
+      "testWickets": 192,
+      "testMatches": 62,
+      "testCenturies": 1,
+      "testFifties": 7,
+      "fiveWs": 5,
+      "tenWs": 1,
+      "testBowlingAverage": 29.6,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 34
+    }
+  },
+  {
+    "id": "donald-tiripano",
+    "name": "Donald Tiripano",
+    "nation": "Zimbabwe",
+    "era": [
+      "2020s"
+    ],
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": "all-rounder",
+    "stats": {
+      "testAverage": 22.1,
+      "testRuns": 531,
+      "testWickets": 26,
+      "testMatches": 16,
+      "testCenturies": 0,
+      "testFifties": 2,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 49,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 6
+    }
+  },
+  {
+    "id": "henry-nicholls",
+    "name": "Henry Nicholls",
+    "nation": "New Zealand",
+    "era": [
+      "2020s"
+    ],
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 39.5,
+      "testRuns": 3358,
+      "testWickets": 0,
+      "testMatches": 60,
+      "testCenturies": 11,
+      "testFifties": 12,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 40
+    }
+  },
+  {
+    "id": "jonny-bairstow",
+    "name": "Jonny Bairstow",
+    "nation": "England",
+    "era": [
+      "2020s"
+    ],
+    "primaryRole": "Middle-order",
+    "secondaryRoles": "middle-order",
+    "stats": {
+      "testAverage": 36.4,
+      "testRuns": 6042,
+      "testWickets": 0,
+      "testMatches": 100,
+      "testCenturies": 12,
+      "testFifties": 26,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 259
+    }
+  },
+  {
+    "id": "moeen-ali",
+    "name": "Moeen Ali",
+    "nation": "England",
+    "era": [
+      "2020s"
+    ],
+    "primaryRole": "All-rounder",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 28.1,
+      "testRuns": 3094,
+      "testWickets": 204,
+      "testMatches": 68,
+      "testCenturies": 5,
+      "testFifties": 15,
+      "fiveWs": 5,
+      "tenWs": 1,
+      "testBowlingAverage": 37.3,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 42
+    }
+  },
+  {
+    "id": "mustafizur-rahman",
+    "name": "Mustafizur Rahman",
+    "nation": "Bangladesh",
+    "era": [
+      "2020s"
+    ],
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 4.4,
+      "testRuns": 66,
+      "testWickets": 31,
+      "testMatches": 15,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 36.7,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 2
+    }
+  },
+  {
+    "id": "neil-wagner",
+    "name": "Neil Wagner",
+    "nation": "New Zealand",
+    "era": [
+      "2020s"
+    ],
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 14.6,
+      "testRuns": 875,
+      "testWickets": 260,
+      "testMatches": 64,
+      "testCenturies": 0,
+      "testFifties": 1,
+      "fiveWs": 9,
+      "tenWs": 0,
+      "testBowlingAverage": 27.6,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 19
+    }
+  },
+  {
+    "id": "niroshan-dickwella",
+    "name": "Niroshan Dickwella",
+    "nation": "Sri Lanka",
+    "era": [
+      "2020s"
+    ],
+    "primaryRole": "Wicketkeeper",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 30.7,
+      "testRuns": 2853,
+      "testWickets": 0,
+      "testMatches": 56,
+      "testCenturies": 0,
+      "testFifties": 23,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 173
+    }
+  },
+  {
+    "id": "peter-handscomb",
+    "name": "Peter Handscomb",
+    "nation": "Australia",
+    "era": [
+      "2020s"
+    ],
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 37.2,
+      "testRuns": 1079,
+      "testWickets": 0,
+      "testMatches": 20,
+      "testCenturies": 2,
+      "testFifties": 5,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 32
+    }
+  },
+  {
+    "id": "shai-hope",
+    "name": "Shai Hope",
+    "nation": "West Indies",
+    "era": [
+      "2020s"
+    ],
+    "primaryRole": "Middle-order",
+    "secondaryRoles": "wicketkeeper",
+    "stats": {
+      "testAverage": 28,
+      "testRuns": 2518,
+      "testWickets": 0,
+      "testMatches": 49,
+      "testCenturies": 5,
+      "testFifties": 7,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 82
+    }
+  },
+  {
+    "id": "shannon-gabriel",
+    "name": "Shannon Gabriel",
+    "nation": "West Indies",
+    "era": [
+      "2020s"
+    ],
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 4.2,
+      "testRuns": 229,
+      "testWickets": 166,
+      "testMatches": 59,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "fiveWs": 6,
+      "tenWs": 1,
+      "testBowlingAverage": 32.2,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 17
+    }
+  },
+  {
+    "id": "umesh-yadav",
+    "name": "Umesh Yadav",
+    "nation": "India",
+    "era": [
+      "2020s"
+    ],
+    "primaryRole": "Fast bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 11.2,
+      "testRuns": 460,
+      "testWickets": 170,
+      "testMatches": 57,
+      "testCenturies": 0,
+      "testFifties": 0,
+      "fiveWs": 3,
+      "tenWs": 1,
+      "testBowlingAverage": 31,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 23
     }
   }
 ]
