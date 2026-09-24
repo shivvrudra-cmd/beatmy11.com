@@ -361,7 +361,83 @@ export function validateDraftPick(
   if (state.picksThisRound.length >= selectionLimitForRound(state.currentRound)) {
     return 'Round complete — spin again for the next draw.';
   }
+  // Group quotas: once a group's quota is filled, every other player of that
+  // group becomes unpickable (the pool UI disables them via this reason).
+  // Only one wicketkeeper per XI.
+  if (
+    player.primaryRole === 'wicketkeeper' &&
+    hasWicketkeeper(state.selectedPlayers)
+  ) {
+    return 'Wicketkeeper quota filled (1 max).';
+  }
+  const group = quotaGroupForRole(player.primaryRole);
+  const quota = DRAFT_GROUP_QUOTAS[group];
+  if (quota !== undefined) {
+    const used = countQuotaGroup(state.selectedPlayers, group);
+    if (used >= quota) {
+      const label = DRAFT_GROUP_LABELS[group] ?? group;
+      return `${label} quota filled (${quota} max).`;
+    }
+    // The wicketkeeper is mandatory and bats in the middle order, so the
+    // last middle-order slot is reserved for the keeper — a draft can never
+    // strand itself at 11 players with no keeper.
+    if (group === 'middle-order' && player.primaryRole !== 'wicketkeeper') {
+      const batters = state.selectedPlayers.filter(
+        (p) => p.primaryRole === 'middle-order',
+      ).length;
+      if (batters >= MAX_NON_KEEPER_MIDDLE_ORDER) {
+        return 'Middle-order batting is full — the last middle-order slot is reserved for your wicketkeeper.';
+      }
+    }
+  }
   return null;
+}
+
+// ---------------------------------------------------------------------------
+// Draft group quotas — the XI's role composition rules.
+//
+// The wicketkeeper counts toward the middle-order quota (their batting home),
+// so the five quotas sum to exactly XI_SIZE (11): 2 openers, 4 middle order
+// (3 batters + the keeper), 1 all-rounder, 1 spinner, 3 fast bowlers.
+// ---------------------------------------------------------------------------
+
+/** Maximum picks per quota group in the spin draft. */
+export const DRAFT_GROUP_QUOTAS: Record<string, number> = {
+  opener: 2,
+  'middle-order': 4,
+  'all-rounder': 1,
+  spinner: 1,
+  'fast-bowler': 3,
+};
+
+/**
+ * Non-keeper middle-order cap: reserves the last middle-order slot for the
+ * mandatory wicketkeeper.
+ */
+export const MAX_NON_KEEPER_MIDDLE_ORDER = 3;
+
+export const DRAFT_GROUP_LABELS: Record<string, string> = {
+  opener: 'Openers',
+  'middle-order': 'Middle Order',
+  'all-rounder': 'All-Rounders',
+  spinner: 'Spinners',
+  'fast-bowler': 'Fast Bowlers',
+  wicketkeeper: 'Wicketkeeper',
+};
+
+/** The quota group a role counts toward ('wicketkeeper' → 'middle-order'). */
+export function quotaGroupForRole(role: string): string {
+  return role === 'wicketkeeper' ? 'middle-order' : role;
+}
+
+/** How many of `xi` count toward a quota group. */
+export function countQuotaGroup(xi: DraftPick[], group: string): number {
+  return xi.filter((p) => quotaGroupForRole(p.primaryRole) === group).length;
+}
+
+/** Whether the XI contains the mandatory wicketkeeper. */
+export function hasWicketkeeper(xi: DraftPick[]): boolean {
+  return xi.some((p) => p.primaryRole === 'wicketkeeper');
 }
 
 /**

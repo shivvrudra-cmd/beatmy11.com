@@ -161,6 +161,11 @@ const styleSeed = playersForEra('legends')[0];
       clearDraft,
       saveUserXI,
       clearUserXI,
+      hasWicketkeeper,
+      quotaGroupForRole,
+      countQuotaGroup,
+      DRAFT_GROUP_QUOTAS,
+      DRAFT_GROUP_LABELS,
       XI_SIZE,
       DRAFT_ROUNDS,
     } from '../lib/player-logic';
@@ -216,14 +221,17 @@ const styleSeed = playersForEra('legends')[0];
       { label: 'Fast Bowlers', roles: ['fast-bowler'], kind: 'bowl' },
     ];
     // Your-XI display groups, in batting-to-bowling order. Wicketkeepers are
-    // shown under Middle Order (their batting home) so the XI always has
-    // exactly these five groups; `kind` selects the stat line per group.
+    // shown under Middle Order (their batting home) AND get a dedicated,
+    // mandatory Wicketkeeper row. `quota` is the max picks per group:
+    // 2 openers, 4 middle order (3 batters + the keeper), 1 all-rounder,
+    // 1 spinner, 3 fast bowlers = 11.
     const XI_GROUPS = [
-      { label: 'Openers', roles: ['opener'], kind: 'bat' },
-      { label: 'Middle Order', roles: ['middle-order', 'wicketkeeper'], kind: 'bat' },
-      { label: 'All-Rounders', roles: ['all-rounder'], kind: 'ar' },
-      { label: 'Spinners', roles: ['spinner'], kind: 'bowl' },
-      { label: 'Fast Bowlers', roles: ['fast-bowler'], kind: 'bowl' },
+      { label: 'Openers', roles: ['opener'], kind: 'bat', quota: DRAFT_GROUP_QUOTAS.opener },
+      { label: 'Middle Order', roles: ['middle-order', 'wicketkeeper'], kind: 'bat', quota: DRAFT_GROUP_QUOTAS['middle-order'] },
+      { label: 'Wicketkeeper', roles: ['wicketkeeper'], kind: 'bat', quota: 1, required: true },
+      { label: 'All-Rounders', roles: ['all-rounder'], kind: 'ar', quota: DRAFT_GROUP_QUOTAS['all-rounder'] },
+      { label: 'Spinners', roles: ['spinner'], kind: 'bowl', quota: DRAFT_GROUP_QUOTAS.spinner },
+      { label: 'Fast Bowlers', roles: ['fast-bowler'], kind: 'bowl', quota: DRAFT_GROUP_QUOTAS['fast-bowler'] },
     ];
     const NATION_FLAGS = {
       Australia: '🇦🇺',
@@ -653,9 +661,15 @@ const styleSeed = playersForEra('legends')[0];
           btn.classList.remove('is-selected', 'is-locked');
           btn.classList.toggle('is-disabled', reason !== null);
           btn.setAttribute('aria-pressed', 'false');
-          if (reason) btn.setAttribute('aria-disabled', 'true');
-          else btn.removeAttribute('aria-disabled');
-          btn.removeAttribute('title');
+          if (reason) {
+            // Quota-filled groups (and other blocks) explain themselves on
+            // hover / focus so the user knows why a card can't be picked.
+            btn.setAttribute('aria-disabled', 'true');
+            btn.title = reason;
+          } else {
+            btn.removeAttribute('aria-disabled');
+            btn.removeAttribute('title');
+          }
           btn.setAttribute('aria-label', accessibleName(p));
           setBadge(false);
         }
@@ -694,19 +708,28 @@ const styleSeed = playersForEra('legends')[0];
         }
         draft = applyDraftPick(draft, p);
         flashMsg('');
+        // Note when a pick fills its group quota — the pool cards for that
+        // group are now disabled.
+        const qGroup = quotaGroupForRole(p.primaryRole);
+        const qUsed = countQuotaGroup(draft.selectedPlayers, qGroup);
+        const qMax = DRAFT_GROUP_QUOTAS[qGroup];
+        const quotaNote =
+          qMax !== undefined && qUsed >= qMax
+            ? ` ${DRAFT_GROUP_LABELS[qGroup]} quota filled (${qUsed}/${qMax}).`
+            : '';
         if (draft.gameComplete) {
           announce(
             `XI complete — ${p.name} selected. Your XI of ${XI_SIZE} is ready. Compare XIs to face the house team.`
           );
         } else if (roundDone()) {
           announce(
-            `Selected ${p.name}. Round ${draft.currentRound} complete — spin again for the next draw.`
+            `Selected ${p.name}.${quotaNote} Round ${draft.currentRound} complete — spin again for the next draw.`
           );
         } else {
           const left =
             selectionLimitForRound(draft.currentRound) - draft.picksThisRound.length;
           announce(
-            `Selected ${p.name}. ${left} more pick${left === 1 ? '' : 's'} this round. ` +
+            `Selected ${p.name}.${quotaNote} ${left} more pick${left === 1 ? '' : 's'} this round. ` +
               `${draft.selectedPlayers.length} of ${XI_SIZE} total.`
           );
         }
@@ -782,22 +805,28 @@ const styleSeed = playersForEra('legends')[0];
             `<li class="bm11-xi-group">` +
             `<div class="bm11-xi-group-head">` +
             `<span class="bm11-xi-group-label">${esc(g.label)}</span>` +
-            `<span class="bm11-xi-group-count" aria-label="${members.length} selected">${members.length}</span>` +
+            `<span class="bm11-xi-group-count" aria-label="${members.length} of ${g.quota} ${esc(g.label)} selected">${members.length}/${g.quota}</span>` +
             `</div>` +
             (rows
               ? `<ul class="bm11-xi-group-list">${rows}</ul>`
-              : `<p class="bm11-xi-group-empty">No picks yet</p>`) +
+              : g.required
+                ? `<p class="bm11-xi-group-empty bm11-xi-group-required">Required — every XI needs a keeper</p>`
+                : `<p class="bm11-xi-group-empty">No picks yet</p>`) +
             `</li>`
           );
         }).join('');
       }
 
-      const ready = draft.gameComplete;
+      // A finished XI always contains the mandatory wicketkeeper (the draft
+      // reserves the last middle-order slot for the keeper), but guard the
+      // CTA anyway for drafts restored from before the quota rules existed.
+      const keeperOk = hasWicketkeeper(draft.selectedPlayers);
+      const ready = draft.gameComplete && keeperOk;
       ctaEl.classList.toggle('is-disabled', !ready);
       ctaEl.setAttribute('aria-disabled', ready ? 'false' : 'true');
 
       const stalled =
-        !ready &&
+        !draft.gameComplete &&
         draft.currentRound >= DRAFT_ROUNDS &&
         roundDone() &&
         draft.currentRound > 0;
@@ -809,7 +838,13 @@ const styleSeed = playersForEra('legends')[0];
     }
 
     ctaEl.addEventListener('click', (e) => {
-      if (!draft.gameComplete) {
+      if (draft.gameComplete && !hasWicketkeeper(draft.selectedPlayers)) {
+        e.preventDefault();
+        const msg =
+          'This XI has no wicketkeeper — start a fresh draft to build a valid XI.';
+        flashMsg(msg);
+        announce(msg);
+      } else if (!draft.gameComplete) {
         e.preventDefault();
         const need = XI_SIZE - draft.selectedPlayers.length;
         flashMsg(`Pick ${need} more player${need === 1 ? '' : 's'} to complete your XI.`);
@@ -1331,6 +1366,11 @@ const styleSeed = playersForEra('legends')[0];
       font-size: 0.75rem;
       color: var(--bm11-muted, #94a3b8);
       font-style: italic;
+    }
+    .bm11-xi-group-required {
+      color: #fbbf24;
+      font-style: normal;
+      font-weight: 600;
     }
     .bm11-xi-player,
     .bm11-xi-empty {
