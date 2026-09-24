@@ -57,12 +57,12 @@ const styleSeed = playersForEra('legends')[0];
           <div class="bm11-draw-slots">
             <div class="bm11-draw-slot">
               <span class="bm11-draw-k">Era</span>
-              <span class="bm11-draw-v" id="bm11-draw-era">?</span>
+              <span class="bm11-draw-v" id="bm11-draw-era">Fate</span>
             </div>
             <div class="bm11-draw-x" aria-hidden="true">+</div>
             <div class="bm11-draw-slot">
               <span class="bm11-draw-k">Nation</span>
-              <span class="bm11-draw-v" id="bm11-draw-nation">?</span>
+              <span class="bm11-draw-v" id="bm11-draw-nation">awaits…</span>
             </div>
           </div>
           <button
@@ -205,13 +205,15 @@ const styleSeed = playersForEra('legends')[0];
       'fast-bowler': 'Fast Bowler',
       spinner: 'Spinner',
     };
-    const ROLE_GROUPS = [
-      ['opener', 'Openers'],
-      ['middle-order', 'Middle Order'],
-      ['all-rounder', 'All-Rounders'],
-      ['wicketkeeper', 'Wicketkeeper'],
-      ['spinner', 'Spinners'],
-      ['fast-bowler', 'Fast Bowlers'],
+    // Pool display groups, in batting-to-bowling order. Wicketkeepers are
+    // shown under Middle Order (their batting home) so the pool always has
+    // exactly these five groups; `kind` selects the stat columns per group.
+    const POOL_GROUPS = [
+      { label: 'Openers', roles: ['opener'], kind: 'bat' },
+      { label: 'Middle Order', roles: ['middle-order', 'wicketkeeper'], kind: 'bat' },
+      { label: 'All-Rounders', roles: ['all-rounder'], kind: 'ar' },
+      { label: 'Spinners', roles: ['spinner'], kind: 'bowl' },
+      { label: 'Fast Bowlers', roles: ['fast-bowler'], kind: 'bowl' },
     ];
     // Your-XI display groups, in batting-to-bowling order. Wicketkeepers are
     // shown under Middle Order (their batting home) so the XI always has
@@ -279,50 +281,15 @@ const styleSeed = playersForEra('legends')[0];
     }
 
     // 3 key ministats per card — same logic as PlayerCard.astro.
-    function keyStats(p) {
-      const s = p.stats || {};
-      const role = p.primaryRole || '';
-      const isBowler = role === 'fast-bowler' || role === 'spinner';
-      const isKeeper =
-        role === 'wicketkeeper' || (p.secondaryRoles || []).includes('wicketkeeper');
-      const isAllRounder = role === 'all-rounder';
-      const bowlAvg = s.testBowlingAverage ?? s.bowlingAverage;
-      if (isBowler) {
-        return [
-          { label: 'Wkts', value: fmtInt(s.testWickets) },
-          { label: 'Avg', value: fmtAvg(bowlAvg) },
-          { label: '5WI', value: fmtInt(s.fiveWs) },
-        ];
-      }
-      if (isAllRounder) {
-        return [
-          { label: 'Avg', value: fmtAvg(s.testAverage) },
-          { label: 'Runs', value: fmtInt(s.testRuns) },
-          { label: 'Wkts', value: fmtInt(s.testWickets) },
-        ];
-      }
-      if (isKeeper) {
-        return [
-          { label: 'Avg', value: fmtAvg(s.testAverage) },
-          { label: 'Runs', value: fmtInt(s.testRuns) },
-          { label: 'Dism.', value: fmtInt(s.dismissals) },
-        ];
-      }
-      return [
-        { label: 'Avg', value: fmtAvg(s.testAverage) },
-        { label: 'Runs', value: fmtInt(s.testRuns) },
-        { label: '100s', value: fmtInt(s.testCenturies) },
-      ];
-    }
-
-    // Stat line for a Your-XI row, tailored to the player's display group:
-    // batters → M / Runs / Avg / 50s / 100s; all-rounders → M / Runs / Wkts /
-    // Bat Avg / Bowl Avg; bowlers → M / Wkts / Bowl Avg / 5W / 10W.
-    function xiStatLine(p, kind) {
+    // Stat columns for a pool row, in the 82-0.com style: label on top,
+    // value below. Tailored to the player's display group:
+    // batters → M / Runs / Avg / 50s / 100s; all-rounders → M / Runs /
+    // Wkts / Bat Avg / Bowl Avg; bowlers → M / Wkts / Bowl Avg / 5W / 10W.
+    function poolStatCells(p, kind) {
       const s = p.stats || {};
       const bowlAvg = s.testBowlingAverage ?? s.bowlingAverage;
       const cell = (v, l) =>
-        `<span class="bm11-xi-stat"><b>${esc(v)}</b><i>${esc(l)}</i></span>`;
+        `<span class="bm11-prow-stat"><i>${esc(l)}</i><b>${esc(v)}</b></span>`;
       if (kind === 'bat') {
         return (
           cell(fmtInt(s.testMatches), 'M') +
@@ -350,16 +317,6 @@ const styleSeed = playersForEra('legends')[0];
       );
     }
 
-    function roleChipsHTML(p) {
-      const roles = [
-        p.primaryRole,
-        ...(p.secondaryRoles || []).filter((r) => r !== p.primaryRole),
-      ].filter(Boolean);
-      return roles
-        .map((r) => `<span class="bm11-chip">${esc(ROLE_LABELS[r] || r)}</span>`)
-        .join('');
-    }
-
     function accessibleName(p) {
       const roles = [
         p.primaryRole,
@@ -370,37 +327,28 @@ const styleSeed = playersForEra('legends')[0];
       return `${p.name}, ${roles.join(', ') || 'player'}, ${p.nation || ''}`;
     }
 
-    // PlayerCard non-comparison markup (classes match the globalized styles).
-    function cardHTML(p) {
-      // Pool cards show the era of the current draw, not the player's
-      // first-listed era — a player listed under several eras (e.g. Shaun
-      // Pollock in 1990s+2000s) is shown under the era the spin landed on.
+    // Pool player row: 82-0.com style — avatar + name on the left, five
+    // stat columns on the right. The row shows the era of the current draw,
+    // not the player's first-listed era (multi-era players like Shaun
+    // Pollock are shown under the era the spin landed on).
+    function cardHTML(p, kind) {
       const drawEra = draft.currentEra || p.displayEra;
       const accent = ERA_ACCENTS[drawEra] || '#94A3B8';
       const flag = NATION_FLAGS[p.nation] || '';
-      const stats = keyStats(p);
       const eraLabel = eraName(drawEra);
       return (
-        `<button type="button" class="bm11-player-card" data-bm11-select="${esc(p.uid)}"` +
+        `<button type="button" class="bm11-prow" data-bm11-select="${esc(p.uid)}"` +
         ` aria-pressed="false" aria-label="${esc(accessibleName(p))}" style="--era-accent:${accent};">` +
-        `<div class="bm11-pc-top">` +
+        `<span class="bm11-prow-id">` +
         `<img src="${avatarSrc(drawEra)}" alt="" aria-hidden="true" loading="lazy" draggable="false"` +
-        ` class="rounded-full object-cover select-none w-14 h-14" style="--era-accent:${accent};background-color:#0D1424;" />` +
-        `<div class="bm11-pc-head">` +
-        `<div class="bm11-pc-name">${esc(p.name)}</div>` +
-        `<div class="bm11-pc-sub">${flag ? `<span aria-hidden="true">${flag} </span>` : ''}${esc(p.nation || '')}</div>` +
-        `<span class="bm11-era-chip" style="--era-accent:${accent};">${esc(eraLabel)}</span>` +
-        `</div></div>` +
-        `<div class="bm11-pc-roles" aria-label="Roles">${roleChipsHTML(p)}</div>` +
-        `<div class="bm11-pc-stats" aria-label="Key statistics">` +
-        stats
-          .map(
-            (st) =>
-              `<div class="bm11-pc-stat"><span class="bm11-pc-stat-v">${esc(st.value)}</span>` +
-              `<span class="bm11-pc-stat-l">${esc(st.label)}</span></div>`
-          )
-          .join('') +
-        `</div>` +
+        ` class="bm11-prow-avatar" style="--era-accent:${accent};background-color:#0D1424;" />` +
+        `<span class="bm11-prow-who">` +
+        `<span class="bm11-prow-name">${esc(p.name)}</span>` +
+        `<span class="bm11-prow-sub">${flag ? `<span aria-hidden="true">${flag} </span>` : ''}${esc(
+          p.nation || ''
+        )} · ${esc(eraLabel)}</span>` +
+        `</span></span>` +
+        `<span class="bm11-prow-stats" aria-label="Career statistics">${poolStatCells(p, kind)}</span>` +
         `<span class="bm11-check-badge" aria-hidden="true" hidden>` +
         `<svg viewBox="0 0 16 16" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 5"/></svg>` +
         `</span></button>`
@@ -487,8 +435,8 @@ const styleSeed = playersForEra('legends')[0];
       if (draft.currentEra && draft.currentNation) {
         previewDraw(draft.currentEra, draft.currentNation);
       } else {
-        eraSlot.textContent = '?';
-        nationSlot.textContent = '?';
+        eraSlot.textContent = 'Fate';
+        nationSlot.textContent = 'awaits…';
       }
 
       const done = roundDone();
@@ -611,11 +559,11 @@ const styleSeed = playersForEra('legends')[0];
     // ------------------------------------------------------------ player grid
     const cardEls = new Map();
 
-    function groupHTML(label, players) {
+    function groupHTML(g) {
       return (
-        `<section class="bm11-role-group" aria-label="${esc(label)}">` +
-        `<h3 class="bm11-role-title">${esc(label)} <span class="bm11-role-count">${players.length}</span></h3>` +
-        `<div class="bm11-player-grid">${players.map(cardHTML).join('')}</div>` +
+        `<section class="bm11-role-group" aria-label="${esc(g.label)}">` +
+        `<h3 class="bm11-role-title">${esc(g.label)} <span class="bm11-role-count">${g.players.length}</span></h3>` +
+        `<div class="bm11-prow-list">${g.players.map((p) => cardHTML(p, g.kind)).join('')}</div>` +
         `</section>`
       );
     }
@@ -647,16 +595,16 @@ const styleSeed = playersForEra('legends')[0];
         return;
       }
 
-      const groups = ROLE_GROUPS.map(([role, label]) => ({
-        label,
-        players: pool.filter((p) => p.primaryRole === role),
+      const groups = POOL_GROUPS.map((g) => ({
+        ...g,
+        players: pool.filter((p) => g.roles.includes(p.primaryRole)),
       })).filter((g) => g.players.length > 0);
       const others = pool.filter(
-        (p) => !ROLE_GROUPS.some(([role]) => role === p.primaryRole)
+        (p) => !POOL_GROUPS.some((g) => g.roles.includes(p.primaryRole))
       );
-      if (others.length) groups.push({ label: 'Squad', players: others });
+      if (others.length) groups.push({ label: 'Squad', kind: 'bat', players: others });
 
-      groupsEl.innerHTML = groups.map((g) => groupHTML(g.label, g.players)).join('');
+      groupsEl.innerHTML = groups.map((g) => groupHTML(g)).join('');
       cardEls.clear();
       for (const btn of groupsEl.querySelectorAll('[data-bm11-select]')) {
         cardEls.set(btn.getAttribute('data-bm11-select'), btn);
@@ -819,10 +767,6 @@ const styleSeed = playersForEra('legends')[0];
                 `<span class="bm11-xi-sub">${flag ? `<span aria-hidden="true">${flag} </span>` : ''}${esc(
                   p.nation || ''
                 )} · ${esc(eraName(eraId))}</span>` +
-                `<span class="bm11-xi-stats" aria-label="Career statistics">${xiStatLine(
-                  p,
-                  g.kind
-                )}</span>` +
                 `</span>` +
                 `<span class="bm11-xi-round" title="Picked in round ${p.roundPicked}">R${p.roundPicked}</span>` +
                 (removable
@@ -1001,11 +945,13 @@ const styleSeed = playersForEra('legends')[0];
     .bm11-spinzone .bm11-wrap {
       padding-top: 2rem;
       padding-bottom: 2rem;
+      text-align: center;
     }
     .bm11-draw {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
+      justify-content: center;
       gap: 1rem 1.5rem;
       margin-top: 1.5rem;
     }
@@ -1124,24 +1070,107 @@ const styleSeed = playersForEra('legends')[0];
       font-variant-numeric: tabular-nums;
     }
     .bm11-check-badge[hidden] { display: none; }
-    .bm11-player-grid {
-      display: grid;
-      gap: 0.9rem;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      align-items: start;
+    /* Pool player rows — 82-0.com style: identity left, stat columns right. */
+    .bm11-prow-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
-    @media (max-width: 359px) {
-      .bm11-player-grid { grid-template-columns: minmax(0, 1fr); }
+    .bm11-prow {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      font: inherit;
+      text-align: left;
+      color: var(--bm11-text, #f1f5f9);
+      background: var(--bm11-surface, #0d1424);
+      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+      border-left: 3px solid var(--era-accent, var(--bm11-border, rgba(148, 163, 184, 0.14)));
+      border-radius: 0.9rem;
+      cursor: pointer;
     }
-    @media (min-width: 1150px) {
-      .bm11-player-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .bm11-prow:hover { border-color: rgba(148, 163, 184, 0.35); }
+    .bm11-prow:focus-visible {
+      outline: 2px solid var(--bm11-ring, #4ade80);
+      outline-offset: 2px;
     }
-    .bm11-player-card.is-locked {
-      cursor: not-allowed;
-      opacity: 0.85;
+    .bm11-prow.is-selected {
+      border-color: var(--bm11-primary, #22c55e);
+      box-shadow: 0 0 0 2px var(--bm11-primary, #22c55e), 0 12px 28px rgba(0, 0, 0, 0.45);
     }
-    .bm11-player-card.is-locked:hover {
-      transform: none;
+    .bm11-prow.is-disabled { opacity: 0.45; cursor: not-allowed; }
+    .bm11-prow.is-disabled:hover { border-color: var(--bm11-border, rgba(148, 163, 184, 0.14)); }
+    .bm11-prow.is-locked { cursor: not-allowed; opacity: 0.85; }
+    .bm11-prow-id {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .bm11-prow-avatar {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 9999px;
+      object-fit: cover;
+      flex: 0 0 auto;
+      user-select: none;
+    }
+    .bm11-prow-who {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .bm11-prow-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .bm11-prow-sub {
+      font-size: 0.72rem;
+      color: var(--bm11-muted, #94a3b8);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .bm11-prow-stats {
+      display: flex;
+      gap: 1rem;
+      margin-left: auto;
+      flex: 0 0 auto;
+    }
+    .bm11-prow-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+      min-width: 2.4rem;
+    }
+    .bm11-prow-stat i {
+      font-style: normal;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--bm11-muted, #94a3b8);
+      white-space: nowrap;
+    }
+    .bm11-prow-stat b {
+      font-size: 0.95rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    @media (max-width: 480px) {
+      .bm11-prow { gap: 0.6rem; padding: 0.6rem 0.7rem; }
+      .bm11-prow-stats { gap: 0.65rem; }
+      .bm11-prow-stat { min-width: 0; }
+      .bm11-prow-stat b { font-size: 0.85rem; }
+      .bm11-prow-avatar { width: 2.1rem; height: 2.1rem; }
     }
     .bm11-pool-idle {
       color: var(--bm11-muted, #94a3b8);
@@ -1302,28 +1331,6 @@ const styleSeed = playersForEra('legends')[0];
       font-size: 0.75rem;
       color: var(--bm11-muted, #94a3b8);
       font-style: italic;
-    }
-    .bm11-xi-stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.15rem 0.6rem;
-      margin-top: 0.15rem;
-      font-size: 0.7rem;
-    }
-    .bm11-xi-stat {
-      display: inline-flex;
-      align-items: baseline;
-      gap: 0.25rem;
-      font-variant-numeric: tabular-nums;
-      white-space: nowrap;
-    }
-    .bm11-xi-stat b {
-      font-weight: 700;
-      color: var(--bm11-text, #f1f5f9);
-    }
-    .bm11-xi-stat i {
-      font-style: normal;
-      color: var(--bm11-muted, #94a3b8);
     }
     .bm11-xi-player,
     .bm11-xi-empty {
