@@ -15,9 +15,12 @@
  *
  * Client <script type="module"> keeps ONE draft state object (see
  * src/lib/player-logic.ts — createDraft / applySpinResult / applyDraftPick /
- * applyDraftDeselect) as the single source of truth and re-renders from it.
- * The plain normalized-player array is persisted to `beatmy11.userXI.v1`
- * (/matchup's contract); draft extras live under `beatmy11.draft.v1`.
+ * applyDraftMove / applyDraftDeselect) as the single source of truth and
+ * re-renders from it. Drafting is two-step: select a player in the pool,
+ * then select a glowing slot in the XI panel; afterwards players can be
+ * moved between any slots their roles allow. The plain normalized-player
+ * array (in slot order) is persisted to `beatmy11.userXI.v1` (/matchup's
+ * contract); draft extras live under `beatmy11.draft.v1`.
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Navbar from '@/components/Navbar.astro';
@@ -151,9 +154,12 @@ const styleSeed = playersForEra('legends')[0];
       selectionLimitForRound,
       isRoundComplete,
       canSpin,
-      validateDraftPick,
+      validatePoolPick,
+      validateSlotPlacement,
+      validateSlotMove,
       applySpinResult,
       applyDraftPick,
+      applyDraftMove,
       applyDraftDeselect,
       deserializeDraft,
       saveDraft,
@@ -161,10 +167,11 @@ const styleSeed = playersForEra('legends')[0];
       clearDraft,
       saveUserXI,
       clearUserXI,
-      hasWicketkeeper,
-      quotaGroupForRole,
-      countQuotaGroup,
-      DRAFT_GROUP_QUOTAS,
+      playerGroups,
+      keeperSlotFilled,
+      slotByKey,
+      orderedXI,
+      XI_SLOTS,
       DRAFT_GROUP_LABELS,
       XI_SIZE,
       DRAFT_ROUNDS,
@@ -220,18 +227,16 @@ const styleSeed = playersForEra('legends')[0];
       { label: 'Spinners', roles: ['spinner'], kind: 'bowl' },
       { label: 'Fast Bowlers', roles: ['fast-bowler'], kind: 'bowl' },
     ];
-    // Your-XI display groups, in batting-to-bowling order. Wicketkeepers are
-    // shown under Middle Order (their batting home) AND get a dedicated,
-    // mandatory Wicketkeeper row. `quota` is the max picks per group:
-    // 2 openers, 4 middle order (3 batters + the keeper), 1 all-rounder,
-    // 1 spinner, 3 fast bowlers = 11.
-    const XI_GROUPS = [
-      { label: 'Openers', roles: ['opener'], kind: 'bat', quota: DRAFT_GROUP_QUOTAS.opener },
-      { label: 'Middle Order', roles: ['middle-order', 'wicketkeeper'], kind: 'bat', quota: DRAFT_GROUP_QUOTAS['middle-order'] },
-      { label: 'Wicketkeeper', roles: ['wicketkeeper'], kind: 'bat', quota: 1, required: true },
-      { label: 'All-Rounders', roles: ['all-rounder'], kind: 'ar', quota: DRAFT_GROUP_QUOTAS['all-rounder'] },
-      { label: 'Spinners', roles: ['spinner'], kind: 'bowl', quota: DRAFT_GROUP_QUOTAS.spinner },
-      { label: 'Fast Bowlers', roles: ['fast-bowler'], kind: 'bowl', quota: DRAFT_GROUP_QUOTAS['fast-bowler'] },
+    // Your-XI slot groups, in batting-to-bowling order. The wicketkeeper
+    // slot sits with the middle order (their batting home) and is the one
+    // mandatory slot — every XI needs a keeper. Eleven fixed slots, always
+    // rendered, even before the first pick.
+    const SLOT_GROUPS = [
+      { label: 'Openers', keys: ['opener-1', 'opener-2'] },
+      { label: 'Middle Order', keys: ['middle-1', 'middle-2', 'middle-3', 'keeper'] },
+      { label: 'All-Rounders', keys: ['all-rounder'] },
+      { label: 'Spinners', keys: ['spinner'] },
+      { label: 'Fast Bowlers', keys: ['fast-1', 'fast-2', 'fast-3'] },
     ];
     const NATION_FLAGS = {
       Australia: '🇦🇺',
@@ -338,12 +343,21 @@ const styleSeed = playersForEra('legends')[0];
     // Pool player row: 82-0.com style — avatar + name on the left, five
     // stat columns on the right. The row shows the era of the current draw,
     // not the player's first-listed era (multi-era players like Shaun
-    // Pollock are shown under the era the spin landed on).
+    // Pollock are shown under the era the spin landed on), plus every group
+    // the data marks the player eligible for (e.g. "Middle Order,
+    // Wicketkeeper").
     function cardHTML(p, kind) {
       const drawEra = draft.currentEra || p.displayEra;
       const accent = ERA_ACCENTS[drawEra] || '#94A3B8';
       const flag = NATION_FLAGS[p.nation] || '';
       const eraLabel = eraName(drawEra);
+      const roles = [
+        p.primaryRole,
+        ...(p.secondaryRoles || []).filter((r) => r !== p.primaryRole),
+      ]
+        .filter(Boolean)
+        .map((r) => ROLE_LABELS[r] || r)
+        .join(', ');
       return (
         `<button type="button" class="bm11-prow" data-bm11-select="${esc(p.uid)}"` +
         ` aria-pressed="false" aria-label="${esc(accessibleName(p))}" style="--era-accent:${accent};">` +
@@ -352,7 +366,7 @@ const styleSeed = playersForEra('legends')[0];
         ` class="bm11-prow-avatar" style="--era-accent:${accent};background-color:#0D1424;" />` +
         `<span class="bm11-prow-who">` +
         `<span class="bm11-prow-name">${esc(p.name)}</span>` +
-        `<span class="bm11-prow-sub">${flag ? `<span aria-hidden="true">${flag} </span>` : ''}${esc(
+        `<span class="bm11-prow-sub">${esc(roles)} · ${flag ? `<span aria-hidden="true">${flag} </span>` : ''}${esc(
           p.nation || ''
         )} · ${esc(eraLabel)}</span>` +
         `</span></span>` +
@@ -366,8 +380,13 @@ const styleSeed = playersForEra('legends')[0];
     // ------------------------------------------------------------------ state
     // ONE draft object = the single source of truth. Every mutation goes
     // through the pure transitions in player-logic.ts, then persist() +
-    // renderAll().
+    // renderAll(). Two extra pieces of UI-only state drive the two-step
+    // flow: `selectedUid` (the pool player waiting for a slot) and
+    // `moveFrom` (the slot whose occupant is being repositioned). Neither
+    // is persisted — they reset on reload and round changes.
     let draft = createDraft();
+    let selectedUid = null;
+    let moveFrom = null;
     let msgTimer = 0;
 
     const $ = (id) => document.getElementById(id);
@@ -395,9 +414,17 @@ const styleSeed = playersForEra('legends')[0];
       if (text) msgTimer = window.setTimeout(() => { msgEl.textContent = ''; }, 4500);
     };
     const persist = () => {
-      saveUserXI(draft.selectedPlayers);
+      // /matchup's contract: a plain array of 11 players. Saved in slot
+      // (batting) order so the XI reads top-to-bottom naturally.
+      saveUserXI(orderedXI(draft));
       saveDraft(draft);
     };
+
+    /** "Middle Order, Wicketkeeper" — every group the data marks a player eligible for. */
+    const groupLabelList = (p) =>
+      playerGroups(p)
+        .map((g) => ROLE_LABELS[g] || DRAFT_GROUP_LABELS[g] || g)
+        .join(', ');
 
     // ------------------------------------------------------------ pool logic
     // Eligible pool for the current draw: era id ∈ player.era (string or
@@ -477,14 +504,23 @@ const styleSeed = playersForEra('legends')[0];
         const limit = selectionLimitForRound(draft.currentRound);
         const picked = draft.picksThisRound.length;
         if (draft.currentRound === 1) {
-          status = picked === 0 ? 'Select your Legend' : 'Legend selected';
+          status = picked === 0 ? 'Select your Legend, then a slot' : 'Legend placed';
         } else if (limit === 2) {
-          status = picked === 0 ? 'Select 2 players' : '1 of 2 selected';
+          status = picked === 0 ? 'Select a player, then a slot' : '1 placed — select 1 more';
         } else {
-          status = 'Select 1 player';
+          status = 'Select a player, then a slot';
         }
         btnLabel = 'Spin';
         btnEnabled = false;
+      }
+
+      if (selectedUid && uidIndex[selectedUid]) {
+        status = `Place ${uidIndex[selectedUid].name} — choose a glowing slot`;
+      } else if (moveFrom) {
+        const occupant = draft.selectedPlayers.find((s) => s.uid === draft.slots[moveFrom]);
+        status = occupant
+          ? `Moving ${occupant.name} — choose a glowing slot`
+          : 'Choose a glowing slot';
       }
 
       setDrawStatus(status);
@@ -555,6 +591,8 @@ const styleSeed = playersForEra('legends')[0];
 
     $('bm11-startover').addEventListener('click', () => {
       draft = createDraft();
+      selectedUid = null;
+      moveFrom = null;
       clearUserXI();
       clearDraft();
       flashMsg('');
@@ -593,7 +631,7 @@ const styleSeed = playersForEra('legends')[0];
       const picked = draft.picksThisRound.length;
       lede.textContent =
         `${unpickedCount(pool)} players available · ` +
-        `pick ${limit - picked} more this round`;
+        `pick ${limit - picked} more this round — select a player, then choose their slot in your XI`;
 
       if (pool.length === 0) {
         // Defensive: cannot happen — spins only draw combos with players.
@@ -631,13 +669,13 @@ const styleSeed = playersForEra('legends')[0];
           if (badge) badge.hidden = !show;
         };
         if (pick && pick.roundPicked === draft.currentRound && !draft.gameComplete) {
-          // Picked this round — selected and toggleable.
+          // Placed this round — shown picked; activate to remove the pick.
           btn.classList.add('is-selected');
           btn.classList.remove('is-disabled', 'is-locked');
           btn.setAttribute('aria-pressed', 'true');
           btn.removeAttribute('aria-disabled');
           btn.removeAttribute('title');
-          btn.setAttribute('aria-label', `${accessibleName(p)} (selected — activate to remove)`);
+          btn.setAttribute('aria-label', `${accessibleName(p)} (placed — activate to remove)`);
           setBadge(true);
         } else if (pick) {
           // Picked in an earlier round (or draft complete) — locked in.
@@ -656,14 +694,26 @@ const styleSeed = playersForEra('legends')[0];
           btn.removeAttribute('title');
           btn.setAttribute('aria-label', accessibleName(p));
           setBadge(false);
+        } else if (uid === selectedUid) {
+          // The candidate waiting for a slot.
+          btn.classList.add('is-selected');
+          btn.classList.remove('is-disabled', 'is-locked');
+          btn.setAttribute('aria-pressed', 'true');
+          btn.removeAttribute('aria-disabled');
+          btn.removeAttribute('title');
+          btn.setAttribute(
+            'aria-label',
+            `${accessibleName(p)} (selected — choose a glowing slot in your XI, or activate again to cancel)`
+          );
+          setBadge(false);
         } else {
-          const reason = validateDraftPick(draft, p);
+          const reason = validatePoolPick(draft, p);
           btn.classList.remove('is-selected', 'is-locked');
           btn.classList.toggle('is-disabled', reason !== null);
           btn.setAttribute('aria-pressed', 'false');
           if (reason) {
-            // Quota-filled groups (and other blocks) explain themselves on
-            // hover / focus so the user knows why a card can't be picked.
+            // Every slot this player could fill is taken (or another block)
+            // — the reason explains itself on hover / focus.
             btn.setAttribute('aria-disabled', 'true');
             btn.title = reason;
           } else {
@@ -679,10 +729,13 @@ const styleSeed = playersForEra('legends')[0];
     groupsEl.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-bm11-select]');
       if (!btn) return;
-      togglePlayer(btn.getAttribute('data-bm11-select'), btn);
+      onPoolClick(btn.getAttribute('data-bm11-select'), btn);
     });
 
-    function togglePlayer(uid, btn) {
+    // Step 1 of drafting: select a pool player as the candidate. They only
+    // join the XI once placed into a slot (step 2). Activating the same
+    // card again cancels the selection.
+    function onPoolClick(uid, btn) {
       const p = uidIndex[uid];
       if (!p || draft.isSpinning) return;
       const existing = draft.selectedPlayers.find((s) => s.id === p.id);
@@ -693,10 +746,16 @@ const styleSeed = playersForEra('legends')[0];
           announce(msg);
           return;
         }
+        // Remove this round's pick (frees its slot too).
+        if (selectedUid === uid) selectedUid = null;
+        if (moveFrom) moveFrom = null;
         draft = applyDraftDeselect(draft, p.id);
         announce(`Removed ${p.name}. ${draft.selectedPlayers.length} of ${XI_SIZE} selected.`);
+      } else if (selectedUid === uid) {
+        selectedUid = null;
+        announce(`Deselected ${p.name}.`);
       } else {
-        const reason = validateDraftPick(draft, p);
+        const reason = validatePoolPick(draft, p);
         if (reason) {
           flashMsg(reason);
           announce(reason);
@@ -706,37 +765,133 @@ const styleSeed = playersForEra('legends')[0];
           }
           return;
         }
-        draft = applyDraftPick(draft, p);
+        // A pool selection takes over from a pending move.
+        moveFrom = null;
+        selectedUid = uid;
         flashMsg('');
-        // Note when a pick fills its group quota — the pool cards for that
-        // group are now disabled.
-        const qGroup = quotaGroupForRole(p.primaryRole);
-        const qUsed = countQuotaGroup(draft.selectedPlayers, qGroup);
-        const qMax = DRAFT_GROUP_QUOTAS[qGroup];
-        const quotaNote =
-          qMax !== undefined && qUsed >= qMax
-            ? ` ${DRAFT_GROUP_LABELS[qGroup]} quota filled (${qUsed}/${qMax}).`
+        announce(
+          `Selected ${p.name} — ${groupLabelList(p)}. Choose a glowing slot in your XI.`
+        );
+      }
+      persist();
+      renderAll();
+    }
+
+    // Step 2 of drafting: place the selected pool player into a slot —
+    // or, with no pool selection, reposition an XI player (move / swap).
+    function onSlotClick(slotKey) {
+      const slot = slotByKey(slotKey);
+      if (!slot || draft.isSpinning) return;
+      const occupantUid = draft.slots[slotKey];
+
+      if (selectedUid) {
+        const p = uidIndex[selectedUid];
+        if (!p) {
+          selectedUid = null;
+          renderAll();
+          return;
+        }
+        const reason = validateSlotPlacement(draft, p, slotKey);
+        if (reason) {
+          flashMsg(reason);
+          announce(reason);
+          return;
+        }
+        draft = applyDraftPick(draft, p, slotKey);
+        selectedUid = null;
+        flashMsg('');
+        // Note when a placement fills every slot of its group.
+        const groupSlots = XI_SLOTS.filter((s) => s.group === slot.group);
+        const filledNote =
+          groupSlots.length > 1 && groupSlots.every((s) => draft.slots[s.key])
+            ? ` ${(DRAFT_GROUP_LABELS[slot.group] || slot.group)} filled.`
             : '';
         if (draft.gameComplete) {
           announce(
-            `XI complete — ${p.name} selected. Your XI of ${XI_SIZE} is ready. Compare XIs to face the house team.`
+            `XI complete — ${p.name} placed at ${slot.label}.${filledNote} Your XI of ${XI_SIZE} is ready. Compare XIs to face the house team.`
           );
         } else if (roundDone()) {
           announce(
-            `Selected ${p.name}.${quotaNote} Round ${draft.currentRound} complete — spin again for the next draw.`
+            `Placed ${p.name} at ${slot.label}.${filledNote} Round ${draft.currentRound} complete — spin again for the next draw.`
           );
         } else {
           const left =
             selectionLimitForRound(draft.currentRound) - draft.picksThisRound.length;
           announce(
-            `Selected ${p.name}.${quotaNote} ${left} more pick${left === 1 ? '' : 's'} this round. ` +
+            `Placed ${p.name} at ${slot.label}.${filledNote} ${left} more pick${left === 1 ? '' : 's'} this round. ` +
               `${draft.selectedPlayers.length} of ${XI_SIZE} total.`
           );
         }
+      } else if (moveFrom) {
+        if (moveFrom === slotKey) {
+          moveFrom = null;
+          announce('Move cancelled.');
+        } else {
+          const reason = validateSlotMove(draft, moveFrom, slotKey);
+          if (reason) {
+            flashMsg(reason);
+            announce(reason);
+            return;
+          }
+          const mover = draft.selectedPlayers.find(
+            (s) => s.uid === draft.slots[moveFrom]
+          );
+          const targetOccupied = !!draft.slots[slotKey];
+          draft = applyDraftMove(draft, moveFrom, slotKey);
+          moveFrom = null;
+          flashMsg('');
+          announce(
+            mover
+              ? `${mover.name} ${targetOccupied ? 'swapped' : 'moved'} to ${slot.label}.`
+              : `Moved to ${slot.label}.`
+          );
+        }
+      } else if (occupantUid) {
+        // Arm a move: the next slot activated becomes the destination.
+        const p = draft.selectedPlayers.find((s) => s.uid === occupantUid);
+        moveFrom = slotKey;
+        announce(
+          p
+            ? `Selected ${p.name} from ${slot.label} — ${groupLabelList(p)}. Choose a glowing slot to move them, or ${slot.label} again to cancel.`
+            : `Selected ${slot.label}. Choose a glowing slot, or ${slot.label} again to cancel.`
+        );
+      } else {
+        const hint = 'Select a player from your draw first — then choose a slot.';
+        flashMsg(hint);
+        announce(hint);
+        return;
       }
       persist();
       renderAll();
     }
+
+    summaryEl.addEventListener('click', (e) => {
+      const rm = e.target.closest('[data-bm11-deselect]');
+      if (rm) {
+        const rawId = rm.getAttribute('data-bm11-deselect');
+        const p = draft.selectedPlayers.find((s) => s.id === rawId);
+        if (!p) return;
+        if (selectedUid) selectedUid = null;
+        if (moveFrom) moveFrom = null;
+        draft = applyDraftDeselect(draft, rawId);
+        persist();
+        renderAll();
+        announce(`Removed ${p.name}. ${draft.selectedPlayers.length} of ${XI_SIZE} selected.`);
+        return;
+      }
+      const slotBtn = e.target.closest('[data-bm11-slot]');
+      if (slotBtn) onSlotClick(slotBtn.getAttribute('data-bm11-slot'));
+    });
+
+    // Escape cancels a pending pool selection or move.
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (!selectedUid && !moveFrom) return;
+      selectedUid = null;
+      moveFrom = null;
+      renderAll();
+      announce('Selection cancelled.');
+    });
 
     // ------------------------------------------------------------ spin history
     function renderHistory() {
@@ -758,6 +913,96 @@ const styleSeed = playersForEra('legends')[0];
     }
 
     // ----------------------------------------------------------------- summary
+    // The XI panel always renders all 11 fixed slots, grouped in batting
+    // order. Empty slots are buttons: with a pool player selected, the
+    // compatible ones glow; with a move armed, valid destinations glow.
+    function slotButtonHTML(slotKey) {
+      const slot = slotByKey(slotKey);
+      const occupantUid = draft.slots[slotKey];
+      const occupant = occupantUid
+        ? draft.selectedPlayers.find((s) => s.uid === occupantUid)
+        : null;
+      const classes = ['bm11-slot-btn'];
+      let hint = '';
+      let ariaLabel = '';
+      let pressed = null;
+
+      if (occupant) {
+        // Row shows the era of the spin that drafted the player, and every
+        // group the data marks them eligible for (e.g. "Middle Order,
+        // Wicketkeeper").
+        const eraId = occupant.draftEra || occupant.displayEra;
+        const accent = ERA_ACCENTS[eraId] || '#94A3B8';
+        const flag = NATION_FLAGS[occupant.nation] || '';
+        const roles = groupLabelList(occupant);
+        const removable =
+          !draft.gameComplete && occupant.roundPicked === draft.currentRound;
+        if (moveFrom === slotKey) {
+          classes.push('is-armed');
+          pressed = 'true';
+          ariaLabel =
+            `${occupant.name}, ${roles}, ${slot.label} — selected for moving. ` +
+            `Activate a glowing slot to move them, or this slot again to cancel.`;
+        } else if (moveFrom && validateSlotMove(draft, moveFrom, slotKey) === null) {
+          classes.push('is-glow');
+          ariaLabel =
+            `${occupant.name}, ${roles}, ${slot.label} — activate to swap with the selected player.`;
+        } else {
+          ariaLabel =
+            `${occupant.name}, ${roles}, ${slot.label}. ` +
+            `Activate to select for moving.`;
+        }
+        return (
+          `<button type="button" class="${classes.join(' ')}" data-bm11-slot="${esc(slotKey)}"` +
+          (pressed ? ` aria-pressed="${pressed}"` : '') +
+          ` aria-label="${esc(ariaLabel)}" style="--era-accent:${accent};">` +
+          `<img src="${avatarSrc(eraId)}" alt="" aria-hidden="true" loading="lazy"` +
+          ` class="bm11-xi-avatar" style="--era-accent:${accent};" />` +
+          `<span class="bm11-xi-main">` +
+          `<span class="bm11-xi-name">${esc(occupant.name)}</span>` +
+          `<span class="bm11-xi-sub">${esc(roles)} · ${flag ? `<span aria-hidden="true">${flag} </span>` : ''}${esc(
+            occupant.nation || ''
+          )} · ${esc(eraName(eraId))}</span>` +
+          `</span>` +
+          `<span class="bm11-xi-round" title="Picked in round ${occupant.roundPicked}">R${occupant.roundPicked}</span>` +
+          `</button>` +
+          (removable
+            ? `<button type="button" class="bm11-slot-remove" data-bm11-deselect="${esc(
+                occupant.id
+              )}" aria-label="Remove ${esc(occupant.name)} from XI">×</button>`
+            : '')
+        );
+      }
+
+      // Empty slot.
+      classes.push('is-empty');
+      if (selectedUid && uidIndex[selectedUid]) {
+        const p = uidIndex[selectedUid];
+        if (validateSlotPlacement(draft, p, slotKey) === null) {
+          classes.push('is-glow');
+          hint = `Place ${p.name} here`;
+          ariaLabel = `${slot.label} — empty. Activate to place ${p.name} here.`;
+        } else {
+          hint = slot.required ? 'Required — every XI needs a keeper' : 'Empty';
+          ariaLabel = `${slot.label} — empty. ${p.name} can't play here.`;
+        }
+      } else if (moveFrom && validateSlotMove(draft, moveFrom, slotKey) === null) {
+        classes.push('is-glow');
+        hint = 'Move here';
+        ariaLabel = `${slot.label} — empty. Activate to move the selected player here.`;
+      } else {
+        hint = slot.required ? 'Required — every XI needs a keeper' : 'Empty';
+        ariaLabel = `${slot.label} — empty.`;
+      }
+      return (
+        `<button type="button" class="${classes.join(' ')}" data-bm11-slot="${esc(slotKey)}"` +
+        ` aria-label="${esc(ariaLabel)}">` +
+        `<span class="bm11-slot-label">${esc(slot.label)}</span>` +
+        `<span class="bm11-slot-hint${slot.required && hint !== 'Empty' ? ' is-required' : ''}">${esc(hint)}</span>` +
+        `</button>`
+      );
+    }
+
     function renderSummary() {
       $('bm11-count').textContent = `${draft.selectedPlayers.length}/${XI_SIZE}`;
       $('bm11-progress-fill').style.width = `${
@@ -765,63 +1010,26 @@ const styleSeed = playersForEra('legends')[0];
       }%`;
 
       const list = $('bm11-xi-list');
-      if (!draft.selectedPlayers.length) {
-        list.innerHTML =
-          '<li class="bm11-xi-empty">No players yet — spin to draw your Legend.</li>';
-      } else {
-        list.innerHTML = XI_GROUPS.map((g) => {
-          const members = draft.selectedPlayers.filter((p) =>
-            g.roles.includes(p.primaryRole)
-          );
-          const rows = members
-            .map((p) => {
-              // Row shows the era of the spin that drafted the player.
-              const eraId = p.draftEra || p.displayEra;
-              const accent = ERA_ACCENTS[eraId] || '#94A3B8';
-              const flag = NATION_FLAGS[p.nation] || '';
-              const removable =
-                !draft.gameComplete && p.roundPicked === draft.currentRound;
-              return (
-                `<li class="bm11-xi-player">` +
-                `<img src="${avatarSrc(eraId)}" alt="" aria-hidden="true" loading="lazy"` +
-                ` class="bm11-xi-avatar" style="--era-accent:${accent};" />` +
-                `<span class="bm11-xi-main">` +
-                `<span class="bm11-xi-name">${esc(p.name)}</span>` +
-                `<span class="bm11-xi-sub">${flag ? `<span aria-hidden="true">${flag} </span>` : ''}${esc(
-                  p.nation || ''
-                )} · ${esc(eraName(eraId))}</span>` +
-                `</span>` +
-                `<span class="bm11-xi-round" title="Picked in round ${p.roundPicked}">R${p.roundPicked}</span>` +
-                (removable
-                  ? `<button type="button" class="bm11-slot-remove" data-bm11-deselect="${esc(
-                      p.id
-                    )}" aria-label="Remove ${esc(p.name)} from XI">×</button>`
-                  : '') +
-                `</li>`
-              );
-            })
-            .join('');
-          return (
-            `<li class="bm11-xi-group">` +
-            `<div class="bm11-xi-group-head">` +
-            `<span class="bm11-xi-group-label">${esc(g.label)}</span>` +
-            `<span class="bm11-xi-group-count" aria-label="${members.length} of ${g.quota} ${esc(g.label)} selected">${members.length}/${g.quota}</span>` +
-            `</div>` +
-            (rows
-              ? `<ul class="bm11-xi-group-list">${rows}</ul>`
-              : g.required
-                ? `<p class="bm11-xi-group-empty bm11-xi-group-required">Required — every XI needs a keeper</p>`
-                : `<p class="bm11-xi-group-empty">No picks yet</p>`) +
-            `</li>`
-          );
-        }).join('');
-      }
+      list.innerHTML = SLOT_GROUPS.map((g) => {
+        const filled = g.keys.filter((k) => draft.slots[k]).length;
+        const rows = g.keys
+          .map((k) => `<li class="bm11-slot">${slotButtonHTML(k)}</li>`)
+          .join('');
+        return (
+          `<li class="bm11-xi-group">` +
+          `<div class="bm11-xi-group-head">` +
+          `<span class="bm11-xi-group-label">${esc(g.label)}</span>` +
+          `<span class="bm11-xi-group-count" aria-label="${filled} of ${g.keys.length} ${esc(g.label)} slots filled">${filled}/${g.keys.length}</span>` +
+          `</div>` +
+          `<ul class="bm11-xi-group-list">${rows}</ul>` +
+          `</li>`
+        );
+      }).join('');
 
-      // A finished XI always contains the mandatory wicketkeeper (the draft
-      // reserves the last middle-order slot for the keeper), but guard the
-      // CTA anyway for drafts restored from before the quota rules existed.
-      const keeperOk = hasWicketkeeper(draft.selectedPlayers);
-      const ready = draft.gameComplete && keeperOk;
+      // Compare XIs unlocks on a complete XI with the keeper slot filled.
+      // The draft itself can never strand a keeperless XI at 11, but guard
+      // anyway for drafts restored from older saves.
+      const ready = draft.gameComplete && keeperSlotFilled(draft);
       ctaEl.classList.toggle('is-disabled', !ready);
       ctaEl.setAttribute('aria-disabled', ready ? 'false' : 'true');
 
@@ -838,30 +1046,18 @@ const styleSeed = playersForEra('legends')[0];
     }
 
     ctaEl.addEventListener('click', (e) => {
-      if (draft.gameComplete && !hasWicketkeeper(draft.selectedPlayers)) {
+      if (draft.gameComplete && !keeperSlotFilled(draft)) {
         e.preventDefault();
         const msg =
-          'This XI has no wicketkeeper — start a fresh draft to build a valid XI.';
+          'This XI has no wicketkeeper — move a keeper-capable player into the Wicketkeeper slot.';
         flashMsg(msg);
         announce(msg);
       } else if (!draft.gameComplete) {
         e.preventDefault();
         const need = XI_SIZE - draft.selectedPlayers.length;
-        flashMsg(`Pick ${need} more player${need === 1 ? '' : 's'} to complete your XI.`);
+        flashMsg(`Place ${need} more player${need === 1 ? '' : 's'} to complete your XI.`);
         announce(`Your XI is incomplete. ${need} more needed.`);
       }
-    });
-
-    summaryEl.addEventListener('click', (e) => {
-      const rm = e.target.closest('[data-bm11-deselect]');
-      if (!rm) return;
-      const rawId = rm.getAttribute('data-bm11-deselect');
-      const p = draft.selectedPlayers.find((s) => s.id === rawId);
-      if (!p) return;
-      draft = applyDraftDeselect(draft, rawId);
-      persist();
-      renderAll();
-      announce(`Removed ${p.name}. ${draft.selectedPlayers.length} of ${XI_SIZE} selected.`);
     });
 
     $('bm11-toggle').addEventListener('click', () => {
@@ -1372,6 +1568,73 @@ const styleSeed = playersForEra('legends')[0];
       font-style: normal;
       font-weight: 600;
     }
+    /* ---- XI slots: 11 fixed rows, always rendered ---- */
+    .bm11-slot {
+      display: flex;
+      align-items: stretch;
+      gap: 0.35rem;
+    }
+    .bm11-slot-btn {
+      flex: 1 1 auto;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.35rem 0.5rem;
+      font: inherit;
+      text-align: left;
+      color: var(--bm11-text, #f1f5f9);
+      background: var(--bm11-elevated, #141d33);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      border-radius: 0.6rem;
+      cursor: pointer;
+    }
+    .bm11-slot-btn:focus-visible {
+      outline: 2px solid var(--bm11-ring, #4ade80);
+      outline-offset: 2px;
+    }
+    .bm11-slot-btn.is-empty {
+      border-style: dashed;
+      border-color: var(--bm11-border, rgba(148, 163, 184, 0.14));
+      background: transparent;
+      justify-content: space-between;
+      padding: 0.5rem 0.7rem;
+    }
+    .bm11-slot-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .bm11-slot-hint {
+      font-size: 0.72rem;
+      color: var(--bm11-muted, #94a3b8);
+      text-align: right;
+    }
+    .bm11-slot-hint.is-required {
+      color: #fbbf24;
+      font-weight: 600;
+    }
+    /* Compatible destinations glow while placing or moving. */
+    .bm11-slot-btn.is-glow {
+      border-style: solid;
+      border-color: var(--bm11-primary, #22c55e);
+      background: rgba(34, 197, 94, 0.08);
+      box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.55), 0 0 18px rgba(34, 197, 94, 0.35);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .bm11-slot-btn.is-glow { animation: bm11-slot-glow 1.6s ease-in-out infinite; }
+      @keyframes bm11-slot-glow {
+        50% {
+          box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.8), 0 0 26px rgba(34, 197, 94, 0.5);
+        }
+      }
+    }
+    /* The slot whose occupant is being repositioned. */
+    .bm11-slot-btn.is-armed {
+      border-color: #fbbf24;
+      box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.6);
+    }
+    .bm11-slot .bm11-slot-remove { align-self: center; }
     .bm11-xi-player,
     .bm11-xi-empty {
       display: flex;
