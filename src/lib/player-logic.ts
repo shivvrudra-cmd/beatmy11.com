@@ -256,9 +256,13 @@ export const DRAFT_ROUNDS = 6;
  *  plain player array stays under XI_STORAGE_KEY so /matchup keeps working. */
 export const DRAFT_STORAGE_KEY = 'beatmy11.draft.v1';
 
-/** A drafted player: normalized player + the round they were picked in. */
+/** A drafted player: normalized player + the round they were picked in,
+ *  plus the era of the spin that drafted them (the draw era — a player
+ *  listed under several eras, e.g. Shaun Pollock in 1990s+2000s, is shown
+ *  under the era the spin landed on). */
 export interface DraftPick extends NormalizedPlayer {
   roundPicked: number;
+  draftEra: string;
 }
 
 /** One spin: the drawn combo plus the raw ids picked from it. */
@@ -388,7 +392,11 @@ export function applyDraftPick(
   player: NormalizedPlayer,
 ): DraftState {
   if (validateDraftPick(state, player) !== null) return state;
-  const pick: DraftPick = { ...player, roundPicked: state.currentRound };
+  const pick: DraftPick = {
+    ...player,
+    roundPicked: state.currentRound,
+    draftEra: state.currentEra ?? player.displayEra,
+  };
   const spinHistory = state.spinHistory.map((s, i) =>
     i === state.spinHistory.length - 1
       ? { ...s, picks: [...s.picks, player.id] }
@@ -436,7 +444,7 @@ export interface SerializedDraft {
   currentRound: number;
   gameComplete: boolean;
   spinHistory: SpinRecord[];
-  picks: { uid: string; round: number }[];
+  picks: { uid: string; round: number; draftEra: string }[];
 }
 
 /** Serialize a draft for `beatmy11.draft.v1`. Players are stored by uid and
@@ -449,7 +457,7 @@ export function serializeDraft(state: DraftState): SerializedDraft {
     currentRound: state.currentRound,
     gameComplete: state.gameComplete,
     spinHistory: state.spinHistory.map((s) => ({ ...s, picks: [...s.picks] })),
-    picks: state.selectedPlayers.map((p) => ({ uid: p.uid, round: p.roundPicked })),
+    picks: state.selectedPlayers.map((p) => ({ uid: p.uid, round: p.roundPicked, draftEra: p.draftEra })),
   };
 }
 
@@ -471,7 +479,11 @@ export function deserializeDraft(
     const p =
       entry && typeof entry.uid === 'string' ? resolve(entry.uid) : null;
     if (!p) return null;
-    selectedPlayers.push({ ...p, roundPicked: Number(entry.round) || 1 });
+    selectedPlayers.push({
+      ...p,
+      roundPicked: Number(entry.round) || 1,
+      draftEra: String(entry.draftEra ?? p.displayEra),
+    });
   }
   const spinHistory: SpinRecord[] = Array.isArray(d.spinHistory)
     ? d.spinHistory

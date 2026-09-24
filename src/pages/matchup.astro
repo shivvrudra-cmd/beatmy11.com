@@ -177,7 +177,7 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
         id: uid || String(p.name ?? ''),
         name: String(p.name ?? ''),
         nation: String(p.nation ?? ''),
-        era: eraString(p.era ?? p.displayEra, inferredEra ?? sourceEra),
+        era: eraString(p.draftEra ?? p.era ?? p.displayEra, inferredEra ?? sourceEra),
         primaryRole: normalizeRole(p.primaryRole),
         secondaryRoles: normalizeSecondaryRoles(p.secondaryRoles),
         stats: {
@@ -315,7 +315,7 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
      * + .bm11-pc-ministats. Styles come from the component's global classes.
      */
     function comparisonRow(p) {
-      const eraId = eraString(p.era ?? p.displayEra, 'legends');
+      const eraId = eraString(p.draftEra ?? p.era ?? p.displayEra, 'legends');
       const eraLabel = eraId === 'legends' ? 'Legends' : eraId;
       const accent = ERA_ACCENTS[eraId] ?? '#94A3B8';
       const roles = [
