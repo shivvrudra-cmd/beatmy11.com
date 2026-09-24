@@ -1,0 +1,214 @@
+---
+/**
+ * PlayerCompare — neutral "A vs B" stat comparison.
+ *
+ * Props:
+ *   playerA - player object
+ *   playerB - player object
+ *
+ * Stat rows render only when at least one side has a real (non-zero) value.
+ * Each side's bars use that player's era accent — no winner styling.
+ * Ratings are shown neutrally and only when the data carries them
+ * (stats.finalRating, computed by ratings.ts at runtime).
+ */
+import PlayerAvatar from './PlayerAvatar.astro';
+import StatBar from './StatBar.astro';
+
+interface Props {
+  playerA: any;
+  playerB: any;
+}
+
+const { playerA, playerB } = Astro.props;
+
+const ERA_ACCENTS: Record<string, string> = {
+  legends: '#C9A227',
+  '1970s': '#C26936',
+  '1980s': '#D64045',
+  '1990s': '#2AA198',
+  '2000s': '#3B82F6',
+  '2010s': '#8B5CF6',
+  '2020s': '#2DD4BF',
+};
+
+const NATION_FLAGS: Record<string, string> = {
+  Australia: '🇦🇺',
+  England: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+  India: '🇮🇳',
+  Pakistan: '🇵🇰',
+  'West Indies': '🇯🇲',
+  'New Zealand': '🇳🇿',
+  'South Africa': '🇿🇦',
+  'Sri Lanka': '🇱🇰',
+  Bangladesh: '🇧🇩',
+  Zimbabwe: '🇿🇼',
+};
+
+const eraAccentOf = (p: any) => {
+  const eraId = (Array.isArray(p.era) ? p.era[0] : p.era) ?? 'legends';
+  return ERA_ACCENTS[eraId] ?? '#94A3B8';
+};
+const eraLabelOf = (p: any) => {
+  const eraId = (Array.isArray(p.era) ? p.era[0] : p.era) ?? 'legends';
+  return eraId === 'legends' ? 'Legends' : eraId;
+};
+
+const accentA = eraAccentOf(playerA);
+const accentB = eraAccentOf(playerB);
+const sA = playerA.stats ?? {};
+const sB = playerB.stats ?? {};
+
+const num = (v: any) => (v == null || Number.isNaN(Number(v)) ? null : Number(v));
+const fmt2 = (v: number | null) => (v == null ? '–' : v.toFixed(2));
+const fmtInt = (v: number | null) => (v == null ? '–' : Math.round(v).toLocaleString('en-US'));
+
+interface Row {
+  key: string;
+  label: string;
+  a: number | null;
+  b: number | null;
+  max: number;
+  fmt: (v: number | null) => string;
+}
+
+const hasValue = (v: number | null) => v != null && v !== 0;
+const scaleMax = (a: number | null, b: number | null) =>
+  Math.max(Math.abs(a ?? 0), Math.abs(b ?? 0), 1);
+
+const candidateRows: Row[] = [
+  { key: 'avg', label: 'Batting Avg', a: num(sA.testAverage), b: num(sB.testAverage), max: 0, fmt: fmt2 },
+  { key: 'runs', label: 'Runs', a: num(sA.testRuns), b: num(sB.testRuns), max: 0, fmt: fmtInt },
+  { key: 'sr', label: 'Strike Rate', a: num(sA.battingStrikeRate), b: num(sB.battingStrikeRate), max: 0, fmt: fmt2 },
+  { key: '100s', label: 'Centuries', a: num(sA.testCenturies), b: num(sB.testCenturies), max: 0, fmt: fmtInt },
+  { key: 'wkts', label: 'Wickets', a: num(sA.testWickets), b: num(sB.testWickets), max: 0, fmt: fmtInt },
+  { key: 'bowlavg', label: 'Bowling Avg', a: num(sA.testBowlingAverage ?? sA.bowlingAverage), b: num(sB.testBowlingAverage ?? sB.bowlingAverage), max: 0, fmt: fmt2 },
+  { key: 'fivewi', label: 'Five-Wicket Hauls', a: num(sA.fiveWs), b: num(sB.fiveWs), max: 0, fmt: fmtInt },
+  { key: 'dismissals', label: 'Dismissals', a: num(sA.dismissals), b: num(sB.dismissals), max: 0, fmt: fmtInt },
+  { key: 'matches', label: 'Matches', a: num(sA.testMatches), b: num(sB.testMatches), max: 0, fmt: fmtInt },
+];
+
+// Render rows only for stats present in the data (non-zero on at least one side).
+const rows: Row[] = candidateRows
+  .filter((r) => hasValue(r.a) || hasValue(r.b))
+  .map((r) => ({ ...r, max: scaleMax(r.a, r.b) }));
+
+const ratingA = num(sA.finalRating ?? playerA.rating ?? playerA.score);
+const ratingB = num(sB.finalRating ?? playerB.rating ?? playerB.score);
+const showRating = hasValue(ratingA) || hasValue(ratingB);
+const ratingMax = scaleMax(ratingA, ratingB);
+
+const headerSide = (p: any, accent: string) => ({
+  flag: NATION_FLAGS[p.nation] ?? '',
+  era: eraLabelOf(p),
+  accent,
+});
+const headA = headerSide(playerA, accentA);
+const headB = headerSide(playerB, accentB);
+---
+<section class="bm11-compare" aria-label={`${playerA.name} versus ${playerB.name}`}>
+  <div class="bm11-vs-head">
+    <div class="bm11-vs-side">
+      <PlayerAvatar name={playerA.name} era={playerA.era} size="w-16 h-16 sm:w-20 sm:h-20" />
+      <div class="bm11-vs-name">{playerA.name}</div>
+      <div class="bm11-vs-sub">
+        {headA.flag && <span aria-hidden="true">{headA.flag} </span>}{playerA.nation}
+        {' · '}
+        <span class="bm11-era-chip" style={`--era-accent:${headA.accent}`}>{headA.era}</span>
+      </div>
+    </div>
+    <div class="bm11-vs-badge" aria-hidden="true">VS</div>
+    <div class="bm11-vs-side">
+      <PlayerAvatar name={playerB.name} era={playerB.era} size="w-16 h-16 sm:w-20 sm:h-20" />
+      <div class="bm11-vs-name">{playerB.name}</div>
+      <div class="bm11-vs-sub">
+        {headB.flag && <span aria-hidden="true">{headB.flag} </span>}{playerB.nation}
+        {' · '}
+        <span class="bm11-era-chip" style={`--era-accent:${headB.accent}`}>{headB.era}</span>
+      </div>
+    </div>
+  </div>
+
+  {showRating && (
+    <div class="bm11-vs-rating" aria-label="Ratings">
+      <span class="bm11-vs-rating-side bm11-stat-num" style={`color:${accentA}`}>{fmt2(ratingA)}</span>
+      <span class="bm11-vs-rating-label">Rating</span>
+      <span class="bm11-vs-rating-side bm11-stat-num" style={`color:${accentB}`}>{fmt2(ratingB)}</span>
+    </div>
+  )}
+
+  <div class="bm11-vs-rows">
+    {rows.length === 0 && (
+      <p class="bm11-vs-empty">No comparable statistics available for these players.</p>
+    )}
+    {rows.map((r) => (
+      <div class="bm11-vs-row">
+        <div class="bm11-vs-rowhead">
+          <span class="bm11-vs-value bm11-stat-num">{r.fmt(r.a)}</span>
+          <span class="bm11-vs-label">{r.label}</span>
+          <span class="bm11-vs-value bm11-stat-num">{r.fmt(r.b)}</span>
+        </div>
+        <div class="bm11-vs-bars">
+          <StatBar label={playerA.name} value={r.a ?? 0} max={r.max} display={r.fmt(r.a)} accent={accentA} />
+          <StatBar label={playerB.name} value={r.b ?? 0} max={r.max} display={r.fmt(r.b)} accent={accentB} />
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style is:global>
+  .bm11-compare {
+    background: var(--bm11-surface, #0D1424);
+    border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+    color: var(--bm11-text, #F1F5F9);
+  }
+  .bm11-vs-head {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+  }
+  .bm11-vs-side { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.4rem; min-width: 0; }
+  .bm11-vs-name { font-weight: 700; font-size: 1rem; line-height: 1.25; }
+  .bm11-vs-sub { font-size: 0.75rem; color: var(--bm11-muted, #94A3B8); }
+  .bm11-vs-badge {
+    font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em;
+    color: var(--bm11-muted, #94A3B8);
+    border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+    background: var(--bm11-elevated, #141D33);
+    border-radius: 9999px;
+    padding: 0.4rem 0.7rem;
+  }
+  .bm11-era-chip {
+    display: inline-block;
+    font-size: 0.62rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--era-accent);
+    border: 1px solid var(--era-accent);
+    border-radius: 9999px;
+    padding: 0.08rem 0.5rem;
+    line-height: 1.5;
+  }
+  .bm11-vs-rating {
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+    gap: 0.75rem; padding: 0.9rem 0;
+    border-bottom: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+  }
+  .bm11-vs-rating-side { font-size: 1.35rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .bm11-vs-rating-side:first-child { text-align: right; }
+  .bm11-vs-rating-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--bm11-muted, #94A3B8); }
+
+  .bm11-vs-rows { display: flex; flex-direction: column; gap: 1rem; padding-top: 1rem; }
+  .bm11-vs-rowhead {
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: baseline;
+    gap: 0.75rem; margin-bottom: 0.45rem;
+  }
+  .bm11-vs-value { font-weight: 700; font-variant-numeric: tabular-nums; font-size: 0.95rem; }
+  .bm11-vs-value:first-child { text-align: right; }
+  .bm11-vs-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--bm11-muted, #94A3B8); text-align: center; }
+  .bm11-vs-bars { display: flex; flex-direction: column; gap: 0.5rem; }
+  .bm11-vs-empty { color: var(--bm11-muted, #94A3B8); font-size: 0.85rem; text-align: center; padding: 1rem 0; }
+</style>

@@ -1,122 +1,455 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Meta } from '@/components/Meta.astro';
+import Navbar from '@/components/Navbar.astro';
+import Hero from '@/components/Hero.astro';
+import EraCard from '@/components/EraCard.astro';
+import EraTimeline from '@/components/EraTimeline.astro';
+import Footer from '@/components/Footer.astro';
+import CricketIcon from '@/components/icons/CricketIcons.astro';
+import { ERAS } from '@/lib/design-tokens';
+import type { EraToken } from '@/lib/design-tokens';
 
-const title = 'Beat My 11 - Build Your All-Time XI';
-const description = 'Test your cricket knowledge against the legends. Build your fantasy XI and see if you can beat the house team in a 5-match Test series.';
-const ogImage = '/og-image.png';
-const siteUrl = 'https://beatmy11.com';
+import legendsData from '@/data/legends.json';
+import data1970s from '@/data/1970s.json';
+import data1980s from '@/data/1980s.json';
+import data1990s from '@/data/1990s.json';
+import data2000s from '@/data/2000s.json';
+import data2010s from '@/data/2010s.json';
+import data2020s from '@/data/2020s.json';
+
+const title = 'BeatMy11 — Build Your All-Time Test XI';
+const description =
+  'Draft your all-time Test XI across seven eras of Test cricket and take on the fixed house XI. Era-normalized ratings decide your win probability. Can you beat my 11?';
+
+const count = (d: unknown) => (Array.isArray(d) ? d.length : 0);
+
+const countsByEra: Record<string, number> = {
+  legends: count(legendsData),
+  '1970s': count(data1970s),
+  '1980s': count(data1980s),
+  '1990s': count(data1990s),
+  '2000s': count(data2000s),
+  '2010s': count(data2010s),
+  '2020s': count(data2020s),
+};
+
+/* Era data comes from the shared design tokens; player counts are read
+   from the (read-only) era JSON pools, hrefs point at the game. */
+const eras: (EraToken & { playerCount: number; href: string })[] = ERAS.map(
+  (era) => ({
+    ...era,
+    playerCount: countsByEra[era.id] ?? 0,
+    href: '/play',
+  })
+);
+
+const totalPlayers = eras.reduce((n, e) => n + e.playerCount, 0);
+
+const steps = [
+  {
+    n: '1',
+    title: 'Spin for your Legend',
+    body: 'Your first spin always draws the Legends era — a random nation, one pick. Start your XI with an all-time great.',
+  },
+  {
+    n: '2',
+    title: 'Draft your XI',
+    body: 'Five more spins across the eras, two picks each round. Eleven players total — picks from earlier rounds are locked in.',
+  },
+  {
+    n: '3',
+    title: 'Face My XI',
+    body: 'Your XI takes on my fixed house XI — Bradman, Sobers, Warne, Marshall and company.',
+  },
+  {
+    n: '4',
+    title: 'Get the verdict',
+    body: 'Era-normalized ratings score both sides and set your win probability. The only question: can you beat my 11?',
+  },
+];
+
+const features = [
+  {
+    title: 'Strategic gameplay',
+    body: 'Six spins, eleven picks, no take-backs on earlier rounds — every selection shapes your final score against the house.',
+    icon: 'captain' as const,
+  },
+  {
+    title: 'Historical depth',
+    body: `From Bradman to the breakout stars of the 2020s — ${totalPlayers} players across cricket\u2019s rich history.`,
+    icon: 'ball' as const,
+  },
+  {
+    title: 'Face the house',
+    body: 'Your XI takes on the fixed Beat My 11 side — get an instant win-probability verdict on your all-time team.',
+    icon: 'trophy' as const,
+  },
+];
 ---
 <BaseLayout title={title} description={description}>
-  <Meta title={title} description={description} />
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <Navbar />
 
-  <main class="min-h-screen bg-gradient-to-b from-gray-50 to-white py-12">
-    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-      <header class="text-center mb-16">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">
-          Beat My 11
-        </h1>
-        <p class="text-xl text-gray-600">
-          Build your all-time XI and see if you can beat the house team
-        </p>
-      </header>
+  <main id="main" class="page">
+    <Hero />
 
-      <!-- Game Instructions -->
-      <section class="bg-white rounded-xl shadow-sm p-8 mb-12">
-        <h2 class="text-2xl font-semibold text-gray-900 mb-6">
-          How to Play
+    <!-- How to play -->
+    <section class="section" id="how" aria-labelledby="how-heading">
+      <div class="wrap">
+        <p class="eyebrow">The format</p>
+        <h2 class="h2" id="how-heading">How to play</h2>
+        <p class="lede">
+          Six spins. Eleven picks. One verdict. Spin to draw an era + nation,
+          draft your all-time XI round by round, and find out if you can beat
+          my 11.
         </p>
-        <ol class="list-decimal list-inside space-y-4 text-gray-700">
-          <li>
-            <strong>Spin the Wheel:</strong> Get 6 spins, each giving you a random cricket nation + era
-          </li>
-          <li>
-            <strong>Pick Players:</strong> Choose 2 players per spin (12 total) to build your XI
-          </li>
-          <li>
-            <strong>Follow the Rules:</strong> Max 1 opener, 1 wicketkeeper, 1 all-rounder per spin
-          </li>
-          <li>
-            <strong>Designate 12th Man:</strong> Choose which player sits out as your 12th man
-          </li>
-          <li>
-            <strong>Get Your Result:</strong> See if your XI beats Beat My 11 in a 5-match Test series
-          </li>
+        <ol class="steps">
+          {steps.map((s) => (
+            <li class="bm11-card step">
+              <span class="step__num" aria-hidden="true">{s.n}</span>
+              <h3 class="step__title">{s.title}</h3>
+              <p class="step__body">{s.body}</p>
+            </li>
+          ))}
         </ol>
-      </section>
-
-      <!-- Call to Action -->
-      <div class="text-center">
-        <button
-          class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
-        >
-          Start Building Your XI
-        </button>
       </div>
+    </section>
 
-      <!-- Features -->
-      <section class="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <div class="text-center p-6 bg-white rounded-xl shadow-sm">
-          <div class="mb-4">
-            <svg class="h-8 w-8 text-primary-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-.806-3.138 3.42 3.42 0 000-4.438 3.42 3.42 0 01.806-1.946 3.42 3.42 0 003.138-3.138z" />
-            </svg>
-          </div>
-          <h3 class="text-lg font-medium text-gray-900 mb-2">
-            Strategic Gameplay
-          </h3>
-          <p class="text-sm text-gray-500">
-            Limited spins and role constraints force meaningful decisions every turn
-          </p>
+    <!-- Era grid -->
+    <section class="section section--alt" id="eras" aria-labelledby="eras-heading">
+      <div class="wrap">
+        <p class="eyebrow">1877 — today</p>
+        <h2 class="h2" id="eras-heading">Seven eras of Test cricket</h2>
+        <p class="lede">
+          Every spin draws from one of seven eras — each with its own pool
+          of players, its own flavour, its own legends.
+        </p>
+        <div class="era-grid">
+          {eras.map((era) => (
+            <EraCard era={era} playerCount={era.playerCount} href={era.href} />
+          ))}
         </div>
+      </div>
+    </section>
 
-        <div class="text-center p-6 bg-white rounded-xl shadow-sm">
-          <div class="mb-4">
-            <svg class="h-8 w-8 text-primary-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2zm0 10c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2zm0-6c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2z" />
-            </svg>
-          </div>
-          <h3 class="text-lg font-medium text-gray-900 mb-2">
-            Historical Depth
-          </h3>
-          <p class="text-sm text-gray-500">
-            From Bradman to Babar Azam - build XIs across cricket's rich history
-          </p>
+    <!-- Era timeline -->
+    <section class="section" aria-labelledby="timeline-heading">
+      <div class="wrap">
+        <h2 class="h2 h2--sm" id="timeline-heading">Travel through time</h2>
+        <p class="lede">From the timeless Tests to the data age — pick your battleground.</p>
+        <EraTimeline eras={eras} />
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section section--alt" aria-labelledby="features-heading">
+      <div class="wrap">
+        <p class="eyebrow">Why it works</p>
+        <h2 class="h2" id="features-heading">Built for cricket nerds</h2>
+        <div class="feature-grid">
+          {features.map((f) => (
+            <div class="bm11-card feature">
+              <CricketIcon name={f.icon} class="feature__icon" />
+              <h3 class="feature__title">{f.title}</h3>
+              <p class="feature__body">{f.body}</p>
+            </div>
+          ))}
         </div>
+      </div>
+    </section>
 
-        <div class="text-center p-6 bg-white rounded-xl shadow-sm">
-          <div class="mb-4">
-            <svg class="h-8 w-8 text-primary-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h3m8 0h3M8 7a4.965 4.965 0 00-1.717.968m10-1.032A4.965 4.965 0 0117.717 7.968zm-3.434 6.032A11.94 11.94 0 018 19c-4.478 0-8.268-2.943-9.543-7a11.91 11.91 0 012.078-6.968m14.465 1.032A11.91 11.91 0 0021 12c0-4.478-2.943-8.268-7-9.543a11.91 11.91 0 01-6.968-2.078m-3.434 6.032a11.94 11.94 0 006.374 1.732M13 7h3" />
+    <!-- Daily challenge band -->
+    <section class="section" id="daily" aria-labelledby="daily-heading">
+      <div class="wrap">
+        <div class="daily">
+          <div class="daily__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+              <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
           </div>
-          <h3 class="text-lg font-medium text-gray-900 mb-2">
-            Share & Compete
-          </h3>
-          <p class="text-sm text-gray-500">
-            Get a shareable result card and see how you stack up against others
-          </p>
-        </div>
-      </section>
-
-      <!-- Daily Seed Info -->
-      <section class="mt-16 p-8 bg-primary-50 rounded-xl border border-primary-200">
-        <div class="flex items-center space-x-4">
-          <div class="flex-shrink-0">
-            <svg class="h-6 w-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-          </div>
-          <div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">
-              Daily Challenge
-            </h3>
-            <p class="text-sm text-gray-600">
-              Everyone gets the same 6 spins each day - compete for the daily leaderboard
+          <div class="daily__copy">
+            <h2 class="daily__title" id="daily-heading">Start with a Legend</h2>
+            <p class="daily__body">
+              Your first spin always draws the Legends era — pick one
+              all-time great, then build the rest of your XI across five
+              more spins. Six spins, eleven picks, one verdict.
             </p>
           </div>
+          <a class="bm11-btn bm11-btn-primary" href="/play">Start drafting</a>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   </main>
+
+  <Footer />
 </BaseLayout>
+
+<style is:global>
+  /* Page-level styles. Shared design-contract utilities (.bm11-*) and
+     prefers-reduced-motion resets live in src/styles/globals.css. */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* ---- Page layout ---- */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    padding: 0.75rem 1.25rem;
+    background: var(--bm11-primary);
+    color: #052e16;
+    font-weight: 800;
+    border-radius: 0 0 0.75rem 0;
+    text-decoration: none;
+  }
+
+  .skip-link:focus {
+    left: 0;
+  }
+
+  .page {
+    background: var(--bm11-bg);
+    color: var(--bm11-text);
+    min-height: 100vh;
+  }
+
+  .section {
+    padding: 3.5rem 0;
+  }
+
+  @media (min-width: 768px) {
+    .section {
+      padding: 5rem 0;
+    }
+  }
+
+  .section--alt {
+    background:
+      radial-gradient(70% 50% at 50% 0%, rgba(148, 163, 184, 0.05), transparent 70%),
+      var(--bm11-bg);
+    border-top: 1px solid var(--bm11-border);
+    border-bottom: 1px solid var(--bm11-border);
+  }
+
+  .wrap {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .wrap {
+      padding: 0 1.5rem;
+    }
+  }
+
+  .eyebrow {
+    margin: 0 0 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--bm11-gold);
+  }
+
+  .h2 {
+    margin: 0 0 0.8rem;
+    font-size: clamp(1.6rem, 4.5vw, 2.5rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--bm11-text);
+    text-wrap: balance;
+  }
+
+  .h2--sm {
+    font-size: clamp(1.35rem, 3.5vw, 1.9rem);
+  }
+
+  .lede {
+    margin: 0 0 2.25rem;
+    max-width: 38rem;
+    color: var(--bm11-muted);
+    font-size: 1.02rem;
+    line-height: 1.65;
+  }
+
+  /* How-to-play steps */
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .steps {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .step {
+    padding: 1.4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .step__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 0.7rem;
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: var(--bm11-primary);
+    font-weight: 900;
+    font-size: 0.95rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .step__title {
+    margin: 0 0 0.5rem;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--bm11-text);
+  }
+
+  .step__body {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--bm11-muted);
+  }
+
+  /* Era grid */
+  .era-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .era-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .era-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .era-grid > :first-child {
+      grid-column: span 1;
+    }
+  }
+
+  /* Features */
+  .feature-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .feature-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .feature {
+    padding: 1.6rem;
+    text-align: left;
+  }
+
+  .feature__icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    color: var(--bm11-primary);
+    margin-bottom: 1rem;
+  }
+
+  .feature__title {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--bm11-text);
+  }
+
+  .feature__body {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--bm11-muted);
+  }
+
+  /* Daily challenge band */
+  .daily {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 1.75rem;
+    border-radius: 1.25rem;
+    background:
+      radial-gradient(120% 140% at 0% 0%, rgba(34, 197, 94, 0.14), transparent 55%),
+      radial-gradient(100% 120% at 100% 100%, rgba(201, 162, 39, 0.1), transparent 55%),
+      var(--bm11-surface);
+    border: 1px solid var(--bm11-border);
+  }
+
+  @media (min-width: 768px) {
+    .daily {
+      flex-direction: row;
+      align-items: center;
+      padding: 2.25rem;
+    }
+  }
+
+  .daily__icon {
+    flex: none;
+    width: 3.25rem;
+    height: 3.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+  }
+
+  .daily__icon svg {
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--bm11-primary);
+  }
+
+  .daily__copy {
+    flex: 1;
+  }
+
+  .daily__title {
+    margin: 0 0 0.4rem;
+    font-size: 1.35rem;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    color: var(--bm11-text);
+  }
+
+  .daily__body {
+    margin: 0;
+    color: var(--bm11-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 34rem;
+  }
+
+</style>

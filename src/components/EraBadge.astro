@@ -1,0 +1,140 @@
+---
+/**
+ * EraBadge — small original SVG badge per era.
+ * Shield for Legends (gold), circle for decade eras, each with an
+ * era-appropriate geometric motif drawn in the era accent color.
+ */
+interface Props {
+  era: string;
+  class?: string;
+  label?: string;
+}
+
+const { era, class: cls = '', label } = Astro.props;
+
+const ACCENTS: Record<string, string> = {
+  legends: '#C9A227',
+  '1970s': '#C26936',
+  '1980s': '#D64045',
+  '1990s': '#2AA198',
+  '2000s': '#3B82F6',
+  '2010s': '#8B5CF6',
+  '2020s': '#2DD4BF',
+};
+
+const NAMES: Record<string, string> = {
+  legends: 'Legends',
+  '1970s': '1970s',
+  '1980s': '1980s',
+  '1990s': '1990s',
+  '2000s': '2000s',
+  '2010s': '2010s',
+  '2020s': '2020s',
+};
+
+const accent = ACCENTS[era] ?? '#C9A227';
+const name = label ?? NAMES[era] ?? era;
+const isLegends = era === 'legends';
+
+/* Original stroke motifs, drawn in the era accent color. */
+const MOTIFS: Record<string, string> = {
+  // Crown — the immortals
+  legends: `<path d="M13 31 L11 17 L18 23.5 L24 11 L30 23.5 L37 17 L35 31 Z" />
+    <rect x="13" y="33.5" width="22" height="3.2" rx="1" />
+    <circle cx="24" cy="24.5" r="1.6" />`,
+  // Cricket ball with curved seam — the pace era
+  '1970s': `<circle cx="24" cy="24" r="11" />
+    <path d="M18.5 15.5 Q24 24 18.5 32.5" />
+    <path d="M29.5 15.5 Q24 24 29.5 32.5" />
+    <path d="M20.5 19.5 Q24 24 20.5 28.5" stroke-dasharray="2 2.4" />
+    <path d="M27.5 19.5 Q24 24 27.5 28.5" stroke-dasharray="2 2.4" />`,
+  // Trophy cup — the all-rounders' decade
+  '1980s': `<path d="M18 10 H30 V19 Q30 26 24 26 Q18 26 18 19 Z" />
+    <path d="M18 13 H13.5 Q13.5 20 18.5 20.5" />
+    <path d="M30 13 H34.5 Q34.5 20 29.5 20.5" />
+    <rect x="22.8" y="26" width="2.4" height="6" />
+    <rect x="18" y="32" width="12" height="3" rx="1" />`,
+  // Floodlight mast — icons under lights
+  '1990s': `<rect x="16" y="8" width="16" height="9" rx="2" />
+    <circle cx="20.5" cy="12.5" r="1.7" />
+    <circle cx="24" cy="12.5" r="1.7" />
+    <circle cx="27.5" cy="12.5" r="1.7" />
+    <path d="M24 17 V36" />
+    <path d="M18 36 H30" />
+    <path d="M21 21 H27" />`,
+  // Play button — the broadcast era
+  '2000s': `<circle cx="24" cy="24" r="11" />
+    <path d="M21 17.5 L31 24 L21 30.5 Z" />`,
+  // Rising bars — the analytics age
+  '2010s': `<rect x="12" y="28" width="5" height="8" rx="1" />
+    <rect x="21.5" y="22" width="5" height="14" rx="1" />
+    <rect x="31" y="15" width="5" height="21" rx="1" />
+    <path d="M11 40 H37" />`,
+  // Connected nodes — the data-driven era
+  '2020s': `<circle cx="24" cy="13" r="3.4" />
+    <circle cx="13.5" cy="31" r="3.4" />
+    <circle cx="34.5" cy="31" r="3.4" />
+    <path d="M21.5 16 L16 27.5" />
+    <path d="M26.5 16 L32 27.5" />
+    <path d="M17 31 H31" />`,
+};
+
+const motif = MOTIFS[era] ?? MOTIFS.legends;
+const badgeId = `erab-${era}-${Math.random().toString(36).slice(2, 8)}`;
+---
+<svg
+  class={`era-badge ${cls}`}
+  viewBox="0 0 48 48"
+  role="img"
+  aria-label={`${name} era badge`}
+  focusable="false"
+  style={`--era-accent:${accent}`}
+>
+  <defs>
+    <radialGradient id={`${badgeId}-bg`} cx="35%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#1B2540" />
+      <stop offset="100%" stop-color="#0D1424" />
+    </radialGradient>
+    <radialGradient id={`${badgeId}-gl`} cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color={accent} stop-opacity="0.28" />
+      <stop offset="100%" stop-color={accent} stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  {isLegends ? (
+    <>
+      <path
+        d="M24 3.5 L40.5 9.5 V23.5 Q40.5 35.5 24 44.5 Q7.5 35.5 7.5 23.5 V9.5 Z"
+        fill={`url(#${badgeId}-bg)`}
+        stroke={accent}
+        stroke-width="2"
+      />
+      <path
+        d="M24 3.5 L40.5 9.5 V23.5 Q40.5 35.5 24 44.5 Q7.5 35.5 7.5 23.5 V9.5 Z"
+        fill={`url(#${badgeId}-gl)`}
+      />
+    </>
+  ) : (
+    <>
+      <circle cx="24" cy="24" r="20.5" fill={`url(#${badgeId}-bg)`} stroke={accent} stroke-width="2" />
+      <circle cx="24" cy="24" r="20.5" fill={`url(#${badgeId}-gl)`} />
+    </>
+  )}
+
+  <g
+    set:html={motif}
+    fill="none"
+    stroke={accent}
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>
+
+<style>
+  .era-badge {
+    display: inline-block;
+    flex: none;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.45));
+  }
+</style>

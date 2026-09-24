@@ -1,0 +1,66 @@
+---
+/**
+ * BeatMy11 brand logo — inline SVG, no external fetch, theme-safe on dark.
+ * variant: "full" (mark + wordmark) | "mark" (icon only) | "mono" (single-color, inherits currentColor)
+ */
+export interface Props {
+  variant?: 'full' | 'mark' | 'mono';
+  class?: string;
+}
+
+const { variant = 'full', class: className } = Astro.props;
+const FONT = "Inter, 'Segoe UI', Arial, sans-serif";
+---
+
+{variant === 'mark' && (
+  <svg viewBox="0 0 96 96" class={className} role="img" aria-label="BeatMy11">
+    <title>BeatMy11</title>
+    <path d="M48 6 L80 19 V45 C80 66 65 80 48 90 C31 80 16 66 16 45 V19 Z"
+      fill="#0D1424" stroke="#C9A227" stroke-width="5" stroke-linejoin="round" />
+    <circle cx="48" cy="37" r="17" fill="#C8102E" />
+    <path d="M37 27 Q48 37 37 47" fill="none" stroke="#F1F5F9" stroke-width="2.2"
+      stroke-linecap="round" stroke-dasharray="3.6 2.6" />
+    <path d="M59 27 Q48 37 59 47" fill="none" stroke="#F1F5F9" stroke-width="2.2"
+      stroke-linecap="round" stroke-dasharray="3.6 2.6" />
+    <text x="48" y="76" text-anchor="middle" font-family={FONT}
+      font-size="23" font-weight="800" letter-spacing="1" fill="#F1F5F9">11</text>
+  </svg>
+)}
+
+{variant === 'full' && (
+  <svg viewBox="0 0 336 96" class={className} role="img" aria-label="BeatMy11">
+    <title>BeatMy11</title>
+    <path d="M48 6 L80 19 V45 C80 66 65 80 48 90 C31 80 16 66 16 45 V19 Z"
+      fill="#0D1424" stroke="#C9A227" stroke-width="5" stroke-linejoin="round" />
+    <circle cx="48" cy="37" r="17" fill="#C8102E" />
+    <path d="M37 27 Q48 37 37 47" fill="none" stroke="#F1F5F9" stroke-width="2.2"
+      stroke-linecap="round" stroke-dasharray="3.6 2.6" />
+    <path d="M59 27 Q48 37 59 47" fill="none" stroke="#F1F5F9" stroke-width="2.2"
+      stroke-linecap="round" stroke-dasharray="3.6 2.6" />
+    <text x="48" y="76" text-anchor="middle" font-family={FONT}
+      font-size="23" font-weight="800" letter-spacing="1" fill="#F1F5F9">11</text>
+    <text x="108" y="60" font-family={FONT} font-size="37" font-weight="800"
+      letter-spacing="2" fill="#F1F5F9">BEATMY<tspan fill="#C9A227">11</tspan></text>
+    <text x="110" y="82" font-family={FONT} font-size="12.5" font-weight="600"
+      letter-spacing="4.5" fill="#94A3B8">ALL-TIME TEST XI</text>
+  </svg>
+)}
+
+{variant === 'mono' && (
+  <svg viewBox="0 0 336 96" class={className} role="img" aria-label="BeatMy11" fill="none" stroke="currentColor">
+    <title>BeatMy11</title>
+    <path d="M48 6 L80 19 V45 C80 66 65 80 48 90 C31 80 16 66 16 45 V19 Z"
+      stroke-width="5" stroke-linejoin="round" />
+    <circle cx="48" cy="37" r="17" stroke-width="3.5" />
+    <path d="M37 27 Q48 37 37 47" stroke-width="2.2"
+      stroke-linecap="round" stroke-dasharray="3.6 2.6" />
+    <path d="M59 27 Q48 37 59 47" stroke-width="2.2"
+      stroke-linecap="round" stroke-dasharray="3.6 2.6" />
+    <text x="48" y="76" text-anchor="middle" font-family={FONT}
+      font-size="23" font-weight="800" letter-spacing="1" fill="currentColor" stroke="none">11</text>
+    <text x="108" y="60" font-family={FONT} font-size="37" font-weight="800"
+      letter-spacing="2" fill="currentColor" stroke="none">BEATMY11</text>
+    <text x="110" y="82" font-family={FONT} font-size="12.5" font-weight="600"
+      letter-spacing="4.5" fill="currentColor" stroke="none" opacity="0.65">ALL-TIME TEST XI</text>
+  </svg>
+)}

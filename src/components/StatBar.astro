@@ -1,0 +1,98 @@
+---
+/**
+ * StatBar — lightweight stat visualization.
+ *
+ * Props:
+ *   label   - stat name shown beside/above the bar
+ *   value   - numeric value used for fill proportion
+ *   max     - scale maximum (fill = value / max)
+ *   display - text shown for the value (defaults to String(value))
+ *   accent  - bar color (CSS color); defaults to --bm11-primary
+ *   variant - 'bar' (default) | 'radial'
+ */
+interface Props {
+  label: string;
+  value?: number;
+  max?: number;
+  display?: string;
+  accent?: string;
+  variant?: 'bar' | 'radial';
+}
+
+const {
+  label,
+  value = 0,
+  max = 100,
+  display,
+  accent = 'var(--bm11-primary, #22C55E)',
+  variant = 'bar',
+} = Astro.props;
+
+const pct = max > 0 ? Math.max(0, Math.min(100, (Number(value) / max) * 100)) : 0;
+const text = display ?? String(value);
+
+// Radial geometry
+const R = 18;
+const CIRC = 2 * Math.PI * R;
+---
+{variant === 'radial' ? (
+  <div class="bm11-statbar-radial" role="img" aria-label={`${label}: ${text}`}>
+    <svg viewBox="0 0 44 44" class="bm11-radial-svg" aria-hidden="true" focusable="false">
+      <circle cx="22" cy="22" r={R} class="bm11-radial-track" />
+      <circle
+        cx="22"
+        cy="22"
+        r={R}
+        class="bm11-radial-fill"
+        style={`stroke:${accent};stroke-dasharray:${CIRC.toFixed(1)};stroke-dashoffset:${(CIRC * (1 - pct / 100)).toFixed(1)};`}
+      />
+    </svg>
+    <div class="bm11-radial-center">
+      <span class="bm11-radial-value bm11-stat-num">{text}</span>
+      <span class="bm11-radial-label">{label}</span>
+    </div>
+  </div>
+) : (
+  <div class="bm11-statbar">
+    <div class="bm11-statbar-head">
+      <span class="bm11-statbar-label">{label}</span>
+      <span class="bm11-statbar-value bm11-stat-num">{text}</span>
+    </div>
+    <div class="bm11-statbar-track" role="img" aria-label={`${label}: ${text}`}>
+      <div class="bm11-statbar-fill" style={`width:${pct.toFixed(1)}%;background:${accent};`}></div>
+    </div>
+  </div>
+)}
+
+<style is:global>
+  .bm11-statbar { min-width: 0; }
+  .bm11-statbar-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 0.5rem; margin-bottom: 0.3rem;
+    font-size: 0.75rem;
+  }
+  .bm11-statbar-label { color: var(--bm11-muted, #94A3B8); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bm11-statbar-value { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--bm11-text, #F1F5F9); }
+  .bm11-statbar-track {
+    height: 0.5rem; border-radius: 9999px; overflow: hidden;
+    background: var(--bm11-elevated, #141D33);
+    border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+  }
+  .bm11-statbar-fill { height: 100%; border-radius: 9999px; transition: width 0.5s ease; }
+
+  .bm11-statbar-radial { position: relative; width: 5.5rem; height: 5.5rem; flex: 0 0 auto; }
+  .bm11-radial-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .bm11-radial-track { fill: none; stroke: var(--bm11-elevated, #141D33); stroke-width: 5; }
+  .bm11-radial-fill { fill: none; stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 0.5s ease; }
+  .bm11-radial-center {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; line-height: 1.2; padding: 0.25rem;
+  }
+  .bm11-radial-value { font-weight: 700; font-size: 0.95rem; font-variant-numeric: tabular-nums; color: var(--bm11-text, #F1F5F9); }
+  .bm11-radial-label { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--bm11-muted, #94A3B8); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bm11-statbar-fill, .bm11-radial-fill { transition: none; }
+  }
+</style>

@@ -1,8 +1,322 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../../tailwind.config.mjs";
 
-/* Custom utilities for BeatMy11 */
+/* ============================================================
+   BeatMy11 — dark-first design tokens
+   Single source of truth for color. Tailwind theme extensions in
+   tailwind.config.mjs and TS tokens in src/lib/design-tokens.ts
+   mirror these values — keep the three in sync.
+   ============================================================ */
+:root {
+  color-scheme: dark;
+
+  --bm11-bg: #070B14;
+  --bm11-surface: #0D1424;
+  --bm11-elevated: #141D33;
+  --bm11-border: rgba(148, 163, 184, 0.14);
+  --bm11-text: #F1F5F9;
+  --bm11-muted: #94A3B8;
+  --bm11-primary: #22C55E;
+  --bm11-primary-strong: #16A34A;
+  --bm11-gold: #C9A227;
+  --bm11-danger: #EF4444;
+  --bm11-warning: #F59E0B;
+  --bm11-success: #22C55E;
+  --bm11-ring: #4ADE80;
+
+  /* Era accents — also exported from src/lib/design-tokens.ts */
+  --era-legends: #C9A227;
+  --era-1970s: #C26936;
+  --era-1980s: #D64045;
+  --era-1990s: #2AA198;
+  --era-2000s: #3B82F6;
+  --era-2010s: #8B5CF6;
+  --era-2020s: #2DD4BF;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+@layer base {
+  html {
+    background-color: var(--bm11-bg);
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bm11-bg);
+    color: var(--bm11-text);
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: rgba(34, 197, 94, 0.35);
+    color: var(--bm11-text);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--bm11-ring);
+    outline-offset: 2px;
+  }
+
+  /* Thin dark scrollbars */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #26314d var(--bm11-bg);
+  }
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-track {
+    background: var(--bm11-bg);
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: #26314d;
+    border-radius: 8px;
+    border: 2px solid var(--bm11-bg);
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: #35436b;
+  }
+}
+
+/* ============================================================
+   BeatMy11 component classes (shared across workstreams)
+   ============================================================ */
+@layer components {
+  /* Flat surface block */
+  .bm11-surface {
+    background-color: var(--bm11-surface);
+  }
+
+  /* Raised card: elevated bg, hairline border, soft deep shadow */
+  .bm11-card {
+    background-color: var(--bm11-elevated);
+    border: 1px solid var(--bm11-border);
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 24px rgba(2, 6, 16, 0.45);
+  }
+
+  /* ---- Buttons ---- */
+  .bm11-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    line-height: 1.25;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.625rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease,
+      box-shadow 0.15s ease,
+      transform 0.15s ease;
+  }
+  .bm11-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  .bm11-btn:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  /* Primary action — #052E16 on #22C55E = 6.54:1 (WCAG AA + AAA) */
+  .bm11-btn-primary {
+    background-color: var(--bm11-primary);
+    color: #052E16;
+    box-shadow: 0 4px 14px rgba(34, 197, 94, 0.25);
+  }
+  .bm11-btn-primary:hover:not(:disabled) {
+    /* #052E16 on #16A34A = 4.52:1 — still WCAG AA */
+    background-color: var(--bm11-primary-strong);
+    box-shadow: 0 4px 18px rgba(34, 197, 94, 0.35);
+  }
+
+  /* Quiet secondary action */
+  .bm11-btn-ghost {
+    background-color: transparent;
+    border-color: var(--bm11-border);
+    color: var(--bm11-text);
+  }
+  .bm11-btn-ghost:hover:not(:disabled) {
+    background-color: rgba(148, 163, 184, 0.08);
+    border-color: rgba(148, 163, 184, 0.3);
+  }
+
+  /* ---- Chips ---- */
+  .bm11-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    background-color: rgba(148, 163, 184, 0.08);
+    border: 1px solid var(--bm11-border);
+    color: var(--bm11-muted);
+  }
+
+  /*
+   * Era chip — set the accent inline per era, e.g.
+   *   <span class="bm11-era-chip" style="--era-accent: var(--era-1990s)">1990s</span>
+   * or via the TS tokens: style={`--era-accent: ${era.accent}`}
+   */
+  .bm11-era-chip {
+    --era-accent: var(--era-legends); /* fallback */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 0.25rem 0.75rem 0.25rem 0.625rem;
+    border-radius: 9999px;
+    background-color: var(--bm11-surface);
+    border: 1px solid var(--bm11-border);
+    color: var(--bm11-text);
+  }
+  .bm11-era-chip::before {
+    content: '';
+    flex: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background-color: var(--era-accent);
+    box-shadow: 0 0 10px var(--era-accent);
+  }
+
+  /* ---- Form inputs ---- */
+  .bm11-input {
+    width: 100%;
+    background-color: var(--bm11-surface);
+    border: 1px solid var(--bm11-border);
+    border-radius: 0.625rem;
+    color: var(--bm11-text);
+    font-size: 0.9375rem;
+    padding: 0.625rem 0.875rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .bm11-input::placeholder {
+    color: var(--bm11-muted);
+    opacity: 0.7;
+  }
+  .bm11-input:focus {
+    outline: none;
+    border-color: var(--bm11-ring);
+    box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.18);
+  }
+
+  /* ---- Loading skeleton with shimmer sweep ---- */
+  .bm11-skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--bm11-elevated);
+    border-radius: 0.5rem;
+  }
+  .bm11-skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      100deg,
+      transparent 20%,
+      rgba(241, 245, 249, 0.06) 50%,
+      transparent 80%
+    );
+    animation: bm11-shimmer 1.6s ease-in-out infinite;
+  }
+  @keyframes bm11-shimmer {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Tabular numerals for stats, scores, averages */
+  .bm11-stat-num {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+  }
+
+  /* Glass panel, dark-adapted */
+  .glass-bg {
+    background-color: rgba(13, 20, 36, 0.8);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--bm11-border);
+    box-shadow: 0 8px 24px rgba(2, 6, 16, 0.35);
+  }
+
+  /* Gentle pulse for live/updating indicators */
+  .animate-pulse-subtle {
+    animation: bm11-pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  @keyframes bm11-pulse-subtle {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.85;
+    }
+  }
+}
+
+/* ============================================================
+   Decorative background motifs — subtle, non-competing.
+   Layer under content, e.g. <section class="bm11-hero-grid">
+   ============================================================ */
+@layer components {
+  /* Faint stat-grid for hero / section backgrounds */
+  .bm11-hero-grid {
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  /*
+   * Cricket-pitch motif: faint gold-tinted central strip with
+   * crease ticks. Keep opacity low — it's a texture, not a focal point.
+   */
+  .bm11-pitch-lines {
+    background-image:
+      linear-gradient(
+        90deg,
+        transparent calc(50% - 90px),
+        rgba(201, 162, 39, 0.05) calc(50% - 90px),
+        rgba(201, 162, 39, 0.05) calc(50% + 90px),
+        transparent calc(50% + 90px)
+      ),
+      repeating-linear-gradient(
+        180deg,
+        transparent 0,
+        transparent 118px,
+        rgba(148, 163, 184, 0.08) 118px,
+        rgba(148, 163, 184, 0.08) 120px
+      );
+  }
+}
+
+/* ============================================================
+   Small utilities
+   ============================================================ */
 @layer utilities {
   .content-auto {
     content-visibility: auto;
@@ -17,63 +331,23 @@
   }
 
   .img-zoomed {
-    @apply transition-transform duration-300;
+    transition: transform 0.3s ease;
   }
-
   .img-zoomed:hover {
-    @apply scale-[1.02];
+    transform: scale(1.02);
   }
 }
 
-/* Base styles */
-html {
-  font-family: 'Inter', system-ui, sans-serif;
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  @apply bg-gray-50 text-gray-900 antialiased;
-}
-
-.prose {
-  @prose lg:prose-xl;
-}
-
-/* Focus ring enhancements */
-:focus-visible {
-  @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-gray-50;
-}
-
-/* Dark mode support (prepare for future) */
-@media (prefers-color-scheme: dark) {
-  body {
-    @apply bg-gray-900 text-gray-100;
+/* ============================================================
+   Reduced motion — disable animation/transition sweeps
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-
-  .prose {
-    @prose dark;
-  }
-}
-
-/* Animations */
-@keyframes pulse-subtle {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.85;
-  }
-}
-
-.animate-pulse-subtle {
-  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* Glass morphism effect */
-.glass-bg {
-  @apply bg-white/80 backdrop-blur-sm border border-white/20 shadow-sm;
-}
-
-.dark .glass-bg {
-  @apply bg-gray-900/80 backdrop-blur-sm border border-gray-800/20;
 }

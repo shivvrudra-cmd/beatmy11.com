@@ -1,7 +1,7 @@
 // Rating System for BeatMy11
 // Era-normalized indices with diminishing returns
 
-interface Player {
+export interface Player {
   id: string;
   name: string;
   nation: string;

@@ -1,0 +1,468 @@
+---
+/**
+ * Hero — premium dark hero, pure CSS/SVG visuals.
+ * Floodlight glows, pitch-line motif, animated ball-trajectory arc,
+ * floating stat cards (float animation; disabled with prefers-reduced-motion),
+ * era timeline strip at the base. Readable down to 320px.
+ */
+const stats = [
+  { value: '99.94', label: 'Bradman · Test batting avg', accent: '#C9A227' },
+  { value: '800', label: 'Murali · Test wickets', accent: '#3B82F6' },
+  { value: '15,921', label: 'Tendulkar · Test runs', accent: '#2AA198' },
+  { value: '400*', label: 'Lara · Highest Test score', accent: '#8B5CF6' },
+];
+
+const eraStrip = [
+  { id: 'legends', name: 'Legends', accent: '#C9A227' },
+  { id: '1970s', name: '70s', accent: '#C26936' },
+  { id: '1980s', name: '80s', accent: '#D64045' },
+  { id: '1990s', name: '90s', accent: '#2AA198' },
+  { id: '2000s', name: '00s', accent: '#3B82F6' },
+  { id: '2010s', name: '10s', accent: '#8B5CF6' },
+  { id: '2020s', name: '20s', accent: '#2DD4BF' },
+];
+---
+<section class="hero" aria-labelledby="hero-heading">
+  <!-- Floodlight glows + vignette -->
+  <div class="hero__glow hero__glow--left" aria-hidden="true"></div>
+  <div class="hero__glow hero__glow--right" aria-hidden="true"></div>
+  <div class="hero__grain" aria-hidden="true"></div>
+
+  <!-- Ball trajectory arc -->
+  <svg class="hero__trajectory" viewBox="0 0 900 420" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMax meet">
+    <defs>
+      <radialGradient id="hero-ball" cx="35%" cy="30%" r="75%">
+        <stop offset="0%" stop-color="#F87171" />
+        <stop offset="55%" stop-color="#DC2626" />
+        <stop offset="100%" stop-color="#7F1D1D" />
+      </radialGradient>
+      <linearGradient id="hero-arc" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#22C55E" stop-opacity="0" />
+        <stop offset="60%" stop-color="#22C55E" stop-opacity="0.55" />
+        <stop offset="100%" stop-color="#C9A227" stop-opacity="0.9" />
+      </linearGradient>
+    </defs>
+    <path
+      class="hero__arc-path"
+      d="M 40 400 C 260 380, 420 300, 560 200 S 800 60, 860 40"
+      fill="none"
+      stroke="url(#hero-arc)"
+      stroke-width="2.5"
+      stroke-dasharray="10 9"
+      stroke-linecap="round"
+    />
+    <circle cx="860" cy="40" r="14" fill="url(#hero-ball)" />
+    <path d="M 851 29 Q 860 40 851 51" fill="none" stroke="#FECACA" stroke-width="1.8" stroke-dasharray="4 3" stroke-linecap="round" />
+    <path d="M 869 29 Q 860 40 869 51" fill="none" stroke="#FECACA" stroke-width="1.8" stroke-dasharray="4 3" stroke-linecap="round" />
+    <circle cx="855" cy="34" r="4" fill="#FCA5A5" opacity="0.5" />
+    <!-- bounce marks -->
+    <ellipse cx="560" cy="200" rx="9" ry="3" fill="#22C55E" opacity="0.35" />
+    <ellipse cx="700" cy="120" rx="7" ry="2.5" fill="#22C55E" opacity="0.25" />
+  </svg>
+
+  <!-- Pitch-line motif -->
+  <svg class="hero__pitch" viewBox="0 0 600 120" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid slice">
+    <g stroke="#22C55E" stroke-width="1.5" opacity="0.28" fill="none">
+      <rect x="250" y="18" width="100" height="84" />
+      <line x1="250" y1="34" x2="350" y2="34" />
+      <line x1="250" y1="86" x2="350" y2="86" />
+      <line x1="0" y1="18" x2="600" y2="18" opacity="0.5" />
+      <line x1="0" y1="102" x2="600" y2="102" opacity="0.5" />
+      <line x1="272" y1="34" x2="272" y2="26" />
+      <line x1="286" y1="34" x2="286" y2="26" />
+      <line x1="300" y1="34" x2="300" y2="26" />
+      <line x1="272" y1="86" x2="272" y2="94" />
+      <line x1="286" y1="86" x2="286" y2="94" />
+      <line x1="300" y1="86" x2="300" y2="94" />
+    </g>
+  </svg>
+
+  <div class="hero__content">
+    <p class="hero__eyebrow">
+      <span class="hero__eyebrow-dot" aria-hidden="true"></span>
+      Beat My 11
+    </p>
+    <h1 class="hero__title" id="hero-heading">
+      Build your <span class="hero__title-accent">all-time</span> Test XI.
+    </h1>
+    <p class="hero__sub">
+      Six spins. Seven eras. One shot at cricket immortality.
+      Draft your legends, outsmart the house team, and win the
+      five-match Test series.
+    </p>
+    <div class="hero__ctas">
+      <a class="bm11-btn bm11-btn-primary hero__cta-primary" href="/play">
+        Start Building Your XI
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </svg>
+      </a>
+      <a class="bm11-btn bm11-btn-ghost" href="#how">How it works</a>
+    </div>
+    <p class="hero__meta">
+      <span>794 players</span><span aria-hidden="true">·</span>
+      <span>10 nations</span><span aria-hidden="true">·</span>
+      <span>1 legendary series</span>
+    </p>
+  </div>
+
+  <!-- Floating stat cards -->
+  <div class="hero__cards" aria-label="Iconic Test cricket records">
+    {stats.map((s, i) => (
+      <div
+        class={`hero__card hero__card--${i + 1}`}
+        style={`--stat-accent:${s.accent}`}
+      >
+        <p class="hero__card-value">{s.value}</p>
+        <p class="hero__card-label">{s.label}</p>
+      </div>
+    ))}
+  </div>
+
+  <!-- Era strip at hero base -->
+  <nav class="hero__strip" aria-label="Jump to an era">
+    <a class="hero__strip-all" href="#eras">Explore the eras</a>
+    <ul class="hero__strip-list">
+      {eraStrip.map((e) => (
+        <li>
+          <a href="#eras" style={`--era-accent:${e.accent}`}>
+            <span class="hero__strip-dot" aria-hidden="true"></span>
+            {e.name}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(90% 60% at 50% 110%, rgba(34, 197, 94, 0.07), transparent 65%),
+      var(--bm11-bg);
+    border-bottom: 1px solid var(--bm11-border);
+  }
+
+  .hero__glow {
+    position: absolute;
+    top: -12rem;
+    width: 34rem;
+    height: 34rem;
+    border-radius: 999px;
+    filter: blur(90px);
+    pointer-events: none;
+  }
+
+  .hero__glow--left {
+    left: -10rem;
+    background: radial-gradient(circle, rgba(201, 162, 39, 0.16), transparent 65%);
+  }
+
+  .hero__glow--right {
+    right: -10rem;
+    background: radial-gradient(circle, rgba(34, 197, 94, 0.14), transparent 65%);
+  }
+
+  .hero__grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image: radial-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+    background-size: 26px 26px;
+    mask-image: radial-gradient(75% 75% at 50% 40%, black, transparent);
+    -webkit-mask-image: radial-gradient(75% 75% at 50% 40%, black, transparent);
+  }
+
+  .hero__trajectory {
+    position: absolute;
+    inset: auto 0 0 0;
+    width: 100%;
+    height: min(46vw, 26rem);
+    min-height: 12rem;
+    opacity: 0.9;
+    pointer-events: none;
+  }
+
+  .hero__arc-path {
+    animation: hero-dash 3.2s linear infinite;
+  }
+
+  @keyframes hero-dash {
+    to {
+      stroke-dashoffset: -76;
+    }
+  }
+
+  .hero__pitch {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 7.5rem;
+    pointer-events: none;
+    mask-image: linear-gradient(to top, black 30%, transparent);
+    -webkit-mask-image: linear-gradient(to top, black 30%, transparent);
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 4.5rem 1rem 2.5rem;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .hero__content {
+      padding: 6.5rem 1.5rem 3rem;
+    }
+  }
+
+  .hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--bm11-gold);
+    margin: 0 0 1.25rem;
+  }
+
+  .hero__eyebrow-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 999px;
+    background: var(--bm11-primary);
+    box-shadow: 0 0 12px var(--bm11-primary);
+    animation: hero-pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes hero-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.55; transform: scale(0.82); }
+  }
+
+  .hero__title {
+    margin: 0 0 1.1rem;
+    font-size: clamp(2.1rem, 7.2vw, 4.4rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: var(--bm11-text);
+    text-wrap: balance;
+  }
+
+  .hero__title-accent {
+    background: linear-gradient(100deg, var(--bm11-gold), #f5d76e 45%, var(--bm11-primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero__sub {
+    margin: 0 auto 2rem;
+    max-width: 36rem;
+    font-size: clamp(1rem, 2.6vw, 1.2rem);
+    line-height: 1.65;
+    color: var(--bm11-muted);
+    text-wrap: balance;
+  }
+
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero__cta-primary svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    transition: transform 0.2s ease;
+  }
+
+  .hero__cta-primary:hover svg {
+    transform: translateX(4px);
+  }
+
+  .hero__meta {
+    margin: 1.6rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--bm11-muted);
+  }
+
+  /* Floating stat cards */
+  .hero__cards {
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .hero__cards {
+      display: block;
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero__card {
+      position: absolute;
+      padding: 0.8rem 1.05rem;
+      border-radius: 0.9rem;
+      background: color-mix(in srgb, var(--bm11-elevated) 88%, transparent);
+      border: 1px solid var(--bm11-border);
+      border-left: 3px solid var(--stat-accent);
+      box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      animation: hero-float 7s ease-in-out infinite;
+      text-align: left;
+    }
+
+    .hero__card--1 { top: 16%; left: 4%; animation-delay: 0s; }
+    .hero__card--2 { top: 12%; right: 5%; animation-delay: -2.2s; }
+    .hero__card--3 { bottom: 26%; left: 7%; animation-delay: -4.4s; }
+    .hero__card--4 { bottom: 30%; right: 6%; animation-delay: -1.4s; }
+
+    @media (min-width: 1200px) {
+      .hero__card--1 { left: 8%; }
+      .hero__card--2 { right: 9%; }
+      .hero__card--3 { left: 11%; }
+      .hero__card--4 { right: 10%; }
+    }
+
+    .hero__card-value {
+      margin: 0;
+      font-size: 1.45rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--stat-accent);
+      font-variant-numeric: tabular-nums;
+      line-height: 1.1;
+    }
+
+    .hero__card-label {
+      margin: 0.2rem 0 0;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--bm11-muted);
+      white-space: nowrap;
+    }
+  }
+
+  @keyframes hero-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  /* Era strip */
+  .hero__strip {
+    position: relative;
+    z-index: 2;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 1.4rem 1rem 1.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .hero__strip {
+      flex-direction: row;
+      justify-content: center;
+      gap: 1.4rem;
+    }
+  }
+
+  .hero__strip-all {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--bm11-muted);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .hero__strip-all:hover,
+  .hero__strip-all:focus-visible {
+    color: var(--bm11-text);
+  }
+
+  .hero__strip-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0.35rem;
+    overflow-x: auto;
+    max-width: 100%;
+    scrollbar-width: none;
+  }
+
+  .hero__strip-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hero__strip-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--bm11-border);
+    background: color-mix(in srgb, var(--bm11-surface) 85%, transparent);
+    color: var(--bm11-text);
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .hero__strip-list a:hover,
+  .hero__strip-list a:focus-visible {
+    border-color: var(--era-accent);
+    transform: translateY(-2px);
+  }
+
+  .hero__strip-dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 999px;
+    background: var(--era-accent);
+    box-shadow: 0 0 10px var(--era-accent);
+    flex: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__arc-path,
+    .hero__eyebrow-dot,
+    .hero__card {
+      animation: none;
+    }
+    .hero__cta-primary svg,
+    .hero__strip-list a {
+      transition: none;
+    }
+  }
+</style>

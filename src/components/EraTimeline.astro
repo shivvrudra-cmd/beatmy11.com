@@ -1,0 +1,165 @@
+---
+import EraBadge from './EraBadge.astro';
+
+/**
+ * EraTimeline — horizontal scrollable timeline, Legends → 2020s.
+ * Desktop: single horizontal row. Mobile: horizontal scroll with snap.
+ */
+export interface TimelineEra {
+  id: string;
+  name: string;
+  range: string;
+  tagline: string;
+  accent: string;
+  playerCount?: number;
+  href?: string;
+}
+
+interface Props {
+  eras: TimelineEra[];
+}
+
+const { eras } = Astro.props;
+---
+<div class="era-timeline" role="region" aria-label="Eras of Test cricket timeline">
+  <ol class="era-timeline__track">
+    {eras.map((era, i) => (
+      <li
+        class="era-timeline__node"
+        style={`--era-accent:${era.accent}`}
+      >
+        <span class="era-timeline__connector" aria-hidden="true" data-index={i}></span>
+        <a class="era-timeline__link" href={era.href ?? '/play'} aria-label={`${era.name} era, ${era.range}${typeof era.playerCount === 'number' ? `, ${era.playerCount} players` : ''}`}>
+          <EraBadge era={era.id} class="era-timeline__badge" />
+          <span class="era-timeline__range">{era.range}</span>
+          <span class="era-timeline__name">{era.name}</span>
+          {typeof era.playerCount === 'number' && (
+            <span class="era-timeline__count">{era.playerCount} players</span>
+          )}
+        </a>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  .era-timeline {
+    position: relative;
+  }
+
+  .era-timeline__track {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 0.25rem 1rem;
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+  }
+
+  .era-timeline__track::-webkit-scrollbar {
+    height: 6px;
+  }
+  .era-timeline__track::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.35);
+    border-radius: 999px;
+  }
+
+  .era-timeline__node {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 10.5rem;
+    scroll-snap-align: start;
+  }
+
+  .era-timeline__connector {
+    position: absolute;
+    top: 2.35rem;
+    left: -0.25rem;
+    right: 50%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--era-accent));
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .era-timeline__node:first-child .era-timeline__connector {
+    display: none;
+  }
+
+  .era-timeline__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    text-align: center;
+    text-decoration: none;
+    padding: 0.75rem 0.5rem 0.5rem;
+    border-radius: 0.9rem;
+    border: 1px solid transparent;
+    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .era-timeline__link:hover,
+  .era-timeline__link:focus-visible {
+    border-color: var(--bm11-border);
+    background: color-mix(in srgb, var(--era-accent) 8%, transparent);
+    transform: translateY(-3px);
+  }
+
+  .era-timeline__link:focus-visible {
+    outline: 2px solid var(--era-accent);
+    outline-offset: 2px;
+  }
+
+  .era-timeline__badge {
+    width: 3.75rem;
+    height: 3.75rem;
+    position: relative;
+    z-index: 1;
+    background: var(--bm11-bg);
+    border-radius: 999px;
+  }
+
+  .era-timeline__range {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--era-accent);
+  }
+
+  .era-timeline__name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--bm11-text);
+  }
+
+  .era-timeline__count {
+    font-size: 0.75rem;
+    color: var(--bm11-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (min-width: 1024px) {
+    .era-timeline__track {
+      overflow-x: visible;
+      gap: 0.25rem;
+    }
+    .era-timeline__node {
+      min-width: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .era-timeline__link {
+      transition: none;
+    }
+    .era-timeline__link:hover,
+    .era-timeline__link:focus-visible {
+      transform: none;
+    }
+  }
+</style>

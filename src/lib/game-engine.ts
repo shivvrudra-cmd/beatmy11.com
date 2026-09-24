@@ -1,7 +1,7 @@
 // Game Engine for BeatMy11
 // Handles spins, team building, and game logic
 
-import { Player } from './ratings';
+import type { Player } from './ratings';
 
 interface SpinResult {
   nation: string;
@@ -185,7 +185,7 @@ export function useTeamReroll(gameState: GameState, lastSpin: SpinResult): SpinR
   }
 
   // Keep the same era, get a random nation
-  const nation = TEST_NATIONS[Math.floor(Math.random() * TEST_NATIONS.length)];
+  let nation = TEST_NATIONS[Math.floor(Math.random() * TEST_NATIONS.length)];
 
   // Ensure it's a valid combination
   let attempts = 0;
@@ -227,7 +227,7 @@ export function useEraReroll(gameState: GameState, lastSpin: SpinResult): SpinRe
   }
 
   // Keep the same nation, get a random era
-  const era = ERAS[Math.floor(Math.random() * ERAS.length)];
+  let era = ERAS[Math.floor(Math.random() * ERAS.length)];
 
   // Ensure it's a valid combination
   let attempts = 0;

@@ -1,0 +1,149 @@
+---
+/**
+ * EmptyState — reusable branded empty state for dark-first BeatMy11 pages.
+ *
+ * Props:
+ *   icon:        "ball" | "stumps" | "trophy" | "search" | "players"
+ *   title:       short heading
+ *   message:     supporting copy
+ *   actionLabel: optional CTA label (rendered as a link-button)
+ *   actionHref:  optional CTA target (defaults to "/")
+ */
+export interface Props {
+  icon: 'ball' | 'stumps' | 'trophy' | 'search' | 'players';
+  title: string;
+  message: string;
+  actionLabel?: string;
+  actionHref?: string;
+}
+
+const { icon, title, message, actionLabel, actionHref = '/' } = Astro.props;
+---
+
+<style>
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    border: 1px dashed var(--bm11-border, rgba(148, 163, 184, 0.14));
+    border-radius: 1rem;
+    background: var(--bm11-surface, #0d1424);
+    color: var(--bm11-text, #f1f5f9);
+    max-width: 36rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 9999px;
+    background: var(--bm11-elevated, #141d33);
+    border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+    color: var(--bm11-gold, #c9a227);
+    margin-bottom: 1.25rem;
+  }
+  .empty-icon svg {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+  .empty-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .empty-message {
+    color: var(--bm11-muted, #94a3b8);
+    line-height: 1.65;
+    margin: 0 0 1.5rem;
+    max-width: 28rem;
+  }
+  .empty-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    background: var(--bm11-primary, #22c55e);
+    color: #04120a;
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .empty-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(34, 197, 94, 0.35);
+  }
+  .empty-action:focus-visible {
+    outline: 2px solid var(--bm11-gold, #c9a227);
+    outline-offset: 3px;
+  }
+</style>
+
+<div class="empty-state" role="status">
+  <div class="empty-icon" aria-hidden="true">
+    {
+      icon === 'ball' && (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M 8.5 5.5 Q 12 12 8.5 18.5 M 15.5 5.5 Q 12 12 15.5 18.5" />
+        </svg>
+      )
+    }
+    {
+      icon === 'stumps' && (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <line x1="7" y1="4" x2="7" y2="20" />
+          <line x1="12" y1="4" x2="12" y2="20" />
+          <line x1="17" y1="4" x2="17" y2="20" />
+          <line x1="7" y1="3" x2="12" y2="3" />
+          <line x1="12" y1="3" x2="17" y2="3" />
+        </svg>
+      )
+    }
+    {
+      icon === 'trophy' && (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M 8 4 H 16 V 10 C 16 13.5 14 16 12 16 C 10 16 8 13.5 8 10 Z" />
+          <path d="M 8 6 H 4.5 C 4.5 9.5 6.5 11.5 9 12 M 16 6 H 19.5 C 19.5 9.5 17.5 11.5 15 12" />
+          <line x1="12" y1="16" x2="12" y2="20" />
+          <line x1="8.5" y1="20" x2="15.5" y2="20" />
+        </svg>
+      )
+    }
+    {
+      icon === 'search' && (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="10.5" cy="10.5" r="6.5" />
+          <line x1="15.5" y1="15.5" x2="21" y2="21" />
+        </svg>
+      )
+    }
+    {
+      icon === 'players' && (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="8.5" cy="8" r="3.2" />
+          <path d="M 3.5 19 C 3.5 15.5 5.8 13.5 8.5 13.5 C 11.2 13.5 13.5 15.5 13.5 19" />
+          <circle cx="16.5" cy="9" r="2.6" />
+          <path d="M 15.5 13.8 C 18 13.8 20 15.6 20.5 18.5" />
+        </svg>
+      )
+    }
+  </div>
+  <h2 class="empty-title">{title}</h2>
+  <p class="empty-message">{message}</p>
+  {
+    actionLabel && (
+      <a class="empty-action" href={actionHref}>
+        {actionLabel}
+      </a>
+    )
+  }
+</div>

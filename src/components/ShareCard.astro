@@ -1,0 +1,437 @@
+---
+/**
+ * ShareCard — on-page share-card templates sized for 1200×630 OG-style
+ * rendering. Pure HTML/CSS with inline SVG motifs only (no raster images,
+ * no external URLs). Dark navy background, gold/green accents.
+ *
+ * Props (loosely typed; only the fields your `type` needs are required):
+ *
+ *   type: "player" | "team" | "era"
+ *
+ *   Player variant:
+ *     playerName, playerNation, flag? (short badge, e.g. "AUS" or emoji),
+ *     playerRole?, headline?, stats?: [{ label, value }]
+ *
+ *   Team variant:
+ *     teamTitle? (default "MY ALL-TIME XI"), subtitle?,
+ *     players?: [{ name, nation?, flag? }] (up to 11, numbered in order)
+ *
+ *   Era variant:
+ *     eraName, tagline?, playerCount?, eraSpan?
+ */
+export interface ShareStat {
+  label: string;
+  value: string;
+}
+export interface SharePlayer {
+  name: string;
+  nation?: string;
+  flag?: string;
+}
+export interface Props {
+  type: 'player' | 'team' | 'era';
+  // player
+  playerName?: string;
+  playerNation?: string;
+  flag?: string;
+  playerRole?: string;
+  headline?: string;
+  stats?: ShareStat[];
+  // team
+  teamTitle?: string;
+  subtitle?: string;
+  players?: SharePlayer[];
+  // era
+  eraName?: string;
+  tagline?: string;
+  playerCount?: number;
+  eraSpan?: string;
+}
+
+const {
+  type,
+  playerName = 'Player Name',
+  playerNation = '',
+  flag = '',
+  playerRole = '',
+  headline = '',
+  stats = [],
+  teamTitle = 'MY ALL-TIME XI',
+  subtitle = '',
+  players = [],
+  eraName = 'Era Name',
+  tagline = '',
+  playerCount,
+  eraSpan = '',
+} = Astro.props;
+
+const kicker =
+  type === 'player' ? 'PLAYER CARD' : type === 'team' ? 'ALL-TIME XI' : 'ERA CARD';
+const teamPlayers = players.slice(0, 11);
+const mid = Math.ceil(teamPlayers.length / 2);
+const colA = teamPlayers.slice(0, mid);
+const colB = teamPlayers.slice(mid);
+---
+
+<style>
+  .share-card {
+    width: 1200px;
+    height: 630px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background:
+      radial-gradient(800px 400px at 12% 0%, rgba(34, 197, 94, 0.14), transparent 60%),
+      radial-gradient(700px 420px at 95% 100%, rgba(201, 162, 39, 0.12), transparent 60%),
+      linear-gradient(135deg, #070b14 0%, #0d1424 55%, #0a0f1e 100%);
+    color: #f1f5f9;
+    font-family:
+      ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    border: 1px solid rgba(148, 163, 184, 0.14);
+  }
+  .share-accent-bar {
+    height: 8px;
+    background: linear-gradient(90deg, #c9a227 0%, #22c55e 55%, #c9a227 100%);
+    flex-shrink: 0;
+  }
+  .share-body {
+    flex: 1;
+    display: flex;
+    padding: 44px 56px 0;
+    gap: 40px;
+    min-height: 0;
+  }
+  .share-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .share-kicker {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.42em;
+    color: #c9a227;
+    margin: 0 0 18px;
+  }
+  .share-title {
+    font-size: 84px;
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    margin: 0;
+  }
+  .share-title .gold {
+    color: #c9a227;
+  }
+  .share-headline {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    color: #22c55e;
+    margin: 10px 0 0;
+  }
+  .share-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 22px;
+  }
+  .share-nation {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #f1f5f9;
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    background: rgba(20, 29, 51, 0.8);
+    border-radius: 9999px;
+    padding: 8px 20px;
+  }
+  .share-flag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 52px;
+    height: 32px;
+    padding: 0 10px;
+    border-radius: 6px;
+    background: #c9a227;
+    color: #0a0f1e;
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+  }
+  .share-role {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: #94a3b8;
+    text-transform: uppercase;
+  }
+  .share-stats {
+    display: flex;
+    gap: 18px;
+    margin-top: 30px;
+  }
+  .share-stat {
+    flex: 1;
+    background: rgba(20, 29, 51, 0.72);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 16px;
+    padding: 18px 20px;
+  }
+  .share-stat-value {
+    font-size: 40px;
+    font-weight: 900;
+    color: #f1f5f9;
+    line-height: 1.1;
+  }
+  .share-stat-value.gold {
+    color: #c9a227;
+  }
+  .share-stat-label {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: #94a3b8;
+    margin-top: 4px;
+  }
+  .share-tagline {
+    font-size: 30px;
+    line-height: 1.45;
+    color: #94a3b8;
+    margin: 18px 0 0;
+    max-width: 640px;
+  }
+  .share-count {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .share-count-num {
+    font-size: 96px;
+    font-weight: 900;
+    color: #c9a227;
+    line-height: 1;
+  }
+  .share-count-label {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    color: #94a3b8;
+  }
+  .share-span {
+    margin-top: 14px;
+    font-size: 20px;
+    letter-spacing: 0.3em;
+    font-weight: 700;
+    color: #22c55e;
+  }
+  .share-team-list {
+    display: flex;
+    gap: 28px;
+    margin-top: 26px;
+    flex: 1;
+    min-height: 0;
+  }
+  .share-team-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-width: 0;
+  }
+  .share-team-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    min-width: 0;
+  }
+  .share-team-num {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    color: #22c55e;
+    font-size: 19px;
+    font-weight: 800;
+  }
+  .share-team-name {
+    font-size: 25px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .share-team-nation {
+    margin-left: auto;
+    flex-shrink: 0;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: #c9a227;
+    border: 1px solid rgba(201, 162, 39, 0.45);
+    border-radius: 6px;
+    padding: 4px 10px;
+  }
+  .share-motif {
+    width: 300px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+  }
+  .share-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 56px;
+    border-top: 1px solid rgba(148, 163, 184, 0.14);
+    flex-shrink: 0;
+  }
+  .share-brand {
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    color: #f1f5f9;
+  }
+  .share-brand .eleven {
+    color: #c9a227;
+  }
+  .share-url {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: #94a3b8;
+  }
+</style>
+
+<article class="share-card" aria-label={`${kicker} share card`}>
+  <div class="share-accent-bar"></div>
+  <div class="share-body">
+    <div class="share-main">
+      <p class="share-kicker">{kicker}</p>
+
+      {
+        type === 'player' && (
+          <>
+            {headline && <p class="share-headline">{headline}</p>}
+            <h2 class="share-title">{playerName}</h2>
+            <div class="share-meta">
+              {(flag || playerNation) && (
+                <span class="share-nation">
+                  {flag && <span class="share-flag">{flag}</span>}
+                  {playerNation}
+                </span>
+              )}
+              {playerRole && <span class="share-role">{playerRole}</span>}
+            </div>
+            {stats.length > 0 && (
+              <div class="share-stats">
+                {stats.slice(0, 4).map((s, i) => (
+                  <div class="share-stat">
+                    <div class={`share-stat-value${i === 0 ? ' gold' : ''}`}>{s.value}</div>
+                    <div class="share-stat-label">{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )
+      }
+
+      {
+        type === 'team' && (
+          <>
+            <h2 class="share-title">
+              {teamTitle.includes('XI') ? (
+                <>
+                  {teamTitle.split('XI')[0]}
+                  <span class="gold">XI</span>
+                  {teamTitle.split('XI').slice(1).join('XI')}
+                </>
+              ) : (
+                teamTitle
+              )}
+            </h2>
+            {subtitle && <p class="share-tagline">{subtitle}</p>}
+            <div class="share-team-list">
+              {[colA, colB].map((col, ci) => (
+                <div class="share-team-col">
+                  {col.map((p, i) => (
+                    <div class="share-team-row">
+                      <span class="share-team-num">{ci === 0 ? i + 1 : mid + i + 1}</span>
+                      <span class="share-team-name">{p.name}</span>
+                      {(p.flag || p.nation) && (
+                        <span class="share-team-nation">{p.flag || p.nation}</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </>
+        )
+      }
+
+      {
+        type === 'era' && (
+          <>
+            <h2 class="share-title">{eraName}</h2>
+            {tagline && <p class="share-tagline">{tagline}</p>}
+            {typeof playerCount === 'number' && (
+              <div class="share-count">
+                <span class="share-count-num">{playerCount}</span>
+                <span class="share-count-label">LEGENDS IN THE VAULT</span>
+              </div>
+            )}
+            {eraSpan && <p class="share-span">{eraSpan}</p>}
+          </>
+        )
+      }
+    </div>
+
+    {/* Decorative cricket motif: stumps + ball, inline SVG */}
+    <div class="share-motif" aria-hidden="true">
+      <svg width="260" height="380" viewBox="0 0 260 380" fill="none">
+        <g stroke="#c9a227" stroke-width="14" stroke-linecap="round" opacity="0.85">
+          <line x1="80" y1="60" x2="80" y2="300" />
+          <line x1="130" y1="60" x2="130" y2="300" />
+          <line x1="180" y1="60" x2="180" y2="300" />
+        </g>
+        <g stroke="#c9a227" stroke-width="10" stroke-linecap="round" opacity="0.85">
+          <line x1="80" y1="46" x2="130" y2="46" />
+          <line x1="130" y1="46" x2="180" y2="46" />
+        </g>
+        <circle cx="205" cy="330" r="34" fill="#22c55e" opacity="0.9" />
+        <path
+          d="M 184 310 Q 205 330 184 350 M 226 310 Q 205 330 226 350"
+          stroke="#052e14"
+          stroke-width="5"
+          stroke-linecap="round"
+        />
+        <line x1="30" y1="316" x2="230" y2="316" stroke="#94a3b8" stroke-width="5" stroke-linecap="round" opacity="0.35" />
+      </svg>
+    </div>
+  </div>
+  <footer class="share-footer">
+    <span class="share-brand">
+      BEATMY<span class="eleven">11</span>
+    </span>
+    <span class="share-url">BEATMY11.COM — BUILD YOUR ALL-TIME XI</span>
+  </footer>
+</article>

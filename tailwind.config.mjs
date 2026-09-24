@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        // BeatMy11 brand colors
+        // BeatMy11 brand colors (existing scales — referenced across the codebase)
         primary: {
           50: '#f0fdf4',
           100: '#dcfce7',
@@ -28,6 +28,40 @@ export default {
           700: '#7e22ce',
           800: '#6b21a8',
           900: '#581c87',
+        },
+        // BeatMy11 dark-first brand palette.
+        // Mirrors the --bm11-* CSS custom properties in src/styles/globals.css.
+        brand: {
+          bg: '#070B14',
+          surface: '#0D1424',
+          elevated: '#141D33',
+          border: 'rgba(148, 163, 184, 0.14)',
+          text: '#F1F5F9',
+          muted: '#94A3B8',
+          primary: '#22C55E',
+          'primary-strong': '#16A34A',
+          ring: '#4ADE80',
+          danger: '#EF4444',
+          warning: '#F59E0B',
+          success: '#22C55E',
+        },
+        // Championship gold
+        gold: {
+          DEFAULT: '#C9A227',
+          soft: '#E2C15C',
+          deep: '#8A6F1C',
+        },
+        // Era accents. Keys must be valid Tailwind identifiers, so the
+        // decades use word forms (e.g. `bg-era-nineties`).
+        // Mirrors the --era-* CSS custom properties and src/lib/design-tokens.ts.
+        era: {
+          legends: '#C9A227',
+          seventies: '#C26936',
+          eighties: '#D64045',
+          nineties: '#2AA198',
+          noughties: '#3B82F6',
+          tens: '#8B5CF6',
+          twenties: '#2DD4BF',
         },
       },
       fontFamily: {

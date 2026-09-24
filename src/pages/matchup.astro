@@ -1,0 +1,630 @@
+---
+/**
+ * matchup.astro — "YOUR XI vs MY XI" + the verdict.
+ *
+ * Server-rendered shell (Navbar / Footer / BaseLayout) with the fixed house XI
+ * pre-normalized in frontmatter and server-rendered via PlayerCard's
+ * `comparison` variant (this also guarantees the PlayerCard `is:global`
+ * styles are emitted on this page, so the client-rendered user rows below
+ * pick up the same bm11-pc-* classes).
+ *
+ * Client <script type="module"> reads the user's XI from localStorage
+ * ('beatmy11.userXI.v1'), renders the user column with markup mirroring
+ * PlayerCard's comparison variant, then scores both sides with the existing
+ * ratings.ts logic (calculateTeamScore + calculateWinProbability).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import PlayerCard from '../components/PlayerCard.astro';
+import { getHouseXI } from '../lib/opponent-xi';
+
+const title = 'Your XI vs My XI — BeatMy11';
+const description =
+  'Your all-time Test XI against the fixed house XI. Era-normalized ratings decide the win probability — can you beat my 11?';
+
+/* ---------- fixed house "My XI" (isolated in src/lib/opponent-xi.ts) ----------
+   Deterministic: the same 11 legends every time. No randomness anywhere in
+   the opponent path. */
+const houseXI = getHouseXI();
+
+const ROLE_ORDER = ['opener', 'middle-order', 'wicketkeeper', 'all-rounder', 'fast-bowler', 'spinner'];
+const ROLE_GROUP_LABELS: Record<string, string> = {
+  opener: 'Openers',
+  'middle-order': 'Middle Order',
+  wicketkeeper: 'Wicketkeeper',
+  'all-rounder': 'All-Rounder',
+  'fast-bowler': 'Fast Bowlers',
+  spinner: 'Spinners',
+};
+const houseGroups = ROLE_ORDER.map((role) => ({
+  role,
+  label: ROLE_GROUP_LABELS[role],
+  players: houseXI.filter((p) => p.primaryRole === role),
+})).filter((g) => g.players.length > 0);
+
+/* Embed the normalized house XI for the client script. Escape "<" so the
+   blob can never close the script element. */
+const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
+---
+<BaseLayout title={title} description={description}>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <Navbar />
+
+  <main id="main" class="matchup">
+    <div class="matchup__wrap">
+      <header class="matchup__head">
+        <p class="matchup__eyebrow">The matchup</p>
+        <h1 class="matchup__title">Your XI <span class="matchup__vs-word">vs</span> My XI</h1>
+        <p class="matchup__lede">
+          Your drafted side against the fixed house XI. Era-normalized
+          ratings, one verdict.
+        </p>
+      </header>
+
+      <div class="matchup__cols">
+        <section class="matchup__team" aria-labelledby="your-xi-heading">
+          <h2 class="matchup__team-title" id="your-xi-heading">Your XI</h2>
+          <div class="matchup__list" id="user-xi">
+            <p class="matchup__loading" id="user-xi-loading">Loading your XI…</p>
+            <noscript>
+              <p class="matchup__loading">
+                Your XI needs JavaScript to load. <a href="/play">Draft a new XI</a> to play.
+              </p>
+            </noscript>
+          </div>
+        </section>
+
+        <div class="matchup__divider" aria-hidden="true"><span>VS</span></div>
+
+        <section class="matchup__team" aria-labelledby="house-xi-heading">
+          <h2 class="matchup__team-title" id="house-xi-heading">
+            My XI <span class="matchup__team-sub">— the house</span>
+          </h2>
+          <div class="matchup__list">
+            {houseGroups.map((g) => (
+              <>
+                <h3 class="matchup__group">{g.label}</h3>
+                {g.players.map((p) => <PlayerCard player={p} comparison />)}
+              </>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      <section class="tape" aria-labelledby="tape-heading">
+        <h2 class="matchup__section-title" id="tape-heading">Tale of the tape</h2>
+        <div class="tape__scores">
+          <div class="tape__side">
+            <span class="tape__label">Your XI</span>
+            <span class="tape__score" id="tape-user-score">–</span>
+          </div>
+          <div class="tape__bar" id="tape-bar" role="img" aria-label="Win probability bar">
+            <span class="tape__mid" aria-hidden="true"></span>
+            <span class="tape__fill" id="tape-fill"></span>
+          </div>
+          <div class="tape__side tape__side--right">
+            <span class="tape__label">My XI</span>
+            <span class="tape__score" id="tape-house-score">–</span>
+          </div>
+        </div>
+        <p class="tape__prob">
+          Win probability — <strong id="tape-prob-user">–</strong> you ·
+          <strong id="tape-prob-house">–</strong> house
+        </p>
+      </section>
+
+      <section class="verdict" aria-live="polite" aria-atomic="true" aria-labelledby="verdict-title">
+        <p class="verdict__eyebrow">The verdict</p>
+        <h2 class="verdict__title" id="verdict-title">Crunching the numbers…</h2>
+        <p class="verdict__sub" id="verdict-sub">Your XI is being scored against the house.</p>
+      </section>
+
+      <div class="matchup__actions">
+        <a href="/play" class="bm11-btn bm11-btn-primary" id="play-again">Play again</a>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+
+  <script id="bm11-house-xi" type="application/json" set:html={houseJson} />
+
+  <script type="module">
+    import { calculateTeamScore, calculateWinProbability } from '../lib/ratings';
+
+    const HOUSE_XI = JSON.parse(
+      document.getElementById('bm11-house-xi').textContent || '[]'
+    );
+
+    /* ---------- normalization (mirrors the frontmatter spec) ---------- */
+    const VALID_ROLES = new Set([
+      'opener', 'middle-order', 'all-rounder', 'wicketkeeper', 'spinner', 'fast-bowler',
+    ]);
+    const normalizeRole = (r) =>
+      String(r ?? '').trim().toLowerCase().replace(/\s+/g, '-');
+    const normalizeSecondaryRoles = (raw) => {
+      const arr = Array.isArray(raw) ? raw : (typeof raw === 'string' && raw ? [raw] : []);
+      return arr.map(normalizeRole).filter((r) => VALID_ROLES.has(r));
+    };
+    const mapBowlingStats = (stats) => {
+      const s = { ...(stats ?? {}) };
+      const tba = Number(s.testBowlingAverage);
+      if (tba > 0 && !(Number(s.bowlingAverage) > 0)) s.bowlingAverage = tba;
+      const bsr = Number(s.bowlingStrikeRate);
+      if (bsr > 0) s.bowlingStrikeRate = bsr;
+      return s;
+    };
+    const eraString = (era, fallback) => {
+      const e = era ?? fallback ?? 'legends';
+      return Array.isArray(e) ? String(e[0]) : String(e);
+    };
+    const num = (v) => {
+      const n = Number(v);
+      return Number.isFinite(n) ? n : 0;
+    };
+    const numOrUndef = (v) => {
+      const n = Number(v);
+      return n > 0 ? n : undefined;
+    };
+
+    /** Lenient conversion of a stored player into the ratings.ts Player shape. */
+    function toScoringPlayer(p, sourceEra) {
+      const uid = String(p.uid ?? p.id ?? '');
+      const inferredEra = uid.includes(':') ? uid.split(':')[0] : undefined;
+      const stats = mapBowlingStats(p.stats);
+      return {
+        id: uid || String(p.name ?? ''),
+        name: String(p.name ?? ''),
+        nation: String(p.nation ?? ''),
+        era: eraString(p.era ?? p.displayEra, inferredEra ?? sourceEra),
+        primaryRole: normalizeRole(p.primaryRole),
+        secondaryRoles: normalizeSecondaryRoles(p.secondaryRoles),
+        stats: {
+          testAverage: num(stats.testAverage),
+          testRuns: num(stats.testRuns),
+          testWickets: num(stats.testWickets),
+          testMatches: num(stats.testMatches),
+          testCenturies: num(stats.testCenturies),
+          testFifties: num(stats.testFifties),
+          bowlingAverage: numOrUndef(stats.bowlingAverage),
+          bowlingStrikeRate: numOrUndef(stats.bowlingStrikeRate),
+        },
+      };
+    }
+
+    function readUserXI() {
+      try {
+        const raw = localStorage.getItem('beatmy11.userXI.v1');
+        if (!raw) return null;
+        const arr = JSON.parse(raw);
+        if (!Array.isArray(arr) || arr.length !== 11) return null;
+        const ok = arr.every(
+          (p) => p && typeof p === 'object' && (p.uid || p.id) && typeof p.name === 'string' && p.name
+        );
+        return ok ? arr : null;
+      } catch {
+        return null;
+      }
+    }
+
+    /* ---------- display helpers (mirror PlayerCard.astro) ---------- */
+    const ERA_ACCENTS = {
+      legends: '#C9A227',
+      '1970s': '#C26936',
+      '1980s': '#D64045',
+      '1990s': '#2AA198',
+      '2000s': '#3B82F6',
+      '2010s': '#8B5CF6',
+      '2020s': '#2DD4BF',
+    };
+    const ROLE_LABELS = {
+      opener: 'Opener',
+      'middle-order': 'Middle Order',
+      wicketkeeper: 'Wicketkeeper',
+      'all-rounder': 'All-Rounder',
+      'fast-bowler': 'Fast Bowler',
+      spinner: 'Spinner',
+    };
+    const NATION_FLAGS = {
+      Australia: '🇦🇺',
+      England: '🏴󐁧󐁢󐁥󐁮󐁧󐁿',
+      India: '🇮🇳',
+      Pakistan: '🇵🇰',
+      'West Indies': '🇯🇲',
+      'New Zealand': '🇳🇿',
+      'South Africa': '🇿🇦',
+      'Sri Lanka': '🇱🇰',
+      Bangladesh: '🇧🇩',
+      Zimbabwe: '🇿🇼',
+    };
+    const esc = (v) =>
+      String(v ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+
+    const fmtAvg = (v) => (v == null || Number.isNaN(Number(v)) ? '–' : Number(v).toFixed(2));
+    const fmtInt = (v) =>
+      v == null || Number.isNaN(Number(v)) ? '–' : Math.round(Number(v)).toLocaleString('en-US');
+
+    /** Avatar data-URI mirroring PlayerAvatar.astro (SVG silhouette medallion). */
+    function avatarURI(eraId) {
+      const accent = ERA_ACCENTS[eraId] ?? '#94A3B8';
+      const figure = '#DDE6F2';
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">` +
+        `<defs><radialGradient id="bm11av" cx="35%" cy="28%" r="85%">` +
+        `<stop offset="0%" stop-color="${accent}" stop-opacity="0.38"/>` +
+        `<stop offset="100%" stop-color="#0D1424" stop-opacity="1"/>` +
+        `</radialGradient></defs>` +
+        `<circle cx="32" cy="32" r="30.5" fill="url(#bm11av)" stroke="${accent}" stroke-opacity="0.55" stroke-width="1.6"/>` +
+        `<ellipse cx="30" cy="55" rx="13" ry="2.4" fill="#000000" opacity="0.35"/>` +
+        `<circle cx="33" cy="12.5" r="6.4" fill="${figure}"/>` +
+        `<g stroke="${figure}" stroke-linecap="round" fill="none">` +
+        `<path d="M33 21 C31.5 27 30.5 32 30 38" stroke-width="9"/>` +
+        `<path d="M31 27 L21 34" stroke-width="6.5"/>` +
+        `<path d="M20 35 L8.5 16.5" stroke-width="6"/>` +
+        `<path d="M30 38 L23 53" stroke-width="7.5"/>` +
+        `<path d="M30 38 L39 52" stroke-width="7.5"/>` +
+        `</g></svg>`;
+      return 'data:image/svg+xml,' + encodeURIComponent(svg);
+    }
+
+    /** Key stats per role — same rules as PlayerCard.astro's comparison variant. */
+    function keyStats(p) {
+      const s = p.stats ?? {};
+      const primaryRole = p.primaryRole ?? '';
+      const secondary = p.secondaryRoles ?? [];
+      const isBowler = primaryRole === 'fast-bowler' || primaryRole === 'spinner';
+      const isKeeper = primaryRole === 'wicketkeeper' || secondary.includes('wicketkeeper');
+      const isAllRounder = primaryRole === 'all-rounder';
+      const bowlAvg = s.testBowlingAverage ?? s.bowlingAverage;
+      if (isBowler) {
+        return [
+          { label: 'Wkts', value: fmtInt(s.testWickets) },
+          { label: 'Avg', value: fmtAvg(bowlAvg) },
+          { label: '5WI', value: fmtInt(s.fiveWs) },
+        ];
+      }
+      if (isAllRounder) {
+        return [
+          { label: 'Avg', value: fmtAvg(s.testAverage) },
+          { label: 'Runs', value: fmtInt(s.testRuns) },
+          { label: 'Wkts', value: fmtInt(s.testWickets) },
+        ];
+      }
+      if (isKeeper) {
+        return [
+          { label: 'Avg', value: fmtAvg(s.testAverage) },
+          { label: 'Runs', value: fmtInt(s.testRuns) },
+          { label: 'Dism.', value: fmtInt(s.dismissals) },
+        ];
+      }
+      return [
+        { label: 'Avg', value: fmtAvg(s.testAverage) },
+        { label: 'Runs', value: fmtInt(s.testRuns) },
+        { label: '100s', value: fmtInt(s.testCenturies) },
+      ];
+    }
+
+    /**
+     * Comparison row markup mirroring PlayerCard.astro's `comparison` variant:
+     * div.bm11-player-card.is-comparison > .bm11-pc-row > avatar + .bm11-pc-head
+     * + .bm11-pc-ministats. Styles come from the component's global classes.
+     */
+    function comparisonRow(p) {
+      const eraId = eraString(p.era ?? p.displayEra, 'legends');
+      const eraLabel = eraId === 'legends' ? 'Legends' : eraId;
+      const accent = ERA_ACCENTS[eraId] ?? '#94A3B8';
+      const roles = [
+        ...(p.primaryRole ? [p.primaryRole] : []),
+        ...normalizeSecondaryRoles(p.secondaryRoles).filter((r) => r !== p.primaryRole),
+      ];
+      const roleLabels = roles.map((r) => ROLE_LABELS[r] ?? r);
+      const flag = NATION_FLAGS[p.nation] ?? '';
+      const stats = keyStats(p)
+        .map(
+          (st) =>
+            `<div class="bm11-pc-ministat"><span class="bm11-pc-ministat-v">${esc(st.value)}</span>` +
+            `<span class="bm11-pc-ministat-l">${esc(st.label)}</span></div>`
+        )
+        .join('');
+      const chips = roleLabels.map((r) => `<span class="bm11-chip">${esc(r)}</span>`).join('');
+      return (
+        `<div class="bm11-player-card is-comparison" style="--era-accent:${accent};">` +
+        `<div class="bm11-pc-row">` +
+        `<img src="${avatarURI(eraId)}" alt="" aria-hidden="true" loading="lazy" draggable="false" ` +
+        `class="rounded-full object-cover select-none w-10 h-10" ` +
+        `style="--era-accent:${accent};background-color:#0D1424;" />` +
+        `<div class="bm11-pc-head">` +
+        `<div class="bm11-pc-name">${esc(p.name)}</div>` +
+        `<div class="bm11-pc-sub">${flag ? `<span aria-hidden="true">${flag} </span>` : ''}${esc(p.nation)}` +
+        ` · <span class="bm11-era-chip" style="--era-accent:${accent};">${esc(eraLabel)}</span></div>` +
+        `<div class="bm11-pc-roles">${chips}</div>` +
+        `</div>` +
+        `<div class="bm11-pc-ministats" aria-label="Key statistics">${stats}</div>` +
+        `</div></div>`
+      );
+    }
+
+    const ROLE_ORDER = ['opener', 'middle-order', 'wicketkeeper', 'all-rounder', 'fast-bowler', 'spinner'];
+    const ROLE_GROUP_LABELS = {
+      opener: 'Openers',
+      'middle-order': 'Middle Order',
+      wicketkeeper: 'Wicketkeeper',
+      'all-rounder': 'All-Rounder',
+      'fast-bowler': 'Fast Bowlers',
+      spinner: 'Spinners',
+    };
+
+    function renderUserXI(userRaw) {
+      const container = document.getElementById('user-xi');
+      const loading = document.getElementById('user-xi-loading');
+      if (loading) loading.remove();
+      const groups = ROLE_ORDER.map((role) => ({
+        role,
+        players: userRaw.filter((p) => normalizeRole(p.primaryRole) === role),
+      })).filter((g) => g.players.length > 0);
+      const leftover = userRaw.filter(
+        (p) => !ROLE_ORDER.includes(normalizeRole(p.primaryRole))
+      );
+      if (leftover.length) groups.push({ role: 'other', players: leftover });
+      container.innerHTML = groups
+        .map(
+          (g) =>
+            `<h3 class="matchup__group">${esc(ROLE_GROUP_LABELS[g.role] ?? 'Squad')}</h3>` +
+            g.players.map(comparisonRow).join('')
+        )
+        .join('');
+    }
+
+    function renderResult(userPlayers, housePlayers) {
+      const scoreU = calculateTeamScore(userPlayers);
+      const scoreH = calculateTeamScore(housePlayers);
+      const prob = calculateWinProbability(userPlayers, housePlayers);
+      const pct = Math.round(prob * 100);
+
+      document.getElementById('tape-user-score').textContent = scoreU.toFixed(1);
+      document.getElementById('tape-house-score').textContent = scoreH.toFixed(1);
+      document.getElementById('tape-prob-user').textContent = `${pct}%`;
+      document.getElementById('tape-prob-house').textContent = `${100 - pct}%`;
+      const fill = document.getElementById('tape-fill');
+      fill.style.width = `${(prob * 100).toFixed(1)}%`;
+      document.getElementById('tape-bar').setAttribute(
+        'aria-label',
+        `Win probability bar: your XI ${pct}%, house XI ${100 - pct}%`
+      );
+
+      const verdictTitle = document.getElementById('verdict-title');
+      const verdictSub = document.getElementById('verdict-sub');
+      if (prob > 0.5) {
+        verdictTitle.textContent = 'YOUR XI BEATS MINE';
+      } else {
+        verdictTitle.textContent = 'MY XI WINS THIS ONE';
+      }
+      verdictSub.textContent = `Your XI has a ${pct}% chance against the house.`;
+    }
+
+    /* ---------- boot ---------- */
+    const userRaw = readUserXI();
+    if (!userRaw) {
+      window.location.href = '/play';
+    } else {
+      const userPlayers = userRaw.map((p) => toScoringPlayer(p, 'legends'));
+      const housePlayers = HOUSE_XI.map((p) => toScoringPlayer(p, 'legends'));
+      renderUserXI(userRaw);
+      renderResult(userPlayers, housePlayers);
+
+      document.getElementById('play-again').addEventListener('click', () => {
+        try {
+          localStorage.removeItem('beatmy11.userXI.v1');
+          localStorage.removeItem('beatmy11.draft.v1');
+        } catch {
+          /* storage unavailable — navigation still works */
+        }
+      });
+    }
+  </script>
+
+  <style>
+    .matchup__wrap {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 2rem 1rem 4rem;
+    }
+    .matchup__head { text-align: center; margin-bottom: 2rem; }
+    .matchup__eyebrow {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bm11-gold, #C9A227);
+      margin: 0 0 0.5rem;
+    }
+    .matchup__title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 800;
+      margin: 0 0 0.5rem;
+      color: var(--bm11-text, #F1F5F9);
+      line-height: 1.15;
+    }
+    .matchup__vs-word {
+      font-weight: 400;
+      color: var(--bm11-muted, #94A3B8);
+      font-size: 0.65em;
+      vertical-align: middle;
+    }
+    .matchup__lede {
+      color: var(--bm11-muted, #94A3B8);
+      max-width: 34rem;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .matchup__cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .matchup__team-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0 0 1rem;
+      color: var(--bm11-text, #F1F5F9);
+    }
+    .matchup__team-sub {
+      font-weight: 400;
+      font-size: 0.85rem;
+      color: var(--bm11-muted, #94A3B8);
+    }
+    .matchup__list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      min-width: 0;
+    }
+    .matchup__group {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--bm11-muted, #94A3B8);
+      margin: 0.9rem 0 0.1rem;
+    }
+    .matchup__group:first-child { margin-top: 0; }
+    .matchup__loading { color: var(--bm11-muted, #94A3B8); }
+    .matchup__divider { display: none; }
+    .matchup__section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0 0 1rem;
+      text-align: center;
+      color: var(--bm11-text, #F1F5F9);
+    }
+
+    /* Tale of the tape */
+    .tape {
+      margin-top: 2.5rem;
+      background: var(--bm11-surface, #0D1424);
+      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+      border-radius: 1rem;
+      padding: 1.5rem;
+    }
+    .tape__scores {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1rem;
+      align-items: center;
+    }
+    .tape__side { display: flex; flex-direction: column; gap: 0.25rem; }
+    .tape__side--right { text-align: right; }
+    .tape__label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--bm11-muted, #94A3B8);
+    }
+    .tape__score {
+      font-size: 1.5rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      color: var(--bm11-text, #F1F5F9);
+    }
+    .tape__bar {
+      position: relative;
+      height: 0.75rem;
+      border-radius: 9999px;
+      background: var(--bm11-elevated, #141D33);
+      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+      overflow: hidden;
+    }
+    .tape__mid {
+      position: absolute;
+      top: -2px;
+      bottom: -2px;
+      left: 50%;
+      width: 2px;
+      background: var(--bm11-border, rgba(148, 163, 184, 0.4));
+    }
+    .tape__fill {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      background: #64748B;
+      border-radius: 9999px;
+      transition: width 0.6s ease;
+    }
+    .tape__prob {
+      text-align: center;
+      color: var(--bm11-muted, #94A3B8);
+      font-size: 0.9rem;
+      margin: 1rem 0 0;
+      font-variant-numeric: tabular-nums;
+    }
+    .tape__prob strong { color: var(--bm11-text, #F1F5F9); }
+
+    /* Verdict hero */
+    .verdict {
+      margin-top: 2rem;
+      text-align: center;
+      background: var(--bm11-surface, #0D1424);
+      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+      border-radius: 1.25rem;
+      padding: 2.5rem 1.5rem;
+    }
+    .verdict__eyebrow {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bm11-gold, #C9A227);
+      margin: 0 0 0.75rem;
+    }
+    .verdict__title {
+      font-size: clamp(1.6rem, 5vw, 2.75rem);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      margin: 0 0 0.75rem;
+      color: var(--bm11-text, #F1F5F9);
+      line-height: 1.15;
+    }
+    .verdict__sub {
+      color: var(--bm11-muted, #94A3B8);
+      margin: 0;
+      font-size: 1.05rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .matchup__actions {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    @media (max-width: 860px) {
+      .matchup__cols { grid-template-columns: 1fr; }
+      .matchup__divider {
+        display: flex;
+        justify-content: center;
+        margin: 0.25rem 0;
+      }
+      .matchup__divider span {
+        font-size: 0.8rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        color: var(--bm11-text, #F1F5F9);
+        background: var(--bm11-elevated, #141D33);
+        border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+        border-radius: 9999px;
+        padding: 0.4rem 1.1rem;
+      }
+      .tape__scores { grid-template-columns: 1fr; gap: 0.75rem; }
+      .tape__side--right { text-align: left; }
+      .tape { padding: 1.25rem; }
+    }
+  </style>
+</BaseLayout>

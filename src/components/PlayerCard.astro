@@ -1,56 +1,358 @@
 ---
-const { player, selected, disabled, onSelect } = Astro.props;
+/**
+ * PlayerCard — selectable player card for grids and result lists.
+ *
+ * Props (existing contract preserved):
+ *   player     - player object { id, name, nation, era, primaryRole, secondaryRoles, stats }
+ *   selected   - selection state (green ring + check badge)
+ *   disabled   - dimmed, non-interactive (aria-disabled)
+ *   onSelect   - (id: string) => void, called on click when not disabled
+ * New optional props:
+ *   highlighted - era-accent glow ring
+ *   captain     - gold "C" badge + gold ring
+ *   comparison  - renders a non-interactive compact row (for result lists)
+ *
+ * Selection is wired two ways:
+ *  1. The original `on:click` contract is kept verbatim for island/framework use.
+ *  2. A delegated client listener dispatches `bm11:player-select` (detail: { id })
+ *     so the static page can react without a framework.
+ */
+import PlayerAvatar from './PlayerAvatar.astro';
 
-// Determine player role display
-const getRoleDisplay = (player) => {
-  const roles = [];
-  if (player.primaryRole === 'opener' || player.secondaryRoles.includes('opener')) roles.push('Opener');
-  if (player.primaryRole === 'middle-order' || player.secondaryRoles.includes('middle-order')) roles.push('Middle');
-  if (player.primaryRole === 'wicketkeeper' || player.secondaryRoles.includes('wicketkeeper')) roles.push('WK');
-  if (player.primaryRole === 'all-rounder' || player.secondaryRoles.includes('all-rounder')) roles.push('All-rounder');
-  if (player.primaryRole === 'fast-bowler' || player.secondaryRoles.includes('fast-bowler')) roles.push('Pacer');
-  if (player.primaryRole === 'spinner' || player.secondaryRoles.includes('spinner')) roles.push('Spinner');
+interface Props {
+  player: any;
+  selected?: boolean;
+  disabled?: boolean;
+  highlighted?: boolean;
+  captain?: boolean;
+  comparison?: boolean;
+  onSelect?: (id: string) => void;
+  /** Alias used by SpinWheel (`on:select={...}`); equivalent to onSelect. */
+  'on:select'?: (id: string) => void;
+}
 
-  return roles.join(' / ');
+const {
+  player,
+  selected = false,
+  disabled = false,
+  highlighted = false,
+  captain = false,
+  comparison = false,
+  onSelect: onSelectProp,
+  // SpinWheel passes the handler as `on:select`; accept both spellings.
+  'on:select': onSelectColon,
+} = Astro.props;
+const onSelect = onSelectProp ?? onSelectColon;
+
+const ERA_ACCENTS: Record<string, string> = {
+  legends: '#C9A227',
+  '1970s': '#C26936',
+  '1980s': '#D64045',
+  '1990s': '#2AA198',
+  '2000s': '#3B82F6',
+  '2010s': '#8B5CF6',
+  '2020s': '#2DD4BF',
 };
 
-// Get player image (placeholder for now)
-const getPlayerImage = (player) => {
-  // In real implementation, this would be actual player photos
-  // For now, using placeholder with initials
-  const initials = player.name
-    .split(' ')
-    .map(n => n[0])
-    .slice(0, 2)
-    .join('')
-    .toUpperCase();
-
-  return `https://ui-avatars.com/api/?name=${initials}&background=random`;
+const ROLE_LABELS: Record<string, string> = {
+  opener: 'Opener',
+  'middle-order': 'Middle Order',
+  wicketkeeper: 'Wicketkeeper',
+  'all-rounder': 'All-Rounder',
+  'fast-bowler': 'Fast Bowler',
+  spinner: 'Spinner',
 };
+
+// Nation flags mirror the TEST_NATIONS list in src/lib/game-engine.ts
+const NATION_FLAGS: Record<string, string> = {
+  Australia: '🇦🇺',
+  England: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+  India: '🇮🇳',
+  Pakistan: '🇵🇰',
+  'West Indies': '🇯🇲',
+  'New Zealand': '🇳🇿',
+  'South Africa': '🇿🇦',
+  'Sri Lanka': '🇱🇰',
+  Bangladesh: '🇧🇩',
+  Zimbabwe: '🇿🇼',
+};
+
+const eraId = (Array.isArray(player.era) ? player.era[0] : player.era) ?? 'legends';
+const eraAccent = ERA_ACCENTS[eraId] ?? '#94A3B8';
+const eraLabel = eraId === 'legends' ? 'Legends' : eraId;
+
+const rawSecondary = player.secondaryRoles;
+// Data is inconsistent: some players carry a single string instead of an array.
+const secondaryRoles: string[] = Array.isArray(rawSecondary)
+  ? rawSecondary
+  : typeof rawSecondary === 'string' && rawSecondary
+    ? [rawSecondary]
+    : [];
+const roles: string[] = [
+  ...(player.primaryRole ? [player.primaryRole] : []),
+  ...secondaryRoles.filter((r: string) => r !== player.primaryRole),
+];
+const roleLabels = roles.map((r: string) => ROLE_LABELS[r] ?? r);
+
+const s = player.stats ?? {};
+const primaryRole: string = player.primaryRole ?? '';
+const isBowler = primaryRole === 'fast-bowler' || primaryRole === 'spinner';
+const isKeeper = primaryRole === 'wicketkeeper' || secondaryRoles.includes('wicketkeeper');
+const isAllRounder = primaryRole === 'all-rounder';
+
+const fmtAvg = (v: any) => (v == null || Number.isNaN(Number(v)) ? '–' : Number(v).toFixed(2));
+const fmtInt = (v: any) => (v == null || Number.isNaN(Number(v)) ? '–' : Math.round(Number(v)).toLocaleString('en-US'));
+const bowlAvg = s.testBowlingAverage ?? s.bowlingAverage;
+
+let keyStats: Array<{ label: string; value: string }>;
+if (isBowler) {
+  keyStats = [
+    { label: 'Wkts', value: fmtInt(s.testWickets) },
+    { label: 'Avg', value: fmtAvg(bowlAvg) },
+    { label: '5WI', value: fmtInt(s.fiveWs) },
+  ];
+} else if (isAllRounder) {
+  keyStats = [
+    { label: 'Avg', value: fmtAvg(s.testAverage) },
+    { label: 'Runs', value: fmtInt(s.testRuns) },
+    { label: 'Wkts', value: fmtInt(s.testWickets) },
+  ];
+} else if (isKeeper) {
+  keyStats = [
+    { label: 'Avg', value: fmtAvg(s.testAverage) },
+    { label: 'Runs', value: fmtInt(s.testRuns) },
+    { label: 'Dism.', value: fmtInt(s.dismissals) },
+  ];
+} else {
+  keyStats = [
+    { label: 'Avg', value: fmtAvg(s.testAverage) },
+    { label: 'Runs', value: fmtInt(s.testRuns) },
+    { label: '100s', value: fmtInt(s.testCenturies) },
+  ];
+}
+
+// Data files carry no rating field today; ratings.ts computes stats.finalRating
+// at runtime. Show it only when present — never invent one.
+const rating = s.finalRating ?? player.rating ?? player.score;
+const flag = NATION_FLAGS[player.nation] ?? '';
+const cardStyle = `--era-accent:${eraAccent};`;
+const accessibleName = `${player.name}, ${roleLabels.join(', ') || 'player'}, ${player.nation ?? ''}`;
 ---
-<div
-  class="PlayerCard"
-  class:selected={selected}
-  class:disabled={disabled}
-  on:click={() => !disabled && onSelect(player.id)}
->
-  <img
-    src={getPlayerImage(player)}
-    alt={player.name}
-    class="PlayerCard-image"
-  />
-  <div class="PlayerCard-name">
-    {player.name}
-  </div>
-  <div class="PlayerCard-role">
-    {getRoleDisplay(player)}
-  </div>
-  <div class="PlayerCard-stats">
-    {player.nation} • {player.era.replace('s', "'s")}
-  </div>
-  {selected && (
-    <div class="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center bg-primary-600 text-white rounded-full text-xs">
-      ✓
+{comparison ? (
+  <div
+    class:list={['bm11-player-card', 'PlayerCard', 'is-comparison', captain && 'is-captain']}
+    style={cardStyle}
+  >
+    <div class="bm11-pc-row">
+      <PlayerAvatar name={player.name} era={player.era} size="w-10 h-10" />
+      <div class="bm11-pc-head">
+        <div class="bm11-pc-name">{player.name}</div>
+        <div class="bm11-pc-sub">
+          {flag && <span aria-hidden="true">{flag} </span>}{player.nation}
+          {' · '}
+          <span class="bm11-era-chip" style={cardStyle}>{eraLabel}</span>
+        </div>
+        <div class="bm11-pc-roles">
+          {roleLabels.map((r: string) => (
+            <span class="bm11-chip">{r}</span>
+          ))}
+        </div>
+      </div>
+      <div class="bm11-pc-ministats" aria-label="Key statistics">
+        {keyStats.map((st) => (
+          <div class="bm11-pc-ministat">
+            <span class="bm11-pc-ministat-v">{st.value}</span>
+            <span class="bm11-pc-ministat-l">{st.label}</span>
+          </div>
+        ))}
+      </div>
     </div>
-  )}
-</div>
+    {captain && (
+      <span class="bm11-captain-badge" title="Captain" aria-label="Captain">C</span>
+    )}
+  </div>
+) : (
+  <button
+    type="button"
+    data-bm11-select={player.id}
+    class:list={[
+      'bm11-player-card',
+      'PlayerCard',
+      selected && 'is-selected',
+      selected && 'PlayerCard-selected',
+      disabled && 'is-disabled',
+      disabled && 'PlayerCard-disabled',
+      highlighted && 'is-highlighted',
+      captain && 'is-captain',
+    ]}
+    style={cardStyle}
+    aria-pressed={selected ? 'true' : 'false'}
+    aria-disabled={disabled ? 'true' : undefined}
+    aria-label={accessibleName}
+    on:click={() => !disabled && onSelect?.(player.id)}
+  >
+    <div class="bm11-pc-top">
+      <PlayerAvatar name={player.name} era={player.era} size="w-14 h-14" />
+      <div class="bm11-pc-head">
+        <div class="bm11-pc-name">{player.name}</div>
+        <div class="bm11-pc-sub">
+          {flag && <span aria-hidden="true">{flag} </span>}{player.nation}
+        </div>
+        <span class="bm11-era-chip" style={cardStyle}>{eraLabel}</span>
+      </div>
+    </div>
+    <div class="bm11-pc-roles" aria-label="Roles">
+      {roleLabels.map((r: string) => (
+        <span class="bm11-chip">{r}</span>
+      ))}
+    </div>
+    <div class="bm11-pc-stats" aria-label="Key statistics">
+      {keyStats.map((st) => (
+        <div class="bm11-pc-stat">
+          <span class="bm11-pc-stat-v">{st.value}</span>
+          <span class="bm11-pc-stat-l">{st.label}</span>
+        </div>
+      ))}
+    </div>
+    {rating != null && (
+      <div class="bm11-pc-rating">
+        Rating <span class="bm11-stat-num">{typeof rating === 'number' ? rating.toFixed(1) : rating}</span>
+      </div>
+    )}
+    {selected && (
+      <span class="bm11-check-badge" aria-hidden="true">
+        <svg viewBox="0 0 16 16" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 8.5l3.2 3.2L13 5" />
+        </svg>
+      </span>
+    )}
+    {captain && (
+      <span class="bm11-captain-badge" title="Captain" aria-label="Captain">C</span>
+    )}
+  </button>
+)}
+
+<script>
+  // Delegated selection wiring (registered once per page). Emits a
+  // `bm11:player-select` CustomEvent with detail { id } for non-disabled cards.
+  const w = window as any;
+  if (!w.__bm11PlayerCardWired) {
+    w.__bm11PlayerCardWired = true;
+    document.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement | null;
+      const el = target?.closest?.('[data-bm11-select]') as HTMLElement | null;
+      if (!el || el.getAttribute('aria-disabled') === 'true') return;
+      const id = el.getAttribute('data-bm11-select');
+      if (!id) return;
+      document.dispatchEvent(
+        new CustomEvent('bm11:player-select', { detail: { id }, bubbles: true })
+      );
+    });
+  }
+</script>
+
+<style is:global>
+  .bm11-player-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    width: 100%;
+    min-width: 0;
+    text-align: left;
+    font: inherit;
+    color: var(--bm11-text, #F1F5F9);
+    background: var(--bm11-surface, #0D1424);
+    border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+    border-radius: 1rem;
+    padding: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, opacity 0.18s ease;
+  }
+  .bm11-player-card.is-comparison { cursor: default; }
+  button.bm11-player-card:hover { transform: translateY(-3px); border-color: var(--era-accent); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45); }
+  .bm11-player-card:focus-visible { outline: 2px solid var(--bm11-primary, #22C55E); outline-offset: 3px; }
+  .bm11-player-card.is-selected { border-color: var(--bm11-primary, #22C55E); box-shadow: 0 0 0 2px var(--bm11-primary, #22C55E), 0 12px 28px rgba(0, 0, 0, 0.45); }
+  .bm11-player-card.is-disabled { opacity: 0.45; cursor: not-allowed; }
+  .bm11-player-card.is-disabled:hover { transform: none; box-shadow: none; }
+  .bm11-player-card.is-highlighted { box-shadow: 0 0 0 2px var(--era-accent), 0 12px 28px rgba(0, 0, 0, 0.45); }
+  .bm11-player-card.is-captain { border-color: var(--bm11-gold, #C9A227); }
+
+  .bm11-pc-top { display: flex; align-items: center; gap: 0.75rem; min-width: 0; }
+  .bm11-pc-row { display: flex; align-items: center; gap: 0.75rem; min-width: 0; }
+  .bm11-pc-head { min-width: 0; flex: 1 1 auto; }
+  .bm11-pc-name { font-weight: 600; font-size: 0.95rem; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bm11-pc-sub { font-size: 0.75rem; color: var(--bm11-muted, #94A3B8); margin-top: 0.15rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .bm11-era-chip {
+    display: inline-block;
+    margin-top: 0.3rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--era-accent);
+    border: 1px solid var(--era-accent);
+    border-radius: 9999px;
+    padding: 0.1rem 0.5rem;
+    line-height: 1.4;
+  }
+  .bm11-pc-row .bm11-era-chip { margin-top: 0; margin-left: 0.25rem; }
+
+  .bm11-pc-roles { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .bm11-chip {
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--bm11-muted, #94A3B8);
+    background: var(--bm11-elevated, #141D33);
+    border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+    border-radius: 9999px;
+    padding: 0.15rem 0.55rem;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  .bm11-pc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; }
+  .bm11-pc-stat {
+    display: flex; flex-direction: column; align-items: center;
+    background: var(--bm11-elevated, #141D33);
+    border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+    border-radius: 0.6rem;
+    padding: 0.4rem 0.25rem;
+  }
+  .bm11-pc-stat-v { font-weight: 700; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+  .bm11-pc-stat-l { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--bm11-muted, #94A3B8); margin-top: 0.1rem; }
+
+  .bm11-pc-ministats { display: flex; gap: 0.9rem; flex: 0 0 auto; }
+  .bm11-pc-ministat { display: flex; flex-direction: column; align-items: flex-end; }
+  .bm11-pc-ministat-v { font-weight: 700; font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+  .bm11-pc-ministat-l { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--bm11-muted, #94A3B8); }
+
+  .bm11-pc-rating { font-size: 0.75rem; color: var(--bm11-muted, #94A3B8); }
+  .bm11-pc-rating .bm11-stat-num { color: var(--bm11-gold, #C9A227); font-weight: 700; }
+
+  .bm11-check-badge {
+    position: absolute; top: -0.55rem; right: -0.55rem;
+    width: 1.5rem; height: 1.5rem; border-radius: 9999px;
+    background: var(--bm11-primary, #22C55E); color: #04120a;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  }
+  .bm11-captain-badge {
+    position: absolute; top: -0.6rem; left: -0.6rem;
+    width: 1.5rem; height: 1.5rem; border-radius: 9999px;
+    background: var(--bm11-gold, #C9A227); color: #1a1405;
+    font-size: 0.75rem; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bm11-player-card { transition: none; }
+    button.bm11-player-card:hover { transform: none; }
+  }
+
+  /* Legacy hooks from the previous SpinWheel <style> block (dark restyle). */
+  .PlayerCard-selected { border-color: var(--bm11-primary, #22C55E); }
+  .PlayerCard-disabled { opacity: 0.5; cursor: not-allowed; }
+</style>

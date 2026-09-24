@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ShareCard from '../components/ShareCard.astro';
+
+// Sample data below is read from src/data/legends.json — real names and stats.
+const title = 'Share Card Demo | BeatMy11';
+const description =
+  'Preview of the BeatMy11 share-card templates: player, team, and era cards.';
+---
+
+<BaseLayout title={title} description={description}>
+  <meta name="robots" content="noindex, nofollow" slot="head" />
+
+  <style is:global>
+    :root {
+      --bm11-bg: #070b14;
+      --bm11-surface: #0d1424;
+      --bm11-elevated: #141d33;
+      --bm11-border: rgba(148, 163, 184, 0.14);
+      --bm11-text: #f1f5f9;
+      --bm11-muted: #94a3b8;
+      --bm11-primary: #22c55e;
+      --bm11-gold: #c9a227;
+      --bm11-danger: #ef4444;
+    }
+  </style>
+
+  <style>
+    .demo-page {
+      min-height: 100vh;
+      background: var(--bm11-bg);
+      color: var(--bm11-text);
+      padding: 2.5rem 1.25rem 4rem;
+    }
+    .demo-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .demo-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--bm11-muted);
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+    .demo-back:hover {
+      color: var(--bm11-text);
+    }
+    .demo-back:focus-visible {
+      outline: 2px solid var(--bm11-gold);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+    .demo-heading {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 900;
+      margin: 0 0 0.5rem;
+      letter-spacing: -0.01em;
+    }
+    .demo-sub {
+      color: var(--bm11-muted);
+      margin: 0 0 2.5rem;
+      font-size: 1.05rem;
+    }
+    .demo-section {
+      margin-bottom: 3rem;
+    }
+    .demo-label {
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.28em;
+      color: var(--bm11-gold);
+      margin: 0 0 1rem;
+    }
+    .demo-scroll {
+      overflow-x: auto;
+      border-radius: 1rem;
+      padding-bottom: 0.5rem;
+    }
+  </style>
+
+  <div class="demo-page">
+    <div class="demo-inner">
+      <a class="demo-back" href="/">&larr; Back home</a>
+      <h1 class="demo-heading">Share card templates</h1>
+      <p class="demo-sub">
+        On-page 1200&times;630 templates for social sharing. Sample data uses
+        real players and stats from the legends vault.
+      </p>
+
+      <section class="demo-section" aria-label="Player card demo">
+        <h2 class="demo-label">PLAYER</h2>
+        <div class="demo-scroll">
+          <ShareCard
+            type="player"
+            headline="THE DON"
+            playerName="Don Bradman"
+            playerNation="Australia"
+            flag="AUS"
+            playerRole="Opener"
+            stats={[
+              { label: 'TEST AVG', value: '99.9' },
+              { label: 'RUNS', value: '6,996' },
+              { label: 'MATCHES', value: '52' },
+              { label: '100s', value: '29' },
+            ]}
+          />
+        </div>
+      </section>
+
+      <section class="demo-section" aria-label="Team card demo">
+        <h2 class="demo-label">TEAM</h2>
+        <div class="demo-scroll">
+          <ShareCard
+            type="team"
+            teamTitle="MY ALL-TIME XI"
+            subtitle="Drafted from the legends vault — can the house beat this side?"
+            players={[
+              { name: 'Don Bradman', flag: 'AUS' },
+              { name: 'Jack Hobbs', flag: 'ENG' },
+              { name: 'Len Hutton', flag: 'ENG' },
+              { name: 'Sunil Gavaskar', flag: 'IND' },
+              { name: 'Sachin Tendulkar', flag: 'IND' },
+              { name: 'Gordon Greenidge', flag: 'WIN' },
+              { name: 'Hanif Mohammad', flag: 'PAK' },
+              { name: 'Graham Gooch', flag: 'ENG' },
+            ]}
+          />
+        </div>
+      </section>
+
+      <section class="demo-section" aria-label="Era card demo">
+        <h2 class="demo-label">ERA</h2>
+        <div class="demo-scroll">
+          <ShareCard
+            type="era"
+            eraName="Legends Era"
+            tagline="From Bradman's Invincibles to the modern masters — the giants every all-time XI is measured against."
+            playerCount={42}
+            eraSpan="1928 — TODAY"
+          />
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

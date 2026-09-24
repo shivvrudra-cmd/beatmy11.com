@@ -1,0 +1,239 @@
+---
+/**
+ * LoadingState — skeleton screens for dark-first BeatMy11 pages.
+ *
+ * Props:
+ *   variant: "card" | "list" | "avatar" | "page"
+ *   count:   how many skeleton units to render (defaults per variant)
+ *
+ * Renders with role="status" and an sr-only "Loading…" label. The shimmer
+ * animation is disabled under prefers-reduced-motion.
+ */
+export interface Props {
+  variant: 'card' | 'list' | 'avatar' | 'page';
+  count?: number;
+}
+
+const { variant, count } = Astro.props;
+const defaults: Record<Props['variant'], number> = {
+  card: 6,
+  list: 5,
+  avatar: 4,
+  page: 1,
+};
+const n = Math.max(1, Math.min(12, count ?? defaults[variant]));
+const items = Array.from({ length: n }, (_, i) => i);
+---
+
+<style>
+  .sk-wrap {
+    width: 100%;
+  }
+  .sk {
+    position: relative;
+    overflow: hidden;
+    background: var(--bm11-elevated, #141d33);
+    border-radius: 0.5rem;
+  }
+  .sk::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(148, 163, 184, 0.14),
+      transparent
+    );
+    animation: sk-shimmer 1.6s ease-in-out infinite;
+  }
+  @keyframes sk-shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sk::after {
+      animation: none;
+    }
+  }
+  .sk-round {
+    border-radius: 9999px;
+  }
+  .sk-card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  @media (min-width: 640px) {
+    .sk-card-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .sk-card-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .sk-card {
+    border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+    border-radius: 1rem;
+    background: var(--bm11-surface, #0d1424);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .sk-media {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    border-radius: 0.75rem;
+  }
+  .sk-line {
+    height: 0.85rem;
+  }
+  .sk-line.short {
+    width: 55%;
+  }
+  .sk-line.mid {
+    width: 80%;
+  }
+  .sk-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .sk-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+    border-radius: 0.75rem;
+    background: var(--bm11-surface, #0d1424);
+    padding: 0.9rem 1rem;
+  }
+  .sk-avatar-sm {
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-shrink: 0;
+  }
+  .sk-row-lines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+  .sk-avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  @media (min-width: 640px) {
+    .sk-avatar-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .sk-avatar-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+    border-radius: 1rem;
+    background: var(--bm11-surface, #0d1424);
+    padding: 1.5rem 1rem;
+  }
+  .sk-avatar-lg {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+  .sk-page {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 64rem;
+    margin: 0 auto;
+  }
+  .sk-page-hero {
+    height: 12rem;
+    border-radius: 1rem;
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+
+<div class="sk-wrap" role="status" aria-busy="true" aria-label="Loading content">
+  <span class="sr-only">Loading&hellip;</span>
+
+  {
+    variant === 'card' && (
+      <div class="sk-card-grid" aria-hidden="true">
+        {items.map(() => (
+          <div class="sk-card">
+            <div class="sk sk-media" />
+            <div class="sk sk-line mid" />
+            <div class="sk sk-line short" />
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    variant === 'list' && (
+      <div class="sk-list" aria-hidden="true">
+        {items.map(() => (
+          <div class="sk-row">
+            <div class="sk sk-round sk-avatar-sm" />
+            <div class="sk-row-lines">
+              <div class="sk sk-line mid" />
+              <div class="sk sk-line short" />
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    variant === 'avatar' && (
+      <div class="sk-avatar-grid" aria-hidden="true">
+        {items.map(() => (
+          <div class="sk-avatar-card">
+            <div class="sk sk-round sk-avatar-lg" />
+            <div class="sk sk-line short" />
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    variant === 'page' && (
+      <div class="sk-page" aria-hidden="true">
+        <div class="sk sk-line" style="height: 2rem; width: 40%;" />
+        <div class="sk sk-page-hero" />
+        <div class="sk-card-grid">
+          {items.slice(0, 3).map(() => (
+            <div class="sk-card">
+              <div class="sk sk-media" />
+              <div class="sk sk-line mid" />
+              <div class="sk sk-line short" />
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+</div>

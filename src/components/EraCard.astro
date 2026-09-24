@@ -1,0 +1,211 @@
+---
+import EraBadge from './EraBadge.astro';
+
+/**
+ * EraCard — reusable era showcase card.
+ * Accent top border + glow driven by `style="--era-accent:..."`.
+ * Legends gets a subtle gold treatment via the id check.
+ */
+export interface EraInfo {
+  id: string;
+  name: string;
+  range: string;
+  tagline: string;
+  accent: string;
+}
+
+interface Props {
+  era: EraInfo;
+  playerCount?: number;
+  href?: string;
+}
+
+const { era, playerCount, href = '/play' } = Astro.props;
+const isLegends = era.id === 'legends';
+---
+<article
+  class={`bm11-card era-card${isLegends ? ' era-card--legends' : ''}`}
+  style={`--era-accent:${era.accent}`}
+>
+  <div class="era-card__bar" aria-hidden="true"></div>
+
+  <div class="era-card__head">
+    <EraBadge era={era.id} class="era-card__badge" />
+    <div>
+      <p class="era-card__range">{era.range}</p>
+      <h3 class="era-card__name">{era.name}</h3>
+    </div>
+    {isLegends && (
+      <span class="bm11-chip era-card__legend-chip">Hall of fame</span>
+    )}
+  </div>
+
+  <p class="era-card__tagline">{era.tagline}</p>
+
+  <div class="era-card__foot">
+    {typeof playerCount === 'number' && (
+      <p class="era-card__count">
+        <span class="era-card__count-num">{playerCount}</span>
+        <span class="era-card__count-label">players</span>
+      </p>
+    )}
+    <a class="era-card__cta" href={href} aria-label={`Explore the ${era.name} era`}>
+      Explore era
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 12h14" />
+        <path d="m12 5 7 7-7 7" />
+      </svg>
+    </a>
+  </div>
+</article>
+
+<style>
+  .era-card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 1.35rem 1.35rem 1.25rem;
+    border-radius: 1rem;
+    background:
+      radial-gradient(120% 90% at 50% -20%, color-mix(in srgb, var(--era-accent) 14%, transparent), transparent 60%),
+      var(--bm11-surface);
+    border: 1px solid var(--bm11-border);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .era-card:hover,
+  .era-card:focus-within {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--era-accent) 45%, transparent);
+    box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--era-accent) 45%, transparent);
+  }
+
+  .era-card__bar {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--era-accent), transparent);
+  }
+
+  .era-card--legends {
+    border-color: color-mix(in srgb, var(--era-accent) 38%, transparent);
+    background:
+      radial-gradient(120% 90% at 50% -20%, color-mix(in srgb, var(--era-accent) 22%, transparent), transparent 62%),
+      var(--bm11-surface);
+    box-shadow: 0 12px 34px -20px color-mix(in srgb, var(--era-accent) 60%, transparent);
+  }
+
+  .era-card__head {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .era-card__badge {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+
+  .era-card__range {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--era-accent);
+    margin: 0 0 0.15rem;
+  }
+
+  .era-card__name {
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--bm11-text);
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  .era-card__legend-chip {
+    margin-left: auto;
+    color: var(--era-accent);
+    border-color: color-mix(in srgb, var(--era-accent) 45%, transparent);
+  }
+
+  .era-card__tagline {
+    color: var(--bm11-muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin: 0;
+    flex: 1;
+  }
+
+  .era-card__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--bm11-border);
+  }
+
+  .era-card__count {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    margin: 0;
+  }
+
+  .era-card__count-num {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--bm11-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .era-card__count-label {
+    font-size: 0.8rem;
+    color: var(--bm11-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .era-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--era-accent);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .era-card__cta svg {
+    width: 1.05rem;
+    height: 1.05rem;
+    transition: transform 0.2s ease;
+  }
+
+  .era-card__cta:hover svg,
+  .era-card__cta:focus-visible svg {
+    transform: translateX(4px);
+  }
+
+  .era-card__cta:focus-visible {
+    outline: 2px solid var(--era-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .era-card,
+    .era-card__cta svg {
+      transition: none;
+    }
+    .era-card:hover,
+    .era-card:focus-within {
+      transform: none;
+    }
+  }
+</style>

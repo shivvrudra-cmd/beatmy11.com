@@ -1,0 +1,195 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+
+const title = '404 — This delivery went wide | BeatMy11';
+const description =
+  'That page was bowled out. Head back home or start building your all-time XI on BeatMy11.';
+---
+
+<BaseLayout title={title} description={description}>
+  <meta name="robots" content="noindex, nofollow" slot="head" />
+
+  <style is:global>
+    :root {
+      --bm11-bg: #070b14;
+      --bm11-surface: #0d1424;
+      --bm11-elevated: #141d33;
+      --bm11-border: rgba(148, 163, 184, 0.14);
+      --bm11-text: #f1f5f9;
+      --bm11-muted: #94a3b8;
+      --bm11-primary: #22c55e;
+      --bm11-gold: #c9a227;
+      --bm11-danger: #ef4444;
+    }
+  </style>
+
+  <style>
+    .err-page {
+      min-height: 100vh;
+      background:
+        radial-gradient(900px 420px at 50% -80px, rgba(34, 197, 94, 0.12), transparent 60%),
+        radial-gradient(700px 380px at 85% 110%, rgba(201, 162, 39, 0.08), transparent 60%),
+        var(--bm11-bg);
+      color: var(--bm11-text);
+      display: flex;
+      flex-direction: column;
+    }
+    .err-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 1.25rem;
+      max-width: 44rem;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .scene {
+      width: min(320px, 72vw);
+      height: auto;
+      margin-bottom: 1.5rem;
+    }
+    .code-404 {
+      font-size: clamp(4.5rem, 18vw, 8rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      color: transparent;
+      -webkit-text-stroke: 2px var(--bm11-gold);
+      margin: 0 0 0.5rem;
+    }
+    .err-title {
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 800;
+      margin: 0 0 0.75rem;
+      letter-spacing: -0.01em;
+    }
+    .err-title .accent {
+      color: var(--bm11-primary);
+    }
+    .err-copy {
+      color: var(--bm11-muted);
+      font-size: 1.05rem;
+      line-height: 1.65;
+      margin: 0 0 2rem;
+      max-width: 34rem;
+    }
+    .err-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      justify-content: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.75rem;
+      border-radius: 0.75rem;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background-color 0.15s ease,
+        border-color 0.15s ease;
+    }
+    .btn:focus-visible {
+      outline: 2px solid var(--bm11-gold);
+      outline-offset: 3px;
+    }
+    .btn-primary {
+      background: var(--bm11-primary);
+      color: #04120a;
+      box-shadow: 0 8px 28px rgba(34, 197, 94, 0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(34, 197, 94, 0.45);
+    }
+    .btn-ghost {
+      border: 1px solid var(--bm11-border);
+      color: var(--bm11-text);
+      background: var(--bm11-surface);
+    }
+    .btn-ghost:hover {
+      border-color: var(--bm11-gold);
+      transform: translateY(-2px);
+    }
+    .err-footer {
+      padding: 1.25rem;
+      text-align: center;
+      color: var(--bm11-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--bm11-border);
+    }
+  </style>
+
+  <div class="err-page">
+    <Navbar />
+
+    <main class="err-main">
+      {/*
+        Decorative "wide delivery" scene: stumps with a dislodged bail and the
+        ball sailing past with motion lines. Pure inline SVG, aria-hidden.
+      */}
+      <svg
+        class="scene"
+        viewBox="0 0 320 180"
+        fill="none"
+        stroke="currentColor"
+        aria-hidden="true"
+        focusable="false"
+      >
+        {/* motion lines trailing the ball */}
+        <g stroke="#94a3b8" stroke-width="3" stroke-linecap="round" opacity="0.55">
+          <line x1="196" y1="52" x2="150" y2="52" />
+          <line x1="204" y1="86" x2="146" y2="86" />
+          <line x1="196" y1="120" x2="158" y2="120" />
+        </g>
+        {/* stumps */}
+        <g stroke="#c9a227" stroke-width="7" stroke-linecap="round">
+          <line x1="60" y1="60" x2="60" y2="150" />
+          <line x1="84" y1="60" x2="84" y2="150" />
+          <line x1="108" y1="60" x2="108" y2="150" />
+        </g>
+        {/* one bail still on, one flying off */}
+        <line x1="60" y1="52" x2="84" y2="52" stroke="#c9a227" stroke-width="5" stroke-linecap="round" />
+        <line x1="104" y1="34" x2="128" y2="26" stroke="#c9a227" stroke-width="5" stroke-linecap="round" opacity="0.9" />
+        {/* the ball, wide of the stumps */}
+        <circle cx="252" cy="86" r="26" fill="#ef4444" stroke="#7f1d1d" stroke-width="3" />
+        <path
+          d="M 236 68 Q 252 86 236 104 M 268 68 Q 252 86 268 104"
+          stroke="#fecaca"
+          stroke-width="3"
+          stroke-linecap="round"
+        />
+        {/* ground line */}
+        <line x1="20" y1="158" x2="300" y2="158" stroke="#94a3b8" stroke-width="3" stroke-linecap="round" opacity="0.4" />
+      </svg>
+
+      <p class="code-404" aria-hidden="true">404</p>
+      <h1 class="err-title">
+        This delivery went <span class="accent">wide.</span>
+      </h1>
+      <p class="err-copy">
+        The page you were after has been bowled out, caught behind, or never
+        made it to the crease. No worries — the next over starts whenever
+        you're ready.
+      </p>
+      <div class="err-actions">
+        <a class="btn btn-primary" href="/">Back home</a>
+        <a class="btn btn-ghost" href="/play">Start playing</a>
+      </div>
+    </main>
+
+    <footer class="err-footer">
+      BeatMy11 — build your all-time XI and take on the house.
+    </footer>
+  </div>
+</BaseLayout>

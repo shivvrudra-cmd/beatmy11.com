@@ -1,0 +1,207 @@
+---
+/**
+ * Navbar — sticky top nav with dark glass background.
+ */
+import Logo from './Logo.astro';
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/play', label: 'Play' },
+  { href: '#eras', label: 'Eras' },
+  { href: '#footer', label: 'About' },
+];
+---
+<header class="navbar" id="top">
+  <nav class="navbar__inner" aria-label="Primary">
+    <a href="/" class="navbar__brand" aria-label="BeatMy11 home">
+      <Logo variant="full" class="navbar__logo" />
+    </a>
+
+    <button
+      id="navbar-toggle"
+      class="navbar__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="navbar-menu"
+      aria-label="Toggle navigation menu"
+    >
+      <span class="navbar__toggle-bar" aria-hidden="true"></span>
+      <span class="navbar__toggle-bar" aria-hidden="true"></span>
+      <span class="navbar__toggle-bar" aria-hidden="true"></span>
+    </button>
+
+    <ul class="navbar__menu" id="navbar-menu">
+      {links.map((l) => (
+        <li>
+          <a class="navbar__link" href={l.href}>{l.label}</a>
+        </li>
+      ))}
+      <li class="navbar__menu-cta">
+        <a class="bm11-btn bm11-btn-primary navbar__cta" href="/play">Start Building</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById('navbar-toggle');
+  const menu = document.getElementById('navbar-menu');
+  toggle?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('navbar__menu--open') ?? false;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+  });
+  menu?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => {
+      menu.classList.remove('navbar__menu--open');
+      toggle?.setAttribute('aria-expanded', 'false');
+    })
+  );
+</script>
+
+<style>
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--bm11-bg) 82%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--bm11-border);
+  }
+
+  .navbar__inner {
+    position: relative;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0.7rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .navbar__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--bm11-text);
+  }
+
+  .navbar__logo {
+    height: 2.4rem;
+    width: auto;
+    display: block;
+  }
+
+  .navbar__toggle {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 2.6rem;
+    height: 2.6rem;
+    padding: 0.55rem;
+    background: transparent;
+    border: 1px solid var(--bm11-border);
+    border-radius: 0.65rem;
+    cursor: pointer;
+  }
+
+  .navbar__toggle-bar {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--bm11-text);
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .navbar__toggle[aria-expanded="true"] .navbar__toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .navbar__toggle[aria-expanded="true"] .navbar__toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+  .navbar__toggle[aria-expanded="true"] .navbar__toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .navbar__menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 0;
+    right: 0;
+    background: var(--bm11-surface);
+    border-bottom: 1px solid var(--bm11-border);
+    padding: 0.5rem 1rem 1rem;
+  }
+
+  .navbar__menu--open {
+    display: block;
+  }
+
+  .navbar__link {
+    display: block;
+    padding: 0.75rem 0.5rem;
+    color: var(--bm11-muted);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border-radius: 0.5rem;
+  }
+
+  .navbar__link:hover,
+  .navbar__link:focus-visible {
+    color: var(--bm11-text);
+    background: rgba(148, 163, 184, 0.08);
+  }
+
+  .navbar__menu-cta {
+    margin-top: 0.5rem;
+  }
+
+  .navbar__cta {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    .navbar__inner {
+      padding: 0.7rem 1.5rem;
+    }
+    .navbar__toggle {
+      display: none;
+    }
+    .navbar__menu {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      position: static;
+      background: transparent;
+      border: 0;
+      padding: 0;
+    }
+    .navbar__link {
+      padding: 0.55rem 0.85rem;
+    }
+    .navbar__menu-cta {
+      margin: 0 0 0 0.5rem;
+    }
+    .navbar__cta {
+      width: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .navbar__toggle-bar {
+      transition: none;
+    }
+  }
+</style>

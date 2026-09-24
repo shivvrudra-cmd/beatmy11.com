@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 336 96" role="img" aria-label="BeatMy11 logo">
+  <title>BeatMy11 monochrome</title>
+  <!-- Single-color version: use any one color; shown here in #F1F5F9 -->
+  <g fill="none" stroke="#F1F5F9">
+    <path d="M48 6 L80 19 V45 C80 66 65 80 48 90 C31 80 16 66 16 45 V19 Z"
+          stroke-width="5" stroke-linejoin="round"/>
+    <circle cx="48" cy="37" r="17" stroke-width="3.5"/>
+    <path d="M37 27 Q48 37 37 47" stroke-width="2.2"
+          stroke-linecap="round" stroke-dasharray="3.6 2.6"/>
+    <path d="M59 27 Q48 37 59 47" stroke-width="2.2"
+          stroke-linecap="round" stroke-dasharray="3.6 2.6"/>
+  </g>
+  <text x="48" y="76" text-anchor="middle" font-family="Inter, 'Segoe UI', Arial, sans-serif"
+        font-size="23" font-weight="800" letter-spacing="1" fill="#F1F5F9">11</text>
+  <text x="108" y="60" font-family="Inter, 'Segoe UI', Arial, sans-serif"
+        font-size="37" font-weight="800" letter-spacing="2" fill="#F1F5F9">BEATMY11</text>
+  <text x="110" y="82" font-family="Inter, 'Segoe UI', Arial, sans-serif"
+        font-size="12.5" font-weight="600" letter-spacing="4.5" fill="#F1F5F9" opacity="0.65">ALL-TIME TEST XI</text>
+</svg>
