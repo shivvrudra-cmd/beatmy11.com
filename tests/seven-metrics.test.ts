@@ -20,7 +20,10 @@ import {
   ROLE_METRICS,
   evaluationRole,
   rawMetrics,
+  adjustedMetrics,
   buildPopulations,
+  buildScoringContext,
+  SHRINKAGE_PRIOR_MATCHES,
   percentileRank,
   normalizeMetrics,
   scorePlayer,
@@ -28,7 +31,7 @@ import {
   compareXIs,
   IncompletePlayerData,
   type NormalizedPlayer,
-  type ScoringPopulations,
+  type ScoringContext,
   type MetricKey,
 } from '../src/lib/seven-metrics';
 import { normalizePlayer } from '../src/lib/player-logic';
@@ -55,7 +58,9 @@ const P = (id: string): NormalizedPlayer => {
   if (!p) throw new Error(`test player missing: ${id}`);
   return p;
 };
-const POPS: ScoringPopulations = buildPopulations([...byId.values()]);
+// Real-data scoring context: the spec context (W=20 shrinkage). Synthetic
+// formula-isolation tests below use buildScoringContext(players, 0).
+const CTX: ScoringContext = buildScoringContext([...byId.values()]);
 const keys = (o: object) => Object.keys(o).sort();
 
 let uidc = 0;
@@ -139,7 +144,7 @@ ok(percentileRank(-5, [1, 2, 3], false) === 100, 'clamp respects inversion (lowe
 ok(percentileRank(99, [1, 2, 3], false) === 0, 'clamp respects inversion (lower-is-better)');
 // real populations: out-of-range values hit the scale ends; everything in range
 for (const def of METRICS) {
-  const pop = POPS[def.key];
+  const pop = CTX.populations[def.key];
   ok(pop.length > 100, `population for ${def.key} is the full eligible set (${pop.length})`);
   const lo = pop[0];
   const hi = pop[pop.length - 1];
@@ -163,13 +168,13 @@ for (const r of ['spinner', 'fast-bowler'] as const) {
   );
 }
 ok(ROLE_METRICS['all-rounder'].length === 7, 'all-rounder: all seven metrics');
-const gilly = scorePlayer(P('adam-gilchrist'), 'wicketkeeper', POPS);
+const gilly = scorePlayer(P('adam-gilchrist'), 'wicketkeeper', CTX);
 ok(gilly.role === 'wicketkeeper', 'keeper keeps keeper role');
 ok(
   JSON.stringify(keys(gilly.normalized)) === JSON.stringify([...BATTING_METRICS].sort()),
   'keeper evaluated on batting only, no wicketkeeping metric',
 );
-const warne = scorePlayer(P('shane-warne'), 'spinner', POPS);
+const warne = scorePlayer(P('shane-warne'), 'spinner', CTX);
 ok(warne.battingScore === null, 'specialist spinner: no batting score');
 ok(
   !('battingAverage' in warne.normalized) && !('runsPerMatch' in warne.normalized),
@@ -178,7 +183,7 @@ ok(
 ok(warne.bowlingScore !== null && warne.score === warne.bowlingScore, 'spinner score = bowling score');
 
 // ---- 12/14. all-rounder: both sides, 50/50 ----
-const kallis = scorePlayer(P('jacques-kallis'), 'all-rounder', POPS);
+const kallis = scorePlayer(P('jacques-kallis'), 'all-rounder', CTX);
 ok(kallis.battingScore !== null && kallis.bowlingScore !== null, 'all-rounder: separate batting + bowling scores');
 const expAR =
   Math.round(
@@ -197,13 +202,13 @@ ok(kallis.score === expAR, 'all-rounder score = 50/50 blend of the two sides', {
 ok(ALL_ROUNDER_BATTING_SHARE === 0.5 && ALL_ROUNDER_BOWLING_SHARE === 0.5, 'V1 all-rounder weighting is 50/50');
 
 // ---- 13. declared role drives evaluation ----
-const sobersDeclared = scorePlayer(P('garfield-sobers'), 'middle-order', POPS);
+const sobersDeclared = scorePlayer(P('garfield-sobers'), 'middle-order', CTX);
 ok(sobersDeclared.role === 'middle-order', 'declared role overrides primary');
 ok(
   JSON.stringify(keys(sobersDeclared.normalized)) === JSON.stringify([...BATTING_METRICS].sort()),
   'declared middle-order: batting metrics only, not silently an all-rounder',
 );
-const sobersAR = scorePlayer(P('garfield-sobers'), 'all-rounder', POPS);
+const sobersAR = scorePlayer(P('garfield-sobers'), 'all-rounder', CTX);
 ok(sobersAR.role === 'all-rounder' && sobersAR.bowlingScore !== null, 'declared all-rounder: full dual evaluation');
 
 // ---- 5 (weights): V1 weight values ----
@@ -238,7 +243,7 @@ const zeroXI = Array.from({ length: 11 }, (_, i) => ({
 }));
 let threw: unknown = null;
 try {
-  compareXIs(zeroXI, zeroXI, POPS);
+  compareXIs(zeroXI, zeroXI, CTX);
 } catch (e) { threw = e; }
 ok(threw instanceof IncompletePlayerData, 'zero-Test players: compareXIs refuses a misleading score');
 ok(
@@ -247,12 +252,12 @@ ok(
 );
 
 // ---- 18. determinism ----
-const detA = JSON.stringify(scorePlayer(P('viv-richards'), 'middle-order', POPS));
-const detB = JSON.stringify(scorePlayer(P('viv-richards'), 'middle-order', POPS));
+const detA = JSON.stringify(scorePlayer(P('viv-richards'), 'middle-order', CTX));
+const detB = JSON.stringify(scorePlayer(P('viv-richards'), 'middle-order', CTX));
 ok(detA === detB, 'same player + data + populations -> identical score');
 const houseEntries = getHouseXI().map((player) => ({ player }));
-const cmpA = compareXIs(houseEntries, houseEntries, POPS);
-const cmpB = compareXIs(houseEntries, houseEntries, POPS);
+const cmpA = compareXIs(houseEntries, houseEntries, CTX);
+const cmpB = compareXIs(houseEntries, houseEntries, CTX);
 ok(JSON.stringify(cmpA) === JSON.stringify(cmpB), 'compareXIs deterministic');
 
 // ---- 19. identical XIs -> identical scores and a tie ----
@@ -262,13 +267,13 @@ ok(cmpA.difference === 0 && cmpA.result === 'tie', 'identical XIs: tie');
 // ---- 20. seven metrics are the ONLY metrics ----
 const saw = new Set<string>();
 for (const p of byId.values()) {
-  for (const k of keys(scorePlayer(p, null, POPS).normalized)) saw.add(k);
+  for (const k of keys(scorePlayer(p, null, CTX).normalized)) saw.add(k);
 }
 ok(
   saw.size === 7 && [...saw].every((k) => (METRICS as { key: string }[]).some((m) => m.key === k)),
   'no metric outside the seven is ever produced',
 );
-const nm = normalizeMetrics(rawMetrics(P('imran-khan')), POPS);
+const nm = normalizeMetrics(adjustedMetrics(P('imran-khan'), CTX), CTX.populations);
 ok(keys(nm).length === 7, 'normalizeMetrics covers exactly seven metrics');
 
 // ---- 21. XI score is the arithmetic mean of the 11 player scores ----
@@ -279,16 +284,16 @@ const xi11 = Array.from({ length: 11 }, (_, i) => ({
     { id: `m${i}`, uid: `t:m${i}`, name: `M${i}` },
   ),
 }));
-const manual = xi11.map((e) => scorePlayer(e.player, null, POPS).score!);
+const manual = xi11.map((e) => scorePlayer(e.player, null, CTX).score!);
 const expected = Math.round((manual.reduce((a, b) => a + b, 0) / manual.length) * 10) / 10;
-const gotXI = compareXIs(xi11, xi11, POPS);
+const gotXI = compareXIs(xi11, xi11, CTX);
 ok(gotXI.userScore === expected, 'XI score = arithmetic mean of the 11 player scores', { gotXI: gotXI.userScore, expected });
 ok(gotXI.userPlayers.length === 11 && gotXI.opponentPlayers.length === 11, 'per-player detail retained for later');
 
 // ---- 22. fixed opponent XI passed explicitly ----
 const house = getHouseXI();
 ok(house.length === 11, 'fixed house XI has 11 players');
-const mixed = compareXIs(xi11, houseEntries, POPS);
+const mixed = compareXIs(xi11, houseEntries, CTX);
 ok(
   Number.isFinite(mixed.userScore) && Number.isFinite(mixed.opponentScore) && mixed.userScore >= 0 && mixed.userScore <= 100,
   'explicit opponent XI scores on the 0–100 scale',
@@ -308,6 +313,105 @@ ok(
   eligPops.battingAverage.length === 0 && eligPops.bowlingAverage.length === 1,
   'populations include only role-eligible players',
 );
+
+// ---- 23. shrinkage: a hot streak must not outrank a career by construction ----
+ok(SHRINKAGE_PRIOR_MATCHES === 20, 'spec shrinkage prior weight is 20 matches');
+// prior means are the raw eligible-population means
+{
+  const elig = [...byId.values()].filter((p) =>
+    ['opener', 'middle-order', 'wicketkeeper', 'all-rounder'].includes(evaluationRole(p)),
+  );
+  const mean = elig.reduce((s, p) => s + rawMetrics(p).battingAverage!, 0) / elig.length;
+  ok(
+    Math.abs(CTX.priorMeans.battingAverage - mean) < 1e-9,
+    'prior mean = raw eligible-population mean',
+  );
+}
+// synthetic: Kaia-like 3-Test hot streak vs Tendulkar-like 200-Test career
+{
+  const mkBat = (matches: number, avg: number, rpm: number, centuries: number, id: string) =>
+    mk(
+      'middle-order',
+      { testAverage: avg, testRuns: Math.round(rpm * matches), testMatches: matches, testCenturies: centuries },
+      { id, uid: `t:${id}`, name: id },
+    );
+  // population mean sits well below both, mirroring the real data (mean 37.4)
+  const hot = mkBat(3, 62.4, 104, 1, 'hot');       // Kaia-like
+  const career = mkBat(200, 53.8, 79.6, 30, 'career'); // Tendulkar-like
+  // 40 filler players with a realistic spread of long-career numbers (deterministic)
+  const fillers = Array.from({ length: 40 }, (_, i) =>
+    mkBat(
+      80 + (i % 5) * 10,
+      28 + (i % 22),
+      45 + (i % 20),
+      10 + (i % 6),
+      `f${i}`,
+    ),
+  );
+  const rawCtx = buildScoringContext([hot, career, ...fillers], 0); // no shrinkage
+  const hotRaw = scorePlayer(hot, null, rawCtx).score!;
+  const careerRaw = scorePlayer(career, null, rawCtx).score!;
+  ok(hotRaw > careerRaw, 'without shrinkage the raw hot streak outranks (the old behavior)', { hotRaw, careerRaw });
+  const ctx20 = buildScoringContext([hot, career, ...fillers], 20);
+  const hotAdj = adjustedMetrics(hot, ctx20);
+  const careerAdj = adjustedMetrics(career, ctx20);
+  const hotRawM = rawMetrics(hot);
+  const careerRawM = rawMetrics(career);
+  ok(hotAdj.battingAverage! < hotRawM.battingAverage!, 'hot streak pulled strongly toward the mean', hotAdj.battingAverage);
+  ok(
+    Math.abs(careerAdj.battingAverage! - careerRawM.battingAverage!) < 1.5,
+    '200-Test career barely moves under shrinkage',
+    careerAdj.battingAverage,
+  );
+  ok(
+    careerAdj.battingAverage! > hotAdj.battingAverage! &&
+      careerAdj.runsPerMatch! > hotAdj.runsPerMatch!,
+    'after shrinkage the career estimates exceed the hot-streak estimates',
+    { hotAdj: hotAdj.battingAverage, careerAdj: careerAdj.battingAverage },
+  );
+  const hotScore20 = scorePlayer(hot, null, ctx20).score!;
+  const careerScore20 = scorePlayer(career, null, ctx20).score!;
+  ok(
+    careerScore20 > hotScore20,
+    'with W=20 shrinkage the 200-Test career outranks the 3-Test hot streak',
+    { hotScore20, careerScore20 },
+  );
+  // adjusted == raw when priorMatches = 0
+  const adj0 = adjustedMetrics(hot, rawCtx);
+  const rawHot = rawMetrics(hot);
+  ok(
+    (Object.keys(rawHot) as MetricKey[]).every(
+      (k) => (rawHot[k] === null && adj0[k] === null) || Math.abs((rawHot[k] ?? 0) - (adj0[k] ?? 0)) < 1e-9,
+    ),
+    'priorMatches = 0 leaves values untouched',
+  );
+  // shrinkage formula itself
+  const adj20 = adjustedMetrics(hot, ctx20);
+  const expected = (3 * 62.4 + 20 * ctx20.priorMeans.battingAverage) / 23;
+  ok(Math.abs(adj20.battingAverage! - expected) < 1e-9, 'adjusted = (m*raw + 20*mean) / (m + 20)', adj20.battingAverage);
+  // missing stays missing under shrinkage
+  const miss = mk('middle-order', { testAverage: 50, testRuns: 5000, testMatches: 0, testCenturies: 10 }, { id: 'miss', uid: 't:miss' });
+  ok(adjustedMetrics(miss, ctx20).runsPerMatch === null, 'shrinkage never fabricates missing values');
+}
+// real data: the debutant hot streaks no longer top the lists; Bradman still does
+{
+  const kaia = scorePlayer(P('innocent-kaia'), 'opener', CTX).score!;
+  const padikkal = scorePlayer(P('devdutt-padikkal'), 'middle-order', CTX).score!;
+  const sachin = scorePlayer(P('sachin-tendulkar'), 'middle-order', CTX).score!;
+  const bradman = scorePlayer(P('don-bradman'), 'opener', CTX).score!;
+  ok(sachin > kaia && sachin > padikkal, 'Tendulkar (200 Tests) outranks the debutant hot streaks', { kaia, padikkal, sachin });
+  const bestOpener = Math.max(...[...byId.values()].filter((p) => p.primaryRole === 'opener').map((p) => scorePlayer(p, null, CTX).score!));
+  ok(bradman === bestOpener, 'Bradman still the top opener after shrinkage', { bradman });
+  // empirical guard on the real data: no tiny-sample player cracks any role's top 10
+  for (const role of ['opener', 'middle-order', 'wicketkeeper', 'all-rounder', 'spinner', 'fast-bowler'] as const) {
+    const inRole = [...byId.values()]
+      .map((p) => ({ p, s: scorePlayer(p, null, CTX) }))
+      .filter((x) => x.s.role === role)
+      .sort((a, b) => b.s.score! - a.s.score!);
+    const top10min = Math.min(...inRole.slice(0, 10).map((x) => Number(x.p.stats.testMatches)));
+    ok(top10min >= 10, `${role}: every top-10 scorer played >= 10 Tests (min=${top10min})`);
+  }
+}
 
 console.log(`\n${pass} passed, ${fail} failed`);
 if (fail > 0) process.exit(1);

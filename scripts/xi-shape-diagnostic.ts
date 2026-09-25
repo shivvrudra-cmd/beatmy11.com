@@ -6,11 +6,11 @@
  */
 import { readFileSync } from 'node:fs';
 import {
-  buildPopulations,
+  buildScoringContext,
   scorePlayer,
   compareXIs,
   type NormalizedPlayer,
-  type ScoringPopulations,
+  type ScoringContext,
   type XIEntry,
 } from '../src/lib/seven-metrics';
 import { normalizePlayer } from '../src/lib/player-logic';
@@ -24,12 +24,12 @@ for (const era of ['legends', '1970s', '1980s', '1990s', '2000s', '2010s', '2020
     if (!byId.has(n.id)) byId.set(n.id, n);
   }
 }
-const POPS: ScoringPopulations = buildPopulations([...byId.values()]);
+const CTX = buildScoringContext([...byId.values()]);
 
 // score every unique player under their primary role
 const scored = [...byId.values()].map((p) => ({
   p,
-  s: scorePlayer(p, null, POPS).score ?? -1,
+  s: scorePlayer(p, null, CTX).score ?? -1,
 }));
 const top = (role: string, n: number) =>
   scored.filter((x) => x.p.primaryRole === role).sort((a, b) => b.s - a.s).slice(0, n).map((x) => x.p);
@@ -40,7 +40,7 @@ const E = (player: NormalizedPlayer, declaredRole: string): XIEntry => ({ player
 
 function show(title: string, xi: XIEntry[], vs?: XIEntry[]) {
   console.log(`\n=== ${title} ===`);
-  const cmp = vs ? compareXIs(xi, vs, POPS) : compareXIs(xi, xi, POPS);
+  const cmp = vs ? compareXIs(xi, vs, CTX) : compareXIs(xi, xi, CTX);
   for (const ps of cmp.userPlayers) {
     console.log(`  ${ps.name} (${ps.role}): ${ps.score}`);
   }

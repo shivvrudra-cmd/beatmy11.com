@@ -28,6 +28,17 @@
  *   directionally inverted. Percentiles neutralize raw numerical scale so
  *   no metric dominates by magnitude.
  *
+ * SHRINKAGE (owner-approved 2026-09-25): before percentile ranking, every
+ *   metric value is shrunk toward its eligible-population mean by sample
+ *   size, so a 3-Test hot streak cannot outrank a 200-Test career by
+ *   construction:
+ *     adjusted = (matches × raw + 20 × populationMean) / (matches + 20)
+ *   using testMatches as the sample size for all seven metrics (including
+ *   the direct averages). A 200-Test career barely moves; a 3-Test debut
+ *   is pulled most of the way to the mean. Populations are built from
+ *   adjusted values, so every player is ranked on the same basis.
+ *   Missing values stay missing — shrinkage never fabricates data.
+ *
  * WEIGHTS (V1): batting metrics 1/3 each; bowling metrics 1/4 each;
  *   all-rounder = 0.5 × batting + 0.5 × bowling.
  *
@@ -41,7 +52,7 @@
  *
  * The engine is pure: it never selects players and never knows how the
  * opponent XI was chosen. compareXIs takes both XIs plus the prebuilt
- * scoring populations as explicit inputs.
+ * scoring context as explicit inputs.
  */
 
 import { normalizeRole, type NormalizedPlayer } from './player-logic';
@@ -231,40 +242,146 @@ export function rawMetrics(player: NormalizedPlayer): RawMetrics {
 // ---------------------------------------------------------------------------
 
 /**
- * Per metric, the sorted-ascending raw values of the FULL eligible scoring
- * population: every unique player (deduped by id — players spanning eras
- * appear in several files) whose primary role is evaluated on that metric.
- * Never split by era, nation, pool, or XI, so eras stay comparable.
+ * Per metric, the sorted-ascending shrinkage-adjusted values of the FULL
+ * eligible scoring population: every unique player (deduped by id —
+ * players spanning eras appear in several files) whose primary role is
+ * evaluated on that metric. Never split by era, nation, pool, or XI, so
+ * eras stay comparable.
  */
 export type ScoringPopulations = Record<MetricKey, number[]>;
 
-export function buildPopulations(
+/**
+ * Owner-approved shrinkage prior weight, in matches (2026-09-25): every
+ * metric value is blended with this many matches of population-mean
+ * performance before percentile ranking.
+ */
+export const SHRINKAGE_PRIOR_MATCHES = 20;
+
+export interface ScoringContext {
+  /** Per metric, sorted-ascending adjusted values of the full population. */
+  populations: ScoringPopulations;
+  /** Per metric, mean of RAW values over the eligible population. */
+  priorMeans: Record<MetricKey, number>;
+  /** Prior weight in matches used for shrinkage. */
+  priorMatches: number;
+}
+
+const emptyPops = (): ScoringPopulations => ({
+  battingAverage: [],
+  runsPerMatch: [],
+  centuryRate: [],
+  bowlingAverage: [],
+  wicketsPerMatch: [],
+  fiveWRate: [],
+  tenWRate: [],
+});
+
+const matchesOf = (player: NormalizedPlayer): number => {
+  const m = Number(player.stats?.testMatches);
+  return Number.isFinite(m) && m > 0 ? m : 0;
+};
+
+/**
+ * Builds the scoring context: prior means from raw eligible values, then
+ * per-player shrinkage-adjusted values ranked into sorted populations.
+ * `priorMatches = 0` disables shrinkage (adjusted == raw); used by tests
+ * to exercise the percentile machinery in isolation. The spec value is
+ * SHRINKAGE_PRIOR_MATCHES.
+ */
+export function buildScoringContext(
   players: NormalizedPlayer[],
-): ScoringPopulations {
+  priorMatches: number = SHRINKAGE_PRIOR_MATCHES,
+): ScoringContext {
   const seen = new Set<string>();
-  const pops: ScoringPopulations = {
-    battingAverage: [],
-    runsPerMatch: [],
-    centuryRate: [],
-    bowlingAverage: [],
-    wicketsPerMatch: [],
-    fiveWRate: [],
-    tenWRate: [],
+  const unique: NormalizedPlayer[] = [];
+  for (const p of players) {
+    if (seen.has(p.id)) continue; // one player, one vote
+    seen.add(p.id);
+    unique.push(p);
+  }
+
+  // Prior means: mean of raw values over each metric's eligible population.
+  const rawSums = emptyPops();
+  const rawCounts: Record<MetricKey, number> = {
+    battingAverage: 0,
+    runsPerMatch: 0,
+    centuryRate: 0,
+    bowlingAverage: 0,
+    wicketsPerMatch: 0,
+    fiveWRate: 0,
+    tenWRate: 0,
   };
-  for (const player of players) {
-    if (seen.has(player.id)) continue; // one player, one vote
-    seen.add(player.id);
-    const role = evaluationRole(player);
-    const raw = rawMetrics(player);
-    const push = (k: MetricKey) => {
+  const raws = new Map<string, RawMetrics>();
+  for (const p of unique) {
+    const role = evaluationRole(p);
+    const raw = rawMetrics(p);
+    raws.set(p.id, raw);
+    const keys: MetricKey[] = [
+      ...(BATTING_ROLES.includes(role) ? BATTING_METRICS : []),
+      ...(BOWLING_ROLES.includes(role) ? BOWLING_METRICS : []),
+    ];
+    for (const k of keys) {
       const v = raw[k];
-      if (v !== null) pops[k].push(v);
-    };
-    if (BATTING_ROLES.includes(role)) for (const k of BATTING_METRICS) push(k);
-    if (BOWLING_ROLES.includes(role)) for (const k of BOWLING_METRICS) push(k);
+      if (v !== null) {
+        rawSums[k].push(v);
+        rawCounts[k]++;
+      }
+    }
+  }
+  const priorMeans = {} as Record<MetricKey, number>;
+  for (const k of Object.keys(rawSums) as MetricKey[]) {
+    priorMeans[k] =
+      rawCounts[k] > 0
+        ? rawSums[k].reduce((a, b) => a + b, 0) / rawCounts[k]
+        : 0;
+  }
+
+  // Shrinkage-adjusted populations.
+  const pops = emptyPops();
+  for (const p of unique) {
+    const role = evaluationRole(p);
+    const raw = raws.get(p.id)!;
+    const m = matchesOf(p);
+    const keys: MetricKey[] = [
+      ...(BATTING_ROLES.includes(role) ? BATTING_METRICS : []),
+      ...(BOWLING_ROLES.includes(role) ? BOWLING_METRICS : []),
+    ];
+    for (const k of keys) {
+      const v = raw[k];
+      if (v === null) continue; // missing stays missing — never fabricated
+      pops[k].push((m * v + priorMatches * priorMeans[k]) / (m + priorMatches));
+    }
   }
   for (const k of Object.keys(pops) as MetricKey[]) pops[k].sort((a, b) => a - b);
-  return pops;
+  return { populations: pops, priorMeans, priorMatches };
+}
+
+/**
+ * Shrinkage-adjusted metric values for one player under a scoring
+ * context. Nulls stay null.
+ */
+export function adjustedMetrics(
+  player: NormalizedPlayer,
+  ctx: ScoringContext,
+): RawMetrics {
+  const raw = rawMetrics(player);
+  const m = matchesOf(player);
+  const out = {} as RawMetrics;
+  for (const k of Object.keys(raw) as MetricKey[]) {
+    const v = raw[k];
+    out[k] =
+      v === null
+        ? null
+        : (m * v + ctx.priorMatches * ctx.priorMeans[k]) / (m + ctx.priorMatches);
+  }
+  return out;
+}
+
+export function buildPopulations(
+  players: NormalizedPlayer[],
+  priorMatches: number = SHRINKAGE_PRIOR_MATCHES,
+): ScoringPopulations {
+  return buildScoringContext(players, priorMatches).populations;
 }
 
 /**
@@ -319,6 +436,8 @@ export interface PlayerScore {
   role: EvaluationRole;
   /** All seven raw metric values; uncomputable metrics are null. */
   raw: RawMetrics;
+  /** Shrinkage-adjusted metric values (what is actually ranked); nulls stay null. */
+  adjusted: RawMetrics;
   /** Applicable normalized (0–100) metrics; uncomputable ones are null. */
   normalized: Partial<Record<MetricKey, number | null>>;
   /** Weighted batting score (1/3 each); null when the role has no batting. */
@@ -351,18 +470,21 @@ function weightedMean(
 
 /**
  * Deterministic per-player scoring. Same player + same data + same
- * populations always yields the same score. Specialist bowlers receive no
- * batting score; an all-rounder's batting and bowling scores stay
- * separately available and combine 50/50.
+ * scoring context always yields the same score. Specialist bowlers
+ * receive no batting score; an all-rounder's batting and bowling scores
+ * stay separately available and combine 50/50. Percentiles are computed
+ * on shrinkage-adjusted values, so small samples are pulled toward the
+ * population mean before ranking.
  */
 export function scorePlayer(
   player: NormalizedPlayer,
   declaredRole: string | null | undefined,
-  populations: ScoringPopulations,
+  ctx: ScoringContext,
 ): PlayerScore {
   const role = evaluationRole(player, declaredRole);
   const raw = rawMetrics(player);
-  const normalizedAll = normalizeMetrics(raw, populations);
+  const adjusted = adjustedMetrics(player, ctx);
+  const normalizedAll = normalizeMetrics(adjusted, ctx.populations);
   const keys = ROLE_METRICS[role];
   const normalized: Partial<Record<MetricKey, number | null>> = {};
   for (const k of keys) normalized[k] = normalizedAll[k];
@@ -394,6 +516,7 @@ export function scorePlayer(
     name: player.name,
     role,
     raw,
+    adjusted,
     normalized,
     battingScore: battingScore === null ? null : round1(battingScore),
     bowlingScore: bowlingScore === null ? null : round1(bowlingScore),
@@ -484,7 +607,7 @@ export class IncompletePlayerData extends Error {
 
 function scoreXI(
   xi: XIEntry[],
-  populations: ScoringPopulations,
+  ctx: ScoringContext,
   label: string,
 ): PlayerScore[] {
   if (xi.length !== 11) {
@@ -492,7 +615,7 @@ function scoreXI(
       `compareXIs expects exactly 11 players per XI; got ${xi.length} (${label}).`,
     );
   }
-  return xi.map((e) => scorePlayer(e.player, e.declaredRole, populations));
+  return xi.map((e) => scorePlayer(e.player, e.declaredRole, ctx));
 }
 
 /**
@@ -506,13 +629,13 @@ function scoreXI(
 export function compareXIs(
   userXI: XIEntry[],
   opponentXI: XIEntry[],
-  populations: ScoringPopulations,
+  ctx: ScoringContext,
 ): TeamComparison {
   const gaps = auditMetrics([...userXI, ...opponentXI]);
   if (gaps.length > 0) throw new IncompletePlayerData(gaps);
 
-  const userPlayers = scoreXI(userXI, populations, 'userXI');
-  const opponentPlayers = scoreXI(opponentXI, populations, 'opponentXI');
+  const userPlayers = scoreXI(userXI, ctx, 'userXI');
+  const opponentPlayers = scoreXI(opponentXI, ctx, 'opponentXI');
   const mean = (ps: PlayerScore[]): number =>
     ps.reduce((s, p) => s + (p.score ?? 0), 0) / ps.length;
 

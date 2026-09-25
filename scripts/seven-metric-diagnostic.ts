@@ -11,7 +11,7 @@ import {
   METRICS,
   BATTING_METRICS,
   BOWLING_METRICS,
-  buildPopulations,
+  buildScoringContext,
   scorePlayer,
   compareXIs,
   type NormalizedPlayer,
@@ -28,7 +28,7 @@ for (const era of ['legends', '1970s', '1980s', '1990s', '2000s', '2010s', '2020
     if (!byId.has(n.id)) byId.set(n.id, n);
   }
 }
-const POPS = buildPopulations([...byId.values()]);
+const CTX = buildScoringContext([...byId.values()]);
 const P = (id: string): NormalizedPlayer => {
   const p = byId.get(id);
   if (!p) throw new Error(`diagnostic player missing: ${id}`);
@@ -42,7 +42,7 @@ const f3 = (x: number | null | undefined) =>
 
 console.log('=== POPULATIONS (unique players, deduped by id) ===');
 for (const def of METRICS) {
-  const pop = POPS[def.key];
+  const pop = CTX.populations[def.key];
   console.log(
     `${def.label}: n=${pop.length} min=${f3(pop[0])} max=${f3(pop[pop.length - 1])}`,
   );
@@ -66,10 +66,11 @@ const samples: [string, string][] = [
   ['imran-khan', 'all-rounder'], // all-rounder
 ];
 for (const [id, declared] of samples) {
-  const s = scorePlayer(P(id), declared, POPS);
+  const s = scorePlayer(P(id), declared, CTX);
   const p = P(id);
   console.log(`\n${s.name} | era=${p.displayEra} | ${p.nation} | role=${s.role}`);
   console.log('  raw:        ' + METRICS.map((m) => `${m.key}=${f3(s.raw[m.key])}`).join(' '));
+  console.log('  adjusted:   ' + METRICS.map((m) => `${m.key}=${f3(s.adjusted[m.key])}`).join(' '));
   console.log('  normalized: ' + METRICS.map((m) => `${m.key}=${f1((s.normalized as Record<string, number | null>)[m.key])}`).join(' '));
   const bat = BATTING_METRICS.map((k) => `${k}:${f1((s.normalized as Record<string, number | null>)[k])}`).join(' ');
   const bowl = BOWLING_METRICS.map((k) => `${k}:${f1((s.normalized as Record<string, number | null>)[k])}`).join(' ');
@@ -86,7 +87,7 @@ for (const [id, declared] of samples) {
 
 console.log('\n=== FIXED HOUSE XI (new engine) ===');
 const house = getHouseXI().map((player) => ({ player }));
-const cmp = compareXIs(house, house, POPS);
+const cmp = compareXIs(house, house, CTX);
 for (const ps of cmp.userPlayers) {
   console.log(
     `${ps.name} (${ps.role}): score=${f1(ps.score)}` +

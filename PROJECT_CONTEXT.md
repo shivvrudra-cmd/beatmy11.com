@@ -177,6 +177,12 @@ rather than invented:
 4. XI aggregation: arithmetic mean of 11 player scores.
 5. `testMatches` confirmed as the denominator for the five derived rates.
 6. Declared non-AR role → scored under the declaration (never silently AR).
+7. Shrinkage (owner-approved 2026-09-25, W=20): before percentile ranking,
+   each metric value is blended with 20 matches of population-mean
+   performance — adjusted = (matches × raw + 20 × mean) / (matches + 20) —
+   using testMatches as the sample size for all seven metrics. Kills the
+   tiny-sample hot-streak problem (Kaia 99.4 → 68.5, Padikkal 99.7 → 80.4;
+   no ≤5-Test player in any role's top 10). Missing values stay missing.
 
 ---
 
