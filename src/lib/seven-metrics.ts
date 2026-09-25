@@ -28,6 +28,15 @@
  *   directionally inverted. Percentiles neutralize raw numerical scale so
  *   no metric dominates by magnitude.
  *
+ * ALL-ROUNDER POPULATIONS (owner-approved 2026-09-25): an all-rounder is
+ *   ranked only against other all-rounders — batting percentiles against
+ *   the all-rounder batting population, bowling percentiles against the
+ *   all-rounder bowling population — never against specialist
+ *   populations. Shrinkage priors for all-rounders likewise come from the
+ *   all-rounder population means. The 50/50 blend is unchanged, so a
+ *   specialist declared as an all-rounder still lands near the middle
+ *   (one half near zero) and no new weighting parameter is introduced.
+ *
  * SHRINKAGE (owner-approved 2026-09-25): before percentile ranking, every
  *   metric value is shrunk toward its eligible-population mean by sample
  *   size, so a 3-Test hot streak cannot outrank a 200-Test career by
@@ -262,6 +271,13 @@ export interface ScoringContext {
   populations: ScoringPopulations;
   /** Per metric, mean of RAW values over the eligible population. */
   priorMeans: Record<MetricKey, number>;
+  /**
+   * Per metric, sorted-ascending adjusted values of the all-rounder-only
+   * population (players whose primary role evaluates to all-rounder).
+   */
+  arPopulations: ScoringPopulations;
+  /** Per metric, mean of RAW values over the all-rounder population. */
+  arPriorMeans: Record<MetricKey, number>;
   /** Prior weight in matches used for shrinkage. */
   priorMatches: number;
 }
@@ -353,26 +369,68 @@ export function buildScoringContext(
     }
   }
   for (const k of Object.keys(pops) as MetricKey[]) pops[k].sort((a, b) => a - b);
-  return { populations: pops, priorMeans, priorMatches };
+
+  // All-rounder-only populations: players whose primary role evaluates to
+  // all-rounder, ranked only against each other, shrunk toward the
+  // all-rounder population means (the eligible population for the role).
+  const arMembers = unique.filter((p) => evaluationRole(p) === 'all-rounder');
+  const metricKeys = METRICS.map((def) => def.key);
+  const arPriorMeans = {} as Record<MetricKey, number>;
+  for (const k of metricKeys) {
+    let sum = 0;
+    let count = 0;
+    for (const p of arMembers) {
+      const v = raws.get(p.id)![k];
+      if (v !== null) {
+        sum += v;
+        count++;
+      }
+    }
+    arPriorMeans[k] = count > 0 ? sum / count : 0;
+  }
+  const arPops = emptyPops();
+  for (const p of arMembers) {
+    const raw = raws.get(p.id)!;
+    const m = matchesOf(p);
+    for (const k of metricKeys) {
+      const v = raw[k];
+      if (v === null) continue; // missing stays missing — never fabricated
+      arPops[k].push(
+        (m * v + priorMatches * arPriorMeans[k]) / (m + priorMatches),
+      );
+    }
+  }
+  for (const k of Object.keys(arPops) as MetricKey[]) arPops[k].sort((a, b) => a - b);
+  return {
+    populations: pops,
+    priorMeans,
+    arPopulations: arPops,
+    arPriorMeans,
+    priorMatches,
+  };
 }
 
 /**
  * Shrinkage-adjusted metric values for one player under a scoring
- * context. Nulls stay null.
+ * context. Nulls stay null. When `role` is 'all-rounder', values are
+ * shrunk toward the all-rounder population means (the population the
+ * player is ranked against); otherwise toward the full-population means.
  */
 export function adjustedMetrics(
   player: NormalizedPlayer,
   ctx: ScoringContext,
+  role?: EvaluationRole,
 ): RawMetrics {
   const raw = rawMetrics(player);
   const m = matchesOf(player);
+  const priors = role === 'all-rounder' ? ctx.arPriorMeans : ctx.priorMeans;
   const out = {} as RawMetrics;
   for (const k of Object.keys(raw) as MetricKey[]) {
     const v = raw[k];
     out[k] =
       v === null
         ? null
-        : (m * v + ctx.priorMatches * ctx.priorMeans[k]) / (m + ctx.priorMatches);
+        : (m * v + ctx.priorMatches * priors[k]) / (m + ctx.priorMatches);
   }
   return out;
 }
@@ -474,7 +532,9 @@ function weightedMean(
  * receive no batting score; an all-rounder's batting and bowling scores
  * stay separately available and combine 50/50. Percentiles are computed
  * on shrinkage-adjusted values, so small samples are pulled toward the
- * population mean before ranking.
+ * population mean before ranking. All-rounders are ranked against the
+ * all-rounder-only populations (with all-rounder shrinkage priors);
+ * every other role is ranked against the full populations.
  */
 export function scorePlayer(
   player: NormalizedPlayer,
@@ -483,8 +543,11 @@ export function scorePlayer(
 ): PlayerScore {
   const role = evaluationRole(player, declaredRole);
   const raw = rawMetrics(player);
-  const adjusted = adjustedMetrics(player, ctx);
-  const normalizedAll = normalizeMetrics(adjusted, ctx.populations);
+  const adjusted = adjustedMetrics(player, ctx, role);
+  const normalizedAll = normalizeMetrics(
+    adjusted,
+    role === 'all-rounder' ? ctx.arPopulations : ctx.populations,
+  );
   const keys = ROLE_METRICS[role];
   const normalized: Partial<Record<MetricKey, number | null>> = {};
   for (const k of keys) normalized[k] = normalizedAll[k];

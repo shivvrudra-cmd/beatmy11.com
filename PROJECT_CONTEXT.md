@@ -166,8 +166,9 @@ rather than invented:
   `IncompletePlayerData` instead of producing a misleading score.
 - The architecture returns per-player detail in `TeamComparison`, but the
   first release displays only **Your XI score, My XI score, and the verdict**.
-- Fixed house XI under the new engine scores **83.6** (diagnostic run
-  2026-09-25; see `scripts/seven-metric-diagnostic.ts` to reproduce).
+- Fixed house XI under the new engine scores **87.5** (diagnostic run
+  2026-09-25; see `SCORING_REVIEW.md` and `scripts/review-report.ts` to
+  reproduce).
 
 ### Scoring decisions — all resolved 2026-09-25 (owner-specified, V1)
 
@@ -183,6 +184,15 @@ rather than invented:
    using testMatches as the sample size for all seven metrics. Kills the
    tiny-sample hot-streak problem (Kaia 99.4 → 68.5, Padikkal 99.7 → 80.4;
    no ≤5-Test player in any role's top 10). Missing values stay missing.
+8. All-rounder-only populations (owner-approved 2026-09-25, "Option A"):
+   all-rounders are percentile-ranked only against the 47 all-rounders
+   (batting vs AR batting, bowling vs AR bowling), with shrinkage priors
+   from AR-only raw means; every other role still uses the full
+   populations. No new weighting parameter — the 50/50 blend is unchanged,
+   and a specialist declared as an all-rounder still collapses (Murali
+   99.2 as spinner → 50.0 as AR). Genuine ARs rise (Botham 78.4, Imran
+   73.6, Sobers 68.8); lopsided players don't (Hadlee 55.5). The elite
+   AR-shape XI gap vs the specialist-shape XI narrows from −3.7 to −1.9.
 
 ---
 
@@ -210,10 +220,12 @@ rather than invented:
 
 - `tests/xi-logic.test.ts` — 127 assertions: slot system, declared roles, blocking,
   move-stranding regression, persistence migration.
-- `tests/seven-metrics.test.ts` — 44 assertions: all six roles, keeper batting
-  evaluation, all-rounder dual evaluation, no batting score for specialist
-  bowlers, metric directionality, determinism, missing-data flags, gated
-  `compareXIs` (expects the `MissingScoringSpec` throw until a spec is supplied).
+- `tests/seven-metrics.test.ts` — 130 assertions: all six roles, keeper batting
+  evaluation, all-rounder dual evaluation incl. AR-only populations (47 ARs,
+  AR priors, anti-gaming, non-AR roles untouched), no batting score for
+  specialist bowlers, metric directionality, W=20 shrinkage incl. hot-streak
+  guards, determinism, missing-data flags, `compareXIs` (throws
+  `IncompletePlayerData` on gaps).
 - `tests/full-draft.test.ts` — 120-trial real-data simulation drafting complete
   XIs in all three shapes, with a backtracking achievability oracle.
 - All suites green; `npm run build` produces the 5 static pages cleanly.

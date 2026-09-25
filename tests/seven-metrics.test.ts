@@ -413,5 +413,99 @@ ok(SHRINKAGE_PRIOR_MATCHES === 20, 'spec shrinkage prior weight is 20 matches');
   }
 }
 
+// ---- all-rounder-only populations (owner-approved 2026-09-25) ----
+{
+  // population shape: one entry per all-rounder per metric
+  for (const k of [...BATTING_METRICS, ...BOWLING_METRICS] as MetricKey[]) {
+    ok(
+      CTX.arPopulations[k].length === 47,
+      `arPopulations.${k} holds the 47 all-rounders`,
+      CTX.arPopulations[k].length,
+    );
+  }
+  // priors are all-rounder-only raw means (all-rounders bat below the full
+  // batting mean and bowl above the full bowling-average mean)
+  ok(
+    CTX.arPriorMeans.battingAverage < CTX.priorMeans.battingAverage,
+    'AR batting prior is the all-rounder-only mean',
+    { ar: CTX.arPriorMeans.battingAverage, full: CTX.priorMeans.battingAverage },
+  );
+  ok(
+    CTX.arPriorMeans.bowlingAverage > CTX.priorMeans.bowlingAverage,
+    'AR bowling-average prior is the all-rounder-only mean (higher = worse)',
+    { ar: CTX.arPriorMeans.bowlingAverage, full: CTX.priorMeans.bowlingAverage },
+  );
+  // shrinkage for all-rounders targets the AR priors …
+  const botham = P('ian-botham');
+  const bm = Number(botham.stats.testMatches);
+  const expARAdj =
+    (bm * Number(botham.stats.testAverage) + 20 * CTX.arPriorMeans.battingAverage) / (bm + 20);
+  ok(
+    Math.abs(adjustedMetrics(botham, CTX, 'all-rounder').battingAverage! - expARAdj) < 1e-9,
+    'AR shrinkage uses AR prior means',
+  );
+  // … while omitting the role keeps the full-population priors (unchanged behavior)
+  const expFullAdj =
+    (bm * Number(botham.stats.testAverage) + 20 * CTX.priorMeans.battingAverage) / (bm + 20);
+  ok(
+    Math.abs(adjustedMetrics(botham, CTX).battingAverage! - expFullAdj) < 1e-9,
+    'adjustedMetrics without role keeps full-population priors',
+  );
+  // genuine all-rounders rise against their peers; the ordering is sane
+  const sBotham = scorePlayer(P('ian-botham'), 'all-rounder', CTX);
+  const sImran = scorePlayer(P('imran-khan'), 'all-rounder', CTX);
+  const sSobers = scorePlayer(P('garfield-sobers'), 'all-rounder', CTX);
+  const sKallis = scorePlayer(P('jacques-kallis'), 'all-rounder', CTX);
+  const sJadeja = scorePlayer(P('ravindra-jadeja'), 'all-rounder', CTX);
+  ok(sBotham.score! > 75 && sBotham.score! < 82, 'Botham ~78 against all-rounders', sBotham.score);
+  ok(sImran.score! > 70 && sImran.score! < 77, 'Imran ~74 against all-rounders', sImran.score);
+  ok(sSobers.score! > 65 && sSobers.score! < 72, 'Sobers ~69 against all-rounders', sSobers.score);
+  ok(sKallis.score! > 57 && sKallis.score! < 63, 'Kallis ~60 against all-rounders', sKallis.score);
+  ok(sJadeja.score! > 67 && sJadeja.score! < 73, 'Jadeja ~70 against all-rounders', sJadeja.score);
+  ok(
+    sBotham.battingScore! > 60 && sBotham.bowlingScore! > 85,
+    'Botham: real two-discipline percentiles vs ARs',
+    { bat: sBotham.battingScore, bowl: sBotham.bowlingScore },
+  );
+  // a lopsided bowler stays low as an "all-rounder" — no free points
+  const sHadlee = scorePlayer(P('richard-hadlee'), 'all-rounder', CTX);
+  ok(sHadlee.score! < 60, 'Hadlee (weak AR batting) stays low as an all-rounder', sHadlee.score);
+  // anti-gaming: a specialist declared as an all-rounder collapses
+  const murSp = scorePlayer(P('muttiah-muralitharan'), 'spinner', CTX).score!;
+  const murAR = scorePlayer(P('muttiah-muralitharan'), 'all-rounder', CTX).score!;
+  ok(murAR < murSp - 30, 'specialist declared as all-rounder gains nothing', { murSp, murAR });
+  // non-AR roles are untouched by the change
+  ok(
+    scorePlayer(P('sachin-tendulkar'), 'middle-order', CTX).score === 96.6,
+    'Tendulkar unchanged (full populations)',
+  );
+  ok(
+    scorePlayer(P('don-bradman'), 'opener', CTX).score === 100,
+    'Bradman unchanged (full populations)',
+  );
+  // elite AR shape vs elite specialist shape: the gap more than halves
+  const E = (player: NormalizedPlayer, declaredRole: string) => ({ player, declaredRole });
+  const ranked = [...byId.values()].map((p) => ({ p, s: scorePlayer(p, null, CTX).score ?? -1 }));
+  const top = (role: string, n: number) =>
+    ranked.filter((x) => x.p.primaryRole === role).sort((a, b) => b.s - a.s).slice(0, n).map((x) => x.p);
+  const shapeAR = [
+    ...top('opener', 2).map((p) => E(p, 'opener')),
+    ...top('middle-order', 4).map((p) => E(p, 'middle-order')),
+    E(top('wicketkeeper', 1)[0], 'wicketkeeper'),
+    E(top('all-rounder', 1)[0], 'all-rounder'),
+    ...top('fast-bowler', 3).map((p) => E(p, 'fast-bowler')),
+  ];
+  const shapeSP = [
+    ...top('opener', 2).map((p) => E(p, 'opener')),
+    ...top('middle-order', 4).map((p) => E(p, 'middle-order')),
+    E(top('wicketkeeper', 1)[0], 'wicketkeeper'),
+    E(top('spinner', 1)[0], 'spinner'),
+    ...top('fast-bowler', 3).map((p) => E(p, 'fast-bowler')),
+  ];
+  const cmp = compareXIs(shapeAR, shapeSP, CTX);
+  ok(cmp.userScore > 94.5, 'elite AR shape scores ~95', cmp.userScore);
+  ok(cmp.difference < 0 && cmp.difference > -2.5, 'AR shape within ~2 points of specialist shape', cmp.difference);
+}
+
 console.log(`\n${pass} passed, ${fail} failed`);
 if (fail > 0) process.exit(1);

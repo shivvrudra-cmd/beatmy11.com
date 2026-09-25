@@ -1,8 +1,10 @@
 # BeatMy11 seven-metric engine — scoring review pack
 
 Generated 2026-09-25 from the current repo data (792 records, 535 unique players).
-Engine: seven metrics, percentile-rank 0–100 over full eligible populations,
-W=20 shrinkage (adjusted = (m×raw + 20×mean)/(m+20)), V1 weights (bat 1/3, bowl 1/4, AR 50/50), XI = mean of 11.
+Engine: seven metrics, percentile-rank 0–100 over eligible populations
+(all-rounders ranked only against the 47 all-rounders, other roles against full populations),
+W=20 shrinkage toward the role-eligible population mean (adjusted = (m×raw + 20×mean)/(m+20)),
+V1 weights (bat 1/3, bowl 1/4, AR 50/50), XI = mean of 11.
 
 ## Populations and shrinkage priors
 
@@ -35,9 +37,9 @@ Roles shown are the declared/evaluation roles. `raw → adjusted` shows the shri
 | Devdutt Padikkal | middle-order | 4 | 69.7→42.8 | 104.5→66.6 | n/a→n/a | 0.000→2.736 | **80.4** |
 | Adam Gilchrist | wicketkeeper | 96 | 47.6→45.8 | 58.0→58.2 | n/a→n/a | 0.000→0.566 | **70.4** |
 | Andy Flower | wicketkeeper | 63 | 51.5→48.1 | 76.1→72.0 | n/a→n/a | 0.000→0.791 | **87.1** |
-| Jacques Kallis | all-rounder | 166 | 55.4→53.5 | 80.1→77.8 | 32.6→32.5 | 1.759→1.923 | **54.3** |
-| Garfield Sobers | all-rounder | 93 | 57.8→54.2 | 86.4→81.5 | 34.0→33.7 | 2.527→2.661 | **56.2** |
-| Imran Khan | all-rounder | 88 | 37.7→37.6 | 43.3→46.2 | 22.8→24.5 | 4.114→3.960 | **59.1** |
+| Jacques Kallis | all-rounder | 166 | 55.4→53.1 | 80.1→76.7 | 32.6→32.9 | 1.759→1.831 | **60.1** |
+| Garfield Sobers | all-rounder | 93 | 57.8→53.6 | 86.4→79.8 | 34.0→34.2 | 2.527→2.509 | **68.8** |
+| Imran Khan | all-rounder | 88 | 37.7→37.0 | 43.3→44.3 | 22.8→25.1 | 4.114→3.801 | **73.6** |
 | Muttiah Muralitharan | spinner | 133 | 11.7→15.1 | 9.5→15.9 | 22.7→23.9 | 6.015→5.658 | **99.2** |
 | Shane Warne | spinner | 145 | 17.3→19.7 | 21.8→26.3 | 25.4→26.2 | 4.883→4.689 | **94.1** |
 | Sydney Barnes | fast-bowler | 27 | 8.1→20.6 | 9.0→30.2 | 16.4→23.1 | 7.000→5.418 | **99.7** |
@@ -55,43 +57,44 @@ No player with ≤5 Tests appears in any role's top 10 (top-10 minimums: 12–87
 
 ## All-rounders under the microscope
 
-### Jacques Kallis — final **54.3** (batting 97.4 / bowling 11.2)
+### Jacques Kallis — final **60.1** (batting 97.8 / bowling 22.3)
 
-| Metric | Adjusted value | Percentile (of 248 bowlers / 334 batters) |
+| Metric | Adjusted value | Percentile (of the 47 all-rounders) |
 |---|---|---|
-| battingAverage | 53.465 | 98.8 |
-| runsPerMatch | 77.786 | 95.2 |
-| centuryRate | 0.256 | 98.2 |
-| bowlingAverage | 32.541 | 40.9 |
-| wicketsPerMatch | 1.923 | 2.8 |
-| fiveWRate | 0.043 | 1.2 |
+| battingAverage | 53.107 | 95.7 |
+| runsPerMatch | 76.728 | 97.8 |
+| centuryRate | 0.251 | 100.0 |
+| bowlingAverage | 32.861 | 63.0 |
+| wicketsPerMatch | 1.831 | 19.6 |
+| fiveWRate | 0.038 | 6.5 |
 | tenWRate | 0.002 | 0.0 |
 
-### Garfield Sobers — final **56.2** (batting 98.2 / bowling 14.2)
+### Garfield Sobers — final **68.8** (batting 98.6 / bowling 39.1)
 
-| Metric | Adjusted value | Percentile (of 248 bowlers / 334 batters) |
+| Metric | Adjusted value | Percentile (of the 47 all-rounders) |
 |---|---|---|
-| battingAverage | 54.190 | 99.1 |
-| runsPerMatch | 81.516 | 97.6 |
-| centuryRate | 0.253 | 97.9 |
-| bowlingAverage | 33.655 | 29.1 |
-| wicketsPerMatch | 2.661 | 15.0 |
-| fiveWRate | 0.079 | 10.9 |
-| tenWRate | 0.004 | 1.6 |
+| battingAverage | 53.601 | 97.8 |
+| runsPerMatch | 79.773 | 100.0 |
+| centuryRate | 0.245 | 97.8 |
+| bowlingAverage | 34.182 | 50.0 |
+| wicketsPerMatch | 2.509 | 58.7 |
+| fiveWRate | 0.072 | 41.3 |
+| tenWRate | 0.003 | 6.5 |
 
-### Imran Khan — final **59.1** (batting 26.4 / bowling 91.7)
+### Imran Khan — final **73.6** (batting 51.4 / bowling 95.7)
 
-| Metric | Adjusted value | Percentile (of 248 bowlers / 334 batters) |
+| Metric | Adjusted value | Percentile (of the 47 all-rounders) |
 |---|---|---|
-| battingAverage | 37.645 | 50.2 |
-| runsPerMatch | 46.169 | 10.5 |
-| centuryRate | 0.079 | 18.6 |
-| bowlingAverage | 24.514 | 94.7 |
-| wicketsPerMatch | 3.960 | 86.2 |
-| fiveWRate | 0.240 | 91.1 |
-| tenWRate | 0.060 | 94.7 |
+| battingAverage | 37.029 | 76.1 |
+| runsPerMatch | 44.346 | 32.6 |
+| centuryRate | 0.071 | 45.7 |
+| bowlingAverage | 25.064 | 97.8 |
+| wicketsPerMatch | 3.801 | 95.7 |
+| fiveWRate | 0.233 | 93.5 |
+| tenWRate | 0.059 | 95.7 |
 
-All-rounders are ranked against the full bowling population (136 fast bowlers + 65 spinners + 47 all-rounders).
+All-rounders are ranked only against the 47 all-rounders (batting vs AR batting, bowling vs AR bowling),
+shrunk toward AR-only prior means. A specialist declared as an all-rounder still collapses (Murali: 99.2 as spinner → 50.0 as AR).
 
 ## Fixed house XI
 
@@ -102,13 +105,13 @@ All-rounders are ranked against the full bowling population (136 fast bowlers + 
 | 3 | Sachin Tendulkar | middle-order | 96.6 |
 | 4 | Viv Richards | middle-order | 86.6 |
 | 5 | Ricky Ponting | middle-order | 95.3 |
-| 6 | Garfield Sobers | all-rounder | 56.2 |
-| 7 | Imran Khan | all-rounder | 59.1 |
+| 6 | Garfield Sobers | all-rounder | 68.8 |
+| 7 | Imran Khan | all-rounder | 73.6 |
 | 8 | Adam Gilchrist | wicketkeeper | 70.4 |
 | 9 | Malcolm Marshall | fast-bowler | 93.8 |
 | 10 | Shane Warne | spinner | 94.1 |
 | 11 | Glenn McGrath | fast-bowler | 86.5 |
-|  | **XI score (mean of 11)** |  | **85.0** |
+|  | **XI score (mean of 11)** |  | **87.5** |
 
 ## XI shapes and head-to-heads
 
@@ -121,11 +124,11 @@ All-rounders are ranked against the full bowling population (136 fast bowlers + 
 - Kane Williamson (middle-order): 98.5
 - Brian Lara (middle-order): 97.6
 - Andy Flower (wicketkeeper): 87.1
-- Imran Khan (all-rounder): 59.1
+- Ian Botham (all-rounder): 78.4
 - Sydney Barnes (fast-bowler): 99.7
 - Dennis Lillee (fast-bowler): 96.2
 - Dale Steyn (fast-bowler): 94.2
-- **XI score: 93.4**
+- **XI score: 95.2**
 
 ### Shape 2 — 2O / 4MO / 1K / 1S / 3F (elite)
 
@@ -150,12 +153,12 @@ All-rounders are ranked against the full bowling population (136 fast bowlers + 
 - Steve Smith (middle-order): 99.0
 - Kane Williamson (middle-order): 98.5
 - Andy Flower (wicketkeeper): 87.1
-- Imran Khan (all-rounder): 59.1
+- Ian Botham (all-rounder): 78.4
 - Muttiah Muralitharan (spinner): 99.2
 - Sydney Barnes (fast-bowler): 99.7
 - Dennis Lillee (fast-bowler): 96.2
 - Dale Steyn (fast-bowler): 94.2
-- **XI score: 93.6**
+- **XI score: 95.3**
 
 ### Elite XI vs weak XI
 
@@ -166,11 +169,11 @@ All-rounders are ranked against the full bowling population (136 fast bowlers + 
 - Kane Williamson (middle-order): 98.5
 - Brian Lara (middle-order): 97.6
 - Andy Flower (wicketkeeper): 87.1
-- Imran Khan (all-rounder): 59.1
+- Ian Botham (all-rounder): 78.4
 - Sydney Barnes (fast-bowler): 99.7
 - Dennis Lillee (fast-bowler): 96.2
 - Dale Steyn (fast-bowler): 94.2
-- **XI score: 93.4** vs 11.1 → diff 82.3 → user
+- **XI score: 95.2** vs 12.2 → diff 83.0 → user
 
 ### AR-heavy (shape 1) vs specialist-heavy (shape 2)
 
@@ -181,11 +184,11 @@ All-rounders are ranked against the full bowling population (136 fast bowlers + 
 - Kane Williamson (middle-order): 98.5
 - Brian Lara (middle-order): 97.6
 - Andy Flower (wicketkeeper): 87.1
-- Imran Khan (all-rounder): 59.1
+- Ian Botham (all-rounder): 78.4
 - Sydney Barnes (fast-bowler): 99.7
 - Dennis Lillee (fast-bowler): 96.2
 - Dale Steyn (fast-bowler): 94.2
-- **XI score: 93.4** vs 97.1 → diff -3.7 → opponent
+- **XI score: 95.2** vs 97.1 → diff -1.9 → opponent
 
 ### Identical XI vs identical XI
 
@@ -196,11 +199,11 @@ All-rounders are ranked against the full bowling population (136 fast bowlers + 
 - Kane Williamson (middle-order): 98.5
 - Brian Lara (middle-order): 97.6
 - Andy Flower (wicketkeeper): 87.1
-- Imran Khan (all-rounder): 59.1
+- Ian Botham (all-rounder): 78.4
 - Sydney Barnes (fast-bowler): 99.7
 - Dennis Lillee (fast-bowler): 96.2
 - Dale Steyn (fast-bowler): 94.2
-- **XI score: 93.4** vs 93.4 → diff 0.0 → tie
+- **XI score: 95.2** vs 95.2 → diff 0.0 → tie
 
 ## How to reproduce
 
