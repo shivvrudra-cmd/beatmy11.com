@@ -1071,7 +1071,7 @@
       "testFifties": 0,
       "fiveWs": 5,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 29.6,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 24
@@ -1295,28 +1295,6 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 11
-    }
-  },
-  {
-    "id": "zahid-mahmood",
-    "name": "Zahid Mahmood",
-    "nation": "Pakistan",
-    "era": "2020s",
-    "primaryRole": "Spinner",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 4.5,
-      "testRuns": 18,
-      "testWickets": 16,
-      "testMatches": 2,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 0
     }
   },
   {
@@ -2634,7 +2612,7 @@
       "testFifties": 0,
       "fiveWs": 1,
       "tenWs": 0,
-      "testBowlingAverage": 0,
+      "testBowlingAverage": 36.7,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 9
@@ -2970,28 +2948,6 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 8
-    }
-  },
-  {
-    "id": "tanunurwa-makoni",
-    "name": "Tanunurwa Makoni",
-    "nation": "Zimbabwe",
-    "era": "2020s",
-    "primaryRole": "Opener",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 0,
-      "testRuns": 184,
-      "testWickets": 0,
-      "testMatches": 0,
-      "testCenturies": 0,
-      "testFifties": 0,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 0
     }
   },
   {
