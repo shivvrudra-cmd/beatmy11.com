@@ -150,25 +150,35 @@ ok(
 );
 
 // ---- missing data is flagged, never zero-filled ----
-const zeroMatch = P('tanunurwa-makoni');
-const zmRaw = rawMetrics(zeroMatch);
+// Synthetic regression: a player with missing figures must surface gaps,
+// never silently-computed zeros. (Uses a mock — no real record may be
+// relied on for missing data, since the dataset is now complete.)
+const mkGapPlayer = (): NormalizedPlayer => ({
+  uid: 't:gap', id: 'gap-player', name: 'Gap Player', nation: 'N', era: '2020s', displayEra: '2020s',
+  primaryRole: 'fast-bowler', secondaryRoles: [],
+  stats: { testBowlingAverage: 0, testWickets: 50, testMatches: 0, fiveWs: 0, tenWs: 0 },
+});
+const gapRaw = rawMetrics(mkGapPlayer());
 ok(
-  zmRaw.runsPerMatch === null && zmRaw.centuryRate === null,
-  'zero-match player: per-match rates are null, not zero',
+  gapRaw.bowlingAverage === null && gapRaw.wicketsPerMatch === null,
+  'missing figures -> null metrics, never zero',
 );
-const gaps = auditMetrics([
-  { player: P('saqlain-mushtaq'), declaredRole: 'spinner' },
-  { player: P('mohammed-siraj'), declaredRole: 'fast-bowler' },
-  { player: zeroMatch, declaredRole: 'opener' },
-]);
-const gapKeys = gaps.map((g) => `${g.playerId}:${g.metric}`).sort();
-ok(gapKeys.includes('saqlain-mushtaq:bowlingAverage'), 'missing bowling average flagged for Saqlain');
-ok(gapKeys.includes('mohammed-siraj:bowlingAverage'), 'missing bowling average flagged for Siraj');
-ok(gapKeys.includes('tanunurwa-makoni:runsPerMatch'), 'zero-match rates flagged');
+const gapList = auditMetrics([{ player: mkGapPlayer(), declaredRole: 'fast-bowler' }]);
+ok(gapList.length > 0, 'missing figures are flagged by auditMetrics');
 ok(
-  gaps.every((g) => /confirm how this should be handled/.test(g.reason)),
+  gapList.every((g) => /confirm how this should be handled/.test(g.reason)),
   'gaps ask for confirmation rather than inventing a rule',
 );
+// Real data (owner filled every gap 2026-09-25): the full sweep must be clean.
+const allGaps = auditMetrics([...byId.values()].map((player) => ({ player })));
+ok(allGaps.length === 0, 'all records: every applicable metric computable', allGaps.slice(0, 3));
+const filledGaps = auditMetrics([
+  { player: P('saqlain-mushtaq'), declaredRole: 'spinner' },
+  { player: P('mohammed-siraj'), declaredRole: 'fast-bowler' },
+  { player: P('lahiru-kumara'), declaredRole: 'fast-bowler' },
+  { player: P('prosper-utseya'), declaredRole: 'spinner' },
+]);
+ok(filledGaps.length === 0, 'previously-missing records are now complete');
 // A complete XI has no gaps: the fixed house XI's applicable metrics.
 import { getHouseXI } from '../src/lib/opponent-xi';
 const houseGaps = auditMetrics(getHouseXI().map((p) => ({ player: p })));
