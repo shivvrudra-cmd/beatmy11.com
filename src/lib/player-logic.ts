@@ -241,8 +241,8 @@ export interface DraftState {
   /** Raw ids picked in the current round. */
   picksThisRound: string[];
   selectedPlayers: DraftPick[];
-  /** The XI lineup: slot key → picked player uid (null = empty slot). */
-  slots: Record<string, string | null>;
+  /** The XI lineup: slot key → occupant (player uid + declared role), null = empty. */
+  slots: Record<string, SlotOccupant | null>;
   spinHistory: SpinRecord[];
   isSpinning: boolean;
   gameComplete: boolean;
@@ -306,53 +306,106 @@ export function canSpin(state: DraftState, unpickedInPool: number): boolean {
 }
 
 // ---------------------------------------------------------------------------
-// XI slots — the right-pane lineup.
+// XI slots — the right-pane lineup, spots 1–11.
 //
-// The XI is 11 fixed slots: 2 openers, 3 middle-order batters + 1 mandatory
-// wicketkeeper (the keeper bats in the middle order, so the keeper slot is
-// one of the four middle-order rows), 1 all-rounder, 1 spinner, 3 fast
-// bowlers. After each spin the user first selects a player from the pool,
-// then selects the slot they go in; afterwards players can be moved between
-// any slots their groups allow (e.g. Sangakkara — a middle-order batter who
-// keeps wicket — can sit in a middle-order slot or the wicketkeeper slot).
+// Spots 1–2 take openers; spots 3–7 are flexible batting slots that accept
+// middle-order batters, the wicketkeeper and the all-rounder; spot 8 takes
+// the spinner or the all-rounder; spots 9–11 take fast bowlers. A player
+// placed into a flexible slot is DECLARED as one of the roles the data says
+// they can play there (primary role by default) — the declaration is what
+// counts toward the XI composition, and it is stored on the slot itself.
 // ---------------------------------------------------------------------------
 
-/** One fixed slot in the XI lineup. */
+/** The six roles that count toward an XI composition. */
+export type XiRole =
+  | 'opener'
+  | 'middle-order'
+  | 'wicketkeeper'
+  | 'all-rounder'
+  | 'spinner'
+  | 'fast-bowler';
+
+export const XI_ROLES: XiRole[] = [
+  'opener',
+  'middle-order',
+  'wicketkeeper',
+  'all-rounder',
+  'spinner',
+  'fast-bowler',
+];
+
+/** One slot in the XI lineup. */
 export interface XiSlot {
   key: string;
-  /** Role group that may occupy the slot. */
-  group: string;
+  /** Roles a placed player may be declared as in this slot. */
+  roles: XiRole[];
   label: string;
-  /** The wicketkeeper slot must be filled before the XI can be compared. */
-  required?: boolean;
 }
 
 export const XI_SLOTS: XiSlot[] = [
-  { key: 'opener-1', group: 'opener', label: 'Opener 1' },
-  { key: 'opener-2', group: 'opener', label: 'Opener 2' },
-  { key: 'middle-1', group: 'middle-order', label: 'Middle Order 1' },
-  { key: 'middle-2', group: 'middle-order', label: 'Middle Order 2' },
-  { key: 'middle-3', group: 'middle-order', label: 'Middle Order 3' },
-  { key: 'keeper', group: 'wicketkeeper', label: 'Wicketkeeper', required: true },
-  { key: 'all-rounder', group: 'all-rounder', label: 'All-Rounder' },
-  { key: 'spinner', group: 'spinner', label: 'Spinner' },
-  { key: 'fast-1', group: 'fast-bowler', label: 'Fast Bowler 1' },
-  { key: 'fast-2', group: 'fast-bowler', label: 'Fast Bowler 2' },
-  { key: 'fast-3', group: 'fast-bowler', label: 'Fast Bowler 3' },
+  { key: 'opener-1', roles: ['opener'], label: 'Opener 1' },
+  { key: 'opener-2', roles: ['opener'], label: 'Opener 2' },
+  {
+    key: 'bat-3',
+    roles: ['middle-order', 'wicketkeeper', 'all-rounder'],
+    label: 'Batting 3',
+  },
+  {
+    key: 'bat-4',
+    roles: ['middle-order', 'wicketkeeper', 'all-rounder'],
+    label: 'Batting 4',
+  },
+  {
+    key: 'bat-5',
+    roles: ['middle-order', 'wicketkeeper', 'all-rounder'],
+    label: 'Batting 5',
+  },
+  {
+    key: 'bat-6',
+    roles: ['middle-order', 'wicketkeeper', 'all-rounder'],
+    label: 'Batting 6',
+  },
+  {
+    key: 'bat-7',
+    roles: ['middle-order', 'wicketkeeper', 'all-rounder'],
+    label: 'Batting 7',
+  },
+  {
+    key: 'spin-ar',
+    roles: ['spinner', 'all-rounder'],
+    label: 'Spot 8',
+  },
+  { key: 'fast-1', roles: ['fast-bowler'], label: 'Fast Bowler 9' },
+  { key: 'fast-2', roles: ['fast-bowler'], label: 'Fast Bowler 10' },
+  { key: 'fast-3', roles: ['fast-bowler'], label: 'Fast Bowler 11' },
 ];
 
 /** XI size derives from the slot lineup — always 11. */
 export const XI_SIZE = XI_SLOTS.length;
 
+/** A filled slot records the player and the role they were declared as. */
+export interface SlotOccupant {
+  uid: string;
+  role: XiRole;
+}
+
 /** Empty slot map for a fresh draft. */
-export function emptySlots(): Record<string, string | null> {
-  const slots: Record<string, string | null> = {};
+export function emptySlots(): Record<string, SlotOccupant | null> {
+  const slots: Record<string, SlotOccupant | null> = {};
   for (const s of XI_SLOTS) slots[s.key] = null;
   return slots;
 }
 
 export function slotByKey(key: string): XiSlot | undefined {
   return XI_SLOTS.find((s) => s.key === key);
+}
+
+/** Declared role of a slot's occupant, if filled. */
+export function slotRoleOf(
+  state: DraftState,
+  slotKey: string,
+): XiRole | null {
+  return state.slots[slotKey]?.role ?? null;
 }
 
 export const DRAFT_GROUP_LABELS: Record<string, string> = {
@@ -362,6 +415,16 @@ export const DRAFT_GROUP_LABELS: Record<string, string> = {
   spinner: 'Spinners',
   'fast-bowler': 'Fast Bowlers',
   wicketkeeper: 'Wicketkeeper',
+};
+
+/** Singular role labels for messages ("declared as Wicketkeeper", …). */
+export const XI_ROLE_LABELS: Record<XiRole, string> = {
+  opener: 'Opener',
+  'middle-order': 'Middle-order batter',
+  wicketkeeper: 'Wicketkeeper',
+  'all-rounder': 'All-rounder',
+  spinner: 'Spinner',
+  'fast-bowler': 'Fast bowler',
 };
 
 /**
@@ -386,15 +449,40 @@ export function hasWicketkeeper(xi: NormalizedPlayer[]): boolean {
   return xi.some(isWicketkeeper);
 }
 
-/** The mandatory wicketkeeper slot is filled. */
-export function keeperSlotFilled(state: DraftState): boolean {
-  return !!state.slots['keeper'];
+/**
+ * Roles `player` could be declared as in `slotKey` — the intersection of
+ * the slot's accepted roles with the groups the data marks them eligible
+ * for. Empty when the player can't play there at all.
+ */
+export function declarableRoles(
+  player: NormalizedPlayer,
+  slotKey: string,
+): XiRole[] {
+  const slot = slotByKey(slotKey);
+  if (!slot) return [];
+  const groups = playerGroups(player);
+  return slot.roles.filter((r) => groups.includes(r));
+}
+
+/**
+ * Default declaration: the primary role when the slot accepts it,
+ * otherwise the first compatible group (groups are primary-first, so this
+ * is deterministic).
+ */
+export function defaultDeclaredRole(
+  player: NormalizedPlayer,
+  slotKey: string,
+): XiRole | null {
+  const roles = declarableRoles(player, slotKey);
+  if (roles.length === 0) return null;
+  const primary = player.primaryRole as XiRole;
+  return roles.includes(primary) ? primary : roles[0];
 }
 
 /** The slot a picked player currently occupies, if any. */
 export function slotOf(state: DraftState, uid: string): string | null {
   for (const s of XI_SLOTS) {
-    if (state.slots[s.key] === uid) return s.key;
+    if (state.slots[s.key]?.uid === uid) return s.key;
   }
   return null;
 }
@@ -404,7 +492,7 @@ export function orderedXI(state: DraftState): DraftPick[] {
   const byUid = new Map(state.selectedPlayers.map((p) => [p.uid, p]));
   const out: DraftPick[] = [];
   for (const s of XI_SLOTS) {
-    const uid = state.slots[s.key];
+    const uid = state.slots[s.key]?.uid;
     const p = uid ? byUid.get(uid) : undefined;
     if (p) out.push(p);
   }
@@ -421,16 +509,201 @@ function groupLabels(player: NormalizedPlayer): string {
     .join(' / ');
 }
 
+// ---------------------------------------------------------------------------
+// XI composition — the valid lineups and the hard-block validators.
+//
+// Valid XIs (11 players):
+//   2 openers · 3–4 middle-order · 1 wicketkeeper (separate from middle
+//   order) · 3 fast bowlers · plus the all-rounder / spinner balance: when
+//   four middle-order spots are taken the XI holds exactly one of the
+//   all-rounder or the spinner; when only three are taken it holds both.
+// Every pool pick is validated up front: a card is disabled unless some
+// placement keeps at least one valid XI reachable — including the supply
+// check that picks still owed to the current round can actually be filled
+// from the current pool. A draft can never dead-end.
+// ---------------------------------------------------------------------------
+
+/** Declared-role counts across the filled slots. */
+export type XiCounts = Record<XiRole, number>;
+
+export function emptyCounts(): XiCounts {
+  return {
+    opener: 0,
+    'middle-order': 0,
+    wicketkeeper: 0,
+    'all-rounder': 0,
+    spinner: 0,
+    'fast-bowler': 0,
+  };
+}
+
+/** The only valid XI compositions. */
+export const XI_SHAPES: XiCounts[] = [
+  {
+    opener: 2,
+    'middle-order': 4,
+    wicketkeeper: 1,
+    'all-rounder': 1,
+    spinner: 0,
+    'fast-bowler': 3,
+  },
+  {
+    opener: 2,
+    'middle-order': 4,
+    wicketkeeper: 1,
+    'all-rounder': 0,
+    spinner: 1,
+    'fast-bowler': 3,
+  },
+  {
+    opener: 2,
+    'middle-order': 3,
+    wicketkeeper: 1,
+    'all-rounder': 1,
+    spinner: 1,
+    'fast-bowler': 3,
+  },
+];
+
+/** Declared-role tally for the current draft. */
+export function countsOf(state: DraftState): XiCounts {
+  const counts = emptyCounts();
+  for (const s of XI_SLOTS) {
+    const occ = state.slots[s.key];
+    if (occ) counts[occ.role] += 1;
+  }
+  return counts;
+}
+
+/** Per-role maximum across the three XI shapes. */
+const shapeMax: XiCounts = {
+  opener: 2,
+  'middle-order': 4,
+  wicketkeeper: 1,
+  'all-rounder': 1,
+  spinner: 1,
+  'fast-bowler': 3,
+};
+
+function countsFitShape(counts: XiCounts, shape: XiCounts): boolean {
+  return XI_ROLES.every((r) => counts[r] <= shape[r]);
+}
+
+/**
+ * Shapes a draft can still become: the counts must fit component-wise.
+ * (Every shape sums to 11, so the deficit always exactly matches the
+ * picks remaining — no separate arithmetic check is needed.)
+ */
+export function reachableShapes(counts: XiCounts): XiCounts[] {
+  return XI_SHAPES.filter((s) => countsFitShape(counts, s));
+}
+
+/** Roles still needed to reach `shape` from `counts`. */
+export function deficitOf(
+  counts: XiCounts,
+  shape: XiCounts,
+): { role: XiRole; need: number }[] {
+  const out: { role: XiRole; need: number }[] = [];
+  for (const r of XI_ROLES) {
+    const need = shape[r] - counts[r];
+    if (need > 0) out.push({ role: r, need });
+  }
+  return out;
+}
+
+/** Picks remaining in rounds after the current one. */
+function futurePicks(state: DraftState): number {
+  if (state.currentRound < 1) return DRAFT_ROUNDS * 2 - 1;
+  let n = 0;
+  for (let r = state.currentRound + 1; r <= DRAFT_ROUNDS; r++) {
+    n += selectionLimitForRound(r);
+  }
+  return n;
+}
+
+/**
+ * Could `role` still be filled from `candidates` (unpicked pool players)
+ * into the currently empty slots of `slots`? The supply check behind the
+ * hard block: picks owed to the current round must come from this pool.
+ */
+export function canFillRole(
+  slots: Record<string, SlotOccupant | null>,
+  candidates: NormalizedPlayer[],
+  role: XiRole,
+): boolean {
+  for (const p of candidates) {
+    if (!playerGroups(p).includes(role)) continue;
+    for (const s of XI_SLOTS) {
+      if (slots[s.key]) continue;
+      if (s.roles.includes(role)) return true;
+    }
+  }
+  return false;
+}
+
+/** Human-readable per-role cap messages for the hard block. */
+function roleCapReason(role: XiRole, have: number): string {
+  switch (role) {
+    case 'opener':
+      return 'Both opener spots are filled.';
+    case 'middle-order':
+      return `Middle-order is at its maximum of 4 (${have} picked).`;
+    case 'wicketkeeper':
+      return 'Your XI already has its wicketkeeper.';
+    case 'all-rounder':
+      return 'Your XI already has its all-rounder.';
+    case 'spinner':
+      return 'Your XI already has its spinner.';
+    case 'fast-bowler':
+      return 'All three fast-bowler spots are filled.';
+  }
+}
+
+/** "1 wicketkeeper, 2 fast bowlers" style deficit summary. */
+function deficitLabel(
+  deficit: { role: XiRole; need: number }[],
+): string {
+  return deficit
+    .map(
+      ({ role, need }) =>
+        `${need} ${need === 1 ? XI_ROLE_LABELS[role].toLowerCase() : `${XI_ROLE_LABELS[role].toLowerCase()}s`}`,
+    )
+    .join(', ');
+}
+
+export interface PickSupply {
+  /** Current round's pool (uids resolve against it). */
+  pool: NormalizedPlayer[];
+  /** Picks remaining in later rounds. */
+  futurePicks: number;
+}
+
+/** Default supply context: derive round bookkeeping from the state, with
+ *  the pool supplied by the caller. Omit the pool to skip the supply check
+ *  (pure reachability — used by tests and placement). */
+export function supplyFor(
+  state: DraftState,
+  pool: NormalizedPlayer[] = [],
+): PickSupply {
+  return { pool, futurePicks: futurePicks(state) };
+}
+
 /**
  * Validate picking `player` from the current pool (before a slot is
  * chosen). Returns null when legal, otherwise a human-readable reason —
  * the pool UI disables the card and shows this as its title.
  * Duplicate blocking is by RAW id: the same real player drawn from
  * another era file counts as the same player.
+ *
+ * Hard block: a pick is legal only if some (slot, declared role) keeps a
+ * valid XI reachable AND every pick still owed to the current round after
+ * this one can be filled from the current pool. When `supply.pool` is
+ * empty the supply check is skipped (pure reachability).
  */
 export function validatePoolPick(
   state: DraftState,
   player: NormalizedPlayer,
+  supply?: PickSupply,
 ): string | null {
   if (state.gameComplete) return 'Your XI is complete.';
   if (state.currentRound < 1) return 'Spin first to draw an era and nation.';
@@ -442,77 +715,241 @@ export function validatePoolPick(
   ) {
     return 'Round complete — spin again for the next draw.';
   }
-  // A group is "filled" once every slot it can use is taken — then every
-  // other player of that group becomes unpickable (the pool UI disables
-  // them via this reason).
-  const groups = playerGroups(player);
-  const hasOpenSlot = XI_SLOTS.some(
-    (s) => groups.includes(s.group) && !state.slots[s.key],
-  );
-  if (!hasOpenSlot) {
+  const counts = countsOf(state);
+  const pickedIds = new Set(state.selectedPlayers.map((p) => p.id));
+
+  // Every role the player could declare in any slot. Per-role caps are the
+  // most actionable reason and fire even when the matching slots are already
+  // filled — but only when EVERY declarable role is capped, so a
+  // keeper-capped Sangakkara can still be picked as a batter.
+  const allRoles: XiRole[] = [];
+  for (const s of XI_SLOTS) {
+    for (const r of declarableRoles(player, s.key)) {
+      if (!allRoles.includes(r)) allRoles.push(r);
+    }
+  }
+  if (allRoles.length === 0) {
     return `No open slots for ${groupLabels(player)} — every slot is filled.`;
   }
-  // The XI can never strand itself without a keeper: the final pick is
-  // blocked unless it (or someone already picked) can keep wicket. Recovery
-  // is always possible — the current round's pool is still open, every
-  // non-Legends pool contains a keeper, and the final pick always lands in
-  // round 6, whose pool is still open.
-  if (
-    state.selectedPlayers.length + 1 >= XI_SIZE &&
-    !isWicketkeeper(player) &&
-    !state.selectedPlayers.some(isWicketkeeper)
-  ) {
-    return 'Every XI needs a wicketkeeper — pick a keeper to complete your XI.';
+  if (allRoles.every((r) => counts[r] + 1 > shapeMax[r])) {
+    return roleCapReason(allRoles[0], counts[allRoles[0]]);
+  }
+
+  let sawCompatibleSlot = false;
+  let supplyBlock: string | null = null;
+  let comboBlock: { role: XiRole } | null = null;
+
+  for (const s of XI_SLOTS) {
+    if (state.slots[s.key]) continue;
+    const roles = declarableRoles(player, s.key);
+    if (roles.length === 0) continue;
+    sawCompatibleSlot = true;
+    for (const role of roles) {
+      const counts2: XiCounts = { ...counts, [role]: counts[role] + 1 };
+      let shapeFit = false;
+      for (const shape of XI_SHAPES) {
+        if (!countsFitShape(counts2, shape)) continue;
+        shapeFit = true;
+        // Supply check: picks still owed to this round after this pick
+        // must be fillable from the current pool.
+        if (supply && supply.pool.length > 0) {
+          const deficit = deficitOf(counts2, shape);
+          const dTotal = deficit.reduce((n, d) => n + d.need, 0);
+          const needFromPool = Math.max(0, dTotal - supply.futurePicks);
+          if (needFromPool > 0) {
+            const slotsAfter = {
+              ...state.slots,
+              [s.key]: { uid: player.uid, role },
+            };
+            const candidates = supply.pool.filter(
+              (p) => p.id !== player.id && !pickedIds.has(p.id),
+            );
+            const satisfiable = deficit.some((d) =>
+              canFillRole(slotsAfter, candidates, d.role),
+            );
+            if (!satisfiable) {
+              supplyBlock = `you'd still need ${deficitLabel(deficit)} with no one left in this draw to fill it`;
+              continue;
+            }
+          }
+        }
+        return null; // some placement keeps a valid XI reachable
+      }
+      // No shape fits this declaration at all — remember it for the reason.
+      if (!shapeFit && !comboBlock) comboBlock = { role };
+    }
+  }
+
+  if (!sawCompatibleSlot) {
+    return `No open slots for ${groupLabels(player)} — every slot is filled.`;
+  }
+  if (supplyBlock) {
+    return `Picking ${player.name} now would strand your XI — ${supplyBlock}.`;
+  }
+  if (comboBlock) {
+    return (
+      `Picking ${player.name} as ${XI_ROLE_LABELS[comboBlock.role].toLowerCase()} ` +
+      `leaves no valid XI combination from here.`
+    );
+  }
+  return `No valid XI fits ${player.name} from here.`;
+}
+
+/**
+ * Why declaring `player` as `role` in `slotKey` breaks the XI, else null.
+ * With `supply`, also rejects declarations that would strand a role still
+ * needed from the current draw.
+ */
+function rolePlacementReason(
+  state: DraftState,
+  player: NormalizedPlayer,
+  slotKey: string,
+  role: XiRole,
+  supply?: PickSupply,
+): string | null {
+  const counts = countsOf(state);
+  if (counts[role] + 1 > shapeMax[role]) return roleCapReason(role, counts[role]);
+  const counts2: XiCounts = { ...counts, [role]: counts[role] + 1 };
+  const shapes = reachableShapes(counts2);
+  if (shapes.length === 0) {
+    return `${player.name} as ${XI_ROLE_LABELS[role].toLowerCase()} leaves no valid XI combination from here.`;
+  }
+  if (supply && supply.pool.length > 0) {
+    const slotsAfter: Record<string, SlotOccupant | null> = {
+      ...state.slots,
+      [slotKey]: { uid: player.uid, role },
+    };
+    for (const shape of shapes) {
+      const deficit = deficitOf(counts2, shape);
+      const dTotal = deficit.reduce((n, d) => n + d.need, 0);
+      const needFromPool = Math.max(0, dTotal - supply.futurePicks);
+      if (needFromPool === 0) return null;
+      const pickedIds = new Set(state.selectedPlayers.map((p) => p.id));
+      const candidates = supply.pool.filter(
+        (p) => p.id !== player.id && !pickedIds.has(p.id),
+      );
+      if (deficit.some((d) => canFillRole(slotsAfter, candidates, d.role))) {
+        return null;
+      }
+    }
+    return `${player.name} as ${XI_ROLE_LABELS[role].toLowerCase()} would strand your XI — no one left in this draw could complete it.`;
   }
   return null;
 }
 
 /**
- * Validate placing `player` into `slotKey`. Null = legal.
+ * Legal declarations for placing `player` into `slotKey`: one entry per
+ * declarable role, with null meaning "legal" and a string carrying the
+ * reason it isn't. The pool UI glows the slot when any entry is legal;
+ * the role chooser offers the legal ones.
  */
+export function placementOptions(
+  state: DraftState,
+  player: NormalizedPlayer,
+  slotKey: string,
+  supply?: PickSupply,
+): { role: XiRole; reason: string | null }[] {
+  const slot = slotByKey(slotKey);
+  if (!slot) return [];
+  if (state.slots[slotKey]) {
+    return declarableRoles(player, slotKey).map((role) => ({
+      role,
+      reason: `${slot.label} is already taken — choose a glowing slot.`,
+    }));
+  }
+  return declarableRoles(player, slotKey).map((role) => ({
+    role,
+    reason: rolePlacementReason(state, player, slotKey, role, supply),
+  }));
+}
+
+/** Validate placing `player` into `slotKey` declared as `role`. Null = legal. */
 export function validateSlotPlacement(
   state: DraftState,
   player: NormalizedPlayer,
   slotKey: string,
+  role: XiRole,
+  supply?: PickSupply,
 ): string | null {
-  const poolReason = validatePoolPick(state, player);
+  // Pool-level guards first (duplicate, round over, draft complete).
+  const poolReason = validatePoolPick(state, player, supply);
   if (poolReason) return poolReason;
   const slot = slotByKey(slotKey);
   if (!slot) return 'Unknown slot.';
-  if (state.slots[slotKey]) {
-    return `${slot.label} is already taken — choose a glowing slot.`;
+  if (!declarableRoles(player, slotKey).includes(role)) {
+    return `${player.name} can't play there as ${XI_ROLE_LABELS[role].toLowerCase()} — they can only fill: ${groupLabels(player)}.`;
   }
-  if (!playerGroups(player).includes(slot.group)) {
-    return `${player.name} can't play there — they can only fill: ${groupLabels(player)}.`;
-  }
-  return null;
+  const opt = placementOptions(state, player, slotKey, supply).find(
+    (o) => o.role === role,
+  );
+  return opt ? opt.reason : 'Unknown slot.';
 }
 
 /**
  * Validate moving the occupant of `fromSlotKey` to `toSlotKey`. Covers
- * plain moves (target empty) and swaps (target occupied — both players
- * must be eligible for each other's slot). Null = legal.
+ * plain moves (target empty) and swaps (target occupied). The declared
+ * role travels with the player when the destination accepts it, otherwise
+ * it is re-derived (primary role first). Null = legal.
  */
 export function validateSlotMove(
   state: DraftState,
   fromSlotKey: string,
   toSlotKey: string,
+  supply?: PickSupply,
 ): string | null {
   if (fromSlotKey === toSlotKey) return null;
-  const uid = state.slots[fromSlotKey];
-  const mover = state.selectedPlayers.find((p) => p.uid === uid);
-  const toSlot = slotByKey(toSlotKey);
   const fromSlot = slotByKey(fromSlotKey);
-  if (!mover || !toSlot || !fromSlot) return 'Nothing to move.';
-  if (!playerGroups(mover).includes(toSlot.group)) {
+  const toSlot = slotByKey(toSlotKey);
+  const occ = state.slots[fromSlotKey];
+  const mover = occ
+    ? state.selectedPlayers.find((p) => p.uid === occ.uid)
+    : undefined;
+  if (!mover || !toSlot || !fromSlot || !occ) return 'Nothing to move.';
+  const newRole = toSlot.roles.includes(occ.role)
+    ? occ.role
+    : defaultDeclaredRole(mover, toSlotKey);
+  if (!newRole) {
     return `${mover.name} can't play there — they can only fill: ${groupLabels(mover)}.`;
   }
-  const occupantUid = state.slots[toSlotKey];
-  if (occupantUid) {
-    const occupant = state.selectedPlayers.find((p) => p.uid === occupantUid);
+  const counts = countsOf(state);
+  counts[occ.role] -= 1;
+  counts[newRole] += 1;
+  const toOcc = state.slots[toSlotKey];
+  let backRole: XiRole | null = null;
+  if (toOcc) {
+    const occupant = state.selectedPlayers.find((p) => p.uid === toOcc.uid);
     if (!occupant) return 'Nothing to move.';
-    if (!playerGroups(occupant).includes(fromSlot.group)) {
+    backRole = fromSlot.roles.includes(toOcc.role)
+      ? toOcc.role
+      : defaultDeclaredRole(occupant, fromSlotKey);
+    if (!backRole) {
       return `Can't swap — ${occupant.name} can't fill ${fromSlot.label}.`;
+    }
+    counts[toOcc.role] -= 1;
+    counts[backRole] += 1;
+  }
+  if (!reachableShapes(counts).length) {
+    return `Moving ${mover.name} there would break your XI — no valid lineup fits from here.`;
+  }
+  if (supply && supply.pool.length > 0) {
+    // A move can re-declare roles (e.g. fast bowler → middle-order), so the
+    // same stranding check as picks applies: the picks still owed must be
+    // able to complete the XI from this draw plus future rounds.
+    const slotsAfter: Record<string, SlotOccupant | null> = {
+      ...state.slots,
+      [fromSlotKey]: toOcc ? { uid: toOcc.uid, role: backRole as XiRole } : null,
+      [toSlotKey]: { uid: occ.uid, role: newRole },
+    };
+    const pickedIds = new Set(state.selectedPlayers.map((p) => p.id));
+    const candidates = supply.pool.filter((p) => !pickedIds.has(p.id));
+    const completable = reachableShapes(counts).some((shape) => {
+      const deficit = deficitOf(counts, shape);
+      const dTotal = deficit.reduce((n, d) => n + d.need, 0);
+      if (Math.max(0, dTotal - supply.futurePicks) === 0) return true;
+      return deficit.some((d) => canFillRole(slotsAfter, candidates, d.role));
+    });
+    if (!completable) {
+      return `Moving ${mover.name} there would strand your XI — no one left in this draw could complete it.`;
     }
   }
   return null;
@@ -539,14 +976,20 @@ export function applySpinResult(
   };
 }
 
-/** Record a pick into a chosen slot. Invalid picks are idempotent
- *  no-ops — the state is returned unchanged. */
+/**
+ * Record a pick into a chosen slot, declared as `role`. Invalid picks are
+ * idempotent no-ops — the state is returned unchanged.
+ */
 export function applyDraftPick(
   state: DraftState,
   player: NormalizedPlayer,
   slotKey: string,
+  role: XiRole,
+  supply?: PickSupply,
 ): DraftState {
-  if (validateSlotPlacement(state, player, slotKey) !== null) return state;
+  if (validateSlotPlacement(state, player, slotKey, role, supply) !== null) {
+    return state;
+  }
   const pick: DraftPick = {
     ...player,
     roundPicked: state.currentRound,
@@ -562,28 +1005,46 @@ export function applyDraftPick(
     ...state,
     picksThisRound: [...state.picksThisRound, player.id],
     selectedPlayers,
-    slots: { ...state.slots, [slotKey]: player.uid },
+    slots: { ...state.slots, [slotKey]: { uid: player.uid, role } },
     spinHistory,
     gameComplete: selectedPlayers.length >= XI_SIZE,
   };
 }
 
 /**
- * Move the occupant of one slot to another (or swap two occupants).
- * Invalid moves are idempotent no-ops. Moves never change the player set,
- * so they stay legal at any time — even after the draft is complete.
+ * Move the occupant of one slot to another (or swap two occupants),
+ * re-deriving declarations exactly as `validateSlotMove` does. Invalid
+ * moves are idempotent no-ops. Moves never change the player set, so they
+ * stay legal at any time — even after the draft is complete.
  */
 export function applyDraftMove(
   state: DraftState,
   fromSlotKey: string,
   toSlotKey: string,
+  supply?: PickSupply,
 ): DraftState {
   if (fromSlotKey === toSlotKey) return state;
-  if (validateSlotMove(state, fromSlotKey, toSlotKey) !== null) return state;
+  if (validateSlotMove(state, fromSlotKey, toSlotKey, supply) !== null)
+    return state;
+  const fromSlot = slotByKey(fromSlotKey)!;
+  const toSlot = slotByKey(toSlotKey)!;
+  const occ = state.slots[fromSlotKey]!;
+  const mover = state.selectedPlayers.find((p) => p.uid === occ.uid)!;
+  const newRole = toSlot.roles.includes(occ.role)
+    ? occ.role
+    : defaultDeclaredRole(mover, toSlotKey)!;
   const slots = { ...state.slots };
-  const mover = slots[fromSlotKey];
-  slots[fromSlotKey] = slots[toSlotKey] ?? null;
-  slots[toSlotKey] = mover ?? null;
+  const toOcc = slots[toSlotKey];
+  if (toOcc) {
+    const occupant = state.selectedPlayers.find((p) => p.uid === toOcc.uid)!;
+    const backRole = fromSlot.roles.includes(toOcc.role)
+      ? toOcc.role
+      : defaultDeclaredRole(occupant, fromSlotKey)!;
+    slots[fromSlotKey] = { uid: toOcc.uid, role: backRole };
+  } else {
+    slots[fromSlotKey] = null;
+  }
+  slots[toSlotKey] = { uid: occ.uid, role: newRole };
   return { ...state, slots };
 }
 
@@ -601,7 +1062,7 @@ export function applyDraftDeselect(state: DraftState, rawId: string): DraftState
   const uid = state.selectedPlayers[idx].uid;
   const slots = { ...state.slots };
   for (const key of Object.keys(slots)) {
-    if (slots[key] === uid) slots[key] = null;
+    if (slots[key]?.uid === uid) slots[key] = null;
   }
   const selectedPlayers = state.selectedPlayers.filter((_, i) => i !== idx);
   const picksThisRound = state.picksThisRound.filter((id) => id !== rawId);
@@ -613,46 +1074,85 @@ export function applyDraftDeselect(state: DraftState, rawId: string): DraftState
   return { ...state, picksThisRound, selectedPlayers, slots, spinHistory };
 }
 
+/**
+ * Is the XI complete AND a valid lineup? Guards the Compare XIs step for
+ * drafts restored from older saves, which the validators below never let
+ * a live draft violate.
+ */
+export function isXIValid(state: DraftState): boolean {
+  if (!state.gameComplete || state.selectedPlayers.length !== XI_SIZE) {
+    return false;
+  }
+  const counts = countsOf(state);
+  return XI_SHAPES.some((s) => XI_ROLES.every((r) => counts[r] === s[r]));
+}
+
 // ---------------------------------------------------------------------------
 // Draft persistence (localStorage, SSR-safe)
 // ---------------------------------------------------------------------------
 
 export interface SerializedDraft {
-  v: 2;
+  v: 3;
   currentEra: string | null;
   currentNation: string | null;
   currentRound: number;
   gameComplete: boolean;
   spinHistory: SpinRecord[];
-  picks: { uid: string; round: number; draftEra: string; slot: string | null }[];
+  picks: {
+    uid: string;
+    round: number;
+    draftEra: string;
+    slot: string | null;
+    role: XiRole | null;
+  }[];
 }
 
 /** Serialize a draft for `beatmy11.draft.v1`. Players are stored by uid and
  *  re-resolved against the embedded pool on load. */
 export function serializeDraft(state: DraftState): SerializedDraft {
   return {
-    v: 2,
+    v: 3,
     currentEra: state.currentEra,
     currentNation: state.currentNation,
     currentRound: state.currentRound,
     gameComplete: state.gameComplete,
     spinHistory: state.spinHistory.map((s) => ({ ...s, picks: [...s.picks] })),
-    picks: state.selectedPlayers.map((p) => ({
-      uid: p.uid,
-      round: p.roundPicked,
-      draftEra: p.draftEra,
-      slot: slotOf(state, p.uid),
-    })),
+    picks: state.selectedPlayers.map((p) => {
+      const key = slotOf(state, p.uid);
+      return {
+        uid: p.uid,
+        round: p.roundPicked,
+        draftEra: p.draftEra,
+        slot: key,
+        role: key ? slotRoleOf(state, key) : null,
+      };
+    }),
   };
 }
 
+/** v2 slot keys → v3 (slot key, declared role). */
+const V2_SLOT_REMAP: Record<string, { slot: string; role: XiRole }> = {
+  'opener-1': { slot: 'opener-1', role: 'opener' },
+  'opener-2': { slot: 'opener-2', role: 'opener' },
+  'middle-1': { slot: 'bat-3', role: 'middle-order' },
+  'middle-2': { slot: 'bat-4', role: 'middle-order' },
+  'middle-3': { slot: 'bat-5', role: 'middle-order' },
+  keeper: { slot: 'bat-6', role: 'wicketkeeper' },
+  'all-rounder': { slot: 'bat-7', role: 'all-rounder' },
+  spinner: { slot: 'spin-ar', role: 'spinner' },
+  'fast-1': { slot: 'fast-1', role: 'fast-bowler' },
+  'fast-2': { slot: 'fast-2', role: 'fast-bowler' },
+  'fast-3': { slot: 'fast-3', role: 'fast-bowler' },
+};
+
 /**
  * Rebuild a draft from stored data. `resolve` maps a uid back to a
- * normalized player from the current pool blob. Accepts v2 blobs (with
- * slots) and v1 blobs (no slots — picks are auto-assigned greedily, keepers
- * first so a keeper claims the keeper slot). Returns null when the data is
- * missing, malformed, or references players that no longer resolve — the
- * caller should then start clean.
+ * normalized player from the current pool blob. Accepts v3 blobs (slots +
+ * declared roles), v2 blobs (fixed slots, remapped) and v1 blobs (no slots
+ * — picks are placed greedily, keepers first, keeping a valid XI
+ * reachable). Returns null when the data is missing, malformed, or
+ * references players that no longer resolve — the caller should then
+ * start clean.
  */
 export function deserializeDraft(
   data: unknown,
@@ -660,11 +1160,20 @@ export function deserializeDraft(
 ): DraftState | null {
   if (!data || typeof data !== 'object') return null;
   const d = data as Partial<SerializedDraft>;
-  // Accept the current v2 shape and the legacy v1 shape (no slots).
   const version = (d as { v?: number }).v;
-  if ((version !== 1 && version !== 2) || typeof d.currentRound !== 'number') return null;
+  if ((version !== 1 && version !== 2 && version !== 3) || typeof d.currentRound !== 'number') {
+    return null;
+  }
   const selectedPlayers: DraftPick[] = [];
-  const wantedSlots = new Map<string, string>();
+  const wanted = new Map<string, { slot: string; role: XiRole }>();
+  const wantedSlots = new Set<string>();
+  const claimSlot = (p: NormalizedPlayer, slot: string, role: XiRole) => {
+    // First claim wins — a duplicate stored slot falls back to greedy.
+    if (!wantedSlots.has(slot)) {
+      wanted.set(p.uid, { slot, role });
+      wantedSlots.add(slot);
+    }
+  };
   for (const entry of d.picks ?? []) {
     const p =
       entry && typeof entry.uid === 'string' ? resolve(entry.uid) : null;
@@ -675,38 +1184,72 @@ export function deserializeDraft(
       draftEra: String(entry.draftEra ?? p.displayEra),
     });
     const slotKey = typeof entry.slot === 'string' ? entry.slot : null;
-    const slot = slotKey ? slotByKey(slotKey) : undefined;
-    if (slot && playerGroups(p).includes(slot.group)) {
-      wantedSlots.set(p.uid, slot.key);
+    if (!slotKey) continue;
+    if (version === 3) {
+      const role = (entry as { role?: unknown }).role;
+      if (
+        slotByKey(slotKey) &&
+        typeof role === 'string' &&
+        (slotByKey(slotKey)!.roles as string[]).includes(role) &&
+        playerGroups(p).includes(role)
+      ) {
+        claimSlot(p, slotKey, role as XiRole);
+      }
+    } else if (version === 2) {
+      const remap = V2_SLOT_REMAP[slotKey];
+      if (remap && playerGroups(p).includes(remap.role)) {
+        claimSlot(p, remap.slot, remap.role);
+      }
     }
   }
   // Slot assignment: honour stored slots, then greedily place the rest.
-  // Keepers go first so a keeper claims the keeper slot before batters fill
-  // in around them. Bail out (null → start clean) on any inconsistency.
+  // Keepers go first so a keeper claims a batting slot as wicketkeeper
+  // before batters fill in around them. Every placement must keep a valid
+  // XI reachable; bail out (null → start clean) on any inconsistency.
   const slots = emptySlots();
-  for (const [uid, key] of wantedSlots) {
-    if (slots[key]) return null;
-    slots[key] = uid;
+  const counts = emptyCounts();
+  const place = (uid: string, slotKey: string, role: XiRole): boolean => {
+    if (slots[slotKey]) return false;
+    const counts2: XiCounts = { ...counts, [role]: counts[role] + 1 };
+    if (!reachableShapes(counts2).length) return false;
+    slots[slotKey] = { uid, role };
+    counts[role] += 1;
+    return true;
+  };
+  for (const [uid, w] of wanted) {
+    if (!place(uid, w.slot, w.role)) return null;
   }
+  const byUid = new Map(selectedPlayers.map((p) => [p.uid, p]));
   const unplaced = selectedPlayers
-    .filter((p) => !wantedSlots.has(p.uid))
+    .filter((p) => ![...wanted.keys()].includes(p.uid))
     .sort((a, b) => Number(isWicketkeeper(b)) - Number(isWicketkeeper(a)));
   for (const p of unplaced) {
-    // A keeper-capable player claims the keeper slot first: otherwise a
-    // keeper with a middle-order secondary role (e.g. Gilchrist) would
-    // greedily fill a middle-order row and leave the mandatory keeper
-    // slot empty.
-    let target: (typeof XI_SLOTS)[number] | undefined;
-    if (isWicketkeeper(p) && !slots.keeper) {
-      target = slotByKey('keeper');
-    } else {
-      target = XI_SLOTS.find(
-        (s) => playerGroups(p).includes(s.group) && !slots[s.key],
-      );
+    let done = false;
+    // Prefer declaring a keeper-capable player as wicketkeeper while the
+    // XI still needs one.
+    const rolePrefs: XiRole[] = [];
+    if (isWicketkeeper(p) && counts.wicketkeeper < 1) rolePrefs.push('wicketkeeper');
+    for (const s of XI_SLOTS) {
+      if (slots[s.key]) continue;
+      const decl = declarableRoles(p, s.key);
+      const ordered = [
+        ...rolePrefs.filter((r) => decl.includes(r)),
+        ...decl.filter((r) => !rolePrefs.includes(r)),
+      ];
+      // Default (primary-first) declaration first within the rest.
+      const def = defaultDeclaredRole(p, s.key);
+      ordered.sort((a, b) => (a === def ? -1 : b === def ? 1 : 0));
+      for (const role of ordered) {
+        if (place(p.uid, s.key, role)) {
+          done = true;
+          break;
+        }
+      }
+      if (done) break;
     }
-    if (!target) return null;
-    slots[target.key] = p.uid;
+    if (!done) return null;
   }
+  void byUid;
   const spinHistory: SpinRecord[] = Array.isArray(d.spinHistory)
     ? d.spinHistory
         .filter(
