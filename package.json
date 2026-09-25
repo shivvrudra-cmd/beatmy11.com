@@ -9,7 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "node_modules/.bin/esbuild tests/xi-logic.test.ts tests/full-draft.test.ts --bundle --platform=node --format=cjs --outdir=.test-dist --out-extension:.js=.cjs --log-level=error && node .test-dist/xi-logic.test.cjs && node .test-dist/full-draft.test.cjs"
+    "test": "node_modules/.bin/esbuild tests/xi-logic.test.ts tests/full-draft.test.ts tests/seven-metrics.test.ts --bundle --platform=node --format=cjs --outdir=.test-dist --out-extension:.js=.cjs --log-level=error && node .test-dist/xi-logic.test.cjs && node .test-dist/full-draft.test.cjs && node .test-dist/seven-metrics.test.cjs"
   },
   "keywords": [
     "cricket",
