@@ -1990,8 +1990,8 @@
     "stats": {
       "testAverage": 50.66,
       "testRuns": 8765,
-      "testWickets": 114,
-      "testMatches": 2,
+      "testWickets": 2,
+      "testMatches": 114,
       "testCenturies": 22,
       "testFifties": 46,
       "fiveWs": 0,
