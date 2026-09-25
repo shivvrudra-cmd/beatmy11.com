@@ -125,6 +125,18 @@ ok(
   'inversion is exactly 100 - x',
 );
 ok(percentileRank(42, [42], true) === 50, 'single-value population -> 50');
+ok(percentileRank(7, [7, 7, 7, 7], true) === 50, 'all identical values -> 50');
+ok(percentileRank(7, [7, 7, 7, 7], false) === 50, 'all identical values -> 50 (lower-is-better)');
+ok(percentileRank(5, [], true) === null, 'empty population -> null');
+const tieMin = percentileRank(5, [5, 5, 5, 10], true);
+ok(Math.abs(tieMin! - (1 / 3) * 100) < 1e-9, 'tied minimum shares averaged rank -> 33.3, not 0', tieMin);
+ok(percentileRank(10, [5, 5, 5, 10], true) === 100, 'untied maximum -> 100 even with ties below');
+const tieMax = percentileRank(10, [5, 10, 10, 10], true);
+ok(Math.abs(tieMax! - (2 / 3) * 100) < 1e-9, 'tied maximum shares averaged rank -> 66.7, not 100', tieMax);
+ok(percentileRank(-5, [1, 2, 3], true) === 0, 'below-population value clamps to 0');
+ok(percentileRank(99, [1, 2, 3], true) === 100, 'above-population value clamps to 100');
+ok(percentileRank(-5, [1, 2, 3], false) === 100, 'clamp respects inversion (lower-is-better)');
+ok(percentileRank(99, [1, 2, 3], false) === 0, 'clamp respects inversion (lower-is-better)');
 // real populations: out-of-range values hit the scale ends; everything in range
 for (const def of METRICS) {
   const pop = POPS[def.key];

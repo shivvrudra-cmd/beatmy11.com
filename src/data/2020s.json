@@ -118,7 +118,7 @@
     "secondaryRoles": "opener",
     "stats": {
       "testAverage": 43.1,
-      "testRuns": 46235,
+      "testRuns": 4653,
       "testWickets": 16,
       "testMatches": 67,
       "testCenturies": 12,
@@ -2017,7 +2017,7 @@
       "testFifties": 1,
       "fiveWs": 6,
       "tenWs": 1,
-      "testBowlingAverage": 200.2,
+      "testBowlingAverage": 20.2,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 7
@@ -2693,7 +2693,7 @@
     "secondaryRoles": [],
     "stats": {
       "testAverage": 33.7,
-      "testRuns": 12694,
+      "testRuns": 2694,
       "testWickets": 0,
       "testMatches": 44,
       "testCenturies": 9,
