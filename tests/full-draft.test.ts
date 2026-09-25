@@ -254,7 +254,7 @@ console.log(`trials: ${TRIALS}`);
 console.log(`oracle-achievable: ${achievableCount}, greedy completed valid: ${greedyWinsOnAchievable}`);
 console.log(`oracle-unachievable: ${TRIALS - achievableCount}, greedy correctly stalled: ${greedyStalledOnUnachievable}`);
 console.log(`shape coverage on wins: 4MO+AR=${shapeHits[0]} 4MO+SP=${shapeHits[1]} 3MO+AR+SP=${shapeHits[2]}`);
-console.log(`multi-role placements (role chips) ${multiRoleTotal} times`);
+console.log(`multi-role placements (role bar) ${multiRoleTotal} times`);
 ok(failures.length === 0, 'no achievable draft defeats greedy; no oracle mismatch', failures.slice(0, 5));
 ok(invalidCompleted === 0, 'no invalid XI ever completed');
 
