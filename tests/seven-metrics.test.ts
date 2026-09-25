@@ -237,6 +237,18 @@ ok(
 );
 const allGaps = auditMetrics([...byId.values()].map((player) => ({ player })));
 ok(allGaps.length === 0, 'current data: every applicable metric computable', allGaps.slice(0, 3));
+// explicit nulls are missing too — Number(null) is 0, which must not zero-fill
+const nullAvg = mk(
+  'middle-order',
+  { testMatches: 50, testRuns: 2000, testCenturies: 5 },
+  { id: 'nullavg', uid: 't:nullavg' },
+);
+(nullAvg.stats as Record<string, unknown>).testAverage = null;
+ok(rawMetrics(nullAvg).battingAverage === null, 'explicit null average stays null, never 0');
+ok(
+  auditMetrics([{ player: nullAvg }]).some((g) => g.metric === 'battingAverage'),
+  'explicit null average is flagged as a gap',
+);
 // zero-Test XI entries cannot be silently scored
 const zeroXI = Array.from({ length: 11 }, (_, i) => ({
   player: mk('middle-order', { testAverage: 40, testRuns: 100, testMatches: 0, testCenturies: 0 }, { id: `z${i}`, uid: `t:z${i}` }),

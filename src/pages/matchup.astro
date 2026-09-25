@@ -8,25 +8,49 @@
  * styles are emitted on this page, so the client-rendered user rows below
  * pick up the same bm11-pc-* classes).
  *
- * Client <script type="module"> reads the user's XI from localStorage
- * ('beatmy11.userXI.v1'), renders the user column with markup mirroring
- * PlayerCard's comparison variant, then scores both sides with the existing
- * ratings.ts logic (calculateTeamScore + calculateWinProbability).
+ * The seven-metric scoring context (populations + shrinkage priors, built
+ * from all 535 unique players at build time) is embedded as JSON for the
+ * client script. Client <script type="module"> reads the user's XI from
+ * localStorage ('beatmy11.userXI.v1'), recovers each pick's declared role
+ * from the draft blob ('beatmy11.draft.v1', falling back to primary role),
+ * then scores both XIs with compareXIs from the seven-metric engine.
+ * V1 displays only the two XI scores and the verdict — no probabilities.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import PlayerCard from '../components/PlayerCard.astro';
 import { getHouseXI } from '../lib/opponent-xi';
+import { buildScoringContext } from '../lib/seven-metrics';
+import { playersForEra, ERA_IDS } from '../lib/player-store';
+import type { NormalizedPlayer } from '../lib/player-logic';
 
 const title = 'Your XI vs My XI — BeatMy11';
 const description =
-  'Your all-time Test XI against the fixed house XI. Era-normalized ratings decide the win probability — can you beat my 11?';
+  'Your all-time Test XI against the fixed house XI. Seven career metrics, percentile-ranked — can you beat my 11?';
 
 /* ---------- fixed house "My XI" (isolated in src/lib/opponent-xi.ts) ----------
    Deterministic: the same 11 legends every time. No randomness anywhere in
    the opponent path. */
 const houseXI = getHouseXI();
+
+/* ---------- seven-metric scoring context (build time) ----------
+   All unique players (deduped by id, first era occurrence wins), exactly
+   the population the engine ranks against. Embedded as JSON so the client
+   verdict script needs no data files. */
+const scoringPlayers: NormalizedPlayer[] = [];
+{
+  const seen = new Set<string>();
+  for (const eraId of ERA_IDS) {
+    for (const p of playersForEra(eraId)) {
+      if (seen.has(p.id)) continue;
+      seen.add(p.id);
+      scoringPlayers.push(p);
+    }
+  }
+}
+const scoringContext = buildScoringContext(scoringPlayers);
+const scoringContextJson = JSON.stringify(scoringContext).replace(/</g, '\\u003c');
 
 const ROLE_ORDER = ['opener', 'middle-order', 'wicketkeeper', 'all-rounder', 'fast-bowler', 'spinner'];
 const ROLE_GROUP_LABELS: Record<string, string> = {
@@ -57,8 +81,8 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
         <p class="matchup__eyebrow">The matchup</p>
         <h1 class="matchup__title">Your XI <span class="matchup__vs-word">vs</span> My XI</h1>
         <p class="matchup__lede">
-          Your drafted side against the fixed house XI. Era-normalized
-          ratings, one verdict.
+          Your drafted side against the fixed house XI. Seven career metrics,
+          percentile-ranked against 535 all-time greats — one verdict.
         </p>
       </header>
 
@@ -99,19 +123,11 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
             <span class="tape__label">Your XI</span>
             <span class="tape__score" id="tape-user-score">–</span>
           </div>
-          <div class="tape__bar" id="tape-bar" role="img" aria-label="Win probability bar">
-            <span class="tape__mid" aria-hidden="true"></span>
-            <span class="tape__fill" id="tape-fill"></span>
-          </div>
           <div class="tape__side tape__side--right">
             <span class="tape__label">My XI</span>
             <span class="tape__score" id="tape-house-score">–</span>
           </div>
         </div>
-        <p class="tape__prob">
-          Win probability — <strong id="tape-prob-user">–</strong> you ·
-          <strong id="tape-prob-house">–</strong> house
-        </p>
       </section>
 
       <section class="verdict" aria-live="polite" aria-atomic="true" aria-labelledby="verdict-title">
@@ -129,12 +145,16 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
   <Footer />
 
   <script id="bm11-house-xi" type="application/json" set:html={houseJson} />
+  <script id="bm11-scoring-context" type="application/json" set:html={scoringContextJson} />
 
   <script type="module">
-    import { calculateTeamScore, calculateWinProbability } from '../lib/ratings';
+    import { compareXIs } from '../lib/seven-metrics';
 
     const HOUSE_XI = JSON.parse(
       document.getElementById('bm11-house-xi').textContent || '[]'
+    );
+    const SCORING_CONTEXT = JSON.parse(
+      document.getElementById('bm11-scoring-context').textContent || '{}'
     );
 
     /* ---------- normalization (mirrors the frontmatter spec) ---------- */
@@ -147,50 +167,71 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
       const arr = Array.isArray(raw) ? raw : (typeof raw === 'string' && raw ? [raw] : []);
       return arr.map(normalizeRole).filter((r) => VALID_ROLES.has(r));
     };
-    const mapBowlingStats = (stats) => {
-      const s = { ...(stats ?? {}) };
-      const tba = Number(s.testBowlingAverage);
-      if (tba > 0 && !(Number(s.bowlingAverage) > 0)) s.bowlingAverage = tba;
-      const bsr = Number(s.bowlingStrikeRate);
-      if (bsr > 0) s.bowlingStrikeRate = bsr;
-      return s;
-    };
     const eraString = (era, fallback) => {
       const e = era ?? fallback ?? 'legends';
       return Array.isArray(e) ? String(e[0]) : String(e);
     };
-    const num = (v) => {
+    const finOrNull = (v) => {
       const n = Number(v);
-      return Number.isFinite(n) ? n : 0;
+      return Number.isFinite(n) ? n : null;
     };
-    const numOrUndef = (v) => {
+    const posOrNull = (v) => {
       const n = Number(v);
-      return n > 0 ? n : undefined;
+      return Number.isFinite(n) && n > 0 ? n : null;
     };
 
-    /** Lenient conversion of a stored player into the ratings.ts Player shape. */
+    /**
+     * Lenient conversion of a stored player into the seven-metric engine's
+     * NormalizedPlayer shape. Missing statistics stay null — never
+     * zero-filled — so auditMetrics/compareXIs see the real gaps.
+     */
     function toScoringPlayer(p, sourceEra) {
       const uid = String(p.uid ?? p.id ?? '');
       const inferredEra = uid.includes(':') ? uid.split(':')[0] : undefined;
-      const stats = mapBowlingStats(p.stats);
+      const stats = p.stats ?? {};
       return {
-        id: uid || String(p.name ?? ''),
+        id: String(p.id ?? uid ?? p.name ?? ''),
+        uid,
         name: String(p.name ?? ''),
         nation: String(p.nation ?? ''),
         era: eraString(p.draftEra ?? p.era ?? p.displayEra, inferredEra ?? sourceEra),
         primaryRole: normalizeRole(p.primaryRole),
         secondaryRoles: normalizeSecondaryRoles(p.secondaryRoles),
         stats: {
-          testAverage: num(stats.testAverage),
-          testRuns: num(stats.testRuns),
-          testWickets: num(stats.testWickets),
-          testMatches: num(stats.testMatches),
-          testCenturies: num(stats.testCenturies),
-          testFifties: num(stats.testFifties),
-          bowlingAverage: numOrUndef(stats.bowlingAverage),
-          bowlingStrikeRate: numOrUndef(stats.bowlingStrikeRate),
+          testAverage: posOrNull(stats.testAverage),
+          testRuns: finOrNull(stats.testRuns),
+          testMatches: finOrNull(stats.testMatches),
+          testCenturies: finOrNull(stats.testCenturies),
+          testWickets: finOrNull(stats.testWickets),
+          testBowlingAverage: posOrNull(stats.testBowlingAverage),
+          bowlingAverage: posOrNull(stats.bowlingAverage),
+          fiveWs: finOrNull(stats.fiveWs),
+          tenWs: finOrNull(stats.tenWs),
         },
       };
+    }
+
+    /**
+     * Declared role per pick, recovered from the serialized draft blob
+     * (v3 stores uid → declared role per slot). Falls back to {} when the
+     * draft blob is absent — entries then score under their primary role.
+     */
+    function readDeclaredRoles() {
+      try {
+        const raw = localStorage.getItem('beatmy11.draft.v1');
+        if (!raw) return {};
+        const draft = JSON.parse(raw);
+        const picks = Array.isArray(draft?.picks) ? draft.picks : [];
+        const map = {};
+        for (const pk of picks) {
+          if (pk && typeof pk.uid === 'string' && typeof pk.role === 'string') {
+            map[pk.uid] = pk.role;
+          }
+        }
+        return map;
+      } catch {
+        return {};
+      }
     }
 
     function readUserXI() {
@@ -380,31 +421,40 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
         .join('');
     }
 
-    function renderResult(userPlayers, housePlayers) {
-      const scoreU = calculateTeamScore(userPlayers);
-      const scoreH = calculateTeamScore(housePlayers);
-      const prob = calculateWinProbability(userPlayers, housePlayers);
-      const pct = Math.round(prob * 100);
-
-      document.getElementById('tape-user-score').textContent = scoreU.toFixed(1);
-      document.getElementById('tape-house-score').textContent = scoreH.toFixed(1);
-      document.getElementById('tape-prob-user').textContent = `${pct}%`;
-      document.getElementById('tape-prob-house').textContent = `${100 - pct}%`;
-      const fill = document.getElementById('tape-fill');
-      fill.style.width = `${(prob * 100).toFixed(1)}%`;
-      document.getElementById('tape-bar').setAttribute(
-        'aria-label',
-        `Win probability bar: your XI ${pct}%, house XI ${100 - pct}%`
-      );
-
+    /**
+     * Scores both XIs with the seven-metric engine and renders the V1
+     * verdict: your XI score, my XI score, and the result. A tie is a
+     * real outcome here (identical means can tie exactly). When the data
+     * cannot support a score, no misleading numbers are shown.
+     */
+    function renderResult(userEntries, houseEntries) {
       const verdictTitle = document.getElementById('verdict-title');
       const verdictSub = document.getElementById('verdict-sub');
-      if (prob > 0.5) {
-        verdictTitle.textContent = 'YOUR XI BEATS MINE';
-      } else {
-        verdictTitle.textContent = 'MY XI WINS THIS ONE';
+      let cmp;
+      try {
+        cmp = compareXIs(userEntries, houseEntries, SCORING_CONTEXT);
+      } catch {
+        document.getElementById('tape-user-score').textContent = '–';
+        document.getElementById('tape-house-score').textContent = '–';
+        verdictTitle.textContent = "CAN'T SCORE THIS ONE";
+        verdictSub.textContent =
+          'A required statistic is missing from the data, so no score was produced.';
+        return;
       }
-      verdictSub.textContent = `Your XI has a ${pct}% chance against the house.`;
+
+      document.getElementById('tape-user-score').textContent = cmp.userScore.toFixed(1);
+      document.getElementById('tape-house-score').textContent = cmp.opponentScore.toFixed(1);
+
+      if (cmp.result === 'user') {
+        verdictTitle.textContent = 'YOUR XI BEATS MINE';
+        verdictSub.textContent = `Your XI ${cmp.userScore.toFixed(1)} — My XI ${cmp.opponentScore.toFixed(1)}.`;
+      } else if (cmp.result === 'opponent') {
+        verdictTitle.textContent = 'MY XI WINS THIS ONE';
+        verdictSub.textContent = `My XI ${cmp.opponentScore.toFixed(1)} — Your XI ${cmp.userScore.toFixed(1)}.`;
+      } else {
+        verdictTitle.textContent = "IT'S A TIE";
+        verdictSub.textContent = `Both XIs score ${cmp.userScore.toFixed(1)}. Dead heat.`;
+      }
     }
 
     /* ---------- boot ---------- */
@@ -412,10 +462,17 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
     if (!userRaw) {
       window.location.href = '/play';
     } else {
-      const userPlayers = userRaw.map((p) => toScoringPlayer(p, 'legends'));
-      const housePlayers = HOUSE_XI.map((p) => toScoringPlayer(p, 'legends'));
+      const declaredRoles = readDeclaredRoles();
+      const userEntries = userRaw.map((p) => ({
+        player: toScoringPlayer(p, 'legends'),
+        declaredRole: declaredRoles[String(p.uid ?? p.id ?? '')] ?? null,
+      }));
+      const houseEntries = HOUSE_XI.map((p) => ({
+        player: toScoringPlayer(p, 'legends'),
+        declaredRole: normalizeRole(p.primaryRole),
+      }));
       renderUserXI(userRaw);
-      renderResult(userPlayers, housePlayers);
+      renderResult(userEntries, houseEntries);
 
       document.getElementById('play-again').addEventListener('click', () => {
         try {
@@ -514,7 +571,7 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
     }
     .tape__scores {
       display: grid;
-      grid-template-columns: auto 1fr auto;
+      grid-template-columns: 1fr 1fr;
       gap: 1rem;
       align-items: center;
     }
@@ -532,41 +589,6 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
       font-variant-numeric: tabular-nums;
       color: var(--bm11-text, #F1F5F9);
     }
-    .tape__bar {
-      position: relative;
-      height: 0.75rem;
-      border-radius: 9999px;
-      background: var(--bm11-elevated, #141D33);
-      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
-      overflow: hidden;
-    }
-    .tape__mid {
-      position: absolute;
-      top: -2px;
-      bottom: -2px;
-      left: 50%;
-      width: 2px;
-      background: var(--bm11-border, rgba(148, 163, 184, 0.4));
-    }
-    .tape__fill {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      background: #64748B;
-      border-radius: 9999px;
-      transition: width 0.6s ease;
-    }
-    .tape__prob {
-      text-align: center;
-      color: var(--bm11-muted, #94A3B8);
-      font-size: 0.9rem;
-      margin: 1rem 0 0;
-      font-variant-numeric: tabular-nums;
-    }
-    .tape__prob strong { color: var(--bm11-text, #F1F5F9); }
-
     /* Verdict hero */
     .verdict {
       margin-top: 2rem;

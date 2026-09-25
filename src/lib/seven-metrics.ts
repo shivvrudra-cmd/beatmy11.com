@@ -225,6 +225,9 @@ function perMatch(total: number, matches: number): number | null {
 export function rawMetrics(player: NormalizedPlayer): RawMetrics {
   const s = player.stats ?? {};
   const num = (v: unknown): number | null => {
+    // Explicitly missing stays missing — Number(null) is 0, which would be
+    // a silent zero-fill. Only genuine numerics convert.
+    if (v === null || v === undefined) return null;
     const n = Number(v);
     return Number.isFinite(n) ? n : null;
   };
