@@ -313,14 +313,14 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
       return 'data:image/svg+xml,' + encodeURIComponent(svg);
     }
 
-    /** Key stats per role — same rules as PlayerCard.astro's comparison variant. */
-    function keyStats(p) {
+    /** Key stats per role — same rules as PlayerCard.astro's comparison variant.
+     *  `role` is the display role (the declared role for the user's XI),
+     *  so the stat columns always match the role the player fills. */
+    function keyStats(p, role) {
       const s = p.stats ?? {};
-      const primaryRole = p.primaryRole ?? '';
-      const secondary = p.secondaryRoles ?? [];
-      const isBowler = primaryRole === 'fast-bowler' || primaryRole === 'spinner';
-      const isKeeper = primaryRole === 'wicketkeeper' || secondary.includes('wicketkeeper');
-      const isAllRounder = primaryRole === 'all-rounder';
+      const isBowler = role === 'fast-bowler' || role === 'spinner';
+      const isKeeper = role === 'wicketkeeper';
+      const isAllRounder = role === 'all-rounder';
       const bowlAvg = s.testBowlingAverage ?? s.bowlingAverage;
       if (isBowler) {
         return [
@@ -355,17 +355,19 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
      * div.bm11-player-card.is-comparison > .bm11-pc-row > avatar + .bm11-pc-head
      * + .bm11-pc-ministats. Styles come from the component's global classes.
      */
-    function comparisonRow(p) {
+    function comparisonRow(p, displayRole) {
       const eraId = eraString(p.draftEra ?? p.era ?? p.displayEra, 'legends');
       const eraLabel = eraId === 'legends' ? 'Legends' : eraId;
       const accent = ERA_ACCENTS[eraId] ?? '#94A3B8';
-      const roles = [
-        ...(p.primaryRole ? [p.primaryRole] : []),
-        ...normalizeSecondaryRoles(p.secondaryRoles).filter((r) => r !== p.primaryRole),
-      ];
+      // Role chips lead with the display (declared) role, then the rest.
+      const role = displayRole || normalizeRole(p.primaryRole);
+      const roles = [role];
+      for (const r of [normalizeRole(p.primaryRole), ...normalizeSecondaryRoles(p.secondaryRoles)]) {
+        if (r && !roles.includes(r)) roles.push(r);
+      }
       const roleLabels = roles.map((r) => ROLE_LABELS[r] ?? r);
       const flag = NATION_FLAGS[p.nation] ?? '';
-      const stats = keyStats(p)
+      const stats = keyStats(p, role)
         .map(
           (st) =>
             `<div class="bm11-pc-ministat"><span class="bm11-pc-ministat-v">${esc(st.value)}</span>` +
@@ -400,23 +402,31 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
       spinner: 'Spinners',
     };
 
-    function renderUserXI(userRaw) {
+    /** Display role for a user XI entry: the declared role when the draft
+     *  blob has one, otherwise the primary role. */
+    function displayRoleOf(entry) {
+      return entry.declaredRole
+        ? normalizeRole(entry.declaredRole)
+        : normalizeRole(entry.player.primaryRole);
+    }
+
+    function renderUserXI(userEntries) {
       const container = document.getElementById('user-xi');
       const loading = document.getElementById('user-xi-loading');
       if (loading) loading.remove();
       const groups = ROLE_ORDER.map((role) => ({
         role,
-        players: userRaw.filter((p) => normalizeRole(p.primaryRole) === role),
-      })).filter((g) => g.players.length > 0);
-      const leftover = userRaw.filter(
-        (p) => !ROLE_ORDER.includes(normalizeRole(p.primaryRole))
+        entries: userEntries.filter((e) => displayRoleOf(e) === role),
+      })).filter((g) => g.entries.length > 0);
+      const leftover = userEntries.filter(
+        (e) => !ROLE_ORDER.includes(displayRoleOf(e))
       );
-      if (leftover.length) groups.push({ role: 'other', players: leftover });
+      if (leftover.length) groups.push({ role: 'other', entries: leftover });
       container.innerHTML = groups
         .map(
           (g) =>
             `<h3 class="matchup__group">${esc(ROLE_GROUP_LABELS[g.role] ?? 'Squad')}</h3>` +
-            g.players.map(comparisonRow).join('')
+            g.entries.map((e) => comparisonRow(e.player, displayRoleOf(e))).join('')
         )
         .join('');
     }
@@ -471,7 +481,7 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
         player: toScoringPlayer(p, 'legends'),
         declaredRole: normalizeRole(p.primaryRole),
       }));
-      renderUserXI(userRaw);
+      renderUserXI(userEntries);
       renderResult(userEntries, houseEntries);
 
       document.getElementById('play-again').addEventListener('click', () => {

@@ -148,13 +148,13 @@ interface GreedyResult {
   ok: boolean;
   stalled: boolean;
   draft: DraftState;
-  chooserOpens: number;
+  multiRoleDecisions: number;
   shapeIdx: number;
 }
 
 function playGreedy(pools: NormalizedPlayer[][]): GreedyResult {
   let draft = createDraft();
-  let chooserOpens = 0;
+  let multiRoleDecisions = 0;
   for (let r = 0; r < 6; r++) {
     const combo = comboOf(pools, r);
     draft = applySpinResult(draft, combo.era, combo.nation);
@@ -180,16 +180,16 @@ function playGreedy(pools: NormalizedPlayer[][]): GreedyResult {
         }
       }
       if (!best) {
-        return { ok: false, stalled: true, draft, chooserOpens, shapeIdx: -1 };
+        return { ok: false, stalled: true, draft, multiRoleDecisions, shapeIdx: -1 };
       }
       const legalCount = placementOptions(draft, best.p, best.slot, supply).filter(
         (o) => !o.reason,
       ).length;
-      if (legalCount > 1) chooserOpens++;
+      if (legalCount > 1) multiRoleDecisions++;
       const before = draft.selectedPlayers.length;
       draft = applyDraftPick(draft, best.p, best.slot, best.role, supply);
       if (draft.selectedPlayers.length !== before + 1) {
-        return { ok: false, stalled: false, draft, chooserOpens, shapeIdx: -1 };
+        return { ok: false, stalled: false, draft, multiRoleDecisions, shapeIdx: -1 };
       }
     }
   }
@@ -200,7 +200,7 @@ function playGreedy(pools: NormalizedPlayer[][]): GreedyResult {
     : c['middle-order'] === 4 && c['all-rounder'] === 1 && c.spinner === 0 ? 0
     : c['middle-order'] === 4 && c['all-rounder'] === 0 && c.spinner === 1 ? 1
     : 2;
-  return { ok: valid, stalled: false, draft, chooserOpens, shapeIdx };
+  return { ok: valid, stalled: false, draft, multiRoleDecisions, shapeIdx };
 }
 
 // pools carry their combo; helper to keep the pairing obvious
@@ -214,7 +214,7 @@ let achievableCount = 0;
 let greedyWinsOnAchievable = 0;
 let greedyStalledOnUnachievable = 0;
 let invalidCompleted = 0;
-let chooserTotal = 0;
+let multiRoleTotal = 0;
 const shapeHits = [0, 0, 0];
 const failures: string[] = [];
 
@@ -230,7 +230,7 @@ for (let seed = 1; seed <= TRIALS; seed++) {
   const achievable = oracleAchievable(pools);
   const oracleMs = Date.now() - t0;
   const g = playGreedy(pools);
-  chooserTotal += g.chooserOpens;
+  multiRoleTotal += g.multiRoleDecisions;
 
   if (achievable) {
     achievableCount++;
@@ -254,7 +254,7 @@ console.log(`trials: ${TRIALS}`);
 console.log(`oracle-achievable: ${achievableCount}, greedy completed valid: ${greedyWinsOnAchievable}`);
 console.log(`oracle-unachievable: ${TRIALS - achievableCount}, greedy correctly stalled: ${greedyStalledOnUnachievable}`);
 console.log(`shape coverage on wins: 4MO+AR=${shapeHits[0]} 4MO+SP=${shapeHits[1]} 3MO+AR+SP=${shapeHits[2]}`);
-console.log(`chooser would have opened ${chooserTotal} times`);
+console.log(`multi-role placements (role chips) ${multiRoleTotal} times`);
 ok(failures.length === 0, 'no achievable draft defeats greedy; no oracle mismatch', failures.slice(0, 5));
 ok(invalidCompleted === 0, 'no invalid XI ever completed');
 
