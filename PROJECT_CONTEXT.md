@@ -157,20 +157,26 @@ rather than invented:
 - **Declared role drives evaluation** when supplied; otherwise primary role.
 - Deterministic per-player scoring, a missing-data audit (`auditMetrics`), and a
   structured `compareXIs(userXI, opponentXI)` API returning a `TeamComparison`.
-- `compareXIs` currently **throws `MissingScoringSpec`** — a deliberate gate,
-  because the following were never defined anywhere in the repo and must not be
-  invented: **metric normalization methodology, metric weights, XI aggregation
-  method, all-rounder batting-vs-bowling weighting.**
-- The architecture already reserves room for player-level detail later, but the
+- `compareXIs` is fully implemented (finalized 2026-09-25): **percentile-rank
+  normalization** across the full eligible scoring population (unique players,
+  deduped by id; never split by era/nation/pool/XI) on a 0–100 scale with
+  bowling average directionally inverted; **weights** 1/3 per batting metric,
+  1/4 per bowling metric, all-rounder 50/50; **XI score = arithmetic mean** of
+  the 11 player scores; declared role is the scoring role; missing data throws
+  `IncompletePlayerData` instead of producing a misleading score.
+- The architecture returns per-player detail in `TeamComparison`, but the
   first release displays only **Your XI score, My XI score, and the verdict**.
+- Fixed house XI under the new engine scores **83.6** (diagnostic run
+  2026-09-25; see `scripts/seven-metric-diagnostic.ts` to reproduce).
 
-### Pending owner decisions (block final wiring + `/matchup` replacement)
+### Scoring decisions — all resolved 2026-09-25 (owner-specified, V1)
 
-1. Normalization methodology per metric. 2. Exact metric weights.
-3. All-rounder batting-vs-bowling weighting. 4. XI aggregation method.
-5. Confirm `testMatches` is the intended denominator for the four rate metrics.
-6. Whether an all-rounder placed in a non-AR slot is scored by declaration or
-   always gets all seven metrics.
+1. Normalization: percentile-rank vs full eligible population, 0–100.
+2. Weights: batting 1/3 each; bowling 1/4 each.
+3. All-rounder: 50% batting / 50% bowling.
+4. XI aggregation: arithmetic mean of 11 player scores.
+5. `testMatches` confirmed as the denominator for the five derived rates.
+6. Declared non-AR role → scored under the declaration (never silently AR).
 
 ---
 
@@ -241,3 +247,8 @@ rather than invented:
 - Seven-metric specified layer (`seven-metrics.ts` + tests), deliberately gated —
   **not yet wired into `/matchup`**; the old model is still what users see.
 - Owner filled the 7 missing-data records manually (2026-09-25).
+- Seven-metric engine finalized to the owner's V1 spec (2026-09-25):
+  percentile normalization, weights, 50/50 all-rounders, mean aggregation,
+  real `compareXIs`; 79 assertions green; diagnostic script added; house XI
+  scores 83.6 under the new engine. `/matchup` still on the old model
+  pending owner approval of the numbers.
