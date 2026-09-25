@@ -334,50 +334,66 @@ export const XI_ROLES: XiRole[] = [
   'fast-bowler',
 ];
 
+/** Right-pane slot groups — the units players can be rearranged within. */
+export const XI_SLOT_GROUP_LABELS: Record<string, string> = {
+  openers: 'Openers',
+  batting: 'Batting 3\u20137',
+  'spot-8': 'Spot 8',
+  fast: 'Fast Bowlers',
+};
+
 /** One slot in the XI lineup. */
 export interface XiSlot {
   key: string;
   /** Roles a placed player may be declared as in this slot. */
   roles: XiRole[];
+  /** Slot group key (see XI_SLOT_GROUP_LABELS). */
+  group: string;
   label: string;
 }
 
 export const XI_SLOTS: XiSlot[] = [
-  { key: 'opener-1', roles: ['opener'], label: 'Opener 1' },
-  { key: 'opener-2', roles: ['opener'], label: 'Opener 2' },
+  { key: 'opener-1', roles: ['opener'], group: 'openers', label: 'Opener 1' },
+  { key: 'opener-2', roles: ['opener'], group: 'openers', label: 'Opener 2' },
   {
     key: 'bat-3',
     roles: ['middle-order', 'wicketkeeper', 'all-rounder'],
+    group: 'batting',
     label: 'Batting 3',
   },
   {
     key: 'bat-4',
     roles: ['middle-order', 'wicketkeeper', 'all-rounder'],
+    group: 'batting',
     label: 'Batting 4',
   },
   {
     key: 'bat-5',
     roles: ['middle-order', 'wicketkeeper', 'all-rounder'],
+    group: 'batting',
     label: 'Batting 5',
   },
   {
     key: 'bat-6',
     roles: ['middle-order', 'wicketkeeper', 'all-rounder'],
+    group: 'batting',
     label: 'Batting 6',
   },
   {
     key: 'bat-7',
     roles: ['middle-order', 'wicketkeeper', 'all-rounder'],
+    group: 'batting',
     label: 'Batting 7',
   },
   {
     key: 'spin-ar',
     roles: ['spinner', 'all-rounder'],
+    group: 'spot-8',
     label: 'Spot 8',
   },
-  { key: 'fast-1', roles: ['fast-bowler'], label: 'Fast Bowler 9' },
-  { key: 'fast-2', roles: ['fast-bowler'], label: 'Fast Bowler 10' },
-  { key: 'fast-3', roles: ['fast-bowler'], label: 'Fast Bowler 11' },
+  { key: 'fast-1', roles: ['fast-bowler'], group: 'fast', label: 'Fast Bowler 9' },
+  { key: 'fast-2', roles: ['fast-bowler'], group: 'fast', label: 'Fast Bowler 10' },
+  { key: 'fast-3', roles: ['fast-bowler'], group: 'fast', label: 'Fast Bowler 11' },
 ];
 
 /** XI size derives from the slot lineup — always 11. */
@@ -407,6 +423,20 @@ export function slotRoleOf(
 ): XiRole | null {
   return state.slots[slotKey]?.role ?? null;
 }
+
+/**
+ * Left-pane pool display groups, in batting-to-bowling order. Grouping is by
+ * primary role; wicketkeepers get their own group and are never folded into
+ * middle order. `kind` selects the stat columns per group.
+ */
+export const POOL_GROUPS: { label: string; roles: XiRole[]; kind: string }[] = [
+  { label: 'Openers', roles: ['opener'], kind: 'bat' },
+  { label: 'Middle Order', roles: ['middle-order'], kind: 'bat' },
+  { label: 'Wicketkeeper', roles: ['wicketkeeper'], kind: 'bat' },
+  { label: 'All-Rounders', roles: ['all-rounder'], kind: 'ar' },
+  { label: 'Spinners', roles: ['spinner'], kind: 'bowl' },
+  { label: 'Fast Bowlers', roles: ['fast-bowler'], kind: 'bowl' },
+];
 
 export const DRAFT_GROUP_LABELS: Record<string, string> = {
   opener: 'Openers',
@@ -891,11 +921,21 @@ export function validateSlotPlacement(
  * role travels with the player when the destination accepts it, otherwise
  * it is re-derived (primary role first). Null = legal.
  */
+export interface MoveOptions {
+  /**
+   * When true, the move is only allowed within one slot group (openers /
+   * batting 3-7 / spot 8 / fast bowlers). Used once the XI is complete, so
+   * the finished lineup can be rearranged but its composition can't change.
+   */
+  sameGroupOnly?: boolean;
+}
+
 export function validateSlotMove(
   state: DraftState,
   fromSlotKey: string,
   toSlotKey: string,
   supply?: PickSupply,
+  options?: MoveOptions,
 ): string | null {
   if (fromSlotKey === toSlotKey) return null;
   const fromSlot = slotByKey(fromSlotKey);
@@ -905,6 +945,12 @@ export function validateSlotMove(
     ? state.selectedPlayers.find((p) => p.uid === occ.uid)
     : undefined;
   if (!mover || !toSlot || !fromSlot || !occ) return 'Nothing to move.';
+  if (options?.sameGroupOnly && fromSlot.group !== toSlot.group) {
+    return (
+      `Once your XI is complete, ${mover.name} can only be rearranged within ` +
+      `the ${XI_SLOT_GROUP_LABELS[fromSlot.group]} group.`
+    );
+  }
   const newRole = toSlot.roles.includes(occ.role)
     ? occ.role
     : defaultDeclaredRole(mover, toSlotKey);
@@ -1022,9 +1068,10 @@ export function applyDraftMove(
   fromSlotKey: string,
   toSlotKey: string,
   supply?: PickSupply,
+  options?: MoveOptions,
 ): DraftState {
   if (fromSlotKey === toSlotKey) return state;
-  if (validateSlotMove(state, fromSlotKey, toSlotKey, supply) !== null)
+  if (validateSlotMove(state, fromSlotKey, toSlotKey, supply, options) !== null)
     return state;
   const fromSlot = slotByKey(fromSlotKey)!;
   const toSlot = slotByKey(toSlotKey)!;

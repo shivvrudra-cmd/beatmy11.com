@@ -3,7 +3,7 @@ import {
   validatePoolPick, validateSlotPlacement, validateSlotMove, placementOptions,
   declarableRoles, defaultDeclaredRole, countsOf, reachableShapes, isXIValid,
   serializeDraft, deserializeDraft, supplyFor, canFillRole,
-  XI_SLOTS, XI_SIZE, XI_SHAPES, emptyCounts,
+  XI_SLOTS, XI_SIZE, XI_SHAPES, emptyCounts, POOL_GROUPS, XI_SLOT_GROUP_LABELS,
   type NormalizedPlayer, type DraftState, type XiRole,
 } from '../src/lib/player-logic';
 
@@ -357,6 +357,60 @@ const mvd2 = applyDraftPick(mvd, supPick, 'bat-7', 'middle-order', supplyFor(mvd
 ok(
   mvd2.slots['bat-7']?.uid === supPick.uid && mvd2.slots['bat-7']?.role === 'middle-order',
   'applyDraftPick with supply commits',
+);
+
+// ---- pool groups: wicketkeeper stands alone ----
+const wkGroup = POOL_GROUPS.find((g) => g.label === 'Wicketkeeper');
+const moGroup = POOL_GROUPS.find((g) => g.label === 'Middle Order');
+ok(!!wkGroup && wkGroup.roles.join(',') === 'wicketkeeper', 'pool has its own Wicketkeeper group');
+ok(!!moGroup && !moGroup.roles.includes('wicketkeeper'), 'middle-order pool group excludes keepers');
+ok(
+  POOL_GROUPS.every((g) => g.roles.length > 0) &&
+    new Set(POOL_GROUPS.flatMap((g) => g.roles)).size ===
+      POOL_GROUPS.flatMap((g) => g.roles).length,
+  'pool groups partition the six roles with no overlap',
+);
+
+// ---- same-group-only moves (post-completion rearrangement) ----
+let gmov = createDraft();
+gmov = applySpinResult(gmov, '1990s', 'Australia');
+gmov = applyDraftPick(gmov, mk('go1', 'GO1', 'opener'), 'opener-1', 'opener');
+gmov = applySpinResult(gmov, '1990s', 'Australia');
+const arDual = mk('ga1', 'GA1', 'all-rounder');
+gmov = applyDraftPick(gmov, arDual, 'bat-6', 'all-rounder');
+const sg = { sameGroupOnly: true };
+ok(
+  validateSlotMove(gmov, 'bat-6', 'bat-5', undefined, sg) === null,
+  'same-group move allowed under sameGroupOnly',
+);
+const crossReason = validateSlotMove(gmov, 'bat-6', 'spin-ar', undefined, sg);
+ok(
+  typeof crossReason === 'string' && crossReason.includes('rearranged within'),
+  'cross-group move blocked once the XI is complete',
+  crossReason,
+);
+ok(
+  validateSlotMove(gmov, 'bat-6', 'spin-ar') === null,
+  'same cross-group move allowed while the draft is still open',
+);
+ok(
+  applyDraftMove(gmov, 'bat-6', 'spin-ar', undefined, sg) === gmov,
+  'blocked post-completion move leaves state untouched',
+);
+const gmov2 = applyDraftMove(gmov, 'bat-6', 'spin-ar');
+ok(
+  gmov2.slots['spin-ar']?.uid === arDual.uid && gmov2.slots['bat-6'] === null,
+  'cross-group move applies while the draft is open',
+);
+const gmov3 = applyDraftMove(gmov, 'bat-6', 'bat-5', undefined, sg);
+ok(
+  gmov3.slots['bat-5']?.uid === arDual.uid && gmov3.slots['bat-5']?.role === 'all-rounder',
+  'same-group move applies under sameGroupOnly',
+);
+ok(
+  XI_SLOT_GROUP_LABELS['batting'] === 'Batting 3\u20137' &&
+    new Set(XI_SLOTS.map((s) => s.group)).size === 4,
+  'slots carry exactly four groups',
 );
 
 console.log(`\n${pass} passed, ${fail} failed`);

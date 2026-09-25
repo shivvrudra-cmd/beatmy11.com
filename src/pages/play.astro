@@ -181,6 +181,7 @@ const styleSeed = playersForEra('legends')[0];
       XI_SIZE,
       DRAFT_ROUNDS,
       XI_ROLE_LABELS,
+      POOL_GROUPS,
     } from '../lib/player-logic';
 
     // ------------------------------------------------------------------ data
@@ -223,16 +224,6 @@ const styleSeed = playersForEra('legends')[0];
       'fast-bowler': 'Fast Bowler',
       spinner: 'Spinner',
     };
-    // Pool display groups, in batting-to-bowling order. Wicketkeepers are
-    // shown under Middle Order (their batting home) so the pool always has
-    // exactly these five groups; `kind` selects the stat columns per group.
-    const POOL_GROUPS = [
-      { label: 'Openers', roles: ['opener'], kind: 'bat' },
-      { label: 'Middle Order', roles: ['middle-order', 'wicketkeeper'], kind: 'bat' },
-      { label: 'All-Rounders', roles: ['all-rounder'], kind: 'ar' },
-      { label: 'Spinners', roles: ['spinner'], kind: 'bowl' },
-      { label: 'Fast Bowlers', roles: ['fast-bowler'], kind: 'bowl' },
-    ];
     // Your-XI slot groups, in batting-to-bowling order: 2 fixed openers,
     // batting spots 3–7 (middle order / wicketkeeper / all-rounder, keeper
     // not confined to one row), spot 8 (spinner or all-rounder), then the
@@ -882,7 +873,9 @@ const styleSeed = playersForEra('legends')[0];
           moveFrom = null;
           announce('Move cancelled.');
         } else {
-          const reason = validateSlotMove(draft, moveFrom, slotKey, draftSupply());
+          const reason = validateSlotMove(draft, moveFrom, slotKey, draftSupply(), {
+            sameGroupOnly: draft.gameComplete,
+          });
           if (reason) {
             flashMsg(reason);
             announce(reason);
@@ -892,7 +885,9 @@ const styleSeed = playersForEra('legends')[0];
             (s) => s.uid === draft.slots[moveFrom]?.uid
           );
           const targetOccupied = !!draft.slots[slotKey];
-          draft = applyDraftMove(draft, moveFrom, slotKey, draftSupply());
+          draft = applyDraftMove(draft, moveFrom, slotKey, draftSupply(), {
+            sameGroupOnly: draft.gameComplete,
+          });
           moveFrom = null;
           flashMsg('');
           announce(
@@ -1027,7 +1022,9 @@ const styleSeed = playersForEra('legends')[0];
           ariaLabel =
             `${occupant.name}, ${declared}, ${slot.label} — selected for moving. ` +
             `Activate a glowing slot to move them, or this slot again to cancel.`;
-        } else if (moveFrom && validateSlotMove(draft, moveFrom, slotKey, draftSupply()) === null) {
+        } else if (moveFrom && validateSlotMove(draft, moveFrom, slotKey, draftSupply(), {
+            sameGroupOnly: draft.gameComplete,
+          }) === null) {
           classes.push('is-glow');
           ariaLabel =
             `${occupant.name}, ${declared}, ${slot.label} — activate to swap with the selected player.`;
@@ -1071,7 +1068,9 @@ const styleSeed = playersForEra('legends')[0];
           hint = slotRoles;
           ariaLabel = `${slot.label} — empty (${slotRoles}). ${p.name} can't play here.`;
         }
-      } else if (moveFrom && validateSlotMove(draft, moveFrom, slotKey, draftSupply()) === null) {
+      } else if (moveFrom && validateSlotMove(draft, moveFrom, slotKey, draftSupply(), {
+            sameGroupOnly: draft.gameComplete,
+          }) === null) {
         classes.push('is-glow');
         hint = 'Move here';
         ariaLabel = `${slot.label} — empty. Activate to move the selected player here.`;
