@@ -99,12 +99,15 @@ const styleSeed = playersForEra('legends')[0];
           >
             Spin
           </button>
-          <p class="bm11-respin-note" id="bm11-respin-note" hidden>
-            One era respin and one nation respin per draft. A respin is a forced
-            redraw — you keep whatever lands, no going back.
-          </p>
-          <p class="bm11-draw-status" id="bm11-draw-status">Spin to begin</p>
-          <p class="bm11-round-status" id="bm11-round-status">6 rounds · 11 players</p>
+          <div
+            class="bm11-progress"
+            id="bm11-progress"
+            role="img"
+            aria-label="6 rounds, 11 players"
+          >
+            <div class="bm11-pips bm11-round-pips" id="bm11-round-pips" aria-hidden="true"></div>
+            <div class="bm11-pips bm11-xi-pips" id="bm11-xi-pips" aria-hidden="true"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -465,15 +468,15 @@ const styleSeed = playersForEra('legends')[0];
     const $ = (id) => document.getElementById(id);
     const liveEl = $('bm11-live');
     const spinBtn = $('bm11-spin');
-    const statusEl = $('bm11-draw-status');
-    const roundEl = $('bm11-round-status');
+    const progressEl = $('bm11-progress');
+    const roundPipsEl = $('bm11-round-pips');
+    const xiPipsEl = $('bm11-xi-pips');
     const eraSlot = $('bm11-draw-era');
     const nationSlot = $('bm11-draw-nation');
     const respinNationBtn = $('bm11-respin-nation');
     const respinEraBtn = $('bm11-respin-era');
     const respinNationLeft = $('bm11-respin-nation-left');
     const respinEraLeft = $('bm11-respin-era-left');
-    const respinNoteEl = $('bm11-respin-note');
     const groupsEl = $('bm11-groups');
     const historyEl = $('bm11-history');
     const summaryEl = $('bm11-summary');
@@ -546,8 +549,34 @@ const styleSeed = playersForEra('legends')[0];
       if (win) win.style.setProperty('--era-accent', accent);
     }
 
-    function setDrawStatus(text) {
-      statusEl.textContent = text;
+    // Visual progress: 6 round pips (hollow = upcoming, gold = current,
+    // green = done) and 11 XI pips that fill as players are placed.
+    // Screen readers get the same info from the container's aria-label.
+    function renderProgress(done) {
+      roundPipsEl.innerHTML = '';
+      for (let i = 1; i <= DRAFT_ROUNDS; i += 1) {
+        const pip = document.createElement('span');
+        pip.className = 'bm11-pip';
+        const isDone = i < draft.currentRound || (i === draft.currentRound && done);
+        const isCurrent =
+          i === draft.currentRound && !done && draft.currentRound >= 1;
+        if (isDone) pip.classList.add('is-done');
+        if (isCurrent) pip.classList.add('is-current');
+        roundPipsEl.appendChild(pip);
+      }
+      xiPipsEl.innerHTML = '';
+      const placed = draft.selectedPlayers.length;
+      for (let i = 0; i < XI_SIZE; i += 1) {
+        const pip = document.createElement('span');
+        pip.className = 'bm11-pip' + (i < placed ? ' is-done' : '');
+        xiPipsEl.appendChild(pip);
+      }
+      progressEl.setAttribute(
+        'aria-label',
+        draft.currentRound === 0
+          ? `${DRAFT_ROUNDS} rounds, ${XI_SIZE} players`
+          : `Round ${draft.currentRound} of ${DRAFT_ROUNDS}, ${placed} of ${XI_SIZE} players placed`
+      );
     }
 
     function renderSpinZone() {
@@ -559,63 +588,31 @@ const styleSeed = playersForEra('legends')[0];
       }
 
       const done = roundDone();
-      let status;
       let btnLabel = 'Spin';
       let btnEnabled = false;
 
       if (draft.gameComplete) {
-        status = 'XI complete';
         btnLabel = 'Spin';
         btnEnabled = false;
       } else if (draft.isSpinning) {
-        status = 'Spinning…';
         btnLabel = 'Spinning…';
         btnEnabled = false;
       } else if (draft.currentRound === 0) {
-        status = 'Spin to begin';
         btnLabel = 'Spin';
         btnEnabled = true;
       } else if (draft.currentRound >= DRAFT_ROUNDS && done && !draft.gameComplete) {
         // Defensive: a tiny pool left the draft short of 11 players.
-        status = 'XI incomplete';
         btnLabel = 'Spin';
         btnEnabled = false;
       } else if (done) {
-        status = 'Round complete';
         btnLabel = 'Spin again';
         btnEnabled = true;
       } else {
-        const limit = selectionLimitForRound(draft.currentRound);
-        const picked = draft.picksThisRound.length;
-        if (draft.currentRound === 1) {
-          status = picked === 0 ? 'Select your Legend, then a slot' : 'Legend placed';
-        } else if (limit === 2) {
-          status = picked === 0 ? 'Select a player, then a slot' : '1 placed — select 1 more';
-        } else {
-          status = 'Select a player, then a slot';
-        }
         btnLabel = 'Spin';
         btnEnabled = false;
       }
 
-      if (selectedUid && uidIndex[selectedUid]) {
-        const p = uidIndex[selectedUid];
-        status =
-          selOfferedRoles.length > 1 && selEffectiveRole
-            ? `Place ${p.name} as ${XI_ROLE_LABELS[selEffectiveRole]} — choose a glowing slot`
-            : `Place ${p.name} — choose a glowing slot`;
-      } else if (moveFrom) {
-        const occupant = draft.selectedPlayers.find((s) => s.uid === draft.slots[moveFrom]?.uid);
-        status = occupant
-          ? `Moving ${occupant.name} — choose a glowing slot`
-          : 'Choose a glowing slot';
-      }
-
-      setDrawStatus(status);
-      roundEl.textContent =
-        draft.currentRound === 0
-          ? `${DRAFT_ROUNDS} rounds · ${XI_SIZE} players`
-          : `Round ${draft.currentRound} of ${DRAFT_ROUNDS}`;
+      renderProgress(done);
       spinBtn.textContent = btnLabel;
       spinBtn.disabled = !btnEnabled;
       spinBtn.hidden = draft.gameComplete;
@@ -642,7 +639,6 @@ const styleSeed = playersForEra('legends')[0];
       const showEra = base && canRespinEra(draft, eraOpts.length);
       respinNationBtn.hidden = !showNation;
       respinEraBtn.hidden = !showEra;
-      respinNoteEl.hidden = !(showNation || showEra);
       if (showNation) {
         respinNationLeft.textContent = `${draft.nationRespinsLeft} left`;
         respinNationBtn.setAttribute(
@@ -1703,32 +1699,43 @@ const styleSeed = playersForEra('legends')[0];
       opacity: 0.45;
       cursor: not-allowed;
     }
-    .bm11-respin-note {
-      font-size: 0.78rem;
-      color: var(--bm11-muted, #94a3b8);
-      margin: 0;
-      max-width: 36ch;
-      text-align: center;
-    }
     .bm11-spin-btn:focus-visible {
       outline: 2px solid var(--bm11-ring, #4ade80);
       outline-offset: 3px;
     }
-    .bm11-draw-status {
-      margin: 0;
-      font-size: 1rem;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--bm11-primary, #22c55e);
+    .bm11-progress {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.45rem;
     }
-    .bm11-round-status {
-      margin: -0.6rem 0 0;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--bm11-muted, #94a3b8);
+    .bm11-pips {
+      display: flex;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+    .bm11-pip {
+      width: 0.7rem;
+      height: 0.7rem;
+      border-radius: 9999px;
+      border: 2px solid var(--bm11-muted, #94a3b8);
+      opacity: 0.35;
+    }
+    .bm11-pip.is-current {
+      border-color: var(--bm11-gold, #C9A227);
+      background: var(--bm11-gold, #C9A227);
+      opacity: 1;
+      box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.25);
+    }
+    .bm11-pip.is-done {
+      border-color: var(--bm11-primary, #22c55e);
+      background: var(--bm11-primary, #22c55e);
+      opacity: 1;
+    }
+    .bm11-xi-pips .bm11-pip {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-width: 1.5px;
     }
     /* Shown only in dead-end states (stalled or invalid XI) — never during
        a live draft. */
