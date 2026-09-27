@@ -53,19 +53,42 @@ const styleSeed = playersForEra('legends')[0];
         <p class="bm11-eyebrow">The draft</p>
         <h1 class="bm11-h1" id="bm11-spin-heading" tabindex="-1">Build your XI</h1>
         <p class="bm11-lede">
-          Six spins. Eleven picks. One verdict. Your first spin always draws
+          Eleven picks. One verdict. Your first spin always draws
           a Legend — pick one, then build the rest of your XI round by round.
         </p>
         <div class="bm11-draw">
-          <div class="bm11-draw-slots">
-            <div class="bm11-draw-slot">
-              <span class="bm11-draw-k">Era</span>
-              <span class="bm11-draw-v" id="bm11-draw-era">Fate</span>
+          <div class="bm11-reels">
+            <div class="bm11-reel bm11-reel--era">
+              <span class="bm11-reel-cap">Era</span>
+              <div class="bm11-reel-window">
+                <span class="bm11-reel-value" id="bm11-draw-era">Fate</span>
+              </div>
+              <button
+                type="button"
+                class="bm11-reel-respin"
+                id="bm11-respin-era"
+                hidden
+              >
+                <span class="bm11-respin-ico" aria-hidden="true">&#10227;</span>
+                Era
+                <span class="bm11-respin-left" id="bm11-respin-era-left">1 left</span>
+              </button>
             </div>
-            <div class="bm11-draw-x" aria-hidden="true">+</div>
-            <div class="bm11-draw-slot">
-              <span class="bm11-draw-k">Nation</span>
-              <span class="bm11-draw-v" id="bm11-draw-nation">awaits…</span>
+            <div class="bm11-reel bm11-reel--nation">
+              <span class="bm11-reel-cap">Nation</span>
+              <div class="bm11-reel-window">
+                <span class="bm11-reel-value" id="bm11-draw-nation">awaits&hellip;</span>
+              </div>
+              <button
+                type="button"
+                class="bm11-reel-respin"
+                id="bm11-respin-nation"
+                hidden
+              >
+                <span class="bm11-respin-ico" aria-hidden="true">&#10227;</span>
+                Nation
+                <span class="bm11-respin-left" id="bm11-respin-nation-left">1 left</span>
+              </button>
             </div>
           </div>
           <button
@@ -76,22 +99,6 @@ const styleSeed = playersForEra('legends')[0];
           >
             Spin
           </button>
-          <div class="bm11-respins" id="bm11-respins" hidden>
-            <button
-              type="button"
-              class="bm11-btn bm11-btn-ghost bm11-btn-sm"
-              id="bm11-respin-nation"
-            >
-              Respin nation
-            </button>
-            <button
-              type="button"
-              class="bm11-btn bm11-btn-ghost bm11-btn-sm"
-              id="bm11-respin-era"
-            >
-              Respin era
-            </button>
-          </div>
           <p class="bm11-respin-note" id="bm11-respin-note" hidden>
             One era respin and one nation respin per draft. A respin is a forced
             redraw — you keep whatever lands, no going back.
@@ -462,9 +469,10 @@ const styleSeed = playersForEra('legends')[0];
     const roundEl = $('bm11-round-status');
     const eraSlot = $('bm11-draw-era');
     const nationSlot = $('bm11-draw-nation');
-    const respinsEl = $('bm11-respins');
     const respinNationBtn = $('bm11-respin-nation');
     const respinEraBtn = $('bm11-respin-era');
+    const respinNationLeft = $('bm11-respin-nation-left');
+    const respinEraLeft = $('bm11-respin-era-left');
     const respinNoteEl = $('bm11-respin-note');
     const groupsEl = $('bm11-groups');
     const historyEl = $('bm11-history');
@@ -534,7 +542,8 @@ const styleSeed = playersForEra('legends')[0];
       eraSlot.textContent = eraName(era);
       nationSlot.textContent = nation;
       const accent = ERA_ACCENTS[era] || '#94A3B8';
-      eraSlot.style.setProperty('--era-accent', accent);
+      const win = eraSlot.closest('.bm11-reel-window');
+      if (win) win.style.setProperty('--era-accent', accent);
     }
 
     function setDrawStatus(text) {
@@ -619,37 +628,33 @@ const styleSeed = playersForEra('legends')[0];
             : 'Spin to draw a random era and nation'
       );
 
-      // Respin tokens: offered after a draw lands, before any pick from it.
+      // Respin tokens: each button sits directly under its own reel and
+      // appears only while that token can actually be used — after a draw
+      // lands and before any pick is made from it.
       const nationOpts = nationRedrawOptions();
       const eraOpts = eraRedrawOptions();
-      const showRespins =
+      const base =
         !draft.gameComplete &&
         !draft.isSpinning &&
         draft.currentRound >= 1 &&
-        draft.picksThisRound.length === 0 &&
-        (draft.nationRespinsLeft > 0 || draft.eraRespinsLeft > 0);
-      respinsEl.hidden = !showRespins;
-      respinNoteEl.hidden = !showRespins;
-      if (showRespins) {
-        const nationOK = canRespinNation(draft, nationOpts.length);
-        const eraOK = canRespinEra(draft, eraOpts.length);
-        respinNationBtn.disabled = !nationOK;
-        respinEraBtn.disabled = !eraOK;
-        respinNationBtn.textContent = `Respin nation (${draft.nationRespinsLeft} left)`;
-        respinEraBtn.textContent = `Respin era (${draft.eraRespinsLeft} left)`;
+        draft.picksThisRound.length === 0;
+      const showNation = base && canRespinNation(draft, nationOpts.length);
+      const showEra = base && canRespinEra(draft, eraOpts.length);
+      respinNationBtn.hidden = !showNation;
+      respinEraBtn.hidden = !showEra;
+      respinNoteEl.hidden = !(showNation || showEra);
+      if (showNation) {
+        respinNationLeft.textContent = `${draft.nationRespinsLeft} left`;
         respinNationBtn.setAttribute(
           'aria-label',
-          nationOK
-            ? `Forced redraw: replace ${draft.currentNation} with a random nation from ${eraName(draft.currentEra)}. No going back.`
-            : 'Nation respin unavailable'
+          `Forced redraw: replace ${draft.currentNation} with a random nation from ${eraName(draft.currentEra)}. No going back.`
         );
+      }
+      if (showEra) {
+        respinEraLeft.textContent = `${draft.eraRespinsLeft} left`;
         respinEraBtn.setAttribute(
           'aria-label',
-          eraOK
-            ? `Forced redraw: replace ${eraName(draft.currentEra)} with a random era for ${draft.currentNation}. No going back.`
-            : draft.currentRound === 1
-              ? 'Era respin unavailable in round 1 — the first draw is always Legends'
-              : 'Era respin unavailable'
+          `Forced redraw: replace ${eraName(draft.currentEra)} with a random era for ${draft.currentNation}. No going back.`
         );
       }
     }
@@ -1559,48 +1564,130 @@ const styleSeed = playersForEra('legends')[0];
       padding-bottom: 2rem;
       text-align: center;
     }
+    /* ---- Slot-machine draw zone (mobile first) ----
+       Twin reels — era and nation — side by side even on phones, with each
+       respin button sitting directly under its own reel like a real slot
+       machine's re-draw lever. */
     .bm11-draw {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 1rem 1.5rem;
+      gap: 0.9rem;
       margin-top: 1.5rem;
     }
-    .bm11-draw-slots {
-      display: flex;
-      align-items: stretch;
-      gap: 0.6rem;
+    .bm11-reels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      width: 100%;
+      max-width: 26rem;
     }
-    .bm11-draw-slot {
+    .bm11-reel {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
-      min-width: 9rem;
-      background: var(--bm11-surface, #0d1424);
-      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
-      border-left: 3px solid var(--era-accent, var(--bm11-border, rgba(148, 163, 184, 0.14)));
-      border-radius: 0.75rem;
-      padding: 0.6rem 1rem;
+      align-items: stretch;
+      min-width: 0;
     }
-    .bm11-draw-k {
-      font-size: 0.65rem;
-      font-weight: 700;
+    .bm11-reel-cap {
+      align-self: center;
+      font-size: 0.68rem;
+      font-weight: 800;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--bm11-muted, #94a3b8);
+      color: #0b0f1c;
+      background: var(--bm11-muted, #94a3b8);
+      padding: 0.22rem 1rem;
+      border-radius: 0.55rem 0.55rem 0 0;
     }
-    .bm11-draw-v {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--era-accent, var(--bm11-text, #f1f5f9));
-      min-height: 1.75rem;
+    .bm11-reel--era .bm11-reel-cap { background: var(--bm11-gold, #C9A227); }
+    .bm11-reel--nation .bm11-reel-cap { background: var(--bm11-primary, #22C55E); }
+    .bm11-reel-window {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 4.5rem;
+      padding: 0.7rem 0.6rem;
+      background: linear-gradient(180deg, #090e1d 0%, #15203a 48%, #090e1d 100%);
+      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+      border-top: 3px solid var(--bm11-muted, #94a3b8);
+      border-radius: 0.9rem;
+      overflow: hidden;
     }
-    .bm11-draw-x {
-      align-self: center;
-      font-size: 1.4rem;
+    .bm11-reel--era .bm11-reel-window {
+      border-top-color: var(--era-accent, var(--bm11-gold, #C9A227));
+    }
+    .bm11-reel--nation .bm11-reel-window {
+      border-top-color: var(--bm11-primary, #22C55E);
+    }
+    /* Soft side shading sells the "window over a spinning drum" look while
+       the 70ms preview ticks during a spin. */
+    .bm11-reel-window::before,
+    .bm11-reel-window::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1.4rem;
+      pointer-events: none;
+    }
+    .bm11-reel-window::before {
+      left: 0;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.55), transparent);
+    }
+    .bm11-reel-window::after {
+      right: 0;
+      background: linear-gradient(-90deg, rgba(0, 0, 0, 0.55), transparent);
+    }
+    .bm11-reel-value {
+      font-size: clamp(1.05rem, 5.2vw, 1.55rem);
       font-weight: 800;
-      color: var(--bm11-muted, #94a3b8);
+      letter-spacing: 0.02em;
+      color: var(--bm11-text, #f1f5f9);
+      text-align: center;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .bm11-reel-respin {
+      margin-top: 0.55rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      min-height: 2.75rem;
+      padding: 0.55rem 0.6rem;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #0b0f1c;
+      border: none;
+      border-radius: 0.65rem;
+      cursor: pointer;
+    }
+    .bm11-reel--era .bm11-reel-respin { background: var(--bm11-gold, #C9A227); }
+    .bm11-reel--nation .bm11-reel-respin { background: var(--bm11-primary, #22C55E); }
+    .bm11-reel-respin[hidden] { display: none; }
+    .bm11-reel-respin:focus-visible {
+      outline: 2px solid var(--bm11-ring, #4ade80);
+      outline-offset: 3px;
+    }
+    .bm11-respin-ico {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .bm11-respin-left {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 9999px;
+      padding: 0.16rem 0.55rem;
     }
     .bm11-spin-btn {
       font-size: 1.1rem;
@@ -1608,33 +1695,26 @@ const styleSeed = playersForEra('legends')[0];
       letter-spacing: 0.06em;
       padding: 0.9rem 2.5rem;
       text-transform: uppercase;
+      width: 100%;
+      max-width: 26rem;
+      min-height: 3.25rem;
     }
     .bm11-spin-btn:disabled {
       opacity: 0.45;
       cursor: not-allowed;
     }
-    .bm11-respins {
-      display: flex;
-      gap: 0.5rem;
-      justify-content: center;
-      margin-top: 0.75rem;
-      flex-wrap: wrap;
-    }
-    .bm11-respins[hidden] {
-      display: none;
-    }
     .bm11-respin-note {
       font-size: 0.78rem;
       color: var(--bm11-muted, #94a3b8);
-      margin: 0.5rem 0 0;
-      max-width: 34ch;
+      margin: 0;
+      max-width: 36ch;
+      text-align: center;
     }
     .bm11-spin-btn:focus-visible {
       outline: 2px solid var(--bm11-ring, #4ade80);
       outline-offset: 3px;
     }
     .bm11-draw-status {
-      flex-basis: 100%;
       margin: 0;
       font-size: 1rem;
       font-weight: 800;
@@ -1643,7 +1723,6 @@ const styleSeed = playersForEra('legends')[0];
       color: var(--bm11-primary, #22c55e);
     }
     .bm11-round-status {
-      flex-basis: 100%;
       margin: -0.6rem 0 0;
       font-size: 0.8rem;
       font-weight: 600;
