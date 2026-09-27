@@ -198,6 +198,7 @@ const styleSeed = playersForEra('legends')[0];
       canRespinEra,
       applyNationRespin,
       applyEraRespin,
+      declarationForSlot,
       deserializeDraft,
       saveDraft,
       loadDraft,
@@ -997,8 +998,8 @@ const styleSeed = playersForEra('legends')[0];
           return;
         }
         // Slot-first: the tapped position decides the declaration — the
-        // player's primary role when it's legal there, else the first
-        // legal declaration in slot order.
+        // first legal role in slot order (a still-needed primary
+        // wicketkeeper declares as wicketkeeper).
         const supply = draftSupply();
         const role = declaredRoleForSlot(p, slotKey, supply);
         if (!role) {
@@ -1112,22 +1113,16 @@ const styleSeed = playersForEra('legends')[0];
 
     // ----------------------------------------------------------------- summary
     // The XI panel always renders all 11 fixed slots, grouped in batting
-    // order. Empty slots are buttons: with a pool player selected, every
-    // slot the player can legally fill glows; with a move armed, valid
-    // destinations glow. Slot-first placement: the tapped position decides
-    // the declaration (the player's primary role when legal there, else
-    // the first legal declaration in slot order) — no separate role step.
+    // Slot-first placement: the tapped position decides the declaration
+    // (first legal role in slot order — an all-rounder who can bat
+    // middle-order declares as middle-order on a batting slot), except a
+    // still-needed primary wicketkeeper declares as wicketkeeper.
+    // No separate role step.
 
-    // Declaration for a slot tap: the legal declarations for that slot,
-    // primary role first. Null when the player can't legally fill it —
-    // which is also what keeps dead-end slots from glowing.
+    // Declaration for a slot tap — also what keeps dead-end slots from
+    // glowing (null = can't legally fill it).
     function declaredRoleForSlot(p, slotKey, supply) {
-      const legal = placementOptions(draft, p, slotKey, supply)
-        .filter((o) => !o.reason)
-        .map((o) => o.role);
-      if (legal.length === 0) return null;
-      const primary = p.primaryRole;
-      return legal.includes(primary) ? primary : legal[0];
+      return declarationForSlot(draft, p, slotKey, supply);
     }
     function slotButtonHTML(slotKey) {
       const slot = slotByKey(slotKey);

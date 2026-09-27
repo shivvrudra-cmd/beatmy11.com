@@ -316,10 +316,12 @@ export function canSpin(state: DraftState, unpickedInPool: number): boolean {
 //
 // Spots 1–2 take openers; spots 3–7 are flexible batting slots that accept
 // middle-order batters, the wicketkeeper and the all-rounder; spot 8 takes
-// the spinner or the all-rounder; spots 9–11 take fast bowlers. A player
-// placed into a flexible slot is DECLARED as one of the roles the data says
-// they can play there (primary role by default) — the declaration is what
-// counts toward the XI composition, and it is stored on the slot itself.
+// the all-rounder or the spinner; spots 9–11 take fast bowlers. A player
+// placed into a flexible slot is DECLARED as the first role they can legally
+// play there in slot order — the tapped slot decides, not the player's
+// primary role — and the declaration is what counts toward the XI
+// composition, stored on the slot itself. (A still-needed primary
+// wicketkeeper placed on a batting slot declares as wicketkeeper.)
 // ---------------------------------------------------------------------------
 
 /** The six roles that count toward an XI composition. */
@@ -393,7 +395,7 @@ export const XI_SLOTS: XiSlot[] = [
   },
   {
     key: 'spin-ar',
-    roles: ['spinner', 'all-rounder'],
+    roles: ['all-rounder', 'spinner'],
     group: 'spot-8',
     label: 'Spot 8',
   },
@@ -501,18 +503,46 @@ export function declarableRoles(
 }
 
 /**
- * Default declaration: the primary role when the slot accepts it,
- * otherwise the first compatible group (groups are primary-first, so this
- * is deterministic).
+ * Default declaration: the first compatible role in slot order — the tapped
+ * slot decides, not the player's primary role. (Fresh placements apply the
+ * keeper preference on top via declarationForSlot: a still-needed primary
+ * wicketkeeper declares as wicketkeeper.)
  */
 export function defaultDeclaredRole(
   player: NormalizedPlayer,
   slotKey: string,
 ): XiRole | null {
   const roles = declarableRoles(player, slotKey);
-  if (roles.length === 0) return null;
-  const primary = player.primaryRole as XiRole;
-  return roles.includes(primary) ? primary : roles[0];
+  return roles.length > 0 ? roles[0] : null;
+}
+
+/**
+ * The declaration a fresh placement into `slotKey` takes: the first LEGAL
+ * declaration in slot order — the tapped slot decides, not the player's
+ * primary role. So an all-rounder (primary) who can also bat middle-order
+ * declares as middle-order on a batting slot. Exception: a primary
+ * wicketkeeper the XI still needs declares as wicketkeeper (exactly one is
+ * mandatory). Null when the player can't legally fill the slot — which is
+ * also what keeps dead-end slots from glowing.
+ */
+export function declarationForSlot(
+  state: DraftState,
+  player: NormalizedPlayer,
+  slotKey: string,
+  supply?: PickSupply,
+): XiRole | null {
+  const legal = placementOptions(state, player, slotKey, supply)
+    .filter((o) => !o.reason)
+    .map((o) => o.role);
+  if (legal.length === 0) return null;
+  if (
+    player.primaryRole === 'wicketkeeper' &&
+    countsOf(state).wicketkeeper === 0 &&
+    legal.includes('wicketkeeper')
+  ) {
+    return 'wicketkeeper';
+  }
+  return legal[0];
 }
 
 /** The slot a picked player currently occupies, if any. */

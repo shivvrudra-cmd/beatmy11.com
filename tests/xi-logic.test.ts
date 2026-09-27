@@ -1,7 +1,7 @@
 import {
   createDraft, applySpinResult, applyDraftPick, applyDraftMove, applyDraftDeselect,
   validatePoolPick, validateSlotPlacement, validateSlotMove, placementOptions,
-  declarableRoles, defaultDeclaredRole, countsOf, reachableShapes, isXIValid,
+  declarableRoles, defaultDeclaredRole, declarationForSlot, countsOf, reachableShapes, isXIValid,
   serializeDraft, deserializeDraft, supplyFor, canFillRole,
   XI_SLOTS, XI_SIZE, XI_SHAPES, emptyCounts, POOL_GROUPS, XI_SLOT_GROUP_LABELS,
   canRespinNation,
@@ -41,11 +41,30 @@ const hobbs = mk('hobbs', 'Hobbs', 'opener');
 ok(JSON.stringify(declarableRoles(sanga, 'bat-3')) === JSON.stringify(['middle-order', 'wicketkeeper']), 'sanga bat roles');
 ok(defaultDeclaredRole(sanga, 'bat-3') === 'middle-order', 'sanga default MO');
 ok(JSON.stringify(declarableRoles(sobers, 'bat-3')) === JSON.stringify(['middle-order', 'all-rounder']), 'sobers bat roles');
-ok(defaultDeclaredRole(sobers, 'bat-3') === 'all-rounder', 'sobers default AR (primary)');
-ok(JSON.stringify(declarableRoles(kallis, 'spin-ar')) === JSON.stringify(['spinner', 'all-rounder']), 'kallis slot8 roles');
+ok(defaultDeclaredRole(sobers, 'bat-3') === 'middle-order', 'sobers default MO (slot-first)');
+ok(JSON.stringify(declarableRoles(kallis, 'spin-ar')) === JSON.stringify(['all-rounder', 'spinner']), 'kallis slot8 roles');
 ok(defaultDeclaredRole(kallis, 'spin-ar') === 'all-rounder', 'kallis default AR');
 ok(declarableRoles(warne, 'bat-3').length === 0, 'warne cannot bat');
 ok(declarableRoles(hobbs, 'opener-1')[0] === 'opener', 'hobbs opener');
+
+// ---- slot-first declarations: the tapped slot decides ----
+{
+  const d0 = freshStarted();
+  // All-rounder (primary) who can bat middle-order declares as middle-order
+  // on a batting slot — the user's reported case.
+  ok(declarationForSlot(d0, sobers, 'bat-3') === 'middle-order', 'sobers declares MO on bat-3');
+  // …but as all-rounder on the spot-8 slot, where middle-order isn't an option.
+  ok(declarationForSlot(d0, sobers, 'spin-ar') === 'all-rounder', 'sobers declares AR on spin-ar');
+  // A still-needed primary wicketkeeper declares as wicketkeeper…
+  const dhoni = mk('dhoni', 'Dhoni', 'wicketkeeper', ['middle-order']);
+  ok(declarationForSlot(d0, dhoni, 'bat-3') === 'wicketkeeper', 'needed keeper declares WK');
+  // …and falls back to middle-order once the keeper slot is filled.
+  let d1 = applyDraftPick(d0, gilchrist, 'bat-6', 'wicketkeeper');
+  ok(d1 !== d0, 'keeper pick applies');
+  ok(declarationForSlot(d1, dhoni, 'bat-4') === 'middle-order', 'unneeded keeper declares MO');
+  // No legal declaration → null (dead-end slots don't glow).
+  ok(declarationForSlot(d0, warne, 'bat-3') === null, 'warne has no batting declaration');
+}
 
 // ---- draft driver: R1 = 1 pick, R2+ = 2 picks ----
 function freshStarted(): DraftState {
