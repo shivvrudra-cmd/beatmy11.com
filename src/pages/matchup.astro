@@ -260,14 +260,6 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
       '2010s': '#8B5CF6',
       '2020s': '#2DD4BF',
     };
-    const ROLE_LABELS = {
-      opener: 'Opener',
-      'middle-order': 'Middle Order',
-      wicketkeeper: 'Wicketkeeper',
-      'all-rounder': 'All-Rounder',
-      'fast-bowler': 'Fast Bowler',
-      spinner: 'Spinner',
-    };
     const NATION_FLAGS = {
       Australia: '🇦🇺',
       England: '🏴󐁧󐁢󐁥󐁮󐁧󐁿',
@@ -280,6 +272,18 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
       Bangladesh: '🇧🇩',
       Zimbabwe: '🇿🇼',
     };
+    const NATION_CODES = {
+      Australia: 'AUS',
+      England: 'EG',
+      India: 'IND',
+      Pakistan: 'PAK',
+      'West Indies': 'WI',
+      'New Zealand': 'NZ',
+      'South Africa': 'SA',
+      'Sri Lanka': 'SL',
+      Bangladesh: 'BAN',
+      Zimbabwe: 'ZIM',
+    };
     const esc = (v) =>
       String(v ?? '')
         .replace(/&/g, '&amp;')
@@ -290,29 +294,6 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
     const fmtAvg = (v) => (v == null || Number.isNaN(Number(v)) ? '–' : Number(v).toFixed(2));
     const fmtInt = (v) =>
       v == null || Number.isNaN(Number(v)) ? '–' : Math.round(Number(v)).toLocaleString('en-US');
-
-    /** Avatar data-URI mirroring PlayerAvatar.astro (SVG silhouette medallion). */
-    function avatarURI(eraId) {
-      const accent = ERA_ACCENTS[eraId] ?? '#94A3B8';
-      const figure = '#DDE6F2';
-      const svg =
-        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">` +
-        `<defs><radialGradient id="bm11av" cx="35%" cy="28%" r="85%">` +
-        `<stop offset="0%" stop-color="${accent}" stop-opacity="0.38"/>` +
-        `<stop offset="100%" stop-color="#0D1424" stop-opacity="1"/>` +
-        `</radialGradient></defs>` +
-        `<circle cx="32" cy="32" r="30.5" fill="url(#bm11av)" stroke="${accent}" stroke-opacity="0.55" stroke-width="1.6"/>` +
-        `<ellipse cx="30" cy="55" rx="13" ry="2.4" fill="#000000" opacity="0.35"/>` +
-        `<circle cx="33" cy="12.5" r="6.4" fill="${figure}"/>` +
-        `<g stroke="${figure}" stroke-linecap="round" fill="none">` +
-        `<path d="M33 21 C31.5 27 30.5 32 30 38" stroke-width="9"/>` +
-        `<path d="M31 27 L21 34" stroke-width="6.5"/>` +
-        `<path d="M20 35 L8.5 16.5" stroke-width="6"/>` +
-        `<path d="M30 38 L23 53" stroke-width="7.5"/>` +
-        `<path d="M30 38 L39 52" stroke-width="7.5"/>` +
-        `</g></svg>`;
-      return 'data:image/svg+xml,' + encodeURIComponent(svg);
-    }
 
     /** Key stats per role — same rules as PlayerCard.astro's comparison variant.
      *  `role` is the display role (the declared role for the user's XI),
@@ -353,21 +334,19 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
 
     /**
      * Comparison row markup mirroring PlayerCard.astro's `comparison` variant:
-     * div.bm11-player-card.is-comparison > .bm11-pc-row > avatar + .bm11-pc-head
+     * div.bm11-player-card.is-comparison > .bm11-pc-row > .bm11-pc-head
      * + .bm11-pc-ministats. Styles come from the component's global classes.
      */
     function comparisonRow(p, displayRole) {
       const eraId = eraString(p.draftEra ?? p.era ?? p.displayEra, 'legends');
       const eraLabel = eraId === 'legends' ? 'Legends' : eraId;
       const accent = ERA_ACCENTS[eraId] ?? '#94A3B8';
-      // Role chips lead with the display (declared) role, then the rest.
+      // `role` is the display (declared) role, so the stat columns always
+      // match the role the player fills. No role chips: each card already
+      // sits under its position group heading.
       const role = displayRole || normalizeRole(p.primaryRole);
-      const roles = [role];
-      for (const r of [normalizeRole(p.primaryRole), ...normalizeSecondaryRoles(p.secondaryRoles)]) {
-        if (r && !roles.includes(r)) roles.push(r);
-      }
-      const roleLabels = roles.map((r) => ROLE_LABELS[r] ?? r);
       const flag = NATION_FLAGS[p.nation] ?? '';
+      const nationCode = NATION_CODES[p.nation] ?? p.nation;
       const stats = keyStats(p, role)
         .map(
           (st) =>
@@ -375,18 +354,13 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
             `<span class="bm11-pc-ministat-l">${esc(st.label)}</span></div>`
         )
         .join('');
-      const chips = roleLabels.map((r) => `<span class="bm11-chip">${esc(r)}</span>`).join('');
       return (
         `<div class="bm11-player-card is-comparison" style="--era-accent:${accent};">` +
         `<div class="bm11-pc-row">` +
-        `<img src="${avatarURI(eraId)}" alt="" aria-hidden="true" loading="lazy" draggable="false" ` +
-        `class="rounded-full object-cover select-none w-10 h-10" ` +
-        `style="--era-accent:${accent};background-color:#0D1424;" />` +
         `<div class="bm11-pc-head">` +
         `<div class="bm11-pc-name">${esc(p.name)}</div>` +
-        `<div class="bm11-pc-sub">${flag ? `<span aria-hidden="true">${flag} </span>` : ''}${esc(p.nation)}` +
+        `<div class="bm11-pc-sub">${flag ? `<span aria-hidden="true">${flag} </span>` : ''}${esc(nationCode)}` +
         ` · <span class="bm11-era-chip" style="--era-accent:${accent};">${esc(eraLabel)}</span></div>` +
-        `<div class="bm11-pc-roles">${chips}</div>` +
         `</div>` +
         `<div class="bm11-pc-ministats" aria-label="Key statistics">${stats}</div>` +
         `</div></div>`
