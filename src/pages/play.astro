@@ -52,10 +52,6 @@ const styleSeed = playersForEra('legends')[0];
       <div class="bm11-wrap">
         <p class="bm11-eyebrow">The draft</p>
         <h1 class="bm11-h1" id="bm11-spin-heading" tabindex="-1">Build your XI</h1>
-        <p class="bm11-lede">
-          Eleven picks. One verdict. Your first spin always draws
-          a Legend — pick one, then build the rest of your XI round by round.
-        </p>
         <div class="bm11-draw">
           <div class="bm11-reels">
             <div class="bm11-reel bm11-reel--era">
@@ -155,7 +151,6 @@ const styleSeed = playersForEra('legends')[0];
             <div class="bm11-progress" aria-hidden="true">
               <span class="bm11-progress-fill" id="bm11-progress-fill"></span>
             </div>
-            <div class="bm11-rolebar" id="bm11-rolebar" hidden></div>
             <ul class="bm11-xi-list" id="bm11-xi-list"></ul>
             <div class="bm11-comp" id="bm11-comp" aria-live="polite"></div>
             <p class="bm11-summary-msg" id="bm11-msg" role="status"></p>
@@ -216,8 +211,6 @@ const styleSeed = playersForEra('legends')[0];
       reachableShapes,
       isXIValid,
       supplyFor,
-      XI_SLOTS,
-      XI_ROLES,
       XI_SIZE,
       DRAFT_ROUNDS,
       XI_ROLE_LABELS,
@@ -311,18 +304,6 @@ const styleSeed = playersForEra('legends')[0];
       { label: 'Spot 8', keys: ['spin-ar'] },
       { label: 'Fast Bowlers', keys: ['fast-1', 'fast-2', 'fast-3'] },
     ];
-    const NATION_FLAGS = {
-      Australia: '🇦🇺',
-      England: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
-      India: '🇮🇳',
-      Pakistan: '🇵🇰',
-      'West Indies': '🇯🇲',
-      'New Zealand': '🇳🇿',
-      'South Africa': '🇿🇦',
-      'Sri Lanka': '🇱🇰',
-      Bangladesh: '🇧🇩',
-      Zimbabwe: '🇿🇼',
-    };
     const ERA_NAMES = {
       legends: 'Legends',
       '1970s': '1970s',
@@ -422,15 +403,6 @@ const styleSeed = playersForEra('legends')[0];
     function cardHTML(p, kind) {
       const drawEra = draft.currentEra || p.displayEra;
       const accent = ERA_ACCENTS[drawEra] || '#94A3B8';
-      const flag = NATION_FLAGS[p.nation] || '';
-      const eraLabel = eraName(drawEra);
-      const roles = [
-        p.primaryRole,
-        ...(p.secondaryRoles || []).filter((r) => r !== p.primaryRole),
-      ]
-        .filter(Boolean)
-        .map((r) => ROLE_LABELS[r] || r)
-        .join(', ');
       return (
         `<button type="button" class="bm11-prow" data-bm11-select="${esc(p.uid)}"` +
         ` aria-pressed="false" aria-label="${esc(accessibleName(p))}" style="--era-accent:${accent};">` +
@@ -439,9 +411,6 @@ const styleSeed = playersForEra('legends')[0];
         ` class="bm11-prow-avatar" style="--era-accent:${accent};background-color:#0D1424;" />` +
         `<span class="bm11-prow-who">` +
         `<span class="bm11-prow-name">${esc(p.name)}</span>` +
-        `<span class="bm11-prow-sub">${esc(roles)} · ${flag ? `<span aria-hidden="true">${flag} </span>` : ''}${esc(
-          p.nation || ''
-        )} · ${esc(eraLabel)}</span>` +
         `</span></span>` +
         `<span class="bm11-prow-stats" aria-label="Career statistics">${poolStatCells(p, kind)}</span>` +
         `<span class="bm11-check-badge" aria-hidden="true" hidden>` +
@@ -453,16 +422,15 @@ const styleSeed = playersForEra('legends')[0];
     // ------------------------------------------------------------------ state
     // ONE draft object = the single source of truth. Every mutation goes
     // through the pure transitions in player-logic.ts, then persist() +
-    // renderAll(). Three extra pieces of UI-only state drive the two-step
-    // flow: `selectedUid` (the pool player waiting for a slot), `moveFrom`
-    // (the slot whose occupant is being repositioned) and `selectedRole`
-    // (the declaration a multi-role player will take — chosen first on the
-    // role bar, then the slot). None is persisted — they reset on reload
-    // and round changes.
+    // renderAll(). Two extra pieces of UI-only state drive the two-step
+    // flow: `selectedUid` (the pool player waiting for a slot) and
+    // `moveFrom` (the slot whose occupant is being repositioned). The
+    // tapped slot decides a multi-role player's declaration — no separate
+    // role choice. None is persisted — they reset on reload and round
+    // changes.
     let draft = createDraft();
     let selectedUid = null;
     let moveFrom = null;
-    let selectedRole = null;
     let msgTimer = 0;
 
     const $ = (id) => document.getElementById(id);
@@ -769,7 +737,6 @@ const styleSeed = playersForEra('legends')[0];
       draft = createDraft();
       selectedUid = null;
       moveFrom = null;
-      selectedRole = null;
       clearUserXI();
       clearDraft();
       flashMsg('');
@@ -928,14 +895,12 @@ const styleSeed = playersForEra('legends')[0];
         // Remove this round's pick (frees its slot too).
         if (selectedUid === uid) {
           selectedUid = null;
-          selectedRole = null;
         }
         if (moveFrom) moveFrom = null;
         draft = applyDraftDeselect(draft, p.id);
         announce(`Removed ${p.name}. ${draft.selectedPlayers.length} of ${XI_SIZE} selected.`);
       } else if (selectedUid === uid) {
         selectedUid = null;
-        selectedRole = null;
         announce(`Deselected ${p.name}.`);
       } else {
         const reason = validatePoolPick(draft, p, draftSupply());
@@ -950,14 +915,10 @@ const styleSeed = playersForEra('legends')[0];
         }
         // A pool selection takes over from a pending move.
         moveFrom = null;
-        selectedRole = null;
         selectedUid = uid;
-        refreshSelectionContext();
         flashMsg('');
         announce(
-          selOfferedRoles.length > 1
-            ? `Selected ${p.name} — ${groupLabelList(p)}. Choose a role above your XI, then a glowing slot.`
-            : `Selected ${p.name} — ${groupLabelList(p)}. Choose a glowing slot in your XI.`
+          `Selected ${p.name} — ${groupLabelList(p)}. Choose a glowing slot in your XI.`
         );
       }
       persist();
@@ -976,7 +937,6 @@ const styleSeed = playersForEra('legends')[0];
       }
       draft = applyDraftPick(draft, p, slotKey, role, supply);
       selectedUid = null;
-      selectedRole = null;
       flashMsg('');
       persist();
       renderAll();
@@ -1016,28 +976,21 @@ const styleSeed = playersForEra('legends')[0];
         const p = uidIndex[selectedUid];
         if (!p) {
           selectedUid = null;
-          selectedRole = null;
           renderAll();
           return;
         }
-        // Role-first: the declaration was chosen on the role bar (or is
-        // the player's only legal declaration) — the slot tap just places.
-        const role = selEffectiveRole;
-        if (!role) {
-          const reason =
-            validatePoolPick(draft, p, draftSupply()) ||
-            `${p.name} has no legal slot right now.`;
-          flashMsg(reason);
-          announce(reason);
-          return;
-        }
+        // Slot-first: the tapped position decides the declaration — the
+        // player's primary role when it's legal there, else the first
+        // legal declaration in slot order.
         const supply = draftSupply();
-        const opt = placementOptions(draft, p, slotKey, supply).find(
-          (o) => o.role === role
-        );
-        if (!opt || opt.reason) {
+        const role = declaredRoleForSlot(p, slotKey, supply);
+        if (!role) {
+          const options = placementOptions(draft, p, slotKey, supply);
+          const blocked = options.find((o) => o.reason);
           const reason =
-            (opt && opt.reason) || `${p.name} can't play there.`;
+            (blocked && blocked.reason) ||
+            validatePoolPick(draft, p, supply) ||
+            `${p.name} has no legal slot right now.`;
           flashMsg(reason);
           announce(reason);
           return;
@@ -1092,20 +1045,6 @@ const styleSeed = playersForEra('legends')[0];
     }
 
     summaryEl.addEventListener('click', (e) => {
-      const selRoleBtn = e.target.closest('[data-bm11-selrole]');
-      if (selRoleBtn) {
-        // Role bar: switch the selected player's declaration, then
-        // re-glow the XI for that single role.
-        const p = selectedUid ? uidIndex[selectedUid] : null;
-        const role = selRoleBtn.getAttribute('data-bm11-selrole');
-        if (!p || !role || !selOfferedRoles.includes(role)) return;
-        selectedRole = role;
-        renderAll();
-        announce(
-          `${p.name} will fill ${XI_ROLE_LABELS[role].toLowerCase()} — choose a glowing slot.`
-        );
-        return;
-      }
       const rm = e.target.closest('[data-bm11-deselect]');
       if (rm) {
         const rawId = rm.getAttribute('data-bm11-deselect');
@@ -1113,7 +1052,6 @@ const styleSeed = playersForEra('legends')[0];
         if (!p) return;
         if (selectedUid) {
           selectedUid = null;
-          selectedRole = null;
         }
         if (moveFrom) moveFrom = null;
         draft = applyDraftDeselect(draft, rawId);
@@ -1132,7 +1070,6 @@ const styleSeed = playersForEra('legends')[0];
       if (!selectedUid && !moveFrom) return;
       selectedUid = null;
       moveFrom = null;
-      selectedRole = null;
       renderAll();
       announce('Selection cancelled.');
     });
@@ -1158,42 +1095,22 @@ const styleSeed = playersForEra('legends')[0];
 
     // ----------------------------------------------------------------- summary
     // The XI panel always renders all 11 fixed slots, grouped in batting
-    // order. Empty slots are buttons: with a pool player selected, the
-    // compatible ones glow; with a move armed, valid destinations glow.
-    // Role-first placement: a multi-role player picks their declaration on
-    // the role bar first, then each glowing slot shows that one role.
+    // order. Empty slots are buttons: with a pool player selected, every
+    // slot the player can legally fill glows; with a move armed, valid
+    // destinations glow. Slot-first placement: the tapped position decides
+    // the declaration (the player's primary role when legal there, else
+    // the first legal declaration in slot order) — no separate role step.
 
-    // Placement context for the selected pool player, refreshed once per
-    // renderSummary so slot rendering stays cheap.
-    let selOfferedRoles = [];
-    let selEffectiveRole = null;
-    function refreshSelectionContext() {
-      selOfferedRoles = [];
-      selEffectiveRole = null;
-      const p = selectedUid ? uidIndex[selectedUid] : null;
-      if (!p) return;
-      const supply = draftSupply();
-      for (const r of XI_ROLES) {
-        for (const s of XI_SLOTS) {
-          if (draft.slots[s.key]) continue;
-          const opt = placementOptions(draft, p, s.key, supply).find(
-            (o) => o.role === r
-          );
-          if (opt && !opt.reason) {
-            selOfferedRoles.push(r);
-            break;
-          }
-        }
-      }
-      if (selOfferedRoles.length === 1) {
-        selEffectiveRole = selOfferedRoles[0];
-      } else if (selOfferedRoles.length > 1) {
-        // Default to the user's bar choice, else the first role that still
-        // has a legal slot — the glow set is never empty.
-        selEffectiveRole = selOfferedRoles.includes(selectedRole)
-          ? selectedRole
-          : selOfferedRoles[0];
-      }
+    // Declaration for a slot tap: the legal declarations for that slot,
+    // primary role first. Null when the player can't legally fill it —
+    // which is also what keeps dead-end slots from glowing.
+    function declaredRoleForSlot(p, slotKey, supply) {
+      const legal = placementOptions(draft, p, slotKey, supply)
+        .filter((o) => !o.reason)
+        .map((o) => o.role);
+      if (legal.length === 0) return null;
+      const primary = p.primaryRole;
+      return legal.includes(primary) ? primary : legal[0];
     }
     function slotButtonHTML(slotKey) {
       const slot = slotByKey(slotKey);
@@ -1251,24 +1168,18 @@ const styleSeed = playersForEra('legends')[0];
       classes.push('is-empty');
       if (selectedUid && uidIndex[selectedUid]) {
         const p = uidIndex[selectedUid];
-        // Role-first: the slot glows only for the effective declaration,
-        // so every glowing slot shows exactly one role.
-        const options = placementOptions(draft, p, slotKey, draftSupply());
-        const opt =
-          selEffectiveRole &&
-          options.find((o) => o.role === selEffectiveRole);
-        if (opt && !opt.reason) {
+        // Slot-first: the slot glows when any declaration is legal here,
+        // and its hint shows the declaration the tap would place.
+        const role = declaredRoleForSlot(p, slotKey, draftSupply());
+        if (role) {
           classes.push('is-glow');
-          const rl = XI_ROLE_LABELS[selEffectiveRole];
+          const rl = XI_ROLE_LABELS[role];
           hint = `as ${rl}`;
           ariaLabel = `${slot.label} — empty. Activate to place ${p.name} as ${rl}.`;
         } else {
-          hint = slotRoles;
+          hint = '';
           ariaLabel =
-            `${slot.label} — empty (${slotRoles}). ${p.name} can't play here` +
-            (selEffectiveRole
-              ? ` as ${XI_ROLE_LABELS[selEffectiveRole].toLowerCase()}.`
-              : '.');
+            `${slot.label} — empty (${slotRoles}). ${p.name} can't play here.`;
         }
       } else if (moveFrom && validateSlotMove(draft, moveFrom, slotKey, draftSupply(), {
             sameGroupOnly: draft.gameComplete,
@@ -1277,14 +1188,14 @@ const styleSeed = playersForEra('legends')[0];
         hint = 'Move here';
         ariaLabel = `${slot.label} — empty. Activate to move the selected player here.`;
       } else {
-        hint = slotRoles;
+        hint = '';
         ariaLabel = `${slot.label} — empty (${slotRoles}).`;
       }
       return (
         `<button type="button" class="${classes.join(' ')}" data-bm11-slot="${esc(slotKey)}"` +
         ` aria-label="${esc(ariaLabel)}">` +
         `<span class="bm11-slot-label">${esc(slot.label)}</span>` +
-        `<span class="bm11-slot-hint">${esc(hint)}</span>` +
+        (hint ? `<span class="bm11-slot-hint">${esc(hint)}</span>` : '') +
         `</button>`
       );
     }
@@ -1341,39 +1252,6 @@ const styleSeed = playersForEra('legends')[0];
         `<span class="bm11-comp-counts">${esc(bits.join(' · '))}</span>` + needHTML;
     }
 
-    // Role chooser: a multi-role pool player with several legal declarations
-    // for the chosen slot picks which role they fill it as. Illegal options
-    // show disabled with the reason as their title.
-    // Role bar: while a multi-role pool player is selected, a segmented
-    // control offers each declaration that still has a legal slot. Picking
-    // one re-glows the XI for that single role — role first, slot second.
-    function renderRoleBar() {
-      const el = $('bm11-rolebar');
-      const p = selectedUid ? uidIndex[selectedUid] : null;
-      if (!p || selOfferedRoles.length < 2) {
-        el.hidden = true;
-        el.innerHTML = '';
-        return;
-      }
-      el.hidden = false;
-      el.innerHTML =
-        `<span class="bm11-rolebar-label">Place <b>${esc(p.name)}</b> as:</span>` +
-        `<div class="bm11-rolebar-btns" role="group" aria-label="Choose the role ${esc(
-          p.name
-        )} will fill">` +
-        selOfferedRoles
-          .map((r) => {
-            const active = r === selEffectiveRole;
-            return (
-              `<button type="button" class="bm11-rolebar-btn${active ? ' is-active' : ''}" ` +
-              `data-bm11-selrole="${esc(r)}" aria-pressed="${active}">` +
-              `${esc(XI_ROLE_LABELS[r])}</button>`
-            );
-          })
-          .join('') +
-        `</div>`;
-    }
-
     function renderSummary() {
       $('bm11-count').textContent = `${draft.selectedPlayers.length}/${XI_SIZE}`;
       $('bm11-progress-fill').style.width = `${
@@ -1398,7 +1276,6 @@ const styleSeed = playersForEra('legends')[0];
       }).join('');
 
       renderComposition();
-      renderRoleBar();
 
       // Compare XIs unlocks only on a valid XI — exactly the combinations
       // the hard block enforces during the draft. Guarded anyway for drafts
@@ -1448,7 +1325,6 @@ const styleSeed = playersForEra('legends')[0];
 
     // ------------------------------------------------------------------ render
     function renderAll() {
-      refreshSelectionContext();
       renderSpinZone();
       renderPool();
       renderHistory();
@@ -1848,13 +1724,6 @@ const styleSeed = playersForEra('legends')[0];
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    .bm11-prow-sub {
-      font-size: 0.72rem;
-      color: var(--bm11-muted, #94a3b8);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
     .bm11-prow-stats {
       display: flex;
       gap: 1rem;
@@ -2175,53 +2044,6 @@ const styleSeed = playersForEra('legends')[0];
     }
     .bm11-comp-need.is-done {
       color: var(--bm11-primary, #22c55e);
-    }
-    /* Role bar: segmented declaration picker shown while a multi-role
-       pool player is selected. Sticky so it stays in reach on mobile. */
-    .bm11-rolebar {
-      position: sticky;
-      top: 0;
-      z-index: 5;
-      margin: 0.7rem 0 0;
-      padding: 0.65rem 0.75rem;
-      border: 1px solid rgba(34, 197, 94, 0.4);
-      border-radius: 0.65rem;
-      background: var(--bm11-surface, #0d1424);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-    }
-    .bm11-rolebar[hidden] {
-      display: none;
-    }
-    .bm11-rolebar-label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-size: 0.82rem;
-      color: var(--bm11-text, #e8edf5);
-    }
-    .bm11-rolebar-btns {
-      display: flex;
-      gap: 0.5rem;
-    }
-    .bm11-rolebar-btn {
-      flex: 1 1 0;
-      padding: 0.6rem 0.5rem;
-      font-size: 0.82rem;
-      font-weight: 700;
-      border-radius: 0.55rem;
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      background: transparent;
-      color: var(--bm11-muted, #94a3b8);
-      cursor: pointer;
-      min-height: 2.75rem;
-    }
-    .bm11-rolebar-btn.is-active {
-      border-color: rgba(34, 197, 94, 0.6);
-      background: rgba(34, 197, 94, 0.16);
-      color: var(--bm11-text, #e8edf5);
-    }
-    .bm11-rolebar-btn:focus-visible {
-      outline: 2px solid var(--bm11-primary, #22c55e);
-      outline-offset: 2px;
     }
     .bm11-slot-remove {
       flex: 0 0 auto;
