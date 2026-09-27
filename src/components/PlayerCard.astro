@@ -77,6 +77,20 @@ const NATION_FLAGS: Record<string, string> = {
   Zimbabwe: '🇿🇼',
 };
 
+// Short nation codes for the compact comparison rows (results page).
+const NATION_CODES: Record<string, string> = {
+  Australia: 'AUS',
+  England: 'EG',
+  India: 'IND',
+  Pakistan: 'PAK',
+  'West Indies': 'WI',
+  'New Zealand': 'NZ',
+  'South Africa': 'SA',
+  'Sri Lanka': 'SL',
+  Bangladesh: 'BAN',
+  Zimbabwe: 'ZIM',
+};
+
 const eraId = (Array.isArray(player.era) ? player.era[0] : player.era) ?? 'legends';
 const eraAccent = ERA_ACCENTS[eraId] ?? '#94A3B8';
 const eraLabel = eraId === 'legends' ? 'Legends' : eraId;
@@ -144,18 +158,12 @@ const accessibleName = `${player.name}, ${roleLabels.join(', ') || 'player'}, ${
     style={cardStyle}
   >
     <div class="bm11-pc-row">
-      <PlayerAvatar name={player.name} era={player.era} size="w-10 h-10" />
       <div class="bm11-pc-head">
         <div class="bm11-pc-name">{player.name}</div>
         <div class="bm11-pc-sub">
-          {flag && <span aria-hidden="true">{flag} </span>}{player.nation}
+          {flag && <span aria-hidden="true">{flag} </span>}{NATION_CODES[player.nation] ?? player.nation}
           {' · '}
           <span class="bm11-era-chip" style={cardStyle}>{eraLabel}</span>
-        </div>
-        <div class="bm11-pc-roles">
-          {roleLabels.map((r: string) => (
-            <span class="bm11-chip">{r}</span>
-          ))}
         </div>
       </div>
       <div class="bm11-pc-ministats" aria-label="Key statistics">
