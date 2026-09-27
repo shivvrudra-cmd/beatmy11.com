@@ -805,6 +805,28 @@
       "dismissals": 42
     }
   },
+   {
+    "id": "joe-root",
+    "name": "Joe Root",
+    "nation": "England",
+    "era": ["legends","2010s","2020s"],
+    "primaryRole": "Middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 50.5,
+      "testRuns": 14278,
+      "testWickets": 74,
+      "testMatches": 169,
+      "testCenturies": 41,
+      "testFifties": 69,
+      "fiveWs": 1,
+      "tenWs": 0,
+      "testBowlingAverage": 48.1,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 221
+    }
+  },
   {
     "id": "waqar-younis",
     "name": "Waqar Younis",
