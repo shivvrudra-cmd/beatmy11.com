@@ -458,7 +458,7 @@ export const DRAFT_GROUP_LABELS: Record<string, string> = {
 /** Singular role labels for messages ("declared as Wicketkeeper", …). */
 export const XI_ROLE_LABELS: Record<XiRole, string> = {
   opener: 'Opener',
-  'middle-order': 'Middle-order batter',
+  'middle-order': 'Middle-order',
   wicketkeeper: 'Wicketkeeper',
   'all-rounder': 'All-rounder',
   spinner: 'Spinner',
@@ -966,6 +966,30 @@ export interface MoveOptions {
   sameGroupOnly?: boolean;
 }
 
+/**
+ * The declaration the occupant of `fromSlotKey` would take if moved to
+ * `toSlotKey`. Within a slot group the declared role travels with the
+ * player; across groups the destination slot re-decides it slot-first —
+ * so an all-rounder moved onto a batting slot declares as middle-order,
+ * and moving back to spot 8 declares as all-rounder again. Null when the
+ * player can't fill the destination at all.
+ */
+export function moveDeclaration(
+  state: DraftState,
+  fromSlotKey: string,
+  toSlotKey: string,
+): XiRole | null {
+  const fromSlot = slotByKey(fromSlotKey);
+  const toSlot = slotByKey(toSlotKey);
+  const occ = state.slots[fromSlotKey];
+  const mover = occ ? state.selectedPlayers.find((p) => p.uid === occ.uid) : undefined;
+  if (!mover || !toSlot || !fromSlot || !occ) return null;
+  if (fromSlot.group === toSlot.group && toSlot.roles.includes(occ.role)) {
+    return occ.role;
+  }
+  return defaultDeclaredRole(mover, toSlotKey);
+}
+
 export function validateSlotMove(
   state: DraftState,
   fromSlotKey: string,
@@ -987,9 +1011,7 @@ export function validateSlotMove(
       `the ${XI_SLOT_GROUP_LABELS[fromSlot.group]} group.`
     );
   }
-  const newRole = toSlot.roles.includes(occ.role)
-    ? occ.role
-    : defaultDeclaredRole(mover, toSlotKey);
+  const newRole = moveDeclaration(state, fromSlotKey, toSlotKey);
   if (!newRole) {
     return `${mover.name} can't play there — they can only fill: ${groupLabels(mover)}.`;
   }
@@ -1001,9 +1023,7 @@ export function validateSlotMove(
   if (toOcc) {
     const occupant = state.selectedPlayers.find((p) => p.uid === toOcc.uid);
     if (!occupant) return 'Nothing to move.';
-    backRole = fromSlot.roles.includes(toOcc.role)
-      ? toOcc.role
-      : defaultDeclaredRole(occupant, fromSlotKey);
+    backRole = moveDeclaration(state, toSlotKey, fromSlotKey);
     if (!backRole) {
       return `Can't swap — ${occupant.name} can't fill ${fromSlot.label}.`;
     }
@@ -1184,20 +1204,12 @@ export function applyDraftMove(
   if (fromSlotKey === toSlotKey) return state;
   if (validateSlotMove(state, fromSlotKey, toSlotKey, supply, options) !== null)
     return state;
-  const fromSlot = slotByKey(fromSlotKey)!;
-  const toSlot = slotByKey(toSlotKey)!;
   const occ = state.slots[fromSlotKey]!;
-  const mover = state.selectedPlayers.find((p) => p.uid === occ.uid)!;
-  const newRole = toSlot.roles.includes(occ.role)
-    ? occ.role
-    : defaultDeclaredRole(mover, toSlotKey)!;
+  const newRole = moveDeclaration(state, fromSlotKey, toSlotKey)!;
   const slots = { ...state.slots };
   const toOcc = slots[toSlotKey];
   if (toOcc) {
-    const occupant = state.selectedPlayers.find((p) => p.uid === toOcc.uid)!;
-    const backRole = fromSlot.roles.includes(toOcc.role)
-      ? toOcc.role
-      : defaultDeclaredRole(occupant, fromSlotKey)!;
+    const backRole = moveDeclaration(state, toSlotKey, fromSlotKey)!;
     slots[fromSlotKey] = { uid: toOcc.uid, role: backRole };
   } else {
     slots[fromSlotKey] = null;

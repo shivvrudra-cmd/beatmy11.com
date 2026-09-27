@@ -1,9 +1,9 @@
 import {
   createDraft, applySpinResult, applyDraftPick, applyDraftMove, applyDraftDeselect,
   validatePoolPick, validateSlotPlacement, validateSlotMove, placementOptions,
-  declarableRoles, defaultDeclaredRole, declarationForSlot, countsOf, reachableShapes, isXIValid,
+  declarableRoles, defaultDeclaredRole, declarationForSlot, moveDeclaration, countsOf, reachableShapes, isXIValid,
   serializeDraft, deserializeDraft, supplyFor, canFillRole,
-  XI_SLOTS, XI_SIZE, XI_SHAPES, emptyCounts, POOL_GROUPS, XI_SLOT_GROUP_LABELS,
+  XI_SLOTS, XI_SIZE, XI_SHAPES, emptyCounts, POOL_GROUPS, XI_SLOT_GROUP_LABELS, XI_ROLE_LABELS,
   canRespinNation,
   canRespinEra,
   applyNationRespin,
@@ -474,6 +474,49 @@ delete (rsOldBlob as Record<string, unknown>).eraRespinsLeft;
 delete (rsOldBlob as Record<string, unknown>).nationRespinsLeft;
 const rsDeserOld = deserializeDraft(rsOldBlob, () => null);
 ok(rsDeserOld !== null && rsDeserOld.eraRespinsLeft === 1 && rsDeserOld.nationRespinsLeft === 1, 'pre-respin blobs default to 1 token each');
+
+// ---- cross-group moves re-declare slot-first ----
+{
+  // The user's reported case: Botham (AR primary, MO secondary) slotted as
+  // an all-rounder, then moved onto a batting slot after a later spin.
+  const botham = mk('both', 'Botham', 'all-rounder', ['middle-order']);
+  let cmv = freshStarted();
+  cmv = pick(cmv, hobbs, 'opener-1', 'opener');
+  cmv = spinNext(cmv);
+  cmv = pick(cmv, botham, 'spin-ar', 'all-rounder');
+  ok(
+    validateSlotMove(cmv, 'spin-ar', 'bat-3') === null,
+    'AR -> batting move is legal mid-draft',
+    validateSlotMove(cmv, 'spin-ar', 'bat-3'),
+  );
+  ok(
+    moveDeclaration(cmv, 'spin-ar', 'bat-3') === 'middle-order',
+    'moveDeclaration previews middle-order for the batting slot',
+  );
+  const cmv2 = applyDraftMove(cmv, 'spin-ar', 'bat-3');
+  ok(
+    cmv2.slots['bat-3']?.role === 'middle-order',
+    'cross-group move re-declares as middle-order',
+  );
+  ok(
+    countsOf(cmv2)['middle-order'] === 1 && countsOf(cmv2)['all-rounder'] === 0,
+    'counts follow the re-declaration',
+  );
+  // Moving back to spot 8 re-declares as all-rounder.
+  const cmv3 = applyDraftMove(cmv2, 'bat-3', 'spin-ar');
+  ok(
+    cmv3.slots['spin-ar']?.role === 'all-rounder',
+    'return to spot 8 re-declares as all-rounder',
+  );
+  // Same-group moves still travel the declaration.
+  const cmv4 = applyDraftMove(cmv2, 'bat-3', 'bat-4');
+  ok(
+    cmv4.slots['bat-4']?.role === 'middle-order',
+    'same-group move keeps the declaration',
+  );
+  // The right-pane label reads plain "Middle-order".
+  ok(XI_ROLE_LABELS['middle-order'] === 'Middle-order', 'XI label drops "batter"');
+}
 
 console.log(`\n${pass} passed, ${fail} failed`);
 if (fail > 0) throw new Error('tests failed');

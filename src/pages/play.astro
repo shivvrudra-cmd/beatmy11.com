@@ -189,6 +189,7 @@ const styleSeed = playersForEra('legends')[0];
       validatePoolPick,
       validateSlotPlacement,
       validateSlotMove,
+      moveDeclaration,
       placementOptions,
       applySpinResult,
       applyDraftPick,
@@ -1197,8 +1198,18 @@ const styleSeed = playersForEra('legends')[0];
             sameGroupOnly: draft.gameComplete,
           }) === null) {
         classes.push('is-glow');
-        hint = 'Move here';
-        ariaLabel = `${slot.label} — empty. Activate to move the selected player here.`;
+        // Preview the declaration the move would take: across slot groups
+        // the destination re-decides it (e.g. all-rounder -> middle-order).
+        const moveRole = moveDeclaration(draft, moveFrom, slotKey);
+        const curRole = draft.slots[moveFrom]?.role;
+        if (moveRole && curRole && moveRole !== curRole) {
+          const mrl = XI_ROLE_LABELS[moveRole];
+          hint = `Move here as ${mrl}`;
+          ariaLabel = `${slot.label} — empty. Activate to move the selected player here as ${mrl}.`;
+        } else {
+          hint = 'Move here';
+          ariaLabel = `${slot.label} — empty. Activate to move the selected player here.`;
+        }
       } else {
         hint = '';
         ariaLabel = `${slot.label} — empty (${slotRoles}).`;
