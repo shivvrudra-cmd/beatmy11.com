@@ -99,9 +99,6 @@ const styleSeed = playersForEra('legends')[0];
           <p class="bm11-draw-status" id="bm11-draw-status">Spin to begin</p>
           <p class="bm11-round-status" id="bm11-round-status">6 rounds · 11 players</p>
         </div>
-        <button type="button" class="bm11-btn bm11-btn-ghost bm11-btn-sm" id="bm11-startover">
-          Start over
-        </button>
       </div>
     </section>
 
@@ -152,6 +149,14 @@ const styleSeed = playersForEra('legends')[0];
             <ul class="bm11-xi-list" id="bm11-xi-list"></ul>
             <div class="bm11-comp" id="bm11-comp" aria-live="polite"></div>
             <p class="bm11-summary-msg" id="bm11-msg" role="status"></p>
+            <button
+              type="button"
+              class="bm11-btn bm11-btn-ghost bm11-btn-sm"
+              id="bm11-startover"
+              hidden
+            >
+              Start over
+            </button>
             <a href="/matchup" class="bm11-btn bm11-btn-primary bm11-cta is-disabled" id="bm11-cta" aria-disabled="true">
               Compare XIs →
             </a>
@@ -756,7 +761,10 @@ const styleSeed = playersForEra('legends')[0];
     respinNationBtn.addEventListener('click', () => runRespin('nation'));
     respinEraBtn.addEventListener('click', () => runRespin('era'));
 
-    $('bm11-startover').addEventListener('click', () => {
+    // Full draft reset. The button lives only in dead-end states (a stalled
+    // draft that can never reach 11, or a complete-but-invalid XI) and on
+    // the results page — never during a live draft.
+    function startOver() {
       draft = createDraft();
       selectedUid = null;
       moveFrom = null;
@@ -768,7 +776,8 @@ const styleSeed = playersForEra('legends')[0];
       announce('Draft reset. Spin to begin a new draft.');
       window.scrollTo({ top: 0, behavior: 'auto' });
       spinBtn.focus({ preventScroll: true });
-    });
+    }
+    $('bm11-startover').addEventListener('click', startOver);
 
     // ------------------------------------------------------------ player grid
     const cardEls = new Map();
@@ -910,7 +919,7 @@ const styleSeed = playersForEra('legends')[0];
       const existing = draft.selectedPlayers.find((s) => s.id === p.id);
       if (existing) {
         if (existing.roundPicked !== draft.currentRound || draft.gameComplete) {
-          const msg = `${p.name} is locked in from round ${existing.roundPicked}. Start over to change earlier picks.`;
+          const msg = `${p.name} is locked in from round ${existing.roundPicked} and can't be changed now.`;
           flashMsg(msg);
           announce(msg);
           return;
@@ -1199,13 +1208,8 @@ const styleSeed = playersForEra('legends')[0];
       const slotRoles = slot.roles.map((r) => XI_ROLE_LABELS[r]).join(' · ');
 
       if (occupant && occ) {
-        // Row shows the era of the spin that drafted the player, and every
-        // group the data marks them eligible for (e.g. "Middle Order,
-        // Wicketkeeper").
-        const eraId = occupant.draftEra || occupant.displayEra;
-        const accent = ERA_ACCENTS[eraId] || '#94A3B8';
-        const flag = NATION_FLAGS[occupant.nation] || '';
-        const roles = groupLabelList(occupant);
+        // An occupied slot shows just the name and the declared position
+        // (e.g. "Middle Order") — no other player details.
         const declared = XI_ROLE_LABELS[occ.role];
         const removable =
           !draft.gameComplete && occupant.roundPicked === draft.currentRound;
@@ -1223,22 +1227,16 @@ const styleSeed = playersForEra('legends')[0];
             `${occupant.name}, ${declared}, ${slot.label} — activate to swap with the selected player.`;
         } else {
           ariaLabel =
-            `${occupant.name}, ${declared}, ${slot.label} (${roles}). ` +
+            `${occupant.name}, ${declared}, ${slot.label}. ` +
             `Activate to select for moving.`;
         }
         return (
           `<button type="button" class="${classes.join(' ')}" data-bm11-slot="${esc(slotKey)}"` +
           (pressed ? ` aria-pressed="${pressed}"` : '') +
-          ` aria-label="${esc(ariaLabel)}" style="--era-accent:${accent};">` +
-          `<img src="${avatarSrc(eraId)}" alt="" aria-hidden="true" loading="lazy"` +
-          ` class="bm11-xi-avatar" style="--era-accent:${accent};" />` +
+          ` aria-label="${esc(ariaLabel)}">` +
           `<span class="bm11-xi-main">` +
           `<span class="bm11-xi-name">${esc(occupant.name)} <span class="bm11-xi-role">${esc(declared)}</span></span>` +
-          `<span class="bm11-xi-sub">${esc(roles)} · ${flag ? `<span aria-hidden="true">${flag} </span>` : ''}${esc(
-            occupant.nation || ''
-          )} · ${esc(eraName(eraId))}</span>` +
           `</span>` +
-          `<span class="bm11-xi-round" title="Picked in round ${occupant.roundPicked}">R${occupant.roundPicked}</span>` +
           `</button>` +
           (removable
             ? `<button type="button" class="bm11-slot-remove" data-bm11-deselect="${esc(
@@ -1418,6 +1416,12 @@ const styleSeed = playersForEra('legends')[0];
           'XI incomplete — a tiny pool left your draft short of 11. Start over to try again.'
         );
       }
+
+      // Start over is only offered when the draft is a dead end: stalled
+      // short of 11, or complete but not a valid combination. A live draft
+      // never shows it.
+      const deadEnd = stalled || (draft.gameComplete && !isXIValid(draft));
+      $('bm11-startover').hidden = !deadEnd;
     }
 
     ctaEl.addEventListener('click', (e) => {
@@ -1428,6 +1432,7 @@ const styleSeed = playersForEra('legends')[0];
           'This XI is not a valid combination — start over to draft a valid XI.';
         flashMsg(msg);
         announce(msg);
+        $('bm11-startover').hidden = false;
       } else {
         const need = XI_SIZE - draft.selectedPlayers.length;
         flashMsg(`Place ${need} more player${need === 1 ? '' : 's'} to complete your XI.`);
@@ -1646,7 +1651,10 @@ const styleSeed = playersForEra('legends')[0];
       text-transform: uppercase;
       color: var(--bm11-muted, #94a3b8);
     }
-    #bm11-startover { margin-top: 1.25rem; }
+    /* Shown only in dead-end states (stalled or invalid XI) — never during
+       a live draft. */
+    #bm11-startover { margin: 0.75rem 0 0; width: 100%; }
+    #bm11-startover[hidden] { display: none; }
     .bm11-btn-sm {
       padding: 0.45rem 0.9rem;
       font-size: 0.85rem;
@@ -2036,19 +2044,12 @@ const styleSeed = playersForEra('legends')[0];
       background: var(--bm11-elevated, #141d33);
       border: 1px solid rgba(34, 197, 94, 0.35);
     }
-    .bm11-xi-avatar {
-      width: 1.75rem;
-      height: 1.75rem;
-      border-radius: 9999px;
-      object-fit: cover;
-      flex: 0 0 auto;
-      background-color: #0d1424;
-    }
     .bm11-xi-main {
       flex: 1;
       min-width: 0;
       display: flex;
       flex-direction: column;
+      justify-content: center;
     }
     .bm11-xi-name {
       font-weight: 600;
@@ -2135,25 +2136,6 @@ const styleSeed = playersForEra('legends')[0];
     .bm11-rolebar-btn:focus-visible {
       outline: 2px solid var(--bm11-primary, #22c55e);
       outline-offset: 2px;
-    }
-    .bm11-xi-sub {
-      font-size: 0.72rem;
-      color: var(--bm11-muted, #94a3b8);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .bm11-xi-round {
-      flex: 0 0 auto;
-      font-size: 0.68rem;
-      font-weight: 800;
-      letter-spacing: 0.05em;
-      color: var(--bm11-muted, #94a3b8);
-      background: var(--bm11-surface, #0d1424);
-      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
-      border-radius: 9999px;
-      padding: 0.15rem 0.5rem;
-      font-variant-numeric: tabular-nums;
     }
     .bm11-slot-remove {
       flex: 0 0 auto;
