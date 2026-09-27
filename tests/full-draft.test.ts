@@ -223,17 +223,30 @@ for (let seed = 1; seed <= TRIALS; seed++) {
   const combos: { era: string; nation: string }[] = [];
   combos.push(legendCombos[Math.floor(rand() * legendCombos.length)]);
   // Rounds 2–6 draw without replacement: the live game excludes already-drawn
-  // era×nation combos, so the sim must too.
+  // era×nation combos, so the sim must too. The live game also caps every
+  // nation at two landings per draft — mirrored here.
   const remaining = [...draftCombos];
+  const nationCount: Record<string, number> = {};
+  nationCount[combos[0].nation] = 1;
   for (let r = 1; r < 6; r++) {
-    const idx = Math.floor(rand() * remaining.length);
-    combos.push(remaining.splice(idx, 1)[0]);
+    let eligible = remaining.filter((c) => (nationCount[c.nation] || 0) < 2);
+    if (eligible.length === 0) eligible = remaining; // defensive, mirrors live
+    const idx = Math.floor(rand() * eligible.length);
+    const [picked] = eligible.splice(idx, 1);
+    remaining.splice(remaining.indexOf(picked), 1);
+    nationCount[picked.nation] = (nationCount[picked.nation] || 0) + 1;
+    combos.push(picked);
   }
   const pairKeys = combos.map((c) => `${c.era}|${c.nation}`);
   ok(
     new Set(pairKeys).size === pairKeys.length,
     `trial ${seed}: all 6 spin combos are unique pairs`,
     JSON.stringify(pairKeys),
+  );
+  ok(
+    Object.values(nationCount).every((n) => n <= 2),
+    `trial ${seed}: no nation lands more than twice`,
+    JSON.stringify(nationCount),
   );
   const pools: NormalizedPlayer[][] = combos.map((c) => poolFor(c.era, c.nation));
   combos.forEach((c, r) => ((pools as any)[`__combo${r}`] = c));

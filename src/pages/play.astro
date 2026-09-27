@@ -231,30 +231,47 @@ const styleSeed = playersForEra('legends')[0];
     // user picks their one Legend first; rounds 2–6 spin the other eras.
     // A spin can never re-land on an era×nation combo already drawn in this
     // draft: a repeat would shrink the user's options (picked players are
-    // removed from the pool). Eras and nations may each repeat — only the
-    // pair must be unique.
+    // removed from the pool). And a nation can land at most twice per draft,
+    // so no single pool dominates the six rounds.
     const usedComboKeys = () =>
       new Set(draft.spinHistory.map((s) => `${s.era}|${s.nation}`));
+    const nationCounts = () => {
+      const counts = {};
+      for (const s of draft.spinHistory)
+        counts[s.nation] = (counts[s.nation] || 0) + 1;
+      return counts;
+    };
     const combosForUpcomingRound = () => {
       const base = draft.currentRound === 0 ? LEGEND_COMBOS : DRAFT_COMBOS;
       const used = usedComboKeys();
-      const fresh = base.filter((c) => !used.has(`${c.era}|${c.nation}`));
-      // Defensive: with dozens of combos and at most 5 prior spins the fresh
-      // pool can never run dry — but never let the spin dead-end if it does.
-      return fresh.length > 0 ? fresh : base;
+      const counts = nationCounts();
+      const fresh = base.filter(
+        (c) =>
+          !used.has(`${c.era}|${c.nation}`) && (counts[c.nation] || 0) < 2,
+      );
+      if (fresh.length > 0) return fresh;
+      // Defensive: relax the nation cap first, then the pair rule — with
+      // dozens of combos and at most 5 prior spins the pool can never run
+      // dry, but never let the spin dead-end if it does.
+      const pairFresh = base.filter((c) => !used.has(`${c.era}|${c.nation}`));
+      return pairFresh.length > 0 ? pairFresh : base;
     };
     // Respin redraws: the rejected pair is excluded (no going back) and the
     // no-repeat rule still holds. A nation respin keeps the era; an era respin
     // keeps the nation but never lands on Legends — round 1 owns that era.
+    // The nation cap applies to respins too (an era respin needs no check:
+    // it keeps the current nation, so the counts don't change).
     const nationRedrawOptions = () => {
       if (!draft.currentEra) return [];
       const base = draft.currentRound === 1 ? LEGEND_COMBOS : DRAFT_COMBOS;
       const used = usedComboKeys();
+      const counts = nationCounts();
       return base.filter(
         (c) =>
           c.era === draft.currentEra &&
           c.nation !== draft.currentNation &&
-          !used.has(`${c.era}|${c.nation}`),
+          !used.has(`${c.era}|${c.nation}`) &&
+          (counts[c.nation] || 0) < 2,
       );
     };
     const eraRedrawOptions = () => {
