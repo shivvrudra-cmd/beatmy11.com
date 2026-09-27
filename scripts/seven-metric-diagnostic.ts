@@ -96,5 +96,5 @@ for (const ps of cmp.userPlayers) {
         : ''),
   );
 }
-console.log(`\nHOUSE XI SCORE (mean of 11) = ${cmp.userScore}`);
+console.log(`\nHOUSE XI SCORE (40/50/10 team blend) = ${cmp.userScore}`);
 console.log(`self-comparison: user=${cmp.userScore} opponent=${cmp.opponentScore} diff=${cmp.difference} -> ${cmp.result}`);

@@ -49,9 +49,13 @@
  *   Missing values stay missing — shrinkage never fabricates data.
  *
  * WEIGHTS (V1): batting metrics 1/3 each; bowling metrics 1/4 each;
- *   all-rounder = 0.5 × batting + 0.5 × bowling.
+ *   all-rounder = 0.6 × stronger discipline + 0.4 × weaker discipline.
  *
- * XI SCORE: arithmetic mean of the 11 player scores (0–100 scale).
+ * XI SCORE: team blend — 40% batting unit + 50% bowling unit + 10%
+ *   fielding unit (0–100 scale). The batting unit is the mean batting half
+ *   over batting-role entries, the bowling unit the mean bowling half over
+ *   bowling-role entries (an all-rounder feeds both), fielding the mean
+ *   dismissals-per-match percentile over all 11 entries.
  *   difference = userScore − opponentScore.
  *
  * MISSING DATA: never zero-filled, never estimated, never fabricated.
@@ -137,6 +141,18 @@ export const BOWLING_WEIGHTS: Record<MetricKey, number> = {
  *  chopped by their weaker half. Symmetric: helps batting spikes and
  *  bowling spikes alike. */
 export const ALL_ROUNDER_STRONGER_SHARE = 0.6;
+
+/**
+ * Owner-approved 2026-09-27: the TEAM score blends the three units —
+ * 40% batting unit + 50% bowling unit + 10% fielding unit. Player scores
+ * are unchanged (batters on batting, bowlers on bowling, all-rounders
+ * 60/40 toward the stronger discipline); the blend applies at the XI
+ * level only. An all-rounder feeds his batting half to the batting unit
+ * and his bowling half to the bowling unit.
+ */
+export const TEAM_BATTING_SHARE = 0.4;
+export const TEAM_BOWLING_SHARE = 0.5;
+export const TEAM_FIELDING_SHARE = 0.1;
 
 // ---------------------------------------------------------------------------
 // Roles and applicable metrics
@@ -284,6 +300,14 @@ export interface ScoringContext {
   arPopulations: ScoringPopulations;
   /** Per metric, mean of RAW values over the all-rounder population. */
   arPriorMeans: Record<MetricKey, number>;
+  /**
+   * Fielding population: sorted-ascending shrinkage-adjusted
+   * dismissals-per-match over the FULL unique-player population (every
+   * player fields; there is no role split for fielding in V1).
+   */
+  fieldingPopulation: number[];
+  /** Mean of raw dismissals-per-match over the fielding population. */
+  fieldingPriorMean: number;
   /** Prior weight in matches used for shrinkage. */
   priorMatches: number;
 }
@@ -407,11 +431,33 @@ export function buildScoringContext(
     }
   }
   for (const k of Object.keys(arPops) as MetricKey[]) arPops[k].sort((a, b) => a - b);
+
+  // Fielding population: dismissals per match over the full unique-player
+  // population (every player fields). Same shrinkage treatment as the
+  // seven metrics; missing dismissals stay missing — never fabricated.
+  const fRaw = new Map<string, number>();
+  for (const p of unique) {
+    const v = rawFielding(p);
+    if (v !== null) fRaw.set(p.id, v);
+  }
+  const fieldingPriorMean =
+    fRaw.size > 0 ? [...fRaw.values()].reduce((a, b) => a + b, 0) / fRaw.size : 0;
+  const fieldingPopulation: number[] = [];
+  for (const p of unique) {
+    const v = fRaw.get(p.id);
+    if (v === undefined) continue;
+    const m = matchesOf(p);
+    fieldingPopulation.push((m * v + priorMatches * fieldingPriorMean) / (m + priorMatches));
+  }
+  fieldingPopulation.sort((a, b) => a - b);
+
   return {
     populations: pops,
     priorMeans,
     arPopulations: arPops,
     arPriorMeans,
+    fieldingPopulation,
+    fieldingPriorMean,
     priorMatches,
   };
 }
@@ -596,6 +642,158 @@ export function scorePlayer(
 }
 
 // ---------------------------------------------------------------------------
+// Fielding + team blend (owner-approved 2026-09-27)
+//
+// Fielding is deliberately NOT an eighth player metric: player scores are
+// unchanged (batters on batting, bowlers on bowling, all-rounders 60/40
+// toward the stronger discipline). Dismissals enter only at the XI level,
+// where the team score = 40% batting unit + 50% bowling unit + 10%
+// fielding unit. Every player fields, so there is no role split —
+// keepers and outfielders are ranked in one population.
+// ---------------------------------------------------------------------------
+
+/**
+ * Raw dismissals per match. Null when uncomputable (missing dismissals or
+ * zero matches) — never zero-filled. An explicit 0 dismissals stays 0.
+ */
+export function rawFielding(player: NormalizedPlayer): number | null {
+  const d = player.stats?.dismissals;
+  if (d === null || d === undefined) return null;
+  const n = Number(d);
+  if (!Number.isFinite(n)) return null;
+  const m = matchesOf(player);
+  if (m === 0) return null;
+  return n / m;
+}
+
+/**
+ * Fielding score on the 0–100 scale: dismissals per match with W=20
+ * shrinkage toward the full-population prior mean, percentile-ranked
+ * against the fielding population (higher is better). Null when
+ * uncomputable — a misleading score is never produced.
+ */
+export function fieldingScore(
+  player: NormalizedPlayer,
+  ctx: ScoringContext,
+): number | null {
+  const raw = rawFielding(player);
+  if (raw === null) return null;
+  const m = matchesOf(player);
+  const adjusted =
+    (m * raw + ctx.priorMatches * ctx.fieldingPriorMean) / (m + ctx.priorMatches);
+  return percentileRank(adjusted, ctx.fieldingPopulation, true);
+}
+
+export interface TeamBlend {
+  /** Mean batting half over entries whose role includes batting. */
+  teamBatting: number;
+  /** Mean bowling half over entries whose role includes bowling. */
+  teamBowling: number;
+  /** Mean fielding score over all 11 entries. */
+  teamFielding: number;
+  /** Entries counted in the batting unit. */
+  battingCount: number;
+  /** Entries counted in the bowling unit. */
+  bowlingCount: number;
+  /**
+   * Final 0–100 team score (1 decimal): 40% batting + 50% bowling + 10%
+   * fielding. Halves are unrounded inputs; only the team score rounds.
+   */
+  score: number;
+}
+
+/**
+ * The XI-level team score. An all-rounder feeds his batting half to the
+ * batting unit and his bowling half to the bowling unit; every entry
+ * feeds the fielding unit.
+ *
+ * Throws IncompletePlayerData when any required half or fielding value is
+ * uncomputable — a misleading team score is never returned. Throws a
+ * plain Error when a unit has no entries (every legal XI has 7+ batting,
+ * 4+ bowling, 11 fielding entries, so this is a shape/programmer error,
+ * not a data gap).
+ */
+export function teamBlend(xi: XIEntry[], ctx: ScoringContext): TeamBlend {
+  if (xi.length !== 11) {
+    throw new Error(`teamBlend expects exactly 11 entries; got ${xi.length}.`);
+  }
+  const gaps: MetricGap[] = [];
+  let batSum = 0;
+  let batN = 0;
+  let bowlSum = 0;
+  let bowlN = 0;
+  let fieldSum = 0;
+  for (const e of xi) {
+    const role = evaluationRole(e.player, e.declaredRole);
+    const adjusted = adjustedMetrics(e.player, ctx, role);
+    const normalized = normalizeMetrics(
+      adjusted,
+      role === 'all-rounder' ? ctx.arPopulations : ctx.populations,
+    );
+    if (BATTING_ROLES.includes(role)) {
+      const b = weightedMean(normalized, BATTING_METRICS, BATTING_WEIGHTS);
+      if (b === null) {
+        gaps.push({
+          playerId: e.player.id,
+          name: e.player.name,
+          role,
+          metric: 'battingAverage',
+          reason: 'Batting half uncomputable from verified data.',
+        });
+      } else {
+        batSum += b;
+        batN++;
+      }
+    }
+    if (BOWLING_ROLES.includes(role)) {
+      const b = weightedMean(normalized, BOWLING_METRICS, BOWLING_WEIGHTS);
+      if (b === null) {
+        gaps.push({
+          playerId: e.player.id,
+          name: e.player.name,
+          role,
+          metric: 'bowlingAverage',
+          reason: 'Bowling half uncomputable from verified data.',
+        });
+      } else {
+        bowlSum += b;
+        bowlN++;
+      }
+    }
+    const f = fieldingScore(e.player, ctx);
+    if (f === null) {
+      gaps.push({
+        playerId: e.player.id,
+        name: e.player.name,
+        role,
+        metric: 'fielding',
+        reason:
+          'Required statistic (dismissals) is missing from the verified data; ' +
+          'confirm how this should be handled instead of assuming a value.',
+      });
+    } else {
+      fieldSum += f;
+    }
+  }
+  if (gaps.length > 0) throw new IncompletePlayerData(gaps);
+  if (batN === 0) {
+    throw new Error('teamBlend: XI has no batting-role entries; every legal XI has 7+.');
+  }
+  if (bowlN === 0) {
+    throw new Error('teamBlend: XI has no bowling-role entries; every legal XI has 4+.');
+  }
+  const teamBatting = batSum / batN;
+  const teamBowling = bowlSum / bowlN;
+  const teamFielding = fieldSum / xi.length;
+  const score = round1(
+    TEAM_BATTING_SHARE * teamBatting +
+      TEAM_BOWLING_SHARE * teamBowling +
+      TEAM_FIELDING_SHARE * teamFielding,
+  );
+  return { teamBatting, teamBowling, teamFielding, battingCount: batN, bowlingCount: bowlN, score };
+}
+
+// ---------------------------------------------------------------------------
 // Missing-data audit
 // ---------------------------------------------------------------------------
 
@@ -603,7 +801,11 @@ export interface MetricGap {
   playerId: string;
   name: string;
   role: EvaluationRole;
-  metric: MetricKey;
+  /**
+   * The missing metric. 'fielding' is the team-level dismissals requirement
+   * (fielding is not a player metric — it enters only at the XI level).
+   */
+  metric: MetricKey | 'fielding';
   reason: string;
 }
 
@@ -692,10 +894,13 @@ function scoreXI(
 /**
  * Compares two explicit XIs. Player selection and scoring stay separate:
  * this function never selects players and never knows how the opponent XI
- * was chosen. The XI score is the arithmetic mean of the 11 player scores.
+ * was chosen. Each XI's score is the team blend — 40% batting unit + 50%
+ * bowling unit + 10% fielding unit (owner-approved 2026-09-27) — computed
+ * from the players' role halves; per-player 60/40 all-rounder scores are
+ * retained in the result for display only.
  *
- * Throws IncompletePlayerData if any applicable metric is uncomputable —
- * a misleading score is never returned.
+ * Throws IncompletePlayerData if any applicable metric or any required
+ * fielding value is uncomputable — a misleading score is never returned.
  */
 export function compareXIs(
   userXI: XIEntry[],
@@ -707,11 +912,9 @@ export function compareXIs(
 
   const userPlayers = scoreXI(userXI, ctx, 'userXI');
   const opponentPlayers = scoreXI(opponentXI, ctx, 'opponentXI');
-  const mean = (ps: PlayerScore[]): number =>
-    ps.reduce((s, p) => s + (p.score ?? 0), 0) / ps.length;
-
-  const userScore = round1(mean(userPlayers));
-  const opponentScore = round1(mean(opponentPlayers));
+  // teamBlend throws IncompletePlayerData on missing fielding data.
+  const userScore = teamBlend(userXI, ctx).score;
+  const opponentScore = teamBlend(opponentXI, ctx).score;
   const difference = round1(userScore - opponentScore);
   const result: Verdict =
     difference > 0 ? 'user' : difference < 0 ? 'opponent' : 'tie';

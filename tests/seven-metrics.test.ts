@@ -5,8 +5,9 @@
  * lower-is-better only for bowling average, percentile normalization,
  * all six roles, declared-role behavior, 60/40-stronger all-rounder weighting,
  * no batting score for specialists, missing/zero-Test handling,
- * determinism, identical-XI ties, metrics-only discipline, XI mean
- * aggregation, explicit fixed-opponent input. Draft suites untouched.
+ * determinism, identical-XI ties, metrics-only discipline, 40/50/10 team
+ * blend aggregation, team-level fielding (dismissals), explicit
+ * fixed-opponent input. Draft suites untouched.
  */
 import { readFileSync } from 'node:fs';
 import {
@@ -29,6 +30,12 @@ import {
   auditMetrics,
   compareXIs,
   IncompletePlayerData,
+  rawFielding,
+  fieldingScore,
+  teamBlend,
+  TEAM_BATTING_SHARE,
+  TEAM_BOWLING_SHARE,
+  TEAM_FIELDING_SHARE,
   type NormalizedPlayer,
   type ScoringContext,
   type MetricKey,
@@ -289,24 +296,122 @@ ok(
 const nm = normalizeMetrics(adjustedMetrics(P('imran-khan'), CTX), CTX.populations);
 ok(keys(nm).length === 7, 'normalizeMetrics covers exactly seven metrics');
 
-// ---- 21. XI score is the arithmetic mean of the 11 player scores ----
-const xi11 = Array.from({ length: 11 }, (_, i) => ({
+// ---- 21. XI score is the 40/50/10 team blend, not the mean of 11 ----
+// Synthetic XI with a legal shape (batting + bowling units) and dismissals
+// on every player, so the blend is fully computable.
+const blendBat = (i: number) => ({
   player: mk(
     'middle-order',
-    { testAverage: 30 + i, testRuns: 3000 + 100 * i, testMatches: 100, testCenturies: 5 + i },
-    { id: `m${i}`, uid: `t:m${i}`, name: `M${i}` },
+    { testAverage: 45, testRuns: 6000, testMatches: 120, testCenturies: 15, dismissals: 60 + i },
+    { id: `bb${i}`, uid: `t:bb${i}`, name: `BB${i}` },
   ),
-}));
-const manual = xi11.map((e) => scorePlayer(e.player, null, CTX).score!);
-const expected = Math.round((manual.reduce((a, b) => a + b, 0) / manual.length) * 10) / 10;
-const gotXI = compareXIs(xi11, xi11, CTX);
-ok(gotXI.userScore === expected, 'XI score = arithmetic mean of the 11 player scores', { gotXI: gotXI.userScore, expected });
-ok(gotXI.userPlayers.length === 11 && gotXI.opponentPlayers.length === 11, 'per-player detail retained for later');
+});
+const blendBowl = (i: number) => ({
+  player: mk(
+    'fast-bowler',
+    { testBowlingAverage: 24, testWickets: 350, testMatches: 100, fiveWs: 15, tenWs: 3, dismissals: 30 + i },
+    { id: `bw${i}`, uid: `t:bw${i}`, name: `BW${i}` },
+  ),
+});
+const blendXI = [
+  ...Array.from({ length: 8 }, (_, i) => blendBat(i)),
+  ...Array.from({ length: 3 }, (_, i) => blendBowl(i)),
+];
+// Local unrounded-half helper built from the engine's own exported pieces.
+const halfOf = (p: NormalizedPlayer, role: 'middle-order' | 'fast-bowler', keys: MetricKey[], weights: Record<MetricKey, number>) => {
+  const norm = normalizeMetrics(adjustedMetrics(p, CTX, role), CTX.populations);
+  let s = 0;
+  for (const k of keys) s += (norm[k] as number) * weights[k];
+  return s;
+};
+{
+  const bats = blendXI.slice(0, 8).map((e) => halfOf(e.player, 'middle-order', BATTING_METRICS, BATTING_WEIGHTS));
+  const bowls = blendXI.slice(8).map((e) => halfOf(e.player, 'fast-bowler', BOWLING_METRICS, BOWLING_WEIGHTS));
+  const fields = blendXI.map((e) => fieldingScore(e.player, CTX) as number);
+  const expected =
+    Math.round(
+      (TEAM_BATTING_SHARE * (bats.reduce((a, b) => a + b, 0) / bats.length) +
+        TEAM_BOWLING_SHARE * (bowls.reduce((a, b) => a + b, 0) / bowls.length) +
+        TEAM_FIELDING_SHARE * (fields.reduce((a, b) => a + b, 0) / fields.length)) *
+        10,
+    ) / 10;
+  const tb = teamBlend(blendXI, CTX);
+  ok(tb.battingCount === 8 && tb.bowlingCount === 3, 'units count role members (8 bat / 3 bowl)', tb);
+  ok(tb.score === expected, 'team score = 40% batting + 50% bowling + 10% fielding', { score: tb.score, expected });
+  const gotXI = compareXIs(blendXI, blendXI, CTX);
+  ok(gotXI.userScore === tb.score, 'compareXIs scores XIs with the team blend', gotXI.userScore);
+  const meanOf11 =
+    Math.round(
+      (blendXI.map((e) => scorePlayer(e.player, null, CTX).score!).reduce((a, b) => a + b, 0) / 11) * 10,
+    ) / 10;
+  ok(gotXI.userScore !== meanOf11, 'blend differs from the old mean-of-11', { blend: gotXI.userScore, meanOf11 });
+  ok(gotXI.userPlayers.length === 11 && gotXI.opponentPlayers.length === 11, 'per-player detail retained for later');
+}
+ok(
+  TEAM_BATTING_SHARE === 0.4 && TEAM_BOWLING_SHARE === 0.5 && TEAM_FIELDING_SHARE === 0.1,
+  'team weights are 40/50/10',
+);
+// An XI with no bowling-role entries cannot be blended (shape error, not data).
+{
+  const noBowl = Array.from({ length: 11 }, (_, i) => ({
+    player: mk(
+      'middle-order',
+      { testAverage: 40, testRuns: 4000, testMatches: 100, testCenturies: 10, dismissals: 50 },
+      { id: `nb${i}`, uid: `t:nb${i}`, name: `NB${i}` },
+    ),
+  }));
+  let threwNB: unknown = null;
+  try { teamBlend(noBowl, CTX); } catch (e) { threwNB = e; }
+  ok(threwNB instanceof Error && !(threwNB instanceof IncompletePlayerData), 'bowling-less XI: plain shape error, not a data gap');
+}
+// An all-rounder feeds both units.
+{
+  const arXI = [
+    ...Array.from({ length: 7 }, (_, i) => blendBat(i)),
+    { player: mk('all-rounder', { testAverage: 40, testRuns: 5000, testMatches: 120, testCenturies: 10, testBowlingAverage: 30, testWickets: 250, fiveWs: 8, tenWs: 1, dismissals: 80 }, { id: 'arx', uid: 't:arx', name: 'ARX' }) },
+    ...Array.from({ length: 3 }, (_, i) => blendBowl(i)),
+  ];
+  const tb = teamBlend(arXI, CTX);
+  ok(tb.battingCount === 8 && tb.bowlingCount === 4, 'all-rounder feeds both units', tb);
+}
+
+// ---- 21b. fielding: dismissals per match, full-population percentile ----
+{
+  const f = (stats: Record<string, number>, extra: Partial<NormalizedPlayer> = {}) =>
+    mk('middle-order', stats, { id: `f${uidc}`, uid: `t:f${uidc}`, ...extra });
+  ok(rawFielding(f({ testMatches: 100, dismissals: 120 })) === 1.2, 'raw fielding = dismissals / matches');
+  ok(rawFielding(f({ testMatches: 100, dismissals: 0 })) === 0, 'explicit 0 dismissals stays 0 (not null)');
+  ok(rawFielding(f({ testMatches: 100 })) === null, 'missing dismissals -> null (never zero-filled)');
+  ok(rawFielding(f({ testMatches: 0, dismissals: 50 })) === null, 'zero matches -> null');
+  ok(fieldingScore(f({ testMatches: 100 })) === null, 'fielding score null when raw is null');
+  // Real-data sanity: keepers top the full population, tailenders anchor it.
+  const fg = fieldingScore(P('adam-gilchrist'), CTX)!;
+  const fm = fieldingScore(P('glenn-mcgrath'), CTX)!;
+  ok(fg > 99 && fm < 10, 'Gilchrist ~100, McGrath ~4: full-population fielding spread', { fg, fm });
+  ok(
+    fieldingScore(P('adam-gilchrist'), CTX) === fieldingScore(P('adam-gilchrist'), CTX),
+    'fielding score deterministic',
+  );
+  ok(CTX.fieldingPopulation.length === 535, 'fielding population = all 535 unique players', CTX.fieldingPopulation.length);
+  // Missing fielding data is an honest error at the XI level.
+  const missingF = blendXI.map((e, i) =>
+    i === 0
+      ? { player: mk('middle-order', { testAverage: 45, testRuns: 6000, testMatches: 120, testCenturies: 15 }, { id: 'mf0', uid: 't:mf0', name: 'MF0' }) }
+      : e,
+  );
+  let threwF: unknown = null;
+  try { compareXIs(missingF, missingF, CTX); } catch (e) { threwF = e; }
+  ok(
+    threwF instanceof IncompletePlayerData &&
+      (threwF as IncompletePlayerData).gaps.some((g) => g.metric === 'fielding'),
+    'XI with missing dismissals: IncompletePlayerData with a fielding gap',
+  );
+}
 
 // ---- 22. fixed opponent XI passed explicitly ----
 const house = getHouseXI();
 ok(house.length === 11, 'fixed house XI has 11 players');
-const mixed = compareXIs(xi11, houseEntries, CTX);
+const mixed = compareXIs(blendXI, houseEntries, CTX);
 ok(
   Number.isFinite(mixed.userScore) && Number.isFinite(mixed.opponentScore) && mixed.userScore >= 0 && mixed.userScore <= 100,
   'explicit opponent XI scores on the 0–100 scale',
@@ -516,8 +621,8 @@ ok(SHRINKAGE_PRIOR_MATCHES === 20, 'spec shrinkage prior weight is 20 matches');
     ...top('fast-bowler', 3).map((p) => E(p, 'fast-bowler')),
   ];
   const cmp = compareXIs(shapeAR, shapeSP, CTX);
-  ok(cmp.userScore > 94.5, 'elite AR shape scores ~95', cmp.userScore);
-  ok(cmp.difference < 0 && cmp.difference > -2.5, 'AR shape within ~2 points of specialist shape', cmp.difference);
+  ok(cmp.userScore > 89.5, 'elite AR shape blends to ~91', cmp.userScore);
+  ok(cmp.difference < 0 && cmp.difference > -2.5, 'AR shape within ~2.5 points of specialist shape', cmp.difference);
 }
 
 console.log(`\n${pass} passed, ${fail} failed`);
