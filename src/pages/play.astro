@@ -76,6 +76,26 @@ const styleSeed = playersForEra('legends')[0];
           >
             Spin
           </button>
+          <div class="bm11-respins" id="bm11-respins" hidden>
+            <button
+              type="button"
+              class="bm11-btn bm11-btn-ghost bm11-btn-sm"
+              id="bm11-respin-nation"
+            >
+              Respin nation
+            </button>
+            <button
+              type="button"
+              class="bm11-btn bm11-btn-ghost bm11-btn-sm"
+              id="bm11-respin-era"
+            >
+              Respin era
+            </button>
+          </div>
+          <p class="bm11-respin-note" id="bm11-respin-note" hidden>
+            One era respin and one nation respin per draft. A respin is a forced
+            redraw — you keep whatever lands, no going back.
+          </p>
           <p class="bm11-draw-status" id="bm11-draw-status">Spin to begin</p>
           <p class="bm11-round-status" id="bm11-round-status">6 rounds · 11 players</p>
         </div>
@@ -164,6 +184,10 @@ const styleSeed = playersForEra('legends')[0];
       applyDraftPick,
       applyDraftMove,
       applyDraftDeselect,
+      canRespinNation,
+      canRespinEra,
+      applyNationRespin,
+      applyEraRespin,
       deserializeDraft,
       saveDraft,
       loadDraft,
@@ -210,6 +234,30 @@ const styleSeed = playersForEra('legends')[0];
       // Defensive: with dozens of combos and at most 5 prior spins the fresh
       // pool can never run dry — but never let the spin dead-end if it does.
       return fresh.length > 0 ? fresh : base;
+    };
+    // Respin redraws: the rejected pair is excluded (no going back) and the
+    // no-repeat rule still holds. A nation respin keeps the era; an era respin
+    // keeps the nation but never lands on Legends — round 1 owns that era.
+    const nationRedrawOptions = () => {
+      if (!draft.currentEra) return [];
+      const base = draft.currentRound === 1 ? LEGEND_COMBOS : DRAFT_COMBOS;
+      const used = usedComboKeys();
+      return base.filter(
+        (c) =>
+          c.era === draft.currentEra &&
+          c.nation !== draft.currentNation &&
+          !used.has(`${c.era}|${c.nation}`),
+      );
+    };
+    const eraRedrawOptions = () => {
+      if (!draft.currentNation) return [];
+      const used = usedComboKeys();
+      return DRAFT_COMBOS.filter(
+        (c) =>
+          c.nation === draft.currentNation &&
+          c.era !== draft.currentEra &&
+          !used.has(`${c.era}|${c.nation}`),
+      );
     };
     const uidIndex = {};
     for (const eraId of Object.keys(byEra)) {
@@ -409,6 +457,10 @@ const styleSeed = playersForEra('legends')[0];
     const roundEl = $('bm11-round-status');
     const eraSlot = $('bm11-draw-era');
     const nationSlot = $('bm11-draw-nation');
+    const respinsEl = $('bm11-respins');
+    const respinNationBtn = $('bm11-respin-nation');
+    const respinEraBtn = $('bm11-respin-era');
+    const respinNoteEl = $('bm11-respin-note');
     const groupsEl = $('bm11-groups');
     const historyEl = $('bm11-history');
     const summaryEl = $('bm11-summary');
@@ -561,6 +613,40 @@ const styleSeed = playersForEra('legends')[0];
             ? 'Spin to draw your Legend — a random nation from the Legends era'
             : 'Spin to draw a random era and nation'
       );
+
+      // Respin tokens: offered after a draw lands, before any pick from it.
+      const nationOpts = nationRedrawOptions();
+      const eraOpts = eraRedrawOptions();
+      const showRespins =
+        !draft.gameComplete &&
+        !draft.isSpinning &&
+        draft.currentRound >= 1 &&
+        draft.picksThisRound.length === 0 &&
+        (draft.nationRespinsLeft > 0 || draft.eraRespinsLeft > 0);
+      respinsEl.hidden = !showRespins;
+      respinNoteEl.hidden = !showRespins;
+      if (showRespins) {
+        const nationOK = canRespinNation(draft, nationOpts.length);
+        const eraOK = canRespinEra(draft, eraOpts.length);
+        respinNationBtn.disabled = !nationOK;
+        respinEraBtn.disabled = !eraOK;
+        respinNationBtn.textContent = `Respin nation (${draft.nationRespinsLeft} left)`;
+        respinEraBtn.textContent = `Respin era (${draft.eraRespinsLeft} left)`;
+        respinNationBtn.setAttribute(
+          'aria-label',
+          nationOK
+            ? `Forced redraw: replace ${draft.currentNation} with a random nation from ${eraName(draft.currentEra)}. No going back.`
+            : 'Nation respin unavailable'
+        );
+        respinEraBtn.setAttribute(
+          'aria-label',
+          eraOK
+            ? `Forced redraw: replace ${eraName(draft.currentEra)} with a random era for ${draft.currentNation}. No going back.`
+            : draft.currentRound === 1
+              ? 'Era respin unavailable in round 1 — the first draw is always Legends'
+              : 'Era respin unavailable'
+        );
+      }
     }
 
     spinBtn.addEventListener('click', () => {
@@ -610,6 +696,65 @@ const styleSeed = playersForEra('legends')[0];
           `${available} players available. ${pickWord}`
       );
     }
+
+    // ------------------------------------------------------------ respins
+    // One era respin + one nation respin per draft, forced redraw: the new
+    // draw replaces the old one and there is no going back.
+    function runRespin(kind) {
+      if (draft.isSpinning) return; // double-spin guard
+      const opts =
+        kind === 'nation' ? nationRedrawOptions() : eraRedrawOptions();
+      const allowed =
+        kind === 'nation'
+          ? canRespinNation(draft, opts.length)
+          : canRespinEra(draft, opts.length);
+      if (!allowed || opts.length === 0) return;
+      draft = { ...draft, isSpinning: true };
+      renderAll();
+
+      const reduceMotion = window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+      ).matches;
+      const draw = () => opts[Math.floor(Math.random() * opts.length)];
+      const settle = (choice) => {
+        // Clear the spinning flag first: apply*Respin re-validates, and a
+        // spinning draft is never respinnable.
+        draft = { ...draft, isSpinning: false };
+        const before = kind === 'nation' ? draft.currentNation : draft.currentEra;
+        draft =
+          kind === 'nation'
+            ? applyNationRespin(draft, choice.nation)
+            : applyEraRespin(draft, choice.era);
+        persist();
+        renderAll();
+        const after = kind === 'nation' ? draft.currentNation : draft.currentEra;
+        if (after !== before) {
+          announce(
+            `Forced redraw — your ${kind} respin landed on ${eraName(draft.currentEra)}, ${draft.currentNation}. ` +
+              `The old draw is gone. ${unpickedCount(currentPool())} players available.`
+          );
+        } else {
+          announce('Respin unavailable — the draft state changed.');
+        }
+      };
+
+      if (reduceMotion || opts.length === 0) {
+        settle(draw());
+        return;
+      }
+      let ticks = 0;
+      const timer = window.setInterval(() => {
+        const c = draw();
+        if (c) previewDraw(c.era, c.nation);
+        if (++ticks >= 9) {
+          window.clearInterval(timer);
+          settle(draw());
+        }
+      }, 70);
+    }
+
+    respinNationBtn.addEventListener('click', () => runRespin('nation'));
+    respinEraBtn.addEventListener('click', () => runRespin('era'));
 
     $('bm11-startover').addEventListener('click', () => {
       draft = createDraft();
@@ -1462,6 +1607,22 @@ const styleSeed = playersForEra('legends')[0];
     .bm11-spin-btn:disabled {
       opacity: 0.45;
       cursor: not-allowed;
+    }
+    .bm11-respins {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .bm11-respins[hidden] {
+      display: none;
+    }
+    .bm11-respin-note {
+      font-size: 0.78rem;
+      color: var(--bm11-muted, #94a3b8);
+      margin: 0.5rem 0 0;
+      max-width: 34ch;
     }
     .bm11-spin-btn:focus-visible {
       outline: 2px solid var(--bm11-ring, #4ade80);

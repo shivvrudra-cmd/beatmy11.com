@@ -4,6 +4,10 @@ import {
   declarableRoles, defaultDeclaredRole, countsOf, reachableShapes, isXIValid,
   serializeDraft, deserializeDraft, supplyFor, canFillRole,
   XI_SLOTS, XI_SIZE, XI_SHAPES, emptyCounts, POOL_GROUPS, XI_SLOT_GROUP_LABELS,
+  canRespinNation,
+  canRespinEra,
+  applyNationRespin,
+  applyEraRespin,
   type NormalizedPlayer, type DraftState, type XiRole,
 } from '../src/lib/player-logic';
 
@@ -412,6 +416,45 @@ ok(
     new Set(XI_SLOTS.map((s) => s.group)).size === 4,
   'slots carry exactly four groups',
 );
+
+// ---- respins: one era + one nation token per draft, forced redraw ----
+let rs0 = freshStarted(); // round 1: legends|Australia
+ok(rs0.eraRespinsLeft === 1 && rs0.nationRespinsLeft === 1, 'respin tokens start at 1 each');
+ok(canRespinNation(rs0, 3) === true, 'nation respin available after round-1 draw');
+ok(canRespinEra(rs0, 3) === false, 'era respin blocked in round 1');
+ok(applyEraRespin(rs0, '1990s') === rs0, 'era respin in round 1 is a no-op');
+
+const rsN = applyNationRespin(rs0, 'England');
+ok(rsN !== rs0, 'nation respin applies');
+ok(rsN.currentEra === 'legends' && rsN.currentNation === 'England', 'nation respin keeps era, replaces nation');
+ok(rsN.nationRespinsLeft === 0 && rsN.eraRespinsLeft === 1, 'nation token consumed');
+ok(rsN.currentRound === 1, 'respin does not advance the round');
+ok(rsN.spinHistory.length === 1 && rsN.spinHistory[0].nation === 'England', 'history shows the replaced pair, not the rejected one');
+ok(applyNationRespin(rsN, 'India') === rsN, 'exhausted nation token is a no-op');
+ok(canRespinNation(rsN, 3) === false, 'canRespinNation false with 0 tokens');
+ok(applyNationRespin(rs0, 'Australia') === rs0, 'respin to the current nation is a no-op');
+
+let rsE = applySpinResult(freshStarted(), '1990s', 'Australia'); // round 2
+ok(canRespinEra(rsE, 2) === true, 'era respin available from round 2');
+const rsE2 = applyEraRespin(rsE, '2000s');
+ok(rsE2.currentEra === '2000s' && rsE2.currentNation === 'Australia', 'era respin keeps nation, replaces era');
+ok(rsE2.eraRespinsLeft === 0 && rsE2.nationRespinsLeft === 1, 'era token consumed');
+ok(applyEraRespin(rsE, 'legends') === rsE, 'era respin onto an already-drawn pair is rejected');
+
+let rsP = applyDraftPick(freshStarted(), hobbs, 'opener-1', 'opener');
+ok(rsP.picksThisRound.length === 1, 'pick recorded for respin guard');
+ok(applyNationRespin(rsP, 'England') === rsP, 'respin after a pick is a no-op');
+ok(canRespinNation(rsP, 3) === false, 'canRespinNation false once picks are made');
+
+const rsSer = serializeDraft(rsE2);
+ok(rsSer.eraRespinsLeft === 0 && rsSer.nationRespinsLeft === 1, 'tokens serialized');
+const rsDeser = deserializeDraft(rsSer, () => null);
+ok(rsDeser !== null && rsDeser.eraRespinsLeft === 0 && rsDeser.nationRespinsLeft === 1, 'tokens survive serialize round-trip');
+const rsOldBlob = { ...rsSer };
+delete (rsOldBlob as Record<string, unknown>).eraRespinsLeft;
+delete (rsOldBlob as Record<string, unknown>).nationRespinsLeft;
+const rsDeserOld = deserializeDraft(rsOldBlob, () => null);
+ok(rsDeserOld !== null && rsDeserOld.eraRespinsLeft === 1 && rsDeserOld.nationRespinsLeft === 1, 'pre-respin blobs default to 1 token each');
 
 console.log(`\n${pass} passed, ${fail} failed`);
 if (fail > 0) throw new Error('tests failed');

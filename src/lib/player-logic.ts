@@ -246,6 +246,10 @@ export interface DraftState {
   spinHistory: SpinRecord[];
   isSpinning: boolean;
   gameComplete: boolean;
+  /** Respin tokens: one era-respin and one nation-respin per draft. A respin
+   *  replaces the current round's draw before any pick is made from it. */
+  eraRespinsLeft: number;
+  nationRespinsLeft: number;
 }
 
 /** Fresh draft: pre-spin state. */
@@ -260,6 +264,8 @@ export function createDraft(): DraftState {
     spinHistory: [],
     isSpinning: false,
     gameComplete: false,
+    eraRespinsLeft: 1,
+    nationRespinsLeft: 1,
   };
 }
 
@@ -1023,6 +1029,81 @@ export function applySpinResult(
 }
 
 /**
+ * Respin availability. A respin replaces the current round's draw BEFORE any
+ * pick is made from it — once you've picked, the round is locked. The era
+ * respin is unavailable in round 1 (round 1 always draws Legends).
+ * `redrawOptions` is the count of eligible fresh combos the caller computed;
+ * a respin with nowhere legal to land is not offered.
+ */
+export function canRespinNation(
+  state: DraftState,
+  redrawOptions: number,
+): boolean {
+  if (state.gameComplete || state.isSpinning) return false;
+  if (state.nationRespinsLeft <= 0) return false;
+  if (state.currentRound < 1 || state.currentEra === null) return false;
+  if (state.picksThisRound.length > 0) return false;
+  return redrawOptions > 0;
+}
+
+export function canRespinEra(state: DraftState, redrawOptions: number): boolean {
+  if (state.gameComplete || state.isSpinning) return false;
+  if (state.eraRespinsLeft <= 0) return false;
+  if (state.currentRound <= 1 || state.currentEra === null) return false;
+  if (state.picksThisRound.length > 0) return false;
+  return redrawOptions > 0;
+}
+
+/**
+ * Forced nation respin: the current round keeps its era and takes `nation`.
+ * The rejected pair is struck from the spin history — there is no going back,
+ * and the redraw can never re-land on a pair already drawn. Invalid calls are
+ * idempotent no-ops, matching the other transitions.
+ */
+export function applyNationRespin(
+  state: DraftState,
+  nation: string,
+): DraftState {
+  if (!canRespinNation(state, 1)) return state;
+  if (!nation || nation === state.currentNation) return state;
+  const key = `${state.currentEra}|${nation}`;
+  const clash = state.spinHistory
+    .slice(0, -1)
+    .some((s) => `${s.era}|${s.nation}` === key);
+  if (clash) return state;
+  return {
+    ...state,
+    currentNation: nation,
+    nationRespinsLeft: state.nationRespinsLeft - 1,
+    spinHistory: state.spinHistory.map((s, i) =>
+      i === state.spinHistory.length - 1 ? { ...s, nation } : s,
+    ),
+  };
+}
+
+/**
+ * Forced era respin: the current round keeps its nation and takes `era`.
+ * Same no-going-back, no-repeat rules as the nation respin.
+ */
+export function applyEraRespin(state: DraftState, era: string): DraftState {
+  if (!canRespinEra(state, 1)) return state;
+  if (!era || era === state.currentEra) return state;
+  const key = `${era}|${state.currentNation}`;
+  const clash = state.spinHistory
+    .slice(0, -1)
+    .some((s) => `${s.era}|${s.nation}` === key);
+  if (clash) return state;
+  return {
+    ...state,
+    currentEra: era,
+    eraRespinsLeft: state.eraRespinsLeft - 1,
+    spinHistory: state.spinHistory.map((s, i) =>
+      i === state.spinHistory.length - 1 ? { ...s, era } : s,
+    ),
+  };
+}
+
+/**
  * Record a pick into a chosen slot, declared as `role`. Invalid picks are
  * idempotent no-ops — the state is returned unchanged.
  */
@@ -1145,6 +1226,9 @@ export interface SerializedDraft {
   currentRound: number;
   gameComplete: boolean;
   spinHistory: SpinRecord[];
+  /** Respin tokens; absent in pre-respin blobs → treated as 1. */
+  eraRespinsLeft?: number;
+  nationRespinsLeft?: number;
   picks: {
     uid: string;
     round: number;
@@ -1164,6 +1248,8 @@ export function serializeDraft(state: DraftState): SerializedDraft {
     currentRound: state.currentRound,
     gameComplete: state.gameComplete,
     spinHistory: state.spinHistory.map((s) => ({ ...s, picks: [...s.picks] })),
+    eraRespinsLeft: state.eraRespinsLeft,
+    nationRespinsLeft: state.nationRespinsLeft,
     picks: state.selectedPlayers.map((p) => {
       const key = slotOf(state, p.uid);
       return {
@@ -1324,6 +1410,10 @@ export function deserializeDraft(
     spinHistory,
     isSpinning: false,
     gameComplete: d.gameComplete === true || selectedPlayers.length >= XI_SIZE,
+    eraRespinsLeft:
+      typeof d.eraRespinsLeft === 'number' ? d.eraRespinsLeft : 1,
+    nationRespinsLeft:
+      typeof d.nationRespinsLeft === 'number' ? d.nationRespinsLeft : 1,
   };
 }
 
