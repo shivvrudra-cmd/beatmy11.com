@@ -103,17 +103,17 @@ shrunk toward AR-only prior means. A specialist declared as an all-rounder still
 | # | Player | Role | Score |
 |---|---|---|---|
 | 1 | Don Bradman | opener | 100.0 |
-| 2 | Virender Sehwag | opener | 93.0 |
+| 2 | Sunil Gavaskar | opener | 95.8 |
 | 3 | Sachin Tendulkar | middle-order | 96.6 |
-| 4 | Viv Richards | middle-order | 86.7 |
-| 5 | Javed Miandad | middle-order | 87.3 |
+| 4 | Brian Lara | middle-order | 97.7 |
+| 5 | Joe Root | middle-order | 96.0 |
 | 6 | Adam Gilchrist | wicketkeeper | 70.5 |
 | 7 | Richard Hadlee | all-rounder | 64.3 |
 | 8 | Muttiah Muralitharan | spinner | 99.2 |
 | 9 | Malcolm Marshall | fast-bowler | 93.8 |
-| 10 | James Anderson | fast-bowler | 69.9 |
+| 10 | Wasim Akram | fast-bowler | 87.3 |
 | 11 | Dale Steyn | fast-bowler | 94.2 |
-|  | **XI score (40/50/10 team blend)** |  | **81.2** |
+|  | **XI score (40/50/10 team blend)** |  | **84.4** |
 
 ## XI shapes and head-to-heads
 
