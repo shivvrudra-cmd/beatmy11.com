@@ -197,8 +197,20 @@ const styleSeed = playersForEra('legends')[0];
     );
     // Round 1 (draft.currentRound === 0) always spins the Legends era — the
     // user picks their one Legend first; rounds 2–6 spin the other eras.
-    const combosForUpcomingRound = () =>
-      draft.currentRound === 0 ? LEGEND_COMBOS : DRAFT_COMBOS;
+    // A spin can never re-land on an era×nation combo already drawn in this
+    // draft: a repeat would shrink the user's options (picked players are
+    // removed from the pool). Eras and nations may each repeat — only the
+    // pair must be unique.
+    const usedComboKeys = () =>
+      new Set(draft.spinHistory.map((s) => `${s.era}|${s.nation}`));
+    const combosForUpcomingRound = () => {
+      const base = draft.currentRound === 0 ? LEGEND_COMBOS : DRAFT_COMBOS;
+      const used = usedComboKeys();
+      const fresh = base.filter((c) => !used.has(`${c.era}|${c.nation}`));
+      // Defensive: with dozens of combos and at most 5 prior spins the fresh
+      // pool can never run dry — but never let the spin dead-end if it does.
+      return fresh.length > 0 ? fresh : base;
+    };
     const uidIndex = {};
     for (const eraId of Object.keys(byEra)) {
       for (const p of byEra[eraId]) uidIndex[p.uid] = p;
