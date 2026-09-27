@@ -222,7 +222,19 @@ for (let seed = 1; seed <= TRIALS; seed++) {
   const rand = mulberry32(seed);
   const combos: { era: string; nation: string }[] = [];
   combos.push(legendCombos[Math.floor(rand() * legendCombos.length)]);
-  for (let r = 1; r < 6; r++) combos.push(draftCombos[Math.floor(rand() * draftCombos.length)]);
+  // Rounds 2–6 draw without replacement: the live game excludes already-drawn
+  // era×nation combos, so the sim must too.
+  const remaining = [...draftCombos];
+  for (let r = 1; r < 6; r++) {
+    const idx = Math.floor(rand() * remaining.length);
+    combos.push(remaining.splice(idx, 1)[0]);
+  }
+  const pairKeys = combos.map((c) => `${c.era}|${c.nation}`);
+  ok(
+    new Set(pairKeys).size === pairKeys.length,
+    `trial ${seed}: all 6 spin combos are unique pairs`,
+    JSON.stringify(pairKeys),
+  );
   const pools: NormalizedPlayer[][] = combos.map((c) => poolFor(c.era, c.nation));
   combos.forEach((c, r) => ((pools as any)[`__combo${r}`] = c));
 
