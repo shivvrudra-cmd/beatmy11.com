@@ -260,18 +260,6 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
       '2010s': '#8B5CF6',
       '2020s': '#2DD4BF',
     };
-    const NATION_FLAGS = {
-      Australia: '🇦🇺',
-      England: '🏴󐁧󐁢󐁥󐁮󐁧󐁿',
-      India: '🇮🇳',
-      Pakistan: '🇵🇰',
-      'West Indies': '🇯🇲',
-      'New Zealand': '🇳🇿',
-      'South Africa': '🇿🇦',
-      'Sri Lanka': '🇱🇰',
-      Bangladesh: '🇧🇩',
-      Zimbabwe: '🇿🇼',
-    };
     const NATION_CODES = {
       Australia: 'AUS',
       England: 'EG',
@@ -345,7 +333,6 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
       // match the role the player fills. No role chips: each card already
       // sits under its position group heading.
       const role = displayRole || normalizeRole(p.primaryRole);
-      const flag = NATION_FLAGS[p.nation] ?? '';
       const nationCode = NATION_CODES[p.nation] ?? p.nation;
       const stats = keyStats(p, role)
         .map(
@@ -359,7 +346,7 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
         `<div class="bm11-pc-row">` +
         `<div class="bm11-pc-head">` +
         `<div class="bm11-pc-name">${esc(p.name)}</div>` +
-        `<div class="bm11-pc-sub">${flag ? `<span aria-hidden="true">${flag} </span>` : ''}${esc(nationCode)}` +
+        `<div class="bm11-pc-sub"><span class="bm11-nation-code">${esc(nationCode)}</span>` +
         ` · <span class="bm11-era-chip" style="--era-accent:${accent};">${esc(eraLabel)}</span></div>` +
         `</div>` +
         `<div class="bm11-pc-ministats" aria-label="Key statistics">${stats}</div>` +

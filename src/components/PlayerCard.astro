@@ -161,7 +161,7 @@ const accessibleName = `${player.name}, ${roleLabels.join(', ') || 'player'}, ${
       <div class="bm11-pc-head">
         <div class="bm11-pc-name">{player.name}</div>
         <div class="bm11-pc-sub">
-          {flag && <span aria-hidden="true">{flag} </span>}{NATION_CODES[player.nation] ?? player.nation}
+          <span class="bm11-nation-code">{NATION_CODES[player.nation] ?? player.nation}</span>
           {' · '}
           <span class="bm11-era-chip" style={cardStyle}>{eraLabel}</span>
         </div>
@@ -306,6 +306,23 @@ const accessibleName = `${player.name}, ${roleLabels.join(', ') || 'player'}, ${
     line-height: 1.4;
   }
   .bm11-pc-row .bm11-era-chip { margin-top: 0; margin-left: 0.25rem; }
+
+  /* Nation code badge on the compact comparison rows (results page):
+     the same pill for every nation, so codes like WI / EG / SA render
+     identically everywhere instead of relying on flag emoji. */
+  .bm11-nation-code {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--bm11-text, #F1F5F9);
+    background: var(--bm11-elevated, #141D33);
+    border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+    border-radius: 0.375rem;
+    padding: 0.12rem 0.42rem;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
 
   .bm11-pc-roles { display: flex; flex-wrap: wrap; gap: 0.3rem; }
   .bm11-chip {
