@@ -304,18 +304,6 @@ const styleSeed = playersForEra('legends')[0];
       { label: 'Spot 8', keys: ['spin-ar'] },
       { label: 'Fast Bowlers', keys: ['fast-1', 'fast-2', 'fast-3'] },
     ];
-    const NATION_FLAGS = {
-      Australia: '🇦🇺',
-      England: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
-      India: '🇮🇳',
-      Pakistan: '🇵🇰',
-      'West Indies': '🇯🇲',
-      'New Zealand': '🇳🇿',
-      'South Africa': '🇿🇦',
-      'Sri Lanka': '🇱🇰',
-      Bangladesh: '🇧🇩',
-      Zimbabwe: '🇿🇼',
-    };
     const ERA_NAMES = {
       legends: 'Legends',
       '1970s': '1970s',
@@ -415,15 +403,6 @@ const styleSeed = playersForEra('legends')[0];
     function cardHTML(p, kind) {
       const drawEra = draft.currentEra || p.displayEra;
       const accent = ERA_ACCENTS[drawEra] || '#94A3B8';
-      const flag = NATION_FLAGS[p.nation] || '';
-      const eraLabel = eraName(drawEra);
-      const roles = [
-        p.primaryRole,
-        ...(p.secondaryRoles || []).filter((r) => r !== p.primaryRole),
-      ]
-        .filter(Boolean)
-        .map((r) => ROLE_LABELS[r] || r)
-        .join(', ');
       return (
         `<button type="button" class="bm11-prow" data-bm11-select="${esc(p.uid)}"` +
         ` aria-pressed="false" aria-label="${esc(accessibleName(p))}" style="--era-accent:${accent};">` +
@@ -432,9 +411,6 @@ const styleSeed = playersForEra('legends')[0];
         ` class="bm11-prow-avatar" style="--era-accent:${accent};background-color:#0D1424;" />` +
         `<span class="bm11-prow-who">` +
         `<span class="bm11-prow-name">${esc(p.name)}</span>` +
-        `<span class="bm11-prow-sub">${esc(roles)} · ${flag ? `<span aria-hidden="true">${flag} </span>` : ''}${esc(
-          p.nation || ''
-        )} · ${esc(eraLabel)}</span>` +
         `</span></span>` +
         `<span class="bm11-prow-stats" aria-label="Career statistics">${poolStatCells(p, kind)}</span>` +
         `<span class="bm11-check-badge" aria-hidden="true" hidden>` +
@@ -1201,7 +1177,7 @@ const styleSeed = playersForEra('legends')[0];
           hint = `as ${rl}`;
           ariaLabel = `${slot.label} — empty. Activate to place ${p.name} as ${rl}.`;
         } else {
-          hint = slotRoles;
+          hint = '';
           ariaLabel =
             `${slot.label} — empty (${slotRoles}). ${p.name} can't play here.`;
         }
@@ -1212,14 +1188,14 @@ const styleSeed = playersForEra('legends')[0];
         hint = 'Move here';
         ariaLabel = `${slot.label} — empty. Activate to move the selected player here.`;
       } else {
-        hint = slotRoles;
+        hint = '';
         ariaLabel = `${slot.label} — empty (${slotRoles}).`;
       }
       return (
         `<button type="button" class="${classes.join(' ')}" data-bm11-slot="${esc(slotKey)}"` +
         ` aria-label="${esc(ariaLabel)}">` +
         `<span class="bm11-slot-label">${esc(slot.label)}</span>` +
-        `<span class="bm11-slot-hint">${esc(hint)}</span>` +
+        (hint ? `<span class="bm11-slot-hint">${esc(hint)}</span>` : '') +
         `</button>`
       );
     }
@@ -1744,13 +1720,6 @@ const styleSeed = playersForEra('legends')[0];
     .bm11-prow-name {
       font-weight: 700;
       font-size: 0.95rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .bm11-prow-sub {
-      font-size: 0.72rem;
-      color: var(--bm11-muted, #94a3b8);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
