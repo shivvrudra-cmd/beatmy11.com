@@ -36,7 +36,7 @@ L.push(`Generated ${new Date().toISOString().slice(0, 10)} from the current repo
 L.push('Engine: seven metrics, percentile-rank 0–100 over eligible populations');
 L.push('(all-rounders ranked only against the 47 all-rounders, other roles against full populations),');
 L.push('W=20 shrinkage toward the role-eligible population mean (adjusted = (m×raw + 20×mean)/(m+20)),');
-L.push('V1 weights (bat 1/3, bowl 1/4, AR 50/50), XI = mean of 11.');
+L.push('V1 weights (bat 1/3, bowl 1/4, AR 60/40 toward stronger discipline), XI = mean of 11.');
 L.push('');
 L.push('## Populations and shrinkage priors');
 L.push('');

@@ -3,7 +3,7 @@
  *
  * Checklist: seven metrics, derived rates, averages used directly,
  * lower-is-better only for bowling average, percentile normalization,
- * all six roles, declared-role behavior, 50/50 all-rounder weighting,
+ * all six roles, declared-role behavior, 60/40-stronger all-rounder weighting,
  * no batting score for specialists, missing/zero-Test handling,
  * determinism, identical-XI ties, metrics-only discipline, XI mean
  * aggregation, explicit fixed-opponent input. Draft suites untouched.
@@ -15,8 +15,7 @@ import {
   BOWLING_METRICS,
   BATTING_WEIGHTS,
   BOWLING_WEIGHTS,
-  ALL_ROUNDER_BATTING_SHARE,
-  ALL_ROUNDER_BOWLING_SHARE,
+  ALL_ROUNDER_STRONGER_SHARE,
   ROLE_METRICS,
   evaluationRole,
   rawMetrics,
@@ -182,24 +181,26 @@ ok(
 );
 ok(warne.bowlingScore !== null && warne.score === warne.bowlingScore, 'spinner score = bowling score');
 
-// ---- 12/14. all-rounder: both sides, 50/50 ----
+// ---- 12/14. all-rounder: both sides, 60/40 toward stronger ----
 const kallis = scorePlayer(P('jacques-kallis'), 'all-rounder', CTX);
 ok(kallis.battingScore !== null && kallis.bowlingScore !== null, 'all-rounder: separate batting + bowling scores');
+const arStronger = Math.max(kallis.battingScore!, kallis.bowlingScore!);
+const arWeaker = Math.min(kallis.battingScore!, kallis.bowlingScore!);
 const expAR =
   Math.round(
-    (ALL_ROUNDER_BATTING_SHARE *
-      (kallis.normalized.battingAverage! * BATTING_WEIGHTS.battingAverage +
-        kallis.normalized.runsPerMatch! * BATTING_WEIGHTS.runsPerMatch +
-        kallis.normalized.centuryRate! * BATTING_WEIGHTS.centuryRate) +
-      ALL_ROUNDER_BOWLING_SHARE *
-        (kallis.normalized.bowlingAverage! * BOWLING_WEIGHTS.bowlingAverage +
-          kallis.normalized.wicketsPerMatch! * BOWLING_WEIGHTS.wicketsPerMatch +
-          kallis.normalized.fiveWRate! * BOWLING_WEIGHTS.fiveWRate +
-          kallis.normalized.tenWRate! * BOWLING_WEIGHTS.tenWRate)) *
+    (ALL_ROUNDER_STRONGER_SHARE * arStronger +
+      (1 - ALL_ROUNDER_STRONGER_SHARE) * arWeaker) *
       10,
   ) / 10;
-ok(kallis.score === expAR, 'all-rounder score = 50/50 blend of the two sides', { got: kallis.score, exp: expAR });
-ok(ALL_ROUNDER_BATTING_SHARE === 0.5 && ALL_ROUNDER_BOWLING_SHARE === 0.5, 'V1 all-rounder weighting is 50/50');
+ok(kallis.score === expAR, 'all-rounder score = 60/40 blend toward the stronger side', { got: kallis.score, exp: expAR });
+ok(ALL_ROUNDER_STRONGER_SHARE === 0.6, 'V1 all-rounder weighting is 60/40 toward stronger discipline');
+ok(kallis.score === 67.6, 'kallis as all-rounder: 67.6 — batting spike leads, not chopped by bowling', { got: kallis.score });
+// symmetry: a bowling spike is weighted the same way
+const hadleeAR = scorePlayer(P('richard-hadlee'), 'all-rounder', CTX);
+ok(hadleeAR.bowlingScore! > hadleeAR.battingScore!, 'hadlee: bowling half is the stronger side');
+const expHadleeAR =
+  Math.round((0.6 * hadleeAR.bowlingScore! + 0.4 * hadleeAR.battingScore!) * 10) / 10;
+ok(hadleeAR.score === expHadleeAR, 'bowling spike gets the 60% weight too', { got: hadleeAR.score, exp: expHadleeAR });
 
 // ---- 13. declared role drives evaluation ----
 const sobersDeclared = scorePlayer(P('garfield-sobers'), 'middle-order', CTX);
@@ -469,19 +470,19 @@ ok(SHRINKAGE_PRIOR_MATCHES === 20, 'spec shrinkage prior weight is 20 matches');
   const sSobers = scorePlayer(P('garfield-sobers'), 'all-rounder', CTX);
   const sKallis = scorePlayer(P('jacques-kallis'), 'all-rounder', CTX);
   const sJadeja = scorePlayer(P('ravindra-jadeja'), 'all-rounder', CTX);
-  ok(sBotham.score! > 75 && sBotham.score! < 82, 'Botham ~78 against all-rounders', sBotham.score);
-  ok(sImran.score! > 70 && sImran.score! < 77, 'Imran ~74 against all-rounders', sImran.score);
-  ok(sSobers.score! > 65 && sSobers.score! < 72, 'Sobers ~69 against all-rounders', sSobers.score);
-  ok(sKallis.score! > 57 && sKallis.score! < 63, 'Kallis ~60 against all-rounders', sKallis.score);
-  ok(sJadeja.score! > 67 && sJadeja.score! < 73, 'Jadeja ~70 against all-rounders', sJadeja.score);
+  ok(sBotham.score! > 79 && sBotham.score! < 83, 'Botham ~81 against all-rounders', sBotham.score);
+  ok(sImran.score! > 76 && sImran.score! < 80, 'Imran ~78 against all-rounders', sImran.score);
+  ok(sSobers.score! > 73 && sSobers.score! < 77, 'Sobers ~75 against all-rounders', sSobers.score);
+  ok(sKallis.score! > 66 && sKallis.score! < 69, 'Kallis ~68 against all-rounders', sKallis.score);
+  ok(sJadeja.score! > 72 && sJadeja.score! < 75, 'Jadeja ~73 against all-rounders', sJadeja.score);
   ok(
     sBotham.battingScore! > 60 && sBotham.bowlingScore! > 85,
     'Botham: real two-discipline percentiles vs ARs',
     { bat: sBotham.battingScore, bowl: sBotham.bowlingScore },
   );
-  // a lopsided bowler stays low as an "all-rounder" — no free points
+  // a lopsided bowler's spike leads the 60/40 blend — symmetric with batting spikes
   const sHadlee = scorePlayer(P('richard-hadlee'), 'all-rounder', CTX);
-  ok(sHadlee.score! < 60, 'Hadlee (weak AR batting) stays low as an all-rounder', sHadlee.score);
+  ok(sHadlee.score! > 62 && sHadlee.score! < 67, 'Hadlee (bowling spike) ~64 as an all-rounder', sHadlee.score);
   // anti-gaming: a specialist declared as an all-rounder collapses
   const murSp = scorePlayer(P('muttiah-muralitharan'), 'spinner', CTX).score!;
   const murAR = scorePlayer(P('muttiah-muralitharan'), 'all-rounder', CTX).score!;

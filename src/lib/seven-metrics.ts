@@ -18,7 +18,7 @@
  * ROLES: openers / middle-order / wicketkeepers score the 3 batting metrics;
  *   spinners / fast bowlers score the 4 bowling metrics only (no batting
  *   score for specialists); all-rounders score all 7 with batting and
- *   bowling kept separate, combined 50/50. The XI slot's declared role is
+ *   bowling kept separate, combined 60/40 toward the stronger half. The XI slot's declared role is
  *   the scoring role when present.
  *
  * NORMALIZATION: percentile-rank across the FULL eligible scoring
@@ -33,8 +33,8 @@
  *   the all-rounder batting population, bowling percentiles against the
  *   all-rounder bowling population — never against specialist
  *   populations. Shrinkage priors for all-rounders likewise come from the
- *   all-rounder population means. The 50/50 blend is unchanged, so a
- *   specialist declared as an all-rounder still lands near the middle
+ *   all-rounder population means. The 60/40-stronger blend still lands a
+ *   specialist declared as an all-rounder far below their specialist score
  *   (one half near zero) and no new weighting parameter is introduced.
  *
  * SHRINKAGE (owner-approved 2026-09-25): before percentile ranking, every
@@ -131,9 +131,12 @@ export const BOWLING_WEIGHTS: Record<MetricKey, number> = {
   tenWRate: 1 / 4,
 };
 
-/** … all-rounder = 50% batting + 50% bowling. */
-export const ALL_ROUNDER_BATTING_SHARE = 0.5;
-export const ALL_ROUNDER_BOWLING_SHARE = 0.5;
+/** … all-rounder = 60% stronger discipline + 40% weaker discipline.
+ *  The stronger of the batting/bowling halves leads, so asymmetric
+ *  all-rounders (a main weapon plus a bonus — Kallis, Hadlee) are not
+ *  chopped by their weaker half. Symmetric: helps batting spikes and
+ *  bowling spikes alike. */
+export const ALL_ROUNDER_STRONGER_SHARE = 0.6;
 
 // ---------------------------------------------------------------------------
 // Roles and applicable metrics
@@ -507,7 +510,7 @@ export interface PlayerScore {
   bowlingScore: number | null;
   /**
    * Final 0–100 player score (1 decimal): batting/bowling weighted score,
-   * or 50/50 of the two for all-rounders. Null while any applicable
+   * or 60/40 toward the stronger half for all-rounders. Null while any applicable
    * metric is uncomputable — a misleading score is never produced.
    */
   score: number | null;
@@ -533,7 +536,7 @@ function weightedMean(
  * Deterministic per-player scoring. Same player + same data + same
  * scoring context always yields the same score. Specialist bowlers
  * receive no batting score; an all-rounder's batting and bowling scores
- * stay separately available and combine 50/50. Percentiles are computed
+ * stay separately available and combine 60/40 toward the stronger half. Percentiles are computed
  * on shrinkage-adjusted values, so small samples are pulled toward the
  * population mean before ranking. All-rounders are ranked against the
  * all-rounder-only populations (with all-rounder shrinkage priors);
@@ -567,9 +570,11 @@ export function scorePlayer(
   let score: number | null = null;
   if (role === 'all-rounder') {
     if (battingScore !== null && bowlingScore !== null) {
+      const stronger = Math.max(battingScore, bowlingScore);
+      const weaker = Math.min(battingScore, bowlingScore);
       score =
-        ALL_ROUNDER_BATTING_SHARE * battingScore +
-        ALL_ROUNDER_BOWLING_SHARE * bowlingScore;
+        ALL_ROUNDER_STRONGER_SHARE * stronger +
+        (1 - ALL_ROUNDER_STRONGER_SHARE) * weaker;
     }
   } else if (battingScore !== null) {
     score = battingScore;
