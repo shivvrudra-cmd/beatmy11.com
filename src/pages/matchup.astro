@@ -207,6 +207,7 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
           bowlingAverage: posOrNull(stats.bowlingAverage),
           fiveWs: finOrNull(stats.fiveWs),
           tenWs: finOrNull(stats.tenWs),
+          dismissals: finOrNull(stats.dismissals),
         },
       };
     }
