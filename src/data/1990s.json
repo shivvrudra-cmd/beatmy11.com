@@ -536,6 +536,28 @@
     }
   },
   {
+    "id": "navjot-sidhu",
+    "name": "Navjot Sidhu",
+    "nation": "India",
+    "era": ["1980s","1990s"],
+    "primaryRole": "Opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 42.1,
+      "testRuns": 3202,
+      "testWickets": 0,
+      "testMatches": 51,
+      "testCenturies": 9,
+      "testFifties": 15,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 9
+    }
+  },
+  {
     "id": "sachin-tendulkar",
     "name": "Sachin Tendulkar",
     "nation": "India",
@@ -2557,11 +2579,8 @@
       "1980s",
       "1990s"
     ],
-    "primaryRole": "all-rounder",
-    "secondaryRoles": [
-      "fast-bowler",
-      "middle-order"
-    ],
+    "primaryRole": "opener",
+    "secondaryRoles": "all-rounder",
     "stats": {
       "testAverage": 32.6,
       "testRuns": 1600,
