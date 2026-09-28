@@ -398,6 +398,23 @@ const styleSeed = playersForEra('legends')[0];
       label: XI_SLOT_GROUP_LABELS[g],
       keys: XI_SLOTS.filter((s) => s.group === g).map((s) => s.key),
     }));
+    // Mobile field-view grouping (display only): 1-2 / 3-4-5 / 6-7-8 / 9-10-11.
+    // The XI_SLOTS model above (groups, roles, rules) is untouched — this only
+    // re-slices the 11 fixed slots for the compact mobile card view.
+    const MOBILE_FIELD_GROUPS = [
+      { key: 'm-openers', label: '1–2 · Openers', keys: ['opener-1', 'opener-2'] },
+      { key: 'm-batters', label: '3–4–5 · Batters', keys: ['bat-3', 'bat-4', 'bat-5'] },
+      {
+        key: 'm-allround',
+        label: '6–7–8 · All-round',
+        keys: ['bat-6', 'flex-7', 'flex-8'],
+      },
+      {
+        key: 'm-bowlers',
+        label: '9–10–11 · Fast Bowlers',
+        keys: ['fast-1', 'fast-2', 'fast-3'],
+      },
+    ];
     const ERA_NAMES = {
       legends: 'Legends',
       '1970s': '1970s',
@@ -1587,7 +1604,10 @@ const styleSeed = playersForEra('legends')[0];
       }%`;
 
       const list = $('bm11-xi-list');
-      list.innerHTML = SLOT_GROUPS.map((g) => {
+      // Mobile shows the 1-2 / 3-4-5 / 6-7-8 / 9-10-11 field view; desktop
+      // keeps the model groups. The slots themselves are identical.
+      const groups = mqMobile.matches ? MOBILE_FIELD_GROUPS : SLOT_GROUPS;
+      list.innerHTML = groups.map((g) => {
         const filled = g.keys.filter((k) => draft.slots[k]).length;
         const rows = g.keys
           .map((k) => `<li class="bm11-slot">${slotButtonHTML(k)}</li>`)
@@ -1662,7 +1682,11 @@ const styleSeed = playersForEra('legends')[0];
     // Panels must be in their breakpoint-correct homes before the first
     // render populates them.
     layoutPanels();
-    mqMobile.addEventListener('change', layoutPanels);
+    // Re-slice the XI groups when crossing the mobile breakpoint.
+    mqMobile.addEventListener('change', () => {
+      layoutPanels();
+      renderSummary();
+    });
     (function restore() {
       const raw = loadDraft();
       if (!raw) {
@@ -2585,16 +2609,16 @@ const styleSeed = playersForEra('legends')[0];
         display: grid;
         gap: 0.5rem;
       }
-      .bm11-xi-static .bm11-xi-group[data-bm11-group='openers'] .bm11-xi-group-list {
+      .bm11-xi-static .bm11-xi-group[data-bm11-group='m-openers'] .bm11-xi-group-list {
         grid-template-columns: repeat(2, 1fr);
       }
-      .bm11-xi-static .bm11-xi-group[data-bm11-group='batting'] .bm11-xi-group-list {
-        grid-template-columns: repeat(4, 1fr);
+      .bm11-xi-static .bm11-xi-group[data-bm11-group='m-batters'] .bm11-xi-group-list {
+        grid-template-columns: repeat(3, 1fr);
       }
-      .bm11-xi-static .bm11-xi-group[data-bm11-group='flex'] .bm11-xi-group-list {
-        grid-template-columns: repeat(2, 1fr);
+      .bm11-xi-static .bm11-xi-group[data-bm11-group='m-allround'] .bm11-xi-group-list {
+        grid-template-columns: repeat(3, 1fr);
       }
-      .bm11-xi-static .bm11-xi-group[data-bm11-group='fast'] .bm11-xi-group-list {
+      .bm11-xi-static .bm11-xi-group[data-bm11-group='m-bowlers'] .bm11-xi-group-list {
         grid-template-columns: repeat(3, 1fr);
       }
       /* The × sits on the card corner instead of beside the row. */
