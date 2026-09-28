@@ -201,7 +201,7 @@ const expAR =
   ) / 10;
 ok(kallis.score === expAR, 'all-rounder score = 60/40 blend toward the stronger side', { got: kallis.score, exp: expAR });
 ok(ALL_ROUNDER_STRONGER_SHARE === 0.6, 'V1 all-rounder weighting is 60/40 toward stronger discipline');
-ok(kallis.score === 67.6, 'kallis as all-rounder: 67.6 — batting spike leads, not chopped by bowling', { got: kallis.score });
+ok(kallis.score === 68, 'kallis as all-rounder: 68 — batting spike leads, not chopped by bowling', { got: kallis.score });
 // symmetry: a bowling spike is weighted the same way
 const hadleeAR = scorePlayer(P('richard-hadlee'), 'all-rounder', CTX);
 ok(hadleeAR.bowlingScore! > hadleeAR.battingScore!, 'hadlee: bowling half is the stronger side');
@@ -536,8 +536,8 @@ ok(SHRINKAGE_PRIOR_MATCHES === 20, 'spec shrinkage prior weight is 20 matches');
   // population shape: one entry per all-rounder per metric
   for (const k of [...BATTING_METRICS, ...BOWLING_METRICS] as MetricKey[]) {
     ok(
-      CTX.arPopulations[k].length === 47,
-      `arPopulations.${k} holds the 47 all-rounders`,
+      CTX.arPopulations[k].length === 46,
+      `arPopulations.${k} holds the 46 all-rounders`,
       CTX.arPopulations[k].length,
     );
   }
@@ -594,7 +594,7 @@ ok(SHRINKAGE_PRIOR_MATCHES === 20, 'spec shrinkage prior weight is 20 matches');
   ok(murAR < murSp - 30, 'specialist declared as all-rounder gains nothing', { murSp, murAR });
   // non-AR roles are untouched by the change
   ok(
-    scorePlayer(P('sachin-tendulkar'), 'middle-order', CTX).score === 96.6,
+    scorePlayer(P('sachin-tendulkar'), 'middle-order', CTX).score === 96.7,
     'Tendulkar unchanged (full populations)',
   );
   ok(

@@ -185,7 +185,7 @@ rather than invented:
    tiny-sample hot-streak problem (Kaia 99.4 → 68.5, Padikkal 99.7 → 80.4;
    no ≤5-Test player in any role's top 10). Missing values stay missing.
 8. All-rounder-only populations (owner-approved 2026-09-25, "Option A"):
-   all-rounders are percentile-ranked only against the 47 all-rounders
+   all-rounders are percentile-ranked only against the 46 all-rounders
    (batting vs AR batting, bowling vs AR bowling), with shrinkage priors
    from AR-only raw means; every other role still uses the full
    populations. No new weighting parameter — the 50/50 blend is unchanged,
