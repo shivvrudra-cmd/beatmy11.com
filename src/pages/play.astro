@@ -1194,6 +1194,16 @@ const styleSeed = playersForEra('legends')[0];
       // complete), it stays down on Your XI with Spin up top to continue.
       if (mqMobile.matches && !draft.gameComplete && !roundDone()) {
         revealDrawSheet();
+      } else if (mqMobile.matches && !draft.gameComplete && roundDone()) {
+        // Round done on mobile: bring the spin zone back into view so the
+        // next spin is one tap away — no manual scroll-up needed.
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        requestAnimationFrame(() => {
+          document.querySelector('.bm11-spinzone')?.scrollIntoView({
+            behavior: reduceMotion ? 'auto' : 'smooth',
+            block: 'start',
+          });
+        });
       }
       // Note when a placement fills every slot of its group.
       const group = SLOT_GROUPS.find((g) => g.keys.includes(slotKey));
