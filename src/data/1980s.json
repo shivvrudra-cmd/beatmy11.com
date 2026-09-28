@@ -1013,9 +1013,9 @@
     "name": "Manoj Prabhakar",
     "nation": "India",
     "era": ["1980s","1990s"],
-    "primaryRole": "all-rounder",
+    "primaryRole": "middle-order",
     "secondaryRoles": [
-      "fast-bowler","middle-order"
+      "fast-bowler","all-rounder"
     ],
     "stats": {
       "testAverage": 32.6,
