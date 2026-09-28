@@ -92,10 +92,6 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
         <p class="verdict__sub" id="verdict-sub">Your XI is being scored against the house.</p>
       </section>
 
-      <div class="matchup__actions">
-        <a href="/play" class="bm11-btn bm11-btn-primary" id="play-again">Start over</a>
-      </div>
-
       <section class="tape" aria-labelledby="tape-heading">
         <h2 class="matchup__section-title" id="tape-heading">Tale of the tape</h2>
         <div class="tape__scores">
@@ -142,16 +138,9 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
         </section>
       </div>
 
-      <!-- Mobile: no role grouping — the two XIs matched player for player,
-           slot order vs slot order, side by side. Populated by the client
-           script; the grouped columns above stay the desktop layout. -->
-      <section class="matchup__vs" aria-label="Your XI versus My XI, player by player">
-        <div class="matchup__vs-head">
-          <h2 class="matchup__vs-title">Your XI</h2>
-          <h2 class="matchup__vs-title matchup__vs-title--right">My XI</h2>
-        </div>
-        <div class="matchup__vs-rows" id="matchup-vs"></div>
-      </section>
+      <div class="matchup__actions">
+        <a href="/play" class="bm11-btn bm11-btn-primary" id="play-again">Start over</a>
+      </div>
     </div>
   </main>
 
@@ -389,6 +378,9 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
       const container = document.getElementById('user-xi');
       const loading = document.getElementById('user-xi-loading');
       if (loading) loading.remove();
+      // Flat list in the same role order as the house column — the
+      // <h3> group headings are CSS-hidden on mobile, so both columns
+      // read as plain side-by-side XIs there.
       const groups = ROLE_ORDER.map((role) => ({
         role,
         entries: userEntries.filter((e) => displayRoleOf(e) === role),
@@ -404,27 +396,6 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
             g.entries.map((e) => comparisonRow(e.player, displayRoleOf(e))).join('')
         )
         .join('');
-    }
-
-    /**
-     * Mobile player-by-player view: no role grouping — the two XIs matched
-     * slot for slot (both arrays are in batting/slot order), side by side.
-     */
-    function renderVsRows(userEntries, houseEntries) {
-      const vs = document.getElementById('matchup-vs');
-      if (!vs) return;
-      const n = Math.max(userEntries.length, houseEntries.length);
-      let html = '';
-      for (let i = 0; i < n; i++) {
-        const u = userEntries[i];
-        const h = houseEntries[i];
-        html +=
-          `<div class="matchup__vs-row">` +
-          `<div class="matchup__vs-cell">${u ? comparisonRow(u.player, displayRoleOf(u)) : ''}</div>` +
-          `<div class="matchup__vs-cell">${h ? comparisonRow(h.player, h.declaredRole) : ''}</div>` +
-          `</div>`;
-      }
-      vs.innerHTML = html;
     }
 
     /**
@@ -487,7 +458,6 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
       }));
       renderUserXI(userEntries);
       renderResult(userEntries, houseEntries);
-      renderVsRows(userEntries, houseEntries);
 
       document.getElementById('play-again').addEventListener('click', () => {
         try {
@@ -569,9 +539,6 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
     .matchup__group:first-child { margin-top: 0; }
     .matchup__loading { color: var(--bm11-muted, #a5a8c9); }
     .matchup__divider { display: none; }
-    /* Mobile player-by-player view (populated by JS): hidden on desktop,
-       where the grouped two-column layout rules. */
-    .matchup__vs { display: none; }
     .matchup__section-title {
       font-size: 1.1rem;
       font-weight: 700;
@@ -679,58 +646,23 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
     }
 
     @media (max-width: 860px) {
-      /* Grouped columns become the mobile side-by-side: no role grouping,
-         the two XIs matched player for player, slot order vs slot order. */
-      .matchup__cols { display: none; }
-      .matchup__vs { display: block; }
-      .matchup__vs-head {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.6rem;
-        margin-bottom: 0.75rem;
-      }
-      .matchup__vs-title {
-        font-size: 1rem;
-        font-weight: 700;
-        margin: 0;
-        color: var(--bm11-text, #ffffff);
-      }
-      .matchup__vs-title--right { text-align: right; }
-      .matchup__vs-rows {
-        display: flex;
-        flex-direction: column;
-        gap: 0.6rem;
-      }
-      .matchup__vs-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.6rem;
-        align-items: stretch;
-      }
-      .matchup__vs-cell { min-width: 0; }
-      /* Tighten the comparison cards for half-width cells. */
-      .matchup__vs-cell .bm11-player-card.is-comparison { padding: 0.6rem; }
-      .matchup__vs-cell .bm11-pc-row { gap: 0.5rem; }
-      .matchup__vs-cell .bm11-pc-name { font-size: 0.85rem; }
-      .matchup__vs-cell .bm11-pc-sub { font-size: 0.68rem; }
-      .matchup__vs-cell .bm11-pc-ministats { gap: 0.5rem; }
-      .matchup__vs-cell .bm11-pc-ministat-v { font-size: 0.75rem; }
-      .matchup__vs-cell .bm11-pc-ministat-l { font-size: 0.52rem; }
-      .matchup__divider {
-        display: flex;
-        justify-content: center;
-        margin: 0.25rem 0;
-      }
-      .matchup__divider span {
-        font-size: 0.8rem;
-        font-weight: 800;
-        letter-spacing: 0.12em;
-        color: var(--bm11-text, #ffffff);
-        background: var(--bm11-elevated, #1a1a38);
-        border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
-        border-radius: 9999px;
-        padding: 0.4rem 1.1rem;
-      }
+      /* Mobile keeps the desktop shape — the two XIs side by side — with
+         no role group headings and compact type so the columns fit. */
+      .matchup__cols { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+      .matchup__group { display: none; }
+      .matchup__team-title { font-size: 0.95rem; }
+      .matchup__list { gap: 0.5rem; }
+      .matchup__list .bm11-player-card.is-comparison { padding: 0.6rem; }
+      .matchup__list .bm11-pc-row { gap: 0.5rem; }
+      .matchup__list .bm11-pc-name { font-size: 0.85rem; }
+      .matchup__list .bm11-pc-sub { font-size: 0.68rem; }
+      .matchup__list .bm11-pc-ministats { gap: 0.5rem; }
+      .matchup__list .bm11-pc-ministat-v { font-size: 0.75rem; }
+      .matchup__list .bm11-pc-ministat-l { font-size: 0.52rem; }
+      /* Extra copy stays on desktop — mobile keeps only the essentials:
+         header, tale of the tape, verdict, the two XIs, Start over. */
+      .matchup__lede,
+      #verdict-sub { display: none; }
       .tape__scores { grid-template-columns: 1fr; gap: 0.75rem; }
       .tape__side--right { text-align: left; }
       .tape { padding: 1.25rem; }
