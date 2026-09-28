@@ -430,8 +430,9 @@ const styleSeed = playersForEra('legends')[0];
       String(v ?? '').replace(/[&<>"']/g, (c) => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
       }[c]));
+    // Pool-sheet averages show one decimal (55.1, not 55.10).
     const fmtAvg = (v) =>
-      v == null || Number.isNaN(Number(v)) ? '–' : Number(v).toFixed(2);
+      v == null || Number.isNaN(Number(v)) ? '–' : Number(v).toFixed(1);
     const fmtInt = (v) =>
       v == null || Number.isNaN(Number(v)) ? '–' : Math.round(Number(v)).toLocaleString('en-US');
     // Compact card initials for the mobile field-view XI (e.g. "Steve Waugh" -> "SW").
@@ -2148,7 +2149,7 @@ const styleSeed = playersForEra('legends')[0];
       .bm11-prow-avatar { display: none; }
       .bm11-prow-id { flex: 1 1 auto; min-width: 0; }
       .bm11-prow-name {
-        font-size: 0.88rem;
+        font-size: 0.78rem;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
