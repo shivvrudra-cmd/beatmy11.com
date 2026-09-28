@@ -137,6 +137,30 @@ const styleSeed = playersForEra('legends')[0];
 
         <!-- Sticky XI panel on desktop; bottom draw sheet on mobile -->
         <aside class="bm11-summary" id="bm11-summary" aria-label="Your selected XI">
+          <!-- Mobile only: respin tokens ride directly above the draw sheet
+               and travel with it as it opens/closes. -->
+          <div class="bm11-sheet-respins" id="bm11-sheet-respins" hidden>
+            <button
+              type="button"
+              class="bm11-reel-respin bm11-sheet-respin--era"
+              id="bm11-respin-era-sheet"
+              hidden
+            >
+              <span class="bm11-respin-ico" aria-hidden="true">&#10227;</span>
+              Era
+              <span class="bm11-respin-left" id="bm11-respin-era-sheet-left">1 left</span>
+            </button>
+            <button
+              type="button"
+              class="bm11-reel-respin bm11-sheet-respin--nation"
+              id="bm11-respin-nation-sheet"
+              hidden
+            >
+              <span class="bm11-respin-ico" aria-hidden="true">&#10227;</span>
+              Nation
+              <span class="bm11-respin-left" id="bm11-respin-nation-sheet-left">1 left</span>
+            </button>
+          </div>
           <div class="bm11-summary-head">
             <div class="bm11-sheet-titles">
               <div class="bm11-sheet-title-row">
@@ -519,6 +543,23 @@ const styleSeed = playersForEra('legends')[0];
     const respinEraBtn = $('bm11-respin-era');
     const respinNationLeft = $('bm11-respin-nation-left');
     const respinEraLeft = $('bm11-respin-era-left');
+    // Mobile twins: the same tokens rendered above the draw sheet.
+    const respinBar = $('bm11-sheet-respins');
+    const respinNationSheetBtn = $('bm11-respin-nation-sheet');
+    const respinEraSheetBtn = $('bm11-respin-era-sheet');
+    const respinNationSheetLeft = $('bm11-respin-nation-sheet-left');
+    const respinEraSheetLeft = $('bm11-respin-era-sheet-left');
+    // Sync one token's reel button + sheet button together.
+    function syncRespinBtn(btn, sheetBtn, leftEl, sheetLeftEl, show, leftText, label) {
+      btn.hidden = !show;
+      sheetBtn.hidden = !show;
+      if (show) {
+        leftEl.textContent = leftText;
+        sheetLeftEl.textContent = leftText;
+        btn.setAttribute('aria-label', label);
+        sheetBtn.setAttribute('aria-label', label);
+      }
+    }
     const groupsEl = $('bm11-groups');
     const historyEl = $('bm11-history');
     const summaryEl = $('bm11-summary');
@@ -720,9 +761,10 @@ const styleSeed = playersForEra('legends')[0];
             : 'Spin to draw a random era and nation'
       );
 
-      // Respin tokens: each button sits directly under its own reel and
-      // appears only while that token can actually be used — after a draw
-      // lands and before any pick is made from it.
+      // Respin tokens: each button sits directly under its own reel on
+      // desktop and rides above the draw sheet on mobile. Both appear only
+      // while that token can actually be used — after a draw lands and
+      // before any pick is made from it.
       const nationOpts = nationRedrawOptions();
       const eraOpts = eraRedrawOptions();
       const base =
@@ -732,22 +774,25 @@ const styleSeed = playersForEra('legends')[0];
         draft.picksThisRound.length === 0;
       const showNation = base && canRespinNation(draft, nationOpts.length);
       const showEra = base && canRespinEra(draft, eraOpts.length);
-      respinNationBtn.hidden = !showNation;
-      respinEraBtn.hidden = !showEra;
-      if (showNation) {
-        respinNationLeft.textContent = `${draft.nationRespinsLeft} left`;
-        respinNationBtn.setAttribute(
-          'aria-label',
-          `Forced redraw: replace ${draft.currentNation} with a random nation from ${eraName(draft.currentEra)}. No going back.`
-        );
-      }
-      if (showEra) {
-        respinEraLeft.textContent = `${draft.eraRespinsLeft} left`;
-        respinEraBtn.setAttribute(
-          'aria-label',
-          `Forced redraw: replace ${eraName(draft.currentEra)} with a random era for ${draft.currentNation}. No going back.`
-        );
-      }
+      syncRespinBtn(
+        respinNationBtn,
+        respinNationSheetBtn,
+        respinNationLeft,
+        respinNationSheetLeft,
+        showNation,
+        `${draft.nationRespinsLeft} left`,
+        `Forced redraw: replace ${draft.currentNation} with a random nation from ${eraName(draft.currentEra)}. No going back.`
+      );
+      syncRespinBtn(
+        respinEraBtn,
+        respinEraSheetBtn,
+        respinEraLeft,
+        respinEraSheetLeft,
+        showEra,
+        `${draft.eraRespinsLeft} left`,
+        `Forced redraw: replace ${eraName(draft.currentEra)} with a random era for ${draft.currentNation}. No going back.`
+      );
+      respinBar.hidden = !(showNation || showEra);
     }
 
     spinBtn.addEventListener('click', () => {
@@ -873,6 +918,8 @@ const styleSeed = playersForEra('legends')[0];
 
     respinNationBtn.addEventListener('click', () => runRespin('nation'));
     respinEraBtn.addEventListener('click', () => runRespin('era'));
+    respinNationSheetBtn.addEventListener('click', () => runRespin('nation'));
+    respinEraSheetBtn.addEventListener('click', () => runRespin('era'));
 
     // Full draft reset. The button lives only in dead-end states (a stalled
     // draft that can never reach 11, or a complete-but-invalid XI) and on
@@ -2449,9 +2496,55 @@ const styleSeed = playersForEra('legends')[0];
         max-height: calc(100vh - 7rem);
         overflow-y: auto;
       }
+      /* The sheet respin bar is a mobile-only treatment. */
+      .bm11-sheet-respins { display: none; }
     }
     @media (max-width: 1023.98px) {
       .bm11-play { padding-bottom: 6.5rem; }
+      /* The spin zone drops its heading on mobile — the reels and the spin
+         button carry the context. The h1 stays in the accessibility tree
+         (visually hidden) so the section keeps its label. */
+      .bm11-spinzone .bm11-eyebrow { display: none; }
+      .bm11-spinzone #bm11-spin-heading {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      .bm11-spinzone .bm11-wrap {
+        padding-top: 1.25rem;
+        padding-bottom: 1.5rem;
+      }
+      .bm11-spinzone .bm11-draw { margin-top: 0; }
+      /* Respin tokens live above the draw sheet on mobile, not under the
+         reels — the reel buttons stay a desktop-only treatment. */
+      .bm11-reel .bm11-reel-respin { display: none; }
+      /* Respin bar: pinned above the sheet, travelling with it as the
+         sheet opens and closes. Taps pass through except on the buttons. */
+      .bm11-sheet-respins {
+        position: absolute;
+        bottom: calc(100% + 0.5rem);
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        pointer-events: none;
+      }
+      .bm11-sheet-respins[hidden] { display: none; }
+      .bm11-sheet-respins .bm11-reel-respin {
+        pointer-events: auto;
+        margin-top: 0;
+        flex: 1 1 0;
+        max-width: 11rem;
+      }
+      .bm11-sheet-respin--era { background: var(--bm11-gold, #FFC93C); }
+      .bm11-sheet-respin--nation { background: var(--bm11-primary, #00e676); }
       .bm11-summary {
         position: fixed;
         left: 0.75rem;
