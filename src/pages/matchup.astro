@@ -532,15 +532,6 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
       gap: 0.6rem;
       min-width: 0;
     }
-    .matchup__group {
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--bm11-muted, #a5a8c9);
-      margin: 0.9rem 0 0.1rem;
-    }
-    .matchup__group:first-child { margin-top: 0; }
     .matchup__loading { color: var(--bm11-muted, #a5a8c9); }
     .matchup__divider { display: none; }
     .matchup__section-title {
@@ -651,18 +642,12 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
 
     @media (max-width: 860px) {
       /* Mobile keeps the desktop shape — the two XIs side by side — with
-         no role group headings and compact type so the columns fit. */
+         compact type so the columns fit. (Group headings and player-card
+         tweaks live in the is:global block below: those nodes are rendered
+         by the inline script and never get Astro's scoped attribute.) */
       .matchup__cols { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-      .matchup__group { display: none; }
       .matchup__team-title { font-size: 0.95rem; }
       .matchup__list { gap: 0.5rem; }
-      .matchup__list .bm11-player-card.is-comparison { padding: 0.6rem; }
-      .matchup__list .bm11-pc-row { gap: 0.5rem; }
-      .matchup__list .bm11-pc-name { font-size: 0.85rem; }
-      .matchup__list .bm11-pc-sub { font-size: 0.68rem; }
-      .matchup__list .bm11-pc-ministats { gap: 0.5rem; }
-      .matchup__list .bm11-pc-ministat-v { font-size: 0.75rem; }
-      .matchup__list .bm11-pc-ministat-l { font-size: 0.52rem; }
       /* Extra copy stays on desktop — mobile keeps only the essentials:
          header, tale of the tape, verdict, the two XIs, Start over. */
       .matchup__lede,
@@ -670,6 +655,33 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
       .tape__scores { grid-template-columns: 1fr; gap: 0.75rem; }
       .tape__side--right { text-align: left; }
       .tape { padding: 1.25rem; }
+    }
+  </style>
+  <style is:global>
+    /* Group headings, the empty-state note, and the player cards are rendered
+       by the inline script, so Astro's scoped selectors (which require the
+       data-astro-cid attribute) never match them — these rules must be global. */
+    .matchup__group {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--bm11-muted, #a5a8c9);
+      margin: 0.9rem 0 0.1rem;
+    }
+    .matchup__group:first-child { margin-top: 0; }
+    .matchup__empty {
+      color: var(--bm11-muted, #a5a8c9);
+      font-size: 0.9rem;
+      padding: 1rem 0;
+    }
+    @media (max-width: 860px) {
+      /* Mobile: flat XI lists — no group headings, names only, no stat columns. */
+      .matchup__group { display: none; }
+      .matchup__list .bm11-player-card.is-comparison { padding: 0.55rem 0.65rem; }
+      .matchup__list .bm11-pc-name { font-size: 0.9rem; }
+      .matchup__list .bm11-pc-sub { font-size: 0.7rem; }
+      .matchup__list .bm11-pc-ministats { display: none; }
     }
   </style>
 </BaseLayout>
