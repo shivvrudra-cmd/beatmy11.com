@@ -1938,39 +1938,42 @@ const styleSeed = playersForEra('legends')[0];
       white-space: nowrap;
     }
     @media (max-width: 480px) {
-      .bm11-prow { gap: 0.55rem; padding: 0.6rem 0.65rem; }
-      .bm11-prow-avatar { width: 2rem; height: 2rem; }
-      .bm11-prow-name { font-size: 0.88rem; }
-      .bm11-prow-sub { margin-top: 0.22rem; }
-      /* Phone sheet rows go two-line: the identity takes the full first
-         row so names render complete (no ellipsis), and the five stat
-         columns share the full second row in an even grid — values can
-         never collide, clip, or paint over each other. */
-      .bm11-prow { flex-wrap: wrap; row-gap: 0.45rem; align-items: flex-start; }
-      .bm11-prow-id { flex: 1 1 100%; }
-      .bm11-prow-name {
-        white-space: normal;
-        overflow: visible;
-        text-overflow: clip;
-      }
-      .bm11-prow-stats {
-        flex: 1 1 100%;
-        margin-left: 0;
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
+      /* Phone sheet rows: dense single-line 82-0.com style — name (+ nation
+         sub-line) left, five stat columns right with labels over values.
+         No avatar; stat columns keep their content width so values can
+         never paint over each other, and the name absorbs pressure. */
+      .bm11-prow {
+        flex-wrap: nowrap;
+        align-items: center;
         gap: 0.5rem;
+        padding: 0.55rem 0.7rem;
+      }
+      .bm11-prow-avatar { display: none; }
+      .bm11-prow-id { flex: 1 1 auto; min-width: 0; }
+      .bm11-prow-name {
+        font-size: 0.88rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .bm11-prow-sub { margin-top: 0.15rem; }
+      .bm11-prow-stats {
+        display: flex;
+        gap: 0.55rem;
+        margin-left: auto;
+        flex: 0 0 auto;
       }
       .bm11-prow-stat {
         min-width: 0;
-        align-items: flex-start;
-        text-align: left;
+        align-items: flex-end;
+        text-align: right;
       }
       .bm11-prow-stat i { font-size: 0.55rem; }
       .bm11-prow-stat b { font-size: 0.78rem; }
       .bm11-check-badge {
         position: absolute;
-        top: 0.6rem;
-        right: 0.65rem;
+        top: 0.55rem;
+        right: 0.6rem;
       }
     }
     .bm11-pool-idle {
