@@ -511,6 +511,10 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
       gap: 1.5rem;
       align-items: start;
     }
+    /* Grid items must be shrinkable — otherwise the fixed-width stat
+       columns force the tracks wider than the viewport and the page
+       scrolls sideways on phones. */
+    .matchup__team { min-width: 0; }
     .matchup__team-title {
       font-size: 1.1rem;
       font-weight: 700;
