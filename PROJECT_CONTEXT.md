@@ -203,8 +203,10 @@ rather than invented:
   roles[], battingHand, bowlingArm, isWicketkeeper`, plus a `stats` object with
   `testMatches, testRuns, testAverage, testCenturies, testWickets,
   testBowlingAverage, fiveWs, tenWs` (among others).
-- Existing raw CSVs and fetch scripts live alongside the JSON (`TestStat.csv`,
-  `fetch_stats.py`) — the JSON files are the source of truth at runtime.
+- The raw `TestStat.csv` export lives alongside the JSON in `src/data/` for
+  provenance — the JSON files are the source of truth at runtime. (The
+  one-off Python extraction/update scripts were removed 2026-09-28; data
+  is now maintained by editing the JSONs directly.)
 - **Known data gaps** (owner filled these in manually on 2026-09-25; re-run the
   missing-data audit after any data edit):
   - 6 bowler records had `testBowlingAverage: 0`: Saqlain Mushtaq (in both
