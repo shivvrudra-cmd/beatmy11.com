@@ -2,12 +2,8 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Navbar from '@/components/Navbar.astro';
 import Hero from '@/components/Hero.astro';
-import EraCard from '@/components/EraCard.astro';
-import EraTimeline from '@/components/EraTimeline.astro';
 import Footer from '@/components/Footer.astro';
 import CricketIcon from '@/components/icons/CricketIcons.astro';
-import { ERAS } from '@/lib/design-tokens';
-import type { EraToken } from '@/lib/design-tokens';
 
 import legendsData from '@/data/legends.json';
 import data1970s from '@/data/1970s.json';
@@ -23,27 +19,16 @@ const description =
 
 const count = (d: unknown) => (Array.isArray(d) ? d.length : 0);
 
-const countsByEra: Record<string, number> = {
-  legends: count(legendsData),
-  '1970s': count(data1970s),
-  '1980s': count(data1980s),
-  '1990s': count(data1990s),
-  '2000s': count(data2000s),
-  '2010s': count(data2010s),
-  '2020s': count(data2020s),
-};
-
-/* Era data comes from the shared design tokens; player counts are read
-   from the (read-only) era JSON pools, hrefs point at the game. */
-const eras: (EraToken & { playerCount: number; href: string })[] = ERAS.map(
-  (era) => ({
-    ...era,
-    playerCount: countsByEra[era.id] ?? 0,
-    href: '/play',
-  })
-);
-
-const totalPlayers = eras.reduce((n, e) => n + e.playerCount, 0);
+/* Player counts are read from the (read-only) era JSON pools so the
+   headline number stays accurate as the data is maintained. */
+const totalPlayers =
+  count(legendsData) +
+  count(data1970s) +
+  count(data1980s) +
+  count(data1990s) +
+  count(data2000s) +
+  count(data2010s) +
+  count(data2020s);
 
 const steps = [
   {
@@ -115,32 +100,6 @@ const features = [
       </div>
     </section>
 
-    <!-- Era grid -->
-    <section class="section section--alt" id="eras" aria-labelledby="eras-heading">
-      <div class="wrap">
-        <p class="eyebrow">1877 — today</p>
-        <h2 class="h2" id="eras-heading">Seven eras of Test cricket</h2>
-        <p class="lede">
-          Every spin draws from one of seven eras — each with its own pool
-          of players, its own flavour, its own legends.
-        </p>
-        <div class="era-grid">
-          {eras.map((era) => (
-            <EraCard era={era} playerCount={era.playerCount} href={era.href} />
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- Era timeline -->
-    <section class="section" aria-labelledby="timeline-heading">
-      <div class="wrap">
-        <h2 class="h2 h2--sm" id="timeline-heading">Travel through time</h2>
-        <p class="lede">From the timeless Tests to the data age — pick your battleground.</p>
-        <EraTimeline eras={eras} />
-      </div>
-    </section>
-
     <!-- Features -->
     <section class="section section--alt" aria-labelledby="features-heading">
       <div class="wrap">
@@ -199,7 +158,7 @@ const features = [
     z-index: 100;
     padding: 0.75rem 1.25rem;
     background: var(--bm11-primary);
-    color: #052e16;
+    color: #03130a;
     font-weight: 800;
     border-radius: 0 0 0.75rem 0;
     text-decoration: none;
@@ -227,7 +186,7 @@ const features = [
 
   .section--alt {
     background:
-      radial-gradient(70% 50% at 50% 0%, rgba(148, 163, 184, 0.05), transparent 70%),
+      radial-gradient(70% 50% at 50% 0%, rgba(139, 92, 246, 0.07), transparent 70%),
       var(--bm11-bg);
     border-top: 1px solid var(--bm11-border);
     border-bottom: 1px solid var(--bm11-border);
@@ -310,8 +269,8 @@ const features = [
     width: 2.1rem;
     height: 2.1rem;
     border-radius: 0.7rem;
-    background: rgba(34, 197, 94, 0.12);
-    border: 1px solid rgba(34, 197, 94, 0.3);
+    background: rgba(0, 230, 118, 0.12);
+    border: 1px solid rgba(0, 230, 118, 0.32);
     color: var(--bm11-primary);
     font-weight: 900;
     font-size: 0.95rem;
@@ -332,26 +291,7 @@ const features = [
     color: var(--bm11-muted);
   }
 
-  /* Era grid */
-  .era-grid {
-    display: grid;
-    gap: 1rem;
-  }
-
-  @media (min-width: 640px) {
-    .era-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .era-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    .era-grid > :first-child {
-      grid-column: span 1;
-    }
-  }
+  /* Era grid styles removed with the section (2026-09-28) */
 
   /* Features */
   .feature-grid {
@@ -400,8 +340,8 @@ const features = [
     padding: 1.75rem;
     border-radius: 1.25rem;
     background:
-      radial-gradient(120% 140% at 0% 0%, rgba(34, 197, 94, 0.14), transparent 55%),
-      radial-gradient(100% 120% at 100% 100%, rgba(201, 162, 39, 0.1), transparent 55%),
+      radial-gradient(120% 140% at 0% 0%, rgba(0, 230, 118, 0.14), transparent 55%),
+      radial-gradient(100% 120% at 100% 100%, rgba(255, 201, 60, 0.1), transparent 55%),
       var(--bm11-surface);
     border: 1px solid var(--bm11-border);
   }
@@ -422,8 +362,8 @@ const features = [
     align-items: center;
     justify-content: center;
     border-radius: 1rem;
-    background: rgba(34, 197, 94, 0.12);
-    border: 1px solid rgba(34, 197, 94, 0.3);
+    background: rgba(0, 230, 118, 0.12);
+    border: 1px solid rgba(0, 230, 118, 0.32);
   }
 
   .daily__icon svg {

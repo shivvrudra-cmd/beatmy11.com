@@ -304,6 +304,19 @@ const styleSeed = playersForEra('legends')[0];
       '2010s': '#8B5CF6',
       '2020s': '#2DD4BF',
     };
+    // Short nation codes — mirrors PlayerCard.astro (results pages).
+    const NATION_CODES = {
+      Australia: 'AUS',
+      England: 'EG',
+      India: 'IND',
+      Pakistan: 'PAK',
+      'West Indies': 'WI',
+      'New Zealand': 'NZ',
+      'South Africa': 'SA',
+      'Sri Lanka': 'SL',
+      Bangladesh: 'BAN',
+      Zimbabwe: 'ZIM',
+    };
     const ROLE_LABELS = {
       opener: 'Opener',
       'middle-order': 'Middle Order',
@@ -345,13 +358,13 @@ const styleSeed = playersForEra('legends')[0];
 
     // Inline SVG medallion — same artwork as PlayerAvatar.astro (data URI).
     function avatarSrc(era) {
-      const accent = ERA_ACCENTS[era] || '#94A3B8';
+      const accent = ERA_ACCENTS[era] || '#a5a8c9';
       const figure = '#DDE6F2';
       const svg =
         `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">` +
         `<defs><radialGradient id="bm11av" cx="35%" cy="28%" r="85%">` +
         `<stop offset="0%" stop-color="${accent}" stop-opacity="0.38"/>` +
-        `<stop offset="100%" stop-color="#0D1424" stop-opacity="1"/>` +
+        `<stop offset="100%" stop-color="#12122b" stop-opacity="1"/>` +
         `</radialGradient></defs>` +
         `<circle cx="32" cy="32" r="30.5" fill="url(#bm11av)" stroke="${accent}" stroke-opacity="0.55" stroke-width="1.6"/>` +
         `<ellipse cx="30" cy="55" rx="13" ry="2.4" fill="#000000" opacity="0.35"/>` +
@@ -421,15 +434,21 @@ const styleSeed = playersForEra('legends')[0];
     // Wicketkeeper").
     function cardHTML(p, kind) {
       const drawEra = draft.currentEra || p.displayEra;
-      const accent = ERA_ACCENTS[drawEra] || '#94A3B8';
+      const accent = ERA_ACCENTS[drawEra] || '#a5a8c9';
+      const nationCode = NATION_CODES[p.nation] || p.nation || '';
+      const eraLabel = drawEra === 'legends' ? 'Legends' : drawEra;
       return (
         `<button type="button" class="bm11-prow" data-bm11-select="${esc(p.uid)}"` +
         ` aria-pressed="false" aria-label="${esc(accessibleName(p))}" style="--era-accent:${accent};">` +
         `<span class="bm11-prow-id">` +
         `<img src="${avatarSrc(drawEra)}" alt="" aria-hidden="true" loading="lazy" draggable="false"` +
-        ` class="bm11-prow-avatar" style="--era-accent:${accent};background-color:#0D1424;" />` +
+        ` class="bm11-prow-avatar" style="--era-accent:${accent};background-color:#12122b;" />` +
         `<span class="bm11-prow-who">` +
         `<span class="bm11-prow-name">${esc(p.name)}</span>` +
+        `<span class="bm11-prow-sub">` +
+        `<span class="bm11-nation-code">${esc(nationCode)}</span>` +
+        `<span class="bm11-prow-era" style="--era-accent:${accent};">${esc(eraLabel)}</span>` +
+        `</span>` +
         `</span></span>` +
         `<span class="bm11-prow-stats" aria-label="Career statistics">${poolStatCells(p, kind)}</span>` +
         `<span class="bm11-check-badge" aria-hidden="true" hidden>` +
@@ -531,7 +550,7 @@ const styleSeed = playersForEra('legends')[0];
     function previewDraw(era, nation) {
       eraSlot.textContent = eraName(era);
       nationSlot.textContent = nation;
-      const accent = ERA_ACCENTS[era] || '#94A3B8';
+      const accent = ERA_ACCENTS[era] || '#a5a8c9';
       const win = eraSlot.closest('.bm11-reel-window');
       if (win) win.style.setProperty('--era-accent', accent);
     }
@@ -1383,8 +1402,8 @@ const styleSeed = playersForEra('legends')[0];
     /* ============ play.astro page styles (global: much of this DOM is
        rendered/updated by the client script, so scoped styles would miss it) ============ */
     .bm11-play {
-      background: var(--bm11-bg, #070b14);
-      color: var(--bm11-text, #f1f5f9);
+      background: var(--bm11-bg, #0a0a1c);
+      color: var(--bm11-text, #ffffff);
       overflow-x: clip;
       min-height: 60vh;
     }
@@ -1401,7 +1420,7 @@ const styleSeed = playersForEra('legends')[0];
       font-weight: 700;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--bm11-muted, #94a3b8);
+      color: var(--bm11-muted, #a5a8c9);
       margin: 0 0 0.6rem;
     }
     .bm11-h1 {
@@ -1423,7 +1442,7 @@ const styleSeed = playersForEra('legends')[0];
       outline: none;
     }
     .bm11-lede {
-      color: var(--bm11-muted, #94a3b8);
+      color: var(--bm11-muted, #a5a8c9);
       font-size: 1rem;
       line-height: 1.6;
       max-width: 44rem;
@@ -1436,8 +1455,8 @@ const styleSeed = playersForEra('legends')[0];
       left: 1rem;
       top: -4rem;
       z-index: 100;
-      background: var(--bm11-primary, #22c55e);
-      color: #04120a;
+      background: var(--bm11-primary, #00e676);
+      color: #03130a;
       font-weight: 700;
       padding: 0.6rem 1rem;
       border-radius: 0.6rem;
@@ -1448,10 +1467,10 @@ const styleSeed = playersForEra('legends')[0];
 
     /* ---- Spin zone (always visible at the top) ---- */
     .bm11-spinzone {
-      border-bottom: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+      border-bottom: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
       background:
-        radial-gradient(60% 90% at 50% 0%, rgba(34, 197, 94, 0.08), transparent 70%),
-        var(--bm11-bg, #070b14);
+        radial-gradient(60% 90% at 50% 0%, rgba(0, 230, 118, 0.08), transparent 70%),
+        var(--bm11-bg, #0a0a1c);
     }
     .bm11-spinzone .bm11-wrap {
       padding-top: 2rem;
@@ -1489,12 +1508,12 @@ const styleSeed = playersForEra('legends')[0];
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: #0b0f1c;
-      background: var(--bm11-muted, #94a3b8);
+      background: var(--bm11-muted, #a5a8c9);
       padding: 0.22rem 1rem;
       border-radius: 0.55rem 0.55rem 0 0;
     }
-    .bm11-reel--era .bm11-reel-cap { background: var(--bm11-gold, #C9A227); }
-    .bm11-reel--nation .bm11-reel-cap { background: var(--bm11-primary, #22C55E); }
+    .bm11-reel--era .bm11-reel-cap { background: var(--bm11-gold, #FFC93C); }
+    .bm11-reel--nation .bm11-reel-cap { background: var(--bm11-primary, #00e676); }
     .bm11-reel-window {
       position: relative;
       display: flex;
@@ -1502,17 +1521,18 @@ const styleSeed = playersForEra('legends')[0];
       justify-content: center;
       min-height: 4.5rem;
       padding: 0.7rem 0.6rem;
-      background: linear-gradient(180deg, #090e1d 0%, #15203a 48%, #090e1d 100%);
-      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
-      border-top: 3px solid var(--bm11-muted, #94a3b8);
+      background: linear-gradient(180deg, #0b0b20 0%, #23234d 48%, #0b0b20 100%);
+      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
+      border-top: 3px solid var(--bm11-muted, #a5a8c9);
       border-radius: 0.9rem;
       overflow: hidden;
+      box-shadow: 0 8px 28px rgba(4, 4, 20, 0.5), inset 0 0 0 1px rgba(139, 92, 246, 0.08);
     }
     .bm11-reel--era .bm11-reel-window {
-      border-top-color: var(--era-accent, var(--bm11-gold, #C9A227));
+      border-top-color: var(--era-accent, var(--bm11-gold, #FFC93C));
     }
     .bm11-reel--nation .bm11-reel-window {
-      border-top-color: var(--bm11-primary, #22C55E);
+      border-top-color: var(--bm11-primary, #00e676);
     }
     /* Soft side shading sells the "window over a spinning drum" look while
        the 70ms preview ticks during a spin. */
@@ -1537,7 +1557,7 @@ const styleSeed = playersForEra('legends')[0];
       font-size: clamp(1.05rem, 5.2vw, 1.55rem);
       font-weight: 800;
       letter-spacing: 0.02em;
-      color: var(--bm11-text, #f1f5f9);
+      color: var(--bm11-text, #ffffff);
       text-align: center;
       max-width: 100%;
       overflow: hidden;
@@ -1561,11 +1581,11 @@ const styleSeed = playersForEra('legends')[0];
       border-radius: 0.65rem;
       cursor: pointer;
     }
-    .bm11-reel--era .bm11-reel-respin { background: var(--bm11-gold, #C9A227); }
-    .bm11-reel--nation .bm11-reel-respin { background: var(--bm11-primary, #22C55E); }
+    .bm11-reel--era .bm11-reel-respin { background: var(--bm11-gold, #FFC93C); }
+    .bm11-reel--nation .bm11-reel-respin { background: var(--bm11-primary, #00e676); }
     .bm11-reel-respin[hidden] { display: none; }
     .bm11-reel-respin:focus-visible {
-      outline: 2px solid var(--bm11-ring, #4ade80);
+      outline: 2px solid var(--bm11-ring, #00e676);
       outline-offset: 3px;
     }
     .bm11-respin-ico {
@@ -1598,7 +1618,7 @@ const styleSeed = playersForEra('legends')[0];
       cursor: not-allowed;
     }
     .bm11-spin-btn:focus-visible {
-      outline: 2px solid var(--bm11-ring, #4ade80);
+      outline: 2px solid var(--bm11-ring, #00e676);
       outline-offset: 3px;
     }
     .bm11-round-progress {
@@ -1618,16 +1638,16 @@ const styleSeed = playersForEra('legends')[0];
       min-width: 0;
       height: 0.6rem;
       border-radius: 9999px;
-      background: var(--bm11-elevated, #141d33);
-      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+      background: var(--bm11-elevated, #1a1a38);
+      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
     }
     .bm11-roundbar-seg.is-done {
-      background: var(--bm11-primary, #22c55e);
-      border-color: var(--bm11-primary, #22c55e);
+      background: var(--bm11-primary, #00e676);
+      border-color: var(--bm11-primary, #00e676);
     }
     .bm11-roundbar-seg.is-current {
-      background: var(--bm11-gold, #C9A227);
-      border-color: var(--bm11-gold, #C9A227);
+      background: var(--bm11-gold, #FFC93C);
+      border-color: var(--bm11-gold, #FFC93C);
       animation: bm11-seg-pulse 1.6s ease-in-out infinite;
     }
     @keyframes bm11-seg-pulse {
@@ -1638,7 +1658,7 @@ const styleSeed = playersForEra('legends')[0];
       margin: 0;
       text-align: center;
       font-size: 0.8rem;
-      color: var(--bm11-muted, #94a3b8);
+      color: var(--bm11-muted, #a5a8c9);
     }
     /* Shown only in dead-end states (stalled or invalid XI) — never during
        a live draft. */
@@ -1682,9 +1702,9 @@ const styleSeed = playersForEra('legends')[0];
     .bm11-role-count {
       font-size: 0.75rem;
       font-weight: 700;
-      color: var(--bm11-muted, #94a3b8);
-      background: var(--bm11-elevated, #141d33);
-      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+      color: var(--bm11-muted, #a5a8c9);
+      background: var(--bm11-elevated, #1a1a38);
+      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
       border-radius: 9999px;
       padding: 0.1rem 0.55rem;
       font-variant-numeric: tabular-nums;
@@ -1702,27 +1722,28 @@ const styleSeed = playersForEra('legends')[0];
       align-items: center;
       gap: 0.75rem;
       width: 100%;
-      padding: 0.7rem 0.9rem;
+      padding: 0.75rem 0.9rem;
       font: inherit;
       text-align: left;
-      color: var(--bm11-text, #f1f5f9);
-      background: var(--bm11-surface, #0d1424);
-      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
-      border-left: 3px solid var(--era-accent, var(--bm11-border, rgba(148, 163, 184, 0.14)));
+      color: var(--bm11-text, #ffffff);
+      background: var(--bm11-elevated, #1a1a38);
+      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
+      border-left: 3px solid var(--era-accent, var(--bm11-border, rgba(139, 92, 246, 0.14)));
       border-radius: 0.9rem;
       cursor: pointer;
+      box-shadow: 0 4px 16px rgba(4, 4, 20, 0.35);
     }
-    .bm11-prow:hover { border-color: rgba(148, 163, 184, 0.35); }
+    .bm11-prow:hover { border-color: rgba(139, 92, 246, 0.45); }
     .bm11-prow:focus-visible {
-      outline: 2px solid var(--bm11-ring, #4ade80);
+      outline: 2px solid var(--bm11-ring, #00e676);
       outline-offset: 2px;
     }
     .bm11-prow.is-selected {
-      border-color: var(--bm11-primary, #22c55e);
-      box-shadow: 0 0 0 2px var(--bm11-primary, #22c55e), 0 12px 28px rgba(0, 0, 0, 0.45);
+      border-color: var(--bm11-primary, #00e676);
+      box-shadow: 0 0 0 2px var(--bm11-primary, #00e676), 0 0 22px rgba(0, 230, 118, 0.3);
     }
     .bm11-prow.is-disabled { opacity: 0.45; cursor: not-allowed; }
-    .bm11-prow.is-disabled:hover { border-color: var(--bm11-border, rgba(148, 163, 184, 0.14)); }
+    .bm11-prow.is-disabled:hover { border-color: var(--bm11-border, rgba(139, 92, 246, 0.14)); }
     .bm11-prow.is-locked { cursor: not-allowed; opacity: 0.85; }
     .bm11-prow-id {
       display: flex;
@@ -1745,10 +1766,33 @@ const styleSeed = playersForEra('legends')[0];
       min-width: 0;
     }
     .bm11-prow-name {
-      font-weight: 700;
-      font-size: 0.95rem;
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    /* Nation + draw-era badges under the name: the same pills the
+       results pages use, so pool and results read as one system. */
+    .bm11-prow-sub {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.3rem;
+    }
+    .bm11-prow-era {
+      display: inline-block;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--era-accent, #a5a8c9);
+      border: 1px solid var(--era-accent, #a5a8c9);
+      border-radius: 9999px;
+      padding: 0.08rem 0.45rem;
+      line-height: 1.4;
       white-space: nowrap;
     }
     .bm11-prow-stats {
@@ -1769,7 +1813,7 @@ const styleSeed = playersForEra('legends')[0];
       font-size: 0.6rem;
       font-weight: 700;
       letter-spacing: 0.08em;
-      color: var(--bm11-muted, #94a3b8);
+      color: var(--bm11-muted, #a5a8c9);
       white-space: nowrap;
     }
     .bm11-prow-stat b {
@@ -1786,9 +1830,9 @@ const styleSeed = playersForEra('legends')[0];
       .bm11-prow-avatar { width: 2.1rem; height: 2.1rem; }
     }
     .bm11-pool-idle {
-      color: var(--bm11-muted, #94a3b8);
-      background: var(--bm11-surface, #0d1424);
-      border: 1px dashed var(--bm11-border, rgba(148, 163, 184, 0.14));
+      color: var(--bm11-muted, #a5a8c9);
+      background: var(--bm11-surface, #12122b);
+      border: 1px dashed var(--bm11-border, rgba(139, 92, 246, 0.14));
       border-radius: 1rem;
       padding: 2.5rem 1.5rem;
       text-align: center;
@@ -1816,16 +1860,16 @@ const styleSeed = playersForEra('legends')[0];
       max-width: 44rem;
     }
     .bm11-history-list li {
-      background: var(--bm11-surface, #0d1424);
-      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+      background: var(--bm11-surface, #12122b);
+      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
       border-radius: 0.75rem;
       padding: 0.6rem 0.9rem;
       font-size: 0.9rem;
-      color: var(--bm11-muted, #94a3b8);
+      color: var(--bm11-muted, #a5a8c9);
     }
     .bm11-history-round {
       font-weight: 800;
-      color: var(--bm11-text, #f1f5f9);
+      color: var(--bm11-text, #ffffff);
       text-transform: uppercase;
       font-size: 0.78rem;
       letter-spacing: 0.06em;
@@ -1837,8 +1881,8 @@ const styleSeed = playersForEra('legends')[0];
 
     /* ---- Summary panel: sticky sidebar on desktop, bottom bar on mobile ---- */
     .bm11-summary {
-      background: var(--bm11-surface, #0d1424);
-      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+      background: var(--bm11-surface, #12122b);
+      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
       border-radius: 1rem;
       padding: 1.1rem;
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
@@ -1857,18 +1901,18 @@ const styleSeed = playersForEra('legends')[0];
       font-variant-numeric: tabular-nums;
       font-weight: 700;
       font-size: 0.85rem;
-      color: var(--bm11-muted, #94a3b8);
-      background: var(--bm11-elevated, #141d33);
-      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+      color: var(--bm11-muted, #a5a8c9);
+      background: var(--bm11-elevated, #1a1a38);
+      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
       border-radius: 9999px;
       padding: 0.15rem 0.6rem;
     }
     .bm11-summary-toggle {
       display: none;
       margin-left: auto;
-      background: var(--bm11-elevated, #141d33);
-      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
-      color: var(--bm11-text, #f1f5f9);
+      background: var(--bm11-elevated, #1a1a38);
+      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
+      color: var(--bm11-text, #ffffff);
       border-radius: 0.6rem;
       padding: 0.4rem 0.55rem;
       cursor: pointer;
@@ -1883,7 +1927,7 @@ const styleSeed = playersForEra('legends')[0];
     .bm11-progress {
       height: 0.45rem;
       border-radius: 9999px;
-      background: var(--bm11-elevated, #141d33);
+      background: var(--bm11-elevated, #1a1a38);
       margin: 0.85rem 0 0.25rem;
       overflow: hidden;
     }
@@ -1892,7 +1936,7 @@ const styleSeed = playersForEra('legends')[0];
       height: 100%;
       width: 0;
       border-radius: inherit;
-      background: var(--bm11-primary, #22c55e);
+      background: var(--bm11-primary, #00e676);
       transition: width 0.25s ease;
     }
     .bm11-xi-list {
@@ -1918,14 +1962,14 @@ const styleSeed = playersForEra('legends')[0];
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--bm11-muted, #94a3b8);
+      color: var(--bm11-muted, #a5a8c9);
     }
     .bm11-xi-group-count {
       font-size: 0.72rem;
       font-weight: 800;
-      color: var(--bm11-text, #f1f5f9);
-      background: var(--bm11-surface, #0d1424);
-      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+      color: var(--bm11-text, #ffffff);
+      background: var(--bm11-surface, #12122b);
+      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
       border-radius: 9999px;
       padding: 0.1rem 0.55rem;
       font-variant-numeric: tabular-nums;
@@ -1942,11 +1986,11 @@ const styleSeed = playersForEra('legends')[0];
       margin: 0;
       padding: 0.15rem 0.15rem 0.1rem;
       font-size: 0.75rem;
-      color: var(--bm11-muted, #94a3b8);
+      color: var(--bm11-muted, #a5a8c9);
       font-style: italic;
     }
     .bm11-xi-group-required {
-      color: #fbbf24;
+      color: var(--bm11-gold, #ffc93c);
       font-style: normal;
       font-weight: 600;
     }
@@ -1962,22 +2006,22 @@ const styleSeed = playersForEra('legends')[0];
       display: flex;
       align-items: center;
       gap: 0.55rem;
-      padding: 0.35rem 0.5rem;
+      padding: 0.45rem 0.65rem;
       font: inherit;
       text-align: left;
-      color: var(--bm11-text, #f1f5f9);
-      background: var(--bm11-elevated, #141d33);
-      border: 1px solid rgba(34, 197, 94, 0.35);
-      border-radius: 0.6rem;
+      color: var(--bm11-text, #ffffff);
+      background: var(--bm11-elevated, #1a1a38);
+      border: 1px solid rgba(0, 230, 118, 0.35);
+      border-radius: 0.75rem;
       cursor: pointer;
     }
     .bm11-slot-btn:focus-visible {
-      outline: 2px solid var(--bm11-ring, #4ade80);
+      outline: 2px solid var(--bm11-ring, #00e676);
       outline-offset: 2px;
     }
     .bm11-slot-btn.is-empty {
       border-style: dashed;
-      border-color: var(--bm11-border, rgba(148, 163, 184, 0.14));
+      border-color: var(--bm11-border, rgba(139, 92, 246, 0.14));
       background: transparent;
       justify-content: space-between;
       padding: 0.5rem 0.7rem;
@@ -1989,28 +2033,28 @@ const styleSeed = playersForEra('legends')[0];
     }
     .bm11-slot-hint {
       font-size: 0.72rem;
-      color: var(--bm11-muted, #94a3b8);
+      color: var(--bm11-muted, #a5a8c9);
       text-align: right;
     }
     /* Compatible destinations glow while placing or moving. */
     .bm11-slot-btn.is-glow {
       border-style: solid;
-      border-color: var(--bm11-primary, #22c55e);
-      background: rgba(34, 197, 94, 0.08);
-      box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.55), 0 0 18px rgba(34, 197, 94, 0.35);
+      border-color: var(--bm11-primary, #00e676);
+      background: rgba(0, 230, 118, 0.08);
+      box-shadow: 0 0 0 2px rgba(0, 230, 118, 0.55), 0 0 18px rgba(0, 230, 118, 0.35);
     }
     @media (prefers-reduced-motion: no-preference) {
       .bm11-slot-btn.is-glow { animation: bm11-slot-glow 1.6s ease-in-out infinite; }
       @keyframes bm11-slot-glow {
         50% {
-          box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.8), 0 0 26px rgba(34, 197, 94, 0.5);
+          box-shadow: 0 0 0 3px rgba(0, 230, 118, 0.8), 0 0 26px rgba(0, 230, 118, 0.5);
         }
       }
     }
     /* The slot whose occupant is being repositioned. */
     .bm11-slot-btn.is-armed {
-      border-color: #fbbf24;
-      box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.6);
+      border-color: var(--bm11-gold, #ffc93c);
+      box-shadow: 0 0 0 2px rgba(255, 201, 60, 0.6);
     }
     .bm11-slot .bm11-slot-remove { align-self: center; }
     .bm11-xi-player,
@@ -2023,8 +2067,8 @@ const styleSeed = playersForEra('legends')[0];
       font-size: 0.85rem;
     }
     .bm11-xi-player {
-      background: var(--bm11-elevated, #141d33);
-      border: 1px solid rgba(34, 197, 94, 0.35);
+      background: var(--bm11-elevated, #1a1a38);
+      border: 1px solid rgba(0, 230, 118, 0.35);
     }
     .bm11-xi-main {
       flex: 1;
@@ -2048,9 +2092,9 @@ const styleSeed = playersForEra('legends')[0];
       font-weight: 700;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: var(--bm11-primary, #22c55e);
-      background: rgba(34, 197, 94, 0.12);
-      border: 1px solid rgba(34, 197, 94, 0.35);
+      color: var(--bm11-primary, #00e676);
+      background: rgba(0, 230, 118, 0.12);
+      border: 1px solid rgba(0, 230, 118, 0.35);
       border-radius: 9999px;
       padding: 0.08rem 0.45rem;
       margin-left: 0.35rem;
@@ -2063,23 +2107,23 @@ const styleSeed = playersForEra('legends')[0];
       gap: 0.25rem;
       margin: 0.7rem 0 0;
       font-size: 0.78rem;
-      color: var(--bm11-muted, #94a3b8);
+      color: var(--bm11-muted, #a5a8c9);
     }
     .bm11-comp-need {
       font-weight: 600;
       color: var(--bm11-warning, #f59e0b);
     }
     .bm11-comp-need.is-done {
-      color: var(--bm11-primary, #22c55e);
+      color: var(--bm11-primary, #00e676);
     }
     .bm11-slot-remove {
       flex: 0 0 auto;
       width: 1.5rem;
       height: 1.5rem;
       border-radius: 9999px;
-      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
+      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
       background: transparent;
-      color: var(--bm11-muted, #94a3b8);
+      color: var(--bm11-muted, #a5a8c9);
       font-size: 1rem;
       line-height: 1;
       cursor: pointer;
@@ -2093,12 +2137,12 @@ const styleSeed = playersForEra('legends')[0];
       background: rgba(239, 68, 68, 0.15);
     }
     .bm11-slot-remove:focus-visible {
-      outline: 2px solid var(--bm11-primary, #22c55e);
+      outline: 2px solid var(--bm11-primary, #00e676);
       outline-offset: 2px;
     }
     .bm11-xi-empty {
-      border: 1px dashed var(--bm11-border, rgba(148, 163, 184, 0.14));
-      color: var(--bm11-muted, #94a3b8);
+      border: 1px dashed var(--bm11-border, rgba(139, 92, 246, 0.14));
+      color: var(--bm11-muted, #a5a8c9);
       font-size: 0.82rem;
       justify-content: center;
       padding-block: 0.8rem;
@@ -2124,7 +2168,7 @@ const styleSeed = playersForEra('legends')[0];
       box-shadow: none;
     }
     .bm11-cta:focus-visible {
-      outline: 2px solid var(--bm11-ring, #4ade80);
+      outline: 2px solid var(--bm11-ring, #00e676);
       outline-offset: 3px;
     }
 

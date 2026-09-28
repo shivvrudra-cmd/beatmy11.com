@@ -10,19 +10,20 @@
 :root {
   color-scheme: dark;
 
-  --bm11-bg: #070B14;
-  --bm11-surface: #0D1424;
-  --bm11-elevated: #141D33;
-  --bm11-border: rgba(148, 163, 184, 0.14);
-  --bm11-text: #F1F5F9;
-  --bm11-muted: #94A3B8;
-  --bm11-primary: #22C55E;
-  --bm11-primary-strong: #16A34A;
-  --bm11-gold: #C9A227;
+  --bm11-bg: #0A0A1C;
+  --bm11-surface: #12122B;
+  --bm11-elevated: #1A1A38;
+  --bm11-border: rgba(139, 92, 246, 0.22);
+  --bm11-text: #FFFFFF;
+  --bm11-muted: #A5A8C9;
+  --bm11-primary: #00E676;
+  --bm11-primary-strong: #00C864;
+  --bm11-gold: #FFC93C;
+  --bm11-violet: #8B5CF6;
   --bm11-danger: #EF4444;
   --bm11-warning: #F59E0B;
-  --bm11-success: #22C55E;
-  --bm11-ring: #4ADE80;
+  --bm11-success: #00E676;
+  --bm11-ring: #00E676;
 
   /* Era accents — also exported from src/lib/design-tokens.ts */
   --era-legends: #C9A227;
@@ -46,6 +47,11 @@
 
   body {
     background-color: var(--bm11-bg);
+    /* Ambient Bold-Dark glows — decorative, sits behind all content */
+    background-image:
+      radial-gradient(900px 480px at 50% -8%, rgba(0, 230, 118, 0.14), transparent 60%),
+      radial-gradient(700px 420px at 85% 10%, rgba(139, 92, 246, 0.12), transparent 60%);
+    background-attachment: fixed;
     color: var(--bm11-text);
     font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -54,7 +60,7 @@
   }
 
   ::selection {
-    background-color: rgba(34, 197, 94, 0.35);
+    background-color: rgba(0, 230, 118, 0.35);
     color: var(--bm11-text);
   }
 
@@ -66,7 +72,7 @@
   /* Thin dark scrollbars */
   * {
     scrollbar-width: thin;
-    scrollbar-color: #26314d var(--bm11-bg);
+    scrollbar-color: #2a2a52 var(--bm11-bg);
   }
   *::-webkit-scrollbar {
     width: 10px;
@@ -76,12 +82,12 @@
     background: var(--bm11-bg);
   }
   *::-webkit-scrollbar-thumb {
-    background-color: #26314d;
+    background-color: #2a2a52;
     border-radius: 8px;
     border: 2px solid var(--bm11-bg);
   }
   *::-webkit-scrollbar-thumb:hover {
-    background-color: #35436b;
+    background-color: #3d3d75;
   }
 }
 
@@ -94,12 +100,20 @@
     background-color: var(--bm11-surface);
   }
 
-  /* Raised card: elevated bg, hairline border, soft deep shadow */
+  /* Raised card: elevated bg, violet-tinted hairline, soft deep shadow */
   .bm11-card {
     background-color: var(--bm11-elevated);
     border: 1px solid var(--bm11-border);
-    border-radius: 0.75rem;
-    box-shadow: 0 8px 24px rgba(2, 6, 16, 0.45);
+    border-radius: 1.125rem;
+    box-shadow: 0 8px 32px rgba(4, 4, 20, 0.55);
+  }
+
+  /* Gradient headline text (gold → emerald) for hero / verdict keywords */
+  .bm11-grad-text {
+    background: linear-gradient(100deg, #FFC93C 10%, #00E676 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   /* ---- Buttons ---- */
@@ -132,16 +146,16 @@
     transform: translateY(1px);
   }
 
-  /* Primary action — #052E16 on #22C55E = 6.54:1 (WCAG AA + AAA) */
+  /* Primary action — #03130A on #00E676 ≈ 11.5:1 (WCAG AAA) */
   .bm11-btn-primary {
     background-color: var(--bm11-primary);
-    color: #052E16;
-    box-shadow: 0 4px 14px rgba(34, 197, 94, 0.25);
+    color: #03130A;
+    box-shadow: 0 0 24px rgba(0, 230, 118, 0.35);
   }
   .bm11-btn-primary:hover:not(:disabled) {
-    /* #052E16 on #16A34A = 4.52:1 — still WCAG AA */
+    /* #03130A on #00C864 ≈ 8.6:1 — still WCAG AA */
     background-color: var(--bm11-primary-strong);
-    box-shadow: 0 4px 18px rgba(34, 197, 94, 0.35);
+    box-shadow: 0 0 32px rgba(0, 230, 118, 0.5);
   }
 
   /* Quiet secondary action */
@@ -151,8 +165,8 @@
     color: var(--bm11-text);
   }
   .bm11-btn-ghost:hover:not(:disabled) {
-    background-color: rgba(148, 163, 184, 0.08);
-    border-color: rgba(148, 163, 184, 0.3);
+    background-color: rgba(139, 92, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.4);
   }
 
   /* ---- Chips ---- */
@@ -165,7 +179,7 @@
     letter-spacing: 0.02em;
     padding: 0.25rem 0.625rem;
     border-radius: 9999px;
-    background-color: rgba(148, 163, 184, 0.08);
+    background-color: rgba(139, 92, 246, 0.08);
     border: 1px solid var(--bm11-border);
     color: var(--bm11-muted);
   }
@@ -217,7 +231,7 @@
   .bm11-input:focus {
     outline: none;
     border-color: var(--bm11-ring);
-    box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.18);
+    box-shadow: 0 0 0 3px rgba(0, 230, 118, 0.18);
   }
 
   /* ---- Loading skeleton with shimmer sweep ---- */
@@ -234,7 +248,7 @@
     background: linear-gradient(
       100deg,
       transparent 20%,
-      rgba(241, 245, 249, 0.06) 50%,
+      rgba(255, 255, 255, 0.07) 50%,
       transparent 80%
     );
     animation: bm11-shimmer 1.6s ease-in-out infinite;
@@ -256,11 +270,11 @@
 
   /* Glass panel, dark-adapted */
   .glass-bg {
-    background-color: rgba(13, 20, 36, 0.8);
+    background-color: rgba(18, 18, 43, 0.8);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     border: 1px solid var(--bm11-border);
-    box-shadow: 0 8px 24px rgba(2, 6, 16, 0.35);
+    box-shadow: 0 8px 32px rgba(4, 4, 20, 0.45);
   }
 
   /* Gentle pulse for live/updating indicators */
@@ -286,8 +300,8 @@
   /* Faint stat-grid for hero / section backgrounds */
   .bm11-hero-grid {
     background-image:
-      linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+      linear-gradient(rgba(139, 92, 246, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(139, 92, 246, 0.06) 1px, transparent 1px);
     background-size: 44px 44px;
   }
 
@@ -300,16 +314,16 @@
       linear-gradient(
         90deg,
         transparent calc(50% - 90px),
-        rgba(201, 162, 39, 0.05) calc(50% - 90px),
-        rgba(201, 162, 39, 0.05) calc(50% + 90px),
+        rgba(255, 201, 60, 0.06) calc(50% - 90px),
+        rgba(255, 201, 60, 0.06) calc(50% + 90px),
         transparent calc(50% + 90px)
       ),
       repeating-linear-gradient(
         180deg,
         transparent 0,
         transparent 118px,
-        rgba(148, 163, 184, 0.08) 118px,
-        rgba(148, 163, 184, 0.08) 120px
+        rgba(139, 92, 246, 0.1) 118px,
+        rgba(139, 92, 246, 0.1) 120px
       );
   }
 }

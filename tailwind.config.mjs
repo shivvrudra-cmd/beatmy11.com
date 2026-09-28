@@ -32,24 +32,26 @@ export default {
         // BeatMy11 dark-first brand palette.
         // Mirrors the --bm11-* CSS custom properties in src/styles/globals.css.
         brand: {
-          bg: '#070B14',
-          surface: '#0D1424',
-          elevated: '#141D33',
-          border: 'rgba(148, 163, 184, 0.14)',
-          text: '#F1F5F9',
-          muted: '#94A3B8',
-          primary: '#22C55E',
-          'primary-strong': '#16A34A',
-          ring: '#4ADE80',
+          bg: '#0A0A1C',
+          surface: '#12122B',
+          elevated: '#1A1A38',
+          border: 'rgba(139, 92, 246, 0.22)',
+          text: '#FFFFFF',
+          muted: '#A5A8C9',
+          primary: '#00E676',
+          'primary-strong': '#00C864',
+          gold: '#FFC93C',
+          violet: '#8B5CF6',
+          ring: '#00E676',
           danger: '#EF4444',
           warning: '#F59E0B',
-          success: '#22C55E',
+          success: '#00E676',
         },
         // Championship gold
         gold: {
-          DEFAULT: '#C9A227',
-          soft: '#E2C15C',
-          deep: '#8A6F1C',
+          DEFAULT: '#FFC93C',
+          soft: '#FFD97A',
+          deep: '#B78A1F',
         },
         // Era accents. Keys must be valid Tailwind identifiers, so the
         // decades use word forms (e.g. `bg-era-nineties`).

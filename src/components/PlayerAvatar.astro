@@ -32,7 +32,7 @@ const ERA_ACCENTS: Record<string, string> = {
 };
 
 const eraId = (Array.isArray(era) ? era[0] : era) ?? 'legends';
-const accent = ERA_ACCENTS[eraId] ?? '#94A3B8';
+const accent = ERA_ACCENTS[eraId] ?? '#a5a8c9';
 const figure = '#DDE6F2';
 
 // Batsman silhouette (facing left, bat raised) on an era-tinted dark medallion.
@@ -40,7 +40,7 @@ const svg =
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">` +
   `<defs><radialGradient id="bm11av" cx="35%" cy="28%" r="85%">` +
   `<stop offset="0%" stop-color="${accent}" stop-opacity="0.38"/>` +
-  `<stop offset="100%" stop-color="#0D1424" stop-opacity="1"/>` +
+  `<stop offset="100%" stop-color="#12122B" stop-opacity="1"/>` +
   `</radialGradient></defs>` +
   `<circle cx="32" cy="32" r="30.5" fill="url(#bm11av)" stroke="${accent}" stroke-opacity="0.55" stroke-width="1.6"/>` +
   `<ellipse cx="30" cy="55" rx="13" ry="2.4" fill="#000000" opacity="0.35"/>` +
@@ -61,5 +61,5 @@ const src = `data:image/svg+xml,${encodeURIComponent(svg)}`;
   loading="lazy"
   draggable="false"
   class={`rounded-full object-cover select-none ${size} ${extraClass}`}
-  style={`--era-accent:${accent};background-color:#0D1424;`}
+  style={`--era-accent:${accent};background-color:#12122B;`}
 />
