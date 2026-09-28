@@ -1,8 +1,9 @@
 ---
 /**
  * Navbar — sticky top nav with dark glass background.
- * Mobile shows just the brand plus a compact Play button (no burger menu);
- * the full link menu appears at 768px and up.
+ * Mobile shows just the brand plus a compact Play button (no burger menu),
+ * except on /play and /matchup where the button is redundant; the full
+ * link menu appears at 768px and up.
  */
 import Logo from './Logo.astro';
 
@@ -13,7 +14,10 @@ const links = [
   { href: '#footer', label: 'About' },
 ];
 
-const isPlayPage = Astro.url.pathname.replace(/\/$/, '') === '/play';
+const path = Astro.url.pathname.replace(/\/$/, '');
+/* The mobile Play button is redundant on the draft page itself and on the
+   results page (which already has a Start over action). */
+const hideMobileCta = path === '/play' || path === '/matchup';
 ---
 <header class="navbar" id="top">
   <nav class="navbar__inner" aria-label="Primary">
@@ -21,7 +25,7 @@ const isPlayPage = Astro.url.pathname.replace(/\/$/, '') === '/play';
       <Logo variant="full" class="navbar__logo" />
     </a>
 
-    {!isPlayPage && (
+    {!hideMobileCta && (
       <a class="bm11-btn bm11-btn-primary navbar__mobile-cta" href="/play">Play</a>
     )}
 
