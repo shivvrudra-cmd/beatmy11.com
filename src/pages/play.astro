@@ -394,6 +394,7 @@ const styleSeed = playersForEra('legends')[0];
     // (all-rounder / spinner), then the 3 fast bowlers. Eleven fixed slots,
     // always rendered, even before the first pick.
     const SLOT_GROUPS = ['openers', 'batting', 'flex', 'fast'].map((g) => ({
+      key: g,
       label: XI_SLOT_GROUP_LABELS[g],
       keys: XI_SLOTS.filter((s) => s.group === g).map((s) => s.key),
     }));
@@ -416,6 +417,15 @@ const styleSeed = playersForEra('legends')[0];
       v == null || Number.isNaN(Number(v)) ? '–' : Number(v).toFixed(2);
     const fmtInt = (v) =>
       v == null || Number.isNaN(Number(v)) ? '–' : Math.round(Number(v)).toLocaleString('en-US');
+    // Compact card initials for the mobile field-view XI (e.g. "Steve Waugh" -> "SW").
+    const initials = (name) =>
+      String(name || '')
+        .split(/\s+/)
+        .filter(Boolean)
+        .map((w) => w[0])
+        .slice(0, 2)
+        .join('')
+        .toUpperCase();
 
     // Inline SVG medallion — same artwork as PlayerAvatar.astro (data URI).
     function avatarSrc(era) {
@@ -1413,8 +1423,11 @@ const styleSeed = playersForEra('legends')[0];
 
       if (occupant && occ) {
         // An occupied slot shows just the name and the declared position
-        // (e.g. "Middle Order") — no other player details.
+        // (e.g. "Middle Order") — no other player details. The initials
+        // medallion (era-accented) drives the mobile field-view card.
         const declared = XI_ROLE_LABELS[occ.role];
+        const eraAccent =
+          ERA_ACCENTS[occupant.draftEra || occupant.displayEra] || '#8b5cf6';
         const removable =
           !draft.gameComplete && occupant.roundPicked === draft.currentRound;
         if (moveFrom === slotKey) {
@@ -1439,6 +1452,7 @@ const styleSeed = playersForEra('legends')[0];
           (pressed ? ` aria-pressed="${pressed}"` : '') +
           ` aria-label="${esc(ariaLabel)}">` +
           `<span class="bm11-xi-main">` +
+          `<span class="bm11-xi-initials" style="--bm11-era-accent:${esc(eraAccent)}">${esc(initials(occupant.name))}</span>` +
           `<span class="bm11-xi-name">${esc(occupant.name)} <span class="bm11-xi-role">${esc(declared)}</span></span>` +
           `</span>` +
           `</button>` +
@@ -1579,7 +1593,7 @@ const styleSeed = playersForEra('legends')[0];
           .map((k) => `<li class="bm11-slot">${slotButtonHTML(k)}</li>`)
           .join('');
         return (
-          `<li class="bm11-xi-group">` +
+          `<li class="bm11-xi-group" data-bm11-group="${g.key}">` +
           `<div class="bm11-xi-group-head">` +
           `<span class="bm11-xi-group-label">${esc(g.label)}</span>` +
           `<span class="bm11-xi-group-count" aria-label="${filled} of ${g.keys.length} ${esc(g.label)} slots filled">${filled}/${g.keys.length}</span>` +
@@ -2400,6 +2414,8 @@ const styleSeed = playersForEra('legends')[0];
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+    /* Initials medallion: hidden everywhere except the mobile field-view XI. */
+    .bm11-xi-initials { display: none; }
     /* Declared role chip on an occupied slot: the role the player fills
        the slot as (e.g. Sangakkara as Wicketkeeper at Batting 6). */
     .bm11-xi-role {
@@ -2545,6 +2561,120 @@ const styleSeed = playersForEra('legends')[0];
       }
       .bm11-sheet-respin--era { background: var(--bm11-gold, #FFC93C); }
       .bm11-sheet-respin--nation { background: var(--bm11-primary, #00e676); }
+      /* ---- Mobile field-view XI: compact grouped slot cards ----
+         All 11 slots read at a glance (no scroll-hunt for a glowing slot).
+         Desktop keeps the roomy row list. */
+      .bm11-xi-static .bm11-xi-list { gap: 0.85rem; }
+      .bm11-xi-static .bm11-xi-group-head {
+        gap: 0.6rem;
+        margin-bottom: 0.5rem;
+      }
+      .bm11-xi-static .bm11-xi-group-head::before,
+      .bm11-xi-static .bm11-xi-group-head::after {
+        content: '';
+        flex: 1 1 0;
+        height: 1px;
+        background: var(--bm11-border, rgba(139, 92, 246, 0.14));
+      }
+      .bm11-xi-static .bm11-xi-group-label {
+        font-size: 0.66rem;
+        letter-spacing: 0.16em;
+      }
+      .bm11-xi-static .bm11-xi-group-count { display: none; }
+      .bm11-xi-static .bm11-xi-group-list {
+        display: grid;
+        gap: 0.5rem;
+      }
+      .bm11-xi-static .bm11-xi-group[data-bm11-group='openers'] .bm11-xi-group-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .bm11-xi-static .bm11-xi-group[data-bm11-group='batting'] .bm11-xi-group-list {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .bm11-xi-static .bm11-xi-group[data-bm11-group='flex'] .bm11-xi-group-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .bm11-xi-static .bm11-xi-group[data-bm11-group='fast'] .bm11-xi-group-list {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      /* The × sits on the card corner instead of beside the row. */
+      .bm11-xi-static .bm11-slot {
+        position: relative;
+        display: block;
+      }
+      .bm11-xi-static .bm11-slot .bm11-slot-remove {
+        position: absolute;
+        top: 0.3rem;
+        right: 0.3rem;
+        width: 1.35rem;
+        height: 1.35rem;
+        font-size: 0.9rem;
+        background: rgba(10, 10, 28, 0.75);
+      }
+      .bm11-xi-static .bm11-slot-btn {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.32rem;
+        min-height: 5.4rem;
+        padding: 0.55rem 0.3rem;
+        text-align: center;
+        border-color: rgba(255, 201, 60, 0.45);
+      }
+      .bm11-xi-static .bm11-slot-btn.is-empty {
+        justify-content: center;
+        padding: 0.55rem 0.3rem;
+      }
+      .bm11-xi-static .bm11-xi-main {
+        align-items: center;
+        width: 100%;
+        text-align: center;
+      }
+      .bm11-xi-static .bm11-xi-initials {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        width: 2.3rem;
+        height: 2.3rem;
+        border-radius: 9999px;
+        font-size: 0.8rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        color: var(--bm11-text, #ffffff);
+        background: color-mix(in srgb, var(--bm11-era-accent, #8b5cf6) 24%, transparent);
+        border: 1.5px solid var(--bm11-era-accent, #8b5cf6);
+      }
+      .bm11-xi-static .bm11-xi-name {
+        font-size: 0.66rem;
+        font-weight: 700;
+        max-width: 100%;
+      }
+      .bm11-xi-static .bm11-xi-role {
+        display: block;
+        width: fit-content;
+        margin: 0.18rem auto 0;
+        font-size: 0.55rem;
+        padding: 0.08rem 0.4rem;
+      }
+      .bm11-xi-static .bm11-slot-btn.is-empty .bm11-slot-label {
+        font-size: 0.6rem;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--bm11-muted, #a5a8c9);
+        white-space: normal;
+        text-align: center;
+        line-height: 1.3;
+      }
+      .bm11-xi-static .bm11-slot-btn.is-empty .bm11-slot-label::before {
+        content: '+';
+        display: block;
+        font-size: 1.45rem;
+        font-weight: 400;
+        line-height: 1.15;
+      }
+      .bm11-xi-static .bm11-slot-hint { display: none; }
       .bm11-summary {
         position: fixed;
         left: 0.75rem;
