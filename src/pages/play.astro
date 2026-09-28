@@ -436,7 +436,6 @@ const styleSeed = playersForEra('legends')[0];
       const drawEra = draft.currentEra || p.displayEra;
       const accent = ERA_ACCENTS[drawEra] || '#a5a8c9';
       const nationCode = NATION_CODES[p.nation] || p.nation || '';
-      const eraLabel = drawEra === 'legends' ? 'Legends' : drawEra;
       return (
         `<button type="button" class="bm11-prow" data-bm11-select="${esc(p.uid)}"` +
         ` aria-pressed="false" aria-label="${esc(accessibleName(p))}" style="--era-accent:${accent};">` +
@@ -447,7 +446,6 @@ const styleSeed = playersForEra('legends')[0];
         `<span class="bm11-prow-name">${esc(p.name)}</span>` +
         `<span class="bm11-prow-sub">` +
         `<span class="bm11-nation-code">${esc(nationCode)}</span>` +
-        `<span class="bm11-prow-era" style="--era-accent:${accent};">${esc(eraLabel)}</span>` +
         `</span>` +
         `</span></span>` +
         `<span class="bm11-prow-stats" aria-label="Career statistics">${poolStatCells(p, kind)}</span>` +
@@ -1774,26 +1772,13 @@ const styleSeed = playersForEra('legends')[0];
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    /* Nation + draw-era badges under the name: the same pills the
-       results pages use, so pool and results read as one system. */
+    /* Nation badge under the name: the same pill the results pages
+       use, so pool and results read as one system. */
     .bm11-prow-sub {
       display: flex;
       align-items: center;
       gap: 0.35rem;
       margin-top: 0.3rem;
-    }
-    .bm11-prow-era {
-      display: inline-block;
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--era-accent, #a5a8c9);
-      border: 1px solid var(--era-accent, #a5a8c9);
-      border-radius: 9999px;
-      padding: 0.08rem 0.45rem;
-      line-height: 1.4;
-      white-space: nowrap;
     }
     .bm11-prow-stats {
       display: flex;
