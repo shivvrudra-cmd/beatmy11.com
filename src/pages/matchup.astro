@@ -281,7 +281,7 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
 
-    const fmtAvg = (v) => (v == null || Number.isNaN(Number(v)) ? '–' : Number(v).toFixed(2));
+    const fmtAvg = (v) => (v == null || Number.isNaN(Number(v)) ? '–' : Number(v).toFixed(1));
     const fmtInt = (v) =>
       v == null || Number.isNaN(Number(v)) ? '–' : Math.round(Number(v)).toLocaleString('en-US');
 
