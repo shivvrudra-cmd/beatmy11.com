@@ -695,6 +695,18 @@ const styleSeed = playersForEra('legends')[0];
       draft = applySpinResult(draft, combo.era, combo.nation);
       persist();
       renderAll();
+      // Bring the fresh draw into view — on mobile the pool sits below
+      // the fold after a spin.
+      const poolHeading = document.getElementById('bm11-pool-heading');
+      if (poolHeading) {
+        const reduceMotion = window.matchMedia(
+          '(prefers-reduced-motion: reduce)'
+        ).matches;
+        poolHeading.scrollIntoView({
+          behavior: reduceMotion ? 'auto' : 'smooth',
+          block: 'start',
+        });
+      }
       const available = unpickedCount(currentPool());
       const pickWord =
         draft.currentRound === 1
