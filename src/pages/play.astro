@@ -111,8 +111,14 @@ const styleSeed = playersForEra('legends')[0];
     <div id="bm11-game" class="bm11-wrap" tabindex="-1">
       <div class="bm11-draft-layout">
         <div class="bm11-draft-main">
+          <!-- Your XI as a static in-page section on mobile (the aside hosts
+               it as a sticky sidebar on desktop) -->
+          <section class="bm11-xi-static" aria-labelledby="bm11-xi-static-heading">
+            <h2 class="bm11-h2" id="bm11-xi-static-heading">Your XI</h2>
+            <div id="bm11-xi-static-mount"></div>
+          </section>
           <!-- Player pool for the current draw, role-grouped -->
-          <section aria-labelledby="bm11-pool-heading">
+          <section id="bm11-pool-section" aria-labelledby="bm11-pool-heading">
             <h2 class="bm11-h2" id="bm11-pool-heading" tabindex="-1">Your draw</h2>
             <p class="bm11-lede" id="bm11-pool-lede">
               Your drawn players will appear here after your first spin.
@@ -129,11 +135,17 @@ const styleSeed = playersForEra('legends')[0];
           </section>
         </div>
 
-        <!-- Sticky XI panel -->
+        <!-- Sticky XI panel on desktop; bottom draw sheet on mobile -->
         <aside class="bm11-summary" id="bm11-summary" aria-label="Your selected XI">
           <div class="bm11-summary-head">
-            <h2 class="bm11-summary-title">Your XI</h2>
-            <span class="bm11-summary-count" id="bm11-count">0/11</span>
+            <div class="bm11-sheet-titles">
+              <div class="bm11-sheet-title-row">
+                <h2 class="bm11-summary-title" id="bm11-sheet-title">Your XI</h2>
+                <span class="bm11-summary-count" id="bm11-count">0/11</span>
+                <span class="bm11-sheet-draw" id="bm11-sheet-draw"></span>
+              </div>
+              <p class="bm11-sheet-lede" id="bm11-sheet-lede"></p>
+            </div>
             <button
               type="button"
               class="bm11-summary-toggle"
@@ -141,13 +153,14 @@ const styleSeed = playersForEra('legends')[0];
               aria-expanded="false"
               aria-controls="bm11-summary-body"
             >
-              <span class="sr-only">Toggle XI details</span>
+              <span class="sr-only">Toggle sheet</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="m6 9 6 6 6-6" />
+                <path d="m18 15-6-6-6 6" />
               </svg>
             </button>
           </div>
           <div class="bm11-summary-body" id="bm11-summary-body">
+            <div id="bm11-xi-wrap">
             <div class="bm11-progress" aria-hidden="true">
               <span class="bm11-progress-fill" id="bm11-progress-fill"></span>
             </div>
@@ -165,6 +178,7 @@ const styleSeed = playersForEra('legends')[0];
             <a href="/matchup" class="bm11-btn bm11-btn-primary bm11-cta is-disabled" id="bm11-cta" aria-disabled="true">
               Compare XIs →
             </a>
+            </div>
           </div>
         </aside>
       </div>
@@ -487,6 +501,46 @@ const styleSeed = playersForEra('legends')[0];
     const msgEl = $('bm11-msg');
     const ctaEl = $('bm11-cta');
 
+    // Mobile (<1024px) swaps the panels: the fixed bottom sheet hosts the
+    // drawn pool, and Your XI lives as a static section in the page flow.
+    // Desktop keeps the pool in the main column and the XI sticky sidebar.
+    const mqMobile = window.matchMedia('(max-width: 1023.98px)');
+
+    function layoutPanels() {
+      const sheetBody = $('bm11-summary-body');
+      const xiWrap = $('bm11-xi-wrap');
+      const staticMount = $('bm11-xi-static-mount');
+      const poolSection = $('bm11-pool-section');
+      const sheetTitle = $('bm11-sheet-title');
+      if (mqMobile.matches) {
+        if (xiWrap.parentNode !== staticMount) staticMount.appendChild(xiWrap);
+        if (groupsEl.parentNode !== sheetBody) sheetBody.appendChild(groupsEl);
+        sheetTitle.textContent = 'Your draw';
+        summaryEl.setAttribute('aria-label', 'Your draw');
+      } else {
+        if (xiWrap.parentNode !== sheetBody)
+          sheetBody.insertBefore(xiWrap, sheetBody.firstChild);
+        if (groupsEl.parentNode !== poolSection) poolSection.appendChild(groupsEl);
+        sheetTitle.textContent = 'Your XI';
+        summaryEl.setAttribute('aria-label', 'Your selected XI');
+        setSheetOpen(false);
+      }
+    }
+
+    function setSheetOpen(open) {
+      summaryEl.classList.toggle('is-open', open);
+      $('bm11-toggle').setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    // Pop the draw sheet up (mobile only). Returns whether it did anything,
+    // so callers can fall back to a page scroll on desktop.
+    function revealDrawSheet() {
+      if (!mqMobile.matches) return false;
+      setSheetOpen(true);
+      $('bm11-summary-body').scrollTop = 0;
+      return true;
+    }
+
     const announce = (text) => {
       liveEl.textContent = '';
       requestAnimationFrame(() => {
@@ -695,10 +749,10 @@ const styleSeed = playersForEra('legends')[0];
       draft = applySpinResult(draft, combo.era, combo.nation);
       persist();
       renderAll();
-      // Bring the fresh draw into view — on mobile the pool sits below
-      // the fold after a spin.
+      // Mobile: the draw sheet pops up with the fresh pool. Desktop: the
+      // pool sits in the main column, so bring it into view instead.
       const poolHeading = document.getElementById('bm11-pool-heading');
-      if (poolHeading) {
+      if (!revealDrawSheet() && poolHeading) {
         const reduceMotion = window.matchMedia(
           '(prefers-reduced-motion: reduce)'
         ).matches;
@@ -748,6 +802,8 @@ const styleSeed = playersForEra('legends')[0];
             : applyEraRespin(draft, choice.era);
         persist();
         renderAll();
+        // A respun draw is a fresh draw — pop the sheet on mobile.
+        revealDrawSheet();
         const after = kind === 'nation' ? draft.currentNation : draft.currentEra;
         if (after !== before) {
           announce(
@@ -812,6 +868,8 @@ const styleSeed = playersForEra('legends')[0];
       if (!draft.currentEra || !draft.currentNation) {
         heading.textContent = 'Your draw';
         lede.textContent = 'Your drawn players will appear here after your first spin.';
+        $('bm11-sheet-draw').textContent = '';
+        $('bm11-sheet-lede').textContent = '';
         groupsEl.innerHTML =
           '<p class="bm11-pool-idle">Hit <strong>Spin</strong> above to draw your first era + nation.</p>';
         cardEls.clear();
@@ -824,6 +882,10 @@ const styleSeed = playersForEra('legends')[0];
       lede.textContent =
         `${unpickedCount(pool)} players available · ` +
         `pick ${limit - picked} more this round — select a player, then choose their slot in your XI`;
+      // Mobile draw-sheet header mirrors the draw + remaining picks.
+      $('bm11-sheet-draw').textContent = `${eraName(draft.currentEra)} · ${draft.currentNation}`;
+      $('bm11-sheet-lede').textContent =
+        `${unpickedCount(pool)} available · pick ${limit - picked} more this round`;
 
       if (pool.length === 0) {
         // Defensive: cannot happen — spins only draw combos with players.
@@ -931,6 +993,7 @@ const styleSeed = playersForEra('legends')[0];
     function onPoolClick(uid, btn) {
       const p = uidIndex[uid];
       if (!p || draft.isSpinning) return;
+      let justSelected = false;
       const existing = draft.selectedPlayers.find((s) => s.id === p.id);
       if (existing) {
         if (existing.roundPicked !== draft.currentRound || draft.gameComplete) {
@@ -963,6 +1026,7 @@ const styleSeed = playersForEra('legends')[0];
         // A pool selection takes over from a pending move.
         moveFrom = null;
         selectedUid = uid;
+        justSelected = true;
         flashMsg('');
         announce(
           `Selected ${p.name} — ${groupLabelList(p)}. Choose a glowing slot in your XI.`
@@ -970,6 +1034,21 @@ const styleSeed = playersForEra('legends')[0];
       }
       persist();
       renderAll();
+      // Mobile: the sheet drops away to reveal the Your XI slots for
+      // placement; the toggle brings it back any time.
+      if (justSelected && mqMobile.matches) {
+        setSheetOpen(false);
+        const xiHeading = $('bm11-xi-static-heading');
+        if (xiHeading) {
+          const reduceMotion = window.matchMedia(
+            '(prefers-reduced-motion: reduce)'
+          ).matches;
+          xiHeading.scrollIntoView({
+            behavior: reduceMotion ? 'auto' : 'smooth',
+            block: 'start',
+          });
+        }
+      }
     }
 
     // Shared placement tail: validate once more, then commit the pick with
@@ -987,6 +1066,12 @@ const styleSeed = playersForEra('legends')[0];
       flashMsg('');
       persist();
       renderAll();
+      // Mobile: when the round still needs picks, the draw sheet pops back
+      // up for the next selection. When the round is done (or the XI is
+      // complete), it stays down on Your XI with Spin up top to continue.
+      if (mqMobile.matches && !draft.gameComplete && !roundDone()) {
+        revealDrawSheet();
+      }
       // Note when a placement fills every slot of its group.
       const group = SLOT_GROUPS.find((g) => g.keys.includes(slotKey));
       const filledNote =
@@ -1091,7 +1176,9 @@ const styleSeed = playersForEra('legends')[0];
       renderAll();
     }
 
-    summaryEl.addEventListener('click', (e) => {
+    // Delegated at document level: on mobile the XI slots live outside the
+    // aside (static in-page section), so aside-scoped delegation would miss.
+    document.addEventListener('click', (e) => {
       const rm = e.target.closest('[data-bm11-deselect]');
       if (rm) {
         const rawId = rm.getAttribute('data-bm11-deselect');
@@ -1370,8 +1457,7 @@ const styleSeed = playersForEra('legends')[0];
     });
 
     $('bm11-toggle').addEventListener('click', () => {
-      const open = summaryEl.classList.toggle('is-open');
-      $('bm11-toggle').setAttribute('aria-expanded', open ? 'true' : 'false');
+      setSheetOpen(!summaryEl.classList.contains('is-open'));
     });
 
     // ------------------------------------------------------------------ render
@@ -1383,6 +1469,10 @@ const styleSeed = playersForEra('legends')[0];
     }
 
     // --------------------------------------------------------------- restore
+    // Panels must be in their breakpoint-correct homes before the first
+    // render populates them.
+    layoutPanels();
+    mqMobile.addEventListener('change', layoutPanels);
     (function restore() {
       const raw = loadDraft();
       if (!raw) {
@@ -1397,6 +1487,17 @@ const styleSeed = playersForEra('legends')[0];
       }
       draft = restored;
       renderAll();
+      // Mobile: if the restored draft has a live draw with picks remaining,
+      // reopen the draw sheet so choosing can continue where it left off.
+      if (
+        mqMobile.matches &&
+        !draft.gameComplete &&
+        draft.currentEra &&
+        draft.currentNation &&
+        !roundDone()
+      ) {
+        revealDrawSheet();
+      }
       if (draft.gameComplete) {
         announce('Welcome back — your XI is complete. Compare XIs to face the house team.');
       } else {
@@ -1900,6 +2001,18 @@ const styleSeed = playersForEra('legends')[0];
       font-weight: 800;
       margin: 0;
     }
+    /* Mobile draw-sheet header bits: hidden on desktop, where the aside is
+       the Your XI sidebar. The title wrappers use display:contents there so
+       the header lays out exactly as before. */
+    .bm11-sheet-draw,
+    .bm11-sheet-lede,
+    .bm11-xi-static {
+      display: none;
+    }
+    @media (min-width: 1024px) {
+      .bm11-sheet-titles,
+      .bm11-sheet-title-row { display: contents; }
+    }
     .bm11-summary-count {
       font-variant-numeric: tabular-nums;
       font-weight: 700;
@@ -2189,10 +2302,49 @@ const styleSeed = playersForEra('legends')[0];
         position: fixed;
         left: 0.75rem;
         right: 0.75rem;
-        bottom: 0.75rem;
+        bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
         z-index: 60;
         border-radius: 1rem;
         padding: 0.8rem 1rem;
+      }
+      /* Your XI lives in the page flow on mobile; the pool section hides
+         (its groups render inside the sheet instead). */
+      .bm11-xi-static { display: block; }
+      #bm11-pool-section { display: none; }
+      /* Draw-sheet header: title + draw pill on one row, lede beneath. */
+      .bm11-summary-head { align-items: flex-start; }
+      .bm11-sheet-titles {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        flex: 1;
+        min-width: 0;
+      }
+      .bm11-sheet-title-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-width: 0;
+      }
+      #bm11-count { display: none; }
+      .bm11-sheet-draw {
+        display: inline-block;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+        color: var(--bm11-gold, #ffc93c);
+        border: 1px solid rgba(255, 201, 60, 0.4);
+        border-radius: 9999px;
+        padding: 0.1rem 0.55rem;
+      }
+      .bm11-sheet-draw:empty,
+      .bm11-sheet-lede:empty { display: none; }
+      .bm11-sheet-lede {
+        display: block;
+        margin: 0;
+        font-size: 0.75rem;
+        color: var(--bm11-muted, #a5a8c9);
       }
       .bm11-summary-toggle { display: inline-flex; }
       .bm11-summary-body { display: none; }
