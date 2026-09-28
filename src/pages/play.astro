@@ -144,7 +144,6 @@ const styleSeed = playersForEra('legends')[0];
                 <span class="bm11-summary-count" id="bm11-count">0/11</span>
                 <span class="bm11-sheet-draw" id="bm11-sheet-draw"></span>
               </div>
-              <p class="bm11-sheet-lede" id="bm11-sheet-lede"></p>
             </div>
             <button
               type="button"
@@ -886,7 +885,6 @@ const styleSeed = playersForEra('legends')[0];
         heading.textContent = 'Your draw';
         lede.textContent = 'Your drawn players will appear here after your first spin.';
         $('bm11-sheet-draw').textContent = '';
-        $('bm11-sheet-lede').textContent = '';
         groupsEl.innerHTML =
           '<p class="bm11-pool-idle">Hit <strong>Spin</strong> above to draw your first era + nation.</p>';
         cardEls.clear();
@@ -899,10 +897,8 @@ const styleSeed = playersForEra('legends')[0];
       lede.textContent =
         `${unpickedCount(pool)} players available · ` +
         `pick ${limit - picked} more this round — select a player, then choose their slot in your XI`;
-      // Mobile draw-sheet header mirrors the draw + remaining picks.
+      // Mobile draw-sheet header mirrors the draw.
       $('bm11-sheet-draw').textContent = `${eraName(draft.currentEra)} · ${draft.currentNation}`;
-      $('bm11-sheet-lede').textContent =
-        `${unpickedCount(pool)} available · pick ${limit - picked} more this round`;
 
       if (pool.length === 0) {
         // Defensive: cannot happen — spins only draw combos with players.
@@ -2048,7 +2044,6 @@ const styleSeed = playersForEra('legends')[0];
        the Your XI sidebar. The title wrappers use display:contents there so
        the header lays out exactly as before. */
     .bm11-sheet-draw,
-    .bm11-sheet-lede,
     .bm11-xi-static {
       display: none;
     }
@@ -2381,14 +2376,7 @@ const styleSeed = playersForEra('legends')[0];
         border-radius: 9999px;
         padding: 0.1rem 0.55rem;
       }
-      .bm11-sheet-draw:empty,
-      .bm11-sheet-lede:empty { display: none; }
-      .bm11-sheet-lede {
-        display: block;
-        margin: 0;
-        font-size: 0.75rem;
-        color: var(--bm11-muted, #a5a8c9);
-      }
+      .bm11-sheet-draw:empty { display: none; }
       .bm11-summary-toggle { display: inline-flex; }
       .bm11-summary-body { display: none; }
       .bm11-summary.is-open .bm11-summary-body {
