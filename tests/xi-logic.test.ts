@@ -58,10 +58,14 @@ ok(declarableRoles(hobbs, 'opener-1')[0] === 'opener', 'hobbs opener');
   // A still-needed primary wicketkeeper declares as wicketkeeper…
   const dhoni = mk('dhoni', 'Dhoni', 'wicketkeeper', ['middle-order']);
   ok(declarationForSlot(d0, dhoni, 'bat-3') === 'wicketkeeper', 'needed keeper declares WK');
+  // …and so does a secondary keeper (e.g. Sangakkara, primary middle-order)
+  // — the user's reported case: he must be pickable as the wicketkeeper.
+  ok(declarationForSlot(d0, sanga, 'bat-3') === 'wicketkeeper', 'needed secondary keeper declares WK');
   // …and falls back to middle-order once the keeper slot is filled.
   let d1 = applyDraftPick(d0, gilchrist, 'bat-6', 'wicketkeeper');
   ok(d1 !== d0, 'keeper pick applies');
   ok(declarationForSlot(d1, dhoni, 'bat-4') === 'middle-order', 'unneeded keeper declares MO');
+  ok(declarationForSlot(d1, sanga, 'bat-4') === 'middle-order', 'unneeded secondary keeper declares MO');
   // No legal declaration → null (dead-end slots don't glow).
   ok(declarationForSlot(d0, warne, 'bat-3') === null, 'warne has no batting declaration');
 }
@@ -475,10 +479,11 @@ delete (rsOldBlob as Record<string, unknown>).nationRespinsLeft;
 const rsDeserOld = deserializeDraft(rsOldBlob, () => null);
 ok(rsDeserOld !== null && rsDeserOld.eraRespinsLeft === 1 && rsDeserOld.nationRespinsLeft === 1, 'pre-respin blobs default to 1 token each');
 
-// ---- cross-group moves re-declare slot-first ----
+// ---- moves preserve the declaration when the destination accepts it ----
 {
   // The user's reported case: Botham (AR primary, MO secondary) slotted as
-  // an all-rounder, then moved onto a batting slot after a later spin.
+  // an all-rounder at spot 8, then moved onto a batting slot — he must stay
+  // an all-rounder, not silently become a middle-order batter.
   const botham = mk('both', 'Botham', 'all-rounder', ['middle-order']);
   let cmv = freshStarted();
   cmv = pick(cmv, hobbs, 'opener-1', 'opener');
@@ -490,29 +495,49 @@ ok(rsDeserOld !== null && rsDeserOld.eraRespinsLeft === 1 && rsDeserOld.nationRe
     validateSlotMove(cmv, 'spin-ar', 'bat-3'),
   );
   ok(
-    moveDeclaration(cmv, 'spin-ar', 'bat-3') === 'middle-order',
-    'moveDeclaration previews middle-order for the batting slot',
+    moveDeclaration(cmv, 'spin-ar', 'bat-3') === 'all-rounder',
+    'moveDeclaration keeps all-rounder for the batting slot',
   );
   const cmv2 = applyDraftMove(cmv, 'spin-ar', 'bat-3');
   ok(
-    cmv2.slots['bat-3']?.role === 'middle-order',
-    'cross-group move re-declares as middle-order',
+    cmv2.slots['bat-3']?.role === 'all-rounder',
+    'spot-8 -> batting move keeps the all-rounder declaration',
   );
   ok(
-    countsOf(cmv2)['middle-order'] === 1 && countsOf(cmv2)['all-rounder'] === 0,
-    'counts follow the re-declaration',
+    countsOf(cmv2)['all-rounder'] === 1 && countsOf(cmv2)['middle-order'] === 0,
+    'counts follow the preserved declaration',
   );
-  // Moving back to spot 8 re-declares as all-rounder.
+  // …which frees spot 8, so a spinner becomes pickable afterwards.
+  const warne2 = mk('warne2', 'Warne', 'spinner');
+  ok(
+    validatePoolPick(cmv2, warne2) === null,
+    'spinner pickable once the AR vacates spot 8',
+    validatePoolPick(cmv2, warne2),
+  );
+  const cmv2b = pick(cmv2, warne2, 'spin-ar', 'spinner');
+  ok(
+    countsOf(cmv2b)['all-rounder'] === 1 && countsOf(cmv2b)['spinner'] === 1,
+    'AR + spinner coexist (3MO+AR+SP shape stays reachable)',
+  );
+  // Moving back to spot 8 keeps all-rounder too.
   const cmv3 = applyDraftMove(cmv2, 'bat-3', 'spin-ar');
   ok(
     cmv3.slots['spin-ar']?.role === 'all-rounder',
-    'return to spot 8 re-declares as all-rounder',
+    'return to spot 8 keeps all-rounder',
   );
   // Same-group moves still travel the declaration.
   const cmv4 = applyDraftMove(cmv2, 'bat-3', 'bat-4');
   ok(
-    cmv4.slots['bat-4']?.role === 'middle-order',
+    cmv4.slots['bat-4']?.role === 'all-rounder',
     'same-group move keeps the declaration',
+  );
+  // A destination that can't take the role still re-derives slot-first:
+  // a middle-order-only player moved to spot 8 can't stay middle-order.
+  const moOnly = mk('moOnly', 'MO Only', 'middle-order');
+  let cmv5 = pick(cmv, moOnly, 'bat-5', 'middle-order');
+  ok(
+    moveDeclaration(cmv5, 'bat-5', 'spin-ar') === null,
+    'middle-order-only player cannot move to spot 8',
   );
   // The right-pane label reads plain "Middle-order".
   ok(XI_ROLE_LABELS['middle-order'] === 'Middle-order', 'XI label drops "batter"');

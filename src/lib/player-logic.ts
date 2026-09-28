@@ -520,10 +520,11 @@ export function defaultDeclaredRole(
  * The declaration a fresh placement into `slotKey` takes: the first LEGAL
  * declaration in slot order — the tapped slot decides, not the player's
  * primary role. So an all-rounder (primary) who can also bat middle-order
- * declares as middle-order on a batting slot. Exception: a primary
- * wicketkeeper the XI still needs declares as wicketkeeper (exactly one is
- * mandatory). Null when the player can't legally fill the slot — which is
- * also what keeps dead-end slots from glowing.
+ * declares as middle-order on a batting slot. Exception: a keeper-capable
+ * player (primary or secondary wicketkeeper, e.g. Sangakkara) declares as
+ * wicketkeeper when the XI still needs its mandatory keeper. Null when the
+ * player can't legally fill the slot — which is also what keeps dead-end
+ * slots from glowing.
  */
 export function declarationForSlot(
   state: DraftState,
@@ -536,7 +537,7 @@ export function declarationForSlot(
     .map((o) => o.role);
   if (legal.length === 0) return null;
   if (
-    player.primaryRole === 'wicketkeeper' &&
+    playerGroups(player).includes('wicketkeeper') &&
     countsOf(state).wicketkeeper === 0 &&
     legal.includes('wicketkeeper')
   ) {
@@ -968,11 +969,12 @@ export interface MoveOptions {
 
 /**
  * The declaration the occupant of `fromSlotKey` would take if moved to
- * `toSlotKey`. Within a slot group the declared role travels with the
- * player; across groups the destination slot re-decides it slot-first —
- * so an all-rounder moved onto a batting slot declares as middle-order,
- * and moving back to spot 8 declares as all-rounder again. Null when the
- * player can't fill the destination at all.
+ * `toSlotKey`. The declared role travels with the player whenever the
+ * destination slot accepts it — so an all-rounder moved from spot 8 onto a
+ * batting slot stays an all-rounder instead of being re-declared
+ * middle-order. Only when the destination can't take the current role is it
+ * re-derived slot-first (e.g. moving back to spot 8, or a role the new slot
+ * doesn't accept). Null when the player can't fill the destination at all.
  */
 export function moveDeclaration(
   state: DraftState,
@@ -984,7 +986,7 @@ export function moveDeclaration(
   const occ = state.slots[fromSlotKey];
   const mover = occ ? state.selectedPlayers.find((p) => p.uid === occ.uid) : undefined;
   if (!mover || !toSlot || !fromSlot || !occ) return null;
-  if (fromSlot.group === toSlot.group && toSlot.roles.includes(occ.role)) {
+  if (toSlot.roles.includes(occ.role)) {
     return occ.role;
   }
   return defaultDeclaredRole(mover, toSlotKey);

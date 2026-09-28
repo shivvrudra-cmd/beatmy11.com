@@ -1125,8 +1125,8 @@ const styleSeed = playersForEra('legends')[0];
           return;
         }
         // Slot-first: the tapped position decides the declaration — the
-        // first legal role in slot order (a still-needed primary
-        // wicketkeeper declares as wicketkeeper).
+        // first legal role in slot order (a still-needed keeper-capable
+        // player, primary or secondary, declares as wicketkeeper).
         const supply = draftSupply();
         const role = declaredRoleForSlot(p, slotKey, supply);
         if (!role) {
@@ -1245,7 +1245,7 @@ const styleSeed = playersForEra('legends')[0];
     // Slot-first placement: the tapped position decides the declaration
     // (first legal role in slot order — an all-rounder who can bat
     // middle-order declares as middle-order on a batting slot), except a
-    // still-needed primary wicketkeeper declares as wicketkeeper.
+    // still-needed keeper-capable player declares as wicketkeeper.
     // No separate role step.
 
     // Declaration for a slot tap — also what keeps dead-end slots from
