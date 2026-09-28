@@ -1405,6 +1405,19 @@ const styleSeed = playersForEra('legends')[0];
 
       // Empty slot.
       classes.push('is-empty');
+      // When a multi-role slot's legal declarations narrow to a single
+      // role (e.g. the last batting slot once 3 middle-order batters are
+      // placed can only take the wicketkeeper), label it with that role
+      // so the requirement reads on the slot itself.
+      let displayLabel = slot.label;
+      if (slot.roles.length > 1) {
+        const labelCounts = countsOf(draft);
+        const openShapes = reachableShapes(labelCounts);
+        const stillOpen = slot.roles.filter((r) =>
+          openShapes.some((s) => (labelCounts[r] || 0) < s[r])
+        );
+        if (stillOpen.length === 1) displayLabel = XI_ROLE_LABELS[stillOpen[0]];
+      }
       if (selectedUid && uidIndex[selectedUid]) {
         const p = uidIndex[selectedUid];
         // Slot-first: the slot glows when any declaration is legal here,
@@ -1418,12 +1431,12 @@ const styleSeed = playersForEra('legends')[0];
               .length > 1;
           hint = multi ? `as ${rl} · choose` : `as ${rl}`;
           ariaLabel =
-            `${slot.label} — empty. Activate to place ${p.name}` +
+            `${displayLabel} — empty. Activate to place ${p.name}` +
             (multi ? ', then choose a role.' : ` as ${rl}.`);
         } else {
           hint = '';
           ariaLabel =
-            `${slot.label} — empty (${slotRoles}). ${p.name} can't play here.`;
+            `${displayLabel} — empty (${slotRoles}). ${p.name} can't play here.`;
         }
       } else if (moveFrom && validateSlotMove(draft, moveFrom, slotKey, draftSupply(), {
             sameGroupOnly: draft.gameComplete,
@@ -1436,28 +1449,28 @@ const styleSeed = playersForEra('legends')[0];
         if (moveRole && curRole && moveRole !== curRole) {
           const mrl = XI_ROLE_LABELS[moveRole];
           hint = `Move here as ${mrl}`;
-          ariaLabel = `${slot.label} — empty. Activate to move the selected player here as ${mrl}.`;
+          ariaLabel = `${displayLabel} — empty. Activate to move the selected player here as ${mrl}.`;
         } else {
           hint = 'Move here';
-          ariaLabel = `${slot.label} — empty. Activate to move the selected player here.`;
+          ariaLabel = `${displayLabel} — empty. Activate to move the selected player here.`;
         }
       } else {
         hint = '';
-        ariaLabel = `${slot.label} — empty (${slotRoles}).`;
+        ariaLabel = `${displayLabel} — empty (${slotRoles}).`;
       }
       return (
         `<button type="button" class="${classes.join(' ')}" data-bm11-slot="${esc(slotKey)}"` +
         ` aria-label="${esc(ariaLabel)}">` +
-        `<span class="bm11-slot-label">${esc(slot.label)}</span>` +
+        `<span class="bm11-slot-label">${esc(displayLabel)}</span>` +
         (hint ? `<span class="bm11-slot-hint">${esc(hint)}</span>` : '') +
         `</button>`
       );
     }
 
     // Composition status: live role counts plus what every reachable XI
-    // shape still needs. A valid XI is exactly: 2 openers, 3–4 middle-order,
-    // 1 wicketkeeper, 1 all-rounder and/or 1 spinner (both only with 3
-    // middle-order), and 3 fast bowlers.
+    // shape still needs. A valid XI is exactly: 2 openers, 3 middle-order,
+    // 1 wicketkeeper, 3 fast bowlers, and a flex pair of 2 all-rounders,
+    // all-rounder + spinner, or 2 spinners.
     const ROLE_PLURALS = {
       opener: ['opener', 'openers'],
       'middle-order': ['middle-order batter', 'middle-order batters'],
