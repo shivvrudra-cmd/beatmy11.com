@@ -2630,7 +2630,10 @@ const styleSeed = playersForEra('legends')[0];
         gap: 0.5rem;
       }
       .bm11-xi-static .bm11-xi-group[data-bm11-group='m-openers'] .bm11-xi-group-list {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        /* The opener pair stays two equal cards, centered as a unit. */
+        max-width: 21rem;
+        margin-inline: auto;
       }
       .bm11-xi-static .bm11-xi-group[data-bm11-group='m-batters'] .bm11-xi-group-list {
         grid-template-columns: repeat(3, 1fr);
