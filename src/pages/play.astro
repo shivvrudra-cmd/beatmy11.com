@@ -191,6 +191,30 @@ const styleSeed = playersForEra('legends')[0];
     <script type="application/json" id="bm11-legend-combos" set:html={legendCombosJson}></script>
     <script type="application/json" id="bm11-draft-combos" set:html={draftCombosJson}></script>
   </main>
+
+  <!-- Role chooser: shown only when a tapped player/slot has more than one
+       legal declaration (e.g. Sangakkara as batter or keeper). -->
+  <div id="bm11-role-chooser" class="bm11-chooser" hidden>
+    <div class="bm11-chooser-backdrop" data-bm11-chooser-cancel></div>
+    <div
+      class="bm11-chooser-card"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="bm11-chooser-title"
+    >
+      <h3 class="bm11-chooser-title" id="bm11-chooser-title"></h3>
+      <p class="bm11-chooser-sub" id="bm11-chooser-sub"></p>
+      <div class="bm11-chooser-options" id="bm11-chooser-options"></div>
+      <button
+        type="button"
+        class="bm11-chooser-cancel"
+        data-bm11-chooser-cancel
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+
   <Footer />
 
   <script>
@@ -229,6 +253,8 @@ const styleSeed = playersForEra('legends')[0];
       XI_SIZE,
       DRAFT_ROUNDS,
       XI_ROLE_LABELS,
+      XI_SLOTS,
+      XI_SLOT_GROUP_LABELS,
       POOL_GROUPS,
     } from '../lib/player-logic';
 
@@ -338,17 +364,15 @@ const styleSeed = playersForEra('legends')[0];
       'fast-bowler': 'Fast Bowler',
       spinner: 'Spinner',
     };
-    // Your-XI slot groups, in batting-to-bowling order: 2 fixed openers,
-    // batting spots 3–7 (middle order / wicketkeeper / all-rounder, keeper
-    // not confined to one row), spot 8 (spinner or all-rounder), then the
-    // 3 fast bowlers. Eleven fixed slots, always rendered, even before the
-    // first pick.
-    const SLOT_GROUPS = [
-      { label: 'Openers', keys: ['opener-1', 'opener-2'] },
-      { label: 'Batting · Spots 3–7', keys: ['bat-3', 'bat-4', 'bat-5', 'bat-6', 'bat-7'] },
-      { label: 'Spot 8', keys: ['spin-ar'] },
-      { label: 'Fast Bowlers', keys: ['fast-1', 'fast-2', 'fast-3'] },
-    ];
+    // Your-XI slot groups, in batting-to-bowling order, derived from the
+    // shared XI_SLOTS model so labels and keys can't drift: 2 fixed
+    // openers, batting spots 3–6 (middle order / wicketkeeper), spots 7–8
+    // (all-rounder / spinner), then the 3 fast bowlers. Eleven fixed slots,
+    // always rendered, even before the first pick.
+    const SLOT_GROUPS = ['openers', 'batting', 'flex', 'fast'].map((g) => ({
+      label: XI_SLOT_GROUP_LABELS[g],
+      keys: XI_SLOTS.filter((s) => s.group === g).map((s) => s.key),
+    }));
     const ERA_NAMES = {
       legends: 'Legends',
       '1970s': '1970s',
@@ -480,6 +504,7 @@ const styleSeed = playersForEra('legends')[0];
     let draft = createDraft();
     let selectedUid = null;
     let moveFrom = null;
+    let chooserState = null; // { uid, slotKey, supply } while the role chooser is open
     let msgTimer = 0;
 
     const $ = (id) => document.getElementById(id);
@@ -1036,8 +1061,9 @@ const styleSeed = playersForEra('legends')[0];
           }
           return;
         }
-        // A pool selection takes over from a pending move.
+        // A pool selection takes over from a pending move or chooser.
         moveFrom = null;
+        hideRoleChooser();
         selectedUid = uid;
         justSelected = true;
         flashMsg('');
@@ -1124,13 +1150,10 @@ const styleSeed = playersForEra('legends')[0];
           renderAll();
           return;
         }
-        // Slot-first: the tapped position decides the declaration — the
-        // first legal role in slot order (a still-needed keeper-capable
-        // player, primary or secondary, declares as wicketkeeper).
         const supply = draftSupply();
-        const role = declaredRoleForSlot(p, slotKey, supply);
-        if (!role) {
-          const options = placementOptions(draft, p, slotKey, supply);
+        const options = placementOptions(draft, p, slotKey, supply);
+        const legal = options.filter((o) => !o.reason);
+        if (!legal.length) {
           const blocked = options.find((o) => o.reason);
           const reason =
             (blocked && blocked.reason) ||
@@ -1140,7 +1163,14 @@ const styleSeed = playersForEra('legends')[0];
           announce(reason);
           return;
         }
-        placeSelected(p, slotKey, role, supply);
+        if (legal.length === 1) {
+          placeSelected(p, slotKey, legal[0].role, supply);
+          return;
+        }
+        // More than one legal declaration — ask the user which role the
+        // player takes (e.g. Sangakkara as batter or keeper). The
+        // slot-first default is marked Suggested.
+        showRoleChooser(p, slotKey, legal.map((o) => o.role), supply);
         return;
       } else if (moveFrom) {
         if (moveFrom === slotKey) {
@@ -1192,6 +1222,20 @@ const styleSeed = playersForEra('legends')[0];
     // Delegated at document level: on mobile the XI slots live outside the
     // aside (static in-page section), so aside-scoped delegation would miss.
     document.addEventListener('click', (e) => {
+      const chooserOpt = e.target.closest('[data-bm11-chooser-role]');
+      if (chooserOpt) {
+        const st = chooserState;
+        const role = chooserOpt.getAttribute('data-bm11-chooser-role');
+        const p = st && uidIndex[st.uid];
+        hideRoleChooser();
+        if (st && p && role) placeSelected(p, st.slotKey, role, st.supply);
+        return;
+      }
+      if (e.target.closest('[data-bm11-chooser-cancel]')) {
+        hideRoleChooser();
+        announce('Role choice cancelled.');
+        return;
+      }
       const rm = e.target.closest('[data-bm11-deselect]');
       if (rm) {
         const rawId = rm.getAttribute('data-bm11-deselect');
@@ -1214,6 +1258,11 @@ const styleSeed = playersForEra('legends')[0];
     // Escape cancels a pending pool selection or move.
     document.addEventListener('keydown', (e) => {
       if (e.key !== 'Escape') return;
+      if (chooserState) {
+        hideRoleChooser();
+        announce('Role choice cancelled.');
+        return;
+      }
       if (!selectedUid && !moveFrom) return;
       selectedUid = null;
       moveFrom = null;
@@ -1252,6 +1301,55 @@ const styleSeed = playersForEra('legends')[0];
     // glowing (null = can't legally fill it).
     function declaredRoleForSlot(p, slotKey, supply) {
       return declarationForSlot(draft, p, slotKey, supply);
+    }
+
+    // One-line explainer per role inside the chooser.
+    const CHOOSER_SUB = {
+      opener: 'Opens the batting',
+      'middle-order': 'Bats in the middle order',
+      wicketkeeper: 'Fills your keeper slot',
+      'all-rounder': 'Batting and bowling value',
+      spinner: 'Frontline spin option',
+      'fast-bowler': 'Pace attack',
+    };
+
+    // Role chooser: only when the tapped slot admits more than one legal
+    // declaration. The slot-first default (keeper-preferred) is Suggested;
+    // the user can override it.
+    function showRoleChooser(p, slotKey, roles, supply) {
+      const slot = slotByKey(slotKey);
+      const suggested = declarationForSlot(draft, p, slotKey, supply);
+      chooserState = { uid: p.uid, slotKey, supply };
+      $('bm11-chooser-title').textContent = p.name;
+      $('bm11-chooser-sub').textContent =
+        `${slot ? slot.label : 'This slot'} takes ${p.name} ` +
+        `${roles.length === 2 ? 'two' : roles.length} ways — pick a role:`;
+      $('bm11-chooser-options').innerHTML = roles
+        .map((role) => {
+          const isSugg = role === suggested;
+          return (
+            `<button type="button" class="bm11-chooser-opt${isSugg ? ' is-suggested' : ''}" ` +
+            `data-bm11-chooser-role="${role}">` +
+            `<span class="bm11-chooser-opt-name">${esc(XI_ROLE_LABELS[role])}` +
+            (isSugg ? ' <span class="bm11-chooser-badge">Suggested</span>' : '') +
+            `</span><span class="bm11-chooser-opt-sub">${esc(CHOOSER_SUB[role] || '')}</span></button>`
+          );
+        })
+        .join('');
+      const box = $('bm11-role-chooser');
+      box.hidden = false;
+      const focusTarget =
+        box.querySelector('.bm11-chooser-opt.is-suggested') ||
+        box.querySelector('.bm11-chooser-opt');
+      if (focusTarget) focusTarget.focus();
+      announce(
+        `${p.name} can play ${roles.map((r) => XI_ROLE_LABELS[r]).join(' or ')} here. Choose a role.`
+      );
+    }
+    function hideRoleChooser() {
+      chooserState = null;
+      const box = $('bm11-role-chooser');
+      if (box) box.hidden = true;
     }
     function slotButtonHTML(slotKey) {
       const slot = slotByKey(slotKey);
@@ -1315,8 +1413,13 @@ const styleSeed = playersForEra('legends')[0];
         if (role) {
           classes.push('is-glow');
           const rl = XI_ROLE_LABELS[role];
-          hint = `as ${rl}`;
-          ariaLabel = `${slot.label} — empty. Activate to place ${p.name} as ${rl}.`;
+          const multi =
+            placementOptions(draft, p, slotKey, draftSupply()).filter((o) => !o.reason)
+              .length > 1;
+          hint = multi ? `as ${rl} · choose` : `as ${rl}`;
+          ariaLabel =
+            `${slot.label} — empty. Activate to place ${p.name}` +
+            (multi ? ', then choose a role.' : ` as ${rl}.`);
         } else {
           hint = '';
           ariaLabel =
@@ -2392,6 +2495,110 @@ const styleSeed = playersForEra('legends')[0];
       .bm11-progress-fill { transition: none; }
       .bm11-summary-toggle svg { transition: none; }
       .bm11-roundbar-seg.is-current { animation: none; }
+    }
+    /* ============ role chooser (multi-declaration placements) ============ */
+    .bm11-chooser[hidden] { display: none; }
+    .bm11-chooser {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .bm11-chooser-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(4, 4, 16, 0.72);
+      backdrop-filter: blur(2px);
+    }
+    .bm11-chooser-card {
+      position: relative;
+      width: min(26rem, calc(100% - 1.5rem));
+      margin-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+      background: var(--bm11-elevated, #1a1a38);
+      border: 1px solid rgba(0, 230, 118, 0.25);
+      border-radius: 1rem;
+      padding: 1.1rem 1.1rem 1rem;
+      box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.55);
+    }
+    @media (min-width: 1024px) {
+      .bm11-chooser { align-items: center; }
+      .bm11-chooser-card { margin-bottom: 0; }
+    }
+    .bm11-chooser-title {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .bm11-chooser-sub {
+      margin: 0.3rem 0 0.9rem;
+      font-size: 0.85rem;
+      color: var(--bm11-muted, #a5a8c9);
+    }
+    .bm11-chooser-options {
+      display: grid;
+      gap: 0.55rem;
+    }
+    .bm11-chooser-opt {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      align-items: flex-start;
+      text-align: left;
+      width: 100%;
+      padding: 0.7rem 0.85rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(165, 168, 201, 0.25);
+      background: var(--bm11-surface, #12122b);
+      color: inherit;
+      cursor: pointer;
+    }
+    .bm11-chooser-opt:hover { border-color: rgba(0, 230, 118, 0.6); }
+    .bm11-chooser-opt:focus-visible {
+      outline: 2px solid var(--bm11-ring, #00e676);
+      outline-offset: 2px;
+    }
+    .bm11-chooser-opt.is-suggested {
+      border-color: var(--bm11-primary, #00e676);
+      box-shadow: 0 0 0 1px var(--bm11-primary, #00e676);
+    }
+    .bm11-chooser-opt-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .bm11-chooser-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #06130c;
+      background: var(--bm11-primary, #00e676);
+      border-radius: 999px;
+      padding: 0.12rem 0.5rem;
+    }
+    .bm11-chooser-opt-sub {
+      font-size: 0.78rem;
+      color: var(--bm11-muted, #a5a8c9);
+    }
+    .bm11-chooser-cancel {
+      margin-top: 0.8rem;
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 0.75rem;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--bm11-muted, #a5a8c9);
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .bm11-chooser-cancel:hover { color: #fff; }
+    @media (prefers-reduced-motion: reduce) {
+      .bm11-chooser-backdrop { backdrop-filter: none; }
     }
   </style>
 </BaseLayout>

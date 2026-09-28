@@ -314,12 +314,12 @@ export function canSpin(state: DraftState, unpickedInPool: number): boolean {
 // ---------------------------------------------------------------------------
 // XI slots — the right-pane lineup, spots 1–11.
 //
-// Spots 1–2 take openers; spots 3–7 are flexible batting slots that accept
-// middle-order batters, the wicketkeeper and the all-rounder; spot 8 takes
-// the all-rounder or the spinner; spots 9–11 take fast bowlers. A player
-// placed into a flexible slot is DECLARED as the first role they can legally
-// play there in slot order — the tapped slot decides, not the player's
-// primary role — and the declaration is what counts toward the XI
+// Spots 1–2 take openers; spots 3–6 take middle-order batters and the
+// wicketkeeper (an all-rounder placed there bats as a middle-order player);
+// spots 7–8 take the all-rounder(s) and/or spinner(s); spots 9–11 take fast
+// bowlers. A player placed into a slot is DECLARED as the first role they
+// can legally play there in slot order — the tapped slot decides, not the
+// player's primary role — and the declaration is what counts toward the XI
 // composition, stored on the slot itself. (A still-needed primary
 // wicketkeeper placed on a batting slot declares as wicketkeeper.)
 // ---------------------------------------------------------------------------
@@ -345,8 +345,8 @@ export const XI_ROLES: XiRole[] = [
 /** Right-pane slot groups — the units players can be rearranged within. */
 export const XI_SLOT_GROUP_LABELS: Record<string, string> = {
   openers: 'Openers',
-  batting: 'Batting 3\u20137',
-  'spot-8': 'Spot 8',
+  batting: 'Batting 3\u20136',
+  flex: 'Spots 7\u20138',
   fast: 'Fast Bowlers',
 };
 
@@ -365,39 +365,39 @@ export const XI_SLOTS: XiSlot[] = [
   { key: 'opener-2', roles: ['opener'], group: 'openers', label: 'Opener 2' },
   {
     key: 'bat-3',
-    roles: ['middle-order', 'wicketkeeper', 'all-rounder'],
+    roles: ['middle-order', 'wicketkeeper'],
     group: 'batting',
     label: 'Batting 3',
   },
   {
     key: 'bat-4',
-    roles: ['middle-order', 'wicketkeeper', 'all-rounder'],
+    roles: ['middle-order', 'wicketkeeper'],
     group: 'batting',
     label: 'Batting 4',
   },
   {
     key: 'bat-5',
-    roles: ['middle-order', 'wicketkeeper', 'all-rounder'],
+    roles: ['middle-order', 'wicketkeeper'],
     group: 'batting',
     label: 'Batting 5',
   },
   {
     key: 'bat-6',
-    roles: ['middle-order', 'wicketkeeper', 'all-rounder'],
+    roles: ['middle-order', 'wicketkeeper'],
     group: 'batting',
     label: 'Batting 6',
   },
   {
-    key: 'bat-7',
-    roles: ['middle-order', 'wicketkeeper', 'all-rounder'],
-    group: 'batting',
-    label: 'Batting 7',
+    key: 'flex-7',
+    roles: ['all-rounder', 'spinner'],
+    group: 'flex',
+    label: 'Slot 7',
   },
   {
-    key: 'spin-ar',
+    key: 'flex-8',
     roles: ['all-rounder', 'spinner'],
-    group: 'spot-8',
-    label: 'Spot 8',
+    group: 'flex',
+    label: 'Slot 8',
   },
   { key: 'fast-1', roles: ['fast-bowler'], group: 'fast', label: 'Fast Bowler 9' },
   { key: 'fast-2', roles: ['fast-bowler'], group: 'fast', label: 'Fast Bowler 10' },
@@ -608,18 +608,10 @@ export function emptyCounts(): XiCounts {
 export const XI_SHAPES: XiCounts[] = [
   {
     opener: 2,
-    'middle-order': 4,
+    'middle-order': 3,
     wicketkeeper: 1,
-    'all-rounder': 1,
+    'all-rounder': 2,
     spinner: 0,
-    'fast-bowler': 3,
-  },
-  {
-    opener: 2,
-    'middle-order': 4,
-    wicketkeeper: 1,
-    'all-rounder': 0,
-    spinner: 1,
     'fast-bowler': 3,
   },
   {
@@ -628,6 +620,14 @@ export const XI_SHAPES: XiCounts[] = [
     wicketkeeper: 1,
     'all-rounder': 1,
     spinner: 1,
+    'fast-bowler': 3,
+  },
+  {
+    opener: 2,
+    'middle-order': 3,
+    wicketkeeper: 1,
+    'all-rounder': 0,
+    spinner: 2,
     'fast-bowler': 3,
   },
 ];
@@ -645,10 +645,10 @@ export function countsOf(state: DraftState): XiCounts {
 /** Per-role maximum across the three XI shapes. */
 const shapeMax: XiCounts = {
   opener: 2,
-  'middle-order': 4,
+  'middle-order': 3,
   wicketkeeper: 1,
-  'all-rounder': 1,
-  spinner: 1,
+  'all-rounder': 2,
+  spinner: 2,
   'fast-bowler': 3,
 };
 
@@ -714,13 +714,13 @@ function roleCapReason(role: XiRole, have: number): string {
     case 'opener':
       return 'Both opener spots are filled.';
     case 'middle-order':
-      return `Middle-order is at its maximum of 4 (${have} picked).`;
+      return `Middle-order is at its maximum of 3 (${have} picked).`;
     case 'wicketkeeper':
       return 'Your XI already has its wicketkeeper.';
     case 'all-rounder':
-      return 'Your XI already has its all-rounder.';
+      return 'Your XI already has its two all-rounders.';
     case 'spinner':
-      return 'Your XI already has its spinner.';
+      return 'Your XI already has its two spinners.';
     case 'fast-bowler':
       return 'All three fast-bowler spots are filled.';
   }
@@ -961,7 +961,7 @@ export function validateSlotPlacement(
 export interface MoveOptions {
   /**
    * When true, the move is only allowed within one slot group (openers /
-   * batting 3-7 / spot 8 / fast bowlers). Used once the XI is complete, so
+   * batting 3-6 / spots 7-8 / fast bowlers). Used once the XI is complete, so
    * the finished lineup can be rearranged but its composition can't change.
    */
   sameGroupOnly?: boolean;
@@ -970,11 +970,13 @@ export interface MoveOptions {
 /**
  * The declaration the occupant of `fromSlotKey` would take if moved to
  * `toSlotKey`. The declared role travels with the player whenever the
- * destination slot accepts it — so an all-rounder moved from spot 8 onto a
+ * destination slot accepts it — so an all-rounder keeps his role on any
+ * move the destination accepts (e.g. between the two flex slots).
  * batting slot stays an all-rounder instead of being re-declared
  * middle-order. Only when the destination can't take the current role is it
- * re-derived slot-first (e.g. moving back to spot 8, or a role the new slot
- * doesn't accept). Null when the player can't fill the destination at all.
+ * re-derived slot-first when the destination can't take the current role
+ * (e.g. a batter moved to a flex slot). Null when the player can't fill the
+ * destination at all.
  */
 export function moveDeclaration(
   state: DraftState,
@@ -1264,7 +1266,7 @@ export function isXIValid(state: DraftState): boolean {
 // ---------------------------------------------------------------------------
 
 export interface SerializedDraft {
-  v: 3;
+  v: 4;
   currentEra: string | null;
   currentNation: string | null;
   currentRound: number;
@@ -1286,7 +1288,7 @@ export interface SerializedDraft {
  *  re-resolved against the embedded pool on load. */
 export function serializeDraft(state: DraftState): SerializedDraft {
   return {
-    v: 3,
+    v: 4,
     currentEra: state.currentEra,
     currentNation: state.currentNation,
     currentRound: state.currentRound,
@@ -1308,6 +1310,15 @@ export function serializeDraft(state: DraftState): SerializedDraft {
 }
 
 /** v2 slot keys → v3 (slot key, declared role). */
+/**
+ * v3 -> v4: the single 'spin-ar' slot split into 'flex-7'/'flex-8'; 'bat-7'
+ * was removed (batting is now spots 3-6), so its occupant falls through to
+ * the greedy placement below.
+ */
+const V3_SLOT_REMAP: Record<string, string> = {
+  'spin-ar': 'flex-7',
+};
+
 const V2_SLOT_REMAP: Record<string, { slot: string; role: XiRole }> = {
   'opener-1': { slot: 'opener-1', role: 'opener' },
   'opener-2': { slot: 'opener-2', role: 'opener' },
@@ -1315,8 +1326,8 @@ const V2_SLOT_REMAP: Record<string, { slot: string; role: XiRole }> = {
   'middle-2': { slot: 'bat-4', role: 'middle-order' },
   'middle-3': { slot: 'bat-5', role: 'middle-order' },
   keeper: { slot: 'bat-6', role: 'wicketkeeper' },
-  'all-rounder': { slot: 'bat-7', role: 'all-rounder' },
-  spinner: { slot: 'spin-ar', role: 'spinner' },
+  'all-rounder': { slot: 'flex-7', role: 'all-rounder' },
+  spinner: { slot: 'flex-7', role: 'spinner' },
   'fast-1': { slot: 'fast-1', role: 'fast-bowler' },
   'fast-2': { slot: 'fast-2', role: 'fast-bowler' },
   'fast-3': { slot: 'fast-3', role: 'fast-bowler' },
@@ -1338,7 +1349,7 @@ export function deserializeDraft(
   if (!data || typeof data !== 'object') return null;
   const d = data as Partial<SerializedDraft>;
   const version = (d as { v?: number }).v;
-  if ((version !== 1 && version !== 2 && version !== 3) || typeof d.currentRound !== 'number') {
+  if ((version !== 1 && version !== 2 && version !== 3 && version !== 4) || typeof d.currentRound !== 'number') {
     return null;
   }
   const selectedPlayers: DraftPick[] = [];
@@ -1362,15 +1373,16 @@ export function deserializeDraft(
     });
     const slotKey = typeof entry.slot === 'string' ? entry.slot : null;
     if (!slotKey) continue;
-    if (version === 3) {
+    if (version === 4 || version === 3) {
+      const remappedKey = version === 3 ? (V3_SLOT_REMAP[slotKey] ?? slotKey) : slotKey;
       const role = (entry as { role?: unknown }).role;
       if (
-        slotByKey(slotKey) &&
+        slotByKey(remappedKey) &&
         typeof role === 'string' &&
-        (slotByKey(slotKey)!.roles as string[]).includes(role) &&
+        (slotByKey(remappedKey)!.roles as string[]).includes(role) &&
         playerGroups(p).includes(role)
       ) {
-        claimSlot(p, slotKey, role as XiRole);
+        claimSlot(p, remappedKey, role as XiRole);
       }
     } else if (version === 2) {
       const remap = V2_SLOT_REMAP[slotKey];

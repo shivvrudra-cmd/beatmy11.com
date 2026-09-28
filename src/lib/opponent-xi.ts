@@ -21,8 +21,8 @@ import type { NormalizedPlayer, RawPlayer } from './player-logic';
 /**
  * Raw ids of the fixed house XI, in batting order. Every id is verified
  * present in the era data; getHouseXI() throws at build time if one goes
- * missing. Blend 83.5 under the 40/50/10 team score — hard but fair:
- * ~25% user win rate with one nation-respin and one era-respin in play
+ * missing. Blend 81.6 under the 40/50/10 team score — hard but fair:
+ * ~24% user win rate with one nation-respin and one era-respin in play
  * (forced-redraw semantics). 8 represented nations.
  */
 export const HOUSE_PLAYER_IDS = [
@@ -34,7 +34,7 @@ export const HOUSE_PLAYER_IDS = [
   'adam-gilchrist', // wicketkeeper (AUS)
   'richard-hadlee', // all-rounder (NZL)
   'muttiah-muralitharan', // spinner (SRI)
-  'curtly-ambrose', // fast-bowler (WIN)
+  'joel-garner', // fast-bowler (WIN)
   'wasim-akram', // fast-bowler (PAK)
   'dale-steyn', // fast-bowler (RSA)
 ] as const;

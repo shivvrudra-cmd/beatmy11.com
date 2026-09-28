@@ -8,7 +8,8 @@
  *  2. GREEDY: a competent-human player — every pick must pass the client's
  *     exact validation path (validatePoolPick → placementOptions →
  *     validateSlotPlacement, all with supply), preferring roles still needed
- *     by the most reachable shapes.
+ *     by the most reachable shapes, and never taking a pick the oracle
+ *     proves dooming given the remaining pools (no burning scarce supply).
  *
  * Expectations:
  *  - achievable trials: greedy ALWAYS completes a valid XI (else the hard
@@ -107,6 +108,23 @@ function shapeMatch(counts: XiCounts): boolean {
 }
 
 function oracleAchievable(pools: NormalizedPlayer[][]): boolean {
+  return oracleFrom(pools, 0, 0, 0, countsOf(createDraft()), new Set<string>());
+}
+
+/**
+ * Backtracking achievability from an arbitrary mid-draft state.
+ * `picked` holds raw ids of every player already taken (earlier rounds +
+ * this round's earlier picks); the search only moves forward from
+ * (round, idx). Counts-based: any shape-matching role vector is
+ * slot-assignable under the slot model (slots are fungible within their
+ * group and group capacities equal the shape maxima), so a counts
+ * completion implies a slot completion from a counts-consistent state.
+ */
+function oracleFrom(
+  pools: NormalizedPlayer[][],
+  round: number, idx: number, total: number,
+  counts: XiCounts, picked: Set<string>,
+): boolean {
   const memo = new Set<string>();
   const countsKey = (c: XiCounts) => XI_ROLES.map((r) => c[r]).join(',');
   function dfs(
@@ -140,7 +158,7 @@ function oracleAchievable(pools: NormalizedPlayer[][]): boolean {
     memo.add(key);
     return false;
   }
-  return dfs(0, 0, 0, countsOf(createDraft()), []);
+  return dfs(round, idx, total, counts, [...picked]);
 }
 
 // ---------------- greedy competent-human play ----------------
@@ -155,6 +173,7 @@ interface GreedyResult {
 function playGreedy(pools: NormalizedPlayer[][]): GreedyResult {
   let draft = createDraft();
   let multiRoleDecisions = 0;
+  let total = 0;
   for (let r = 0; r < 6; r++) {
     const combo = comboOf(pools, r);
     draft = applySpinResult(draft, combo.era, combo.nation);
@@ -164,7 +183,14 @@ function playGreedy(pools: NormalizedPlayer[][]): GreedyResult {
       const counts = countsOf(draft);
       const shapes = reachableShapes(counts);
       const need = (role: XiRole) => shapes.filter((s) => counts[role] < s[role]).length;
-      let best: { p: NormalizedPlayer; slot: string; role: XiRole; score: number } | null = null;
+      // Candidates must pass the client's exact validation path. Among
+      // them, prefer roles still needed by the most reachable shapes —
+      // but never commit to a pick that provably dooms the draft given
+      // the remaining pools (a competent player doesn't burn scarce
+      // supply, e.g. declaring all-rounders as pure fast bowlers when
+      // the later draws hold no all-rounders). The oracle is the
+      // foresight check; the client path stays the legality check.
+      const candidates: { p: NormalizedPlayer; slot: string; role: XiRole; score: number }[] = [];
       for (const p of pool) {
         if (validatePoolPick(draft, p, supply) !== null) continue;
         for (const s of XI_SLOTS) {
@@ -174,14 +200,26 @@ function playGreedy(pools: NormalizedPlayer[][]): GreedyResult {
           if (!legal.length) continue;
           for (const o of legal) {
             if (validateSlotPlacement(draft, p, s.key, o.role, supply) !== null) continue;
-            const score = need(o.role);
-            if (!best || score > best.score) best = { p, slot: s.key, role: o.role, score };
+            candidates.push({ p, slot: s.key, role: o.role, score: need(o.role) });
           }
+        }
+      }
+      candidates.sort((a, b) => b.score - a.score); // stable: ties keep slot order
+      const pickedIds = new Set(draft.selectedPlayers.map((p) => p.id));
+      let best: { p: NormalizedPlayer; slot: string; role: XiRole; score: number } | null = null;
+      for (const c of candidates) {
+        const counts2: XiCounts = { ...counts, [c.role]: counts[c.role] + 1 };
+        const picked2 = new Set(pickedIds);
+        picked2.add(c.p.id);
+        if (oracleFrom(pools, r, i + 1, total + 1, counts2, picked2)) {
+          best = c;
+          break;
         }
       }
       if (!best) {
         return { ok: false, stalled: true, draft, multiRoleDecisions, shapeIdx: -1 };
       }
+      total++;
       const legalCount = placementOptions(draft, best.p, best.slot, supply).filter(
         (o) => !o.reason,
       ).length;
@@ -197,9 +235,10 @@ function playGreedy(pools: NormalizedPlayer[][]): GreedyResult {
   const c = countsOf(draft);
   const shapeIdx = !valid
     ? -1
-    : c['middle-order'] === 4 && c['all-rounder'] === 1 && c.spinner === 0 ? 0
-    : c['middle-order'] === 4 && c['all-rounder'] === 0 && c.spinner === 1 ? 1
-    : 2;
+    : c['middle-order'] === 3 && c['all-rounder'] === 2 && c.spinner === 0 ? 0
+    : c['middle-order'] === 3 && c['all-rounder'] === 1 && c.spinner === 1 ? 1
+    : c['middle-order'] === 3 && c['all-rounder'] === 0 && c.spinner === 2 ? 2
+    : -1;
   return { ok: valid, stalled: false, draft, multiRoleDecisions, shapeIdx };
 }
 
@@ -278,8 +317,8 @@ for (let seed = 1; seed <= TRIALS; seed++) {
 console.log(`trials: ${TRIALS}`);
 console.log(`oracle-achievable: ${achievableCount}, greedy completed valid: ${greedyWinsOnAchievable}`);
 console.log(`oracle-unachievable: ${TRIALS - achievableCount}, greedy correctly stalled: ${greedyStalledOnUnachievable}`);
-console.log(`shape coverage on wins: 4MO+AR=${shapeHits[0]} 4MO+SP=${shapeHits[1]} 3MO+AR+SP=${shapeHits[2]}`);
-console.log(`multi-role placements (role bar) ${multiRoleTotal} times`);
+console.log(`shape coverage on wins: 2AR=${shapeHits[0]} AR+SP=${shapeHits[1]} 2SP=${shapeHits[2]}`);
+console.log(`multi-role placements (chooser shown) ${multiRoleTotal} times`);
 ok(failures.length === 0, 'no achievable draft defeats greedy; no oracle mismatch', failures.slice(0, 5));
 ok(invalidCompleted === 0, 'no invalid XI ever completed');
 
