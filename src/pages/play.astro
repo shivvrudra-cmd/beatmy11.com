@@ -96,13 +96,13 @@ const styleSeed = playersForEra('legends')[0];
             Spin
           </button>
           <div
-            class="bm11-progress"
+            class="bm11-round-progress"
             id="bm11-progress"
             role="img"
             aria-label="6 rounds, 11 players"
           >
-            <div class="bm11-pips bm11-round-pips" id="bm11-round-pips" aria-hidden="true"></div>
-            <div class="bm11-pips bm11-xi-pips" id="bm11-xi-pips" aria-hidden="true"></div>
+            <div class="bm11-roundbar" id="bm11-roundbar" aria-hidden="true"></div>
+            <p class="bm11-progress-label" id="bm11-progress-label" aria-hidden="true"></p>
           </div>
         </div>
       </div>
@@ -456,8 +456,8 @@ const styleSeed = playersForEra('legends')[0];
     const liveEl = $('bm11-live');
     const spinBtn = $('bm11-spin');
     const progressEl = $('bm11-progress');
-    const roundPipsEl = $('bm11-round-pips');
-    const xiPipsEl = $('bm11-xi-pips');
+    const roundBarEl = $('bm11-roundbar');
+    const progressLabelEl = $('bm11-progress-label');
     const eraSlot = $('bm11-draw-era');
     const nationSlot = $('bm11-draw-nation');
     const respinNationBtn = $('bm11-respin-nation');
@@ -536,28 +536,27 @@ const styleSeed = playersForEra('legends')[0];
       if (win) win.style.setProperty('--era-accent', accent);
     }
 
-    // Visual progress: 6 round pips (hollow = upcoming, gold = current,
-    // green = done) and 11 XI pips that fill as players are placed.
+    // Visual progress: a 6-segment round bar (dim = upcoming, gold pulse =
+    // current, green = done) with a text label for the round and XI count.
     // Screen readers get the same info from the container's aria-label.
     function renderProgress(done) {
-      roundPipsEl.innerHTML = '';
+      roundBarEl.innerHTML = '';
       for (let i = 1; i <= DRAFT_ROUNDS; i += 1) {
-        const pip = document.createElement('span');
-        pip.className = 'bm11-pip';
+        const seg = document.createElement('span');
+        seg.className = 'bm11-roundbar-seg';
         const isDone = i < draft.currentRound || (i === draft.currentRound && done);
         const isCurrent =
           i === draft.currentRound && !done && draft.currentRound >= 1;
-        if (isDone) pip.classList.add('is-done');
-        if (isCurrent) pip.classList.add('is-current');
-        roundPipsEl.appendChild(pip);
+        if (isDone) seg.classList.add('is-done');
+        if (isCurrent) seg.classList.add('is-current');
+        roundBarEl.appendChild(seg);
       }
-      xiPipsEl.innerHTML = '';
       const placed = draft.selectedPlayers.length;
-      for (let i = 0; i < XI_SIZE; i += 1) {
-        const pip = document.createElement('span');
-        pip.className = 'bm11-pip' + (i < placed ? ' is-done' : '');
-        xiPipsEl.appendChild(pip);
-      }
+      const roundText =
+        draft.currentRound === 0
+          ? `Round 1 of ${DRAFT_ROUNDS}`
+          : `Round ${draft.currentRound} of ${DRAFT_ROUNDS}`;
+      progressLabelEl.textContent = `${roundText} · ${placed} of ${XI_SIZE} picked`;
       progressEl.setAttribute(
         'aria-label',
         draft.currentRound === 0
@@ -1602,39 +1601,44 @@ const styleSeed = playersForEra('legends')[0];
       outline: 2px solid var(--bm11-ring, #4ade80);
       outline-offset: 3px;
     }
-    .bm11-progress {
+    .bm11-round-progress {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 0.45rem;
+      align-items: stretch;
+      gap: 0.5rem;
+      width: 100%;
+      max-width: 26rem;
     }
-    .bm11-pips {
+    .bm11-roundbar {
       display: flex;
-      justify-content: center;
-      gap: 0.4rem;
+      gap: 0.35rem;
     }
-    .bm11-pip {
-      width: 0.7rem;
-      height: 0.7rem;
+    .bm11-roundbar-seg {
+      flex: 1 1 0;
+      min-width: 0;
+      height: 0.6rem;
       border-radius: 9999px;
-      border: 2px solid var(--bm11-muted, #94a3b8);
-      opacity: 0.35;
+      background: var(--bm11-elevated, #141d33);
+      border: 1px solid var(--bm11-border, rgba(148, 163, 184, 0.14));
     }
-    .bm11-pip.is-current {
-      border-color: var(--bm11-gold, #C9A227);
-      background: var(--bm11-gold, #C9A227);
-      opacity: 1;
-      box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.25);
-    }
-    .bm11-pip.is-done {
-      border-color: var(--bm11-primary, #22c55e);
+    .bm11-roundbar-seg.is-done {
       background: var(--bm11-primary, #22c55e);
-      opacity: 1;
+      border-color: var(--bm11-primary, #22c55e);
     }
-    .bm11-xi-pips .bm11-pip {
-      width: 0.5rem;
-      height: 0.5rem;
-      border-width: 1.5px;
+    .bm11-roundbar-seg.is-current {
+      background: var(--bm11-gold, #C9A227);
+      border-color: var(--bm11-gold, #C9A227);
+      animation: bm11-seg-pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes bm11-seg-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
+    .bm11-progress-label {
+      margin: 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--bm11-muted, #94a3b8);
     }
     /* Shown only in dead-end states (stalled or invalid XI) — never during
        a live draft. */
@@ -2157,6 +2161,7 @@ const styleSeed = playersForEra('legends')[0];
     @media (prefers-reduced-motion: reduce) {
       .bm11-progress-fill { transition: none; }
       .bm11-summary-toggle svg { transition: none; }
+      .bm11-roundbar-seg.is-current { animation: none; }
     }
   </style>
 </BaseLayout>
