@@ -541,6 +541,20 @@ const styleSeed = playersForEra('legends')[0];
       return true;
     }
 
+    // Spin/respin landing: let the landed era + nation breathe in the spin
+    // zone before the sheet takes over — the landing should read as an
+    // event, not a flash. Skips the beat when already open (e.g. the user
+    // beat the timer to the toggle) and under reduced motion.
+    function revealDrawSheetAfterLanding() {
+      if (!mqMobile.matches) return;
+      const reduceMotion = window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+      ).matches;
+      window.setTimeout(() => {
+        if (!summaryEl.classList.contains('is-open')) revealDrawSheet();
+      }, reduceMotion ? 0 : 1200);
+    }
+
     const announce = (text) => {
       liveEl.textContent = '';
       requestAnimationFrame(() => {
@@ -749,10 +763,13 @@ const styleSeed = playersForEra('legends')[0];
       draft = applySpinResult(draft, combo.era, combo.nation);
       persist();
       renderAll();
-      // Mobile: the draw sheet pops up with the fresh pool. Desktop: the
-      // pool sits in the main column, so bring it into view instead.
+      // Mobile: the draw sheet pops up with the fresh pool — but only after
+      // the landing has had its moment in the spin zone. Desktop: the pool
+      // sits in the main column, so bring it into view instead.
       const poolHeading = document.getElementById('bm11-pool-heading');
-      if (!revealDrawSheet() && poolHeading) {
+      if (mqMobile.matches) {
+        revealDrawSheetAfterLanding();
+      } else if (poolHeading) {
         const reduceMotion = window.matchMedia(
           '(prefers-reduced-motion: reduce)'
         ).matches;
@@ -802,8 +819,8 @@ const styleSeed = playersForEra('legends')[0];
             : applyEraRespin(draft, choice.era);
         persist();
         renderAll();
-        // A respun draw is a fresh draw — pop the sheet on mobile.
-        revealDrawSheet();
+        // A respun draw is a fresh draw — same landing beat, then the sheet.
+        revealDrawSheetAfterLanding();
         const after = kind === 'nation' ? draft.currentNation : draft.currentEra;
         if (after !== before) {
           announce(
@@ -1925,13 +1942,36 @@ const styleSeed = playersForEra('legends')[0];
       .bm11-prow-avatar { width: 2rem; height: 2rem; }
       .bm11-prow-name { font-size: 0.88rem; }
       .bm11-prow-sub { margin-top: 0.22rem; }
-      /* Stat columns must never squeeze below their content width —
-         the name block absorbs all horizontal pressure via ellipsis,
-         so nowrap values can never paint over each other. */
-      .bm11-prow-stats { gap: 0.5rem; flex: 0 0 auto; }
-      .bm11-prow-stat { min-width: auto; }
+      /* Phone sheet rows go two-line: the identity takes the full first
+         row so names render complete (no ellipsis), and the five stat
+         columns share the full second row in an even grid — values can
+         never collide, clip, or paint over each other. */
+      .bm11-prow { flex-wrap: wrap; row-gap: 0.45rem; align-items: flex-start; }
+      .bm11-prow-id { flex: 1 1 100%; }
+      .bm11-prow-name {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+      }
+      .bm11-prow-stats {
+        flex: 1 1 100%;
+        margin-left: 0;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.5rem;
+      }
+      .bm11-prow-stat {
+        min-width: 0;
+        align-items: flex-start;
+        text-align: left;
+      }
       .bm11-prow-stat i { font-size: 0.55rem; }
       .bm11-prow-stat b { font-size: 0.78rem; }
+      .bm11-check-badge {
+        position: absolute;
+        top: 0.6rem;
+        right: 0.65rem;
+      }
     }
     .bm11-pool-idle {
       color: var(--bm11-muted, #a5a8c9);
