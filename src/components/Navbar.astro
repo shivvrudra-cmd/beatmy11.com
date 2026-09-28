@@ -1,6 +1,8 @@
 ---
 /**
  * Navbar — sticky top nav with dark glass background.
+ * Mobile shows just the brand plus a compact Play button (no burger menu);
+ * the full link menu appears at 768px and up.
  */
 import Logo from './Logo.astro';
 
@@ -10,6 +12,8 @@ const links = [
   { href: '#eras', label: 'Eras' },
   { href: '#footer', label: 'About' },
 ];
+
+const isPlayPage = Astro.url.pathname.replace(/\/$/, '') === '/play';
 ---
 <header class="navbar" id="top">
   <nav class="navbar__inner" aria-label="Primary">
@@ -17,20 +21,11 @@ const links = [
       <Logo variant="full" class="navbar__logo" />
     </a>
 
-    <button
-      id="navbar-toggle"
-      class="navbar__toggle"
-      type="button"
-      aria-expanded="false"
-      aria-controls="navbar-menu"
-      aria-label="Toggle navigation menu"
-    >
-      <span class="navbar__toggle-bar" aria-hidden="true"></span>
-      <span class="navbar__toggle-bar" aria-hidden="true"></span>
-      <span class="navbar__toggle-bar" aria-hidden="true"></span>
-    </button>
+    {!isPlayPage && (
+      <a class="bm11-btn bm11-btn-primary navbar__mobile-cta" href="/play">Play</a>
+    )}
 
-    <ul class="navbar__menu" id="navbar-menu">
+    <ul class="navbar__menu">
       {links.map((l) => (
         <li>
           <a class="navbar__link" href={l.href}>{l.label}</a>
@@ -42,22 +37,6 @@ const links = [
     </ul>
   </nav>
 </header>
-
-<script>
-  const toggle = document.getElementById('navbar-toggle');
-  const menu = document.getElementById('navbar-menu');
-  toggle?.addEventListener('click', () => {
-    const open = menu?.classList.toggle('navbar__menu--open') ?? false;
-    toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
-  });
-  menu?.querySelectorAll('a').forEach((a) =>
-    a.addEventListener('click', () => {
-      menu.classList.remove('navbar__menu--open');
-      toggle?.setAttribute('aria-expanded', 'false');
-    })
-  );
-</script>
 
 <style>
   .navbar {
@@ -95,37 +74,10 @@ const links = [
     display: block;
   }
 
-  .navbar__toggle {
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-    width: 2.6rem;
-    height: 2.6rem;
-    padding: 0.55rem;
-    background: transparent;
-    border: 1px solid var(--bm11-border);
-    border-radius: 0.65rem;
-    cursor: pointer;
-  }
-
-  .navbar__toggle-bar {
-    display: block;
-    height: 2px;
-    width: 100%;
-    background: var(--bm11-text);
-    border-radius: 2px;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-  }
-
-  .navbar__toggle[aria-expanded="true"] .navbar__toggle-bar:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-  }
-  .navbar__toggle[aria-expanded="true"] .navbar__toggle-bar:nth-child(2) {
-    opacity: 0;
-  }
-  .navbar__toggle[aria-expanded="true"] .navbar__toggle-bar:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
+  .navbar__mobile-cta {
+    padding: 0.55rem 1.1rem;
+    font-size: 0.9rem;
+    flex-shrink: 0;
   }
 
   .navbar__menu {
@@ -133,17 +85,6 @@ const links = [
     margin: 0;
     padding: 0;
     display: none;
-    position: absolute;
-    top: calc(100% + 1px);
-    left: 0;
-    right: 0;
-    background: var(--bm11-surface);
-    border-bottom: 1px solid var(--bm11-border);
-    padding: 0.5rem 1rem 1rem;
-  }
-
-  .navbar__menu--open {
-    display: block;
   }
 
   .navbar__link {
@@ -176,7 +117,7 @@ const links = [
     .navbar__inner {
       padding: 0.7rem 1.5rem;
     }
-    .navbar__toggle {
+    .navbar__mobile-cta {
       display: none;
     }
     .navbar__menu {
@@ -196,12 +137,6 @@ const links = [
     }
     .navbar__cta {
       width: auto;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .navbar__toggle-bar {
-      transition: none;
     }
   }
 </style>
