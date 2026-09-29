@@ -427,17 +427,17 @@ const styleSeed = playersForEra('legends')[0];
     // keeper behind the stumps, batters in the inner ring, the flex pair
     // mid-field, the pace attack on the boundary.
     const FIELD_POSITIONS = {
-      'opener-1': { x: 36, y: 64 },
-      'opener-2': { x: 64, y: 64 },
-      'bat-3': { x: 24, y: 50 },
-      'bat-4': { x: 50, y: 42 },
-      'bat-5': { x: 76, y: 50 },
-      'bat-6': { x: 50, y: 80 },
-      'flex-7': { x: 20, y: 30 },
-      'flex-8': { x: 80, y: 30 },
-      'fast-1': { x: 32, y: 12 },
-      'fast-2': { x: 68, y: 12 },
-      'fast-3': { x: 50, y: 21 },
+      'opener-1': { x: 50, y: 68 },
+      'opener-2': { x: 50, y: 28 },
+      'bat-3': { x: 28, y: 78 },
+      'bat-4': { x: 15, y: 62 },
+      'bat-5': { x: 82, y: 72 },
+      'bat-6': { x: 50, y: 88 },
+      'flex-7': { x: 82, y: 45 },
+      'flex-8': { x: 70, y: 55 },
+      'fast-1': { x: 15, y: 35 },
+      'fast-2': { x: 30, y: 15 },
+      'fast-3': { x: 70, y: 15 },
     };
     // Friendly default names inside the flexible slot cards: the keeper's
     // home (bat-6) and the all-rounder/spinner pair (flex-7/8). The
@@ -536,18 +536,29 @@ const styleSeed = playersForEra('legends')[0];
       if (kind === 'ar') {
         return (
           cell(fmtAvg(s.testAverage), 'Bat Avg') +
-          cell(fmtInt(s.testWickets), 'Wkts')
+          cell(fmtInt(s.testWickets), 'Wkts') +
+          cell(fmtAvg(bowlAvg), 'Bowl Avg')
         );
       }
       if (kind === 'bowl') {
         return (
           cell(fmtInt(s.testWickets), 'Wkts') +
-          cell(fmtAvg(bowlAvg), 'Bowl Avg')
+          cell(fmtAvg(bowlAvg), 'Bowl Avg') +
+          cell(fmtInt(s.fiveWs), '5Ws')
+        );
+      }
+      // Batting groups: keepers get dismissals, the defining keeper stat.
+      if (p.primaryRole === 'wicketkeeper') {
+        return (
+          cell(fmtAvg(s.testAverage), 'Avg') +
+          cell(fmtInt(s.dismissals), 'Dis') +
+          cell(fmtInt(s.testCenturies), '100s')
         );
       }
       return (
         cell(fmtAvg(s.testAverage), 'Avg') +
-        cell(fmtInt(s.testCenturies), '100s')
+        cell(fmtInt(s.testCenturies), '100s') +
+        cell(fmtInt(s.testFifties), '50s')
       );
     }
     function accessibleName(p) {
@@ -578,7 +589,6 @@ const styleSeed = playersForEra('legends')[0];
       return (
         `<button type="button" class="bm11-prow" data-bm11-select="${esc(p.uid)}"` +
         ` aria-pressed="false" aria-label="${esc(accessibleName(p))}" style="--era-accent:${accent};">` +
-        `<span class="bm11-prow-medal" aria-hidden="true">${esc(initials(p.name))}</span>` +
         `<span class="bm11-prow-main">` +
         `<span class="bm11-prow-name">${esc(p.name)}</span>` +
         `<span class="bm11-prow-meta">` +
@@ -2320,6 +2330,11 @@ const styleSeed = playersForEra('legends')[0];
       text-align: center;
       line-height: 1.25;
     }
+    /* Mobile: the slot glow already signals a legal destination — the
+       "Place as …" caption is hidden to keep the field uncluttered. */
+    @media (max-width: 767px) {
+      .bm11-fslot-hint { display: none; }
+    }
     /* Awaiting placement: the legal destinations pulse emerald. */
     .bm11-fslot.is-glow .bm11-fslot-ring {
       border-style: solid;
@@ -2583,21 +2598,6 @@ const styleSeed = playersForEra('legends')[0];
       outline: 2px solid var(--bm11-ring, #00e676);
       outline-offset: 2px;
     }
-    .bm11-prow-medal {
-      flex: 0 0 auto;
-      width: 2.75rem;
-      height: 2.75rem;
-      border-radius: 9999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      color: #fff;
-      background: color-mix(in srgb, var(--era-accent, #8b5cf6) 26%, #12122b);
-      border: 1.5px solid var(--era-accent, #8b5cf6);
-    }
     .bm11-prow-main {
       flex: 1 1 auto;
       min-width: 0;
@@ -2638,6 +2638,17 @@ const styleSeed = playersForEra('legends')[0];
       flex: 0 0 auto;
       display: flex;
       gap: 0.8rem;
+    }
+    /* Mobile: three stats per card — tighten type so everything fits
+       without horizontal scroll. */
+    @media (max-width: 767px) {
+      .bm11-prow { gap: 0.55rem; padding: 0.55rem 0.6rem; }
+      .bm11-prow-name { font-size: 0.8rem; }
+      .bm11-prow-meta { font-size: 0.62rem; }
+      .bm11-prow-stats { gap: 0.55rem; }
+      .bm11-prow-stat i { font-size: 0.52rem; }
+      .bm11-prow-stat b { font-size: 0.76rem; }
+      .bm11-prow-cta { width: 1.75rem; height: 1.75rem; }
     }
     .bm11-prow-stat {
       display: flex;
