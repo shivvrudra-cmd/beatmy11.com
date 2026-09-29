@@ -30,3 +30,7 @@ yarn-error.log*
 .test-dist/
 
 .diag-dist/
+
+# Playwright
+test-results/
+playwright-report/
