@@ -21,9 +21,10 @@ import type { NormalizedPlayer, RawPlayer } from './player-logic';
 /**
  * Raw ids of the fixed house XI, in batting order. Every id is verified
  * present in the era data; getHouseXI() throws at build time if one goes
- * missing. Blend 81.6 under the 40/50/10 team score — hard but fair:
- * ~24% user win rate with one nation-respin and one era-respin in play
- * (forced-redraw semantics). 8 represented nations.
+ * missing. Blend 80.8 under the V2 engine's 40/50/10 team score
+ * (owner-approved 2026-09-29: Gilchrist → Flower, Steyn → Pollock,
+ * Hadlee → Kallis) — set so a 5-Test series stays winnable. 8 represented
+ * nations.
  */
 export const HOUSE_PLAYER_IDS = [
   'don-bradman', // opener (AUS)
@@ -31,12 +32,12 @@ export const HOUSE_PLAYER_IDS = [
   'sachin-tendulkar', // middle-order (IND)
   'brian-lara', // middle-order (WIN)
   'joe-root', // middle-order (ENG)
-  'adam-gilchrist', // wicketkeeper (AUS)
-  'richard-hadlee', // all-rounder (NZL)
+  'andy-flower', // wicketkeeper (ZIM)
+  'jacques-kallis', // all-rounder (RSA)
   'muttiah-muralitharan', // spinner (SRI)
   'joel-garner', // fast-bowler (WIN)
   'wasim-akram', // fast-bowler (PAK)
-  'dale-steyn', // fast-bowler (RSA)
+  'shaun-pollock', // fast-bowler (RSA)
 ] as const;
 
 let cached: NormalizedPlayer[] | null = null;
