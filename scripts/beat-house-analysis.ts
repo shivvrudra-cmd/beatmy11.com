@@ -1,5 +1,5 @@
 /**
- * beat-house-analysis.ts — can ANY XI beat the fixed house XI (87.5)?
+ * beat-house-analysis.ts — can ANY XI beat the fixed house XI?
  *
  * Three questions, answered against real data with the real engine:
  *  A. House XI breakdown — confirm 87.5 and see who carries it.
@@ -17,6 +17,10 @@ import {
   createDraft,
   applySpinResult,
   applyDraftPick,
+  applyNationRespin,
+  applyEraRespin,
+  canRespinNation,
+  canRespinEra,
   validatePoolPick,
   validateSlotPlacement,
   placementOptions,
@@ -94,7 +98,7 @@ const houseEntries = houseXI.map((p) => ({
 }));
 const houseCmp = compareXIs(houseEntries, houseEntries, ctx);
 console.log('=== A. HOUSE XI ===');
-console.log(`house score: ${houseCmp.opponentScore} (expected 87.5)`);
+console.log(`house score: ${houseCmp.opponentScore}`);
 const ranked = [...houseCmp.opponentPlayers].sort(
   (a, b) => (b.score ?? 0) - (a.score ?? 0),
 );
@@ -261,56 +265,101 @@ function mulberry32(seed: number) {
 }
 const ROUND_LIMITS = [1, 2, 2, 2, 2, 2];
 
-/** Score-greedy player: best seven-metric value among feasible picks,
- *  preferring roles still needed by reachable shapes as tiebreak. */
-function playQualityGreedy(pools: NormalizedPlayer[][]): DraftState | null {
-  let draft = createDraft();
-  for (let r = 0; r < 6; r++) {
-    const combo = (pools as any)[`__combo${r}`];
-    draft = applySpinResult(draft, combo.era, combo.nation);
-    for (let i = 0; i < ROUND_LIMITS[r]; i++) {
-      const pool = pools[r];
-      const supply = supplyFor(draft, pool);
-      const counts = countsOf(draft);
-      const shapes = reachableShapes(counts);
-      const need = (role: XiRole) =>
-        shapes.filter((s) => counts[role] < s[role]).length;
-      let best: {
-        p: NormalizedPlayer;
-        slot: string;
-        role: XiRole;
-        q: number;
-        n: number;
-      } | null = null;
-      for (const p of pool) {
-        if (validatePoolPick(draft, p, supply) !== null) continue;
-        for (const s of XI_SLOTS) {
-          if (draft.slots[s.key]) continue;
-          const options = placementOptions(draft, p, s.key, supply);
-          for (const o of options) {
-            if (o.reason) continue;
-            if (validateSlotPlacement(draft, p, s.key, o.role, supply) !== null)
-              continue;
-            const q = sevenScore(p, o.role);
-            if (q === null) continue;
-            const n = need(o.role);
-            if (
-              !best ||
-              q > best.q ||
-              (q === best.q && n > best.n)
-            )
-              best = { p, slot: s.key, role: o.role, q, n };
-          }
-        }
+type Pick = { p: NormalizedPlayer; slot: string; role: XiRole; q: number; n: number };
+
+/** Best feasible pick from `pool`: highest seven-metric value, preferring
+ *  roles still needed by reachable shapes as tiebreak. */
+function bestPick(draft: DraftState, pool: NormalizedPlayer[]): Pick | null {
+  const supply = supplyFor(draft, pool);
+  const counts = countsOf(draft);
+  const shapes = reachableShapes(counts);
+  const need = (role: XiRole) => shapes.filter((s) => counts[role] < s[role]).length;
+  let best: Pick | null = null;
+  for (const p of pool) {
+    if (validatePoolPick(draft, p, supply) !== null) continue;
+    for (const s of XI_SLOTS) {
+      if (draft.slots[s.key]) continue;
+      for (const o of placementOptions(draft, p, s.key, supply)) {
+        if (o.reason) continue;
+        if (validateSlotPlacement(draft, p, s.key, o.role, supply) !== null) continue;
+        const q = sevenScore(p, o.role);
+        if (q === null) continue;
+        const n = need(o.role);
+        if (!best || q > best.q || (q === best.q && n > best.n)) best = { p, slot: s.key, role: o.role, q, n };
       }
+    }
+  }
+  return best;
+}
+
+/** A draw's best pick below this triggers a respin (when one is left). */
+const RESPIN_BELOW = 80;
+
+/**
+ * Score-greedy player over a seeded spin sequence. With `useRespins`, it
+ * spends the game's one nation respin and one era respin (era: rounds 2–6
+ * only) whenever a draw's best pick scores below RESPIN_BELOW — nation
+ * first. Respins are forced redraws that never repeat a drawn combo,
+ * matching the live rules in player-logic.
+ */
+function playQualityGreedy(rand: () => number, useRespins: boolean): DraftState | null {
+  let draft = createDraft();
+  // What-if: RESPINS=n gives n of each respin instead of the live game's 1.
+  if (process.env.RESPINS) {
+    draft = { ...draft, eraRespinsLeft: Number(process.env.RESPINS), nationRespinsLeft: Number(process.env.RESPINS) };
+  }
+  // What-if: FULL=n adds n full respins (new era AND nation) per draft.
+  let fullLeft = Number(process.env.FULL ?? 0);
+  const used = new Set<string>();
+  const key = (c: { era: string; nation: string }) => `${c.era}|${c.nation}`;
+  const pickFrom = <T,>(xs: T[]) => xs[Math.floor(rand() * xs.length)];
+  for (let r = 0; r < 6; r++) {
+    const src = r === 0 ? legendCombos : draftCombos;
+    const combo = pickFrom(src.filter((c) => !used.has(key(c))));
+    used.add(key(combo));
+    draft = applySpinResult(draft, combo.era, combo.nation);
+    let pool = poolFor(draft.currentEra!, draft.currentNation!);
+    while (useRespins) {
+      const b = bestPick(draft, pool);
+      if (b && b.q >= RESPIN_BELOW) break;
+      const nationOpts = src.filter((c) => c.era === draft.currentEra && !used.has(key(c)));
+      const eraOpts = draftCombos.filter((c) => c.nation === draft.currentNation && !used.has(key(c)));
+      if (canRespinNation(draft, nationOpts.length)) {
+        const c = pickFrom(nationOpts);
+        used.add(key(c));
+        draft = applyNationRespin(draft, c.nation);
+      } else if (canRespinEra(draft, eraOpts.length)) {
+        const c = pickFrom(eraOpts);
+        used.add(key(c));
+        draft = applyEraRespin(draft, c.era);
+      } else if (fullLeft > 0 && draft.picksThisRound.length === 0) {
+        // What-if full respin: a fresh era AND nation (same pool rules as a
+        // normal spin for this round). Not a live-game rule yet.
+        const c = pickFrom(src.filter((x) => !used.has(key(x))));
+        used.add(key(c));
+        fullLeft--;
+        draft = {
+          ...draft,
+          currentEra: c.era,
+          currentNation: c.nation,
+          spinHistory: draft.spinHistory.map((s, i) =>
+            i === draft.spinHistory.length - 1 ? { ...s, era: c.era, nation: c.nation } : s,
+          ),
+        };
+      } else break;
+      pool = poolFor(draft.currentEra!, draft.currentNation!);
+    }
+    for (let i = 0; i < ROUND_LIMITS[r]; i++) {
+      const best = bestPick(draft, pool);
       if (!best) return null; // stalled — user would start over
-      draft = applyDraftPick(draft, best.p, best.slot, best.role, supply);
+      draft = applyDraftPick(draft, best.p, best.slot, best.role, supplyFor(draft, pool));
     }
   }
   return draft.gameComplete && isXIValid(draft) ? draft : null;
 }
 
 const TRIALS = 200;
+const USE_RESPINS = process.env.NO_RESPINS !== '1';
 const scores: number[] = [];
 let completed = 0;
 let wins = 0;
@@ -318,18 +367,7 @@ let ties = 0;
 let best = -1;
 let bestNames = '';
 for (let seed = 1; seed <= TRIALS; seed++) {
-  const rand = mulberry32(seed);
-  const combos: { era: string; nation: string }[] = [];
-  combos.push(legendCombos[Math.floor(rand() * legendCombos.length)]);
-  // Draw without replacement — matches the live game's no-repeat-combo rule.
-  const remaining = [...draftCombos];
-  for (let r = 1; r < 6; r++) {
-    const idx = Math.floor(rand() * remaining.length);
-    combos.push(remaining.splice(idx, 1)[0]);
-  }
-  const pools: NormalizedPlayer[][] = combos.map((c) => poolFor(c.era, c.nation));
-  combos.forEach((c, r) => ((pools as any)[`__combo${r}`] = c));
-  const draft = playQualityGreedy(pools);
+  const draft = playQualityGreedy(mulberry32(seed), USE_RESPINS);
   if (!draft) continue;
   completed++;
   const entries = draft.selectedPlayers.map((sp) => {
@@ -350,7 +388,9 @@ for (let seed = 1; seed <= TRIALS; seed++) {
 }
 scores.sort((a, b) => a - b);
 const pct = (p: number) => scores[Math.min(scores.length - 1, Math.floor((p / 100) * scores.length))];
-console.log('=== C. REALISTIC DRAFT (score-greedy, 200 random spin sequences) ===');
+console.log(
+  `=== C. REALISTIC DRAFT (score-greedy, 200 random spin sequences, ${USE_RESPINS ? `respins used below ${RESPIN_BELOW}` : 'no respins'}) ===`,
+);
 console.log(`completed XIs: ${completed}/${TRIALS} (rest stalled — user starts over)`);
 console.log(`wins vs house: ${wins}, ties: ${ties}, losses: ${completed - wins - ties}`);
 console.log(`win rate of completed drafts: ${((wins / Math.max(1, completed)) * 100).toFixed(1)}%`);
@@ -360,7 +400,7 @@ if (scores.length) {
   );
   console.log(`best draft XI (${best}): ${bestNames}`);
   console.log('\nwin rate at candidate house scores (same 200 drafts):');
-  for (const h of [80, 81, 82, 83, 84, 85, 86, 87, 87.5]) {
+  for (const h of [72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83]) {
     const w = scores.filter((s) => s > h).length;
     const t = scores.filter((s) => Math.abs(s - h) < 1e-9).length;
     console.log(
