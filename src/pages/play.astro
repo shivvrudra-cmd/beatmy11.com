@@ -1,272 +1,112 @@
 ---
 /**
- * play.astro — the BeatMy11 spin-draft game flow.
+ * play.astro — the BeatMy11 spin draft, "Floodlit night" design
+ * (owner-chosen 2026-09-29, replacing "The Ground").
  *
- * ONE continuous drafting interface (no steps, no era chooser):
- *   SPIN → round 1 always draws the Legends era (pick your 1 Legend) →
- *   rounds 2–6 draw random era+nation combos (2 picks each) →
- *   11 players → COMPARE XIs → /matchup.
+ * Flow: SPIN → round 1 always draws the Legends era (pick your 1 Legend) →
+ * rounds 2–6 draw random era+nation combos (2 picks each) → 11 players →
+ * PLAY THE SERIES → /matchup.
  *
- * Server-rendered: Navbar, spin zone shell, Footer, the full normalized
- * player pool embedded as a JSON blob, and the 60 valid spin combos as a
- * second blob. A hidden PlayerCard instance is rendered so that component's
- * global bm11-* styles are emitted on this page (the client script mirrors
- * PlayerCard's markup verbatim).
+ * Layout: a floodlit stage (Era × Nation reels, respins, spin button,
+ * status), a pool of trading cards for the current draw, and a fixed
+ * bottom dock holding the eleven XI slots — always on screen, so
+ * select-then-place never needs scrolling.
  *
- * Client <script type="module"> keeps ONE draft state object (see
- * src/lib/player-logic.ts — createDraft / applySpinResult / applyDraftPick /
- * applyDraftMove / applyDraftDeselect) as the single source of truth and
- * re-renders from it. Drafting is two-step: select a player in the pool,
- * then select a glowing slot in the XI panel; afterwards players can be
- * moved between any slots their roles allow. The plain normalized-player
- * array (in slot order) is persisted to `beatmy11.userXI.v1` (/matchup's
- * contract); draft extras live under `beatmy11.draft.v1`.
+ * Ratings are deliberately NOT shown during the draft (owner decision):
+ * cards carry real Test stats only and are ordered by role, then name —
+ * never by strength — so the best pick is a judgment call. Ratings are
+ * revealed on the result screen.
+ *
+ * All rules live in src/lib/player-logic.ts (createDraft / applySpinResult
+ * / applyDraftPick / applyDraftMove / applyDraftDeselect / respins); this
+ * page keeps ONE draft object as the source of truth and re-renders from
+ * it. The plain player array (slot order) is persisted to
+ * `beatmy11.userXI.v1` (/matchup's contract); draft extras live under
+ * `beatmy11.draft.v1`.
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Navbar from '@/components/Navbar.astro';
-import Footer from '@/components/Footer.astro';
-import PlayerCard from '@/components/PlayerCard.astro';
-import PoolToolbar from '@/components/PoolToolbar.tsx';
-import { playersForEra, allPlayersByEra, legendsSpinCombos, draftSpinCombos } from '@/lib/player-store';
+import { allPlayersByEra, legendsSpinCombos, draftSpinCombos } from '@/lib/player-store';
 
-// Full normalized pool (uid-keyed per era) for the client game. Escaped so a
-// stray "</" sequence can never break out of the script element.
-const playerDataJson = JSON.stringify(allPlayersByEra()).replace(/<\//g, '<\\/');
-// Round 1 spins only the Legends era (pick your Legend); rounds 2–6 spin the
-// remaining eras. Dead combos are excluded at build time in both pools.
-const legendCombosJson = JSON.stringify(legendsSpinCombos());
-const draftCombosJson = JSON.stringify(draftSpinCombos());
-// Style seed: one real card so PlayerCard's global styles ship on this page.
-const styleSeed = playersForEra('legends')[0];
+// Escaped so a stray "</" sequence can never break out of the script element.
+const json = (v: unknown) => JSON.stringify(v).replace(/<\//g, '<\\/');
+const playerDataJson = json(allPlayersByEra());
+const legendCombosJson = json(legendsSpinCombos());
+const draftCombosJson = json(draftSpinCombos());
 ---
 <BaseLayout
   title="Play Beat My 11 — Draft Your All-Time XI"
-  description="Spin to draw an era and nation, draft 11 players across six rounds, then take your XI into battle against the fixed house team."
+  description="Spin to draw an era and nation, draft 11 players across six rounds, then take your XI into a five-Test series against the house team."
 >
-  <Navbar />
-  <main id="bm11-main" class="bm11-play">
-    <a class="bm11-skip" href="#bm11-game">Skip to game</a>
+  <link
+    slot="head"
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
+    rel="stylesheet"
+  />
+  <div class="fl" id="bm11-main">
+    <div class="fl-lights" aria-hidden="true"></div>
+    <a class="fl-skip" href="#fl-pool">Skip to players</a>
     <p id="bm11-live" class="sr-only" role="status" aria-live="polite"></p>
 
-    <!-- Toss panel — the era + nation draw ceremony -->
-    <section class="bm11-spinzone" aria-labelledby="bm11-spin-heading">
-      <div class="bm11-wrap">
-        <p class="bm11-eyebrow">The draft</p>
-        <h1 class="bm11-h1" id="bm11-spin-heading" tabindex="-1">Build your XI</h1>
-        <div class="bm11-draw" id="bm11-draw">
-          <div class="bm11-reels">
-            <div class="bm11-reel bm11-reel--era">
-              <span class="bm11-reel-cap">Era</span>
-              <div class="bm11-reel-window">
-                <span class="bm11-reel-value" id="bm11-draw-era">Fate</span>
-              </div>
-              <button
-                type="button"
-                class="bm11-reel-respin"
-                id="bm11-respin-era"
-                hidden
-              >
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-                Era
-                <span class="bm11-respin-left" id="bm11-respin-era-left">1 left</span>
-              </button>
-            </div>
-            <div class="bm11-toss" aria-hidden="true">
-              <span class="bm11-toss-coin" id="bm11-toss-coin"></span>
-              <span class="bm11-toss-label">toss</span>
-            </div>
-            <div class="bm11-reel bm11-reel--nation">
-              <span class="bm11-reel-cap">Nation</span>
-              <div class="bm11-reel-window">
-                <span class="bm11-reel-value" id="bm11-draw-nation">awaits&hellip;</span>
-              </div>
-              <button
-                type="button"
-                class="bm11-reel-respin"
-                id="bm11-respin-nation"
-                hidden
-              >
-                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-                Nation
-                <span class="bm11-respin-left" id="bm11-respin-nation-left">1 left</span>
-              </button>
-            </div>
+    <header class="fl-top">
+      <a class="fl-brand" href="/" aria-label="Beat My 11 home">BEAT MY 11</a>
+      <div class="fl-rounds" id="fl-rounds" role="img" aria-label="Round 1 of 6"></div>
+      <p class="fl-count"><span id="bm11-count">0/11</span></p>
+    </header>
+
+    <main>
+      <section class="fl-stage" aria-labelledby="fl-status-title">
+        <div class="fl-reels">
+          <div class="fl-reel" id="fl-reel-era">
+            <span class="fl-reel-cap">Era</span>
+            <span class="fl-reel-val" id="fl-era">—</span>
+            <button type="button" class="fl-respin" id="fl-respin-era" hidden></button>
           </div>
-          <button
-            type="button"
-            class="bm11-btn bm11-btn-primary bm11-spin-btn"
-            id="bm11-spin"
-            aria-label="Spin to draw a random era and nation"
-          >
-            Spin
-          </button>
-          <div
-            class="bm11-round-progress"
-            id="bm11-progress"
-            role="img"
-            aria-label="6 rounds, 11 players"
-          >
-            <div class="bm11-roundbar" id="bm11-roundbar" aria-hidden="true"></div>
-            <p class="bm11-progress-label" id="bm11-progress-label" aria-hidden="true"></p>
+          <span class="fl-x" aria-hidden="true">×</span>
+          <div class="fl-reel" id="fl-reel-nation">
+            <span class="fl-reel-cap">Nation</span>
+            <span class="fl-reel-val" id="fl-nation">—</span>
+            <button type="button" class="fl-respin" id="fl-respin-nation" hidden></button>
           </div>
         </div>
+        <button type="button" class="fl-spin" id="bm11-spin">Spin</button>
+        <h1 class="fl-status" id="fl-status-title" tabindex="-1">Spin for your Legend</h1>
+        <p class="fl-sub" id="fl-sub"></p>
+        <p class="fl-msg" id="bm11-msg" role="status"></p>
+      </section>
+
+      <section class="fl-pool" id="fl-pool" aria-labelledby="fl-pool-title" tabindex="-1">
+        <h2 class="sr-only" id="fl-pool-title">Players in this draw</h2>
+        <p class="fl-pool-meta" id="fl-pool-meta" aria-hidden="true"></p>
+        <div class="fl-cards" id="fl-cards"></div>
+      </section>
+
+      <div class="fl-finish" id="fl-finish" hidden>
+        <a href="/matchup" class="fl-cta is-disabled" id="bm11-cta" aria-disabled="true">Play the series →</a>
+        <button type="button" class="fl-link" id="fl-startover" hidden>Start over</button>
       </div>
-    </section>
+    </main>
 
-    <div id="bm11-game" class="bm11-wrap" tabindex="-1">
-      <!-- Persistent game bar: XI progress · current draw · round -->
-      <div class="bm11-gamebar" id="bm11-gamebar">
-        <div class="bm11-gamebar-xi">
-          <span class="bm11-gamebar-count" id="bm11-count">0/11</span>
-          <span class="bm11-gamebar-track" aria-hidden="true">
-            <span class="bm11-gamebar-fill" id="bm11-progress-fill"></span>
-          </span>
-        </div>
-        <p class="bm11-gamebar-draw" id="bm11-gamebar-draw">
-          <span class="bm11-gamebar-draw-idle">Spin to begin</span>
-        </p>
-        <p class="bm11-gamebar-round" id="bm11-gamebar-round">Round 1 of 6</p>
-      </div>
+    <nav class="fl-dock" aria-label="Your XI">
+      <p class="fl-need" id="fl-need" aria-live="polite"></p>
+      <div class="fl-slots" id="fl-slots"></div>
+    </nav>
+  </div>
 
-      <div class="bm11-draft-layout">
-        <div class="bm11-stage">
-          <!-- Your XI, on the field -->
-          <section class="bm11-field-section" aria-labelledby="bm11-field-heading">
-            <div class="bm11-field-head">
-              <h2 class="bm11-h2" id="bm11-field-heading" tabindex="-1">Your XI</h2>
-              <p class="bm11-comp" id="bm11-comp" aria-live="polite"></p>
-            </div>
-            <div class="bm11-field" id="bm11-field">
-              <div class="bm11-ground" aria-hidden="true">
-                <span class="bm11-ground-ring"></span>
-                <span class="bm11-pitch">
-                  <span class="bm11-crease bm11-crease--top"></span>
-                  <span class="bm11-crease bm11-crease--bottom"></span>
-                </span>
-              </div>
-              <div class="bm11-fslots" id="bm11-fslots"></div>
-            </div>
-            <p class="bm11-summary-msg" id="bm11-msg" role="status"></p>
-            <div class="bm11-field-actions">
-              <button
-                type="button"
-                class="bm11-btn bm11-btn-ghost bm11-btn-sm"
-                id="bm11-startover"
-                hidden
-              >
-                Start over
-              </button>
-              <a href="/matchup" class="bm11-btn bm11-btn-primary bm11-cta is-disabled" id="bm11-cta" aria-disabled="true">
-                Compare XIs
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </a>
-            </div>
-          </section>
-
-          <!-- Spin history -->
-          <section class="bm11-history" aria-labelledby="bm11-history-heading">
-            <h2 class="bm11-h2" id="bm11-history-heading">Spin history</h2>
-            <ol class="bm11-history-list" id="bm11-history">
-              <li class="bm11-history-empty">No spins yet — your draws will be listed here.</li>
-            </ol>
-          </section>
-        </div>
-
-        <!-- Player drawer: bottom sheet on mobile, side panel on desktop -->
-        <aside class="bm11-drawer" id="bm11-summary" aria-label="Player drawer">
-          <div class="bm11-drawer-head">
-            <div class="bm11-drawer-titles">
-              <h2 class="bm11-drawer-title" id="bm11-sheet-title">Your draw</h2>
-              <p class="bm11-drawer-draw" id="bm11-sheet-draw"></p>
-            </div>
-            <button
-              type="button"
-              class="bm11-drawer-toggle"
-              id="bm11-toggle"
-              aria-expanded="false"
-              aria-controls="bm11-summary-body"
-            >
-              <span class="sr-only">Toggle drawer</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="m18 15-6-6-6 6" />
-              </svg>
-            </button>
-          </div>
-          <!-- The pop grows upward as an overlay (mobile): the header is the
-               drawer's only in-flow child, so it never moves and opening the
-               sheet can't cause layout shift. -->
-          <div class="bm11-drawer-pop">
-          <!-- Mobile only: respin tokens ride directly above the drawer
-               and travel with it as it opens/closes. -->
-          <div class="bm11-sheet-respins" id="bm11-sheet-respins" hidden>
-            <button
-              type="button"
-              class="bm11-reel-respin bm11-sheet-respin--era"
-              id="bm11-respin-era-sheet"
-              hidden
-            >
-              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-              Era
-              <span class="bm11-respin-left" id="bm11-respin-era-sheet-left">1 left</span>
-            </button>
-            <button
-              type="button"
-              class="bm11-reel-respin bm11-sheet-respin--nation"
-              id="bm11-respin-nation-sheet"
-              hidden
-            >
-              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-              Nation
-              <span class="bm11-respin-left" id="bm11-respin-nation-sheet-left">1 left</span>
-            </button>
-          </div>
-          <div class="bm11-drawer-body" id="bm11-summary-body">
-            <PoolToolbar client:load />
-            <h3 class="sr-only" id="bm11-pool-heading">Your draw</h3>
-            <p class="bm11-lede" id="bm11-pool-lede">
-              Your drawn players will appear here after your first spin.
-            </p>
-            <div id="bm11-groups"></div>
-          </div>
-          </div><!-- /.bm11-drawer-pop -->
-        </aside>
-      </div>
-    </div>
-
-    <div hidden aria-hidden="true">
-      <PlayerCard player={styleSeed} />
-    </div>
-
-    <script type="application/json" id="bm11-player-data" set:html={playerDataJson}></script>
-    <script type="application/json" id="bm11-legend-combos" set:html={legendCombosJson}></script>
-    <script type="application/json" id="bm11-draft-combos" set:html={draftCombosJson}></script>
-  </main>
-
-
-  <!-- Role chooser: shown only when a tapped player/slot has more than one
-       legal declaration (e.g. Sangakkara as batter or keeper). -->
-  <div id="bm11-role-chooser" class="bm11-chooser" hidden>
-    <div class="bm11-chooser-backdrop" data-bm11-chooser-cancel></div>
-    <div
-      class="bm11-chooser-card"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="bm11-chooser-title"
-    >
-      <h3 class="bm11-chooser-title" id="bm11-chooser-title"></h3>
-      <p class="bm11-chooser-sub" id="bm11-chooser-sub"></p>
-      <div class="bm11-chooser-options" id="bm11-chooser-options"></div>
-      <button
-        type="button"
-        class="bm11-chooser-cancel"
-        data-bm11-chooser-cancel
-      >
-        Cancel
-      </button>
+  <!-- Role chooser: only when the tapped slot admits more than one legal
+       declaration (e.g. Sangakkara as batter or keeper). -->
+  <div id="bm11-role-chooser" class="fl-chooser" hidden>
+    <div class="fl-chooser-backdrop" data-fl-chooser-cancel></div>
+    <div class="fl-chooser-card" role="dialog" aria-modal="true" aria-labelledby="fl-chooser-title">
+      <h2 class="fl-chooser-title" id="fl-chooser-title"></h2>
+      <p class="fl-chooser-sub" id="fl-chooser-sub"></p>
+      <div class="fl-chooser-opts" id="fl-chooser-opts"></div>
+      <button type="button" class="fl-link" data-fl-chooser-cancel>Cancel</button>
     </div>
   </div>
 
-  <Footer />
+  <script type="application/json" id="bm11-player-data" set:html={playerDataJson}></script>
+  <script type="application/json" id="bm11-legend-combos" set:html={legendCombosJson}></script>
+  <script type="application/json" id="bm11-draft-combos" set:html={draftCombosJson}></script>
 
   <script>
     import { animate } from 'motion';
@@ -278,7 +118,6 @@ const styleSeed = playersForEra('legends')[0];
       validatePoolPick,
       validateSlotPlacement,
       validateSlotMove,
-      moveDeclaration,
       placementOptions,
       applySpinResult,
       applyDraftPick,
@@ -295,7 +134,6 @@ const styleSeed = playersForEra('legends')[0];
       clearDraft,
       saveUserXI,
       clearUserXI,
-      playerGroups,
       slotByKey,
       orderedXI,
       countsOf,
@@ -306,405 +144,166 @@ const styleSeed = playersForEra('legends')[0];
       DRAFT_ROUNDS,
       XI_ROLE_LABELS,
       XI_SLOTS,
-      XI_SLOT_GROUP_LABELS,
       POOL_GROUPS,
     } from '../lib/player-logic';
 
     // ------------------------------------------------------------------ data
-    const byEra = JSON.parse(
-      document.getElementById('bm11-player-data').textContent || '{}'
-    );
-    const LEGEND_COMBOS = JSON.parse(
-      document.getElementById('bm11-legend-combos').textContent || '[]'
-    );
-    const DRAFT_COMBOS = JSON.parse(
-      document.getElementById('bm11-draft-combos').textContent || '[]'
-    );
-    // Round 1 (draft.currentRound === 0) always spins the Legends era — the
-    // user picks their one Legend first; rounds 2–6 spin the other eras.
-    // A spin can never re-land on an era×nation combo already drawn in this
-    // draft: a repeat would shrink the user's options (picked players are
-    // removed from the pool). And a nation can land at most twice per draft,
-    // so no single pool dominates the six rounds.
-    const usedComboKeys = () =>
-      new Set(draft.spinHistory.map((s) => `${s.era}|${s.nation}`));
+    const read = (id) => JSON.parse(document.getElementById(id).textContent || 'null');
+    const byEra = read('bm11-player-data') || {};
+    const LEGEND_COMBOS = read('bm11-legend-combos') || [];
+    const DRAFT_COMBOS = read('bm11-draft-combos') || [];
+    const uidIndex = {};
+    for (const eraId of Object.keys(byEra)) for (const p of byEra[eraId]) uidIndex[p.uid] = p;
+
+    // A spin never re-lands on an era×nation combo already drawn, and a
+    // nation lands at most twice per draft (unchanged live rules).
+    const usedComboKeys = () => new Set(draft.spinHistory.map((s) => `${s.era}|${s.nation}`));
     const nationCounts = () => {
       const counts = {};
-      for (const s of draft.spinHistory)
-        counts[s.nation] = (counts[s.nation] || 0) + 1;
+      for (const s of draft.spinHistory) counts[s.nation] = (counts[s.nation] || 0) + 1;
       return counts;
     };
     const combosForUpcomingRound = () => {
       const base = draft.currentRound === 0 ? LEGEND_COMBOS : DRAFT_COMBOS;
       const used = usedComboKeys();
       const counts = nationCounts();
-      const fresh = base.filter(
-        (c) =>
-          !used.has(`${c.era}|${c.nation}`) && (counts[c.nation] || 0) < 2,
-      );
+      const fresh = base.filter((c) => !used.has(`${c.era}|${c.nation}`) && (counts[c.nation] || 0) < 2);
       if (fresh.length > 0) return fresh;
-      // Defensive: relax the nation cap first, then the pair rule — with
-      // dozens of combos and at most 5 prior spins the pool can never run
-      // dry, but never let the spin dead-end if it does.
       const pairFresh = base.filter((c) => !used.has(`${c.era}|${c.nation}`));
       return pairFresh.length > 0 ? pairFresh : base;
     };
-    // Respin redraws: the rejected pair is excluded (no going back) and the
-    // no-repeat rule still holds. A nation respin keeps the era; an era respin
-    // keeps the nation but never lands on Legends — round 1 owns that era.
-    // The nation cap applies to respins too (an era respin needs no check:
-    // it keeps the current nation, so the counts don't change).
+    // Respins: a nation respin keeps the era; an era respin keeps the nation
+    // and never lands on Legends (round 1 owns that era).
     const nationRedrawOptions = () => {
       if (!draft.currentEra) return [];
       const base = draft.currentRound === 1 ? LEGEND_COMBOS : DRAFT_COMBOS;
       const used = usedComboKeys();
       const counts = nationCounts();
       return base.filter(
-        (c) =>
-          c.era === draft.currentEra &&
-          c.nation !== draft.currentNation &&
-          !used.has(`${c.era}|${c.nation}`) &&
-          (counts[c.nation] || 0) < 2,
+        (c) => c.era === draft.currentEra && c.nation !== draft.currentNation &&
+          !used.has(`${c.era}|${c.nation}`) && (counts[c.nation] || 0) < 2,
       );
     };
     const eraRedrawOptions = () => {
       if (!draft.currentNation) return [];
       const used = usedComboKeys();
       return DRAFT_COMBOS.filter(
-        (c) =>
-          c.nation === draft.currentNation &&
-          c.era !== draft.currentEra &&
-          !used.has(`${c.era}|${c.nation}`),
+        (c) => c.nation === draft.currentNation && c.era !== draft.currentEra && !used.has(`${c.era}|${c.nation}`),
       );
     };
-    const uidIndex = {};
-    for (const eraId of Object.keys(byEra)) {
-      for (const p of byEra[eraId]) uidIndex[p.uid] = p;
-    }
 
-    // ------------------------------------------------- presentation mirrors
-    // These mirror PlayerCard.astro / PlayerAvatar.astro so client-rendered
-    // cards pick up the component's global styles verbatim. (A hidden
-    // PlayerCard instance is rendered above so those styles are emitted.)
-    const ERA_ACCENTS = {
-      legends: '#C9A227',
-      '1970s': '#C26936',
-      '1980s': '#D64045',
-      '1990s': '#2AA198',
-      '2000s': '#3B82F6',
-      '2010s': '#8B5CF6',
-      '2020s': '#2DD4BF',
-    };
-    // Short nation codes — mirrors PlayerCard.astro (results pages).
-    const NATION_CODES = {
-      Australia: 'AUS',
-      England: 'EG',
-      India: 'IND',
-      Pakistan: 'PAK',
-      'West Indies': 'WI',
-      'New Zealand': 'NZ',
-      'South Africa': 'SA',
-      'Sri Lanka': 'SL',
-      Bangladesh: 'BAN',
-      Zimbabwe: 'ZIM',
-    };
-    const ROLE_LABELS = {
-      opener: 'Opener',
-      'middle-order': 'Middle Order',
-      wicketkeeper: 'Wicketkeeper',
-      'all-rounder': 'All-Rounder',
-      'fast-bowler': 'Fast Bowler',
-      spinner: 'Spinner',
-    };
-    // Your-XI slot groups, in batting-to-bowling order, derived from the
-    // shared XI_SLOTS model so labels and keys can't drift: 2 fixed
-    // openers, batting spots 3–6 (middle order / wicketkeeper), spots 7–8
-    // (all-rounder / spinner), then the 3 fast bowlers. Eleven fixed slots,
-    // always rendered, even before the first pick.
-    const SLOT_GROUPS = ['openers', 'batting', 'flex', 'fast'].map((g) => ({
-      key: g,
-      label: XI_SLOT_GROUP_LABELS[g],
-      keys: XI_SLOTS.filter((s) => s.group === g).map((s) => s.key),
-    }));
-    // Field positions: slot key -> spot on the cricket ground, as
-    // percentages of the field box. Display only — the XI_SLOTS model
-    // (groups, roles, rules) is untouched. Openers at the crease, the
-    // keeper behind the stumps, batters in the inner ring, the flex pair
-    // mid-field, the pace attack on the boundary.
-    const FIELD_POSITIONS = {
-      'opener-1': { x: 50, y: 68 },
-      'opener-2': { x: 50, y: 28 },
-      'bat-3': { x: 28, y: 78 },
-      'bat-4': { x: 15, y: 57 },
-      'bat-5': { x: 82, y: 72 },
-      'bat-6': { x: 50, y: 88 },
-      'flex-7': { x: 86, y: 35 },
-      'flex-8': { x: 70, y: 55 },
-      'fast-1': { x: 15, y: 35 },
-      'fast-2': { x: 30, y: 15 },
-      'fast-3': { x: 70, y: 15 },
-    };
-    // Friendly default names inside the flexible slot cards: the keeper's
-    // home (bat-6) and the all-rounder/spinner pair (flex-7/8). The
-    // reachable-shape narrowing in slotButtonHTML can still override these
-    // for the flex pair; bat-6 is keeper-only so its label never changes.
-    const SLOT_LABEL_OVERRIDES = {
-      'bat-6': 'Wicketkeeper',
-      'flex-7': 'All-rounder/Spinner',
-      'flex-8': 'All-rounder/Spinner',
-    };
+    // ---------------------------------------------------------- presentation
     const ERA_NAMES = {
-      legends: 'Legends',
-      '1970s': '1970s',
-      '1980s': '1980s',
-      '1990s': '1990s',
-      '2000s': '2000s',
-      '2010s': '2010s',
-      '2020s': '2020s',
+      legends: 'Legends', '1970s': '1970s', '1980s': '1980s', '1990s': '1990s',
+      '2000s': '2000s', '2010s': '2010s', '2020s': '2020s',
     };
     const eraName = (id) => ERA_NAMES[id] || id;
+    const ERA_LIST = ['1970s', '1980s', '1990s', '2000s', '2010s', '2020s'];
+    const NATIONS = ['Australia', 'Bangladesh', 'England', 'India', 'New Zealand', 'Pakistan', 'South Africa', 'Sri Lanka', 'West Indies', 'Zimbabwe'];
+    const NATION_CODES = {
+      Australia: 'AUS', England: 'ENG', India: 'IND', Pakistan: 'PAK', 'West Indies': 'WI',
+      'New Zealand': 'NZ', 'South Africa': 'SA', 'Sri Lanka': 'SL', Bangladesh: 'BAN', Zimbabwe: 'ZIM',
+    };
+    const ROLE_LABELS = {
+      opener: 'Opener', 'middle-order': 'Middle order', wicketkeeper: 'Wicketkeeper',
+      'all-rounder': 'All-rounder', 'fast-bowler': 'Fast bowler', spinner: 'Spinner',
+    };
+    const ROLE_SHORT = {
+      opener: 'OPN', 'middle-order': 'BAT', wicketkeeper: 'WK',
+      'all-rounder': 'AR', spinner: 'SPIN', 'fast-bowler': 'PACE',
+    };
+    // Dock groups, batting to bowling. Two rows on phones: batting (1–6),
+    // then the flex pair and the pace attack (7–11).
+    const DOCK_GROUPS = [
+      { label: 'Openers', keys: ['opener-1', 'opener-2'], row: 1 },
+      { label: 'Batting 3–6', keys: ['bat-3', 'bat-4', 'bat-5', 'bat-6'], row: 1 },
+      { label: 'Spots 7–8', keys: ['flex-7', 'flex-8'], row: 2 },
+      { label: 'Pace', keys: ['fast-1', 'fast-2', 'fast-3'], row: 2 },
+    ];
+    const CHOOSER_SUB = {
+      opener: 'Opens the batting',
+      'middle-order': 'Bats in the middle order',
+      wicketkeeper: 'Fills your keeper slot',
+      'all-rounder': 'Batting and bowling value',
+      spinner: 'Frontline spin option',
+      'fast-bowler': 'Pace attack',
+    };
+    const ROLE_PLURALS = {
+      opener: ['opener', 'openers'],
+      'middle-order': ['middle-order batter', 'middle-order batters'],
+      wicketkeeper: ['wicketkeeper', 'wicketkeepers'],
+      'all-rounder': ['all-rounder', 'all-rounders'],
+      spinner: ['spinner', 'spinners'],
+      'fast-bowler': ['fast bowler', 'fast bowlers'],
+    };
+    const XI_ROLE_ORDER = ['opener', 'middle-order', 'wicketkeeper', 'all-rounder', 'spinner', 'fast-bowler'];
 
     const esc = (v) =>
-      String(v ?? '').replace(/[&<>"']/g, (c) => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
-      }[c]));
-    // Lucide icon paths (ISC-licensed), inlined for the vanilla client
-    // script: 24x24, stroke-based, matching lucide-react's artwork.
-    const ICONS = {
-      plus: '<path d="M5 12h14"/><path d="M12 5v14"/>',
-      check: '<path d="M20 6 9 17l-5-5"/>',
-      search: '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
-      x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
-      chevron: '<path d="m6 9 6 6 6-6"/>',
-      respin:
-        '<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>',
-      sparkles:
-        '<path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z"/>',
-      arrow: '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
-    };
-    const icon = (name, size = 16) =>
-      `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" ` +
-      `stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ` +
-      `aria-hidden="true">${ICONS[name] || ''}</svg>`;
-    // Pool-sheet averages show one decimal (55.1, not 55.10).
+      String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+    const fmtAvg = (v) => (v == null || Number.isNaN(Number(v)) || Number(v) === 0 ? '–' : Number(v).toFixed(1));
+    const fmtInt = (v) => (v == null || Number.isNaN(Number(v)) ? '–' : Math.round(Number(v)).toLocaleString('en-US'));
+    const surname = (n) => String(n || '').split(/\s+/).slice(-1)[0];
+    const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const RESPIN_ICON =
+      '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>';
 
-    const fmtAvg = (v) =>
-      v == null || Number.isNaN(Number(v)) ? '–' : Number(v).toFixed(1);
-    const fmtInt = (v) =>
-      v == null || Number.isNaN(Number(v)) ? '–' : Math.round(Number(v)).toLocaleString('en-US');
-    // Compact card initials for the mobile field-view XI (e.g. "Steve Waugh" -> "SW").
-    const initials = (name) =>
-      String(name || '')
-        .split(/\s+/)
-        .filter(Boolean)
-        .map((w) => w[0])
-        .slice(0, 2)
-        .join('')
-        .toUpperCase();
-
-    // Inline SVG medallion — same artwork as PlayerAvatar.astro (data URI).
-    function avatarSrc(era) {
-      const accent = ERA_ACCENTS[era] || '#a5a8c9';
-      const figure = '#DDE6F2';
-      const svg =
-        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">` +
-        `<defs><radialGradient id="bm11av" cx="35%" cy="28%" r="85%">` +
-        `<stop offset="0%" stop-color="${accent}" stop-opacity="0.38"/>` +
-        `<stop offset="100%" stop-color="#12122b" stop-opacity="1"/>` +
-        `</radialGradient></defs>` +
-        `<circle cx="32" cy="32" r="30.5" fill="url(#bm11av)" stroke="${accent}" stroke-opacity="0.55" stroke-width="1.6"/>` +
-        `<ellipse cx="30" cy="55" rx="13" ry="2.4" fill="#000000" opacity="0.35"/>` +
-        `<circle cx="33" cy="12.5" r="6.4" fill="${figure}"/>` +
-        `<g stroke="${figure}" stroke-linecap="round" fill="none">` +
-        `<path d="M33 21 C31.5 27 30.5 32 30 38" stroke-width="9"/>` +
-        `<path d="M31 27 L21 34" stroke-width="6.5"/>` +
-        `<path d="M20 35 L8.5 16.5" stroke-width="6"/>` +
-        `<path d="M30 38 L23 53" stroke-width="7.5"/>` +
-        `<path d="M30 38 L39 52" stroke-width="7.5"/>` +
-        `</g></svg>`;
-      return 'data:image/svg+xml,' + encodeURIComponent(svg);
-    }
-
-    // 4 key ministats per card, tailored to the player's display group:
-    // batters → M / Runs / Avg / 50s/100s; keepers → M / Runs / Avg / Dis;
-    // all-rounders → M / Bat Avg / Bowl Avg / 50s-100s or 5W-10W by the
-    // stronger suit; bowlers → M / Wkts / Bowl Avg / 5W/10W.
-    // Pairs (50s/100s, 5W/10W) render as a single xx/xx cell.
-    function poolStatCells(p, kind) {
+    // Four real Test stats per card, chosen by the player's group. No
+    // ratings anywhere during the draft.
+    function statCells(p) {
       const s = p.stats || {};
       const bowlAvg = s.testBowlingAverage ?? s.bowlingAverage;
-      const cell = (v, l) =>
-        `<span class="bm11-prow-stat"><i>${esc(l)}</i><b>${esc(v)}</b></span>`;
+      const cell = (v, l) => `<span class="fl-stat"><b>${esc(v)}</b><i>${esc(l)}</i></span>`;
       const pair = (a, b, l) => cell(`${fmtInt(a)}/${fmtInt(b)}`, l);
-      if (kind === 'ar') {
-        const batFirst = (s.testAverage ?? 0) > (bowlAvg ?? 0);
-        return (
-          cell(fmtInt(s.testMatches), 'M') +
-          cell(fmtAvg(s.testAverage), 'Bat Avg') +
-          cell(fmtAvg(bowlAvg), 'Bowl Avg') +
-          (batFirst
-            ? pair(s.testFifties, s.testCenturies, '50s/100s')
-            : pair(s.fiveWs, s.tenWs, '5W/10W'))
-        );
+      const r = p.primaryRole;
+      if (r === 'all-rounder') {
+        return cell(fmtInt(s.testMatches), 'Tests') + cell(fmtAvg(s.testAverage), 'Bat avg') +
+          cell(fmtInt(s.testWickets), 'Wkts') + cell(fmtAvg(bowlAvg), 'Bowl avg');
       }
-      if (kind === 'bowl') {
-        return (
-          cell(fmtInt(s.testMatches), 'M') +
-          cell(fmtInt(s.testWickets), 'Wkts') +
-          cell(fmtAvg(bowlAvg), 'Bowl Avg') +
-          pair(s.fiveWs, s.tenWs, '5W/10W')
-        );
+      if (r === 'spinner' || r === 'fast-bowler') {
+        return cell(fmtInt(s.testMatches), 'Tests') + cell(fmtInt(s.testWickets), 'Wkts') +
+          cell(fmtAvg(bowlAvg), 'Bowl avg') + pair(s.fiveWs, s.tenWs, '5W/10W');
       }
-      // Batting groups: keepers get dismissals, the defining keeper stat.
-      if (p.primaryRole === 'wicketkeeper') {
-        return (
-          cell(fmtInt(s.testMatches), 'M') +
-          cell(fmtInt(s.testRuns), 'Runs') +
-          cell(fmtAvg(s.testAverage), 'Avg') +
-          cell(fmtInt(s.dismissals), 'Dis')
-        );
+      if (r === 'wicketkeeper') {
+        return cell(fmtInt(s.testMatches), 'Tests') + cell(fmtInt(s.testRuns), 'Runs') +
+          cell(fmtAvg(s.testAverage), 'Avg') + cell(fmtInt(s.dismissals), 'Dismissals');
       }
-      return (
-        cell(fmtInt(s.testMatches), 'M') +
-        cell(fmtInt(s.testRuns), 'Runs') +
-        cell(fmtAvg(s.testAverage), 'Avg') +
-        pair(s.testFifties, s.testCenturies, '50s/100s')
-      );
+      return cell(fmtInt(s.testMatches), 'Tests') + cell(fmtInt(s.testRuns), 'Runs') +
+        cell(fmtAvg(s.testAverage), 'Avg') + pair(s.testFifties, s.testCenturies, '50s/100s');
     }
-    function accessibleName(p) {
-      const roles = [
-        p.primaryRole,
-        ...(p.secondaryRoles || []).filter((r) => r !== p.primaryRole),
-      ]
-        .filter(Boolean)
-        .map((r) => ROLE_LABELS[r] || r);
-      return `${p.name}, ${roles.join(', ') || 'player'}, ${p.nation || ''}`;
-    }
+    const roleTag = (p) =>
+      [p.primaryRole, ...(p.secondaryRoles || []).filter((r) => r !== p.primaryRole)]
+        .map((r) => ROLE_SHORT[r] || r).join(' / ');
+    const groupLabelList = (p) =>
+      [p.primaryRole, ...(p.secondaryRoles || [])].map((g) => ROLE_LABELS[g] || g).join(', ');
+    const accessibleName = (p) => `${p.name}, ${groupLabelList(p)}, ${p.nation || ''}`;
 
-    // Pool player card: era-accented initials medallion, name + nation +
-    // role, and four group-relevant ministats. The whole card is the tap
-    // target — no separate add button. Selection state (is-selected /
-    // is-disabled / is-locked + the check badge) is owned by
-    // updateCardStates — this just renders the card.
-    function cardHTML(p, kind) {
-      const drawEra = draft.currentEra || p.displayEra;
-      const accent = ERA_ACCENTS[drawEra] || '#a5a8c9';
-      const nationCode = NATION_CODES[p.nation] || p.nation || '';
-      const roleLabel = ROLE_LABELS[p.primaryRole] || p.primaryRole || '';
-      return (
-        `<button type="button" class="bm11-prow" data-bm11-select="${esc(p.uid)}"` +
-        ` aria-pressed="false" aria-label="${esc(accessibleName(p))}" style="--era-accent:${accent};">` +
-        `<span class="bm11-prow-main">` +
-        `<span class="bm11-prow-name">${esc(p.name)}</span>` +
-        `<span class="bm11-prow-meta">` +
-        `<span class="bm11-nation-code">${esc(nationCode)}</span>` +
-        `<span class="bm11-prow-role">${esc(roleLabel)}</span>` +
-        `</span></span>` +
-        `<span class="bm11-prow-stats">${poolStatCells(p, kind)}</span>` +
-        `<span class="bm11-check-badge" aria-hidden="true" hidden>${icon('check', 11)}</span>` +
-        `</button>`
-      );
-    }
     // ------------------------------------------------------------------ state
-    // ONE draft object = the single source of truth. Every mutation goes
-    // through the pure transitions in player-logic.ts, then persist() +
-    // renderAll(). Two extra pieces of UI-only state drive the two-step
-    // flow: `selectedUid` (the pool player waiting for a slot) and
-    // `moveFrom` (the slot whose occupant is being repositioned). The
-    // tapped slot decides a multi-role player's declaration — no separate
-    // role choice. None is persisted — they reset on reload and round
-    // changes.
+    // ONE draft object; every mutation goes through player-logic, then
+    // persist() + renderAll(). UI-only: selectedUid (pool player awaiting a
+    // slot), moveFrom (slot armed for a move), chooserState (role chooser).
     let draft = createDraft();
     let selectedUid = null;
     let moveFrom = null;
-    let chooserState = null; // { uid, slotKey, supply } while the role chooser is open
+    let chooserState = null;
+    let spinningReel = null; // 'both' | 'era' | 'nation' while a reel animates
     let msgTimer = 0;
-    // Slots filled since the last render — drives the Motion pop when a
-    // player lands on the field.
     let prevFilled = new Set();
-    const reduceMotion = () =>
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const $ = (id) => document.getElementById(id);
     const liveEl = $('bm11-live');
     const spinBtn = $('bm11-spin');
-    const progressEl = $('bm11-progress');
-    const roundBarEl = $('bm11-roundbar');
-    const progressLabelEl = $('bm11-progress-label');
-    const eraSlot = $('bm11-draw-era');
-    const nationSlot = $('bm11-draw-nation');
-    const respinNationBtn = $('bm11-respin-nation');
-    const respinEraBtn = $('bm11-respin-era');
-    const respinNationLeft = $('bm11-respin-nation-left');
-    const respinEraLeft = $('bm11-respin-era-left');
-    // Mobile twins: the same tokens rendered above the draw sheet.
-    const respinBar = $('bm11-sheet-respins');
-    const respinNationSheetBtn = $('bm11-respin-nation-sheet');
-    const respinEraSheetBtn = $('bm11-respin-era-sheet');
-    const respinNationSheetLeft = $('bm11-respin-nation-sheet-left');
-    const respinEraSheetLeft = $('bm11-respin-era-sheet-left');
-    // Sync one token's reel button + sheet button together.
-    function syncRespinBtn(btn, sheetBtn, leftEl, sheetLeftEl, show, leftText, label) {
-      btn.hidden = !show;
-      sheetBtn.hidden = !show;
-      if (show) {
-        leftEl.textContent = leftText;
-        sheetLeftEl.textContent = leftText;
-        btn.setAttribute('aria-label', label);
-        sheetBtn.setAttribute('aria-label', label);
-      }
-    }
-    const groupsEl = $('bm11-groups');
-    const historyEl = $('bm11-history');
-    const summaryEl = $('bm11-summary');
+    const eraEl = $('fl-era');
+    const nationEl = $('fl-nation');
+    const respinEraBtn = $('fl-respin-era');
+    const respinNationBtn = $('fl-respin-nation');
+    const cardsEl = $('fl-cards');
+    const slotsEl = $('fl-slots');
     const msgEl = $('bm11-msg');
     const ctaEl = $('bm11-cta');
 
-    // Mobile (<1024px) swaps the panels: the fixed bottom sheet hosts the
-    // drawn pool, and Your XI lives as a static section in the page flow.
-    // Desktop keeps the pool in the main column and the XI sticky sidebar.
-    const mqMobile = window.matchMedia('(max-width: 1023.98px)');
-
-    // The drawer is a fixed bottom sheet on mobile and a sticky side panel
-    // on desktop; the field lives in the page flow on both. Nothing moves
-    // between breakpoints anymore, so this just keeps the sheet closed on
-    // desktop.
-    function layoutPanels() {
-      if (!mqMobile.matches) setSheetOpen(false);
-    }
-    function setSheetOpen(open) {
-      summaryEl.classList.toggle('is-open', open);
-      $('bm11-toggle').setAttribute('aria-expanded', open ? 'true' : 'false');
-    }
-
-    // Pop the draw sheet up (mobile only). Returns whether it did anything,
-    // so callers can fall back to a page scroll on desktop.
-    function revealDrawSheet() {
-      if (!mqMobile.matches) return false;
-      setSheetOpen(true);
-      $('bm11-summary-body').scrollTop = 0;
-      return true;
-    }
-
-    // Spin/respin landing: let the landed era + nation breathe in the spin
-    // zone before the sheet takes over — the landing should read as an
-    // event, not a flash. Skips the beat when already open (e.g. the user
-    // beat the timer to the toggle) and under reduced motion.
-    function revealDrawSheetAfterLanding() {
-      if (!mqMobile.matches) return;
-      const reduceMotion = window.matchMedia(
-        '(prefers-reduced-motion: reduce)'
-      ).matches;
-      window.setTimeout(() => {
-        if (!summaryEl.classList.contains('is-open')) revealDrawSheet();
-      }, reduceMotion ? 0 : 1200);
-    }
-
     const announce = (text) => {
       liveEl.textContent = '';
-      requestAnimationFrame(() => {
-        liveEl.textContent = text;
-      });
+      requestAnimationFrame(() => { liveEl.textContent = text; });
     };
     const flashMsg = (text) => {
       msgEl.textContent = text || '';
@@ -712,21 +311,10 @@ const styleSeed = playersForEra('legends')[0];
       if (text) msgTimer = window.setTimeout(() => { msgEl.textContent = ''; }, 4500);
     };
     const persist = () => {
-      // /matchup's contract: a plain array of 11 players. Saved in slot
-      // (batting) order so the XI reads top-to-bottom naturally.
       saveUserXI(orderedXI(draft));
       saveDraft(draft);
     };
 
-    /** "Middle Order, Wicketkeeper" — every group the data marks a player eligible for. */
-    const groupLabelList = (p) =>
-      playerGroups(p)
-        .map((g) => ROLE_LABELS[g] || XI_ROLE_LABELS[g] || g)
-        .join(', ');
-
-    // ------------------------------------------------------------ pool logic
-    // Eligible pool for the current draw: era id ∈ player.era (string or
-    // array) AND nation matches, deduped by raw id across era files.
     function currentPool() {
       if (!draft.currentEra || !draft.currentNation) return [];
       const out = [];
@@ -740,524 +328,302 @@ const styleSeed = playersForEra('legends')[0];
           out.push(p);
         }
       }
-      return out;
+      // Neutral order: role groups batting → bowling, then A–Z. Never by
+      // strength — the order must not reveal the best pick.
+      const roleRank = (p) => {
+        const i = POOL_GROUPS.findIndex((g) => g.roles.includes(p.primaryRole));
+        return i < 0 ? POOL_GROUPS.length : i;
+      };
+      return out.sort((a, b) => roleRank(a) - roleRank(b) || a.name.localeCompare(b.name));
     }
-
-    // Supply context for the hard block: the current draw's pool plus how
-    // many picks later rounds still owe, so a pick that strands a needed
-    // role (e.g. the keeper) with nobody left in this draw is refused.
     const draftSupply = () => supplyFor(draft, currentPool());
-
     function unpickedCount(pool) {
       const ids = new Set(draft.selectedPlayers.map((p) => p.id));
       let n = 0;
       for (const p of pool) if (!ids.has(p.id)) n += 1;
       return n;
     }
-
     const roundDone = () => isRoundComplete(draft, unpickedCount(currentPool()));
-    // UI-only pool filtering (drawer search + role chips). Never touches
-    // eligibility, the draft model, or persistence.
-    let poolUI = { q: '', role: 'All' };
-    window.addEventListener('bm11:pool-filter', (e) => {
-      const d = (e && e.detail) || {};
-      poolUI = { q: String(d.q || ''), role: String(d.role || 'All') };
-      renderPool();
-    });
-    function resetPoolFilter() {
-      poolUI = { q: '', role: 'All' };
-      window.dispatchEvent(new CustomEvent('bm11:pool-filter-reset'));
-    }
 
-
-    // ------------------------------------------------------------------ spin
-    function previewDraw(era, nation) {
-      eraSlot.textContent = eraName(era);
-      nationSlot.textContent = nation;
-      const accent = ERA_ACCENTS[era] || '#a5a8c9';
-      const win = eraSlot.closest('.bm11-reel-window');
-      if (win) win.style.setProperty('--era-accent', accent);
-    }
-
-    // Visual progress: a 6-segment round bar (dim = upcoming, gold pulse =
-    // current, green = done) with a text label for the round and XI count.
-    // Screen readers get the same info from the container's aria-label.
-    function renderProgress(done) {
-      roundBarEl.innerHTML = '';
-      for (let i = 1; i <= DRAFT_ROUNDS; i += 1) {
-        const seg = document.createElement('span');
-        seg.className = 'bm11-roundbar-seg';
-        const isDone = i < draft.currentRound || (i === draft.currentRound && done);
-        const isCurrent =
-          i === draft.currentRound && !done && draft.currentRound >= 1;
-        if (isDone) seg.classList.add('is-done');
-        if (isCurrent) seg.classList.add('is-current');
-        roundBarEl.appendChild(seg);
+    // ------------------------------------------------------------------ stage
+    function setReel(el, text, state) {
+      el.textContent = text;
+      const reel = el.closest('.fl-reel');
+      reel.classList.toggle('is-rolling', state === 'rolling');
+      if (state === 'landed') {
+        reel.classList.remove('is-landed');
+        void reel.offsetWidth; // restart the landing animation
+        reel.classList.add('is-landed');
       }
-      const placed = draft.selectedPlayers.length;
-      const roundText =
-        draft.currentRound === 0
-          ? `Round 1 of ${DRAFT_ROUNDS}`
-          : `Round ${draft.currentRound} of ${DRAFT_ROUNDS}`;
-      progressLabelEl.textContent = `${roundText} · ${placed} of ${XI_SIZE} picked`;
-      progressEl.setAttribute(
-        'aria-label',
-        draft.currentRound === 0
-          ? `${DRAFT_ROUNDS} rounds, ${XI_SIZE} players`
-          : `Round ${draft.currentRound} of ${DRAFT_ROUNDS}, ${placed} of ${XI_SIZE} players placed`
-      );
     }
 
-    function renderSpinZone() {
-      if (draft.currentEra && draft.currentNation) {
-        previewDraw(draft.currentEra, draft.currentNation);
-      } else {
-        eraSlot.textContent = 'Fate';
-        nationSlot.textContent = 'awaits…';
+    function status() {
+      const r = draft.currentRound;
+      if (draft.gameComplete) {
+        return isXIValid(draft)
+          ? { title: 'Your XI is ready', sub: 'Eleven picked. Time to face My 11 over five Tests.' }
+          : { title: 'This XI can’t take the field', sub: 'It isn’t a valid combination — start over to draft again.' };
       }
+      if (spinningReel) return { title: 'Spinning…', sub: 'Fate is choosing.' };
+      if (r === 0) return { title: 'Spin for your Legend', sub: 'Round 1 always draws the Legends era. You pick one.' };
+      const left = selectionLimitForRound(r) - draft.picksThisRound.length;
+      if (roundDone()) {
+        if (r >= DRAFT_ROUNDS) return { title: 'Draft stalled', sub: 'This draw left your XI short. Start over to try again.' };
+        return { title: 'Round done — spin again', sub: `Round ${r} of ${DRAFT_ROUNDS} is locked in.` };
+      }
+      return {
+        title: `Pick ${left} from ${eraName(draft.currentEra)} ${draft.currentNation}`,
+        sub: selectedUid
+          ? 'Now tap a glowing spot in your XI below.'
+          : moveFrom
+            ? 'Tap a glowing spot to move them, or tap them again to cancel.'
+            : 'Tap a player, then a glowing spot in your XI.',
+      };
+    }
+
+    function renderStage() {
+      if (!spinningReel) {
+        if (draft.currentEra && draft.currentNation) {
+          eraEl.textContent = eraName(draft.currentEra);
+          nationEl.textContent = draft.currentNation;
+        } else {
+          eraEl.textContent = '—';
+          nationEl.textContent = '—';
+        }
+      }
+      const st = status();
+      $('fl-status-title').textContent = st.title;
+      $('fl-sub').textContent = st.sub;
 
       const done = roundDone();
-      let btnLabel = 'Spin';
-      let btnEnabled = false;
-
-      if (draft.gameComplete) {
-        btnLabel = 'Spin';
-        btnEnabled = false;
-      } else if (draft.isSpinning) {
-        btnLabel = 'Spinning…';
-        btnEnabled = false;
-      } else if (draft.currentRound === 0) {
-        btnLabel = 'Spin';
-        btnEnabled = true;
-      } else if (draft.currentRound >= DRAFT_ROUNDS && done && !draft.gameComplete) {
-        // Defensive: a tiny pool left the draft short of 11 players.
-        btnLabel = 'Spin';
-        btnEnabled = false;
-      } else if (done) {
-        btnLabel = 'Spin again';
-        btnEnabled = true;
-      } else {
-        btnLabel = 'Spin';
-        btnEnabled = false;
-      }
-
-      renderProgress(done);
-      spinBtn.innerHTML =
-        icon('sparkles', 18) + '<span>' + esc(btnLabel) + '</span>';
-      spinBtn.disabled = !btnEnabled;
+      const canGo = !spinningReel && !draft.gameComplete && canSpin(draft, unpickedCount(currentPool()));
       spinBtn.hidden = draft.gameComplete;
+      spinBtn.disabled = !canGo;
+      spinBtn.textContent = spinningReel ? '…' : draft.currentRound > 0 && done ? 'Spin next' : 'Spin';
       spinBtn.setAttribute(
         'aria-label',
-        btnLabel === 'Spin again'
-          ? 'Spin again to draw the next era and nation'
-          : draft.currentRound === 0
-            ? 'Spin to draw your Legend — a random nation from the Legends era'
-            : 'Spin to draw a random era and nation'
+        draft.currentRound === 0
+          ? 'Spin to draw your Legend — a random nation from the Legends era'
+          : 'Spin to draw a random era and nation',
       );
 
-      // Respin tokens: each button sits directly under its own reel on
-      // desktop and rides above the draw sheet on mobile. Both appear only
-      // while that token can actually be used — after a draw lands and
-      // before any pick is made from it.
-      const nationOpts = nationRedrawOptions();
-      const eraOpts = eraRedrawOptions();
-      const base =
-        !draft.gameComplete &&
-        !draft.isSpinning &&
-        draft.currentRound >= 1 &&
-        draft.picksThisRound.length === 0;
-      const showNation = base && canRespinNation(draft, nationOpts.length);
-      const showEra = base && canRespinEra(draft, eraOpts.length);
-      syncRespinBtn(
-        respinNationBtn,
-        respinNationSheetBtn,
-        respinNationLeft,
-        respinNationSheetLeft,
-        showNation,
-        `${draft.nationRespinsLeft} left`,
-        `Forced redraw: replace ${draft.currentNation} with a random nation from ${eraName(draft.currentEra)}. No going back.`
-      );
-      syncRespinBtn(
-        respinEraBtn,
-        respinEraSheetBtn,
-        respinEraLeft,
-        respinEraSheetLeft,
-        showEra,
-        `${draft.eraRespinsLeft} left`,
-        `Forced redraw: replace ${eraName(draft.currentEra)} with a random era for ${draft.currentNation}. No going back.`
-      );
-      respinBar.hidden = !(showNation || showEra);
+      // Respins: only after a draw lands and before any pick from it.
+      const base = !spinningReel && !draft.gameComplete && draft.currentRound >= 1 && draft.picksThisRound.length === 0;
+      const showNation = base && canRespinNation(draft, nationRedrawOptions().length);
+      const showEra = base && canRespinEra(draft, eraRedrawOptions().length);
+      respinNationBtn.hidden = !showNation;
+      respinEraBtn.hidden = !showEra;
+      if (showNation) {
+        respinNationBtn.innerHTML = `${RESPIN_ICON} New nation <span>${draft.nationRespinsLeft} left</span>`;
+        respinNationBtn.setAttribute('aria-label',
+          `Respin the nation: replace ${draft.currentNation} with a random nation from ${eraName(draft.currentEra)}. No going back. ${draft.nationRespinsLeft} left.`);
+      }
+      if (showEra) {
+        respinEraBtn.innerHTML = `${RESPIN_ICON} New era <span>${draft.eraRespinsLeft} left</span>`;
+        respinEraBtn.setAttribute('aria-label',
+          `Respin the era: replace ${eraName(draft.currentEra)} with a random era for ${draft.currentNation}. No going back. ${draft.eraRespinsLeft} left.`);
+      }
+
+      // Round progress bars.
+      const rounds = $('fl-rounds');
+      rounds.innerHTML = Array.from({ length: DRAFT_ROUNDS }, (_, i) => {
+        const r = i + 1;
+        const cls = r < draft.currentRound || (r === draft.currentRound && (done || draft.gameComplete))
+          ? 'is-done' : r === draft.currentRound ? 'is-now' : '';
+        return `<span class="fl-round ${cls}"></span>`;
+      }).join('');
+      rounds.setAttribute('aria-label', `Round ${Math.max(1, draft.currentRound)} of ${DRAFT_ROUNDS}`);
+      $('bm11-count').textContent = `${draft.selectedPlayers.length}/${XI_SIZE}`;
+    }
+
+    // Reel animation: the era lands first, then the nation — a beat of
+    // suspense. `which` limits a respin to its own reel.
+    function rollReels(which, target, onDone) {
+      spinningReel = which;
+      renderAll();
+      if (reduceMotion()) {
+        spinningReel = null;
+        onDone();
+        return;
+      }
+      const eras = draft.currentRound === 0 && which === 'both' ? ['Legends'] : ERA_LIST;
+      const t0 = performance.now();
+      const ERA_STOP = which === 'nation' ? 0 : 900;
+      const NATION_STOP = which === 'era' ? 900 : 1500;
+      const rollEra = which !== 'nation';
+      const rollNation = which !== 'era';
+      const tick = () => {
+        const t = performance.now() - t0;
+        if (rollEra) {
+          if (t < ERA_STOP) setReel(eraEl, eras[Math.floor(Math.random() * eras.length)], 'rolling');
+          else if (eraEl.textContent !== eraName(target.era) || eraEl.closest('.fl-reel').classList.contains('is-rolling')) setReel(eraEl, eraName(target.era), 'landed');
+        }
+        if (rollNation) {
+          if (t < NATION_STOP) setReel(nationEl, NATIONS[Math.floor(Math.random() * NATIONS.length)], 'rolling');
+          else if (nationEl.closest('.fl-reel').classList.contains('is-rolling')) setReel(nationEl, target.nation, 'landed');
+        }
+        if (t < Math.max(ERA_STOP, NATION_STOP) + 20) window.setTimeout(tick, 60 + t / 30);
+        else {
+          spinningReel = null;
+          onDone();
+        }
+      };
+      tick();
     }
 
     spinBtn.addEventListener('click', () => {
-      if (draft.isSpinning) return; // double-spin guard
-      if (!canSpin(draft, unpickedCount(currentPool()))) return;
-      draft = { ...draft, isSpinning: true };
-      document.getElementById('bm11-toss-coin')?.classList.add('is-flipping');
-      renderSpinZone();
-
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const pool = combosForUpcomingRound();
-      const draw = () =>
-        pool.length
-          ? pool[Math.floor(Math.random() * pool.length)]
-          : null;
-
-      if (reduceMotion || pool.length === 0) {
-        settleSpin(draw());
-        return;
-      }
-      let ticks = 0;
-      const timer = window.setInterval(() => {
-        const c = draw();
-        if (c) previewDraw(c.era, c.nation);
-        if (++ticks >= 9) {
-          window.clearInterval(timer);
-          settleSpin(draw());
-        }
-      }, 70);
-    });
-
-    function settleSpin(combo) {
-      document.getElementById('bm11-toss-coin')?.classList.remove('is-flipping');
-      if (!combo) {
-        draft = { ...draft, isSpinning: false };
-        renderSpinZone();
-        return;
-      }
-      draft = applySpinResult(draft, combo.era, combo.nation);
-      persist();
-      resetPoolFilter();
-      renderAll();
-      // Mobile: the draw sheet pops up with the fresh pool — but only after
-      // the landing has had its moment in the spin zone. Desktop: the pool
-      // sits in the main column, so bring it into view instead.
-      const poolHeading = document.getElementById('bm11-pool-heading');
-      if (mqMobile.matches) {
-        revealDrawSheetAfterLanding();
-      } else if (poolHeading) {
-        const reduceMotion = window.matchMedia(
-          '(prefers-reduced-motion: reduce)'
-        ).matches;
-        poolHeading.scrollIntoView({
-          behavior: reduceMotion ? 'auto' : 'smooth',
-          block: 'start',
-        });
-      }
-      const available = unpickedCount(currentPool());
-      const pickWord =
-        draft.currentRound === 1
-          ? 'Select your Legend — 1 player.'
-          : `Select ${selectionLimitForRound(draft.currentRound)}.`;
-      announce(
-        `Round ${draft.currentRound} of ${DRAFT_ROUNDS}. Your draw: ${eraName(combo.era)}, ${combo.nation}. ` +
-          `${available} players available. ${pickWord}`
-      );
-    }
-
-    // ------------------------------------------------------------ respins
-    // One era respin + one nation respin per draft, forced redraw: the new
-    // draw replaces the old one and there is no going back.
-    function runRespin(kind) {
-      if (draft.isSpinning) return; // double-spin guard
-      const opts =
-        kind === 'nation' ? nationRedrawOptions() : eraRedrawOptions();
-      const allowed =
-        kind === 'nation'
-          ? canRespinNation(draft, opts.length)
-          : canRespinEra(draft, opts.length);
-      if (!allowed || opts.length === 0) return;
-      draft = { ...draft, isSpinning: true };
-      document.getElementById('bm11-toss-coin')?.classList.add('is-flipping');
-      renderAll();
-
-      const reduceMotion = window.matchMedia(
-        '(prefers-reduced-motion: reduce)'
-      ).matches;
-      const draw = () => opts[Math.floor(Math.random() * opts.length)];
-      const settle = (choice) => {
-        // Clear the spinning flag first: apply*Respin re-validates, and a
-        // spinning draft is never respinnable.
-        draft = { ...draft, isSpinning: false };
-        const before = kind === 'nation' ? draft.currentNation : draft.currentEra;
-        draft =
-          kind === 'nation'
-            ? applyNationRespin(draft, choice.nation)
-            : applyEraRespin(draft, choice.era);
-        persist();
-        renderAll();
-        // A respun draw is a fresh draw — same landing beat, then the sheet.
-        revealDrawSheetAfterLanding();
-        const after = kind === 'nation' ? draft.currentNation : draft.currentEra;
-        if (after !== before) {
-          announce(
-            `Forced redraw — your ${kind} respin landed on ${eraName(draft.currentEra)}, ${draft.currentNation}. ` +
-              `The old draw is gone. ${unpickedCount(currentPool())} players available.`
-          );
-        } else {
-          announce('Respin unavailable — the draft state changed.');
-        }
-      };
-
-      if (reduceMotion || opts.length === 0) {
-        settle(draw());
-        return;
-      }
-      let ticks = 0;
-      const timer = window.setInterval(() => {
-        const c = draw();
-        if (c) previewDraw(c.era, c.nation);
-        if (++ticks >= 9) {
-          window.clearInterval(timer);
-          settle(draw());
-        }
-      }, 70);
-    }
-
-    respinNationBtn.addEventListener('click', () => runRespin('nation'));
-    respinEraBtn.addEventListener('click', () => runRespin('era'));
-    respinNationSheetBtn.addEventListener('click', () => runRespin('nation'));
-    respinEraSheetBtn.addEventListener('click', () => runRespin('era'));
-
-    // Full draft reset. The button lives only in dead-end states (a stalled
-    // draft that can never reach 11, or a complete-but-invalid XI) and on
-    // the results page — never during a live draft.
-    function startOver() {
-      draft = createDraft();
+      if (spinningReel || !canSpin(draft, unpickedCount(currentPool()))) return;
+      const options = combosForUpcomingRound();
+      if (!options.length) return;
+      const combo = options[Math.floor(Math.random() * options.length)];
       selectedUid = null;
       moveFrom = null;
-      clearUserXI();
-      clearDraft();
-      resetPoolFilter();
       flashMsg('');
-      renderAll();
-      announce('Draft reset. Spin to begin a new draft.');
-      window.scrollTo({ top: 0, behavior: 'auto' });
-      spinBtn.focus({ preventScroll: true });
+      rollReels('both', combo, () => {
+        draft = applySpinResult(draft, combo.era, combo.nation);
+        persist();
+        renderAll();
+        scrollToPool();
+        const pickWord = draft.currentRound === 1 ? 'Pick your Legend — 1 player.' : `Pick ${selectionLimitForRound(draft.currentRound)}.`;
+        announce(
+          `Round ${draft.currentRound} of ${DRAFT_ROUNDS}. Your draw: ${eraName(combo.era)}, ${combo.nation}. ` +
+            `${unpickedCount(currentPool())} players available. ${pickWord}`,
+        );
+      });
+    });
+
+    function runRespin(kind) {
+      if (spinningReel) return;
+      const opts = kind === 'nation' ? nationRedrawOptions() : eraRedrawOptions();
+      const allowed = kind === 'nation' ? canRespinNation(draft, opts.length) : canRespinEra(draft, opts.length);
+      if (!allowed || !opts.length) return;
+      const choice = opts[Math.floor(Math.random() * opts.length)];
+      selectedUid = null;
+      rollReels(kind, choice, () => {
+        draft = kind === 'nation' ? applyNationRespin(draft, choice.nation) : applyEraRespin(draft, choice.era);
+        persist();
+        renderAll();
+        announce(
+          `Respin landed on ${eraName(draft.currentEra)}, ${draft.currentNation}. The old draw is gone. ` +
+            `${unpickedCount(currentPool())} players available.`,
+        );
+      });
     }
-    $('bm11-startover').addEventListener('click', startOver);
+    respinNationBtn.addEventListener('click', () => runRespin('nation'));
+    respinEraBtn.addEventListener('click', () => runRespin('era'));
 
-    // ------------------------------------------------------------ player grid
-    const cardEls = new Map();
-
-    function groupHTML(g) {
-      return (
-        `<section class="bm11-role-group" aria-label="${esc(g.label)}">` +
-        `<h3 class="bm11-role-title">${esc(g.label)} <span class="bm11-role-count">${g.players.length}</span></h3>` +
-        `<div class="bm11-prow-list">${g.players.map((p) => cardHTML(p, g.kind)).join('')}</div>` +
-        `</section>`
-      );
+    function scrollToPool() {
+      const pool = $('fl-pool');
+      const rect = pool.getBoundingClientRect();
+      if (rect.top > window.innerHeight * 0.6 || rect.top < 0) {
+        pool.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' });
+      }
     }
 
+    // ------------------------------------------------------------------ pool
     function renderPool() {
-      const heading = $('bm11-pool-heading');
-      const lede = $('bm11-pool-lede');
+      const metaEl = $('fl-pool-meta');
       if (!draft.currentEra || !draft.currentNation) {
-        heading.textContent = 'Your draw';
-        lede.textContent = 'Your drawn players will appear here after your first spin.';
-        $('bm11-sheet-draw').textContent = '';
-        groupsEl.innerHTML =
-          '<p class="bm11-pool-idle">Hit <strong>Spin</strong> above to draw your first era + nation.</p>';
-        cardEls.clear();
+        metaEl.textContent = '';
+        cardsEl.innerHTML =
+          '<p class="fl-empty">Under the lights, fate picks the era and the nation. You pick the XI.</p>';
         return;
       }
       const pool = currentPool();
-      heading.textContent = `Your draw — ${eraName(draft.currentEra)} · ${draft.currentNation}`;
-      const limit = selectionLimitForRound(draft.currentRound);
-      const picked = draft.picksThisRound.length;
-      lede.textContent =
-        `${unpickedCount(pool)} players available · ` +
-        `pick ${limit - picked} more this round — select a player, then choose their slot in your XI`;
-      // Mobile draw-sheet header mirrors the draw.
-      $('bm11-sheet-draw').textContent = `${eraName(draft.currentEra)} · ${draft.currentNation}`;
-
-      if (pool.length === 0) {
-        // Defensive: cannot happen — spins only draw combos with players.
-        groupsEl.innerHTML =
-          '<p class="bm11-pool-idle">No players in this draw — spin again.</p>';
-        cardEls.clear();
-        return;
-      }
-
-      const groups = POOL_GROUPS.map((g) => ({
-        ...g,
-        players: pool.filter((p) => g.roles.includes(p.primaryRole)),
-      })).filter((g) => g.players.length > 0);
-      const others = pool.filter(
-        (p) => !POOL_GROUPS.some((g) => g.roles.includes(p.primaryRole))
-      );
-      if (others.length) groups.push({ label: 'Squad', kind: 'bat', players: others });
-
-      // UI-only filtering: search query + role chip from the drawer
-      // toolbar. The underlying pool and eligibility are untouched.
-      const fq = poolUI.q.trim().toLowerCase();
-      let view = groups;
-      if (poolUI.role !== 'All') view = view.filter((g) => g.label === poolUI.role);
-      if (fq) {
-        view = view
-          .map((g) => ({
-            ...g,
-            players: g.players.filter((p) => p.name.toLowerCase().includes(fq)),
-          }))
-          .filter((g) => g.players.length > 0);
-      }
-      if (view.length === 0) {
-        groupsEl.innerHTML =
-          '<p class="bm11-pool-empty">No players match — try a different search or role filter.</p>';
-        cardEls.clear();
-        return;
-      }
-
-      groupsEl.innerHTML = view.map((g) => groupHTML(g)).join('');
-      cardEls.clear();
-      for (const btn of groupsEl.querySelectorAll('[data-bm11-select]')) {
-        cardEls.set(btn.getAttribute('data-bm11-select'), btn);
-      }
-      updateCardStates();
-    }
-
-    function updateCardStates() {
+      metaEl.innerHTML = `${pool.length} players <span class="fl-swipe">· swipe for more →</span>`;
       const done = roundDone();
-      for (const [uid, btn] of cardEls) {
-        const p = uidIndex[uid];
-        if (!p) continue;
+      const supply = draftSupply();
+      cardsEl.innerHTML = pool.map((p) => {
         const pick = draft.selectedPlayers.find((s) => s.id === p.id);
-        const badge = btn.querySelector('.bm11-check-badge');
-        const setBadge = (show) => {
-          if (badge) badge.hidden = !show;
-        };
+        let cls = '';
+        let tag = '';
+        let title = '';
+        let label = accessibleName(p);
+        let pressed = 'false';
+        let disabled = false;
         if (pick && pick.roundPicked === draft.currentRound && !draft.gameComplete) {
-          // Placed this round — shown picked; activate to remove the pick.
-          btn.classList.add('is-selected');
-          btn.classList.remove('is-disabled', 'is-locked');
-          btn.setAttribute('aria-pressed', 'true');
-          btn.removeAttribute('aria-disabled');
-          btn.removeAttribute('title');
-          btn.setAttribute('aria-label', `${accessibleName(p)} (placed — activate to remove)`);
-          setBadge(true);
+          cls = 'is-picked';
+          tag = '<span class="fl-tag">In your XI · tap to remove</span>';
+          label += ' (placed — activate to remove)';
+          pressed = 'true';
         } else if (pick) {
-          // Picked in an earlier round (or draft complete) — locked in.
-          btn.classList.add('is-selected', 'is-locked');
-          btn.classList.remove('is-disabled');
-          btn.setAttribute('aria-pressed', 'true');
-          btn.setAttribute('aria-disabled', 'true');
-          btn.setAttribute('aria-label', `${accessibleName(p)} (locked in from round ${pick.roundPicked})`);
-          btn.title = `Locked in from round ${pick.roundPicked}`;
-          setBadge(true);
-        } else if (draft.gameComplete || done) {
-          btn.classList.add('is-disabled');
-          btn.classList.remove('is-selected', 'is-locked');
-          btn.setAttribute('aria-pressed', 'false');
-          btn.setAttribute('aria-disabled', 'true');
-          btn.removeAttribute('title');
-          btn.setAttribute('aria-label', accessibleName(p));
-          setBadge(false);
-        } else if (uid === selectedUid) {
-          // The candidate waiting for a slot.
-          btn.classList.add('is-selected');
-          btn.classList.remove('is-disabled', 'is-locked');
-          btn.setAttribute('aria-pressed', 'true');
-          btn.removeAttribute('aria-disabled');
-          btn.removeAttribute('title');
-          btn.setAttribute(
-            'aria-label',
-            `${accessibleName(p)} (selected — choose a glowing slot in your XI, or activate again to cancel)`
-          );
-          setBadge(false);
+          cls = 'is-picked is-locked';
+          tag = '<span class="fl-tag">In your XI</span>';
+          label += ` (locked in from round ${pick.roundPicked})`;
+          pressed = 'true';
+          disabled = true;
+        } else if (draft.gameComplete || done || spinningReel) {
+          cls = 'is-off';
+          disabled = true;
+        } else if (p.uid === selectedUid) {
+          cls = 'is-selected';
+          label += ' (selected — choose a glowing spot in your XI, or activate again to cancel)';
+          pressed = 'true';
         } else {
-          // The hard block: a reason means no placement of this player can
-          // keep a valid XI reachable (role caps, bad combinations, or the
-          // pick would strand a needed role with nobody left in this draw).
-          const reason = validatePoolPick(draft, p, draftSupply());
-          btn.classList.remove('is-selected', 'is-locked');
-          btn.classList.toggle('is-disabled', reason !== null);
-          btn.setAttribute('aria-pressed', 'false');
+          const reason = validatePoolPick(draft, p, supply);
           if (reason) {
-            btn.setAttribute('aria-disabled', 'true');
-            btn.title = reason;
-          } else {
-            btn.removeAttribute('aria-disabled');
-            btn.removeAttribute('title');
+            cls = 'is-blocked';
+            tag = '<span class="fl-tag fl-tag--warn">Can’t fit</span>';
+            title = reason;
+            label += `. ${reason}`;
           }
-          btn.setAttribute('aria-label', accessibleName(p));
-          setBadge(false);
         }
-      }
+        return (
+          `<button type="button" class="fl-card bm11-prow ${cls}" data-bm11-select="${esc(p.uid)}"` +
+          ` aria-pressed="${pressed}" aria-label="${esc(label)}"${title ? ` title="${esc(title)}"` : ''}` +
+          `${disabled ? ' aria-disabled="true"' : ''}>` +
+          `<span class="fl-card-role">${esc(roleTag(p))}</span>` +
+          `<span class="fl-card-name">${esc(p.name)}</span>` +
+          `<span class="fl-card-from">${esc(NATION_CODES[p.nation] || p.nation)} · ${esc(eraName(draft.currentEra))}</span>` +
+          `<span class="fl-card-stats">${statCells(p)}</span>` +
+          tag +
+          `</button>`
+        );
+      }).join('');
     }
 
-    groupsEl.addEventListener('click', (e) => {
+    cardsEl.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-bm11-select]');
-      if (!btn) return;
-      onPoolClick(btn.getAttribute('data-bm11-select'), btn);
+      if (btn) onPoolClick(btn.getAttribute('data-bm11-select'), btn);
     });
 
-    // Step 1 of drafting: select a pool player as the candidate. They only
-    // join the XI once placed into a slot (step 2). Activating the same
-    // card again cancels the selection.
     function onPoolClick(uid, btn) {
       const p = uidIndex[uid];
-      if (!p || draft.isSpinning) return;
-      let justSelected = false;
+      if (!p || spinningReel) return;
       const existing = draft.selectedPlayers.find((s) => s.id === p.id);
       if (existing) {
         if (existing.roundPicked !== draft.currentRound || draft.gameComplete) {
-          const msg = `${p.name} is locked in from round ${existing.roundPicked} and can't be changed now.`;
+          const msg = `${p.name} is locked in from round ${existing.roundPicked}.`;
           flashMsg(msg);
           announce(msg);
           return;
         }
-        // Remove this round's pick (frees its slot too).
-        if (selectedUid === uid) {
-          selectedUid = null;
-        }
-        if (moveFrom) moveFrom = null;
+        selectedUid = null;
+        moveFrom = null;
         draft = applyDraftDeselect(draft, p.id);
         announce(`Removed ${p.name}. ${draft.selectedPlayers.length} of ${XI_SIZE} selected.`);
       } else if (selectedUid === uid) {
         selectedUid = null;
         announce(`Deselected ${p.name}.`);
       } else {
+        if (roundDone() || draft.gameComplete) return;
         const reason = validatePoolPick(draft, p, draftSupply());
         if (reason) {
           flashMsg(reason);
           announce(reason);
-          if (btn) {
-            btn.classList.add('bm11-nudge');
-            window.setTimeout(() => btn.classList.remove('bm11-nudge'), 350);
-          }
+          if (btn && !reduceMotion()) animate(btn, { x: [0, -6, 6, -4, 4, 0] }, { duration: 0.35 });
           return;
         }
-        // A pool selection takes over from a pending move or chooser.
         moveFrom = null;
         hideRoleChooser();
         selectedUid = uid;
-        justSelected = true;
         flashMsg('');
-        announce(
-          `Selected ${p.name} — ${groupLabelList(p)}. Choose a glowing slot in your XI.`
-        );
+        announce(`Selected ${p.name} — ${groupLabelList(p)}. Choose a glowing spot in your XI.`);
       }
       persist();
       renderAll();
-      // Mobile: the sheet drops away to reveal the Your XI slots for
-      // placement; the toggle brings it back any time.
-      if (justSelected && mqMobile.matches) {
-        setSheetOpen(false);
-        const xiHeading = $('bm11-field-heading');
-        if (xiHeading) {
-          const reduceMotion = window.matchMedia(
-            '(prefers-reduced-motion: reduce)'
-          ).matches;
-          xiHeading.scrollIntoView({
-            behavior: reduceMotion ? 'auto' : 'smooth',
-            block: 'start',
-          });
-        }
-      }
     }
 
-    // Shared placement tail: validate once more, then commit the pick with
-    // its declared role.
     function placeSelected(p, slotKey, role, supply) {
       const slot = slotByKey(slotKey);
       const reason = validateSlotPlacement(draft, p, slotKey, role, supply);
@@ -1271,122 +637,174 @@ const styleSeed = playersForEra('legends')[0];
       flashMsg('');
       persist();
       renderAll();
-      // Mobile: when the round still needs picks, the draw sheet pops back
-      // up for the next selection. When the round is done (or the XI is
-      // complete), it stays down on Your XI with Spin up top to continue.
-      if (mqMobile.matches && !draft.gameComplete && !roundDone()) {
-        revealDrawSheet();
-      } else if (mqMobile.matches && !draft.gameComplete && roundDone()) {
-        // Round done on mobile: bring the spin zone back into view so the
-        // next spin is one tap away — no manual scroll-up needed.
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        requestAnimationFrame(() => {
-          document.querySelector('.bm11-spinzone')?.scrollIntoView({
-            behavior: reduceMotion ? 'auto' : 'smooth',
-            block: 'start',
-          });
-        });
-      }
-      // Note when a placement fills every slot of its group.
-      const group = SLOT_GROUPS.find((g) => g.keys.includes(slotKey));
-      const filledNote =
-        group && group.keys.length > 1 && group.keys.every((k) => draft.slots[k])
-          ? ` ${group.label} filled.`
-          : '';
-      const roleNote = ` as ${XI_ROLE_LABELS[role]}`;
+      const as = ` as ${XI_ROLE_LABELS[role]}`;
       if (draft.gameComplete) {
-        announce(
-          `XI complete — ${p.name} placed at ${slot.label}${roleNote}.${filledNote} Your XI of ${XI_SIZE} is ready. Compare XIs to face the house team.`
-        );
+        announce(`XI complete — ${p.name} placed at ${slot.label}${as}. Your XI is ready. Play the series.`);
+        $('fl-finish').scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'center' });
       } else if (roundDone()) {
-        announce(
-          `Placed ${p.name} at ${slot.label}${roleNote}.${filledNote} Round ${draft.currentRound} complete — spin again for the next draw.`
-        );
+        announce(`Placed ${p.name} at ${slot.label}${as}. Round ${draft.currentRound} complete — spin again.`);
+        document.querySelector('.fl-stage').scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' });
       } else {
-        const left =
-          selectionLimitForRound(draft.currentRound) - draft.picksThisRound.length;
-        announce(
-          `Placed ${p.name} at ${slot.label}${roleNote}.${filledNote} ${left} more pick${left === 1 ? '' : 's'} this round. ` +
-            `${draft.selectedPlayers.length} of ${XI_SIZE} total.`
-        );
+        const left = selectionLimitForRound(draft.currentRound) - draft.picksThisRound.length;
+        announce(`Placed ${p.name} at ${slot.label}${as}. ${left} more pick${left === 1 ? '' : 's'} this round.`);
       }
     }
 
-    // Step 2 of drafting: place the selected pool player into a slot —
-    // or, with no pool selection, reposition an XI player (move / swap).
+    // ------------------------------------------------------------------ dock
+    // Surname in the dock; add the first initial when two picks share one
+    // (e.g. S. Hasan / M. Hasan).
+    function dockName(p) {
+      const sn = surname(p.name);
+      const clash = draft.selectedPlayers.some((o) => o.id !== p.id && surname(o.name) === sn);
+      return clash ? `${p.name.trim()[0]}. ${sn}` : sn;
+    }
+    function slotHTML(slotKey) {
+      const slot = slotByKey(slotKey);
+      const n = XI_SLOTS.findIndex((s) => s.key === slotKey) + 1;
+      const occ = draft.slots[slotKey];
+      const occupant = occ ? draft.selectedPlayers.find((s) => s.uid === occ.uid) : null;
+      const supply = draftSupply();
+      const classes = ['fl-slot', 'bm11-fslot'];
+      let label = '';
+      let aria = '';
+      let top = String(n);
+      let bottom = '';
+      let removable = false;
+      const sameGroupOnly = { sameGroupOnly: draft.gameComplete };
+
+      if (occupant && occ) {
+        classes.push('is-filled');
+        top = ROLE_SHORT[occ.role] || '';
+        bottom = dockName(occupant);
+        removable = !draft.gameComplete && occupant.roundPicked === draft.currentRound;
+        if (moveFrom === slotKey) {
+          classes.push('is-armed');
+          aria = `${occupant.name}, ${XI_ROLE_LABELS[occ.role]}, spot ${n} — selected for moving. Activate a glowing spot to move them, or this one to cancel.`;
+        } else if (moveFrom && validateSlotMove(draft, moveFrom, slotKey, supply, sameGroupOnly) === null) {
+          classes.push('is-glow');
+          aria = `${occupant.name}, spot ${n} — activate to swap with the selected player.`;
+        } else {
+          aria = `${occupant.name}, ${XI_ROLE_LABELS[occ.role]}, spot ${n}. Activate to move.`;
+        }
+      } else {
+        classes.push('is-empty');
+        // Keep the empty label honest: when only one role can still fill a
+        // multi-role slot, name that role.
+        let roleKey = slot.roles[0];
+        if (slot.roles.length > 1) {
+          const counts = countsOf(draft);
+          const shapes = reachableShapes(counts);
+          const open = slot.roles.filter((r) => shapes.some((s) => (counts[r] || 0) < s[r]));
+          roleKey = open.length === 1 ? open[0] : null;
+        }
+        bottom = roleKey ? ROLE_SHORT[roleKey] : 'AR/SPIN';
+        label = roleKey ? XI_ROLE_LABELS[roleKey] : slot.roles.map((r) => XI_ROLE_LABELS[r]).join(' or ');
+        if (selectedUid && uidIndex[selectedUid]) {
+          const p = uidIndex[selectedUid];
+          const role = declarationForSlot(draft, p, slotKey, supply);
+          if (role) {
+            classes.push('is-glow');
+            const multi = placementOptions(draft, p, slotKey, supply).filter((o) => !o.reason).length > 1;
+            aria = `Spot ${n}, ${label} — empty. Activate to place ${p.name}${multi ? ', then choose a role.' : ` as ${XI_ROLE_LABELS[role]}.`}`;
+          } else {
+            aria = `Spot ${n}, ${label} — empty. ${p.name} can't play here.`;
+          }
+        } else if (moveFrom && validateSlotMove(draft, moveFrom, slotKey, supply, sameGroupOnly) === null) {
+          classes.push('is-glow');
+          aria = `Spot ${n}, ${label} — empty. Activate to move the selected player here.`;
+        } else {
+          aria = `Spot ${n}, ${label} — empty.`;
+        }
+      }
+      return (
+        `<div class="fl-slot-wrap">` +
+        `<button type="button" class="${classes.join(' ')}" data-bm11-slot="${esc(slotKey)}" aria-label="${esc(aria)}"` +
+        `${moveFrom === slotKey ? ' aria-pressed="true"' : ''}>` +
+        `<span class="fl-slot-top">${esc(top)}</span><span class="fl-slot-bottom">${esc(bottom)}</span></button>` +
+        (removable
+          ? `<button type="button" class="fl-slot-x" data-fl-deselect="${esc(occupant.id)}" aria-label="Remove ${esc(occupant.name)}">×</button>`
+          : '') +
+        `</div>`
+      );
+    }
+
+    function renderDock() {
+      slotsEl.innerHTML = DOCK_GROUPS.map(
+        (g) => `<div class="fl-group fl-row-${g.row}" role="group" aria-label="${esc(g.label)}">${g.keys.map(slotHTML).join('')}</div>`,
+      ).join('');
+
+      // Newly filled slots pop in.
+      const filledNow = new Set(Object.keys(draft.slots).filter((k) => draft.slots[k]));
+      if (!reduceMotion()) {
+        for (const key of filledNow) {
+          if (prevFilled.has(key)) continue;
+          const el = slotsEl.querySelector(`[data-bm11-slot="${key}"]`);
+          if (el) animate(el, { scale: [0.4, 1.15, 1], opacity: [0, 1, 1] }, { duration: 0.45, easing: [0.22, 1, 0.36, 1] });
+        }
+      }
+      prevFilled = filledNow;
+
+      // What the XI still needs.
+      const needEl = $('fl-need');
+      if (isXIValid(draft)) {
+        needEl.textContent = 'Valid XI — ready for the series';
+        needEl.classList.add('is-done');
+      } else {
+        needEl.classList.remove('is-done');
+        const counts = countsOf(draft);
+        const shapes = reachableShapes(counts);
+        const must = [];
+        if (shapes.length) {
+          for (const r of XI_ROLE_ORDER) {
+            const need = Math.min(...shapes.map((s) => s[r] - counts[r]));
+            if (need > 0) must.push(`${need} ${ROLE_PLURALS[r][need === 1 ? 0 : 1]}`);
+          }
+        }
+        needEl.textContent = must.length ? `Still need: ${must.join(', ')}` : '';
+      }
+    }
+
     function onSlotClick(slotKey) {
       const slot = slotByKey(slotKey);
-      if (!slot || draft.isSpinning) return;
-      const occupantUid = draft.slots[slotKey];
-
+      if (!slot || spinningReel) return;
+      const occupied = !!draft.slots[slotKey];
       if (selectedUid) {
         const p = uidIndex[selectedUid];
-        if (!p) {
-          selectedUid = null;
-          renderAll();
-          return;
-        }
+        if (!p) { selectedUid = null; renderAll(); return; }
         const supply = draftSupply();
         const options = placementOptions(draft, p, slotKey, supply);
         const legal = options.filter((o) => !o.reason);
         if (!legal.length) {
           const blocked = options.find((o) => o.reason);
-          const reason =
-            (blocked && blocked.reason) ||
-            validatePoolPick(draft, p, supply) ||
-            `${p.name} has no legal slot right now.`;
+          const reason = (blocked && blocked.reason) || validatePoolPick(draft, p, supply) || `${p.name} can't play there.`;
           flashMsg(reason);
           announce(reason);
           return;
         }
-        if (legal.length === 1) {
-          placeSelected(p, slotKey, legal[0].role, supply);
-          return;
-        }
-        // More than one legal declaration — ask the user which role the
-        // player takes (e.g. Sangakkara as batter or keeper). The
-        // slot-first default is marked Suggested.
-        showRoleChooser(p, slotKey, legal.map((o) => o.role), supply);
+        if (legal.length === 1) placeSelected(p, slotKey, legal[0].role, supply);
+        else showRoleChooser(p, slotKey, legal.map((o) => o.role), supply);
         return;
-      } else if (moveFrom) {
+      }
+      if (moveFrom) {
         if (moveFrom === slotKey) {
           moveFrom = null;
           announce('Move cancelled.');
         } else {
-          const reason = validateSlotMove(draft, moveFrom, slotKey, draftSupply(), {
-            sameGroupOnly: draft.gameComplete,
-          });
-          if (reason) {
-            flashMsg(reason);
-            announce(reason);
-            return;
-          }
-          const mover = draft.selectedPlayers.find(
-            (s) => s.uid === draft.slots[moveFrom]?.uid
-          );
-          const targetOccupied = !!draft.slots[slotKey];
-          draft = applyDraftMove(draft, moveFrom, slotKey, draftSupply(), {
-            sameGroupOnly: draft.gameComplete,
-          });
+          const opts = { sameGroupOnly: draft.gameComplete };
+          const reason = validateSlotMove(draft, moveFrom, slotKey, draftSupply(), opts);
+          if (reason) { flashMsg(reason); announce(reason); return; }
+          const mover = draft.selectedPlayers.find((s) => s.uid === draft.slots[moveFrom]?.uid);
+          draft = applyDraftMove(draft, moveFrom, slotKey, draftSupply(), opts);
           moveFrom = null;
           flashMsg('');
-          announce(
-            mover
-              ? `${mover.name} ${targetOccupied ? 'swapped' : 'moved'} to ${slot.label}.`
-              : `Moved to ${slot.label}.`
-          );
+          announce(mover ? `${mover.name} ${occupied ? 'swapped' : 'moved'} to ${slot.label}.` : `Moved to ${slot.label}.`);
         }
-      } else if (occupantUid) {
-        // Arm a move: the next slot activated becomes the destination.
-        const p = draft.selectedPlayers.find((s) => s.uid === occupantUid);
+      } else if (occupied) {
+        const p = draft.selectedPlayers.find((s) => s.uid === draft.slots[slotKey].uid);
         moveFrom = slotKey;
-        announce(
-          p
-            ? `Selected ${p.name} from ${slot.label} — ${groupLabelList(p)}. Choose a glowing slot to move them, or ${slot.label} again to cancel.`
-            : `Selected ${slot.label}. Choose a glowing slot, or ${slot.label} again to cancel.`
-        );
+        announce(`Selected ${p ? p.name : slot.label} to move. Choose a glowing spot, or the same spot to cancel.`);
       } else {
-        const hint = 'Select a player from your draw first — then choose a slot.';
+        const hint = 'Pick a player from the draw first — then choose their spot.';
         flashMsg(hint);
         announce(hint);
         return;
@@ -1395,32 +813,28 @@ const styleSeed = playersForEra('legends')[0];
       renderAll();
     }
 
-    // Delegated at document level: on mobile the XI slots live outside the
-    // aside (static in-page section), so aside-scoped delegation would miss.
     document.addEventListener('click', (e) => {
-      const chooserOpt = e.target.closest('[data-bm11-chooser-role]');
-      if (chooserOpt) {
+      const opt = e.target.closest('[data-fl-chooser-role]');
+      if (opt) {
         const st = chooserState;
-        const role = chooserOpt.getAttribute('data-bm11-chooser-role');
         const p = st && uidIndex[st.uid];
+        const role = opt.getAttribute('data-fl-chooser-role');
         hideRoleChooser();
         if (st && p && role) placeSelected(p, st.slotKey, role, st.supply);
         return;
       }
-      if (e.target.closest('[data-bm11-chooser-cancel]')) {
+      if (e.target.closest('[data-fl-chooser-cancel]')) {
         hideRoleChooser();
         announce('Role choice cancelled.');
         return;
       }
-      const rm = e.target.closest('[data-bm11-deselect]');
+      const rm = e.target.closest('[data-fl-deselect]');
       if (rm) {
-        const rawId = rm.getAttribute('data-bm11-deselect');
+        const rawId = rm.getAttribute('data-fl-deselect');
         const p = draft.selectedPlayers.find((s) => s.id === rawId);
         if (!p) return;
-        if (selectedUid) {
-          selectedUid = null;
-        }
-        if (moveFrom) moveFrom = null;
+        selectedUid = null;
+        moveFrom = null;
         draft = applyDraftDeselect(draft, rawId);
         persist();
         renderAll();
@@ -1431,14 +845,9 @@ const styleSeed = playersForEra('legends')[0];
       if (slotBtn) onSlotClick(slotBtn.getAttribute('data-bm11-slot'));
     });
 
-    // Escape cancels a pending pool selection or move.
     document.addEventListener('keydown', (e) => {
       if (e.key !== 'Escape') return;
-      if (chooserState) {
-        hideRoleChooser();
-        announce('Role choice cancelled.');
-        return;
-      }
+      if (chooserState) { hideRoleChooser(); announce('Role choice cancelled.'); return; }
       if (!selectedUid && !moveFrom) return;
       selectedUid = null;
       moveFrom = null;
@@ -1446,1510 +855,297 @@ const styleSeed = playersForEra('legends')[0];
       announce('Selection cancelled.');
     });
 
-    // ------------------------------------------------------------ spin history
-    function renderHistory() {
-      if (!draft.spinHistory.length) {
-        historyEl.innerHTML =
-          '<li class="bm11-history-empty">No spins yet — your draws will be listed here.</li>';
-        return;
-      }
-      historyEl.innerHTML = draft.spinHistory
-        .map((s) => {
-          const n = s.picks.length;
-          const tail = n > 0 ? ` — ✓ ${n} selected` : ' — no picks';
-          return (
-            `<li><span class="bm11-history-round">Round ${s.round}</span>` +
-            ` — ${esc(eraName(s.era))} · ${esc(s.nation)}${esc(tail)}</li>`
-          );
-        })
-        .join('');
-    }
-
-    // ----------------------------------------------------------------- summary
-    // The XI panel always renders all 11 fixed slots, grouped in batting
-    // Slot-first placement: the tapped position decides the declaration
-    // (first legal role in slot order — an all-rounder who can bat
-    // middle-order declares as middle-order on a batting slot), except a
-    // still-needed keeper-capable player declares as wicketkeeper.
-    // No separate role step.
-
-    // Declaration for a slot tap — also what keeps dead-end slots from
-    // glowing (null = can't legally fill it).
-    function declaredRoleForSlot(p, slotKey, supply) {
-      return declarationForSlot(draft, p, slotKey, supply);
-    }
-
-    // One-line explainer per role inside the chooser.
-    const CHOOSER_SUB = {
-      opener: 'Opens the batting',
-      'middle-order': 'Bats in the middle order',
-      wicketkeeper: 'Fills your keeper slot',
-      'all-rounder': 'Batting and bowling value',
-      spinner: 'Frontline spin option',
-      'fast-bowler': 'Pace attack',
-    };
-
-    // Role chooser: only when the tapped slot admits more than one legal
-    // declaration. The slot-first default (keeper-preferred) is Suggested;
-    // the user can override it.
+    // ---------------------------------------------------------- role chooser
     function showRoleChooser(p, slotKey, roles, supply) {
       const slot = slotByKey(slotKey);
       const suggested = declarationForSlot(draft, p, slotKey, supply);
       chooserState = { uid: p.uid, slotKey, supply };
-      $('bm11-chooser-title').textContent = p.name;
-      $('bm11-chooser-sub').textContent =
-        `${slot ? slot.label : 'This slot'} takes ${p.name} ` +
-        `${roles.length === 2 ? 'two' : roles.length} ways — pick a role:`;
-      $('bm11-chooser-options').innerHTML = roles
-        .map((role) => {
-          const isSugg = role === suggested;
-          return (
-            `<button type="button" class="bm11-chooser-opt${isSugg ? ' is-suggested' : ''}" ` +
-            `data-bm11-chooser-role="${role}">` +
-            `<span class="bm11-chooser-opt-name">${esc(XI_ROLE_LABELS[role])}` +
-            (isSugg ? ' <span class="bm11-chooser-badge">Suggested</span>' : '') +
-            `</span><span class="bm11-chooser-opt-sub">${esc(CHOOSER_SUB[role] || '')}</span></button>`
-          );
-        })
-        .join('');
+      $('fl-chooser-title').textContent = `Play ${p.name} as…`;
+      $('fl-chooser-sub').textContent = `${slot ? slot.label : 'This spot'} takes ${p.name} ${roles.length === 2 ? 'two' : roles.length} ways.`;
+      $('fl-chooser-opts').innerHTML = roles.map((role) => {
+        const sugg = role === suggested;
+        return (
+          `<button type="button" class="fl-chooser-opt${sugg ? ' is-suggested' : ''}" data-fl-chooser-role="${role}" data-bm11-chooser-role="${role}">` +
+          `<span class="fl-chooser-name">${esc(XI_ROLE_LABELS[role])}${sugg ? ' <em>Suggested</em>' : ''}</span>` +
+          `<span class="fl-chooser-desc">${esc(CHOOSER_SUB[role] || '')}</span></button>`
+        );
+      }).join('');
       const box = $('bm11-role-chooser');
       box.hidden = false;
-      const focusTarget =
-        box.querySelector('.bm11-chooser-opt.is-suggested') ||
-        box.querySelector('.bm11-chooser-opt');
-      if (focusTarget) focusTarget.focus();
-      announce(
-        `${p.name} can play ${roles.map((r) => XI_ROLE_LABELS[r]).join(' or ')} here. Choose a role.`
-      );
+      (box.querySelector('.fl-chooser-opt.is-suggested') || box.querySelector('.fl-chooser-opt'))?.focus();
+      announce(`${p.name} can play ${roles.map((r) => XI_ROLE_LABELS[r]).join(' or ')} here. Choose a role.`);
     }
     function hideRoleChooser() {
       chooserState = null;
-      const box = $('bm11-role-chooser');
-      if (box) box.hidden = true;
-    }
-    // One field slot (chip on the cricket ground). Handles four visual
-    // states: empty, empty-but-legal-for-the-selected-player (emerald
-    // glow), occupied, and occupied-armed-for-move (gold). Slot-first
-    // declaration behavior is unchanged — declaredRoleForSlot decides.
-    function slotButtonHTML(slotKey) {
-      const slot = slotByKey(slotKey);
-      const occ = draft.slots[slotKey];
-      const occupantUid = occ ? occ.uid : null;
-      const occupant = occupantUid
-        ? draft.selectedPlayers.find((s) => s.uid === occupantUid)
-        : null;
-      const pos = FIELD_POSITIONS[slotKey] || { x: 50, y: 50 };
-      const classes = ['bm11-fslot'];
-      let sub = '';
-      let hint = '';
-      let ariaLabel = '';
-      let pressed = null;
-      const slotRoles = slot.roles.map((r) => XI_ROLE_LABELS[r]).join(' · ');
-      const accentFor = (p) => ERA_ACCENTS[p.draftEra || p.displayEra] || '#8b5cf6';
-
-      if (occupant && occ) {
-        classes.push('is-filled');
-        const declared = XI_ROLE_LABELS[occ.role];
-        const removable =
-          !draft.gameComplete && occupant.roundPicked === draft.currentRound;
-        if (moveFrom === slotKey) {
-          classes.push('is-armed');
-          pressed = 'true';
-          sub = 'Selected — tap a glowing slot to move';
-          ariaLabel =
-            `${occupant.name}, ${declared}, ${slot.label} — selected for moving. ` +
-            `Activate a glowing slot to move them, or this slot again to cancel.`;
-        } else if (moveFrom && validateSlotMove(draft, moveFrom, slotKey, draftSupply(), {
-            sameGroupOnly: draft.gameComplete,
-          }) === null) {
-          classes.push('is-glow');
-          sub = 'Tap to swap';
-          ariaLabel =
-            `${occupant.name}, ${declared}, ${slot.label} — activate to swap with the selected player.`;
-        } else {
-          sub = 'Tap to select for moving';
-          ariaLabel =
-            `${occupant.name}, ${declared}, ${slot.label}. ` +
-            `Activate to select for moving.`;
-        }
-        return (
-          `<div class="bm11-fslot-wrap" style="--fx:${pos.x}%;--fy:${pos.y}%;">` +
-          `<button type="button" class="${classes.join(' ')}" data-bm11-slot="${esc(slotKey)}"` +
-          (pressed ? ` aria-pressed="${pressed}"` : '') +
-          ` aria-label="${esc(ariaLabel)}"` +
-          ` style="--bm11-era-accent:${esc(accentFor(occupant))}">` +
-          `<span class="bm11-fslot-ring"><span class="bm11-fslot-initials">${esc(
-            initials(occupant.name)
-          )}</span></span>` +
-          `<span class="bm11-fslot-label">${esc(occupant.name)}</span>` +
-          `<span class="bm11-fslot-sub">${esc(declared)}</span>` +
-          `</button>` +
-          (removable
-            ? `<button type="button" class="bm11-slot-remove" data-bm11-deselect="${esc(
-                occupant.id
-              )}" aria-label="Remove ${esc(occupant.name)} from XI">×</button>`
-            : '') +
-          `</div>`
-        );
-      }
-
-      // Empty slot: the reachable-shapes narrowing keeps labels honest
-      // (e.g. the lone open batting slot reads "Wicketkeeper").
-      classes.push('is-empty');
-      let displayLabel = SLOT_LABEL_OVERRIDES[slotKey] || slot.label;
-      if (slot.roles.length > 1) {
-        const labelCounts = countsOf(draft);
-        const openShapes = reachableShapes(labelCounts);
-        const stillOpen = slot.roles.filter((r) =>
-          openShapes.some((s) => (labelCounts[r] || 0) < s[r])
-        );
-        if (stillOpen.length === 1) displayLabel = XI_ROLE_LABELS[stillOpen[0]];
-      }
-      if (selectedUid && uidIndex[selectedUid]) {
-        const p = uidIndex[selectedUid];
-        const role = declaredRoleForSlot(p, slotKey, draftSupply());
-        if (role) {
-          classes.push('is-glow');
-          const rl = XI_ROLE_LABELS[role];
-          const multi =
-            placementOptions(draft, p, slotKey, draftSupply()).filter((o) => !o.reason)
-              .length > 1;
-          hint = multi ? `Place as ${rl} — choose` : `Place as ${rl}`;
-          ariaLabel =
-            `${displayLabel} — empty. Activate to place ${p.name}` +
-            (multi ? ', then choose a role.' : ` as ${rl}.`);
-        } else {
-          ariaLabel =
-            `${displayLabel} — empty (${slotRoles}). ${p.name} can't play here.`;
-        }
-      } else if (moveFrom && validateSlotMove(draft, moveFrom, slotKey, draftSupply(), {
-            sameGroupOnly: draft.gameComplete,
-          }) === null) {
-        classes.push('is-glow');
-        const moveRole = moveDeclaration(draft, moveFrom, slotKey);
-        const curRole = draft.slots[moveFrom]?.role;
-        if (moveRole && curRole && moveRole !== curRole) {
-          const mrl = XI_ROLE_LABELS[moveRole];
-          hint = `Move here as ${mrl}`;
-          ariaLabel = `${displayLabel} — empty. Activate to move the selected player here as ${mrl}.`;
-        } else {
-          hint = 'Move here';
-          ariaLabel = `${displayLabel} — empty. Activate to move the selected player here.`;
-        }
-      } else {
-        ariaLabel = `${displayLabel} — empty (${slotRoles}).`;
-      }
-      return (
-        `<div class="bm11-fslot-wrap" style="--fx:${pos.x}%;--fy:${pos.y}%;">` +
-        `<button type="button" class="${classes.join(' ')}" data-bm11-slot="${esc(slotKey)}"` +
-        ` aria-label="${esc(ariaLabel)}">` +
-        `<span class="bm11-fslot-ring">${icon('plus', 20)}</span>` +
-        `<span class="bm11-fslot-label">${esc(displayLabel)}</span>` +
-        (hint ? `<span class="bm11-fslot-hint">${esc(hint)}</span>` : '') +
-        `</button></div>`
-      );
-    }
-    // Composition status: live role counts plus what every reachable XI
-    // shape still needs. A valid XI is exactly: 2 openers, 3 middle-order,
-    // 1 wicketkeeper, 3 fast bowlers, and a flex pair of 2 all-rounders,
-    // all-rounder + spinner, or 2 spinners.
-    const ROLE_PLURALS = {
-      opener: ['opener', 'openers'],
-      'middle-order': ['middle-order batter', 'middle-order batters'],
-      wicketkeeper: ['wicketkeeper', 'wicketkeepers'],
-      'all-rounder': ['all-rounder', 'all-rounders'],
-      spinner: ['spinner', 'spinners'],
-      'fast-bowler': ['fast bowler', 'fast bowlers'],
-    };
-    const XI_ROLE_ORDER = [
-      'opener',
-      'middle-order',
-      'wicketkeeper',
-      'all-rounder',
-      'spinner',
-      'fast-bowler',
-    ];
-
-    function renderComposition() {
-      const el = $('bm11-comp');
-      const counts = countsOf(draft);
-      const bits = XI_ROLE_ORDER.map((r) => {
-        const n = counts[r];
-        const [one, many] = ROLE_PLURALS[r];
-        return `${n} ${n === 1 ? one : many}`;
-      });
-      let needHTML = '';
-      if (isXIValid(draft)) {
-        needHTML = `<span class="bm11-comp-need is-done">Valid XI combination</span>`;
-      } else {
-        const shapes = reachableShapes(counts);
-        const must = [];
-        if (shapes.length) {
-          for (const r of XI_ROLE_ORDER) {
-            const need = Math.min(...shapes.map((s) => s[r] - counts[r]));
-            if (need > 0) {
-              const [one, many] = ROLE_PLURALS[r];
-              must.push(`${need} ${need === 1 ? one : many}`);
-            }
-          }
-        }
-        if (must.length) {
-          needHTML = `<span class="bm11-comp-need">Still need: ${esc(must.join(', '))}</span>`;
-        }
-      }
-      el.innerHTML =
-        `<span class="bm11-comp-counts">${esc(bits.join(' · '))}</span>` + needHTML;
+      $('bm11-role-chooser').hidden = true;
     }
 
-    // Single render entry: updates the XI field, the persistent game bar
-    // (x/11, current draw, round), the composition status, and the
-    // Compare-XIs CTA.
-    function renderSummary() {
-      const placed = draft.selectedPlayers.length;
-      $('bm11-count').textContent = `${placed}/${XI_SIZE}`;
-      $('bm11-progress-fill').style.width = `${(placed / XI_SIZE) * 100}%`;
-
-      // Persistent game bar: current draw + round, always visible.
-      const drawBar = $('bm11-gamebar-draw');
-      if (draft.currentEra && draft.currentNation) {
-        drawBar.innerHTML =
-          `<span class="bm11-gamebar-era">${esc(eraName(draft.currentEra))}</span>` +
-          `<span class="bm11-gamebar-nation">${esc(draft.currentNation)}</span>`;
-      } else {
-        drawBar.innerHTML =
-          '<span class="bm11-gamebar-draw-idle">Spin to begin</span>';
-      }
-      $('bm11-gamebar-round').textContent =
-        draft.currentRound === 0
-          ? `Round 1 of ${DRAFT_ROUNDS}`
-          : `Round ${draft.currentRound} of ${DRAFT_ROUNDS}`;
-
-      // The XI, on the field: all 11 fixed slots, positioned.
-      const fslotsEl = $('bm11-fslots');
-      fslotsEl.innerHTML = XI_SLOTS.map((s) => slotButtonHTML(s.key)).join('');
-
-      // Newly filled slots pop onto the field (Motion; skipped under
-      // reduced motion, and skipped when slots are re-rendered without
-      // new placements).
-      const filledNow = new Set(
-        Object.keys(draft.slots).filter((k) => draft.slots[k])
-      );
-      if (!reduceMotion()) {
-        for (const key of filledNow) {
-          if (prevFilled.has(key)) continue;
-          const el = fslotsEl.querySelector(`[data-bm11-slot="${key}"]`);
-          if (el) {
-            animate(
-              el,
-              { scale: [0.3, 1.12, 1], opacity: [0, 1, 1] },
-              { duration: 0.5, easing: [0.22, 1, 0.36, 1] }
-            );
-          }
-        }
-      }
-      prevFilled = filledNow;
-
-      renderComposition();
-
-      // Compare XIs unlocks only on a valid XI — exactly the combinations
-      // the hard block enforces during the draft. Guarded anyway for drafts
-      // restored from older saves.
+    // ---------------------------------------------------------------- finish
+    function renderFinish() {
       const ready = isXIValid(draft);
+      const stalled = !draft.gameComplete && draft.currentRound >= DRAFT_ROUNDS && draft.currentRound > 0 && roundDone();
+      const deadEnd = stalled || (draft.gameComplete && !ready);
+      $('fl-finish').hidden = !(draft.gameComplete || stalled);
+      ctaEl.hidden = !ready;
       ctaEl.classList.toggle('is-disabled', !ready);
       ctaEl.setAttribute('aria-disabled', ready ? 'false' : 'true');
-
-      const stalled =
-        !draft.gameComplete &&
-        draft.currentRound >= DRAFT_ROUNDS &&
-        roundDone() &&
-        draft.currentRound > 0;
-      if (stalled) {
-        flashMsg(
-          'XI incomplete — a tiny pool left your draft short of 11. Start over to try again.'
-        );
-      }
-
-      // Start over is only offered when the draft is a dead end: stalled
-      // short of 11, or complete but not a valid combination. A live draft
-      // never shows it.
-      const deadEnd = stalled || (draft.gameComplete && !isXIValid(draft));
-      $('bm11-startover').hidden = !deadEnd;
+      $('fl-startover').hidden = !deadEnd;
     }
     ctaEl.addEventListener('click', (e) => {
       if (isXIValid(draft)) return; // let the link through
       e.preventDefault();
-      if (draft.gameComplete) {
-        const msg =
-          'This XI is not a valid combination — start over to draft a valid XI.';
-        flashMsg(msg);
-        announce(msg);
-        $('bm11-startover').hidden = false;
-      } else {
-        const need = XI_SIZE - draft.selectedPlayers.length;
-        flashMsg(`Place ${need} more player${need === 1 ? '' : 's'} to complete your XI.`);
-        announce(`Your XI is incomplete. ${need} more needed.`);
-      }
+      const need = XI_SIZE - draft.selectedPlayers.length;
+      const msg = draft.gameComplete
+        ? 'This XI is not a valid combination — start over to draft a valid XI.'
+        : `Place ${need} more player${need === 1 ? '' : 's'} to complete your XI.`;
+      flashMsg(msg);
+      announce(msg);
+    });
+    $('fl-startover').addEventListener('click', () => {
+      draft = createDraft();
+      selectedUid = null;
+      moveFrom = null;
+      clearUserXI();
+      clearDraft();
+      flashMsg('');
+      renderAll();
+      announce('Draft reset. Spin to begin a new draft.');
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      spinBtn.focus({ preventScroll: true });
     });
 
-    $('bm11-toggle').addEventListener('click', () => {
-      setSheetOpen(!summaryEl.classList.contains('is-open'));
-    });
-
-    // ------------------------------------------------------------------ render
+    // ---------------------------------------------------------------- render
     function renderAll() {
-      renderSpinZone();
+      renderStage();
       renderPool();
-      renderHistory();
-      renderSummary();
+      renderDock();
+      renderFinish();
     }
 
-    // --------------------------------------------------------------- restore
-    // Panels must be in their breakpoint-correct homes before the first
-    // render populates them.
-    layoutPanels();
-    // Re-slice the XI groups when crossing the mobile breakpoint.
-    mqMobile.addEventListener('change', () => {
-      layoutPanels();
-      renderSummary();
-    });
     (function restore() {
       const raw = loadDraft();
-      if (!raw) {
-        renderAll();
-        return;
-      }
-      const restored = deserializeDraft(raw, (uid) => uidIndex[uid] || null);
-      if (!restored || !restored.selectedPlayers.length) {
+      if (raw) {
+        const restored = deserializeDraft(raw, (uid) => uidIndex[uid] || null);
+        if (restored && restored.selectedPlayers.length) {
+          draft = restored;
+          renderAll();
+          announce(
+            draft.gameComplete
+              ? 'Welcome back — your XI is complete. Play the series.'
+              : `Welcome back — round ${draft.currentRound} of ${DRAFT_ROUNDS}, ${draft.selectedPlayers.length} of ${XI_SIZE} picked.`,
+          );
+          return;
+        }
         clearDraft();
-        renderAll();
-        return;
       }
-      draft = restored;
       renderAll();
-      // Mobile: if the restored draft has a live draw with picks remaining,
-      // reopen the draw sheet so choosing can continue where it left off.
-      if (
-        mqMobile.matches &&
-        !draft.gameComplete &&
-        draft.currentEra &&
-        draft.currentNation &&
-        !roundDone()
-      ) {
-        revealDrawSheet();
-      }
-      if (draft.gameComplete) {
-        announce('Welcome back — your XI is complete. Compare XIs to face the house team.');
-      } else {
-        announce(
-          `Welcome back — restored your draft: round ${draft.currentRound} of ${DRAFT_ROUNDS}, ` +
-            `${draft.selectedPlayers.length} of ${XI_SIZE} selected.`
-        );
-      }
     })();
   </script>
 
   <style is:global>
-    /* ================= BeatMy11 /play — "The Ground" redesign ================
-       Mobile-first. Base styles target phones; the (min-width:1024px) block
-       promotes the drawer to a sticky side panel and widens the field.
-       Game logic lives in player-logic.ts — this file is presentation only. */
-
-    .bm11-play { color: var(--bm11-text, #fff); }
-    .bm11-wrap {
-      max-width: 80rem;
-      margin-inline: auto;
-      padding-inline: 1rem;
+    /* ============ /play — Floodlit night ============
+       Tokens are local to the game screen; the page is dark by design
+       (a night match under lights), so it does not follow the OS theme. */
+    .fl {
+      --fl-bg: #04060c;
+      --fl-panel: #0b1020;
+      --fl-panel-2: #16223a;
+      --fl-line: rgba(255, 255, 255, 0.1);
+      --fl-text: #eaf0ff;
+      --fl-muted: #9aa6c4;
+      --fl-dim: #6b7694;
+      --fl-lime: #c6ff3d;
+      --fl-lime-soft: rgba(198, 255, 61, 0.14);
+      --fl-warn: #ff6b5e;
+      --fl-display: 'Bebas Neue', 'Oswald', 'Arial Narrow', sans-serif;
+      position: relative;
+      min-height: 100vh;
+      background: var(--fl-bg);
+      color: var(--fl-text);
+      font-family: Inter, system-ui, sans-serif;
+      padding: 12px 16px 200px;
+      overflow-x: clip;
     }
-    .bm11-skip {
-      position: absolute;
-      left: -9999px;
-      top: 0;
-      z-index: 100;
-      padding: 0.6rem 1rem;
-      background: var(--bm11-primary, #00e676);
-      color: #03130a;
-      font-weight: 800;
-      border-radius: 0 0 0.6rem 0;
-    }
-    .bm11-skip:focus { left: 0; }
-    .sr-only {
-      position: absolute;
-      width: 1px; height: 1px;
-      padding: 0; margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-    .bm11-eyebrow {
-      margin: 0 0 0.3rem;
-      font-size: 0.7rem;
-      font-weight: 800;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--bm11-gold, #ffc93c);
-    }
-    .bm11-h1 {
-      margin: 0;
-      font-size: 1.7rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-    .bm11-h2 {
-      margin: 0;
-      font-size: 1.15rem;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-    }
-    .bm11-lede {
-      margin: 0.35rem 0 0;
-      font-size: 0.85rem;
-      color: var(--bm11-muted, #a5a8c9);
-    }
-    .bm11-btn-sm {
-      min-height: 2.5rem;
-      padding: 0.45rem 1rem;
-      font-size: 0.85rem;
-      border-radius: 0.6rem;
-    }
-
-    /* ------------------------- toss panel (spin zone) ---------------------- */
-    .bm11-spinzone { padding: 1.1rem 0 0; }
-    .bm11-draw {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-      margin-top: 0.9rem;
-      padding: 1.25rem 1rem 1.4rem;
+    body:has(.fl) { background: #04060c; }
+    .fl-lights {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
       background:
-        radial-gradient(60% 90% at 50% 0%, rgba(255, 201, 60, 0.07), transparent 70%),
-        var(--bm11-surface, #12122b);
-      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
-      border-radius: 1.25rem;
-      box-shadow: 0 1.25rem 3rem rgba(0, 0, 0, 0.35);
+        radial-gradient(60vw 50vh at 6% -12%, rgba(180, 220, 255, 0.2), transparent 60%),
+        radial-gradient(60vw 50vh at 94% -12%, rgba(180, 220, 255, 0.2), transparent 60%),
+        radial-gradient(90vw 45vh at 50% 115%, rgba(40, 160, 90, 0.24), transparent 70%);
     }
-    .bm11-reels {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.9rem;
-      width: 100%;
-    }
-    .bm11-reel {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.45rem;
-      flex: 1 1 0;
-      max-width: 13rem;
-    }
-    .bm11-reel-cap {
-      font-size: 0.66rem;
-      font-weight: 800;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--bm11-gold, #ffc93c);
-    }
-    .bm11-reel-window {
-      width: 100%;
-      min-height: 3.4rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.6rem 0.8rem;
-      border: 1px solid rgba(255, 201, 60, 0.35);
-      border-radius: 0.9rem;
-      background: rgba(255, 201, 60, 0.06);
-      box-shadow: inset 0 0 1.5rem rgba(0, 0, 0, 0.35);
-    }
-    .bm11-reel-value {
-      font-size: 1.05rem;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-      text-align: center;
-      color: #fff;
-    }
-    .bm11-reel-respin {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      min-height: 2.5rem;
-      padding: 0.35rem 0.75rem;
-      font-size: 0.74rem;
-      font-weight: 700;
-      border-radius: 9999px;
-      border: 1px solid;
-      background: transparent;
-      cursor: pointer;
-      color: var(--bm11-text, #fff);
-    }
-    .bm11-reel-respin[hidden] { display: none; }
-    /* Desktop only: the under-reel respin buttons keep their row reserved
-       while hidden, so appearing never pushes the spin button down. */
-    .bm11-reel > .bm11-reel-respin[hidden] {
-      display: inline-flex;
-      visibility: hidden;
-    }
-    .bm11-reel-respin svg { flex: 0 0 auto; }
-    #bm11-respin-era, #bm11-respin-era-sheet {
-      border-color: rgba(255, 201, 60, 0.55);
-      color: var(--bm11-gold, #ffc93c);
-    }
-    #bm11-respin-nation, #bm11-respin-nation-sheet {
-      border-color: rgba(0, 230, 118, 0.55);
-      color: var(--bm11-primary, #00e676);
-    }
-    .bm11-respin-left {
-      font-size: 0.66rem;
-      font-weight: 600;
-      opacity: 0.75;
-    }
-    /* The toss coin between the reels. */
-    .bm11-toss {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.3rem;
-      flex: 0 0 auto;
-      padding-top: 1.1rem;
-    }
-    .bm11-toss-coin {
-      width: 2.6rem;
-      height: 2.6rem;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #ffe9a8, #ffc93c 55%, #c79422);
-      box-shadow:
-        0 0 1rem rgba(255, 201, 60, 0.35),
-        inset 0 0 0 3px rgba(120, 72, 0, 0.28);
-    }
-    .bm11-toss-coin.is-flipping { animation: bm11-coin-flip 0.7s ease-in-out infinite; }
-    @keyframes bm11-coin-flip {
-      from { transform: rotateY(0deg); }
-      to { transform: rotateY(360deg); }
-    }
-    .bm11-toss-label {
-      font-size: 0.58rem;
-      font-weight: 700;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--bm11-muted, #a5a8c9);
-    }
-    .bm11-spin-btn {
-      min-width: min(16rem, 100%);
-      min-height: 3.25rem;
-      font-size: 1.05rem;
-      font-weight: 800;
-      border-radius: 9999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.55rem;
-    }
-    .bm11-spin-btn[hidden] {
-      /* The button hides when the draft completes: keep its box so the
-         progress bar below never jumps (layout-shift free). */
-      visibility: hidden;
-    }
-    .bm11-round-progress { width: 100%; max-width: 26rem; }
-    .bm11-roundbar {
-      display: flex;
-      gap: 0.35rem;
-    }
-    .bm11-roundbar-seg {
-      flex: 1 1 0;
-      height: 0.45rem;
-      border-radius: 9999px;
-      background: rgba(165, 168, 201, 0.18);
-    }
-    .bm11-roundbar-seg.is-done { background: var(--bm11-primary, #00e676); }
-    .bm11-roundbar-seg.is-current {
-      background: var(--bm11-gold, #ffc93c);
-      animation: bm11-seg-pulse 1.6s ease-in-out infinite;
-    }
-    @keyframes bm11-seg-pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.45; }
-    }
-    .bm11-progress-label {
-      margin: 0.5rem 0 0;
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--bm11-muted, #a5a8c9);
-    }
+    .fl > *:not(.fl-lights):not(.fl-dock) { position: relative; z-index: 1; }
+    .fl-skip { position: absolute; left: -9999px; }
+    .fl-skip:focus { left: 16px; top: 8px; z-index: 50; background: var(--fl-lime); color: #04060c; padding: 8px 12px; border-radius: 8px; }
+    .fl :focus-visible { outline: 3px solid var(--fl-lime); outline-offset: 2px; }
 
-    /* ------------------------- persistent game bar ----------------------- */
-    .bm11-gamebar {
-      position: sticky;
-      top: 3.35rem;
-      z-index: 45;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      margin-inline: -1rem;
-      margin-top: 0.9rem;
-      padding: 0.55rem 1rem;
-      background: color-mix(in srgb, var(--bm11-bg, #0a0a1c) 88%, transparent);
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
-      border-top: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
-      border-bottom: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
-    }
-    .bm11-gamebar-xi {
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-      flex: 1 1 auto;
-      min-width: 0;
-    }
-    .bm11-gamebar-count {
-      font-size: 1.05rem;
-      font-weight: 800;
-      font-variant-numeric: tabular-nums;
-      letter-spacing: -0.01em;
-      white-space: nowrap;
-    }
-    .bm11-gamebar-track {
-      flex: 1 1 auto;
-      min-width: 3rem;
-      max-width: 12rem;
-      height: 0.4rem;
-      border-radius: 9999px;
-      background: rgba(165, 168, 201, 0.18);
-      overflow: hidden;
-    }
-    .bm11-gamebar-fill {
-      display: block;
-      height: 100%;
-      width: 0;
-      border-radius: inherit;
-      background: linear-gradient(90deg, var(--bm11-gold, #ffc93c), var(--bm11-primary, #00e676));
-      transition: width 0.45s ease;
-    }
-    .bm11-gamebar-draw {
-      margin: 0;
-      flex: 0 1 auto;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-size: 0.74rem;
-      font-weight: 700;
-      color: var(--bm11-gold, #ffc93c);
-      border: 1px solid rgba(255, 201, 60, 0.4);
-      border-radius: 9999px;
-      padding: 0.28rem 0.7rem;
-    }
-    .bm11-gamebar-draw:empty { display: none; }
-    .bm11-gamebar-draw-idle {
-      color: var(--bm11-muted, #a5a8c9);
-      font-weight: 600;
-    }
-    .bm11-gamebar-era { font-weight: 800; }
-    .bm11-gamebar-nation { font-weight: 600; opacity: 0.9; }
-    .bm11-gamebar-era + .bm11-gamebar-nation::before {
-      content: '·';
-      margin: 0 0.35em;
-      opacity: 0.7;
-    }
-    .bm11-gamebar-round {
-      margin: 0;
-      flex: 0 0 auto;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--bm11-muted, #a5a8c9);
-      white-space: nowrap;
-    }
+    .fl-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; max-width: 1100px; margin: 0 auto; }
+    .fl-brand { font: 400 26px/1 var(--fl-display); letter-spacing: 0.08em; color: var(--fl-text); text-decoration: none; }
+    .fl-rounds { display: flex; gap: 5px; }
+    .fl-round { width: 20px; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.14); }
+    .fl-round.is-done { background: var(--fl-lime); }
+    .fl-round.is-now { background: #fff; box-shadow: 0 0 10px #fff; }
+    .fl-count { margin: 0; font: 400 30px/1 var(--fl-display); }
 
-    /* -------------------------------- layout ----------------------------- */
-    .bm11-draft-layout {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      padding-bottom: 7rem;
+    .fl-stage { text-align: center; max-width: 900px; margin: 18px auto 6px; }
+    .fl-reels { display: flex; align-items: flex-start; justify-content: center; gap: 10px; }
+    .fl-x { align-self: center; margin-top: -24px; font: 400 32px var(--fl-display); color: var(--fl-dim); }
+    .fl-reel {
+      flex: 1; max-width: 340px; min-width: 0; padding: 10px 8px 12px; border-radius: 16px;
+      background: linear-gradient(180deg, #0c1222, #070a14);
+      border: 1px solid rgba(198, 255, 61, 0.22);
+      box-shadow: inset 0 18px 24px -18px rgba(0, 0, 0, 0.9), inset 0 -18px 24px -18px rgba(0, 0, 0, 0.9);
+      display: flex; flex-direction: column; align-items: center;
     }
-    .bm11-stage { min-width: 0; }
+    .fl-reel-cap { font: 600 11px Inter, sans-serif; letter-spacing: 0.3em; text-transform: uppercase; color: var(--fl-muted); }
+    .fl-reel-val {
+      display: block; max-width: 100%; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      font: 400 clamp(30px, 8vw, 62px)/1 var(--fl-display); letter-spacing: 0.04em;
+      color: #fff; text-shadow: 0 0 18px rgba(198, 255, 61, 0.45);
+    }
+    .fl-reel.is-rolling .fl-reel-val { color: #9aa6c4; text-shadow: none; filter: blur(1px); }
+    .fl-reel.is-landed { border-color: var(--fl-lime); box-shadow: 0 0 28px rgba(198, 255, 61, 0.3); }
+    .fl-reel.is-landed .fl-reel-val { animation: fl-land 0.4s cubic-bezier(0.2, 1.6, 0.4, 1); }
+    @keyframes fl-land { from { transform: scale(1.25); } to { transform: none; } }
+    .fl-respin {
+      display: inline-flex; align-items: center; gap: 4px; margin-top: 10px; min-height: 36px; padding: 6px 10px;
+      border-radius: 999px; border: 1px solid rgba(198, 255, 61, 0.45); background: var(--fl-lime-soft);
+      color: var(--fl-lime); font: 600 12px Inter, sans-serif; cursor: pointer; white-space: nowrap;
+    }
+    .fl-respin[hidden] { display: none; }
+    @media (max-width: 400px) {
+      .fl-respin { font-size: 11px; padding: 6px 8px; }
+    }
+    .fl-respin span { color: var(--fl-muted); font-weight: 500; }
+    .fl-respin:hover { background: rgba(198, 255, 61, 0.24); }
 
-    /* ------------------------------ the field ---------------------------- */
-    .bm11-field-section { padding-top: 1.1rem; }
-    .bm11-field-head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 0.75rem;
-      margin-bottom: 0.7rem;
+    .fl-spin {
+      display: block; margin: 16px auto 4px; width: 184px; height: 58px; border: 0; border-radius: 999px; cursor: pointer;
+      background: var(--fl-lime); color: #04060c; font: 400 30px/1 var(--fl-display); letter-spacing: 0.12em;
+      box-shadow: 0 0 0 6px rgba(198, 255, 61, 0.15), 0 0 40px rgba(198, 255, 61, 0.5);
+      transition: transform 0.12s, box-shadow 0.2s;
     }
-    .bm11-comp {
-      margin: 0;
-      font-size: 0.74rem;
-      color: var(--bm11-muted, #a5a8c9);
-      text-align: right;
-    }
-    .bm11-comp-counts { display: block; }
-    .bm11-comp-need { display: block; margin-top: 0.15rem; color: var(--bm11-gold, #ffc93c); font-weight: 600; }
-    .bm11-comp-need.is-done { color: var(--bm11-primary, #00e676); }
+    .fl-spin:not(:disabled):hover { transform: scale(1.04); box-shadow: 0 0 0 10px rgba(198, 255, 61, 0.18), 0 0 60px rgba(198, 255, 61, 0.7); }
+    .fl-spin:not(:disabled):active { transform: scale(0.97); }
+    .fl-spin:disabled { cursor: not-allowed; background: #1a2233; color: var(--fl-dim); box-shadow: none; }
+    .fl-status { margin: 10px 0 2px; font: 400 clamp(26px, 6vw, 40px)/1.05 var(--fl-display); letter-spacing: 0.04em; }
+    .fl-status:focus { outline: none; }
+    .fl-sub { margin: 0; color: var(--fl-muted); font-size: 14px; min-height: 20px; }
+    .fl-msg { margin: 8px auto 0; max-width: 560px; min-height: 20px; color: #ffd2cc; font-size: 13.5px; }
+    .fl-msg:empty { min-height: 0; margin: 0; }
 
-    .bm11-field {
-      position: relative;
-      width: 100%;
-      max-width: 30rem;
-      margin-inline: auto;
-      aspect-ratio: 1 / 1.14;
+    .fl-pool { max-width: 1200px; margin: 14px auto 0; scroll-margin-top: 12px; }
+    .fl-pool:focus { outline: none; }
+    .fl-pool-meta { margin: 0 2px; font: 600 11px Inter, sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fl-dim); }
+    .fl-pool-meta:empty { display: none; }
+    @media (min-width: 1024px) { .fl-swipe { display: none; } .fl-pool-meta { text-align: center; } }
+    .fl-cards { display: flex; gap: 12px; overflow-x: auto; padding: 8px 2px 16px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
+    .fl-card {
+      flex: 0 0 164px; min-height: 212px; scroll-snap-align: start; position: relative; text-align: left; cursor: pointer;
+      padding: 12px; border-radius: 16px; border: 1px solid var(--fl-line); color: var(--fl-text);
+      display: flex; flex-direction: column; gap: 3px;
+      background: linear-gradient(160deg, #18213a 0%, #0b1020 62%);
+      transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s, opacity 0.15s;
     }
-    /* Night-match ground: pure CSS shapes, no artwork. */
-    .bm11-ground {
-      position: absolute;
-      inset: 0;
-      border-radius: 50% / 44%;
-      background:
-        radial-gradient(58% 46% at 50% 44%, rgba(45, 212, 191, 0.10), transparent 70%),
-        radial-gradient(88% 78% at 50% 42%, #155a35 0%, #0e4026 46%, #0a2f1d 76%, #072213 100%);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      box-shadow:
-        inset 0 0 4rem rgba(0, 0, 0, 0.5),
-        0 1.5rem 3.5rem rgba(0, 0, 0, 0.4);
-      overflow: hidden;
+    .fl-card:hover:not(.is-locked):not(.is-off) { transform: translateY(-3px); border-color: rgba(198, 255, 61, 0.5); }
+    .fl-card.is-selected { border-color: var(--fl-lime); box-shadow: 0 0 0 2px var(--fl-lime), 0 0 30px rgba(198, 255, 61, 0.4); transform: translateY(-5px); }
+    .fl-card.is-picked { border-color: rgba(198, 255, 61, 0.5); }
+    .fl-card.is-locked, .fl-card.is-off { opacity: 0.42; cursor: default; }
+    .fl-card.is-blocked { opacity: 0.55; }
+    .fl-card.is-blocked .fl-card-name { text-decoration: line-through; text-decoration-color: rgba(255, 107, 94, 0.7); }
+    .fl-card-role { font: 700 10.5px Inter, sans-serif; letter-spacing: 0.12em; color: var(--fl-lime); }
+    .fl-card-name { margin-top: 6px; font: 400 26px/0.98 var(--fl-display); letter-spacing: 0.03em; overflow-wrap: anywhere; }
+    .fl-card-from { font-size: 11.5px; color: var(--fl-muted); letter-spacing: 0.04em; }
+    .fl-card-stats { margin-top: auto; padding-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 6px; }
+    .fl-stat { display: flex; flex-direction: column; min-width: 0; }
+    .fl-stat b { font: 400 21px/1 var(--fl-display); letter-spacing: 0.03em; }
+    .fl-stat i { font: 500 9.5px Inter, sans-serif; font-style: normal; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fl-dim); }
+    .fl-tag {
+      position: absolute; top: 10px; right: 10px; font: 700 9.5px Inter, sans-serif; letter-spacing: 0.08em; text-transform: uppercase;
+      color: #04060c; background: var(--fl-lime); padding: 3px 6px; border-radius: 4px;
     }
-    .bm11-ground::before {
-      /* mowed ring */
-      content: '';
-      position: absolute;
-      inset: 9% 7%;
-      border-radius: 50% / 46%;
-      border: 1.5px dashed rgba(255, 255, 255, 0.10);
-    }
-    .bm11-ground-ring {
-      position: absolute;
-      inset: 30% 26%;
-      border-radius: 50%;
-      border: 1.5px solid rgba(255, 255, 255, 0.16);
-    }
-    .bm11-pitch {
-      position: absolute;
-      left: 50%;
-      top: 40%;
-      width: 7.5%;
-      height: 30%;
-      transform: translateX(-50%);
-      background: linear-gradient(180deg, #cfa96f, #b78e58);
-      border-radius: 3px;
-      opacity: 0.92;
-      box-shadow: 0 0 0.6rem rgba(0, 0, 0, 0.35);
-    }
-    .bm11-crease {
-      position: absolute;
-      left: 50%;
-      width: 220%;
-      height: 2px;
-      transform: translateX(-50%);
-      background: rgba(255, 255, 255, 0.85);
-    }
-    .bm11-crease--top { top: 2%; }
-    .bm11-crease--bottom { bottom: 2%; }
+    .fl-tag--warn { background: var(--fl-warn); color: #1a0402; }
+    .fl-empty { text-align: center; color: var(--fl-dim); font: 400 22px/1.2 var(--fl-display); letter-spacing: 0.06em; padding: 28px 8px; margin: 0; }
 
-    .bm11-fslots {
-      position: absolute;
-      inset: 0;
+    .fl-finish { text-align: center; margin: 18px auto 0; }
+    .fl-cta {
+      display: inline-block; padding: 16px 30px; border-radius: 999px; background: #fff; color: #04060c; text-decoration: none;
+      font: 400 28px/1 var(--fl-display); letter-spacing: 0.1em; box-shadow: 0 0 40px rgba(255, 255, 255, 0.35);
     }
-    .bm11-fslot-wrap {
-      position: absolute;
-      left: var(--fx, 50%);
-      top: var(--fy, 50%);
-      transform: translate(-50%, -50%);
-      display: flex;
-    }
-    .bm11-fslot {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.22rem;
-      min-width: 2.75rem;
-      min-height: 2.75rem;
-      padding: 0.15rem;
-      background: none;
-      border: 0;
-      color: inherit;
-      cursor: pointer;
-    }
-    .bm11-fslot:focus-visible {
-      outline: 2px solid var(--bm11-ring, #00e676);
-      outline-offset: 3px;
-      border-radius: 0.6rem;
-    }
-    .bm11-fslot-ring {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 3rem;
-      height: 3rem;
-      border-radius: 9999px;
-      border: 2px dashed rgba(165, 168, 201, 0.55);
-      background: rgba(10, 10, 28, 0.62);
-      color: var(--bm11-muted, #a5a8c9);
-      transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
-    }
-    .bm11-fslot.is-filled .bm11-fslot-ring {
-      border-style: solid;
-      border-color: var(--bm11-era-accent, #8b5cf6);
-      background: color-mix(in srgb, var(--bm11-era-accent, #8b5cf6) 24%, #0a0a1c);
-      box-shadow: 0 0.4rem 1.1rem rgba(0, 0, 0, 0.45);
-    }
-    .bm11-fslot-initials {
-      font-size: 0.82rem;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      color: #fff;
-    }
-    .bm11-fslot-label {
-      max-width: 5.75rem;
-      font-size: 0.62rem;
-      font-weight: 800;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      text-align: center;
-      line-height: 1.3;
-      color: var(--bm11-muted, #a5a8c9);
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-    .bm11-fslot.is-filled .bm11-fslot-label {
-      text-transform: none;
-      letter-spacing: 0;
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: #fff;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-    .bm11-fslot-sub {
-      font-size: 0.56rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--bm11-gold, #ffc93c);
-      background: rgba(255, 201, 60, 0.12);
-      border: 1px solid rgba(255, 201, 60, 0.35);
-      border-radius: 9999px;
-      padding: 0.08rem 0.45rem;
-      white-space: nowrap;
-    }
-    .bm11-fslot-hint {
-      font-size: 0.6rem;
-      font-weight: 700;
-      color: var(--bm11-primary, #00e676);
-      white-space: nowrap;
-      text-align: center;
-      line-height: 1.25;
-    }
-    /* Mobile: the slot glow already signals a legal destination — the
-       "Place as …" caption is hidden to keep the field uncluttered. */
-    @media (max-width: 767px) {
-      .bm11-fslot-hint { display: none; }
-      /* Occupied slots: hide the declared-role chip (Fast Bowler,
-         Opener, …) — the name + initials carry the slot on small
-         screens, and dropping the chip stops neighbour overlap. */
-      .bm11-fslot-sub { display: none; }
-    }
-    /* Awaiting placement: the legal destinations pulse emerald. */
-    .bm11-fslot.is-glow .bm11-fslot-ring {
-      border-style: solid;
-      border-color: var(--bm11-primary, #00e676);
-      background: rgba(0, 230, 118, 0.10);
-      color: var(--bm11-primary, #00e676);
-      animation: bm11-fslot-pulse 1.6s ease-in-out infinite;
-    }
-    .bm11-fslot.is-glow .bm11-fslot-label { color: var(--bm11-primary, #00e676); }
-    @keyframes bm11-fslot-pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.45), 0 0 1rem rgba(0, 230, 118, 0.25); }
-      50% { box-shadow: 0 0 0 7px rgba(0, 230, 118, 0), 0 0 1.4rem rgba(0, 230, 118, 0.45); }
-    }
-    /* Armed for a move: gold. */
-    .bm11-fslot.is-armed .bm11-fslot-ring {
-      border-style: solid;
-      border-color: var(--bm11-gold, #ffc93c);
-      box-shadow: 0 0 0 4px rgba(255, 201, 60, 0.18), 0 0 1.2rem rgba(255, 201, 60, 0.4);
-    }
-    .bm11-slot-remove {
-      position: absolute;
-      top: -0.85rem;
-      right: -0.85rem;
-      width: 2.75rem;
-      height: 2.75rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 9999px;
-      border: 1px solid rgba(165, 168, 201, 0.35);
-      background: rgba(10, 10, 28, 0.88);
-      color: #fff;
-      font-size: 1.05rem;
-      line-height: 1;
-      cursor: pointer;
-    }
-    .bm11-slot-remove:hover { border-color: #ff6b6b; color: #ff6b6b; }
+    .fl-cta:hover { box-shadow: 0 0 60px rgba(255, 255, 255, 0.55); }
+    .fl-cta[hidden] { display: none; }
+    .fl-link { display: block; margin: 12px auto 0; background: none; border: 0; color: var(--fl-muted); text-decoration: underline; cursor: pointer; font: 500 14px Inter, sans-serif; min-height: 40px; }
 
-    .bm11-summary-msg {
-      margin: 0.8rem 0 0;
-      min-height: 1.5em;
-      font-size: 0.85rem;
-      color: var(--bm11-gold, #ffc93c);
-      text-align: center;
+    .fl-dock {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+      padding: 8px 10px calc(10px + env(safe-area-inset-bottom));
+      background: linear-gradient(180deg, rgba(4, 6, 12, 0), rgba(4, 6, 12, 0.94) 22%);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
     }
-    .bm11-summary-msg:empty { min-height: 0; margin-top: 0; }
-    .bm11-field-actions {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.6rem;
-      margin-top: 0.7rem;
+    .fl-need { margin: 0 auto 6px; text-align: center; font: 500 12px Inter, sans-serif; color: var(--fl-muted); min-height: 16px; }
+    .fl-need.is-done { color: var(--fl-lime); }
+    .fl-slots { display: grid; grid-template-columns: auto auto; justify-content: center; gap: 6px 10px; }
+    .fl-group { display: flex; gap: 5px; padding-right: 10px; border-right: 1px solid rgba(255, 255, 255, 0.1); }
+    .fl-group:nth-child(2n) { border-right: 0; padding-right: 0; }
+    .fl-slot-wrap { position: relative; }
+    .fl-slot {
+      width: 54px; height: 58px; border-radius: 12px; border: 1px dashed rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.03); color: var(--fl-dim); cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 0 3px;
     }
-    .bm11-cta {
-      min-width: min(18rem, 100%);
-      min-height: 3.25rem;
-      font-size: 1.02rem;
-      font-weight: 800;
-      border-radius: 9999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      text-decoration: none;
+    .fl-slot-top { font: 400 20px/1 var(--fl-display); }
+    .fl-slot-bottom { max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 600 9px Inter, sans-serif; letter-spacing: 0.05em; text-transform: uppercase; }
+    .fl-slot.is-filled { border: 1px solid rgba(198, 255, 61, 0.4); background: linear-gradient(180deg, #16223a, #0c1322); color: var(--fl-text); }
+    .fl-slot.is-filled .fl-slot-top { font-size: 13px; color: var(--fl-lime); letter-spacing: 0.06em; }
+    .fl-slot.is-filled .fl-slot-bottom { font-size: 10px; }
+    .fl-slot.is-glow { border: 2px solid var(--fl-lime); background: var(--fl-lime-soft); color: var(--fl-lime); animation: fl-glow 1.1s ease-in-out infinite; }
+    .fl-slot.is-armed { border: 2px solid #fff; box-shadow: 0 0 18px rgba(255, 255, 255, 0.5); }
+    @keyframes fl-glow { 50% { box-shadow: 0 0 20px rgba(198, 255, 61, 0.55); } }
+    .fl-slot-x {
+      position: absolute; top: -7px; right: -7px; width: 22px; height: 22px; border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.3); background: #1a2233; color: #fff; font: 700 13px/1 Inter, sans-serif; cursor: pointer;
     }
-    .bm11-cta.is-disabled {
-      opacity: 0.45;
-      box-shadow: none;
+    @media (min-width: 720px) {
+      .fl-slots { grid-template-columns: repeat(4, auto); }
+      .fl-group:nth-child(2n) { border-right: 1px solid rgba(255, 255, 255, 0.1); padding-right: 10px; }
+      .fl-group:last-child { border-right: 0; padding-right: 0; }
+      .fl-slot { width: 62px; height: 64px; }
+      .fl-slot-bottom { max-width: 58px; }
+      .fl { padding-bottom: 150px; }
     }
-    #bm11-startover[hidden] { display: none; }
-
-    /* ------------------------------ the drawer --------------------------- */
-    .bm11-drawer {
-      position: fixed;
-      left: 0.75rem;
-      right: 0.75rem;
-      bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
-      z-index: 60;
-      /* No background/border here: the header carries the card chrome and is
-         the drawer's only in-flow child, so it never moves. The pop below
-         grows upward as an overlay, which keeps opening the sheet (and the
-         respin bar appearing) free of layout shift. */
-    }
-    /* Overlay above the header: respin bar + pool body. Absolutely
-       positioned, so showing either never moves the header or the page. */
-    .bm11-drawer-pop {
-      position: absolute;
-      bottom: 100%;
-      left: 0;
-      right: 0;
-    }
-    .bm11-sheet-respins { display: none; }
-    .bm11-sheet-respins[hidden] { display: none; }
-    .bm11-drawer-head {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.75rem 0.9rem;
-      background: var(--bm11-surface, #12122b);
-      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
-      border-radius: 1rem;
-      box-shadow: 0 -0.75rem 3rem rgba(0, 0, 0, 0.5);
-    }
-    /* Open: the head becomes the bottom half of the sheet card, merging
-       its top border into the body's bottom edge. */
-    .bm11-drawer.is-open .bm11-drawer-head {
-      border-radius: 0 0 1rem 1rem;
-      border-top: none;
-    }
-    .bm11-drawer-titles {
-      flex: 1 1 auto;
-      min-width: 0;
-      display: flex;
-      align-items: baseline;
-      gap: 0.6rem;
-    }
-    .bm11-drawer-title {
-      margin: 0;
-      font-size: 1rem;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-      white-space: nowrap;
-    }
-    .bm11-drawer-draw {
-      margin: 0;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--bm11-gold, #ffc93c);
-    }
-    .bm11-drawer-draw:empty { display: none; }
-    .bm11-drawer-toggle {
-      flex: 0 0 auto;
-      width: 2.75rem;
-      height: 2.75rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 0.75rem;
-      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
-      background: transparent;
-      color: var(--bm11-muted, #a5a8c9);
-      cursor: pointer;
-    }
-    .bm11-drawer-toggle svg {
-      width: 1.25rem;
-      height: 1.25rem;
-      transition: transform 0.2s ease;
-    }
-    .bm11-drawer.is-open .bm11-drawer-toggle svg { transform: rotate(180deg); }
-    .bm11-drawer-body { display: none; }
-    .bm11-drawer.is-open .bm11-drawer-body {
-      display: block;
-      max-height: 60vh;
-      max-height: 60dvh;
-      overflow-y: auto;
-      overscroll-behavior: contain;
-      padding: 0 0.9rem 1rem;
-      background: var(--bm11-surface, #12122b);
-      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
-      border-bottom: none;
-      border-radius: 1rem 1rem 0 0;
-      box-shadow: 0 -0.75rem 3rem rgba(0, 0, 0, 0.5);
-    }
-
-    /* --------------------- drawer toolbar (React island) ------------------ */
-    .bm11-toolbar {
-      display: grid;
-      gap: 0.6rem;
-      padding: 0.2rem 0 0.85rem;
-    }
-    .bm11-toolbar-search { position: relative; }
-    .bm11-toolbar-icon {
-      position: absolute;
-      left: 0.8rem;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 1rem;
-      height: 1rem;
-      color: var(--bm11-muted, #a5a8c9);
-      pointer-events: none;
-    }
-    .bm11-toolbar-input {
-      height: 2.75rem !important;
-      padding-left: 2.4rem !important;
-      padding-right: 2.4rem !important;
-      border-radius: 0.8rem !important;
-      background: var(--bm11-bg, #0a0a1c) !important;
-      border-color: rgba(139, 92, 246, 0.25) !important;
-      color: #fff !important;
-      font-size: 0.92rem !important;
-    }
-    .bm11-toolbar-input::placeholder { color: var(--bm11-muted, #a5a8c9) !important; }
-    .bm11-toolbar-input:focus-visible {
-      border-color: var(--bm11-primary, #00e676) !important;
-      box-shadow: 0 0 0 1px var(--bm11-primary, #00e676) !important;
-    }
-    .bm11-toolbar-clear {
-      position: absolute;
-      right: 0.25rem;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 2.75rem;
-      height: 2.75rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 0;
-      background: none;
-      color: var(--bm11-muted, #a5a8c9);
-      cursor: pointer;
-      border-radius: 0.6rem;
-    }
-    .bm11-toolbar-filters {
-      display: flex;
-      gap: 0.4rem;
-      overflow-x: auto;
-      padding-bottom: 0.15rem;
-      scrollbar-width: none;
-    }
-    .bm11-toolbar-filters::-webkit-scrollbar { display: none; }
-    .bm11-toolbar-chip {
-      flex: 0 0 auto;
-      border-radius: 9999px !important;
-      font-size: 0.72rem !important;
-      font-weight: 600 !important;
-      border-color: rgba(139, 92, 246, 0.28) !important;
-      color: var(--bm11-muted, #a5a8c9) !important;
-      background: transparent !important;
-      min-height: 2.25rem;
-    }
-    .bm11-toolbar-chip:hover { color: #fff !important; border-color: rgba(139, 92, 246, 0.6) !important; }
-    .bm11-toolbar-chip--active {
-      background: var(--bm11-primary, #00e676) !important;
-      border-color: transparent !important;
-      color: #06130c !important;
-      font-weight: 800 !important;
-    }
-
-    /* ------------------------------ pool cards --------------------------- */
-    .bm11-role-group + .bm11-role-group { margin-top: 1.1rem; }
-    .bm11-role-title {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin: 0 0 0.55rem;
-      font-size: 0.7rem;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--bm11-muted, #a5a8c9);
-    }
-    .bm11-role-count {
-      font-size: 0.66rem;
-      font-weight: 700;
-      letter-spacing: 0;
-      color: var(--bm11-gold, #ffc93c);
-      border: 1px solid rgba(255, 201, 60, 0.35);
-      border-radius: 9999px;
-      padding: 0.05rem 0.5rem;
-    }
-    .bm11-prow-list { display: grid; gap: 0.5rem; }
-    .bm11-prow {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      width: 100%;
-      text-align: left;
-      padding: 0.65rem 0.75rem;
-      background: var(--bm11-surface, #12122b);
-      border: 1px solid rgba(139, 92, 246, 0.14);
-      border-radius: 0.9rem;
-      color: inherit;
-      cursor: pointer;
-      transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
-    }
-    .bm11-prow:hover { border-color: rgba(0, 230, 118, 0.45); }
-    .bm11-prow:active { transform: scale(0.985); }
-    .bm11-prow:focus-visible {
-      outline: 2px solid var(--bm11-ring, #00e676);
-      outline-offset: 2px;
-    }
-    .bm11-prow-main {
-      flex: 1 1 auto;
-      min-width: 0;
-    }
-    .bm11-prow-name {
-      display: block;
-      font-size: 0.92rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .bm11-prow-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      margin-top: 0.2rem;
-      font-size: 0.68rem;
-      color: var(--bm11-muted, #a5a8c9);
-    }
-    .bm11-nation-code {
-      font-size: 0.62rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      color: var(--bm11-gold, #ffc93c);
-      border: 1px solid rgba(255, 201, 60, 0.4);
-      border-radius: 9999px;
-      padding: 0.08rem 0.45rem;
-      white-space: nowrap;
-    }
-    .bm11-prow-role {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .bm11-prow-stats {
-      flex: 0 0 auto;
-      display: flex;
-      gap: 0.8rem;
-    }
-    /* Mobile: four stats per card — tighten type so everything fits
-       without horizontal scroll. */
-    @media (max-width: 767px) {
-      .bm11-prow { gap: 0.55rem; padding: 0.55rem 0.6rem; }
-      .bm11-prow-name { font-size: 0.8rem; }
-      .bm11-prow-meta { font-size: 0.62rem; }
-      .bm11-prow-stats { gap: 0.55rem; }
-      .bm11-prow-stat i { font-size: 0.52rem; }
-      .bm11-prow-stat b { font-size: 0.76rem; }
-    }
-    .bm11-prow-stat {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.1rem;
-    }
-    .bm11-prow-stat i {
-      font-style: normal;
-      font-size: 0.58rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--bm11-muted, #a5a8c9);
-    }
-    .bm11-prow-stat b {
-      font-size: 0.88rem;
-      font-variant-numeric: tabular-nums;
-    }
-    .bm11-prow.is-selected {
-      border-color: var(--bm11-primary, #00e676);
-      box-shadow: 0 0 0 1px var(--bm11-primary, #00e676), 0 0.5rem 1.5rem rgba(0, 230, 118, 0.12);
-    }
-    .bm11-prow.is-disabled { opacity: 0.45; }
-    .bm11-prow.is-locked { opacity: 0.75; }
-    .bm11-check-badge {
-      position: absolute;
-      top: -0.45rem;
-      right: -0.45rem;
-      width: 1.5rem;
-      height: 1.5rem;
-      border-radius: 9999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--bm11-primary, #00e676);
-      color: #06130c;
-      box-shadow: 0 0.25rem 0.75rem rgba(0, 230, 118, 0.5);
-    }
-    .bm11-check-badge[hidden] { display: none; }
-    @keyframes bm11-nudge-x {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-4px); }
-      75% { transform: translateX(4px); }
-    }
-    .bm11-prow.bm11-nudge { animation: bm11-nudge-x 0.32s ease; }
-    .bm11-pool-idle, .bm11-pool-empty {
-      margin: 0;
-      padding: 1.25rem 1rem;
-      text-align: center;
-      font-size: 0.88rem;
-      color: var(--bm11-muted, #a5a8c9);
-      border: 1px dashed rgba(139, 92, 246, 0.3);
-      border-radius: 0.9rem;
-    }
-    .bm11-pool-idle strong { color: var(--bm11-primary, #00e676); }
-
-    /* ------------------------------ history ------------------------------ */
-    .bm11-history { padding: 1.25rem 0 0; }
-    .bm11-history-list {
-      list-style: none;
-      margin: 0.6rem 0 0;
-      padding: 0;
-      display: grid;
-      gap: 0.4rem;
-    }
-    .bm11-history-list li {
-      font-size: 0.82rem;
-      color: var(--bm11-muted, #a5a8c9);
-      background: var(--bm11-surface, #12122b);
-      border: 1px solid rgba(139, 92, 246, 0.12);
-      border-radius: 0.7rem;
-      padding: 0.55rem 0.8rem;
-    }
-    .bm11-history-round { color: #fff; font-weight: 700; }
-    .bm11-history-empty { text-align: center; }
-
-    /* ============ role chooser (multi-declaration placements) ============ */
-    .bm11-chooser[hidden] { display: none; }
-    .bm11-chooser {
-      position: fixed;
-      inset: 0;
-      z-index: 90;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-    }
-    .bm11-chooser-backdrop {
-      position: absolute;
-      inset: 0;
-      background: rgba(4, 4, 16, 0.72);
-      backdrop-filter: blur(2px);
-    }
-    .bm11-chooser-card {
-      position: relative;
-      width: min(26rem, calc(100% - 1.5rem));
-      margin-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
-      background: var(--bm11-elevated, #1a1a38);
-      border: 1px solid rgba(0, 230, 118, 0.25);
-      border-radius: 1rem;
-      padding: 1.1rem 1.1rem 1rem;
-      box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.55);
-    }
-    .bm11-chooser-title {
-      margin: 0;
-      font-size: 1.05rem;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-    }
-    .bm11-chooser-sub {
-      margin: 0.3rem 0 0.9rem;
-      font-size: 0.85rem;
-      color: var(--bm11-muted, #a5a8c9);
-    }
-    .bm11-chooser-options {
-      display: grid;
-      gap: 0.55rem;
-    }
-    .bm11-chooser-opt {
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-      align-items: flex-start;
-      text-align: left;
-      width: 100%;
-      min-height: 3.25rem;
-      padding: 0.7rem 0.85rem;
-      border-radius: 0.75rem;
-      border: 1px solid rgba(165, 168, 201, 0.25);
-      background: var(--bm11-surface, #12122b);
-      color: inherit;
-      cursor: pointer;
-    }
-    .bm11-chooser-opt:hover { border-color: rgba(0, 230, 118, 0.6); }
-    .bm11-chooser-opt:focus-visible {
-      outline: 2px solid var(--bm11-ring, #00e676);
-      outline-offset: 2px;
-    }
-    .bm11-chooser-opt.is-suggested {
-      border-color: var(--bm11-primary, #00e676);
-      box-shadow: 0 0 0 1px var(--bm11-primary, #00e676);
-    }
-    .bm11-chooser-opt-name {
-      font-weight: 700;
-      font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-    }
-    .bm11-chooser-badge {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #06130c;
-      background: var(--bm11-primary, #00e676);
-      border-radius: 999px;
-      padding: 0.12rem 0.5rem;
-    }
-    .bm11-chooser-opt-sub {
-      font-size: 0.78rem;
-      color: var(--bm11-muted, #a5a8c9);
-    }
-    .bm11-chooser-cancel {
-      margin-top: 0.8rem;
-      width: 100%;
-      min-height: 2.75rem;
-      padding: 0.6rem;
-      border-radius: 0.75rem;
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--bm11-muted, #a5a8c9);
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .bm11-chooser-cancel:hover { color: #fff; }
-
-    /* ------------------------------- desktop ----------------------------- */
     @media (min-width: 1024px) {
-      .bm11-h1 { font-size: 2.1rem; }
-      .bm11-draft-layout {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) 23rem;
-        gap: 1.75rem;
-        align-items: start;
-        padding-bottom: 3rem;
-      }
-      .bm11-field { max-width: 33rem; aspect-ratio: 1 / 1.08; }
-      .bm11-drawer {
-        position: sticky;
-        top: 6.9rem;
-        left: auto;
-        right: auto;
-        bottom: auto;
-        z-index: 30;
-        max-height: calc(100vh - 8.2rem);
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        background: var(--bm11-surface, #12122b);
-        border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
-        border-radius: 1rem;
-        box-shadow: 0 1.25rem 3rem rgba(0, 0, 0, 0.35);
-      }
-      .bm11-drawer-toggle { display: none; }
-      /* The mobile overlay wrapper dissolves on desktop: head + body flow
-         as one card again. */
-      .bm11-drawer-pop { position: static; display: contents; }
-      .bm11-drawer-head {
-        background: transparent;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-      }
-      .bm11-drawer-body {
-        position: static;
-        display: block;
-        max-height: none;
-        overflow-y: auto;
-        overscroll-behavior: contain;
-        padding: 0 1rem 1rem;
-        background: transparent;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-      }
-      .bm11-sheet-respins { display: none !important; }
-      .bm11-chooser { align-items: center; }
-      .bm11-chooser-card { margin-bottom: 0; }
+      .fl-cards { flex-wrap: wrap; justify-content: center; overflow: visible; }
+    }
+    @media (max-width: 380px) {
+      .fl-slot { width: 48px; height: 54px; }
+      .fl-slot-bottom { max-width: 44px; }
+      .fl-group { gap: 4px; padding-right: 6px; }
+      .fl-slots { gap: 6px 6px; }
+      .fl-card { flex-basis: 150px; }
     }
 
-    /* ------------------- mobile: respin twins above the drawer ------------ */
-    @media (max-width: 1023.98px) {
-      /* Under-reel respin buttons are desktop-only; mobile uses the sheet
-         twins above the drawer. Hiding (not just un-hiding) also keeps the
-         spin zone height stable on mobile. */
-      .bm11-reel > .bm11-reel-respin { display: none !important; }
-      .bm11-sheet-respins:not([hidden]) {
-        display: flex;
-        gap: 0.5rem;
-        padding: 0.7rem 0.9rem 0;
-        pointer-events: none;
-      }
-      .bm11-sheet-respins .bm11-reel-respin {
-        pointer-events: auto;
-        flex: 1 1 0;
-        justify-content: center;
-      }
+    .fl-chooser { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 16px; }
+    .fl-chooser[hidden] { display: none; }
+    .fl-chooser-backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.6); }
+    .fl-chooser-card {
+      position: relative; width: min(380px, 100%); padding: 20px; border-radius: 16px;
+      background: #0c1222; border: 1px solid #c6ff3d; color: #eaf0ff; font-family: Inter, system-ui, sans-serif;
     }
+    .fl-chooser-title { margin: 0; font: 400 28px/1 'Bebas Neue', sans-serif; letter-spacing: 0.04em; }
+    .fl-chooser-sub { margin: 6px 0 14px; color: #9aa6c4; font-size: 14px; }
+    .fl-chooser-opts { display: grid; gap: 8px; }
+    .fl-chooser-opt {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 12px 14px; border-radius: 12px; cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.14); background: #16223a; color: #eaf0ff; text-align: left;
+    }
+    .fl-chooser-opt.is-suggested { border-color: #c6ff3d; }
+    .fl-chooser-name { font-weight: 700; }
+    .fl-chooser-name em { font-style: normal; font-size: 11px; margin-left: 6px; padding: 2px 6px; border-radius: 4px; background: #c6ff3d; color: #04060c; }
+    .fl-chooser-desc { font-size: 12.5px; color: #9aa6c4; }
+    .fl-chooser .fl-link { color: #9aa6c4; }
 
-    /* ---------------------------- reduced motion -------------------------- */
     @media (prefers-reduced-motion: reduce) {
-      .bm11-toss-coin.is-flipping { animation: none; }
-      .bm11-roundbar-seg.is-current { animation: none; }
-      .bm11-fslot.is-glow .bm11-fslot-ring { animation: none; }
-      .bm11-gamebar-fill { transition: none; }
-      .bm11-drawer-toggle svg { transition: none; }
-      .bm11-prow { transition: none; }
-      .bm11-prow.bm11-nudge { animation: none; }
-      .bm11-chooser-backdrop { backdrop-filter: none; }
+      .fl *, .fl *::before, .fl *::after, .fl-chooser * { animation: none !important; transition: none !important; }
     }
   </style>
-
 </BaseLayout>
