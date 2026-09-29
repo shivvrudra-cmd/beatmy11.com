@@ -174,6 +174,28 @@ const styleSeed = playersForEra('legends')[0];
 
         <!-- Player drawer: bottom sheet on mobile, side panel on desktop -->
         <aside class="bm11-drawer" id="bm11-summary" aria-label="Player drawer">
+          <div class="bm11-drawer-head">
+            <div class="bm11-drawer-titles">
+              <h2 class="bm11-drawer-title" id="bm11-sheet-title">Your draw</h2>
+              <p class="bm11-drawer-draw" id="bm11-sheet-draw"></p>
+            </div>
+            <button
+              type="button"
+              class="bm11-drawer-toggle"
+              id="bm11-toggle"
+              aria-expanded="false"
+              aria-controls="bm11-summary-body"
+            >
+              <span class="sr-only">Toggle drawer</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m18 15-6-6-6 6" />
+              </svg>
+            </button>
+          </div>
+          <!-- The pop grows upward as an overlay (mobile): the header is the
+               drawer's only in-flow child, so it never moves and opening the
+               sheet can't cause layout shift. -->
+          <div class="bm11-drawer-pop">
           <!-- Mobile only: respin tokens ride directly above the drawer
                and travel with it as it opens/closes. -->
           <div class="bm11-sheet-respins" id="bm11-sheet-respins" hidden>
@@ -198,24 +220,6 @@ const styleSeed = playersForEra('legends')[0];
               <span class="bm11-respin-left" id="bm11-respin-nation-sheet-left">1 left</span>
             </button>
           </div>
-          <div class="bm11-drawer-head">
-            <div class="bm11-drawer-titles">
-              <h2 class="bm11-drawer-title" id="bm11-sheet-title">Your draw</h2>
-              <p class="bm11-drawer-draw" id="bm11-sheet-draw"></p>
-            </div>
-            <button
-              type="button"
-              class="bm11-drawer-toggle"
-              id="bm11-toggle"
-              aria-expanded="false"
-              aria-controls="bm11-summary-body"
-            >
-              <span class="sr-only">Toggle drawer</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="m18 15-6-6-6 6" />
-              </svg>
-            </button>
-          </div>
           <div class="bm11-drawer-body" id="bm11-summary-body">
             <PoolToolbar client:load />
             <h3 class="sr-only" id="bm11-pool-heading">Your draw</h3>
@@ -224,6 +228,7 @@ const styleSeed = playersForEra('legends')[0];
             </p>
             <div id="bm11-groups"></div>
           </div>
+          </div><!-- /.bm11-drawer-pop -->
         </aside>
       </div>
     </div>
@@ -1981,6 +1986,12 @@ const styleSeed = playersForEra('legends')[0];
       color: var(--bm11-text, #fff);
     }
     .bm11-reel-respin[hidden] { display: none; }
+    /* Desktop only: the under-reel respin buttons keep their row reserved
+       while hidden, so appearing never pushes the spin button down. */
+    .bm11-reel > .bm11-reel-respin[hidden] {
+      display: inline-flex;
+      visibility: hidden;
+    }
     .bm11-reel-respin svg { flex: 0 0 auto; }
     #bm11-respin-era, #bm11-respin-era-sheet {
       border-color: rgba(255, 201, 60, 0.55);
@@ -2036,7 +2047,11 @@ const styleSeed = playersForEra('legends')[0];
       justify-content: center;
       gap: 0.55rem;
     }
-    .bm11-spin-btn[hidden] { display: none; }
+    .bm11-spin-btn[hidden] {
+      /* The button hides when the draft completes: keep its box so the
+         progress bar below never jumps (layout-shift free). */
+      visibility: hidden;
+    }
     .bm11-round-progress { width: 100%; max-width: 26rem; }
     .bm11-roundbar {
       display: flex;
@@ -2417,10 +2432,18 @@ const styleSeed = playersForEra('legends')[0];
       right: 0.75rem;
       bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
       z-index: 60;
-      background: var(--bm11-surface, #12122b);
-      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
-      border-radius: 1rem;
-      box-shadow: 0 -0.75rem 3rem rgba(0, 0, 0, 0.5);
+      /* No background/border here: the header carries the card chrome and is
+         the drawer's only in-flow child, so it never moves. The pop below
+         grows upward as an overlay, which keeps opening the sheet (and the
+         respin bar appearing) free of layout shift. */
+    }
+    /* Overlay above the header: respin bar + pool body. Absolutely
+       positioned, so showing either never moves the header or the page. */
+    .bm11-drawer-pop {
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      right: 0;
     }
     .bm11-sheet-respins { display: none; }
     .bm11-sheet-respins[hidden] { display: none; }
@@ -2429,6 +2452,16 @@ const styleSeed = playersForEra('legends')[0];
       align-items: center;
       gap: 0.6rem;
       padding: 0.75rem 0.9rem;
+      background: var(--bm11-surface, #12122b);
+      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
+      border-radius: 1rem;
+      box-shadow: 0 -0.75rem 3rem rgba(0, 0, 0, 0.5);
+    }
+    /* Open: the head becomes the bottom half of the sheet card, merging
+       its top border into the body's bottom edge. */
+    .bm11-drawer.is-open .bm11-drawer-head {
+      border-radius: 0 0 1rem 1rem;
+      border-top: none;
     }
     .bm11-drawer-titles {
       flex: 1 1 auto;
@@ -2482,6 +2515,11 @@ const styleSeed = playersForEra('legends')[0];
       overflow-y: auto;
       overscroll-behavior: contain;
       padding: 0 0.9rem 1rem;
+      background: var(--bm11-surface, #12122b);
+      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
+      border-bottom: none;
+      border-radius: 1rem 1rem 0 0;
+      box-shadow: 0 -0.75rem 3rem rgba(0, 0, 0, 0.5);
     }
 
     /* --------------------- drawer toolbar (React island) ------------------ */
@@ -2869,14 +2907,32 @@ const styleSeed = playersForEra('legends')[0];
         display: flex;
         flex-direction: column;
         overflow: hidden;
+        background: var(--bm11-surface, #12122b);
+        border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
+        border-radius: 1rem;
         box-shadow: 0 1.25rem 3rem rgba(0, 0, 0, 0.35);
       }
       .bm11-drawer-toggle { display: none; }
+      /* The mobile overlay wrapper dissolves on desktop: head + body flow
+         as one card again. */
+      .bm11-drawer-pop { position: static; display: contents; }
+      .bm11-drawer-head {
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+      }
       .bm11-drawer-body {
+        position: static;
         display: block;
+        max-height: none;
         overflow-y: auto;
         overscroll-behavior: contain;
         padding: 0 1rem 1rem;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
       }
       .bm11-sheet-respins { display: none !important; }
       .bm11-chooser { align-items: center; }
@@ -2885,6 +2941,10 @@ const styleSeed = playersForEra('legends')[0];
 
     /* ------------------- mobile: respin twins above the drawer ------------ */
     @media (max-width: 1023.98px) {
+      /* Under-reel respin buttons are desktop-only; mobile uses the sheet
+         twins above the drawer. Hiding (not just un-hiding) also keeps the
+         spin zone height stable on mobile. */
+      .bm11-reel > .bm11-reel-respin { display: none !important; }
       .bm11-sheet-respins:not([hidden]) {
         display: flex;
         gap: 0.5rem;
