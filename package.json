@@ -9,7 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "node_modules/.bin/esbuild tests/xi-logic.test.ts tests/full-draft.test.ts tests/seven-metrics.test.ts tests/series.test.ts --bundle --platform=node --format=cjs --outdir=.test-dist --out-extension:.js=.cjs --log-level=error && node .test-dist/xi-logic.test.cjs && node .test-dist/full-draft.test.cjs && node .test-dist/seven-metrics.test.cjs && node .test-dist/series.test.cjs",
+    "test": "esbuild tests/xi-logic.test.ts tests/full-draft.test.ts tests/seven-metrics.test.ts tests/series.test.ts --bundle --platform=node --format=cjs --outdir=.test-dist --out-extension:.js=.cjs --log-level=error && node .test-dist/xi-logic.test.cjs && node .test-dist/full-draft.test.cjs && node .test-dist/seven-metrics.test.cjs && node .test-dist/series.test.cjs",
     "test:unit": "vitest run",
     "test:e2e": "playwright test"
   },
