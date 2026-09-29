@@ -18,8 +18,8 @@
  * ROLES: openers / middle-order / wicketkeepers score the 3 batting metrics;
  *   spinners / fast bowlers score the 4 bowling metrics only (no batting
  *   score for specialists); all-rounders score all 7 with batting and
- *   bowling kept separate, combined 60/40 toward the stronger half. The XI slot's declared role is
- *   the scoring role when present.
+ *   bowling kept separate. The XI slot's declared role is the scoring role
+ *   when present.
  *
  * NORMALIZATION: percentile-rank across the FULL eligible scoring
  *   population (batting metrics: every batting-evaluated player;
@@ -28,28 +28,29 @@
  *   directionally inverted. Percentiles neutralize raw numerical scale so
  *   no metric dominates by magnitude.
  *
- * ALL-ROUNDER POPULATIONS (owner-approved 2026-09-25): an all-rounder is
- *   ranked only against other all-rounders — batting percentiles against
- *   the all-rounder batting population, bowling percentiles against the
- *   all-rounder bowling population — never against specialist
- *   populations. Shrinkage priors for all-rounders likewise come from the
- *   all-rounder population means. The 60/40-stronger blend still lands a
- *   specialist declared as an all-rounder far below their specialist score
- *   (one half near zero) and no new weighting parameter is introduced.
+ * V2 (owner-approved 2026-09-29) — replaces the V1 all-rounder-only
+ *   populations, the 60/40 all-rounder blend and the 20-match prior:
+ *   - All-rounders are ranked against the same full batting and bowling
+ *     populations as specialists.
+ *   - LONGEVITY: each half (batting, bowling) is 75% the metric mean and
+ *     25% Tests played, with full credit at 50 Tests — rewards a real
+ *     career without punishing eras that played fewer Tests (Bradman: 52).
+ *   - ALL-ROUNDER: the stronger half leads and the weaker half fills half
+ *     the remaining gap to 100: score = 100·(1 − (1−S)(1 − 0.5·W)) on
+ *     0–1 halves. A second skill can only add, never drag the score down.
  *
- * SHRINKAGE (owner-approved 2026-09-25): before percentile ranking, every
- *   metric value is shrunk toward its eligible-population mean by sample
- *   size, so a 3-Test hot streak cannot outrank a 200-Test career by
- *   construction:
- *     adjusted = (matches × raw + 20 × populationMean) / (matches + 20)
+ * SHRINKAGE: before percentile ranking, every metric value is shrunk
+ *   toward its eligible-population mean by sample size, so a short hot
+ *   streak cannot outrank a long career by construction:
+ *     adjusted = (matches × raw + 30 × populationMean) / (matches + 30)
  *   using testMatches as the sample size for all seven metrics (including
  *   the direct averages). A 200-Test career barely moves; a 3-Test debut
  *   is pulled most of the way to the mean. Populations are built from
  *   adjusted values, so every player is ranked on the same basis.
  *   Missing values stay missing — shrinkage never fabricates data.
  *
- * WEIGHTS (V1): batting metrics 1/3 each; bowling metrics 1/4 each;
- *   all-rounder = 0.6 × stronger discipline + 0.4 × weaker discipline.
+ * WEIGHTS: batting metrics 1/3 each; bowling metrics 1/4 each (within the
+ *   75% metric share of each half).
  *
  * XI SCORE: team blend — 40% batting unit + 50% bowling unit + 10%
  *   fielding unit (0–100 scale). The batting unit is the mean batting half
@@ -135,18 +136,22 @@ export const BOWLING_WEIGHTS: Record<MetricKey, number> = {
   tenWRate: 1 / 4,
 };
 
-/** … all-rounder = 60% stronger discipline + 40% weaker discipline.
- *  The stronger of the batting/bowling halves leads, so asymmetric
- *  all-rounders (a main weapon plus a bonus — Kallis, Hadlee) are not
- *  chopped by their weaker half. Symmetric: helps batting spikes and
- *  bowling spikes alike. */
-export const ALL_ROUNDER_STRONGER_SHARE = 0.6;
+/** … all-rounder: the stronger half leads and the weaker half fills this
+ *  share of the remaining gap to 100 (owner-approved 2026-09-29). A second
+ *  skill only ever adds, so Hadlee and Sobers are not dragged down by their
+ *  weaker discipline. Symmetric: batting spikes and bowling spikes alike. */
+export const ALL_ROUNDER_GAP_FILL = 0.5;
+
+/** Longevity (owner-approved 2026-09-29): share of each half that comes
+ *  from Tests played, and the Test count that earns full credit. */
+export const LONGEVITY_WEIGHT = 0.25;
+export const LONGEVITY_FULL_CREDIT_TESTS = 50;
 
 /**
  * Owner-approved 2026-09-27: the TEAM score blends the three units —
  * 40% batting unit + 50% bowling unit + 10% fielding unit. Player scores
  * are unchanged (batters on batting, bowlers on bowling, all-rounders
- * 60/40 toward the stronger discipline); the blend applies at the XI
+ * via allRounderScore); the blend applies at the XI
  * level only. An all-rounder feeds his batting half to the batting unit
  * and his bowling half to the bowling unit.
  */
@@ -282,24 +287,17 @@ export function rawMetrics(player: NormalizedPlayer): RawMetrics {
 export type ScoringPopulations = Record<MetricKey, number[]>;
 
 /**
- * Owner-approved shrinkage prior weight, in matches (2026-09-25): every
- * metric value is blended with this many matches of population-mean
- * performance before percentile ranking.
+ * Shrinkage prior weight, in matches (owner-approved 30 on 2026-09-29, was
+ * 20): every metric value is blended with this many matches of
+ * population-mean performance before percentile ranking.
  */
-export const SHRINKAGE_PRIOR_MATCHES = 20;
+export const SHRINKAGE_PRIOR_MATCHES = 30;
 
 export interface ScoringContext {
   /** Per metric, sorted-ascending adjusted values of the full population. */
   populations: ScoringPopulations;
   /** Per metric, mean of RAW values over the eligible population. */
   priorMeans: Record<MetricKey, number>;
-  /**
-   * Per metric, sorted-ascending adjusted values of the all-rounder-only
-   * population (players whose primary role evaluates to all-rounder).
-   */
-  arPopulations: ScoringPopulations;
-  /** Per metric, mean of RAW values over the all-rounder population. */
-  arPriorMeans: Record<MetricKey, number>;
   /**
    * Fielding population: sorted-ascending shrinkage-adjusted
    * dismissals-per-match over the FULL unique-player population (every
@@ -400,38 +398,6 @@ export function buildScoringContext(
   }
   for (const k of Object.keys(pops) as MetricKey[]) pops[k].sort((a, b) => a - b);
 
-  // All-rounder-only populations: players whose primary role evaluates to
-  // all-rounder, ranked only against each other, shrunk toward the
-  // all-rounder population means (the eligible population for the role).
-  const arMembers = unique.filter((p) => evaluationRole(p) === 'all-rounder');
-  const metricKeys = METRICS.map((def) => def.key);
-  const arPriorMeans = {} as Record<MetricKey, number>;
-  for (const k of metricKeys) {
-    let sum = 0;
-    let count = 0;
-    for (const p of arMembers) {
-      const v = raws.get(p.id)![k];
-      if (v !== null) {
-        sum += v;
-        count++;
-      }
-    }
-    arPriorMeans[k] = count > 0 ? sum / count : 0;
-  }
-  const arPops = emptyPops();
-  for (const p of arMembers) {
-    const raw = raws.get(p.id)!;
-    const m = matchesOf(p);
-    for (const k of metricKeys) {
-      const v = raw[k];
-      if (v === null) continue; // missing stays missing — never fabricated
-      arPops[k].push(
-        (m * v + priorMatches * arPriorMeans[k]) / (m + priorMatches),
-      );
-    }
-  }
-  for (const k of Object.keys(arPops) as MetricKey[]) arPops[k].sort((a, b) => a - b);
-
   // Fielding population: dismissals per match over the full unique-player
   // population (every player fields). Same shrinkage treatment as the
   // seven metrics; missing dismissals stay missing — never fabricated.
@@ -454,8 +420,6 @@ export function buildScoringContext(
   return {
     populations: pops,
     priorMeans,
-    arPopulations: arPops,
-    arPriorMeans,
     fieldingPopulation,
     fieldingPriorMean,
     priorMatches,
@@ -464,18 +428,15 @@ export function buildScoringContext(
 
 /**
  * Shrinkage-adjusted metric values for one player under a scoring
- * context. Nulls stay null. When `role` is 'all-rounder', values are
- * shrunk toward the all-rounder population means (the population the
- * player is ranked against); otherwise toward the full-population means.
+ * context, shrunk toward the full-population means. Nulls stay null.
  */
 export function adjustedMetrics(
   player: NormalizedPlayer,
   ctx: ScoringContext,
-  role?: EvaluationRole,
 ): RawMetrics {
   const raw = rawMetrics(player);
   const m = matchesOf(player);
-  const priors = role === 'all-rounder' ? ctx.arPriorMeans : ctx.priorMeans;
+  const priors = ctx.priorMeans;
   const out = {} as RawMetrics;
   for (const k of Object.keys(raw) as MetricKey[]) {
     const v = raw[k];
@@ -550,21 +511,36 @@ export interface PlayerScore {
   adjusted: RawMetrics;
   /** Applicable normalized (0–100) metrics; uncomputable ones are null. */
   normalized: Partial<Record<MetricKey, number | null>>;
-  /** Weighted batting score (1/3 each); null when the role has no batting. */
+  /** Batting half: 75% weighted metrics (1/3 each) + 25% longevity; null
+   *  when the role has no batting. */
   battingScore: number | null;
-  /** Weighted bowling score (1/4 each); null when the role has no bowling. */
+  /** Bowling half: 75% weighted metrics (1/4 each) + 25% longevity; null
+   *  when the role has no bowling. */
   bowlingScore: number | null;
   /**
-   * Final 0–100 player score (1 decimal): batting/bowling weighted score,
-   * or 60/40 toward the stronger half for all-rounders. Null while any applicable
-   * metric is uncomputable — a misleading score is never produced.
+   * Final 0–100 player score (1 decimal): the batting/bowling half, or for
+   * all-rounders the stronger half with the weaker filling part of the gap
+   * to 100. Null while any applicable metric is uncomputable — a
+   * misleading score is never produced.
    */
   score: number | null;
 }
 
 const round1 = (x: number): number => Math.round(x * 10) / 10;
 
-function weightedMean(
+/** Longevity on the 0–100 scale: Tests played, full credit at
+ *  LONGEVITY_FULL_CREDIT_TESTS. */
+export function longevityScore(player: NormalizedPlayer): number {
+  return Math.min(1, matchesOf(player) / LONGEVITY_FULL_CREDIT_TESTS) * 100;
+}
+
+/**
+ * One discipline half on the 0–100 scale: (1 − LONGEVITY_WEIGHT) × the
+ * weighted metric mean + LONGEVITY_WEIGHT × longevity. Null when any of
+ * the half's metrics is uncomputable.
+ */
+function skillHalf(
+  player: NormalizedPlayer,
   normalized: Partial<Record<MetricKey, number | null>>,
   keys: MetricKey[],
   weights: Record<MetricKey, number>,
@@ -575,18 +551,25 @@ function weightedMean(
     if (v === null || v === undefined) return null;
     sum += v * weights[k];
   }
-  return sum;
+  return (1 - LONGEVITY_WEIGHT) * sum + LONGEVITY_WEIGHT * longevityScore(player);
+}
+
+/** All-rounder combination: the stronger half leads; the weaker half fills
+ *  ALL_ROUNDER_GAP_FILL of the remaining gap to 100. */
+export function allRounderScore(battingHalf: number, bowlingHalf: number): number {
+  const s = Math.max(battingHalf, bowlingHalf) / 100;
+  const w = Math.min(battingHalf, bowlingHalf) / 100;
+  return 100 * (1 - (1 - s) * (1 - ALL_ROUNDER_GAP_FILL * w));
 }
 
 /**
  * Deterministic per-player scoring. Same player + same data + same
  * scoring context always yields the same score. Specialist bowlers
- * receive no batting score; an all-rounder's batting and bowling scores
- * stay separately available and combine 60/40 toward the stronger half. Percentiles are computed
- * on shrinkage-adjusted values, so small samples are pulled toward the
- * population mean before ranking. All-rounders are ranked against the
- * all-rounder-only populations (with all-rounder shrinkage priors);
- * every other role is ranked against the full populations.
+ * receive no batting score; an all-rounder's batting and bowling halves
+ * stay separately available and combine via allRounderScore. Percentiles
+ * are computed on shrinkage-adjusted values, so small samples are pulled
+ * toward the population mean before ranking. Every role — all-rounders
+ * included — is ranked against the full populations.
  */
 export function scorePlayer(
   player: NormalizedPlayer,
@@ -595,11 +578,8 @@ export function scorePlayer(
 ): PlayerScore {
   const role = evaluationRole(player, declaredRole);
   const raw = rawMetrics(player);
-  const adjusted = adjustedMetrics(player, ctx, role);
-  const normalizedAll = normalizeMetrics(
-    adjusted,
-    role === 'all-rounder' ? ctx.arPopulations : ctx.populations,
-  );
+  const adjusted = adjustedMetrics(player, ctx);
+  const normalizedAll = normalizeMetrics(adjusted, ctx.populations);
   const keys = ROLE_METRICS[role];
   const normalized: Partial<Record<MetricKey, number | null>> = {};
   for (const k of keys) normalized[k] = normalizedAll[k];
@@ -607,20 +587,16 @@ export function scorePlayer(
   const hasBatting = BATTING_ROLES.includes(role);
   const hasBowling = BOWLING_ROLES.includes(role);
   const battingScore = hasBatting
-    ? weightedMean(normalized, BATTING_METRICS, BATTING_WEIGHTS)
+    ? skillHalf(player, normalized, BATTING_METRICS, BATTING_WEIGHTS)
     : null;
   const bowlingScore = hasBowling
-    ? weightedMean(normalized, BOWLING_METRICS, BOWLING_WEIGHTS)
+    ? skillHalf(player, normalized, BOWLING_METRICS, BOWLING_WEIGHTS)
     : null;
 
   let score: number | null = null;
   if (role === 'all-rounder') {
     if (battingScore !== null && bowlingScore !== null) {
-      const stronger = Math.max(battingScore, bowlingScore);
-      const weaker = Math.min(battingScore, bowlingScore);
-      score =
-        ALL_ROUNDER_STRONGER_SHARE * stronger +
-        (1 - ALL_ROUNDER_STRONGER_SHARE) * weaker;
+      score = allRounderScore(battingScore, bowlingScore);
     }
   } else if (battingScore !== null) {
     score = battingScore;
@@ -645,8 +621,8 @@ export function scorePlayer(
 // Fielding + team blend (owner-approved 2026-09-27)
 //
 // Fielding is deliberately NOT an eighth player metric: player scores are
-// unchanged (batters on batting, bowlers on bowling, all-rounders 60/40
-// toward the stronger discipline). Dismissals enter only at the XI level,
+// unchanged (batters on batting, bowlers on bowling, all-rounders via
+// allRounderScore). Dismissals enter only at the XI level,
 // where the team score = 40% batting unit + 50% bowling unit + 10%
 // fielding unit. Every player fields, so there is no role split —
 // keepers and outfielders are ranked in one population.
@@ -667,8 +643,8 @@ export function rawFielding(player: NormalizedPlayer): number | null {
 }
 
 /**
- * Fielding score on the 0–100 scale: dismissals per match with W=20
- * shrinkage toward the full-population prior mean, percentile-ranked
+ * Fielding score on the 0–100 scale: dismissals per match with the same
+ * prior-match shrinkage toward the full-population prior mean, percentile-ranked
  * against the fielding population (higher is better). Null when
  * uncomputable — a misleading score is never produced.
  */
@@ -725,13 +701,10 @@ export function teamBlend(xi: XIEntry[], ctx: ScoringContext): TeamBlend {
   let fieldSum = 0;
   for (const e of xi) {
     const role = evaluationRole(e.player, e.declaredRole);
-    const adjusted = adjustedMetrics(e.player, ctx, role);
-    const normalized = normalizeMetrics(
-      adjusted,
-      role === 'all-rounder' ? ctx.arPopulations : ctx.populations,
-    );
+    const adjusted = adjustedMetrics(e.player, ctx);
+    const normalized = normalizeMetrics(adjusted, ctx.populations);
     if (BATTING_ROLES.includes(role)) {
-      const b = weightedMean(normalized, BATTING_METRICS, BATTING_WEIGHTS);
+      const b = skillHalf(e.player, normalized, BATTING_METRICS, BATTING_WEIGHTS);
       if (b === null) {
         gaps.push({
           playerId: e.player.id,
@@ -746,7 +719,7 @@ export function teamBlend(xi: XIEntry[], ctx: ScoringContext): TeamBlend {
       }
     }
     if (BOWLING_ROLES.includes(role)) {
-      const b = weightedMean(normalized, BOWLING_METRICS, BOWLING_WEIGHTS);
+      const b = skillHalf(e.player, normalized, BOWLING_METRICS, BOWLING_WEIGHTS);
       if (b === null) {
         gaps.push({
           playerId: e.player.id,
@@ -896,7 +869,7 @@ function scoreXI(
  * this function never selects players and never knows how the opponent XI
  * was chosen. Each XI's score is the team blend — 40% batting unit + 50%
  * bowling unit + 10% fielding unit (owner-approved 2026-09-27) — computed
- * from the players' role halves; per-player 60/40 all-rounder scores are
+ * from the players' role halves; per-player all-rounder scores are
  * retained in the result for display only.
  *
  * Throws IncompletePlayerData if any applicable metric or any required

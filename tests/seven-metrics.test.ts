@@ -3,7 +3,7 @@
  *
  * Checklist: seven metrics, derived rates, averages used directly,
  * lower-is-better only for bowling average, percentile normalization,
- * all six roles, declared-role behavior, 60/40-stronger all-rounder weighting,
+ * all six roles, declared-role behavior, V2 all-rounder gap-fill + longevity,
  * no batting score for specialists, missing/zero-Test handling,
  * determinism, identical-XI ties, metrics-only discipline, 40/50/10 team
  * blend aggregation, team-level fielding (dismissals), explicit
@@ -16,7 +16,11 @@ import {
   BOWLING_METRICS,
   BATTING_WEIGHTS,
   BOWLING_WEIGHTS,
-  ALL_ROUNDER_STRONGER_SHARE,
+  ALL_ROUNDER_GAP_FILL,
+  LONGEVITY_WEIGHT,
+  LONGEVITY_FULL_CREDIT_TESTS,
+  allRounderScore,
+  longevityScore,
   ROLE_METRICS,
   evaluationRole,
   rawMetrics,
@@ -64,7 +68,7 @@ const P = (id: string): NormalizedPlayer => {
   if (!p) throw new Error(`test player missing: ${id}`);
   return p;
 };
-// Real-data scoring context: the spec context (W=20 shrinkage). Synthetic
+// Real-data scoring context: the spec context (W=30 shrinkage). Synthetic
 // formula-isolation tests below use buildScoringContext(players, 0).
 const CTX: ScoringContext = buildScoringContext([...byId.values()]);
 const keys = (o: object) => Object.keys(o).sort();
@@ -188,26 +192,20 @@ ok(
 );
 ok(warne.bowlingScore !== null && warne.score === warne.bowlingScore, 'spinner score = bowling score');
 
-// ---- 12/14. all-rounder: both sides, 60/40 toward stronger ----
+// ---- 12/14. all-rounder: both sides, stronger half + gap fill (V2) ----
 const kallis = scorePlayer(P('jacques-kallis'), 'all-rounder', CTX);
 ok(kallis.battingScore !== null && kallis.bowlingScore !== null, 'all-rounder: separate batting + bowling scores');
-const arStronger = Math.max(kallis.battingScore!, kallis.bowlingScore!);
-const arWeaker = Math.min(kallis.battingScore!, kallis.bowlingScore!);
-const expAR =
-  Math.round(
-    (ALL_ROUNDER_STRONGER_SHARE * arStronger +
-      (1 - ALL_ROUNDER_STRONGER_SHARE) * arWeaker) *
-      10,
-  ) / 10;
-ok(kallis.score === expAR, 'all-rounder score = 60/40 blend toward the stronger side', { got: kallis.score, exp: expAR });
-ok(ALL_ROUNDER_STRONGER_SHARE === 0.6, 'V1 all-rounder weighting is 60/40 toward stronger discipline');
-ok(kallis.score === 68, 'kallis as all-rounder: 68 — batting spike leads, not chopped by bowling', { got: kallis.score });
-// symmetry: a bowling spike is weighted the same way
+ok(ALL_ROUNDER_GAP_FILL === 0.5, 'V2: weaker half fills 50% of the remaining gap');
+ok(Math.abs(allRounderScore(80, 40) - 84) < 1e-9,'allRounderScore = 100·(1 − (1−S)(1 − 0.5·W))');
+ok(allRounderScore(40, 80) === allRounderScore(80, 40), 'symmetric: batting and bowling spikes alike');
+ok(
+  [[90, 0], [90, 50], [60, 60], [100, 10], [0, 0]].every(([a, b]) => allRounderScore(a, b) >= Math.max(a, b) && allRounderScore(a, b) <= 100),
+  'a second skill never drags an all-rounder below the stronger half, never above 100',
+);
+const expAR = Math.round(allRounderScore(kallis.battingScore!, kallis.bowlingScore!) * 10) / 10;
+ok(Math.abs(kallis.score! - expAR) <= 0.1, 'all-rounder score uses allRounderScore on the halves', { got: kallis.score, exp: expAR });
 const hadleeAR = scorePlayer(P('richard-hadlee'), 'all-rounder', CTX);
 ok(hadleeAR.bowlingScore! > hadleeAR.battingScore!, 'hadlee: bowling half is the stronger side');
-const expHadleeAR =
-  Math.round((0.6 * hadleeAR.bowlingScore! + 0.4 * hadleeAR.battingScore!) * 10) / 10;
-ok(hadleeAR.score === expHadleeAR, 'bowling spike gets the 60% weight too', { got: hadleeAR.score, exp: expHadleeAR });
 
 // ---- 13. declared role drives evaluation ----
 const sobersDeclared = scorePlayer(P('garfield-sobers'), 'middle-order', CTX);
@@ -318,11 +316,11 @@ const blendXI = [
   ...Array.from({ length: 3 }, (_, i) => blendBowl(i)),
 ];
 // Local unrounded-half helper built from the engine's own exported pieces.
-const halfOf = (p: NormalizedPlayer, role: 'middle-order' | 'fast-bowler', keys: MetricKey[], weights: Record<MetricKey, number>) => {
-  const norm = normalizeMetrics(adjustedMetrics(p, CTX, role), CTX.populations);
+const halfOf = (p: NormalizedPlayer, _role: 'middle-order' | 'fast-bowler', keys: MetricKey[], weights: Record<MetricKey, number>) => {
+  const norm = normalizeMetrics(adjustedMetrics(p, CTX), CTX.populations);
   let s = 0;
   for (const k of keys) s += (norm[k] as number) * weights[k];
-  return s;
+  return (1 - LONGEVITY_WEIGHT) * s + LONGEVITY_WEIGHT * longevityScore(p);
 };
 {
   const bats = blendXI.slice(0, 8).map((e) => halfOf(e.player, 'middle-order', BATTING_METRICS, BATTING_WEIGHTS));
@@ -433,7 +431,7 @@ ok(
 );
 
 // ---- 23. shrinkage: a hot streak must not outrank a career by construction ----
-ok(SHRINKAGE_PRIOR_MATCHES === 20, 'spec shrinkage prior weight is 20 matches');
+ok(SHRINKAGE_PRIOR_MATCHES === 30, 'spec shrinkage prior weight is 30 matches (V2)');
 // prior means are the raw eligible-population means
 {
   const elig = [...byId.values()].filter((p) =>
@@ -467,9 +465,15 @@ ok(SHRINKAGE_PRIOR_MATCHES === 20, 'spec shrinkage prior weight is 20 matches');
     ),
   );
   const rawCtx = buildScoringContext([hot, career, ...fillers], 0); // no shrinkage
-  const hotRaw = scorePlayer(hot, null, rawCtx).score!;
-  const careerRaw = scorePlayer(career, null, rawCtx).score!;
-  ok(hotRaw > careerRaw, 'without shrinkage the raw hot streak outranks (the old behavior)', { hotRaw, careerRaw });
+  // Without shrinkage the hot streak's raw metrics outrank the career's; in
+  // V2 the longevity share alone already reverses the final score.
+  const hotRawN = scorePlayer(hot, null, rawCtx).normalized.battingAverage!;
+  const careerRawN = scorePlayer(career, null, rawCtx).normalized.battingAverage!;
+  ok(hotRawN > careerRawN, 'without shrinkage the raw hot-streak average outranks the career', { hotRawN, careerRawN });
+  ok(
+    scorePlayer(career, null, rawCtx).score! > scorePlayer(hot, null, rawCtx).score!,
+    'V2: longevity alone puts the 200-Test career ahead even without shrinkage',
+  );
   const ctx20 = buildScoringContext([hot, career, ...fillers], 20);
   const hotAdj = adjustedMetrics(hot, ctx20);
   const careerAdj = adjustedMetrics(career, ctx20);
@@ -531,98 +535,61 @@ ok(SHRINKAGE_PRIOR_MATCHES === 20, 'spec shrinkage prior weight is 20 matches');
   }
 }
 
-// ---- all-rounder-only populations (owner-approved 2026-09-25) ----
+// ---- V2 (owner-approved 2026-09-29): full populations, longevity, AR gap fill ----
 {
-  // population shape: one entry per all-rounder per metric
-  for (const k of [...BATTING_METRICS, ...BOWLING_METRICS] as MetricKey[]) {
-    ok(
-      CTX.arPopulations[k].length === 46,
-      `arPopulations.${k} holds the 46 all-rounders`,
-      CTX.arPopulations[k].length,
-    );
-  }
-  // priors are all-rounder-only raw means (all-rounders bat below the full
-  // batting mean and bowl above the full bowling-average mean)
-  ok(
-    CTX.arPriorMeans.battingAverage < CTX.priorMeans.battingAverage,
-    'AR batting prior is the all-rounder-only mean',
-    { ar: CTX.arPriorMeans.battingAverage, full: CTX.priorMeans.battingAverage },
-  );
-  ok(
-    CTX.arPriorMeans.bowlingAverage > CTX.priorMeans.bowlingAverage,
-    'AR bowling-average prior is the all-rounder-only mean (higher = worse)',
-    { ar: CTX.arPriorMeans.bowlingAverage, full: CTX.priorMeans.bowlingAverage },
-  );
-  // shrinkage for all-rounders targets the AR priors …
+  // all-rounders are ranked against the full populations — no AR-only context
+  ok(!('arPopulations' in CTX) && !('arPriorMeans' in CTX), 'no all-rounder-only populations in the context');
   const botham = P('ian-botham');
   const bm = Number(botham.stats.testMatches);
-  const expARAdj =
-    (bm * Number(botham.stats.testAverage) + 20 * CTX.arPriorMeans.battingAverage) / (bm + 20);
-  ok(
-    Math.abs(adjustedMetrics(botham, CTX, 'all-rounder').battingAverage! - expARAdj) < 1e-9,
-    'AR shrinkage uses AR prior means',
-  );
-  // … while omitting the role keeps the full-population priors (unchanged behavior)
-  const expFullAdj =
-    (bm * Number(botham.stats.testAverage) + 20 * CTX.priorMeans.battingAverage) / (bm + 20);
-  ok(
-    Math.abs(adjustedMetrics(botham, CTX).battingAverage! - expFullAdj) < 1e-9,
-    'adjustedMetrics without role keeps full-population priors',
-  );
-  // genuine all-rounders rise against their peers; the ordering is sane
-  const sBotham = scorePlayer(P('ian-botham'), 'all-rounder', CTX);
-  const sImran = scorePlayer(P('imran-khan'), 'all-rounder', CTX);
-  const sSobers = scorePlayer(P('garfield-sobers'), 'all-rounder', CTX);
-  const sKallis = scorePlayer(P('jacques-kallis'), 'all-rounder', CTX);
-  const sJadeja = scorePlayer(P('ravindra-jadeja'), 'all-rounder', CTX);
-  ok(sBotham.score! > 79 && sBotham.score! < 83, 'Botham ~81 against all-rounders', sBotham.score);
-  ok(sImran.score! > 76 && sImran.score! < 80, 'Imran ~78 against all-rounders', sImran.score);
-  ok(sSobers.score! > 73 && sSobers.score! < 77, 'Sobers ~75 against all-rounders', sSobers.score);
-  ok(sKallis.score! > 66 && sKallis.score! < 69, 'Kallis ~68 against all-rounders', sKallis.score);
-  ok(sJadeja.score! > 72 && sJadeja.score! < 75, 'Jadeja ~73 against all-rounders', sJadeja.score);
-  ok(
-    sBotham.battingScore! > 60 && sBotham.bowlingScore! > 85,
-    'Botham: real two-discipline percentiles vs ARs',
-    { bat: sBotham.battingScore, bowl: sBotham.bowlingScore },
-  );
-  // a lopsided bowler's spike leads the 60/40 blend — symmetric with batting spikes
-  const sHadlee = scorePlayer(P('richard-hadlee'), 'all-rounder', CTX);
-  ok(sHadlee.score! > 62 && sHadlee.score! < 67, 'Hadlee (bowling spike) ~64 as an all-rounder', sHadlee.score);
-  // anti-gaming: a specialist declared as an all-rounder collapses
-  const murSp = scorePlayer(P('muttiah-muralitharan'), 'spinner', CTX).score!;
-  const murAR = scorePlayer(P('muttiah-muralitharan'), 'all-rounder', CTX).score!;
-  ok(murAR < murSp - 30, 'specialist declared as all-rounder gains nothing', { murSp, murAR });
-  // non-AR roles are untouched by the change
-  ok(
-    scorePlayer(P('sachin-tendulkar'), 'middle-order', CTX).score === 96.7,
-    'Tendulkar unchanged (full populations)',
-  );
-  ok(
-    scorePlayer(P('don-bradman'), 'opener', CTX).score === 100,
-    'Bradman unchanged (full populations)',
-  );
-  // elite AR shape vs elite specialist shape: the gap more than halves
+  const expAdj = (bm * Number(botham.stats.testAverage) + 30 * CTX.priorMeans.battingAverage) / (bm + 30);
+  ok(Math.abs(adjustedMetrics(botham, CTX).battingAverage! - expAdj) < 1e-9, 'all-rounder shrinkage uses full-population priors');
+
+  // longevity: Tests played, full credit at 50
+  ok(LONGEVITY_WEIGHT === 0.25 && LONGEVITY_FULL_CREDIT_TESTS === 50, 'longevity is 25% of each half, full credit at 50 Tests');
+  const lt = (m: number) => longevityScore(mk('middle-order', { testMatches: m }, { id: `lt${m}`, uid: `t:lt${m}` }));
+  ok(lt(25) === 50 && lt(50) === 100 && lt(200) === 100 && lt(0) === 0, 'longevity: 25 Tests = 50, 50+ Tests = 100');
+  {
+    // identical rates, different career lengths: the longer career ranks higher
+    const shortC = mk('fast-bowler', { testBowlingAverage: 22, testMatches: 25, testWickets: 125, fiveWs: 6, tenWs: 1 }, { id: 'shortc', uid: 't:shortc' });
+    const longC = mk('fast-bowler', { testBowlingAverage: 22, testMatches: 100, testWickets: 500, fiveWs: 24, tenWs: 4 }, { id: 'longc', uid: 't:longc' });
+    const ctx = buildScoringContext([shortC, longC, ...byId.values()]);
+    ok(scorePlayer(longC, null, ctx).score! > scorePlayer(shortC, null, ctx).score!, 'same rates: the 100-Test career outranks the 25-Test one');
+  }
+
+  // owner's reference points for the all-time greats
+  const s = (id: string, role: string) => scorePlayer(P(id), role, CTX).score!;
+  ok(s('garfield-sobers', 'all-rounder') > 98, 'Sobers above 98 as an all-rounder', s('garfield-sobers', 'all-rounder'));
+  ok(s('richard-hadlee', 'all-rounder') > 98, 'Hadlee above 98 as an all-rounder', s('richard-hadlee', 'all-rounder'));
+  ok(s('jacques-kallis', 'all-rounder') > 98, 'Kallis above 98 as an all-rounder', s('jacques-kallis', 'all-rounder'));
+  ok(s('imran-khan', 'all-rounder') > 94 && s('imran-khan', 'all-rounder') < 97, 'Imran ~96', s('imran-khan', 'all-rounder'));
+  ok(s('ian-botham', 'all-rounder') > 88 && s('ian-botham', 'all-rounder') < 91, 'Botham ~89.5', s('ian-botham', 'all-rounder'));
+  ok(s('don-bradman', 'opener') === 100, 'Bradman still 100 with longevity (52 Tests >= 50)');
+  ok(s('sachin-tendulkar', 'middle-order') > s('harry-brook', 'middle-order'), 'Tendulkar (200 Tests) outranks Harry Brook (41 Tests)');
+  ok(s('glenn-mcgrath', 'fast-bowler') > s('mohammad-asif', 'fast-bowler'), 'McGrath (124 Tests) outranks Mohammad Asif (23 Tests)');
+  const bowlers = [...byId.values()]
+    .filter((p) => ['fast-bowler', 'spinner'].includes(p.primaryRole))
+    .map((p) => ({ p, s: scorePlayer(p, null, CTX).score ?? -1 }))
+    .sort((a, b) => b.s - a.s)
+    .slice(0, 20);
+  const shortTop = bowlers.filter((x) => Number(x.p.stats.testMatches) < 50).length;
+  ok(shortTop <= 4, 'at most 4 of the top-20 bowlers played fewer than 50 Tests', shortTop);
+
+  // anti-gaming at the XI level: a specialist declared as an all-rounder
+  // adds a weak batting half to the batting unit — the team never gains
   const E = (player: NormalizedPlayer, declaredRole: string) => ({ player, declaredRole });
   const ranked = [...byId.values()].map((p) => ({ p, s: scorePlayer(p, null, CTX).score ?? -1 }));
   const top = (role: string, n: number) =>
     ranked.filter((x) => x.p.primaryRole === role).sort((a, b) => b.s - a.s).slice(0, n).map((x) => x.p);
-  const shapeAR = [
+  const base = [
     ...top('opener', 2).map((p) => E(p, 'opener')),
     ...top('middle-order', 4).map((p) => E(p, 'middle-order')),
     E(top('wicketkeeper', 1)[0], 'wicketkeeper'),
-    E(top('all-rounder', 1)[0], 'all-rounder'),
-    ...top('fast-bowler', 3).map((p) => E(p, 'fast-bowler')),
   ];
-  const shapeSP = [
-    ...top('opener', 2).map((p) => E(p, 'opener')),
-    ...top('middle-order', 4).map((p) => E(p, 'middle-order')),
-    E(top('wicketkeeper', 1)[0], 'wicketkeeper'),
-    E(top('spinner', 1)[0], 'spinner'),
-    ...top('fast-bowler', 3).map((p) => E(p, 'fast-bowler')),
-  ];
-  const cmp = compareXIs(shapeAR, shapeSP, CTX);
-  ok(cmp.userScore > 89.5, 'elite AR shape blends to ~91', cmp.userScore);
-  ok(cmp.difference < 0 && cmp.difference > -2.5, 'AR shape within ~2.5 points of specialist shape', cmp.difference);
+  const pace = top('fast-bowler', 3).map((p) => E(p, 'fast-bowler'));
+  const murali = P('muttiah-muralitharan');
+  const asSpinner = teamBlend([...base, E(murali, 'spinner'), ...pace], CTX).score;
+  const asAR = teamBlend([...base, E(murali, 'all-rounder'), ...pace], CTX).score;
+  ok(asAR <= asSpinner, 'declaring a specialist spinner as all-rounder never raises the team score', { asSpinner, asAR });
 }
 
 console.log(`\n${pass} passed, ${fail} failed`);

@@ -27,7 +27,6 @@ for (const era of ['legends', '1970s', '1980s', '1990s', '2000s', '2010s', '2020
   }
 }
 const CTX = buildScoringContext([...byId.values()]);
-const AR_N = CTX.arPopulations.battingAverage.length;
 const P = (id: string) => byId.get(id)!;
 const f1 = (x: number | null | undefined) => (x === null || x === undefined ? 'n/a' : x.toFixed(1));
 const f3 = (x: number | null | undefined) => (x === null || x === undefined ? 'n/a' : x.toFixed(3));
@@ -37,11 +36,12 @@ L.push('# BeatMy11 seven-metric engine — scoring review pack');
 L.push('');
 L.push(`Generated ${new Date().toISOString().slice(0, 10)} from the current repo data (${recordCount} records, ${byId.size} unique players).`);
 L.push('Engine: seven metrics, percentile-rank 0–100 over eligible populations');
-L.push(`(all-rounders ranked only against the ${AR_N} all-rounders, other roles against full populations),`);
-L.push('W=20 shrinkage toward the role-eligible population mean (adjusted = (m×raw + 20×mean)/(m+20)),');
-L.push('V1 weights (bat 1/3, bowl 1/4, AR 60/40 toward stronger discipline),');
+L.push('(every role, all-rounders included, ranked against the full populations — V2, owner-approved 2026-09-29),');
+L.push('W=30 shrinkage toward the role-eligible population mean (adjusted = (m×raw + 30×mean)/(m+30)),');
+L.push('each half = 75% weighted metrics (bat 1/3, bowl 1/4) + 25% longevity (Tests played, full credit at 50),');
+L.push('all-rounder = stronger half + weaker half filling 50% of the gap to 100,');
 L.push('XI score = team blend: 40% batting unit + 50% bowling unit + 10% fielding unit');
-L.push('(owner-approved 2026-09-27; fielding = dismissals/match, W=20 shrinkage, full-population percentile, all players).');
+L.push('(owner-approved 2026-09-27; fielding = dismissals/match, W=30 shrinkage, full-population percentile, all players).');
 L.push('');
 L.push('## Populations and shrinkage priors');
 L.push('');
@@ -87,19 +87,19 @@ L.push('No player with ≤5 Tests appears in any role\'s top 10 (top-10 minimums
 L.push('');
 L.push('## All-rounders under the microscope');
 L.push('');
-for (const id of ['jacques-kallis', 'garfield-sobers', 'imran-khan']) {
+for (const id of ['garfield-sobers', 'richard-hadlee', 'jacques-kallis', 'imran-khan']) {
   const s = scorePlayer(P(id), 'all-rounder', CTX);
   const n = s.normalized;
   L.push(`### ${s.name} — final **${f1(s.score)}** (batting ${f1(s.battingScore)} / bowling ${f1(s.bowlingScore)})`);
   L.push('');
-  L.push(`| Metric | Adjusted value | Percentile (of the ${AR_N} all-rounders) |`);
+  L.push('| Metric | Adjusted value | Percentile (full population) |');
   L.push('|---|---|---|');
   for (const k of BATTING_METRICS) L.push(`| ${k} | ${f3(s.adjusted[k])} | ${f1(n[k])} |`);
   for (const k of BOWLING_METRICS) L.push(`| ${k} | ${f3(s.adjusted[k])} | ${f1(n[k])} |`);
   L.push('');
 }
-L.push(`All-rounders are ranked only against the ${AR_N} all-rounders (batting vs AR batting, bowling vs AR bowling),`);
-L.push('shrunk toward AR-only prior means. A specialist declared as an all-rounder still collapses (Murali: 99.2 as spinner → 50.0 as AR).');
+L.push('All-rounders are ranked against the full batting and bowling populations. Each half includes 25% longevity;');
+L.push('the final score is the stronger half plus the weaker half filling 50% of the remaining gap to 100.');
 L.push('');
 L.push('## Fixed house XI');
 L.push('');
