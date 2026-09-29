@@ -431,9 +431,9 @@ const styleSeed = playersForEra('legends')[0];
       'opener-2': { x: 50, y: 28 },
       'bat-3': { x: 28, y: 78 },
       'bat-4': { x: 15, y: 62 },
-      'bat-5': { x: 82, y: 72 },
+      'bat-5': { x: 86, y: 72 },
       'bat-6': { x: 50, y: 88 },
-      'flex-7': { x: 82, y: 45 },
+      'flex-7': { x: 86, y: 45 },
       'flex-8': { x: 70, y: 55 },
       'fast-1': { x: 15, y: 35 },
       'fast-2': { x: 30, y: 15 },
@@ -2334,6 +2334,10 @@ const styleSeed = playersForEra('legends')[0];
        "Place as …" caption is hidden to keep the field uncluttered. */
     @media (max-width: 767px) {
       .bm11-fslot-hint { display: none; }
+      /* Occupied slots: hide the declared-role chip (Fast Bowler,
+         Opener, …) — the name + initials carry the slot on small
+         screens, and dropping the chip stops neighbour overlap. */
+      .bm11-fslot-sub { display: none; }
     }
     /* Awaiting placement: the legal destinations pulse emerald. */
     .bm11-fslot.is-glow .bm11-fslot-ring {
