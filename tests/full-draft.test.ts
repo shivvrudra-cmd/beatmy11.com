@@ -119,6 +119,8 @@ function oracleAchievable(pools: NormalizedPlayer[][]): boolean {
  * slot-assignable under the slot model (slots are fungible within their
  * group and group capacities equal the shape maxima), so a counts
  * completion implies a slot completion from a counts-consistent state.
+ * (The keeper-only bat-6 is the one exception: the greedy player always
+ * homes the keeper there, restoring fungibility for the rest.)
  */
 function oracleFrom(
   pools: NormalizedPlayer[][],
@@ -204,7 +206,15 @@ function playGreedy(pools: NormalizedPlayer[][]): GreedyResult {
           }
         }
       }
-      candidates.sort((a, b) => b.score - a.score); // stable: ties keep slot order
+      candidates.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        // Keeper's home is the keeper-only bat-6: prefer it for wicketkeeper
+        // declarations, otherwise a keeper placed on bat-3/4/5 strands bat-6
+        // (the counts oracle can't see that slot-level trap).
+        const aHome = a.role === 'wicketkeeper' && a.slot === 'bat-6' ? 1 : 0;
+        const bHome = b.role === 'wicketkeeper' && b.slot === 'bat-6' ? 1 : 0;
+        return bHome - aHome;
+      }); // stable: remaining ties keep slot order
       const pickedIds = new Set(draft.selectedPlayers.map((p) => p.id));
       let best: { p: NormalizedPlayer; slot: string; role: XiRole; score: number } | null = null;
       for (const c of candidates) {

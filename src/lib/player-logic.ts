@@ -383,9 +383,9 @@ export const XI_SLOTS: XiSlot[] = [
   },
   {
     key: 'bat-6',
-    roles: ['middle-order', 'wicketkeeper'],
+    roles: ['wicketkeeper'],
     group: 'batting',
-    label: 'Batting 6',
+    label: 'Wicketkeeper',
   },
   {
     key: 'flex-7',
@@ -1418,7 +1418,13 @@ export function deserializeDraft(
     // XI still needs one.
     const rolePrefs: XiRole[] = [];
     if (isWicketkeeper(p) && counts.wicketkeeper < 1) rolePrefs.push('wicketkeeper');
-    for (const s of XI_SLOTS) {
+    // The keeper's home is the keeper-only bat-6 — claim it before batters
+    // fill the dual-role batting slots around it.
+    const slotOrder = [...XI_SLOTS];
+    if (rolePrefs.includes('wicketkeeper')) {
+      slotOrder.sort((a, b) => (a.key === 'bat-6' ? -1 : b.key === 'bat-6' ? 1 : 0));
+    }
+    for (const s of slotOrder) {
       if (slots[s.key]) continue;
       const decl = declarableRoles(p, s.key);
       const ordered = [

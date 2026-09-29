@@ -206,12 +206,12 @@ ok(capR === 'Both opener spots are filled.', 'opener cap reason', capR);
 k = pick(k, mo1, 'bat-3', 'middle-order');
 k = spinNext(k);
 k = pick(k, mo2, 'bat-4', 'middle-order');
-k = pick(k, gilchrist, 'bat-5', 'wicketkeeper');
+k = pick(k, gilchrist, 'bat-6', 'wicketkeeper');
 k = spinNext(k); // round 4
 // keeper-capped multi-role player can still go as a batter (MO at 2 < 3)
 const sangaFree = validatePoolPick(k, sanga);
 ok(sangaFree === null, 'sanga still pickable as MO when only WK capped', sangaFree);
-k = pick(k, mo3, 'bat-6', 'middle-order');
+k = pick(k, mo3, 'bat-5', 'middle-order');
 k = pick(k, f1, 'fast-1', 'fast-bowler');
 k = spinNext(k); // round 5
 k = pick(k, f2, 'fast-2', 'fast-bowler');
@@ -258,29 +258,35 @@ s6 = pick(s6, f3, 'fast-3', 'fast-bowler');
 s6 = spinNext(s6); // round 6
 const r6poolReal = [sanga, mo4, mk('f9', 'Fast Nine', 'fast-bowler')];
 const sup = supplyFor(s6, r6poolReal);
-// Sangakkara's card stays enabled (he can go as keeper), but declaring him
-// middle-order would strand the keeper slot -> that option is disabled.
+// Sangakkara's card stays enabled (he can go as keeper on bat-6), but on
+// bat-5 both declarations strand the keeper-only slot -> disabled there.
 const sangaCard = validatePoolPick(s6, sanga, sup);
 ok(sangaCard === null, 'sanga card enabled (keeper use is legal)', sangaCard);
 const opts = placementOptions(s6, sanga, 'bat-5', sup);
 const moOpt = opts.find((o) => o.role === 'middle-order');
 const wkOpt = opts.find((o) => o.role === 'wicketkeeper');
 ok(!!moOpt && moOpt.reason !== null && moOpt.reason.includes('strand'), 'chooser: MO option disabled (strands keeper)', moOpt?.reason);
-ok(!!wkOpt && wkOpt.reason === null, 'chooser: WK option enabled');
+ok(!!wkOpt && wkOpt.reason !== null && wkOpt.reason.includes('strand'), 'chooser: WK option on bat-5 disabled (strands keeper-only slot)', wkOpt?.reason);
+// On the keeper-only slot itself, declaring as keeper is clean.
+const opts6 = placementOptions(s6, sanga, 'bat-6', sup);
+const wkOpt6 = opts6.find((o) => o.role === 'wicketkeeper');
+ok(opts6.length === 1 && !!wkOpt6 && wkOpt6.reason === null, 'chooser: bat-6 offers only WK, enabled');
 // (placing as WK works and keeps the AR+SP shape reachable)
-const s6b = applyDraftPick(s6, sanga, 'bat-5', 'wicketkeeper');
-ok(s6b !== s6, 'sanga placed as WK');
+const s6b = applyDraftPick(s6, sanga, 'bat-6', 'wicketkeeper');
+ok(s6b !== s6, 'sanga placed as WK on the keeper-only slot');
 // last pick: only a middle-order completes (AR+SP shape)
 const lastR = validatePoolPick(s6b, mk('f10', 'Fast Ten', 'fast-bowler'), supplyFor(s6b, r6poolReal));
 ok(lastR !== null, 'last pick blocks fast bowler (MO needed)', lastR);
-const s6c = applyDraftPick(s6b, mo4, 'bat-6', 'middle-order');
+const s6c = applyDraftPick(s6b, mo4, 'bat-5', 'middle-order');
 ok(isXIValid(s6c), 'R6-completed XI valid (AR+SP shape, secondary keeper as WK)');
 
 // ---- moves ----
-// move keeper within batting slots keeps role
-const mv1 = applyDraftMove(s6c, 'bat-5', 'bat-3');
+// swap two middle-order batters keeps the XI valid
+const mv1 = applyDraftMove(s6c, 'bat-3', 'bat-4');
 ok(mv1 !== s6c, 'move applies');
-ok(countsOf(mv1).wicketkeeper === 1 && isXIValid(mv1), 'move keeps XI valid');
+ok(countsOf(mv1)['middle-order'] === 3 && isXIValid(mv1), 'MO swap keeps XI valid');
+// keeper-only slot: the keeper cannot move off bat-6 (nothing else can fill it)
+ok(validateSlotMove(s6c, 'bat-6', 'bat-5') !== null, 'keeper cannot leave keeper-only slot');
 // swap opener with fast bowler -> rejected (incompatible)
 ok(validateSlotMove(s6c, 'opener-1', 'fast-1') !== null, 'bad move rejected');
 ok(applyDraftMove(s6c, 'opener-1', 'fast-1') === s6c, 'bad move no-op');
@@ -294,13 +300,13 @@ ok(mvAr !== mv && countsOf(mvAr)['all-rounder'] === 1, 'AR flex-to-flex move kee
 ok(mvAr.slots['flex-8']?.role === 'all-rounder', 'declared AR travels between flex slots');
 // moving the only spinner out to a bat slot is impossible (no compatible role) -> rejected
 ok(validateSlotMove(e, 'flex-8', 'bat-3') !== null, 'spinner cannot move to bat slot', validateSlotMove(e, 'flex-8', 'bat-3'));
-// swap two middle-order batters
-const sw = applyDraftMove(s6c, 'bat-4', 'bat-6');
-ok(sw !== s6c && isXIValid(sw), 'MO swap keeps valid');
+// a middle-order batter cannot move onto the keeper-only slot
+ok(validateSlotMove(s6c, 'bat-4', 'bat-6') !== null, 'MO cannot move to keeper-only slot');
+ok(applyDraftMove(s6c, 'bat-4', 'bat-6') === s6c, 'blocked MO move leaves state untouched');
 
 // ---- deselect ----
 const ds = applyDraftDeselect(s6b, sanga.id);
-ok(ds.selectedPlayers.length === 9 && ds.slots['bat-5'] === null, 'deselect frees slot');
+ok(ds.selectedPlayers.length === 9 && ds.slots['bat-6'] === null, 'deselect frees slot');
 
 // ---- invalid XI guard ----
 let bad = freshStarted();
@@ -316,7 +322,7 @@ const res = deserializeDraft(JSON.parse(JSON.stringify(ser)), (uid) => {
   return all.find((p) => p.uid === uid) ?? null;
 });
 ok(!!res && isXIValid(res), 'v4 round-trip valid');
-ok(res!.slots['bat-5']?.role === 'wicketkeeper', 'v4 restores declared role');
+ok(res!.slots['bat-6']?.role === 'wicketkeeper', 'v4 restores declared role');
 
 // ---- v3 migration: spin-ar -> flex-7; bat-7 falls back to greedy ----
 const v3blob = {
@@ -383,7 +389,7 @@ ok(!canFillRole({ ...s6.slots, 'bat-5': { uid: sanga.uid, role: 'wicketkeeper' }
 
 // ---- move stranding (supply-aware moves) ----
 // Round 6, 9 picks: O2 MO2 WK1 AR1 SP1 F2 — the second fast bowler is a
-// multi-role fast/middle-order player declared as a fast bowler; bat-6 is empty.
+// multi-role fast/middle-order player declared as a fast bowler; bat-5 is empty.
 let mvd = createDraft();
 const mvPick = (p: NormalizedPlayer, slot: string, role: XiRole) => {
   mvd = applyDraftPick(mvd, p, slot, role);
@@ -395,7 +401,7 @@ mvPick(mk('o2', 'O2', 'opener'), 'opener-2', 'opener');
 mvPick(mk('mmo1', 'M1', 'middle-order'), 'bat-3', 'middle-order');
 mvd = applySpinResult(mvd, '1990s', 'Australia');
 mvPick(mk('mmo2', 'M2', 'middle-order'), 'bat-4', 'middle-order');
-mvPick(mk('mwk', 'WK', 'wicketkeeper'), 'bat-5', 'wicketkeeper');
+mvPick(mk('mwk', 'WK', 'wicketkeeper'), 'bat-6', 'wicketkeeper');
 mvd = applySpinResult(mvd, '1990s', 'Australia');
 mvPick(mk('mar', 'AR', 'all-rounder'), 'flex-7', 'all-rounder');
 mvPick(mk('msp', 'SP', 'spinner'), 'flex-8', 'spinner');
@@ -408,9 +414,9 @@ ok(mvd.selectedPlayers.length === 9 && mvd.currentRound === 6, 'move test draft 
 
 const moOnly = mk('mox', 'MOX', 'middle-order');
 const fastOnlyX = mk('fx', 'FX', 'fast-bowler');
-// Moving the dual-role quick from fast-2 to bat-6 re-declares him as a
+// Moving the dual-role quick from fast-2 to bat-5 re-declares him as a
 // batter; with no fast bowler left in the draw the XI would strand on F:1.
-const strandReason = validateSlotMove(mvd, 'fast-2', 'bat-6', supplyFor(mvd, [moOnly]));
+const strandReason = validateSlotMove(mvd, 'fast-2', 'bat-5', supplyFor(mvd, [moOnly]));
 ok(
   typeof strandReason === 'string' && strandReason.includes('strand'),
   'move that strands a scarce role is blocked',
@@ -418,25 +424,25 @@ ok(
 );
 // With a fast bowler still available in the draw, the same move is fine.
 ok(
-  validateSlotMove(mvd, 'fast-2', 'bat-6', supplyFor(mvd, [moOnly, fastOnlyX])) === null,
+  validateSlotMove(mvd, 'fast-2', 'bat-5', supplyFor(mvd, [moOnly, fastOnlyX])) === null,
   'move allowed when the draw can still fill the role',
 );
-const moved = applyDraftMove(mvd, 'fast-2', 'bat-6', supplyFor(mvd, [moOnly, fastOnlyX]));
+const moved = applyDraftMove(mvd, 'fast-2', 'bat-5', supplyFor(mvd, [moOnly, fastOnlyX]));
 ok(
-  moved.slots['bat-6']?.uid === fmDual.uid && moved.slots['bat-6']?.role === 'middle-order',
+  moved.slots['bat-5']?.uid === fmDual.uid && moved.slots['bat-5']?.role === 'middle-order',
   'applyDraftMove re-declares role on move',
 );
 ok(
-  applyDraftMove(mvd, 'fast-2', 'bat-6', supplyFor(mvd, [moOnly])) === mvd,
+  applyDraftMove(mvd, 'fast-2', 'bat-5', supplyFor(mvd, [moOnly])) === mvd,
   'blocked move leaves state untouched',
 );
 // applyDraftPick threads supply: the client's 5-arg call commits the pick.
 // (The draw still holds a fast bowler for the remaining deficit, so the
 // supply check passes.)
 const supPick = mk('supp', 'SupP', 'middle-order');
-const mvd2 = applyDraftPick(mvd, supPick, 'bat-6', 'middle-order', supplyFor(mvd, [supPick, fastOnlyX]));
+const mvd2 = applyDraftPick(mvd, supPick, 'bat-5', 'middle-order', supplyFor(mvd, [supPick, fastOnlyX]));
 ok(
-  mvd2.slots['bat-6']?.uid === supPick.uid && mvd2.slots['bat-6']?.role === 'middle-order',
+  mvd2.slots['bat-5']?.uid === supPick.uid && mvd2.slots['bat-5']?.role === 'middle-order',
   'applyDraftPick with supply commits',
 );
 

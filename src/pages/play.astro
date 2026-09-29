@@ -442,7 +442,7 @@ const styleSeed = playersForEra('legends')[0];
     // Friendly default names inside the flexible slot cards: the keeper's
     // home (bat-6) and the all-rounder/spinner pair (flex-7/8). The
     // reachable-shape narrowing in slotButtonHTML can still override these
-    // (e.g. bat-6 reads "Middle-order" once the keeper is placed elsewhere).
+    // for the flex pair; bat-6 is keeper-only so its label never changes.
     const SLOT_LABEL_OVERRIDES = {
       'bat-6': 'Wicketkeeper',
       'flex-7': 'All-rounder/Spinner',
