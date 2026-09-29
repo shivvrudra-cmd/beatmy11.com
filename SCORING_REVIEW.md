@@ -1,6 +1,6 @@
 # BeatMy11 seven-metric engine — scoring review pack
 
-Generated 2026-09-28 from the current repo data (792 records, 535 unique players).
+Generated 2026-09-29 from the current repo data (796 records, 536 unique players).
 Engine: seven metrics, percentile-rank 0–100 over eligible populations
 (all-rounders ranked only against the 46 all-rounders, other roles against full populations),
 W=20 shrinkage toward the role-eligible population mean (adjusted = (m×raw + 20×mean)/(m+20)),
@@ -15,10 +15,10 @@ XI score = team blend: 40% batting unit + 50% bowling unit + 10% fielding unit
 | Batting Average | 334 | 37.254 |
 | Runs per Player-Match | 334 | 58.964 |
 | Century Rate | 334 | 0.128 |
-| Bowling Average | 247 | 32.032 |
-| Wickets per Bowler-Match | 247 | 3.286 |
-| Five-Wicket-Haul Rate | 247 | 0.148 |
-| Ten-Wicket-Match Rate | 247 | 0.022 |
+| Bowling Average | 248 | 32.044 |
+| Wickets per Bowler-Match | 248 | 3.285 |
+| Five-Wicket-Haul Rate | 248 | 0.148 |
+| Ten-Wicket-Match Rate | 248 | 0.022 |
 
 ## Representative player scores
 
@@ -26,7 +26,7 @@ Roles shown are the declared/evaluation roles. `raw → adjusted` shows the shri
 
 | Player | Role | Tests | Batting avg (raw→adj) | Runs/match (raw→adj) | Bowl avg (raw→adj) | Wkts/match (raw→adj) | Final |
 |---|---|---|---|---|---|---|---|
-| Don Bradman | opener | 52 | 99.9→82.5 | 134.5→113.5 | 36.0→34.9 | 0.038→0.941 | **100.0** |
+| Don Bradman | opener | 52 | 99.9→82.5 | 134.5→113.5 | 36.0→34.9 | 0.038→0.940 | **100.0** |
 | Jack Hobbs | opener | 61 | 56.9→52.0 | 88.7→81.3 | 165.0→132.2 | 0.016→0.824 | **96.5** |
 | Len Hutton | opener | 79 | 56.7→52.8 | 88.2→82.3 | 77.3→68.2 | 0.038→0.694 | **97.3** |
 | Sachin Tendulkar | middle-order | 200 | 53.8→52.3 | 79.6→77.7 | 54.2→52.2 | 0.230→0.508 | **96.7** |
@@ -35,19 +35,19 @@ Roles shown are the declared/evaluation roles. `raw → adjusted` shows the shri
 | Brian Lara | middle-order | 131 | 52.9→50.8 | 91.2→87.0 | n/a→n/a | 0.000→0.435 | **97.8** |
 | Viv Richards | middle-order | 121 | 50.2→48.4 | 70.6→68.9 | 61.4→57.2 | 0.264→0.693 | **86.8** |
 | Ricky Ponting | middle-order | 168 | 51.9→50.3 | 79.6→77.4 | n/a→n/a | 0.030→0.376 | **95.5** |
-| Innocent Kaia | opener | 3 | 62.4→40.5 | 104.0→64.8 | n/a→n/a | 0.000→2.858 | **68.5** |
+| Innocent Kaia | opener | 3 | 62.4→40.5 | 104.0→64.8 | n/a→n/a | 0.000→2.857 | **68.5** |
 | Devdutt Padikkal | middle-order | 4 | 69.7→42.7 | 104.5→66.6 | n/a→n/a | 0.000→2.738 | **80.4** |
-| Adam Gilchrist | wicketkeeper | 96 | 47.6→45.8 | 58.0→58.2 | n/a→n/a | 0.000→0.567 | **70.6** |
+| Adam Gilchrist | wicketkeeper | 96 | 47.6→45.8 | 58.0→58.2 | n/a→n/a | 0.000→0.566 | **70.6** |
 | Andy Flower | wicketkeeper | 63 | 51.5→48.1 | 76.1→72.0 | n/a→n/a | 0.000→0.792 | **87.3** |
 | Jacques Kallis | all-rounder | 166 | 55.4→53.0 | 80.1→76.7 | 32.6→32.9 | 1.759→1.831 | **68.0** |
 | Garfield Sobers | all-rounder | 93 | 57.8→53.5 | 86.4→79.8 | 34.0→34.2 | 2.527→2.509 | **75.1** |
 | Imran Khan | all-rounder | 88 | 37.7→36.9 | 43.3→44.4 | 22.8→25.1 | 4.114→3.801 | **77.5** |
 | Muttiah Muralitharan | spinner | 133 | 11.7→15.0 | 9.5→15.9 | 22.7→23.9 | 6.015→5.658 | **99.2** |
 | Shane Warne | spinner | 145 | 17.3→19.7 | 21.8→26.3 | 25.4→26.2 | 4.883→4.689 | **94.1** |
-| Sydney Barnes | fast-bowler | 27 | 8.1→20.5 | 9.0→30.2 | 16.4→23.1 | 7.000→5.420 | **99.7** |
-| Glenn McGrath | fast-bowler | 124 | 7.4→11.5 | 5.2→12.6 | 21.6→23.0 | 4.540→4.366 | **86.5** |
+| Sydney Barnes | fast-bowler | 27 | 8.1→20.5 | 9.0→30.2 | 16.4→23.1 | 7.000→5.419 | **99.7** |
+| Glenn McGrath | fast-bowler | 124 | 7.4→11.5 | 5.2→12.6 | 21.6→23.1 | 4.540→4.366 | **86.5** |
 | Malcolm Marshall | fast-bowler | 81 | 18.9→22.5 | 22.3→29.6 | 20.9→23.1 | 4.642→4.373 | **93.8** |
-| Donald Tiripano | fast-bowler | 16 | 22.1→30.5 | 33.2→47.5 | 49.0→39.6 | 1.625→2.548 | **18.0** |
+| Donald Tiripano | fast-bowler | 16 | 22.1→30.5 | 33.2→47.5 | 49.0→39.6 | 1.625→2.547 | **18.0** |
 
 ## Hot-streak check (the reason for shrinkage)
 
@@ -110,7 +110,7 @@ shrunk toward AR-only prior means. A specialist declared as an all-rounder still
 | 6 | Adam Gilchrist | wicketkeeper | 70.6 |
 | 7 | Richard Hadlee | all-rounder | 64.4 |
 | 8 | Muttiah Muralitharan | spinner | 99.2 |
-| 9 | Joel Garner | fast-bowler | 61.3 |
+| 9 | Joel Garner | fast-bowler | 61.1 |
 | 10 | Wasim Akram | fast-bowler | 87.3 |
 | 11 | Dale Steyn | fast-bowler | 94.2 |
 |  | **XI score (40/50/10 team blend)** |  | **81.6** |
@@ -128,7 +128,7 @@ shrunk toward AR-only prior means. A specialist declared as an all-rounder still
 - Andy Flower (wicketkeeper): 87.3
 - Ian Botham (all-rounder): 81.3
 - Sydney Barnes (fast-bowler): 99.7
-- Dennis Lillee (fast-bowler): 96.1
+- Dennis Lillee (fast-bowler): 96.2
 - Dale Steyn (fast-bowler): 94.2
 - **XI score: 90.9**
 
@@ -143,7 +143,7 @@ shrunk toward AR-only prior means. A specialist declared as an all-rounder still
 - Andy Flower (wicketkeeper): 87.3
 - Muttiah Muralitharan (spinner): 99.2
 - Sydney Barnes (fast-bowler): 99.7
-- Dennis Lillee (fast-bowler): 96.1
+- Dennis Lillee (fast-bowler): 96.2
 - Dale Steyn (fast-bowler): 94.2
 - **XI score: 93.0**
 
@@ -158,7 +158,7 @@ shrunk toward AR-only prior means. A specialist declared as an all-rounder still
 - Ian Botham (all-rounder): 81.3
 - Muttiah Muralitharan (spinner): 99.2
 - Sydney Barnes (fast-bowler): 99.7
-- Dennis Lillee (fast-bowler): 96.1
+- Dennis Lillee (fast-bowler): 96.2
 - Dale Steyn (fast-bowler): 94.2
 - **XI score: 90.6**
 
@@ -173,7 +173,7 @@ shrunk toward AR-only prior means. A specialist declared as an all-rounder still
 - Andy Flower (wicketkeeper): 87.3
 - Ian Botham (all-rounder): 81.3
 - Sydney Barnes (fast-bowler): 99.7
-- Dennis Lillee (fast-bowler): 96.1
+- Dennis Lillee (fast-bowler): 96.2
 - Dale Steyn (fast-bowler): 94.2
 - **XI score: 90.9** vs 18.0 → diff 72.9 → user
 
@@ -188,7 +188,7 @@ shrunk toward AR-only prior means. A specialist declared as an all-rounder still
 - Andy Flower (wicketkeeper): 87.3
 - Ian Botham (all-rounder): 81.3
 - Sydney Barnes (fast-bowler): 99.7
-- Dennis Lillee (fast-bowler): 96.1
+- Dennis Lillee (fast-bowler): 96.2
 - Dale Steyn (fast-bowler): 94.2
 - **XI score: 90.9** vs 93.0 → diff -2.1 → opponent
 
@@ -203,7 +203,7 @@ shrunk toward AR-only prior means. A specialist declared as an all-rounder still
 - Andy Flower (wicketkeeper): 87.3
 - Ian Botham (all-rounder): 81.3
 - Sydney Barnes (fast-bowler): 99.7
-- Dennis Lillee (fast-bowler): 96.1
+- Dennis Lillee (fast-bowler): 96.2
 - Dale Steyn (fast-bowler): 94.2
 - **XI score: 90.9** vs 90.9 → diff 0.0 → tie
 

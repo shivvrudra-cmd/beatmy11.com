@@ -392,7 +392,7 @@ ok(
     fieldingScore(P('adam-gilchrist'), CTX) === fieldingScore(P('adam-gilchrist'), CTX),
     'fielding score deterministic',
   );
-  ok(CTX.fieldingPopulation.length === 535, 'fielding population = all 535 unique players', CTX.fieldingPopulation.length);
+  ok(CTX.fieldingPopulation.length === 536, 'fielding population = all 536 unique players', CTX.fieldingPopulation.length);
   // Missing fielding data is an honest error at the XI level.
   const missingF = blendXI.map((e, i) =>
     i === 0

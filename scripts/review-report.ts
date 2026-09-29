@@ -18,8 +18,10 @@ import { getHouseXI } from '../src/lib/opponent-xi';
 
 const DATA_DIR = process.cwd() + '/src/data';
 const byId = new Map<string, NormalizedPlayer>();
+let recordCount = 0;
 for (const era of ['legends', '1970s', '1980s', '1990s', '2000s', '2010s', '2020s']) {
   for (const p of JSON.parse(readFileSync(`${DATA_DIR}/${era}.json`, 'utf8'))) {
+    recordCount++;
     const n = normalizePlayer(p, era);
     if (!byId.has(n.id)) byId.set(n.id, n);
   }
@@ -33,7 +35,7 @@ const f3 = (x: number | null | undefined) => (x === null || x === undefined ? 'n
 const L: string[] = [];
 L.push('# BeatMy11 seven-metric engine — scoring review pack');
 L.push('');
-L.push(`Generated ${new Date().toISOString().slice(0, 10)} from the current repo data (792 records, 535 unique players).`);
+L.push(`Generated ${new Date().toISOString().slice(0, 10)} from the current repo data (${recordCount} records, ${byId.size} unique players).`);
 L.push('Engine: seven metrics, percentile-rank 0–100 over eligible populations');
 L.push(`(all-rounders ranked only against the ${AR_N} all-rounders, other roles against full populations),`);
 L.push('W=20 shrinkage toward the role-eligible population mean (adjusted = (m×raw + 20×mean)/(m+20)),');
