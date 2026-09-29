@@ -17,8 +17,17 @@ BeatMy11 is a fantasy cricket web game (Astro + Tailwind + TypeScript). The loop
 3. First release answers exactly one question: **"Does Your XI Beat Mine?"**
    showing **Your XI score**, **My XI score**, and the verdict.
 
-There is deliberately **no** 5-match Test series, no ball-by-ball simulation, and no
-AI-generated "why you won" explanation in this release. Those are later features.
+**The result is a five-Test series** (added 2026-09-29, `src/lib/series.ts`):
+the XI's team score is ranked against a calibration sample of drafted XIs
+(`src/data/series-calibration.json`, written by `scripts/calibrate-series.ts`
+from a human-like simulated drafter), a small seeded wobble is applied, and
+the rank picks the scoreline using the owner's target shares — 5–0 5%, 4–1 10%,
+3–2 20%, 2–2 (one draw) 10%, 2–3 35%, 1–4 10%, 0–5 10%. The same XI always gets
+the same series. Tests are played at Lord's, the MCG, Eden Gardens, Newlands and
+Kensington Oval, in that order; each gets a headline from the side that won it.
+`/matchup` shows the scoreline, the Test-by-Test reveal, the XI's rank among
+drafts and every player's rating — not the two team scores. There is still no
+ball-by-ball simulation. **Recalibrate from real completed drafts after launch.**
 
 Repo: `https://github.com/shivvrudra-cmd/beatmy11.com` (public). `master` is the
 live branch; the owner pulls from GitHub and tests on their own PC.
@@ -63,13 +72,15 @@ tests/
 
 - **Round 1:** always the **Legends** era, 1 pick.
 - **Rounds 2–6:** the other eras, 2 picks each. Total = 11 players.
-- Each spin lands on **Era + Nation**; the left pane shows a role-grouped player pool
-  for that combination (Openers / Middle Order / **Wicketkeeper** (own group) /
-  All-rounder / Spinner / Fast bowlers).
-- Two-step drafting: select a player from the pool, then place them into a glowing
-  compatible slot in the right-pane XI.
+- **"Floodlit night" design** (rebuilt 2026-09-29, mobile-first): Era × Nation
+  reels with one era respin + one nation respin per draft, a swipeable row of
+  player cards for the draw, and a fixed bottom dock holding the 11 XI spots.
+- Cards show **real Test stats only — no ratings** — ordered by role, then A–Z,
+  never by strength, so the best pick is the player's judgment. Ratings are
+  revealed on the result screen.
+- Two-step drafting: tap a card, then a glowing spot in the dock (a role chooser
+  appears only when a spot allows more than one legal role).
 - Picked players display the era the spin landed on.
-- The XI panel groups players by role with counts and role-specific stat columns.
 
 **Hard rules enforced during the draft** (`src/lib/player-logic.ts`):
 
@@ -87,15 +98,19 @@ The XI is **11 fixed slots**, each storing a **declared role**:
 | Spots | Slot group        | Accepts                                              |
 |-------|-------------------|------------------------------------------------------|
 | 1–2   | Openers           | openers only                                         |
-| 3–7   | Batting group     | middle order / wicketkeeper / all-rounder            |
-| 8     | Spot 8            | spinner **or** all-rounder                           |
+| 3–5   | Batting 3–5       | middle order only (keeper-batters / all-rounders bat here as middle order) |
+| 6     | Wicketkeeper      | wicketkeeper only                                    |
+| 7–8   | Spots 7–8         | all-rounder **or** spinner                           |
 | 9–11  | Fast bowlers      | fast bowlers only                                    |
 
-Exactly **three valid completed XI shapes** exist:
+Spots 3–5 stopped accepting a wicketkeeper declaration on 2026-09-29: with
+exactly one keeper and a keeper-only spot 6, a keeper on 3–5 stranded the XI.
 
-1. 2 openers / 4 middle order / 1 keeper / 1 all-rounder / 0 spinner / 3 fast
-2. 2 openers / 4 middle order / 1 keeper / 0 all-rounder / 1 spinner / 3 fast
-3. 2 openers / 3 middle order / 1 keeper / 1 all-rounder / 1 spinner / 3 fast
+Exactly **three valid completed XI shapes** exist (`XI_SHAPES`):
+
+1. 2 openers / 3 middle order / 1 keeper / 2 all-rounders / 0 spinners / 3 fast
+2. 2 openers / 3 middle order / 1 keeper / 1 all-rounder / 1 spinner / 3 fast
+3. 2 openers / 3 middle order / 1 keeper / 0 all-rounders / 2 spinners / 3 fast
 
 Mechanics:
 
@@ -166,9 +181,16 @@ rather than invented:
   `IncompletePlayerData` instead of producing a misleading score.
 - The architecture returns per-player detail in `TeamComparison`, but the
   first release displays only **Your XI score, My XI score, and the verdict**.
-- Fixed house XI under the new engine scores **87.5** (diagnostic run
-  2026-09-25; see `SCORING_REVIEW.md` and `scripts/review-report.ts` to
-  reproduce).
+- **Rating engine V2** (owner-approved 2026-09-29): all-rounders ranked against
+  the full populations with the stronger half leading and the weaker half
+  filling 50% of the gap to 100; each half is 25% longevity (Tests played,
+  full credit at 50); shrinkage prior 30 matches. See the header of
+  `src/lib/seven-metrics.ts`.
+- Fixed house XI under V2 scores **80.8** (2026-09-29, after the owner-approved
+  swaps Gilchrist → Andy Flower, Steyn → Shaun Pollock, Hadlee → Jacques
+  Kallis; 8 nations). Score-greedy simulated drafts that use the game's
+  respins beat it ~14% of the time (`scripts/beat-house-analysis.ts`). See
+  `SCORING_REVIEW.md` and `scripts/review-report.ts` to reproduce.
 
 ### Scoring decisions — all resolved 2026-09-25 (owner-specified, V1)
 

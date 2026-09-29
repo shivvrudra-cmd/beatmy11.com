@@ -1,43 +1,33 @@
 ---
 /**
- * matchup.astro — "YOUR XI vs MY XI" + the verdict.
+ * matchup.astro — the five-Test series result, "Floodlit night" design
+ * (rebuilt 2026-09-29).
  *
- * Server-rendered shell (Navbar / Footer / BaseLayout) with the fixed house XI
- * pre-normalized in frontmatter and server-rendered via PlayerCard's
- * `comparison` variant (this also guarantees the PlayerCard `is:global`
- * styles are emitted on this page, so the client-rendered user rows below
- * pick up the same bm11-pc-* classes).
+ * The client script reads the user's XI from localStorage
+ * ('beatmy11.userXI.v1', slot order) and each pick's declared role from the
+ * draft blob ('beatmy11.draft.v1'), scores it with the seven-metric engine,
+ * then plays the series with src/lib/series.ts: the XI's rank among drafted
+ * XIs (src/data/series-calibration.json) plus a seeded wobble picks the
+ * scoreline, and each Test gets a venue and a headline from the side that
+ * won it. The same XI always gets the same series.
  *
- * The seven-metric scoring context (populations + shrinkage priors, built
- * from all 535 unique players at build time) is embedded as JSON for the
- * client script. Client <script type="module"> reads the user's XI from
- * localStorage ('beatmy11.userXI.v1'), recovers each pick's declared role
- * from the draft blob ('beatmy11.draft.v1', falling back to primary role),
- * then scores both XIs with compareXIs from the seven-metric engine.
- * V1 displays only the two XI scores and the verdict — no probabilities.
+ * Owner decisions: the two team scores are NOT shown (the result comes from
+ * the XI's rank, so raw scores side by side would read as contradictory);
+ * instead the page shows the scoreline, the Test-by-Test story, the XI's
+ * rank among drafts, and — revealed here for the first time — every
+ * player's rating.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
-import PlayerCard from '../components/PlayerCard.astro';
 import { getHouseXI } from '../lib/opponent-xi';
 import { buildScoringContext } from '../lib/seven-metrics';
 import { playersForEra, ERA_IDS } from '../lib/player-store';
 import type { NormalizedPlayer } from '../lib/player-logic';
+import calibration from '../data/series-calibration.json';
 
-const title = 'Your XI vs My XI — BeatMy11';
-const description =
-  'Your all-time Test XI against the fixed house XI. Seven career metrics, percentile-ranked — can you beat my 11?';
-
-/* ---------- fixed house "My XI" (isolated in src/lib/opponent-xi.ts) ----------
-   Deterministic: the same 11 legends every time. No randomness anywhere in
-   the opponent path. */
 const houseXI = getHouseXI();
 
-/* ---------- seven-metric scoring context (build time) ----------
-   All unique players (deduped by id, first era occurrence wins), exactly
-   the population the engine ranks against. Embedded as JSON so the client
-   verdict script needs no data files. */
+// Scoring context over every unique player — the population the engine
+// ranks against — embedded so the client needs no data files.
 const scoringPlayers: NormalizedPlayer[] = [];
 {
   const seen = new Set<string>();
@@ -49,141 +39,94 @@ const scoringPlayers: NormalizedPlayer[] = [];
     }
   }
 }
-const scoringContext = buildScoringContext(scoringPlayers);
-const scoringContextJson = JSON.stringify(scoringContext).replace(/</g, '\\u003c');
-
-const ROLE_ORDER = ['opener', 'middle-order', 'wicketkeeper', 'all-rounder', 'fast-bowler', 'spinner'];
-const ROLE_GROUP_LABELS: Record<string, string> = {
-  opener: 'Openers',
-  'middle-order': 'Middle Order',
-  wicketkeeper: 'Wicketkeeper',
-  'all-rounder': 'All-Rounder',
-  'fast-bowler': 'Fast Bowlers',
-  spinner: 'Spinners',
-};
-const houseGroups = ROLE_ORDER.map((role) => ({
-  role,
-  label: ROLE_GROUP_LABELS[role],
-  players: houseXI.filter((p) => p.primaryRole === role),
-})).filter((g) => g.players.length > 0);
-
-/* Embed the normalized house XI for the client script. Escape "<" so the
-   blob can never close the script element. */
-const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
+const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
+const scoringContextJson = safe(buildScoringContext(scoringPlayers));
+const houseJson = safe(houseXI);
+const calibrationJson = safe(calibration);
 ---
-<BaseLayout title={title} description={description}>
-  <a class="skip-link" href="#main">Skip to main content</a>
-  <Navbar />
+<BaseLayout
+  title="The Series — Beat My 11"
+  description="Your all-time Test XI against My 11 over five Tests at Lord's, the MCG, Eden Gardens, Newlands and Kensington Oval."
+>
+  <link slot="head" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <div class="rs">
+    <div class="rs-lights" aria-hidden="true"></div>
+    <header class="rs-top">
+      <a class="rs-brand" href="/" aria-label="Beat My 11 home">BEAT MY 11</a>
+      <a class="rs-again-top" href="/play" data-rs-again>Draft again</a>
+    </header>
 
-  <main id="main" class="matchup">
-    <div class="matchup__wrap">
-      <h1 class="sr-only">Your XI vs My XI</h1>
-
-      <section class="verdict" aria-live="polite" aria-atomic="true" aria-labelledby="verdict-title">
-        <p class="verdict__eyebrow">The verdict</p>
-        <h2 class="verdict__title" id="verdict-title">Crunching the numbers…</h2>
-        <p class="verdict__sub" id="verdict-sub">Your XI is being scored against the house.</p>
+    <main id="main">
+      <section class="rs-verdict" aria-labelledby="rs-title">
+        <p class="rs-eyebrow">The five-Test series</p>
+        <h1 class="rs-title" id="rs-title">Five Tests. One series.</h1>
+        <div class="rs-score" aria-hidden="true">
+          <div class="rs-side"><span class="rs-num" id="rs-user">0</span><span class="rs-lab">Your XI</span></div>
+          <span class="rs-dash">–</span>
+          <div class="rs-side"><span class="rs-num" id="rs-house">0</span><span class="rs-lab">My 11</span></div>
+        </div>
+        <p class="rs-sub" id="rs-sub" aria-live="polite"></p>
+        <p class="rs-rank" id="rs-rank" hidden></p>
+        <button type="button" class="rs-skip" id="rs-skip">Skip to result</button>
       </section>
 
-      <section class="tape" aria-labelledby="tape-heading">
-        <h2 class="matchup__section-title" id="tape-heading">Tale of the tape</h2>
-        <div class="tape__scores">
-          <div class="tape__side">
-            <span class="tape__label">Your XI</span>
-            <span class="tape__score" id="tape-user-score">–</span>
-            <div class="tape__track tape__track--you" aria-hidden="true"><i id="tape-user-bar"></i></div>
+      <ol class="rs-tests" id="rs-tests" aria-label="The five Tests"></ol>
+
+      <div class="rs-actions" id="rs-actions" hidden>
+        <button type="button" class="rs-share" id="rs-share">Share result</button>
+        <a class="rs-again" href="/play" data-rs-again>Draft again</a>
+        <p class="rs-copied" id="rs-copied" role="status"></p>
+      </div>
+
+      <section class="rs-xis" id="rs-xis" hidden aria-labelledby="rs-xis-title">
+        <h2 class="rs-h2" id="rs-xis-title">The ratings, revealed</h2>
+        <p class="rs-note">Each player’s rating out of 100, from their career numbers.</p>
+        <div class="rs-cols">
+          <div>
+            <h3 class="rs-h3">Your XI</h3>
+            <ol class="rs-list" id="rs-user-xi"></ol>
           </div>
-          <div class="tape__side tape__side--right">
-            <span class="tape__label">My XI</span>
-            <span class="tape__score" id="tape-house-score">–</span>
-            <div class="tape__track tape__track--house" aria-hidden="true"><i id="tape-house-bar"></i></div>
+          <div>
+            <h3 class="rs-h3">My 11</h3>
+            <ol class="rs-list" id="rs-house-xi"></ol>
           </div>
         </div>
       </section>
 
-      <div class="matchup__cols">
-        <section class="matchup__team" aria-labelledby="your-xi-heading">
-          <h2 class="matchup__team-title" id="your-xi-heading">Your XI</h2>
-          <div class="matchup__list" id="user-xi">
-            <p class="matchup__loading" id="user-xi-loading">Loading your XI…</p>
-            <noscript>
-              <p class="matchup__loading">
-                Your XI needs JavaScript to load. <a href="/play">Draft a new XI</a> to play.
-              </p>
-            </noscript>
-          </div>
-        </section>
-
-        <div class="matchup__divider" aria-hidden="true"><span>VS</span></div>
-
-        <section class="matchup__team" aria-labelledby="house-xi-heading">
-          <h2 class="matchup__team-title" id="house-xi-heading">
-            My XI <span class="matchup__team-sub">— the house</span>
-          </h2>
-          <div class="matchup__list">
-            {houseGroups.map((g) => (
-              <>
-                <h3 class="matchup__group">{g.label}</h3>
-                {g.players.map((p) => <PlayerCard player={p} comparison />)}
-              </>
-            ))}
-          </div>
-        </section>
-      </div>
-
-      <div class="matchup__actions">
-        <a href="/play" class="bm11-btn bm11-btn-primary" id="play-again">Start over</a>
-      </div>
-    </div>
-  </main>
-
-  <Footer />
+      <p class="rs-error" id="rs-error" hidden></p>
+    </main>
+  </div>
 
   <script id="bm11-house-xi" type="application/json" set:html={houseJson} />
   <script id="bm11-scoring-context" type="application/json" set:html={scoringContextJson} />
+  <script id="bm11-series-calibration" type="application/json" set:html={calibrationJson} />
 
-  <script type="module">
+  <script>
     import { compareXIs } from '../lib/seven-metrics';
+    import { playSeries, xiSeed } from '../lib/series';
 
-    const HOUSE_XI = JSON.parse(
-      document.getElementById('bm11-house-xi').textContent || '[]'
-    );
-    const SCORING_CONTEXT = JSON.parse(
-      document.getElementById('bm11-scoring-context').textContent || '{}'
-    );
+    const read = (id) => JSON.parse(document.getElementById(id).textContent || 'null');
+    const HOUSE_XI = read('bm11-house-xi') || [];
+    const SCORING_CONTEXT = read('bm11-scoring-context') || {};
+    const CALIBRATION = read('bm11-series-calibration');
 
-    /* ---------- normalization (mirrors the frontmatter spec) ---------- */
-    const VALID_ROLES = new Set([
-      'opener', 'middle-order', 'all-rounder', 'wicketkeeper', 'spinner', 'fast-bowler',
-    ]);
-    const normalizeRole = (r) =>
-      String(r ?? '').trim().toLowerCase().replace(/\s+/g, '-');
+    // ---------- normalization of stored players (lenient; never zero-fills) ----------
+    const VALID_ROLES = new Set(['opener', 'middle-order', 'all-rounder', 'wicketkeeper', 'spinner', 'fast-bowler']);
+    const normalizeRole = (r) => String(r ?? '').trim().toLowerCase().replace(/\s+/g, '-');
     const normalizeSecondaryRoles = (raw) => {
-      const arr = Array.isArray(raw) ? raw : (typeof raw === 'string' && raw ? [raw] : []);
+      const arr = Array.isArray(raw) ? raw : typeof raw === 'string' && raw ? [raw] : [];
       return arr.map(normalizeRole).filter((r) => VALID_ROLES.has(r));
     };
     const eraString = (era, fallback) => {
       const e = era ?? fallback ?? 'legends';
       return Array.isArray(e) ? String(e[0]) : String(e);
     };
-    const finOrNull = (v) => {
-      const n = Number(v);
-      return Number.isFinite(n) ? n : null;
-    };
-    const posOrNull = (v) => {
-      const n = Number(v);
-      return Number.isFinite(n) && n > 0 ? n : null;
-    };
-
-    /**
-     * Lenient conversion of a stored player into the seven-metric engine's
-     * NormalizedPlayer shape. Missing statistics stay null — never
-     * zero-filled — so auditMetrics/compareXIs see the real gaps.
-     */
+    const finOrNull = (v) => { const n = Number(v); return Number.isFinite(n) ? n : null; };
+    const posOrNull = (v) => { const n = Number(v); return Number.isFinite(n) && n > 0 ? n : null; };
     function toScoringPlayer(p, sourceEra) {
       const uid = String(p.uid ?? p.id ?? '');
       const inferredEra = uid.includes(':') ? uid.split(':')[0] : undefined;
-      const stats = p.stats ?? {};
+      const s = p.stats ?? {};
       return {
         id: String(p.id ?? uid ?? p.name ?? ''),
         uid,
@@ -193,266 +136,220 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
         primaryRole: normalizeRole(p.primaryRole),
         secondaryRoles: normalizeSecondaryRoles(p.secondaryRoles),
         stats: {
-          testAverage: posOrNull(stats.testAverage),
-          testRuns: finOrNull(stats.testRuns),
-          testMatches: finOrNull(stats.testMatches),
-          testCenturies: finOrNull(stats.testCenturies),
-          testWickets: finOrNull(stats.testWickets),
-          testBowlingAverage: posOrNull(stats.testBowlingAverage),
-          bowlingAverage: posOrNull(stats.bowlingAverage),
-          fiveWs: finOrNull(stats.fiveWs),
-          tenWs: finOrNull(stats.tenWs),
-          dismissals: finOrNull(stats.dismissals),
+          testAverage: posOrNull(s.testAverage),
+          testRuns: finOrNull(s.testRuns),
+          testMatches: finOrNull(s.testMatches),
+          testCenturies: finOrNull(s.testCenturies),
+          testWickets: finOrNull(s.testWickets),
+          testBowlingAverage: posOrNull(s.testBowlingAverage),
+          bowlingAverage: posOrNull(s.bowlingAverage),
+          fiveWs: finOrNull(s.fiveWs),
+          tenWs: finOrNull(s.tenWs),
+          dismissals: finOrNull(s.dismissals),
         },
       };
     }
-
-    /**
-     * Declared role per pick, recovered from the serialized draft blob
-     * (v3 stores uid → declared role per slot). Falls back to {} when the
-     * draft blob is absent — entries then score under their primary role.
-     */
     function readDeclaredRoles() {
       try {
-        const raw = localStorage.getItem('beatmy11.draft.v1');
-        if (!raw) return {};
-        const draft = JSON.parse(raw);
+        const draft = JSON.parse(localStorage.getItem('beatmy11.draft.v1') || 'null');
         const picks = Array.isArray(draft?.picks) ? draft.picks : [];
         const map = {};
-        for (const pk of picks) {
-          if (pk && typeof pk.uid === 'string' && typeof pk.role === 'string') {
-            map[pk.uid] = pk.role;
-          }
-        }
+        for (const pk of picks) if (pk && typeof pk.uid === 'string' && typeof pk.role === 'string') map[pk.uid] = pk.role;
         return map;
       } catch {
         return {};
       }
     }
-
     function readUserXI() {
       try {
-        const raw = localStorage.getItem('beatmy11.userXI.v1');
-        if (!raw) return null;
-        const arr = JSON.parse(raw);
+        const arr = JSON.parse(localStorage.getItem('beatmy11.userXI.v1') || 'null');
         if (!Array.isArray(arr) || arr.length !== 11) return null;
-        const ok = arr.every(
-          (p) => p && typeof p === 'object' && (p.uid || p.id) && typeof p.name === 'string' && p.name
-        );
-        return ok ? arr : null;
+        return arr.every((p) => p && typeof p === 'object' && (p.uid || p.id) && typeof p.name === 'string' && p.name) ? arr : null;
       } catch {
         return null;
       }
     }
 
-    /* ---------- display helpers (mirror PlayerCard.astro) ---------- */
-    const ERA_ACCENTS = {
-      legends: '#C9A227',
-      '1970s': '#C26936',
-      '1980s': '#D64045',
-      '1990s': '#2AA198',
-      '2000s': '#3B82F6',
-      '2010s': '#8B5CF6',
-      '2020s': '#2DD4BF',
-    };
-    const NATION_CODES = {
-      Australia: 'AUS',
-      England: 'EG',
-      India: 'IND',
-      Pakistan: 'PAK',
-      'West Indies': 'WI',
-      'New Zealand': 'NZ',
-      'South Africa': 'SA',
-      'Sri Lanka': 'SL',
-      Bangladesh: 'BAN',
-      Zimbabwe: 'ZIM',
-    };
+    // ---------- display helpers ----------
     const esc = (v) =>
-      String(v ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-
-    const fmtAvg = (v) => (v == null || Number.isNaN(Number(v)) ? '–' : Number(v).toFixed(1));
-    const fmtInt = (v) =>
-      v == null || Number.isNaN(Number(v)) ? '–' : Math.round(Number(v)).toLocaleString('en-US');
-
-    /** Key stats per role — same rules as PlayerCard.astro's comparison variant.
-     *  `role` is the display role (the declared role for the user's XI),
-     *  so the stat columns always match the role the player fills. */
-    function keyStats(p, role) {
-      const s = p.stats ?? {};
-      const isBowler = role === 'fast-bowler' || role === 'spinner';
-      const isKeeper = role === 'wicketkeeper';
-      const isAllRounder = role === 'all-rounder';
-      const bowlAvg = s.testBowlingAverage ?? s.bowlingAverage;
-      if (isBowler) {
-        return [
-          { label: 'Wkts', value: fmtInt(s.testWickets) },
-          { label: 'Avg', value: fmtAvg(bowlAvg) },
-          { label: '5WI', value: fmtInt(s.fiveWs) },
-        ];
-      }
-      if (isAllRounder) {
-        return [
-          { label: 'Avg', value: fmtAvg(s.testAverage) },
-          { label: 'Runs', value: fmtInt(s.testRuns) },
-          { label: 'Wkts', value: fmtInt(s.testWickets) },
-        ];
-      }
-      if (isKeeper) {
-        return [
-          { label: 'Avg', value: fmtAvg(s.testAverage) },
-          { label: 'Runs', value: fmtInt(s.testRuns) },
-          { label: 'Dism.', value: fmtInt(s.dismissals) },
-        ];
-      }
-      return [
-        { label: 'Avg', value: fmtAvg(s.testAverage) },
-        { label: 'Runs', value: fmtInt(s.testRuns) },
-        { label: '100s', value: fmtInt(s.testCenturies) },
-      ];
-    }
-
-    /**
-     * Comparison row markup mirroring PlayerCard.astro's `comparison` variant:
-     * div.bm11-player-card.is-comparison > .bm11-pc-row > .bm11-pc-head
-     * + .bm11-pc-ministats. Styles come from the component's global classes.
-     */
-    function comparisonRow(p, displayRole) {
-      const eraId = eraString(p.draftEra ?? p.era ?? p.displayEra, 'legends');
-      const eraLabel = eraId === 'legends' ? 'Legends' : eraId;
-      const accent = ERA_ACCENTS[eraId] ?? '#a5a8c9';
-      // `role` is the display (declared) role, so the stat columns always
-      // match the role the player fills. No role chips: each card already
-      // sits under its position group heading.
-      const role = displayRole || normalizeRole(p.primaryRole);
-      const nationCode = NATION_CODES[p.nation] ?? p.nation;
-      const stats = keyStats(p, role)
-        .map(
-          (st) =>
-            `<div class="bm11-pc-ministat"><span class="bm11-pc-ministat-v">${esc(st.value)}</span>` +
-            `<span class="bm11-pc-ministat-l">${esc(st.label)}</span></div>`
-        )
-        .join('');
-      return (
-        `<div class="bm11-player-card is-comparison" style="--era-accent:${accent};">` +
-        `<div class="bm11-pc-row">` +
-        `<div class="bm11-pc-head">` +
-        `<div class="bm11-pc-name">${esc(p.name)}</div>` +
-        `<div class="bm11-pc-sub"><span class="bm11-nation-code">${esc(nationCode)}</span>` +
-        ` · <span class="bm11-era-chip" style="--era-accent:${accent};">${esc(eraLabel)}</span></div>` +
-        `</div>` +
-        `<div class="bm11-pc-ministats" aria-label="Key statistics">${stats}</div>` +
-        `</div></div>`
-      );
-    }
-
-    const ROLE_ORDER = ['opener', 'middle-order', 'wicketkeeper', 'all-rounder', 'fast-bowler', 'spinner'];
-    const ROLE_GROUP_LABELS = {
-      opener: 'Openers',
-      'middle-order': 'Middle Order',
-      wicketkeeper: 'Wicketkeeper',
-      'all-rounder': 'All-Rounder',
-      'fast-bowler': 'Fast Bowlers',
-      spinner: 'Spinners',
+      String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+    const ROLE_SHORT = { opener: 'OPN', 'middle-order': 'BAT', wicketkeeper: 'WK', 'all-rounder': 'AR', spinner: 'SPIN', 'fast-bowler': 'PACE' };
+    const NATION_CODES = {
+      Australia: 'AUS', England: 'ENG', India: 'IND', Pakistan: 'PAK', 'West Indies': 'WI',
+      'New Zealand': 'NZ', 'South Africa': 'SA', 'Sri Lanka': 'SL', Bangladesh: 'BAN', Zimbabwe: 'ZIM',
     };
+    const ORDINAL = ['1st', '2nd', '3rd', '4th', '5th'];
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const $ = (id) => document.getElementById(id);
 
-    /** Display role for a user XI entry: the declared role when the draft
-     *  blob has one, otherwise the primary role. */
-    function displayRoleOf(entry) {
-      return entry.declaredRole
-        ? normalizeRole(entry.declaredRole)
-        : normalizeRole(entry.player.primaryRole);
+    function verdictCopy(s) {
+      const last = s.tests[4];
+      if (s.user === 5) return { title: 'Whitewash.', sub: 'You beat My 11 five–nil. That almost never happens.' };
+      if (s.house === 5) return { title: 'Whitewashed.', sub: 'My 11 won all five. Time for a new XI.' };
+      if (s.draws === 1 && s.user === s.house) return { title: 'Series drawn', sub: `You held My 11 to ${s.user}–${s.house}.` };
+      if (s.user > s.house) {
+        return s.user === 3
+          ? { title: 'You beat My 11', sub: `Level at 2–2, you won the decider at ${last.venue}.` }
+          : { title: 'You beat My 11', sub: `A ${s.user}–${s.house} series win. Convincing.` };
+      }
+      return s.house === 3
+        ? { title: 'So close', sub: `Level at 2–2 — My 11 took the decider at ${last.venue}.` }
+        : { title: 'My 11 wins', sub: `Beaten ${s.user}–${s.house}. Your next XI could do better.` };
     }
 
-    function renderUserXI(userEntries) {
-      const container = document.getElementById('user-xi');
-      const loading = document.getElementById('user-xi-loading');
-      if (loading) loading.remove();
-      // Flat list in the same role order as the house column — the
-      // <h3> group headings are CSS-hidden on mobile, so both columns
-      // read as plain side-by-side XIs there.
-      const groups = ROLE_ORDER.map((role) => ({
-        role,
-        entries: userEntries.filter((e) => displayRoleOf(e) === role),
-      })).filter((g) => g.entries.length > 0);
-      const leftover = userEntries.filter(
-        (e) => !ROLE_ORDER.includes(displayRoleOf(e))
+    function testHTML(t, running) {
+      const res = t.result === 'user' ? 'Won' : t.result === 'house' ? 'Lost' : 'Drawn';
+      return (
+        `<li class="rs-test is-${t.result}">` +
+        `<div class="rs-test-head"><span class="rs-test-n">${ORDINAL[t.number - 1]} Test · ${esc(t.venue)}</span>` +
+        `<span class="rs-chip">${res}</span></div>` +
+        `<p class="rs-test-sum">${esc(t.summary)}</p>` +
+        (t.hero ? `<p class="rs-test-hero"><span aria-hidden="true">★</span> ${esc(t.hero)}${t.heroSide === 'house' ? ' <em>(My 11)</em>' : ''}</p>` : '') +
+        `<p class="rs-test-run">Series ${running}</p>` +
+        `</li>`
       );
-      if (leftover.length) groups.push({ role: 'other', entries: leftover });
-      container.innerHTML = groups
-        .map(
-          (g) =>
-            `<h3 class="matchup__group">${esc(ROLE_GROUP_LABELS[g.role] ?? 'Squad')}</h3>` +
-            g.entries.map((e) => comparisonRow(e.player, displayRoleOf(e))).join('')
-        )
+    }
+
+    function listHTML(rows, marks) {
+      return rows
+        .map((r) => {
+          const mark = marks[r.id] ? `<span class="rs-badge ${marks[r.id].cls}">${marks[r.id].text}</span>` : '';
+          return (
+            `<li class="rs-row"><span class="rs-rating">${Math.round(r.rating)}</span>` +
+            `<span class="rs-who"><span class="rs-name">${esc(r.name)} ${mark}</span>` +
+            `<span class="rs-meta">${esc(ROLE_SHORT[r.role] || r.role)} · ${esc(NATION_CODES[r.nation] || r.nation)} · ${esc(r.era === 'legends' ? 'Legends' : r.era)}</span></span></li>`
+          );
+        })
         .join('');
     }
 
-    /**
-     * verdict: your XI score, my XI score, and the result. A tie is a
-     * real outcome here (identical means can tie exactly). When the data
-     * cannot support a score, no misleading numbers are shown.
-     */
-    function renderResult(userEntries, houseEntries) {
-      const verdictTitle = document.getElementById('verdict-title');
-      const verdictSub = document.getElementById('verdict-sub');
-      const setBar = (id, score) => {
-        const bar = document.getElementById(id);
-        if (bar) bar.style.width = Math.max(0, Math.min(100, score)) + '%';
-      };
+    function run() {
+      const userRaw = readUserXI();
+      if (!userRaw) {
+        window.location.href = '/play';
+        return;
+      }
+      const declared = readDeclaredRoles();
+      const userEntries = userRaw.map((p) => ({
+        player: toScoringPlayer(p, 'legends'),
+        declaredRole: declared[String(p.uid ?? p.id ?? '')] ?? null,
+      }));
+      const houseEntries = HOUSE_XI.map((p) => ({ player: toScoringPlayer(p, 'legends'), declaredRole: normalizeRole(p.primaryRole) }));
+
       let cmp;
       try {
         cmp = compareXIs(userEntries, houseEntries, SCORING_CONTEXT);
       } catch {
-        document.getElementById('tape-user-score').textContent = '–';
-        document.getElementById('tape-house-score').textContent = '–';
-        setBar('tape-user-bar', 0);
-        setBar('tape-house-bar', 0);
-        verdictTitle.textContent = "CAN'T SCORE THIS ONE";
-        verdictSub.textContent =
-          'A required statistic is missing from the data, so no score was produced.';
+        $('rs-error').hidden = false;
+        $('rs-error').textContent = 'A statistic this XI needs is missing from our data, so the series can’t be played. Draft again with a different XI.';
+        $('rs-skip').hidden = true;
+        $('rs-actions').hidden = false;
+        $('rs-share').hidden = true;
         return;
       }
 
-      document.getElementById('tape-user-score').textContent = cmp.userScore.toFixed(1);
-      document.getElementById('tape-house-score').textContent = cmp.opponentScore.toFixed(1);
-      setBar('tape-user-bar', cmp.userScore);
-      setBar('tape-house-bar', cmp.opponentScore);
+      const toSeries = (entries, scores) =>
+        entries.map((e, i) => ({
+          id: e.player.id,
+          name: e.player.name,
+          nation: e.player.nation,
+          era: e.player.era,
+          role: scores[i].role,
+          rating: scores[i].score ?? 0,
+          stats: e.player.stats,
+        }));
+      const userXI = toSeries(userEntries, cmp.userPlayers);
+      const houseXI = toSeries(houseEntries, cmp.opponentPlayers);
+      const series = playSeries({
+        userScore: cmp.userScore,
+        userXI,
+        houseXI,
+        calibration: CALIBRATION,
+        seed: xiSeed(userXI.map((p) => ({ id: p.id, role: p.role }))),
+      });
 
-      // Fixed strings only — no user data — so innerHTML is safe here.
-      if (cmp.result === 'user') {
-        verdictTitle.innerHTML = 'YOUR XI <span class="bm11-grad-text">BEATS</span> MINE';
-        verdictSub.textContent = `Your XI ${cmp.userScore.toFixed(1)} — My XI ${cmp.opponentScore.toFixed(1)}.`;
-      } else if (cmp.result === 'opponent') {
-        verdictTitle.innerHTML = 'MY XI <span class="bm11-grad-text">WINS</span> THIS ONE';
-        verdictSub.textContent = `My XI ${cmp.opponentScore.toFixed(1)} — Your XI ${cmp.userScore.toFixed(1)}.`;
-      } else {
-        verdictTitle.innerHTML = 'IT&rsquo;S A <span class="bm11-grad-text">TIE</span>';
-        verdictSub.textContent = `Both XIs score ${cmp.userScore.toFixed(1)}. Dead heat.`;
+      // Ratings, revealed: best and weakest pick in the user's XI.
+      const sorted = [...userXI].sort((a, b) => b.rating - a.rating);
+      const marks = {
+        [sorted[0].id]: { text: 'Best pick', cls: 'is-best' },
+        [sorted[sorted.length - 1].id]: { text: 'Weakest pick', cls: 'is-weak' },
+      };
+      $('rs-user-xi').innerHTML = listHTML(userXI, marks);
+      $('rs-house-xi').innerHTML = listHTML(houseXI, {});
+
+      const copy = verdictCopy(series);
+      const pct = Math.round(series.percentile * 100);
+      const rankText =
+        series.topPercent <= 50
+          ? `Your XI ranks in the top ${series.topPercent}% of all drafts.`
+          : `Your XI ranks in the bottom ${Math.max(1, pct)}% of all drafts.`;
+
+      // ---- the reveal ----
+      const testsEl = $('rs-tests');
+      let shown = 0;
+      let u = 0;
+      let h = 0;
+      let timer = 0;
+      const finish = () => {
+        window.clearTimeout(timer);
+        while (shown < 5) step(true);
+        $('rs-title').textContent = copy.title;
+        $('rs-sub').textContent = copy.sub;
+        $('rs-rank').textContent = rankText;
+        $('rs-rank').hidden = false;
+        $('rs-skip').hidden = true;
+        $('rs-actions').hidden = false;
+        $('rs-xis').hidden = false;
+        document.querySelector('.rs-verdict').classList.add(
+          series.user > series.house ? 'is-win' : series.user < series.house ? 'is-loss' : 'is-draw',
+          ...(series.user === 5 ? ['is-whitewash'] : []),
+        );
+      };
+      function step(instant) {
+        const t = series.tests[shown];
+        if (t.result === 'user') u++;
+        if (t.result === 'house') h++;
+        shown++;
+        $('rs-user').textContent = String(u);
+        $('rs-house').textContent = String(h);
+        testsEl.insertAdjacentHTML('beforeend', testHTML(t, `${u}–${h}`));
+        const li = testsEl.lastElementChild;
+        if (!instant && !reduceMotion) li.classList.add('is-new');
+        $('rs-sub').textContent = shown < 5 ? `After the ${ORDINAL[shown - 1]} Test at ${t.venue}: ${u}–${h}` : '';
+        if (!instant && shown < 5) timer = window.setTimeout(() => step(false), 1100);
+        else if (!instant) timer = window.setTimeout(finish, 900);
       }
+      $('rs-skip').addEventListener('click', finish);
+      if (reduceMotion) finish();
+      else timer = window.setTimeout(() => step(false), 600);
+
+      // ---- share ----
+      const url = `${location.origin}/`;
+      const shareText =
+        series.user === 5
+          ? `I whitewashed My 11 5–0 with my all-time Test XI 🏏 Can you?`
+          : series.user > series.house
+            ? `My all-time Test XI beat My 11 ${series.user}–${series.house} 🏏 Can yours?`
+            : series.user === series.house
+              ? `My all-time Test XI drew ${series.user}–${series.house} with My 11 🏏 Can you beat it?`
+              : `My all-time Test XI lost ${series.user}–${series.house} to My 11 🏏 Can you beat My 11?`;
+      $('rs-share').addEventListener('click', async () => {
+        try {
+          if (navigator.share) {
+            await navigator.share({ title: 'Beat My 11', text: shareText, url });
+            return;
+          }
+          await navigator.clipboard.writeText(`${shareText} ${url}`);
+          $('rs-copied').textContent = 'Copied — paste it anywhere.';
+        } catch {
+          /* share sheet dismissed or clipboard blocked — nothing to do */
+        }
+      });
     }
 
-    /* ---------- boot ---------- */
-    const userRaw = readUserXI();
-    if (!userRaw) {
-      window.location.href = '/play';
-    } else {
-      const declaredRoles = readDeclaredRoles();
-      const userEntries = userRaw.map((p) => ({
-        player: toScoringPlayer(p, 'legends'),
-        declaredRole: declaredRoles[String(p.uid ?? p.id ?? '')] ?? null,
-      }));
-      const houseEntries = HOUSE_XI.map((p) => ({
-        player: toScoringPlayer(p, 'legends'),
-        declaredRole: normalizeRole(p.primaryRole),
-      }));
-      renderUserXI(userEntries);
-      renderResult(userEntries, houseEntries);
-
-      document.getElementById('play-again').addEventListener('click', () => {
+    // "Draft again" starts a fresh draft.
+    for (const a of document.querySelectorAll('[data-rs-again]')) {
+      a.addEventListener('click', () => {
         try {
           localStorage.removeItem('beatmy11.userXI.v1');
           localStorage.removeItem('beatmy11.draft.v1');
@@ -461,207 +358,110 @@ const houseJson = JSON.stringify(houseXI).replace(/</g, '\\u003c');
         }
       });
     }
+    run();
   </script>
 
-  <style>
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
+  <style is:global>
+    /* ============ /matchup — Floodlit night (mobile-first) ============ */
+    .rs {
+      --rs-bg: #04060c;
+      --rs-text: #eaf0ff;
+      --rs-muted: #9aa6c4;
+      --rs-dim: #6b7694;
+      --rs-lime: #c6ff3d;
+      --rs-loss: #ff6b5e;
+      --rs-draw: #9aa6c4;
+      --rs-display: 'Bebas Neue', 'Oswald', 'Arial Narrow', sans-serif;
+      position: relative; min-height: 100vh; padding: 12px 16px 48px; overflow-x: clip;
+      background: var(--rs-bg); color: var(--rs-text); font-family: Inter, system-ui, sans-serif;
     }
-    .matchup__wrap {
-      max-width: 72rem;
-      margin: 0 auto;
-      padding: 2rem 1rem 4rem;
+    body:has(.rs) { background: #04060c; }
+    .rs-lights {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(60vw 50vh at 6% -12%, rgba(180, 220, 255, 0.2), transparent 60%),
+        radial-gradient(60vw 50vh at 94% -12%, rgba(180, 220, 255, 0.2), transparent 60%),
+        radial-gradient(90vw 45vh at 50% 115%, rgba(40, 160, 90, 0.22), transparent 70%);
     }
-    .matchup__cols {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      align-items: start;
-    }
-    /* Grid items must be shrinkable — otherwise the fixed-width stat
-       columns force the tracks wider than the viewport and the page
-       scrolls sideways on phones. */
-    .matchup__team { min-width: 0; }
-    .matchup__team-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin: 0 0 1rem;
-      color: var(--bm11-text, #ffffff);
-    }
-    .matchup__team-sub {
-      font-weight: 400;
-      font-size: 0.85rem;
-      color: var(--bm11-muted, #a5a8c9);
-    }
-    .matchup__list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      min-width: 0;
-    }
-    .matchup__loading { color: var(--bm11-muted, #a5a8c9); }
-    .matchup__divider { display: none; }
-    .matchup__section-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin: 0 0 1rem;
-      text-align: center;
-      color: var(--bm11-text, #ffffff);
-    }
+    .rs > *:not(.rs-lights) { position: relative; z-index: 1; }
+    .rs :focus-visible { outline: 3px solid var(--rs-lime); outline-offset: 2px; }
+    .rs-top { display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto; }
+    .rs-brand { font: 400 26px/1 var(--rs-display); letter-spacing: 0.08em; color: var(--rs-text); text-decoration: none; }
+    .rs-again-top { color: var(--rs-muted); font: 600 13px Inter, sans-serif; text-decoration: none; padding: 10px 4px; }
 
-    /* Tale of the tape */
-    .tape {
-      margin-top: 2.5rem;
-      background: var(--bm11-surface, #12122b);
-      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
-      border-radius: 1rem;
-      padding: 1.5rem;
+    .rs-verdict { text-align: center; max-width: 640px; margin: 22px auto 8px; }
+    .rs-eyebrow { margin: 0; font: 600 11px Inter, sans-serif; letter-spacing: 0.3em; text-transform: uppercase; color: var(--rs-muted); }
+    .rs-title { margin: 6px 0 4px; font: 400 clamp(40px, 12vw, 76px)/0.95 var(--rs-display); letter-spacing: 0.03em; }
+    .rs-verdict.is-win .rs-title { color: var(--rs-lime); text-shadow: 0 0 30px rgba(198, 255, 61, 0.45); }
+    .rs-verdict.is-whitewash .rs-title { animation: rs-pulse 1.6s ease-in-out 2; }
+    @keyframes rs-pulse { 50% { text-shadow: 0 0 60px rgba(198, 255, 61, 0.9); } }
+    .rs-score { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 6px 0 2px; }
+    .rs-side { display: flex; flex-direction: column; align-items: center; min-width: 88px; }
+    .rs-num { font: 400 clamp(72px, 24vw, 128px)/0.9 var(--rs-display); }
+    .rs-lab { font: 600 11px Inter, sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rs-muted); }
+    .rs-dash { font: 400 56px/1 var(--rs-display); color: var(--rs-dim); margin-top: -18px; }
+    .rs-verdict.is-win .rs-side:first-child .rs-num { color: var(--rs-lime); }
+    .rs-verdict.is-loss .rs-side:last-child .rs-num { color: var(--rs-loss); }
+    .rs-sub { margin: 8px 0 0; min-height: 22px; color: var(--rs-muted); font-size: 15px; }
+    .rs-rank { margin: 10px auto 0; display: inline-block; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(198, 255, 61, 0.4); color: var(--rs-lime); font: 600 13px Inter, sans-serif; }
+    .rs-skip { margin: 12px auto 0; display: block; background: none; border: 0; color: var(--rs-dim); text-decoration: underline; font: 500 13px Inter, sans-serif; min-height: 40px; cursor: pointer; }
+    .rs-skip[hidden] { display: none; }
+
+    .rs-tests { list-style: none; margin: 14px auto 0; padding: 0; max-width: 640px; display: grid; gap: 10px; }
+    .rs-test {
+      padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(160deg, #16223a, #0b1020 70%); border-left-width: 4px;
     }
-    .tape__scores {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      align-items: center;
+    .rs-test.is-user { border-left-color: var(--rs-lime); }
+    .rs-test.is-house { border-left-color: var(--rs-loss); }
+    .rs-test.is-draw { border-left-color: var(--rs-draw); }
+    .rs-test.is-new { animation: rs-in 0.45s cubic-bezier(0.2, 1.2, 0.4, 1); }
+    @keyframes rs-in { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+    .rs-test-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .rs-test-n { font: 400 20px/1 var(--rs-display); letter-spacing: 0.05em; }
+    .rs-chip { font: 700 10.5px Inter, sans-serif; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 8px; border-radius: 6px; }
+    .is-user .rs-chip { background: var(--rs-lime); color: #04060c; }
+    .is-house .rs-chip { background: var(--rs-loss); color: #1a0402; }
+    .is-draw .rs-chip { background: #2a3350; color: var(--rs-text); }
+    .rs-test-sum { margin: 6px 0 0; font-size: 14.5px; }
+    .rs-test-hero { margin: 4px 0 0; font: 400 22px/1.1 var(--rs-display); letter-spacing: 0.04em; color: var(--rs-lime); }
+    .is-house .rs-test-hero { color: #ffb3aa; }
+    .rs-test-hero em { font: 500 11px Inter, sans-serif; font-style: normal; color: var(--rs-muted); letter-spacing: 0.04em; }
+    .rs-test-run { margin: 6px 0 0; font: 600 11px Inter, sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rs-dim); }
+
+    .rs-actions { max-width: 640px; margin: 22px auto 0; display: grid; gap: 10px; text-align: center; }
+    .rs-actions[hidden] { display: none; }
+    .rs-share, .rs-again {
+      display: block; width: 100%; min-height: 54px; border-radius: 999px; font: 400 26px/54px var(--rs-display); letter-spacing: 0.1em;
+      text-decoration: none; cursor: pointer; border: 0;
     }
-    .tape__side { display: flex; flex-direction: column; gap: 0.25rem; }
-    .tape__side--right { text-align: right; }
-    .tape__label {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--bm11-muted, #a5a8c9);
-    }
-    .tape__score {
-      font-size: 1.5rem;
-      font-weight: 800;
-      font-variant-numeric: tabular-nums;
-      color: var(--bm11-text, #ffffff);
-    }
-    /* Score bars — your XI emerald, house XI violet. Widths set by JS;
-       text scores above remain the source of truth (never color alone). */
-    .tape__track {
-      height: 0.6rem;
-      border-radius: 9999px;
-      background: var(--bm11-elevated, #1a1a38);
-      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
-      overflow: hidden;
-      margin-top: 0.55rem;
-    }
-    .tape__track i {
-      display: block;
-      height: 100%;
-      width: 0;
-      border-radius: inherit;
-      transition: width 0.8s ease;
-    }
-    .tape__track--you i {
-      background: linear-gradient(90deg, #00c864, #00e676);
-      box-shadow: 0 0 12px rgba(0, 230, 118, 0.45);
-    }
-    .tape__track--house i {
-      background: linear-gradient(90deg, #7c3aed, #8b5cf6);
-      box-shadow: 0 0 12px rgba(139, 92, 246, 0.45);
+    .rs-share { background: var(--rs-lime); color: #04060c; box-shadow: 0 0 36px rgba(198, 255, 61, 0.4); }
+    .rs-again { background: transparent; color: var(--rs-text); border: 1px solid rgba(255, 255, 255, 0.3); }
+    .rs-copied { margin: 0; min-height: 18px; color: var(--rs-lime); font-size: 13px; }
+
+    .rs-xis { max-width: 900px; margin: 34px auto 0; }
+    .rs-xis[hidden] { display: none; }
+    .rs-h2 { margin: 0; text-align: center; font: 400 34px/1 var(--rs-display); letter-spacing: 0.04em; }
+    .rs-note { margin: 6px 0 16px; text-align: center; color: var(--rs-muted); font-size: 13.5px; }
+    .rs-cols { display: grid; gap: 22px; }
+    .rs-h3 { margin: 0 0 8px; font: 600 12px Inter, sans-serif; letter-spacing: 0.24em; text-transform: uppercase; color: var(--rs-muted); }
+    .rs-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+    .rs-row { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: 12px; background: rgba(255, 255, 255, 0.04); }
+    .rs-rating { flex: none; width: 46px; text-align: center; font: 400 30px/1 var(--rs-display); color: var(--rs-lime); }
+    .rs-who { display: flex; flex-direction: column; min-width: 0; }
+    .rs-name { font-weight: 600; font-size: 15px; }
+    .rs-meta { font-size: 12px; color: var(--rs-muted); letter-spacing: 0.03em; }
+    .rs-badge { margin-left: 4px; font: 700 9.5px Inter, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; vertical-align: 2px; }
+    .rs-badge.is-best { background: var(--rs-lime); color: #04060c; }
+    .rs-badge.is-weak { background: #2a3350; color: var(--rs-text); }
+    .rs-error { max-width: 560px; margin: 18px auto 0; text-align: center; color: #ffd2cc; }
+    @media (min-width: 760px) {
+      .rs-cols { grid-template-columns: 1fr 1fr; }
+      .rs-actions { grid-template-columns: 1fr 1fr; }
+      .rs-copied { grid-column: 1 / -1; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .tape__track i { transition: none; }
-    }
-    /* Verdict hero */
-    .verdict {
-      margin-top: 2rem;
-      text-align: center;
-      background:
-        radial-gradient(80% 100% at 50% 0%, rgba(0, 230, 118, 0.09), transparent 70%),
-        radial-gradient(60% 80% at 50% 100%, rgba(139, 92, 246, 0.08), transparent 70%),
-        var(--bm11-surface, #12122b);
-      border: 1px solid var(--bm11-border, rgba(139, 92, 246, 0.14));
-      border-radius: 1.25rem;
-      padding: 2.5rem 1.5rem;
-      box-shadow: 0 12px 40px rgba(4, 4, 20, 0.5);
-    }
-    .verdict__eyebrow {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--bm11-gold, #FFC93C);
-      margin: 0 0 0.75rem;
-    }
-    .verdict__title {
-      font-size: clamp(1.6rem, 5vw, 2.75rem);
-      font-weight: 900;
-      letter-spacing: -0.01em;
-      margin: 0 0 0.75rem;
-      color: var(--bm11-text, #ffffff);
-      line-height: 1.15;
-    }
-    .verdict__sub {
-      color: var(--bm11-muted, #a5a8c9);
-      margin: 0;
-      font-size: 1.05rem;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .matchup__actions {
-      margin-top: 2rem;
-      display: flex;
-      justify-content: center;
-    }
-
-    @media (max-width: 860px) {
-      /* Mobile keeps the desktop shape — the two XIs side by side — with
-         compact type so the columns fit. (Group headings and player-card
-         tweaks live in the is:global block below: those nodes are rendered
-         by the inline script and never get Astro's scoped attribute.) */
-      .matchup__wrap { padding-top: 1rem; }
-      .verdict { margin-top: 0; padding: 1.5rem 1rem; }
-      .matchup__cols { grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 1.25rem; }
-      .matchup__team-title { font-size: 0.95rem; }
-      .matchup__list { gap: 0.5rem; }
-      /* Extra copy stays on desktop — mobile keeps only the essentials:
-         verdict, the scores, the two XIs, Start over. */
-      #verdict-sub { display: none; }
-      /* Compact tale of the tape, with no section heading on mobile. */
-      #tape-heading { display: none; }
-      .tape { margin-top: 1.25rem; padding: 1rem; }
-      .tape__scores { grid-template-columns: 1fr; gap: 0.75rem; }
-      .tape__side--right { text-align: left; }
-      .tape__score { font-size: 1.25rem; }
-      .tape__track { margin-top: 0.4rem; }
-    }
-  </style>
-  <style is:global>
-    /* Group headings, the empty-state note, and the player cards are rendered
-       by the inline script, so Astro's scoped selectors (which require the
-       data-astro-cid attribute) never match them — these rules must be global. */
-    .matchup__group {
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--bm11-muted, #a5a8c9);
-      margin: 0.9rem 0 0.1rem;
-    }
-    .matchup__group:first-child { margin-top: 0; }
-    .matchup__empty {
-      color: var(--bm11-muted, #a5a8c9);
-      font-size: 0.9rem;
-      padding: 1rem 0;
-    }
-    @media (max-width: 860px) {
-      /* Mobile: flat XI lists — no group headings, names only, no stat columns. */
-      .matchup__group { display: none; }
-      .matchup__list .bm11-player-card.is-comparison { padding: 0.55rem 0.65rem; }
-      .matchup__list .bm11-pc-name { font-size: 0.9rem; }
-      .matchup__list .bm11-pc-sub { font-size: 0.7rem; }
-      .matchup__list .bm11-pc-ministats { display: none; }
+      .rs *, .rs *::before, .rs *::after { animation: none !important; transition: none !important; }
     }
   </style>
 </BaseLayout>
