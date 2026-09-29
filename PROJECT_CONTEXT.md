@@ -47,7 +47,7 @@ src/
     design-tokens.ts
   data/
     legends.json 1970s.json 1980s.json 1990s.json 2000s.json 2010s.json 2020s.json
-                  794 normalized player records total (see §7)
+                  790 normalized player records total (see §7)
   components/ layouts/ styles/
 tests/
   xi-logic.test.ts       127 assertions: slots, roles, blocking, moves, persistence
@@ -198,7 +198,7 @@ rather than invented:
 
 ## 7. Data
 
-- 7 era files (`legends.json`, `1970s.json` … `2020s.json`), **794 normalized
+- 7 era files (`legends.json`, `1970s.json` … `2020s.json`), **790 normalized
   player records**. Each record carries `id, name, era[], nation, primaryRole,
   roles[], battingHand, bowlingArm, isWicketkeeper`, plus a `stats` object with
   `testMatches, testRuns, testAverage, testCenturies, testWickets,

@@ -536,28 +536,6 @@
     }
   },
   {
-    "id": "navjot-sidhu",
-    "name": "Navjot Sidhu",
-    "nation": "India",
-    "era": ["1980s","1990s"],
-    "primaryRole": "Opener",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 42.1,
-      "testRuns": 3202,
-      "testWickets": 0,
-      "testMatches": 51,
-      "testCenturies": 9,
-      "testFifties": 15,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 9
-    }
-  },
-  {
     "id": "sachin-tendulkar",
     "name": "Sachin Tendulkar",
     "nation": "India",
@@ -2084,28 +2062,6 @@
     }
   },
   {
-    "id": "murray-goodwin",
-    "name": "Murray Goodwin",
-    "nation": "Zimbabwe",
-    "era": "1990s",
-    "primaryRole": "Middle-order",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 42.9,
-      "testRuns": 1414,
-      "testWickets": 0,
-      "testMatches": 19,
-      "testCenturies": 3,
-      "testFifties": 8,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 12
-    }
-  },
-  {
     "id": "heath-streak",
     "name": "Heath Streak",
     "nation": "Zimbabwe",
@@ -2461,34 +2417,6 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 71
-    }
-  },
-  {
-    "id": "kapil-dev",
-    "name": "Kapil Dev",
-    "nation": "India",
-    "era": [
-      "legends",
-      "1980s",
-      "1990s"
-    ],
-    "primaryRole": "all-rounder",
-    "secondaryRoles": [
-      "fast-bowler"
-    ],
-    "stats": {
-      "testAverage": 31.1,
-      "testRuns": 5248,
-      "testWickets": 434,
-      "testMatches": 131,
-      "testCenturies": 8,
-      "testFifties": 27,
-      "fiveWs": 23,
-      "tenWs": 2,
-      "testBowlingAverage": 29.6,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 64
     }
   },
   {

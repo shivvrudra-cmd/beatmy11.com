@@ -1693,31 +1693,6 @@
     }
   },
   {
-    "id": "glenn-turner",
-    "name": "Glenn Turner",
-    "nation": "New Zealand",
-    "era": [
-      "1970s",
-      "1980s"
-    ],
-    "primaryRole": "opener",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 44.6,
-      "testRuns": 2991,
-      "testWickets": 0,
-      "testMatches": 41,
-      "testCenturies": 7,
-      "testFifties": 14,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 42
-    }
-  },
-  {
     "id": "john-wright",
     "name": "John Wright",
     "nation": "New Zealand",

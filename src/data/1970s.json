@@ -327,7 +327,7 @@
       "testAverage": 39.9,
       "testRuns": 3272,
       "testWickets": 2,
-      "testMatches": 39,
+      "testMatches": 59,
       "testCenturies": 7,
       "testFifties": 19,
       "fiveWs": 0,
@@ -1576,30 +1576,6 @@
     }
   },
   {
-    "id": "viv-richards",
-    "name": "Viv Richards",
-    "nation": "West Indies",
-    "era": "1970s",
-    "primaryRole": "middle-order",
-    "secondaryRoles": [
-      "all-rounder"
-    ],
-    "stats": {
-      "testAverage": 50.2,
-      "testRuns": 8540,
-      "testWickets": 32,
-      "testMatches": 121,
-      "testCenturies": 24,
-      "testFifties": 45,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 61.4,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 122
-    }
-  },
-  {
     "id": "greg-chappell",
     "name": "Greg Chappell",
     "nation": "Australia",
@@ -1643,28 +1619,6 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 94
-    }
-  },
-  {
-    "id": "alan-knott",
-    "name": "Alan Knott",
-    "nation": "England",
-    "era": "1970s",
-    "primaryRole": "wicketkeeper",
-    "secondaryRoles": [],
-    "stats": {
-      "testAverage": 32.8,
-      "testRuns": 4389,
-      "testWickets": 0,
-      "testMatches": 95,
-      "testCenturies": 5,
-      "testFifties": 30,
-      "fiveWs": 0,
-      "tenWs": 0,
-      "testBowlingAverage": 0,
-      "battingStrikeRate": 0,
-      "bowlingStrikeRate": 0,
-      "dismissals": 269
     }
   },
   {
