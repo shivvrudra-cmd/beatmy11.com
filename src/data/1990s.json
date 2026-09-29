@@ -1977,7 +1977,7 @@
     "id": "alistair-campbell",
     "name": "Alistair Campbell",
     "nation": "Zimbabwe",
-    "era": "1990s",
+    "era": ["1990s", "2000s"],
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
@@ -2509,7 +2509,7 @@
     "stats": {
       "testAverage": 45,
       "testRuns": 6215,
-      "testWickets": 40,
+      "testWickets": 0,
       "testMatches": 99,
       "testCenturies": 22,
       "testFifties": 21,

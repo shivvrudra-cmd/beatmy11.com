@@ -605,7 +605,7 @@
     "id": "shakib-al-hasan",
     "name": "Shakib Al Hasan",
     "nation": "Bangladesh",
-    "era": ["legends","2010s","2020s"],
+    "era": ["legends", "2000s", "2010s", "2020s"],
     "primaryRole": "all-rounder",
     "secondaryRoles": [
       "middle-order"

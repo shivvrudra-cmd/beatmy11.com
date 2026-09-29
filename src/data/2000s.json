@@ -1490,7 +1490,7 @@
     "secondaryRoles": [],
     "stats": {
       "testAverage": 13,
-      "testRuns": 4480,
+      "testRuns": 856,
       "testWickets": 130,
       "testMatches": 46,
       "testCenturies": 1,
@@ -2558,7 +2558,7 @@
     "id": "shakib-al-hasan",
     "name": "Shakib Al Hasan",
     "nation": "Bangladesh",
-    "era": ["legends","2010s","2020s"],
+    "era": ["legends", "2000s", "2010s", "2020s"],
     "primaryRole": "all-rounder",
     "secondaryRoles": [
       "middle-order"
@@ -2802,7 +2802,7 @@
     "id": "alistair-campbell",
     "name": "Alistair Campbell",
     "nation": "Zimbabwe",
-    "era": "1990s",
+    "era": ["1990s", "2000s"],
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {

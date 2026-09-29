@@ -1360,7 +1360,7 @@
     "secondaryRoles": [],
     "stats": {
       "testAverage": 13,
-      "testRuns": 4480,
+      "testRuns": 856,
       "testWickets": 130,
       "testMatches": 46,
       "testCenturies": 1,
@@ -3026,10 +3026,7 @@
     "id": "shakib-al-hasan",
     "name": "Shakib Al Hasan",
     "nation": "Bangladesh",
-    "era": ["2020s",
-      "2000s",
-      "2010s"
-    ],
+    "era": ["legends", "2000s", "2010s", "2020s"],
     "primaryRole": "all-rounder",
     "secondaryRoles": [
       "middle-order"
