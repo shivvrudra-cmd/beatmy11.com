@@ -9,7 +9,7 @@ export async function placeNextPlayer(page: Page): Promise<void> {
   const n = await rows.count();
   for (let i = 0; i < n; i++) {
     await rows.nth(i).click();
-    const glow = page.locator(".bm11-slot-btn.is-glow");
+    const glow = page.locator(".bm11-fslot.is-glow");
     try {
       await glow.first().waitFor({ state: "visible", timeout: 1500 });
     } catch {
