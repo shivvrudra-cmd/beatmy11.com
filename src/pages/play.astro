@@ -525,45 +525,50 @@ const styleSeed = playersForEra('legends')[0];
       return 'data:image/svg+xml,' + encodeURIComponent(svg);
     }
 
-    // 3 key ministats per card — same logic as PlayerCard.astro.
-    // Stat columns for a pool row, in the 82-0.com style: label on top,
-    // value below. Tailored to the player's display group:
-    // batters → M / Runs / Avg / 50s / 100s; all-rounders → M / Runs /
-    // Wkts / Bat Avg / Bowl Avg; bowlers → M / Wkts / Bowl Avg / 5W / 10W.
-    // Two hero stats per card — 82-0.com style (label over value), trimmed
-    // from five columns to keep the drawer scannable: batters → Avg / 100s;
-    // all-rounders → Bat Avg / Wkts; bowlers → Wkts / Bowl Avg.
+    // 4 key ministats per card, tailored to the player's display group:
+    // batters → M / Runs / Avg / 50s/100s; keepers → M / Runs / Avg / Dis;
+    // all-rounders → M / Bat Avg / Bowl Avg / 50s-100s or 5W-10W by the
+    // stronger suit; bowlers → M / Wkts / Bowl Avg / 5W/10W.
+    // Pairs (50s/100s, 5W/10W) render as a single xx/xx cell.
     function poolStatCells(p, kind) {
       const s = p.stats || {};
       const bowlAvg = s.testBowlingAverage ?? s.bowlingAverage;
       const cell = (v, l) =>
         `<span class="bm11-prow-stat"><i>${esc(l)}</i><b>${esc(v)}</b></span>`;
+      const pair = (a, b, l) => cell(`${fmtInt(a)}/${fmtInt(b)}`, l);
       if (kind === 'ar') {
+        const batFirst = (s.testAverage ?? 0) > (bowlAvg ?? 0);
         return (
+          cell(fmtInt(s.testMatches), 'M') +
           cell(fmtAvg(s.testAverage), 'Bat Avg') +
-          cell(fmtInt(s.testWickets), 'Wkts') +
-          cell(fmtAvg(bowlAvg), 'Bowl Avg')
+          cell(fmtAvg(bowlAvg), 'Bowl Avg') +
+          (batFirst
+            ? pair(s.testFifties, s.testCenturies, '50s/100s')
+            : pair(s.fiveWs, s.tenWs, '5W/10W'))
         );
       }
       if (kind === 'bowl') {
         return (
+          cell(fmtInt(s.testMatches), 'M') +
           cell(fmtInt(s.testWickets), 'Wkts') +
           cell(fmtAvg(bowlAvg), 'Bowl Avg') +
-          cell(fmtInt(s.fiveWs), '5Ws')
+          pair(s.fiveWs, s.tenWs, '5W/10W')
         );
       }
       // Batting groups: keepers get dismissals, the defining keeper stat.
       if (p.primaryRole === 'wicketkeeper') {
         return (
+          cell(fmtInt(s.testMatches), 'M') +
+          cell(fmtInt(s.testRuns), 'Runs') +
           cell(fmtAvg(s.testAverage), 'Avg') +
-          cell(fmtInt(s.dismissals), 'Dis') +
-          cell(fmtInt(s.testCenturies), '100s')
+          cell(fmtInt(s.dismissals), 'Dis')
         );
       }
       return (
+        cell(fmtInt(s.testMatches), 'M') +
+        cell(fmtInt(s.testRuns), 'Runs') +
         cell(fmtAvg(s.testAverage), 'Avg') +
-        cell(fmtInt(s.testCenturies), '100s') +
-        cell(fmtInt(s.testFifties), '50s')
+        pair(s.testFifties, s.testCenturies, '50s/100s')
       );
     }
     function accessibleName(p) {
@@ -576,15 +581,10 @@ const styleSeed = playersForEra('legends')[0];
       return `${p.name}, ${roles.join(', ') || 'player'}, ${p.nation || ''}`;
     }
 
-    // Pool player row: 82-0.com style — avatar + name on the left, five
-    // stat columns on the right. The row shows the era of the current draw,
-    // not the player's first-listed era (multi-era players like Shaun
-    // Pollock are shown under the era the spin landed on), plus every group
-    // the data marks the player eligible for (e.g. "Middle Order,
-    // Wicketkeeper").
     // Pool player card: era-accented initials medallion, name + nation +
-    // role, two hero stats, and a plus/check affordance. Selection state
-    // (is-selected / is-disabled / is-locked + the check badge) is owned by
+    // role, and four group-relevant ministats. The whole card is the tap
+    // target — no separate add button. Selection state (is-selected /
+    // is-disabled / is-locked + the check badge) is owned by
     // updateCardStates — this just renders the card.
     function cardHTML(p, kind) {
       const drawEra = draft.currentEra || p.displayEra;
@@ -601,7 +601,6 @@ const styleSeed = playersForEra('legends')[0];
         `<span class="bm11-prow-role">${esc(roleLabel)}</span>` +
         `</span></span>` +
         `<span class="bm11-prow-stats">${poolStatCells(p, kind)}</span>` +
-        `<span class="bm11-prow-cta" aria-hidden="true">${icon('plus', 16)}</span>` +
         `<span class="bm11-check-badge" aria-hidden="true" hidden>${icon('check', 11)}</span>` +
         `</button>`
       );
@@ -2681,7 +2680,7 @@ const styleSeed = playersForEra('legends')[0];
       display: flex;
       gap: 0.8rem;
     }
-    /* Mobile: three stats per card — tighten type so everything fits
+    /* Mobile: four stats per card — tighten type so everything fits
        without horizontal scroll. */
     @media (max-width: 767px) {
       .bm11-prow { gap: 0.55rem; padding: 0.55rem 0.6rem; }
@@ -2690,7 +2689,6 @@ const styleSeed = playersForEra('legends')[0];
       .bm11-prow-stats { gap: 0.55rem; }
       .bm11-prow-stat i { font-size: 0.52rem; }
       .bm11-prow-stat b { font-size: 0.76rem; }
-      .bm11-prow-cta { width: 1.75rem; height: 1.75rem; }
     }
     .bm11-prow-stat {
       display: flex;
@@ -2710,26 +2708,9 @@ const styleSeed = playersForEra('legends')[0];
       font-size: 0.88rem;
       font-variant-numeric: tabular-nums;
     }
-    .bm11-prow-cta {
-      flex: 0 0 auto;
-      width: 2rem;
-      height: 2rem;
-      border-radius: 9999px;
-      border: 1.5px dashed rgba(165, 168, 201, 0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--bm11-muted, #a5a8c9);
-    }
     .bm11-prow.is-selected {
       border-color: var(--bm11-primary, #00e676);
       box-shadow: 0 0 0 1px var(--bm11-primary, #00e676), 0 0.5rem 1.5rem rgba(0, 230, 118, 0.12);
-    }
-    .bm11-prow.is-selected .bm11-prow-cta {
-      border-style: solid;
-      border-color: var(--bm11-primary, #00e676);
-      background: var(--bm11-primary, #00e676);
-      color: #06130c;
     }
     .bm11-prow.is-disabled { opacity: 0.45; }
     .bm11-prow.is-locked { opacity: 0.75; }
