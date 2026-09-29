@@ -44,7 +44,10 @@ const kallis = mk('kallis', 'Kallis', 'all-rounder', ['spinner']);
 const botham = mk('botham', 'Botham', 'all-rounder', ['middle-order']);
 const hobbs = mk('hobbs', 'Hobbs', 'opener');
 
-ok(JSON.stringify(declarableRoles(sanga, 'bat-3')) === JSON.stringify(['middle-order', 'wicketkeeper']), 'sanga bat roles');
+// Spots 3–5 take middle-order only; the keeper's spot is bat-6 (a keeper on
+// 3–5 would strand the keeper-only bat-6 — fixed 2026-09-29).
+ok(JSON.stringify(declarableRoles(sanga, 'bat-3')) === JSON.stringify(['middle-order']), 'sanga bat roles on 3–5: middle-order');
+ok(JSON.stringify(declarableRoles(sanga, 'bat-6')) === JSON.stringify(['wicketkeeper']), 'sanga on bat-6: wicketkeeper');
 ok(defaultDeclaredRole(sanga, 'bat-3') === 'middle-order', 'sanga default MO');
 // Design B: all-rounder is NOT a batting-slot declaration — an all-rounder
 // placed at 3-6 bats as a middle-order player.
@@ -66,10 +69,12 @@ ok(declarableRoles(hobbs, 'opener-1')[0] === 'opener', 'hobbs opener');
   ok(declarationForSlot(d0, sobers, 'flex-7') === 'all-rounder', 'sobers declares AR on flex-7');
   // A still-needed primary wicketkeeper declares as wicketkeeper…
   const dhoni = mk('dhoni', 'Dhoni', 'wicketkeeper', ['middle-order']);
-  ok(declarationForSlot(d0, dhoni, 'bat-3') === 'wicketkeeper', 'needed keeper declares WK');
+  // on the keeper's spot, and bats middle-order on 3–5 …
+  ok(declarationForSlot(d0, dhoni, 'bat-6') === 'wicketkeeper', 'needed keeper declares WK on bat-6');
+  ok(declarationForSlot(d0, dhoni, 'bat-3') === 'middle-order', 'keeper-batter on bat-3 declares MO');
   // …and so does a secondary keeper (e.g. Sangakkara, primary middle-order)
   // — the user's reported case: he must be pickable as the wicketkeeper.
-  ok(declarationForSlot(d0, sanga, 'bat-3') === 'wicketkeeper', 'needed secondary keeper declares WK');
+  ok(declarationForSlot(d0, sanga, 'bat-6') === 'wicketkeeper', 'needed secondary keeper declares WK on bat-6');
   // …and falls back to middle-order once the keeper slot is filled.
   let d1 = applyDraftPick(d0, gilchrist, 'bat-6', 'wicketkeeper');
   ok(d1 !== d0, 'keeper pick applies');
@@ -82,11 +87,12 @@ ok(declarableRoles(hobbs, 'opener-1')[0] === 'opener', 'hobbs opener');
 // ---- role chooser contract: shown iff >1 legal declaration ----
 {
   const d0 = freshStarted();
-  // Keeper still needed: Sangakkara gets the chooser (MO / WK), WK suggested.
-  const chOpts = placementOptions(d0, sanga, 'bat-3');
-  const chLegal = chOpts.filter((o) => !o.reason).map((o) => o.role);
-  ok(chLegal.length === 2 && chLegal.includes('middle-order') && chLegal.includes('wicketkeeper'), 'chooser: sanga has 2 legal roles');
-  ok(declarationForSlot(d0, sanga, 'bat-3') === 'wicketkeeper', 'chooser: suggested role is WK');
+  // Every batting slot now has one declaration, so Sangakkara never needs
+  // the chooser: keeper on bat-6, middle-order on 3–5.
+  const chLegal = placementOptions(d0, sanga, 'bat-3').filter((o) => !o.reason).map((o) => o.role);
+  ok(chLegal.length === 1 && chLegal[0] === 'middle-order', 'sanga on bat-3: single MO declaration');
+  const chLegal6 = placementOptions(d0, sanga, 'bat-6').filter((o) => !o.reason).map((o) => o.role);
+  ok(chLegal6.length === 1 && chLegal6[0] === 'wicketkeeper', 'sanga on bat-6: single WK declaration');
   // Keeper filled: single declaration, no chooser.
   const d1 = applyDraftPick(d0, gilchrist, 'bat-6', 'wicketkeeper');
   const chLegal1 = placementOptions(d1, sanga, 'bat-4').filter((o) => !o.reason);
@@ -266,7 +272,7 @@ const opts = placementOptions(s6, sanga, 'bat-5', sup);
 const moOpt = opts.find((o) => o.role === 'middle-order');
 const wkOpt = opts.find((o) => o.role === 'wicketkeeper');
 ok(!!moOpt && moOpt.reason !== null && moOpt.reason.includes('strand'), 'chooser: MO option disabled (strands keeper)', moOpt?.reason);
-ok(!!wkOpt && wkOpt.reason !== null && wkOpt.reason.includes('strand'), 'chooser: WK option on bat-5 disabled (strands keeper-only slot)', wkOpt?.reason);
+ok(wkOpt === undefined, 'bat-5 never offers a WK declaration (keeper belongs on bat-6)', wkOpt);
 // On the keeper-only slot itself, declaring as keeper is clean.
 const opts6 = placementOptions(s6, sanga, 'bat-6', sup);
 const wkOpt6 = opts6.find((o) => o.role === 'wicketkeeper');

@@ -314,8 +314,12 @@ export function canSpin(state: DraftState, unpickedInPool: number): boolean {
 // ---------------------------------------------------------------------------
 // XI slots — the right-pane lineup, spots 1–11.
 //
-// Spots 1–2 take openers; spots 3–6 take middle-order batters and the
-// wicketkeeper (an all-rounder placed there bats as a middle-order player);
+// Spots 1–2 take openers; spots 3–5 take middle-order batters (an
+// all-rounder or keeper-batter placed there bats as middle-order) and spot 6
+// is the wicketkeeper's. Spots 3–5 never accept a wicketkeeper declaration:
+// an XI has exactly one keeper and spot 6 takes only a keeper, so a keeper
+// on 3–5 would strand spot 6 and the XI could never complete (fixed
+// 2026-09-29);
 // spots 7–8 take the all-rounder(s) and/or spinner(s); spots 9–11 take fast
 // bowlers. A player placed into a slot is DECLARED as the first role they
 // can legally play there in slot order — the tapped slot decides, not the
@@ -365,19 +369,19 @@ export const XI_SLOTS: XiSlot[] = [
   { key: 'opener-2', roles: ['opener'], group: 'openers', label: 'Opener 2' },
   {
     key: 'bat-3',
-    roles: ['middle-order', 'wicketkeeper'],
+    roles: ['middle-order'],
     group: 'batting',
     label: 'Batting 3',
   },
   {
     key: 'bat-4',
-    roles: ['middle-order', 'wicketkeeper'],
+    roles: ['middle-order'],
     group: 'batting',
     label: 'Batting 4',
   },
   {
     key: 'bat-5',
-    roles: ['middle-order', 'wicketkeeper'],
+    roles: ['middle-order'],
     group: 'batting',
     label: 'Batting 5',
   },
