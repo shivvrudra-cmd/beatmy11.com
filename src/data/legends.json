@@ -696,6 +696,31 @@
     }
   },
   {
+    "id": "joel-garner",
+    "name": "Joel Garner",
+    "nation": "West Indies",
+    "era": ["legends",
+      "1970s",
+      "1980s"
+    ],
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 12.4,
+      "testRuns": 672,
+      "testWickets": 259,
+      "testMatches": 58,
+      "testCenturies": 0,
+      "testFifties": 1,
+      "fiveWs": 7,
+      "tenWs": 0,
+      "testBowlingAverage": 21,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 42
+    }
+  },
+  {
     "id": "malcolm-marshall",
     "name": "Malcolm Marshall",
     "nation": "West Indies",
