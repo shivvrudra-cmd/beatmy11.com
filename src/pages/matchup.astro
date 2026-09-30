@@ -276,11 +276,10 @@ const calibrationJson = safe(calibration);
         seed: xiSeed(userXI.map((p) => ({ id: p.id, role: p.role }))),
       });
 
-      // Ratings, revealed: best and weakest pick in the user's XI.
+      // Ratings, revealed: the best pick in the user's XI.
       const sorted = [...userXI].sort((a, b) => b.rating - a.rating);
       const marks = {
         [sorted[0].id]: { text: 'Best pick', cls: 'is-best' },
-        [sorted[sorted.length - 1].id]: { text: 'Weakest pick', cls: 'is-weak' },
       };
       $('rs-user-xi').innerHTML = listHTML(userXI, marks);
       $('rs-house-xi').innerHTML = listHTML(houseXI, {});
@@ -526,7 +525,6 @@ const calibrationJson = safe(calibration);
     .rs-meta { font-size: 12px; color: var(--rs-muted); letter-spacing: 0.03em; }
     .rs-badge { margin-left: 4px; font: 700 9.5px Inter, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; vertical-align: 2px; }
     .rs-badge.is-best { background: var(--rs-lime); color: #04060c; }
-    .rs-badge.is-weak { background: #2a3350; color: var(--rs-text); }
     .rs-error { max-width: 560px; margin: 18px auto 0; text-align: center; color: #ffd2cc; }
     @media (min-width: 760px) {
       .rs-cols { grid-template-columns: 1fr 1fr; }

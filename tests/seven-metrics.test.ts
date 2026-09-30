@@ -16,6 +16,7 @@ import {
   BOWLING_METRICS,
   BATTING_WEIGHTS,
   BOWLING_WEIGHTS,
+  withLongCareerBonus,
   ALL_ROUNDER_GAP_FILL,
   LONGEVITY_WEIGHT,
   LONGEVITY_FULL_CREDIT_TESTS,
@@ -320,7 +321,7 @@ const halfOf = (p: NormalizedPlayer, _role: 'middle-order' | 'fast-bowler', keys
   const norm = normalizeMetrics(adjustedMetrics(p, CTX), CTX.populations);
   let s = 0;
   for (const k of keys) s += (norm[k] as number) * weights[k];
-  return (1 - LONGEVITY_WEIGHT) * s + LONGEVITY_WEIGHT * longevityScore(p);
+  return withLongCareerBonus((1 - LONGEVITY_WEIGHT) * s + LONGEVITY_WEIGHT * longevityScore(p), p);
 };
 {
   const bats = blendXI.slice(0, 8).map((e) => halfOf(e.player, 'middle-order', BATTING_METRICS, BATTING_WEIGHTS));
@@ -546,6 +547,12 @@ ok(SHRINKAGE_PRIOR_MATCHES === 30, 'spec shrinkage prior weight is 30 matches (V
 
   // longevity: Tests played, full credit at 50
   ok(LONGEVITY_WEIGHT === 0.25 && LONGEVITY_FULL_CREDIT_TESTS === 50, 'longevity is 25% of each half, full credit at 50 Tests');
+  {
+    const mk2 = (t: number) => ({ stats: { testMatches: t } } as unknown as NormalizedPlayer);
+    ok(withLongCareerBonus(90, mk2(50)) === 90 && withLongCareerBonus(90, mk2(10)) === 90, 'no long-career bonus at or under 50 Tests');
+    ok(Math.abs(withLongCareerBonus(90, mk2(200)) - 98) < 1e-9 && withLongCareerBonus(90, mk2(400)) === withLongCareerBonus(90, mk2(200)), 'a 200-Test career fills 80% of the gap to 100, and it caps there');
+    ok(withLongCareerBonus(90, mk2(125)) > 90 && withLongCareerBonus(90, mk2(125)) < 98, 'the bonus grows with Tests played');
+  }
   const lt = (m: number) => longevityScore(mk('middle-order', { testMatches: m }, { id: `lt${m}`, uid: `t:lt${m}` }));
   ok(lt(25) === 50 && lt(50) === 100 && lt(200) === 100 && lt(0) === 0, 'longevity: 25 Tests = 50, 50+ Tests = 100');
   {
@@ -562,7 +569,7 @@ ok(SHRINKAGE_PRIOR_MATCHES === 30, 'spec shrinkage prior weight is 30 matches (V
   ok(s('richard-hadlee', 'all-rounder') > 98, 'Hadlee above 98 as an all-rounder', s('richard-hadlee', 'all-rounder'));
   ok(s('jacques-kallis', 'all-rounder') > 98, 'Kallis above 98 as an all-rounder', s('jacques-kallis', 'all-rounder'));
   ok(s('imran-khan', 'all-rounder') > 94 && s('imran-khan', 'all-rounder') < 97, 'Imran ~96', s('imran-khan', 'all-rounder'));
-  ok(s('ian-botham', 'all-rounder') > 86 && s('ian-botham', 'all-rounder') < 91, 'Botham ~88', s('ian-botham', 'all-rounder'));
+  ok(s('ian-botham', 'all-rounder') > 89 && s('ian-botham', 'all-rounder') < 94, 'Botham ~92', s('ian-botham', 'all-rounder'));
   ok(s('don-bradman', 'opener') === 100, 'Bradman still 100 with longevity (52 Tests >= 50)');
   ok(s('sachin-tendulkar', 'middle-order') > s('harry-brook', 'middle-order'), 'Tendulkar (200 Tests) outranks Harry Brook (41 Tests)');
   ok(s('glenn-mcgrath', 'fast-bowler') > s('mohammad-asif', 'fast-bowler'), 'McGrath (124 Tests) outranks Mohammad Asif (23 Tests)');

@@ -151,6 +151,14 @@ export const ALL_ROUNDER_GAP_FILL = 0.5;
 export const LONGEVITY_WEIGHT = 0.25;
 export const LONGEVITY_FULL_CREDIT_TESTS = 50;
 
+/** Long-career bonus (owner-approved 2026-09-30): past LONGEVITY_FULL_CREDIT_TESTS,
+ *  a half fills up to LONGEVITY_BONUS_FILL of its remaining gap to 100,
+ *  reaching that at LONGEVITY_BONUS_FULL_TESTS Tests. Rates per Test alone
+ *  under-rate a 200-Test career (Tendulkar sat below Smith and Williamson);
+ *  players at or under 50 Tests (Bradman, 52) are barely touched. */
+export const LONGEVITY_BONUS_FILL = 0.8;
+export const LONGEVITY_BONUS_FULL_TESTS = 200;
+
 /**
  * Owner-approved 2026-09-27: the TEAM score blends the three units —
  * 40% batting unit + 50% bowling unit + 10% fielding unit. Player scores
@@ -538,9 +546,19 @@ export function longevityScore(player: NormalizedPlayer): number {
   return Math.min(1, matchesOf(player) / LONGEVITY_FULL_CREDIT_TESTS) * 100;
 }
 
+/** A half plus the long-career bonus: fills part of its gap to 100 by Tests played. */
+export function withLongCareerBonus(half: number, player: NormalizedPlayer): number {
+  const span = LONGEVITY_BONUS_FULL_TESTS - LONGEVITY_FULL_CREDIT_TESTS;
+  const bonus =
+    LONGEVITY_BONUS_FILL *
+    Math.min(1, Math.max(0, (matchesOf(player) - LONGEVITY_FULL_CREDIT_TESTS) / span));
+  return half + bonus * (100 - half);
+}
+
 /**
  * One discipline half on the 0–100 scale: (1 − LONGEVITY_WEIGHT) × the
- * weighted metric mean + LONGEVITY_WEIGHT × longevity. Null when any of
+ * weighted metric mean + LONGEVITY_WEIGHT × longevity, then the long-career
+ * bonus fills part of the gap to 100. Null when any of
  * the half's metrics is uncomputable.
  */
 function skillHalf(
@@ -555,7 +573,10 @@ function skillHalf(
     if (v === null || v === undefined) return null;
     sum += v * weights[k];
   }
-  return (1 - LONGEVITY_WEIGHT) * sum + LONGEVITY_WEIGHT * longevityScore(player);
+  return withLongCareerBonus(
+    (1 - LONGEVITY_WEIGHT) * sum + LONGEVITY_WEIGHT * longevityScore(player),
+    player,
+  );
 }
 
 /** All-rounder combination: the stronger half leads; the weaker half fills
