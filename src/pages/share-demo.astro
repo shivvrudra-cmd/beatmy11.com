@@ -1,148 +1,66 @@
 ---
+/**
+ * share-demo — an internal gallery of the link-preview images: the default
+ * one and one per series scoreline, each linked to the /r page that uses
+ * it. Regenerate the images with `npx tsx scripts/gen-og-images.ts`.
+ */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ShareCard from '../components/ShareCard.astro';
+import FloodlitShell from '../components/FloodlitShell.astro';
+import { SHARE_RESULTS } from '../lib/share-results';
 
-// Sample data below is read from src/data/legends.json — real names and stats.
-const title = 'Share Card Demo | BeatMy11';
-const description =
-  'Preview of the BeatMy11 share-card templates: player, team, and era cards.';
+const title = 'Share Previews | Beat My 11';
+const description = 'The link-preview images Beat My 11 shows when a page or a series result is shared.';
+
+const previews = [
+  { src: '/og-image.png', label: 'Default', title: 'Every page', href: '/' },
+  ...SHARE_RESULTS.map((r) => ({ src: `/og/${r.slug}.png`, label: r.slug.replace('-', '–'), title: r.title, href: `/r/${r.slug}` })),
+];
 ---
 
 <BaseLayout title={title} description={description}>
   <meta name="robots" content="noindex, nofollow" slot="head" />
+  <FloodlitShell wide>
+    <section class="sd" aria-labelledby="sd-title">
+      <p class="fs-eyebrow">Internal</p>
+      <h1 class="fs-title" id="sd-title">Share previews</h1>
+      <p class="fs-lede">
+        What a shared link shows in WhatsApp, X, iMessage and the rest. “Share result” links to
+        the scoreline’s page, so the preview matches the result.
+      </p>
+      <ul class="sd-grid">
+        {previews.map((p) => (
+          <li class="sd-item">
+            <a href={p.href} class="sd-card">
+              <img src={p.src} width="1200" height="630" loading="lazy" alt={`Link preview: ${p.title}`} />
+              <span class="sd-meta">
+                <span class="sd-label">{p.label}</span>
+                <span class="sd-title">{p.title}</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </FloodlitShell>
 
   <style is:global>
-    :root {
-      --bm11-bg: #070b14;
-      --bm11-surface: #0d1424;
-      --bm11-elevated: #141d33;
-      --bm11-border: rgba(148, 163, 184, 0.14);
-      --bm11-text: #f1f5f9;
-      --bm11-muted: #94a3b8;
-      --bm11-primary: #22c55e;
-      --bm11-gold: #c9a227;
-      --bm11-danger: #ef4444;
+    .sd { margin: 6vh auto 0; text-align: center; }
+    .sd-grid { list-style: none; margin: 28px 0 0; padding: 0; display: grid; gap: 16px; text-align: left; }
+    .sd-card {
+      display: block; overflow: hidden; border-radius: 14px; background: var(--fs-card);
+      border: 1px solid rgba(255, 255, 255, 0.1); color: var(--fs-text); text-decoration: none;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .sd-card:hover { border-color: rgba(198, 255, 61, 0.5); transform: translateY(-2px); }
+    .sd-card img { display: block; width: 100%; height: auto; }
+    .sd-meta { display: flex; align-items: baseline; gap: 10px; padding: 10px 14px; }
+    .sd-label { font: 400 24px/1 var(--fs-display); letter-spacing: 0.05em; color: var(--fs-lime); }
+    .sd-title { font-size: 14px; color: var(--fs-muted); }
+    @media (min-width: 760px) {
+      .sd-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .sd-card { transition: none; }
     }
   </style>
-
-  <style>
-    .demo-page {
-      min-height: 100vh;
-      background: var(--bm11-bg);
-      color: var(--bm11-text);
-      padding: 2.5rem 1.25rem 4rem;
-    }
-    .demo-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-    .demo-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--bm11-muted);
-      text-decoration: none;
-      font-weight: 600;
-      margin-bottom: 2rem;
-    }
-    .demo-back:hover {
-      color: var(--bm11-text);
-    }
-    .demo-back:focus-visible {
-      outline: 2px solid var(--bm11-gold);
-      outline-offset: 3px;
-      border-radius: 4px;
-    }
-    .demo-heading {
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 900;
-      margin: 0 0 0.5rem;
-      letter-spacing: -0.01em;
-    }
-    .demo-sub {
-      color: var(--bm11-muted);
-      margin: 0 0 2.5rem;
-      font-size: 1.05rem;
-    }
-    .demo-section {
-      margin-bottom: 3rem;
-    }
-    .demo-label {
-      font-size: 0.85rem;
-      font-weight: 800;
-      letter-spacing: 0.28em;
-      color: var(--bm11-gold);
-      margin: 0 0 1rem;
-    }
-    .demo-scroll {
-      overflow-x: auto;
-      border-radius: 1rem;
-      padding-bottom: 0.5rem;
-    }
-  </style>
-
-  <div class="demo-page">
-    <div class="demo-inner">
-      <a class="demo-back" href="/">&larr; Back home</a>
-      <h1 class="demo-heading">Share card templates</h1>
-      <p class="demo-sub">
-        On-page 1200&times;630 templates for social sharing. Sample data uses
-        real players and stats from the legends vault.
-      </p>
-
-      <section class="demo-section" aria-label="Player card demo">
-        <h2 class="demo-label">PLAYER</h2>
-        <div class="demo-scroll">
-          <ShareCard
-            type="player"
-            headline="THE DON"
-            playerName="Don Bradman"
-            playerNation="Australia"
-            flag="AUS"
-            playerRole="Opener"
-            stats={[
-              { label: 'TEST AVG', value: '99.9' },
-              { label: 'RUNS', value: '6,996' },
-              { label: 'MATCHES', value: '52' },
-              { label: '100s', value: '29' },
-            ]}
-          />
-        </div>
-      </section>
-
-      <section class="demo-section" aria-label="Team card demo">
-        <h2 class="demo-label">TEAM</h2>
-        <div class="demo-scroll">
-          <ShareCard
-            type="team"
-            teamTitle="MY ALL-TIME XI"
-            subtitle="Drafted from the legends vault — can the house beat this side?"
-            players={[
-              { name: 'Don Bradman', flag: 'AUS' },
-              { name: 'Jack Hobbs', flag: 'ENG' },
-              { name: 'Len Hutton', flag: 'ENG' },
-              { name: 'Sunil Gavaskar', flag: 'IND' },
-              { name: 'Sachin Tendulkar', flag: 'IND' },
-              { name: 'Gordon Greenidge', flag: 'WIN' },
-              { name: 'Hanif Mohammad', flag: 'PAK' },
-              { name: 'Graham Gooch', flag: 'ENG' },
-            ]}
-          />
-        </div>
-      </section>
-
-      <section class="demo-section" aria-label="Era card demo">
-        <h2 class="demo-label">ERA</h2>
-        <div class="demo-scroll">
-          <ShareCard
-            type="era"
-            eraName="Legends Era"
-            tagline="From Bradman's Invincibles to the modern masters — the giants every all-time XI is measured against."
-            playerCount={42}
-            eraSpan="1928 — TODAY"
-          />
-        </div>
-      </section>
-    </div>
-  </div>
 </BaseLayout>

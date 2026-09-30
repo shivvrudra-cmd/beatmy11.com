@@ -5,7 +5,11 @@ import type { Page } from "@playwright/test";
  * them, handling the role chooser when several declarations are legal.
  */
 export async function placeNextPlayer(page: Page): Promise<void> {
-  const rows = page.locator('.bm11-prow[data-bm11-select]');
+  // Skip cards already in the XI (tapping one removes it), greyed out, or
+  // flagged "Can't fit".
+  const rows = page.locator(
+    ".bm11-prow[data-bm11-select]:not(.is-picked):not(.is-off):not(.is-blocked)"
+  );
   const n = await rows.count();
   for (let i = 0; i < n; i++) {
     await rows.nth(i).click();

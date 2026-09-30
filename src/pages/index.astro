@@ -10,9 +10,9 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getHouseXI } from '@/lib/opponent-xi';
 
-const title = 'Beat My 11 — Can Your All-Time Test XI Beat Mine?';
+const title = 'Beat My 11 — Can Your All-Time Test XI Beat the World XI?';
 const description =
-  "Spin for an era and a nation, draft an all-time Test XI, then play a five-Test series against My 11 at Lord's, the MCG, Eden Gardens, Newlands and Kensington Oval.";
+  "Spin for an era and a nation, draft an all-time Test XI, then play a five-Test series against the World XI at Lord's, the MCG, Eden Gardens, Newlands and Kensington Oval.";
 
 const ROLE_SHORT: Record<string, string> = {
   opener: 'OPN',
@@ -27,7 +27,7 @@ const house = getHouseXI().map((p) => ({ name: p.name, role: ROLE_SHORT[p.primar
 const steps = [
   { n: '1', title: 'Spin', body: 'Fate draws an era and a nation. Your first spin is always a Legend.' },
   { n: '2', title: 'Draft', body: 'Six spins, eleven picks. No ratings — just the numbers and your judgment.' },
-  { n: '3', title: 'Play the series', body: 'Five Tests against My 11. Win it and you beat me. 5–0 is legendary.' },
+  { n: '3', title: 'Play the series', body: 'Five Tests against the World XI. Win the series and you beat it. 5–0 is legendary.' },
 ];
 ---
 <BaseLayout title={title} description={description}>
@@ -41,9 +41,9 @@ const steps = [
     <main id="main">
       <section class="hm-hero" aria-labelledby="hm-title">
         <p class="hm-eyebrow">The all-time Test draft</p>
-        <h1 class="hm-title" id="hm-title">Can your <span class="hm-nw">all&#8209;time&nbsp;XI</span> <span class="hm-hl">beat My 11?</span></h1>
+        <h1 class="hm-title" id="hm-title">Can your <span class="hm-nw">all&#8209;time&nbsp;XI</span> <span class="hm-hl">beat the <span class="hm-nw">World XI?</span></span></h1>
         <p class="hm-lede">
-          Spin for an era and a nation. Draft eleven. Then play five Tests against my XI —
+          Spin for an era and a nation. Draft eleven. Then play five Tests against the World XI —
           Lord’s, the MCG, Eden Gardens, Newlands and Kensington Oval.
         </p>
         <a class="hm-cta" href="/play" id="hm-cta">Start drafting</a>
@@ -53,7 +53,7 @@ const steps = [
       </section>
 
       <section class="hm-house" aria-labelledby="hm-house-title">
-        <h2 class="hm-h2" id="hm-house-title">My 11</h2>
+        <h2 class="hm-h2" id="hm-house-title">The World XI</h2>
         <p class="hm-note">The XI you have to beat.</p>
         <ol class="hm-sheet">
           {house.map((p, i) => (

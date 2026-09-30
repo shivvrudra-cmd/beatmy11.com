@@ -46,7 +46,7 @@ const calibrationJson = safe(calibration);
 ---
 <BaseLayout
   title="The Series — Beat My 11"
-  description="Your all-time Test XI against My 11 over five Tests at Lord's, the MCG, Eden Gardens, Newlands and Kensington Oval."
+  description="Your all-time Test XI against the World XI over five Tests at Lord's, the MCG, Eden Gardens, Newlands and Kensington Oval."
 >
   <link slot="head" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
   <div class="rs">
@@ -63,7 +63,7 @@ const calibrationJson = safe(calibration);
         <div class="rs-score" aria-hidden="true">
           <div class="rs-side"><span class="rs-num" id="rs-user">0</span><span class="rs-lab">Your XI</span></div>
           <span class="rs-dash">–</span>
-          <div class="rs-side"><span class="rs-num" id="rs-house">0</span><span class="rs-lab">My 11</span></div>
+          <div class="rs-side"><span class="rs-num" id="rs-house">0</span><span class="rs-lab">World XI</span></div>
         </div>
         <p class="rs-sub" id="rs-sub" aria-live="polite"></p>
         <p class="rs-rank" id="rs-rank" hidden></p>
@@ -87,7 +87,7 @@ const calibrationJson = safe(calibration);
             <ol class="rs-list" id="rs-user-xi"></ol>
           </div>
           <div>
-            <h3 class="rs-h3">My 11</h3>
+            <h3 class="rs-h3">World XI</h3>
             <ol class="rs-list" id="rs-house-xi"></ol>
           </div>
         </div>
@@ -184,17 +184,17 @@ const calibrationJson = safe(calibration);
 
     function verdictCopy(s) {
       const last = s.tests[4];
-      if (s.user === 5) return { title: 'Whitewash.', sub: 'You beat My 11 five–nil. That almost never happens.' };
-      if (s.house === 5) return { title: 'Whitewashed.', sub: 'My 11 won all five. Time for a new XI.' };
-      if (s.draws === 1 && s.user === s.house) return { title: 'Series drawn', sub: `You held My 11 to ${s.user}–${s.house}.` };
+      if (s.user === 5) return { title: 'Whitewash.', sub: 'You beat the World XI five–nil. That almost never happens.' };
+      if (s.house === 5) return { title: 'Whitewashed.', sub: 'The World XI won all five. Time for a new XI.' };
+      if (s.draws === 1 && s.user === s.house) return { title: 'Series drawn', sub: `You held the World XI to ${s.user}–${s.house}.` };
       if (s.user > s.house) {
         return s.user === 3
-          ? { title: 'You beat My 11', sub: `Level at 2–2, you won the decider at ${last.venue}.` }
-          : { title: 'You beat My 11', sub: `A ${s.user}–${s.house} series win. Convincing.` };
+          ? { title: 'You beat the World XI', sub: `Level at 2–2, you won the decider at ${last.venue}.` }
+          : { title: 'You beat the World XI', sub: `A ${s.user}–${s.house} series win. Convincing.` };
       }
       return s.house === 3
-        ? { title: 'So close', sub: `Level at 2–2 — My 11 took the decider at ${last.venue}.` }
-        : { title: 'My 11 wins', sub: `Beaten ${s.user}–${s.house}. Your next XI could do better.` };
+        ? { title: 'So close', sub: `Level at 2–2 — the World XI took the decider at ${last.venue}.` }
+        : { title: 'World XI wins', sub: `Beaten ${s.user}–${s.house}. Your next XI could do better.` };
     }
 
     function testHTML(t, running) {
@@ -204,7 +204,7 @@ const calibrationJson = safe(calibration);
         `<div class="rs-test-head"><span class="rs-test-n">${ORDINAL[t.number - 1]} Test · ${esc(t.venue)}</span>` +
         `<span class="rs-chip">${res}</span></div>` +
         `<p class="rs-test-sum">${esc(t.summary)}</p>` +
-        (t.hero ? `<p class="rs-test-hero"><span aria-hidden="true">★</span> ${esc(t.hero)}${t.heroSide === 'house' ? ' <em>(My 11)</em>' : ''}</p>` : '') +
+        (t.hero ? `<p class="rs-test-hero"><span aria-hidden="true">★</span> ${esc(t.hero)}${t.heroSide === 'house' ? ' <em>(World XI)</em>' : ''}</p>` : '') +
         `<p class="rs-test-run">Series ${running}</p>` +
         `</li>`
       );
@@ -324,15 +324,17 @@ const calibrationJson = safe(calibration);
       else timer = window.setTimeout(() => step(false), 600);
 
       // ---- share ----
-      const url = `${location.origin}/`;
+      // Each scoreline has its own page (/r/3-2) whose link preview shows
+      // that result — see src/lib/share-results.ts.
+      const url = `${location.origin}/r/${series.user}-${series.house}`;
       const shareText =
         series.user === 5
-          ? `I whitewashed My 11 5–0 with my all-time Test XI 🏏 Can you?`
+          ? `I whitewashed the World XI 5–0 with my all-time Test XI 🏏 Can you?`
           : series.user > series.house
-            ? `My all-time Test XI beat My 11 ${series.user}–${series.house} 🏏 Can yours?`
+            ? `My all-time Test XI beat the World XI ${series.user}–${series.house} 🏏 Can yours?`
             : series.user === series.house
-              ? `My all-time Test XI drew ${series.user}–${series.house} with My 11 🏏 Can you beat it?`
-              : `My all-time Test XI lost ${series.user}–${series.house} to My 11 🏏 Can you beat My 11?`;
+              ? `My all-time Test XI drew ${series.user}–${series.house} with the World XI 🏏 Can you beat it?`
+              : `My all-time Test XI lost ${series.user}–${series.house} to the World XI 🏏 Can you beat it?`;
       $('rs-share').addEventListener('click', async () => {
         try {
           if (navigator.share) {

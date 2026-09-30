@@ -28,7 +28,14 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "npm run dev -- --port 4321 --host 127.0.0.1",
+    // --ignore-lock: Astro 7 refuses a second dev server while one is already
+    // running (e.g. your own on another port); this one is test-only.
+    command: "npm run dev -- --port 4321 --host 127.0.0.1 --ignore-lock",
+    // Under an AI agent Astro forces background mode, which --ignore-lock
+    // rejects. This variable (set by Astro for its own background child)
+    // skips that detection so the server stays in the foreground.
+    // BM11_E2E hides the dev toolbar (astro.config.mjs).
+    env: { ASTRO_DEV_BACKGROUND: "1", BM11_E2E: "1" },
     url: "http://127.0.0.1:4321",
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,

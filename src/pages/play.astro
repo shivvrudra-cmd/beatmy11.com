@@ -361,7 +361,7 @@ const draftCombosJson = json(draftSpinCombos());
       const r = draft.currentRound;
       if (draft.gameComplete) {
         return isXIValid(draft)
-          ? { title: 'Your XI is ready', sub: 'Eleven picked. Time to face My 11 over five Tests.' }
+          ? { title: 'Your XI is ready', sub: 'Eleven picked. Time to face the World XI over five Tests.' }
           : { title: 'This XI can’t take the field', sub: 'It isn’t a valid combination — start over to draft again.' };
       }
       if (spinningReel) return { title: 'Spinning…', sub: 'Fate is choosing.' };

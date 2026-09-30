@@ -1,0 +1,95 @@
+---
+/**
+ * FloodlitShell.astro — the "Floodlit night" page frame for the smaller
+ * pages (share landing, 404, share-demo): dark ground, two floodlight
+ * pylons in the top corners throwing light in toward the pitch, and the
+ * BEAT MY 11 wordmark. The pylons (src/lib/floodlight.ts) are the same
+ * drawing as the link-preview images (scripts/gen-og-images.ts), so
+ * a shared link lands on the same scene its preview showed.
+ *
+ * Page content goes in the default slot; `wide` widens the content column.
+ */
+import { floodlightSvg, FLOODLIGHT_VIEWBOX } from '../lib/floodlight';
+
+interface Props {
+  wide?: boolean;
+}
+
+const { wide = false } = Astro.props;
+
+const sides = ['l', 'r'] as const;
+---
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
+<div class="fs">
+  <div class="fs-lights" aria-hidden="true"></div>
+  {sides.map((side) => (
+    <svg
+      class={`fs-pylon fs-pylon--${side}`}
+      viewBox={FLOODLIGHT_VIEWBOX}
+      aria-hidden="true"
+      focusable="false"
+      set:html={floodlightSvg(`fs-${side}`)}
+    />
+  ))}
+  <header class="fs-top">
+    <a class="fs-brand" href="/" aria-label="Beat My 11 home">BEAT MY 11</a>
+  </header>
+  <main id="main" class:list={['fs-main', { 'fs-main--wide': wide }]}>
+    <slot />
+  </main>
+</div>
+
+<style is:global>
+  /* ============ Floodlit shell (mobile-first) ============ */
+  .fs {
+    --fs-text: #eaf0ff;
+    --fs-muted: #9aa6c4;
+    --fs-dim: #6b7694;
+    --fs-lime: #c6ff3d;
+    --fs-loss: #ff6b5e;
+    --fs-card: linear-gradient(160deg, #16223a, #0b1020 70%);
+    --fs-display: 'Bebas Neue', 'Oswald', 'Arial Narrow', sans-serif;
+    position: relative; min-height: 100vh; padding: 12px 16px 48px; overflow-x: clip;
+    background: #04060c; color: var(--fs-text); font-family: Inter, system-ui, sans-serif;
+  }
+  body:has(.fs) { background: #04060c; }
+  .fs-lights {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background: radial-gradient(90vw 45vh at 50% 115%, rgba(40, 160, 90, 0.26), transparent 70%);
+  }
+  .fs-pylon {
+    position: absolute; top: 0; z-index: 0; pointer-events: none;
+    width: clamp(264px, 58vw, 720px); height: auto;
+    /* fade the mast and beam out instead of ending on a hard edge */
+    -webkit-mask-image: linear-gradient(#000 45%, transparent 100%);
+    mask-image: linear-gradient(#000 45%, transparent 100%);
+  }
+  .fs-pylon--l { left: -10px; }
+  .fs-pylon--r { right: -10px; transform: scaleX(-1); }
+  .fs > .fs-top, .fs > .fs-main { position: relative; z-index: 1; }
+  .fs :focus-visible { outline: 3px solid var(--fs-lime); outline-offset: 3px; }
+  .fs-top { max-width: 900px; margin: 0 auto; text-align: center; }
+  .fs-brand { font: 400 26px/1 var(--fs-display); letter-spacing: 0.1em; color: var(--fs-text); text-decoration: none; }
+  .fs-main { max-width: 640px; margin: 0 auto; }
+  .fs-main--wide { max-width: 1280px; }
+
+  /* shared pieces the shell's pages use */
+  .fs-eyebrow { margin: 0; font: 600 11px Inter, sans-serif; letter-spacing: 0.3em; text-transform: uppercase; color: var(--fs-muted); }
+  .fs-title { margin: 10px 0 12px; font: 400 clamp(46px, 13vw, 88px)/0.92 var(--fs-display); letter-spacing: 0.02em; }
+  .fs-hl { color: var(--fs-lime); text-shadow: 0 0 34px rgba(198, 255, 61, 0.45); }
+  .fs-lede { margin: 0 auto; max-width: 30rem; color: var(--fs-muted); font-size: 16px; line-height: 1.55; }
+  .fs-cta {
+    display: block; width: min(100%, 360px); margin: 26px auto 0; min-height: 60px; border-radius: 999px;
+    background: var(--fs-lime); color: #04060c; text-decoration: none; text-align: center;
+    font: 400 28px/60px var(--fs-display); letter-spacing: 0.12em;
+    box-shadow: 0 0 0 6px rgba(198, 255, 61, 0.15), 0 0 44px rgba(198, 255, 61, 0.5);
+    transition: transform 0.12s, box-shadow 0.2s;
+  }
+  .fs-cta:hover { transform: scale(1.03); box-shadow: 0 0 0 10px rgba(198, 255, 61, 0.18), 0 0 64px rgba(198, 255, 61, 0.7); }
+  .fs-cta:active { transform: scale(0.98); }
+  .fs-link { display: inline-block; margin-top: 14px; padding: 8px 4px; color: var(--fs-muted); font-size: 14px; }
+  .fs-link:hover { color: var(--fs-text); }
+  @media (prefers-reduced-motion: reduce) {
+    .fs-cta { transition: none; }
+  }
+</style>

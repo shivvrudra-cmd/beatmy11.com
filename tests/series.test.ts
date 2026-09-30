@@ -105,7 +105,7 @@ const calibration = { scores: sample, source: 'test', generated: 'test' };
       if (t.result === 'draw') continue;
       const side = t.result === 'user' ? userXI : houseXI;
       if (t.heroSide !== t.result || !side.some((p) => t.hero.startsWith(p.name.split(' ').slice(-1)[0]))) bad++;
-      if (!t.summary.startsWith(t.result === 'user' ? 'Your XI win' : 'My 11 win')) bad++;
+      if (!t.summary.startsWith(t.result === 'user' ? 'Your XI win' : 'World XI win')) bad++;
     }
   }
   ok(bad === 0, 'every hero and summary matches the side that won the Test', bad);

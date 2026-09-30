@@ -1,0 +1,56 @@
+---
+/**
+ * /r/<user>-<house> — where a shared series result lands.
+ *
+ * The page exists for its link preview: title and image name the scoreline
+ * (public/og/<slug>.png), so "I beat the World XI 3–2" shows as such in
+ * WhatsApp, X, iMessage and the rest. A friend who opens it sees the
+ * result as a challenge and one button to start their own draft.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FloodlitShell from '../../components/FloodlitShell.astro';
+import { SHARE_RESULTS, type ShareResult } from '../../lib/share-results';
+
+export function getStaticPaths() {
+  return SHARE_RESULTS.map((r) => ({ params: { result: r.slug }, props: { r } }));
+}
+
+const { r } = Astro.props as { r: ShareResult };
+const won = r.user > r.house;
+const lost = r.user < r.house;
+---
+<BaseLayout
+  title={`${r.title} — Beat My 11`}
+  description={r.challenge}
+  ogImage={`/og/${r.slug}.png`}
+  ogImageAlt={`${r.title}. The five-Test series on Beat My 11.`}
+>
+  <meta name="robots" content="noindex" slot="head" />
+  <FloodlitShell>
+    <section class="sr" aria-labelledby="sr-title">
+      <p class="fs-eyebrow">The five-Test series</p>
+      <h1 class="fs-title" id="sr-title">
+        {won ? <span class="fs-hl">{r.imageHeadline}</span> : r.imageHeadline}
+      </h1>
+      <div class="sr-score" role="img" aria-label={`Their XI ${r.user}, World XI ${r.house}${r.draws ? `, ${r.draws} drawn` : ''}`}>
+        <div class:list={['sr-side', { 'is-win': won }]}><span class="sr-num">{r.user}</span><span class="sr-lab">Their XI</span></div>
+        <span class="sr-dash" aria-hidden="true">–</span>
+        <div class:list={['sr-side', { 'is-loss': lost }]}><span class="sr-num">{r.house}</span><span class="sr-lab">World XI</span></div>
+      </div>
+      <p class="fs-lede">{r.challenge}</p>
+      <a class="fs-cta" href="/play">Draft your XI</a>
+      <a class="fs-link" href="/">How it works</a>
+    </section>
+  </FloodlitShell>
+
+  <style is:global>
+    .sr { margin: 10vh auto 0; text-align: center; }
+    .sr-score { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 4px 0 16px; }
+    .sr-side { display: flex; flex-direction: column; align-items: center; min-width: 96px; }
+    .sr-num { font: 400 clamp(88px, 28vw, 150px)/0.88 var(--fs-display); }
+    .sr-lab { font: 600 11px Inter, sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fs-muted); }
+    .sr-side.is-win .sr-num { color: var(--fs-lime); text-shadow: 0 0 40px rgba(198, 255, 61, 0.45); }
+    .sr-side.is-loss .sr-num { color: var(--fs-loss); }
+    .sr-dash { font: 400 60px/1 var(--fs-display); color: var(--fs-dim); margin-top: -20px; }
+  </style>
+</BaseLayout>

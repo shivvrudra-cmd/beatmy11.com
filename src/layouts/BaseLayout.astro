@@ -1,7 +1,13 @@
 ---
 import '../styles/globals.css';
 
-const { title, description, ogImage, twitterImage, siteUrl } = Astro.props;
+const { title, description, ogImage, ogImageAlt, siteUrl } = Astro.props;
+
+// Link previews need absolute URLs; crawlers don't resolve relative ones.
+const site = Astro.site ?? Astro.url;
+const pageUrl = siteUrl ?? new URL(Astro.url.pathname, site).href;
+const imageUrl = new URL(ogImage ?? '/og-image.png', site).href;
+const imageAlt = ogImageAlt ?? 'Beat My 11 — can your all-time Test XI beat the World XI?';
 ---
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
@@ -10,13 +16,13 @@ const { title, description, ogImage, twitterImage, siteUrl } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <slot name="head" />
     <title>{title}</title>
-    <meta name="description" content="{description}" />
+    <meta name="description" content={description} />
 
     <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#0A0A1C" />
+    <meta name="theme-color" content="#04060c" />
 
     <!-- Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,34 +33,34 @@ const { title, description, ogImage, twitterImage, siteUrl } = Astro.props;
     />
 
     <!-- Open Graph / Social Cards -->
-    <meta property="og:title" content="{title}" />
-    <meta property="og:description" content="{description}" />
-    <meta property="og:image" content="{ogImage ?? '/og-image.png'}" />
-    <meta property="og:url" content="{siteUrl}" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:url" content={pageUrl} />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="BeatMy11" />
+    <meta property="og:site_name" content="Beat My 11" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="{title}" />
-    <meta name="twitter:description" content="{description}" />
-    <meta name="twitter:image" content="{twitterImage ?? ogImage ?? '/og-image.png'}" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
 
     <!-- Structured Data -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "BeatMy11",
-        "description": "{description}",
-        "url": "{siteUrl}",
-        "potentialAction": {
-          "@type": "Action",
-          "name": "Play BeatMy11",
-          "target": "{siteUrl}"
-        }
-      }
-    </script>
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebApplication',
+        name: 'Beat My 11',
+        description,
+        url: pageUrl,
+      }).replace(/</g, '\\u003c')}
+    />
   </head>
   <body class="tap-highlight-color">
     <slot />

@@ -1,5 +1,5 @@
 /**
- * series.ts — the five-Test series between the user's XI and My 11
+ * series.ts — the five-Test series between the user's XI and the World XI
  * (owner-approved 2026-09-29).
  *
  * The result is NOT a per-Test coin flip on the score gap. Instead:
@@ -79,7 +79,7 @@ export interface TestMatch {
   number: number;
   venue: string;
   result: TestResult;
-  /** "Your XI win by 7 wickets" / "My 11 win by an innings and 42 runs" / "Match drawn". */
+  /** "Your XI win by 7 wickets" / "World XI win by an innings and 42 runs" / "Match drawn". */
   summary: string;
   /** Hero line, e.g. "Lara 213" or "Murali 7/88". Empty for a washout. */
   hero: string;
@@ -318,7 +318,7 @@ export function playSeries(input: {
       number: i + 1,
       venue: VENUES[i],
       result,
-      summary: winSummary(result === 'user' ? 'Your XI' : 'My 11', rng),
+      summary: winSummary(result === 'user' ? 'Your XI' : 'World XI', rng),
       hero: heroLine(side, used, rng),
       heroSide: result,
     };
