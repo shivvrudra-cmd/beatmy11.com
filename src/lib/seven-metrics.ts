@@ -49,7 +49,8 @@
  *   adjusted values, so every player is ranked on the same basis.
  *   Missing values stay missing — shrinkage never fabricates data.
  *
- * WEIGHTS: batting metrics 1/3 each; bowling metrics 1/4 each (within the
+ * WEIGHTS: batting metrics 1/3 each; bowling 40/35/20/5 — average, wickets per
+ *   match, five-wicket rate, ten-wicket rate (within the
  *   75% metric share of each half).
  *
  * XI SCORE: team blend — 40% batting unit + 50% bowling unit + 10%
@@ -125,15 +126,18 @@ export const BATTING_WEIGHTS: Record<MetricKey, number> = {
   tenWRate: 0,
 };
 
-/** … bowling metrics 1/4 each … */
+/** … bowling: average 40%, wickets per match 35%, five-wicket rate 20%, ten-wicket
+ *  rate 5% (owner-approved 2026-09-30). Most bowlers have no ten-wicket match, so
+ *  that metric mostly punishes (Pollock ranked 1st percentile on it, 68.6 overall
+ *  despite a 23.1 average); it stays as a small tiebreak for the big winners. */
 export const BOWLING_WEIGHTS: Record<MetricKey, number> = {
   battingAverage: 0,
   runsPerMatch: 0,
   centuryRate: 0,
-  bowlingAverage: 1 / 4,
-  wicketsPerMatch: 1 / 4,
-  fiveWRate: 1 / 4,
-  tenWRate: 1 / 4,
+  bowlingAverage: 0.4,
+  wicketsPerMatch: 0.35,
+  fiveWRate: 0.2,
+  tenWRate: 0.05,
 };
 
 /** … all-rounder: the stronger half leads and the weaker half fills this

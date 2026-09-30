@@ -269,6 +269,7 @@ const calibrationJson = safe(calibration);
       const houseXI = toSeries(houseEntries, cmp.opponentPlayers);
       const series = playSeries({
         userScore: cmp.userScore,
+        houseScore: cmp.opponentScore,
         userXI,
         houseXI,
         calibration: CALIBRATION,

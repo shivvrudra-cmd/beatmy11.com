@@ -38,7 +38,8 @@ import {
   type XiRole,
 } from '../src/lib/player-logic';
 import { buildScoringContext, teamBlend } from '../src/lib/seven-metrics';
-import { mulberry32, OUTCOME_BANDS, bandFor, rankPercentile, wobble } from '../src/lib/series';
+import { mulberry32, OUTCOME_BANDS, bandFor, wobble } from '../src/lib/series';
+import { getHouseXI } from '../src/lib/opponent-xi';
 
 const ERAS = ['legends', '1970s', '1980s', '1990s', '2000s', '2010s', '2020s'];
 const byEra: Record<string, NormalizedPlayer[]> = {};
@@ -95,7 +96,7 @@ function visibleValue(p: NormalizedPlayer, role: XiRole): number {
 }
 
 /** Misjudgment: a fan's read of a player is off by this much (sd, 0–1 scale). */
-const MISJUDGE = 0.12;
+const MISJUDGE = Number(process.env.MISJUDGE ?? 0.12);
 const RESPIN_BELOW = 0.45;
 
 type Pick = { p: NormalizedPlayer; slot: string; role: XiRole; v: number };
@@ -184,15 +185,20 @@ const q = (p: number) => scores[Math.min(scores.length - 1, Math.floor(p * score
 console.log(`human-like drafts: ${scores.length} complete, ${stalled} stalled`);
 console.log(`team scores — p10 ${q(0.1)}, p25 ${q(0.25)}, median ${q(0.5)}, p75 ${q(0.75)}, p90 ${q(0.9)}, best ${scores[scores.length - 1]}`);
 
-// Self-check: the outcome shares the sample produces through the series engine.
+// Self-check: the scorelines these drafts get against the World XI (score gap +
+// seeded wobble), next to the original owner targets.
+const houseScore = teamBlend(getHouseXI().map((p) => ({ player: p, declaredRole: normalizeRole(p.primaryRole) })), ctx).score;
+console.log(`World XI team score: ${houseScore}; drafts at or above it: ${((100 * scores.filter((s) => s >= houseScore).length) / scores.length).toFixed(1)}%`);
 const tally = new Map<string, number>();
 for (let i = 0; i < scores.length; i++) {
-  const band = bandFor(wobble(rankPercentile(scores[i], scores), mulberry32(i + 1)));
+  const band = bandFor(wobble(scores[i] - houseScore, mulberry32(i + 1)));
   const k = `${band.user}-${band.house}`;
   tally.set(k, (tally.get(k) ?? 0) + 1);
 }
+let winShare = 0;
 for (const b of OUTCOME_BANDS) {
   const k = `${b.user}-${b.house}`;
+  if (b.user > b.house) winShare += (tally.get(k) ?? 0) / scores.length;
   console.log(`  ${k.padEnd(4)} target ${(b.share * 100).toFixed(0).padStart(2)}%  sample ${((100 * (tally.get(k) ?? 0)) / scores.length).toFixed(1)}%`);
 }
 
@@ -208,4 +214,5 @@ writeFileSync(
     0,
   ) + '\n',
 );
+console.log(`series wins: ${(winShare * 100).toFixed(1)}% of drafts`);
 console.log('wrote src/data/series-calibration.json');

@@ -1,26 +1,27 @@
 /**
  * series.ts — the five-Test series between the user's XI and the World XI
- * (owner-approved 2026-09-29).
+ * (owner-approved 2026-09-29; head-to-head anchoring 2026-09-30).
  *
- * The result is NOT a per-Test coin flip on the score gap. Instead:
+ * The result is a real comparison with the World XI, not a per-Test coin
+ * flip and not a rank among other drafters:
  *
- *   1. The user's XI team score is ranked against a calibration sample of
- *      drafted XIs (src/data/series-calibration.json, written by
- *      scripts/calibrate-series.ts) → a percentile p in (0, 1).
- *   2. A small seeded wobble is applied in normal space:
- *        z' = (Φ⁻¹(p) + σ·ε) / √(1 + σ²),   ε ~ N(0,1) seeded by the XI
- *      z' is still standard normal, so the wobbled percentile Φ(z') stays
- *      uniform across drafts — the owner's target shares hold exactly —
- *      while an XI near a band edge can land either side (upsets). The seed
- *      comes from the XI itself, so the same XI always gets the same series.
- *   3. The wobbled percentile picks an outcome band (bottom to top):
- *        0–5 10% · 1–4 10% · 2–3 35% · 2–2 (one draw) 10% · 3–2 20% ·
- *        4–1 10% · 5–0 5%
+ *   1. gap = user XI team score − World XI team score (seven-metric engine).
+ *   2. A small seeded wobble in score points is added: gap' = gap + σ·ε,
+ *      ε ~ N(0,1) seeded by the XI, so a near-level XI can land either side
+ *      (upsets) while the same XI always gets the same series.
+ *   3. gap' picks the scoreline from GAP_CUTS (bottom to top):
+ *        0–5 · 1–4 · 2–3 · 2–2 (one draw) · 3–2 · 4–1 · 5–0
+ *      You win the series by finishing ahead of par (PAR_GAP), which sits a
+ *      little below the World XI's own score.
  *   4. Each Test gets a venue (owner-picked, fixed order), a result
  *      consistent with the scoreline, and one headline whose hero comes from
  *      the side that won that Test, with figures scaled from the hero's real
  *      career numbers. Headlines are flavour consistent with the result, not
  *      a ball-by-ball simulation.
+ *
+ * The calibration sample of drafted XIs (src/data/series-calibration.json,
+ * written by scripts/calibrate-series.ts) is used only for the "top X% of
+ * drafts" figure and to report what share of drafts gets each scoreline.
  *
  * Pure and deterministic: no DOM, no storage, no data-file imports — the
  * calibration and scored players are passed in, so the same module can run
@@ -37,7 +38,9 @@ export interface OutcomeBand {
   share: number;
 }
 
-/** Owner targets, ordered from the weakest XIs to the strongest. */
+/** Scorelines, ordered from the weakest XIs to the strongest. `share` is the
+ *  original owner target for how often each occurs across drafts — a design
+ *  reference now; scripts/calibrate-series.ts reports the actual shares. */
 export const OUTCOME_BANDS: OutcomeBand[] = [
   { user: 0, house: 5, draws: 0, share: 0.1 },
   { user: 1, house: 4, draws: 0, share: 0.1 },
@@ -48,8 +51,28 @@ export const OUTCOME_BANDS: OutcomeBand[] = [
   { user: 5, house: 0, draws: 0, share: 0.05 },
 ];
 
-/** Luck: standard deviation of the seeded wobble in normal space. */
-export const WOBBLE_SIGMA = 0.35;
+/** Luck: standard deviation of the seeded wobble, in team-score points. */
+export const WOBBLE_SIGMA = 2.5;
+
+/**
+ * The World XI is a legendary side (team score ~84), so a very good drafted XI
+ * still scores below it. PAR_GAP is how far behind the World XI's team score
+ * an XI can be and still count as level with it — the middle of the series
+ * (drawn 2–2). Tuned so about a third of simulated drafts win the series
+ * (scripts/calibrate-series.ts); lower it to make wins more common, raise it
+ * to make them rarer.
+ */
+export const PAR_GAP = -11.5;
+
+/** Score-gap cut points relative to par: a gap inside ±1 of par is the drawn
+ *  2–2; you must be ahead of par to win and 8+ ahead for a 5–0. */
+const SCORELINE_CUTS = [-14, -8, -1, 1, 4, 8] as const;
+
+/**
+ * Score-gap cut points (user − World XI, team-score points) between the seven
+ * scorelines in OUTCOME_BANDS, shifted by PAR_GAP.
+ */
+export const GAP_CUTS = SCORELINE_CUTS.map((c) => c + PAR_GAP);
 
 export interface SeriesCalibration {
   /** Team scores of reference drafted XIs, sorted ascending. */
@@ -91,7 +114,7 @@ export interface SeriesResult {
   user: number;
   house: number;
   draws: number;
-  /** Percentile of the XI among drafted XIs (before the wobble), 0–1. */
+  /** Percentile of the XI among drafted XIs , 0–1 (display only). */
   percentile: number;
   /** "Top X%" figure for display: share of drafts at or above this XI. */
   topPercent: number;
@@ -183,20 +206,16 @@ export function rankPercentile(score: number, sorted: number[]): number {
   return (below + equal / 2 + 0.5) / (n + 1);
 }
 
-/** Seeded wobble that keeps a uniform percentile uniform. */
-export function wobble(p: number, rng: () => number, sigma: number = WOBBLE_SIGMA): number {
-  const z = (normInv(p) + sigma * gaussian(rng)) / Math.sqrt(1 + sigma * sigma);
-  return normCdf(z);
+/** Seeded luck, in team-score points. */
+export function wobble(gap: number, rng: () => number, sigma: number = WOBBLE_SIGMA): number {
+  return gap + sigma * gaussian(rng);
 }
 
-/** Outcome band for a (wobbled) percentile. */
-export function bandFor(p: number): OutcomeBand {
-  let acc = 0;
-  for (const band of OUTCOME_BANDS) {
-    acc += band.share;
-    if (p < acc) return band;
-  }
-  return OUTCOME_BANDS[OUTCOME_BANDS.length - 1];
+/** Scoreline for a (wobbled) score gap: user − World XI. */
+export function bandFor(gap: number): OutcomeBand {
+  let i = 0;
+  while (i < GAP_CUTS.length && gap >= GAP_CUTS[i]) i++;
+  return OUTCOME_BANDS[i];
 }
 
 // ---------------------------------------------------------------- the series
@@ -285,11 +304,12 @@ function winSummary(team: string, rng: () => number): string {
 }
 
 /**
- * Play the series. `userScore` is the user's XI team score from the
- * seven-metric engine; `seed` comes from xiSeed(user XI).
+ * Play the series. `userScore` and `houseScore` are the two XIs' team scores
+ * from the seven-metric engine; `seed` comes from xiSeed(user XI).
  */
 export function playSeries(input: {
   userScore: number;
+  houseScore: number;
   userXI: SeriesPlayer[];
   houseXI: SeriesPlayer[];
   calibration: SeriesCalibration;
@@ -297,7 +317,7 @@ export function playSeries(input: {
 }): SeriesResult {
   const rng = mulberry32(input.seed);
   const percentile = rankPercentile(input.userScore, input.calibration.scores);
-  const band = bandFor(wobble(percentile, rng));
+  const band = bandFor(wobble(input.userScore - input.houseScore, rng));
   const order = testOrder(band, rng);
   const used = new Set<string>();
   const tests: TestMatch[] = order.map((result, i) => {

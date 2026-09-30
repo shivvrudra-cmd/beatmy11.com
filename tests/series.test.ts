@@ -4,6 +4,8 @@
 import {
   VENUES,
   OUTCOME_BANDS,
+  GAP_CUTS,
+  PAR_GAP,
   bandFor,
   rankPercentile,
   wobble,
@@ -30,9 +32,15 @@ ok(share(2, 2) === 0.1 && share(2, 3) === 0.35 && share(1, 4) === 0.1 && share(0
 ok(OUTCOME_BANDS.every((b) => b.user + b.house + b.draws === 5), 'every band is a five-Test series');
 ok(JSON.stringify(VENUES) === JSON.stringify(["Lord's", 'MCG', 'Eden Gardens', 'Newlands', 'Kensington Oval']), 'owner venues in order');
 
-// ---- bands by percentile ----
-ok(bandFor(0.05).house === 5 && bandFor(0.999).user === 5, 'bottom → 0–5, top → 5–0');
-ok(bandFor(0.5).user === 2 && bandFor(0.5).house === 3, 'median XI loses 2–3');
+// ---- bands by score gap (user − World XI) ----
+ok(GAP_CUTS.length === OUTCOME_BANDS.length - 1 && GAP_CUTS.every((c, i) => i === 0 || c > GAP_CUTS[i - 1]), 'one ascending gap cut between each pair of scorelines');
+ok(bandFor(-30).house === 5 && bandFor(30).user === 5, 'far behind → 0–5, far ahead → 5–0');
+ok(bandFor(PAR_GAP - 4).user === 2 && bandFor(PAR_GAP - 4).house === 3, 'a few points below par loses 2–3');
+ok(bandFor(PAR_GAP).draws === 1, 'at par → drawn 2–2');
+ok(bandFor(PAR_GAP + 2).user === 3 && bandFor(PAR_GAP + 2).house === 2, 'a little above par wins 3–2');
+ok(bandFor(PAR_GAP - 0.99).draws === 1 && bandFor(PAR_GAP + 0.99).draws === 1, 'draw band spans ±1 either side of par');
+ok(OUTCOME_BANDS.every((b, i) => bandFor(i === 0 ? GAP_CUTS[0] - 1 : GAP_CUTS[i - 1]) === b), 'every scoreline is reachable');
+ok(OUTCOME_BANDS.filter((b) => b.user > b.house).every((b) => bandFor(GAP_CUTS[OUTCOME_BANDS.indexOf(b) - 1]).user > b.house), 'series wins need the user above par');
 
 // ---- normal helpers ----
 ok([0.01, 0.2, 0.5, 0.8, 0.99].every((p) => Math.abs(normCdf(normInv(p)) - p) < 1e-4), 'normCdf ∘ normInv ≈ identity');
@@ -42,25 +50,19 @@ const sample = Array.from({ length: 200 }, (_, i) => 60 + i * 0.1);
 ok(rankPercentile(40, sample) < 0.01 && rankPercentile(99, sample) > 0.99, 'rank percentile extremes');
 ok(Math.abs(rankPercentile(sample[100], sample) - 0.5) < 0.01, 'median ranks ~0.5');
 
-// ---- wobble keeps the overall distribution on target ----
+// ---- wobble: luck in score points, but skill still decides ----
 {
-  const tally = new Map<string, number>();
-  const N = 20000;
   const rng = mulberry32(99);
+  let level = 0, behind = 0, ahead = 0;
+  const N = 4000;
   for (let i = 0; i < N; i++) {
-    const b = bandFor(wobble((i + 0.5) / N, rng));
-    tally.set(`${b.user}-${b.house}`, (tally.get(`${b.user}-${b.house}`) ?? 0) + 1);
+    if (bandFor(wobble(PAR_GAP, rng)).user > bandFor(wobble(PAR_GAP, rng)).house) level++;
+    if (bandFor(wobble(PAR_GAP - 10, rng)).user > bandFor(wobble(PAR_GAP - 10, rng)).house) behind++;
+    if (bandFor(wobble(PAR_GAP + 10, rng)).user > bandFor(wobble(PAR_GAP + 10, rng)).house) ahead++;
   }
-  ok(
-    OUTCOME_BANDS.every((b) => Math.abs((tally.get(`${b.user}-${b.house}`) ?? 0) / N - b.share) < 0.012),
-    'with the wobble, outcome shares match the owner targets',
-    Object.fromEntries(tally),
-  );
-  // …and the wobble still rewards skill: a top XI rarely loses the series
-  const r2 = mulberry32(7);
-  let topWins = 0;
-  for (let i = 0; i < 2000; i++) { const b = bandFor(wobble(0.97, r2)); if (b.user > b.house) topWins++; }
-  ok(topWins / 2000 > 0.85, 'a top-3% XI wins the series most of the time', topWins / 2000);
+  ok(ahead / N > 0.95, 'an XI 10 points above par nearly always wins the series', ahead / N);
+  ok(behind / N < 0.02, 'an XI 10 points below par almost never wins the series', behind / N);
+  ok(level / N > 0.2 && level / N < 0.45, 'an XI at par can go either way (upsets exist)', level / N);
 }
 
 // ---- seeding ----
@@ -85,8 +87,8 @@ const userXI = [mkP('u1', 'opener', 80, 45), mkP('u2', 'middle-order', 70, 50), 
 const houseXI = [mkP('h1', 'opener', 99, 99.9), mkP('h2', 'middle-order', 98, 52), mkP('h3', 'spinner', 99, 11, 22.7), mkP('h4', 'fast-bowler', 91, 22, 23.6)];
 const calibration = { scores: sample, source: 'test', generated: 'test' };
 {
-  const a = playSeries({ userScore: 70, userXI, houseXI, calibration, seed: 1234 });
-  const b = playSeries({ userScore: 70, userXI, houseXI, calibration, seed: 1234 });
+  const a = playSeries({ userScore: 70, houseScore: 80, userXI, houseXI, calibration, seed: 1234 });
+  const b = playSeries({ userScore: 70, houseScore: 80, userXI, houseXI, calibration, seed: 1234 });
   ok(JSON.stringify(a) === JSON.stringify(b), 'same XI + seed → identical series');
   ok(a.tests.length === 5 && a.tests.every((t, i) => t.venue === VENUES[i] && t.number === i + 1), 'five Tests at the owner venues in order');
   ok(
@@ -100,7 +102,7 @@ const calibration = { scores: sample, source: 'test', generated: 'test' };
   // heroes always come from the side that won that Test
   let bad = 0;
   for (let seed = 1; seed <= 300; seed++) {
-    const s = playSeries({ userScore: 60 + (seed % 20), userXI, houseXI, calibration, seed });
+    const s = playSeries({ userScore: 60 + (seed % 20), houseScore: 80, userXI, houseXI, calibration, seed });
     for (const t of s.tests) {
       if (t.result === 'draw') continue;
       const side = t.result === 'user' ? userXI : houseXI;
@@ -109,8 +111,8 @@ const calibration = { scores: sample, source: 'test', generated: 'test' };
     }
   }
   ok(bad === 0, 'every hero and summary matches the side that won the Test', bad);
-  const hi = playSeries({ userScore: 1000, userXI, houseXI, calibration, seed: 5 });
-  const lo = playSeries({ userScore: 0, userXI, houseXI, calibration, seed: 5 });
+  const hi = playSeries({ userScore: 1000, houseScore: 80, userXI, houseXI, calibration, seed: 5 });
+  const lo = playSeries({ userScore: 0, houseScore: 80, userXI, houseXI, calibration, seed: 5 });
   ok(hi.topPercent <= 1 && lo.topPercent >= 99, 'top-% figure tracks the rank');
 }
 

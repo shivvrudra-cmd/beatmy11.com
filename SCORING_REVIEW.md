@@ -1,10 +1,10 @@
 # BeatMy11 seven-metric engine — scoring review pack
 
-Generated 2026-09-29 from the current repo data (790 records, 536 unique players).
+Generated 2026-09-30 from the current repo data (790 records, 536 unique players).
 Engine: seven metrics, percentile-rank 0–100 over eligible populations
 (every role, all-rounders included, ranked against the full populations — V2, owner-approved 2026-09-29),
 W=30 shrinkage toward the role-eligible population mean (adjusted = (m×raw + 30×mean)/(m+30)),
-each half = 75% weighted metrics (bat 1/3, bowl 1/4) + 25% longevity (Tests played, full credit at 50),
+each half = 75% weighted metrics (bat 1/3, bowl 40/35/20/5) + 25% longevity (Tests played, full credit at 50),
 all-rounder = stronger half + weaker half filling 50% of the gap to 100,
 XI score = team blend: 40% batting unit + 50% bowling unit + 10% fielding unit
 (owner-approved 2026-09-27; fielding = dismissals/match, W=30 shrinkage, full-population percentile, all players).
@@ -42,13 +42,13 @@ Roles shown are the declared/evaluation roles. `raw → adjusted` shows the shri
 | Andy Flower | wicketkeeper | 63 | 51.5→46.9 | 76.1→70.5 | n/a→n/a | 0.000→1.060 | **90.5** |
 | Jacques Kallis | all-rounder | 166 | 55.4→52.6 | 80.1→76.8 | 32.6→32.5 | 1.759→1.993 | **98.5** |
 | Garfield Sobers | all-rounder | 93 | 57.8→52.8 | 86.4→79.7 | 34.0→33.5 | 2.527→2.712 | **98.9** |
-| Imran Khan | all-rounder | 88 | 37.7→37.6 | 43.3→47.2 | 22.8→25.2 | 4.114→3.903 | **95.7** |
-| Muttiah Muralitharan | spinner | 133 | 11.7→16.4 | 9.5→18.6 | 22.7→24.4 | 6.015→5.513 | **99.6** |
-| Shane Warne | spinner | 145 | 17.3→20.7 | 21.8→28.1 | 25.4→26.5 | 4.883→4.609 | **96.0** |
-| Sydney Barnes | fast-bowler | 27 | 8.1→23.5 | 9.0→35.2 | 16.4→24.6 | 7.000→5.045 | **88.0** |
-| Glenn McGrath | fast-bowler | 124 | 7.4→13.2 | 5.2→15.6 | 21.6→23.6 | 4.540→4.296 | **90.4** |
-| Malcolm Marshall | fast-bowler | 81 | 18.9→23.9 | 22.3→32.2 | 20.9→23.9 | 4.642→4.275 | **95.7** |
-| Donald Tiripano | fast-bowler | 16 | 22.1→32.0 | 33.2→49.9 | 49.0→37.9 | 1.625→2.708 | **22.5** |
+| Imran Khan | all-rounder | 88 | 37.7→37.6 | 43.3→47.2 | 22.8→25.2 | 4.114→3.903 | **95.4** |
+| Muttiah Muralitharan | spinner | 133 | 11.7→16.4 | 9.5→18.6 | 22.7→24.4 | 6.015→5.513 | **99.5** |
+| Shane Warne | spinner | 145 | 17.3→20.7 | 21.8→28.1 | 25.4→26.5 | 4.883→4.609 | **95.6** |
+| Sydney Barnes | fast-bowler | 27 | 8.1→23.5 | 9.0→35.2 | 16.4→24.6 | 7.000→5.045 | **87.8** |
+| Glenn McGrath | fast-bowler | 124 | 7.4→13.2 | 5.2→15.6 | 21.6→23.6 | 4.540→4.296 | **95.7** |
+| Malcolm Marshall | fast-bowler | 81 | 18.9→23.9 | 22.3→32.2 | 20.9→23.9 | 4.642→4.275 | **97.2** |
+| Donald Tiripano | fast-bowler | 16 | 22.1→32.0 | 33.2→49.9 | 49.0→37.9 | 1.625→2.708 | **16.7** |
 
 ## Hot-streak check (the reason for shrinkage)
 
@@ -60,7 +60,7 @@ No player with ≤5 Tests appears in any role's top 10 (top-10 minimums: 12–87
 
 ## All-rounders under the microscope
 
-### Garfield Sobers — final **98.9** (batting 98.6 / bowling 34.4)
+### Garfield Sobers — final **98.9** (batting 98.6 / bowling 38.0)
 
 | Metric | Adjusted value | Percentile (full population) |
 |---|---|---|
@@ -72,7 +72,7 @@ No player with ≤5 Tests appears in any role's top 10 (top-10 minimums: 12–87
 | fiveWRate | 0.085 | 8.1 |
 | tenWRate | 0.005 | 1.6 |
 
-### Richard Hadlee — final **99.0** (batting 27.8 / bowling 98.9)
+### Richard Hadlee — final **98.8** (batting 27.8 / bowling 98.6)
 
 | Metric | Adjusted value | Percentile (full population) |
 |---|---|---|
@@ -84,7 +84,7 @@ No player with ≤5 Tests appears in any role's top 10 (top-10 minimums: 12–87
 | fiveWRate | 0.349 | 99.2 |
 | tenWRate | 0.083 | 99.2 |
 
-### Jacques Kallis — final **98.5** (batting 98.2 / bowling 33.0)
+### Jacques Kallis — final **98.5** (batting 98.2 / bowling 37.6)
 
 | Metric | Adjusted value | Percentile (full population) |
 |---|---|---|
@@ -96,7 +96,7 @@ No player with ≤5 Tests appears in any role's top 10 (top-10 minimums: 12–87
 | fiveWRate | 0.048 | 0.8 |
 | tenWRate | 0.003 | 0.0 |
 
-### Imran Khan — final **95.7** (batting 44.4 / bowling 94.5)
+### Imran Khan — final **95.4** (batting 44.4 / bowling 94.1)
 
 | Metric | Adjusted value | Percentile (full population) |
 |---|---|---|
@@ -122,11 +122,11 @@ the final score is the stronger half plus the weaker half filling 50% of the rem
 | 5 | Joe Root | middle-order | 97.3 |
 | 6 | Andy Flower | wicketkeeper | 90.5 |
 | 7 | Jacques Kallis | all-rounder | 98.5 |
-| 8 | Muttiah Muralitharan | spinner | 99.6 |
-| 9 | Joel Garner | fast-bowler | 70.4 |
-| 10 | Wasim Akram | fast-bowler | 91.4 |
-| 11 | Shaun Pollock | fast-bowler | 68.6 |
-|  | **XI score (40/50/10 team blend)** |  | **80.8** |
+| 8 | Muttiah Muralitharan | spinner | 99.5 |
+| 9 | Joel Garner | fast-bowler | 85.5 |
+| 10 | Wasim Akram | fast-bowler | 91.5 |
+| 11 | Shaun Pollock | fast-bowler | 83.2 |
+|  | **XI score (40/50/10 team blend)** |  | **84.2** |
 
 ## XI shapes and head-to-heads
 
@@ -139,11 +139,11 @@ the final score is the stronger half plus the weaker half filling 50% of the rem
 - Kane Williamson (middle-order): 98.9
 - Brian Lara (middle-order): 98.3
 - Andy Flower (wicketkeeper): 90.5
-- Richard Hadlee (all-rounder): 99.0
-- Dennis Lillee (fast-bowler): 97.3
-- Dale Steyn (fast-bowler): 95.9
-- Malcolm Marshall (fast-bowler): 95.7
-- **XI score: 89.1**
+- Garfield Sobers (all-rounder): 98.9
+- Malcolm Marshall (fast-bowler): 97.2
+- Dale Steyn (fast-bowler): 96.6
+- Dennis Lillee (fast-bowler): 96.5
+- **XI score: 85.9**
 
 ### Shape 2 — 2O / 4MO / 1K / 1S / 3F (elite)
 
@@ -154,11 +154,11 @@ the final score is the stronger half plus the weaker half filling 50% of the rem
 - Kane Williamson (middle-order): 98.9
 - Brian Lara (middle-order): 98.3
 - Andy Flower (wicketkeeper): 90.5
-- Muttiah Muralitharan (spinner): 99.6
-- Dennis Lillee (fast-bowler): 97.3
-- Dale Steyn (fast-bowler): 95.9
-- Malcolm Marshall (fast-bowler): 95.7
-- **XI score: 92.8**
+- Muttiah Muralitharan (spinner): 99.5
+- Malcolm Marshall (fast-bowler): 97.2
+- Dale Steyn (fast-bowler): 96.6
+- Dennis Lillee (fast-bowler): 96.5
+- **XI score: 93.0**
 
 ### Shape 3 — 2O / 3MO / 1K / 1AR / 1S / 3F (elite)
 
@@ -168,12 +168,12 @@ the final score is the stronger half plus the weaker half filling 50% of the rem
 - Steve Smith (middle-order): 99.4
 - Kane Williamson (middle-order): 98.9
 - Andy Flower (wicketkeeper): 90.5
-- Richard Hadlee (all-rounder): 99.0
-- Muttiah Muralitharan (spinner): 99.6
-- Dennis Lillee (fast-bowler): 97.3
-- Dale Steyn (fast-bowler): 95.9
-- Malcolm Marshall (fast-bowler): 95.7
-- **XI score: 88.4**
+- Garfield Sobers (all-rounder): 98.9
+- Muttiah Muralitharan (spinner): 99.5
+- Malcolm Marshall (fast-bowler): 97.2
+- Dale Steyn (fast-bowler): 96.6
+- Dennis Lillee (fast-bowler): 96.5
+- **XI score: 87.0**
 
 ### Elite XI vs weak XI
 
@@ -184,11 +184,11 @@ the final score is the stronger half plus the weaker half filling 50% of the rem
 - Kane Williamson (middle-order): 98.9
 - Brian Lara (middle-order): 98.3
 - Andy Flower (wicketkeeper): 90.5
-- Richard Hadlee (all-rounder): 99.0
-- Dennis Lillee (fast-bowler): 97.3
-- Dale Steyn (fast-bowler): 95.9
-- Malcolm Marshall (fast-bowler): 95.7
-- **XI score: 89.1** vs 27.4 → diff 61.7 → user
+- Garfield Sobers (all-rounder): 98.9
+- Malcolm Marshall (fast-bowler): 97.2
+- Dale Steyn (fast-bowler): 96.6
+- Dennis Lillee (fast-bowler): 96.5
+- **XI score: 85.9** vs 24.9 → diff 61.0 → user
 
 ### AR-heavy (shape 1) vs specialist-heavy (shape 2)
 
@@ -199,11 +199,11 @@ the final score is the stronger half plus the weaker half filling 50% of the rem
 - Kane Williamson (middle-order): 98.9
 - Brian Lara (middle-order): 98.3
 - Andy Flower (wicketkeeper): 90.5
-- Richard Hadlee (all-rounder): 99.0
-- Dennis Lillee (fast-bowler): 97.3
-- Dale Steyn (fast-bowler): 95.9
-- Malcolm Marshall (fast-bowler): 95.7
-- **XI score: 89.1** vs 92.8 → diff -3.7 → opponent
+- Garfield Sobers (all-rounder): 98.9
+- Malcolm Marshall (fast-bowler): 97.2
+- Dale Steyn (fast-bowler): 96.6
+- Dennis Lillee (fast-bowler): 96.5
+- **XI score: 85.9** vs 93.0 → diff -7.1 → opponent
 
 ### Identical XI vs identical XI
 
@@ -214,11 +214,11 @@ the final score is the stronger half plus the weaker half filling 50% of the rem
 - Kane Williamson (middle-order): 98.9
 - Brian Lara (middle-order): 98.3
 - Andy Flower (wicketkeeper): 90.5
-- Richard Hadlee (all-rounder): 99.0
-- Dennis Lillee (fast-bowler): 97.3
-- Dale Steyn (fast-bowler): 95.9
-- Malcolm Marshall (fast-bowler): 95.7
-- **XI score: 89.1** vs 89.1 → diff 0.0 → tie
+- Garfield Sobers (all-rounder): 98.9
+- Malcolm Marshall (fast-bowler): 97.2
+- Dale Steyn (fast-bowler): 96.6
+- Dennis Lillee (fast-bowler): 96.5
+- **XI score: 85.9** vs 85.9 → diff 0.0 → tie
 
 ## How to reproduce
 

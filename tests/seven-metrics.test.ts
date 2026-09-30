@@ -226,9 +226,9 @@ ok(
 );
 ok(
   (['bowlingAverage', 'wicketsPerMatch', 'fiveWRate', 'tenWRate'] as MetricKey[]).every(
-    (k) => BOWLING_WEIGHTS[k] === 1 / 4,
+    (k) => BOWLING_WEIGHTS[k] === ({ bowlingAverage: 0.4, wicketsPerMatch: 0.35, fiveWRate: 0.2, tenWRate: 0.05 } as Record<string, number>)[k],
   ),
-  'bowling weights are 1/4 each',
+  'bowling weights are 40/35/20/5',
 );
 
 // ---- 16/17. missing + zero-Test data: flagged, never zero-filled ----
@@ -562,7 +562,7 @@ ok(SHRINKAGE_PRIOR_MATCHES === 30, 'spec shrinkage prior weight is 30 matches (V
   ok(s('richard-hadlee', 'all-rounder') > 98, 'Hadlee above 98 as an all-rounder', s('richard-hadlee', 'all-rounder'));
   ok(s('jacques-kallis', 'all-rounder') > 98, 'Kallis above 98 as an all-rounder', s('jacques-kallis', 'all-rounder'));
   ok(s('imran-khan', 'all-rounder') > 94 && s('imran-khan', 'all-rounder') < 97, 'Imran ~96', s('imran-khan', 'all-rounder'));
-  ok(s('ian-botham', 'all-rounder') > 88 && s('ian-botham', 'all-rounder') < 91, 'Botham ~89.5', s('ian-botham', 'all-rounder'));
+  ok(s('ian-botham', 'all-rounder') > 86 && s('ian-botham', 'all-rounder') < 91, 'Botham ~88', s('ian-botham', 'all-rounder'));
   ok(s('don-bradman', 'opener') === 100, 'Bradman still 100 with longevity (52 Tests >= 50)');
   ok(s('sachin-tendulkar', 'middle-order') > s('harry-brook', 'middle-order'), 'Tendulkar (200 Tests) outranks Harry Brook (41 Tests)');
   ok(s('glenn-mcgrath', 'fast-bowler') > s('mohammad-asif', 'fast-bowler'), 'McGrath (124 Tests) outranks Mohammad Asif (23 Tests)');

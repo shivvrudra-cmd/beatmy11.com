@@ -38,7 +38,7 @@ L.push(`Generated ${new Date().toISOString().slice(0, 10)} from the current repo
 L.push('Engine: seven metrics, percentile-rank 0–100 over eligible populations');
 L.push('(every role, all-rounders included, ranked against the full populations — V2, owner-approved 2026-09-29),');
 L.push('W=30 shrinkage toward the role-eligible population mean (adjusted = (m×raw + 30×mean)/(m+30)),');
-L.push('each half = 75% weighted metrics (bat 1/3, bowl 1/4) + 25% longevity (Tests played, full credit at 50),');
+L.push('each half = 75% weighted metrics (bat 1/3, bowl 40/35/20/5) + 25% longevity (Tests played, full credit at 50),');
 L.push('all-rounder = stronger half + weaker half filling 50% of the gap to 100,');
 L.push('XI score = team blend: 40% batting unit + 50% bowling unit + 10% fielding unit');
 L.push('(owner-approved 2026-09-27; fielding = dismissals/match, W=30 shrinkage, full-population percentile, all players).');
