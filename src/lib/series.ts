@@ -59,11 +59,12 @@ export const WOBBLE_SIGMA = 2.5;
  * The World XI is a legendary side (team score ~84), so a very good drafted XI
  * still scores below it. PAR_GAP is how far behind the World XI's team score
  * an XI can be and still count as level with it — the middle of the series
- * (drawn 2–2), and where a narrow 3–2 win starts. Tuned so about a fifth of
- * simulated drafts win the series (scripts/calibrate-series.ts); lower it to
- * make wins more common, raise it to make them rarer.
+ * (drawn 2–2), and where a narrow 3–2 win starts. Tuned for strong human
+ * drafts: the simulated drafters in scripts/calibrate-series.ts are much
+ * weaker (only ~3% of them win at -4; -9.5 gave ~22%). Lower it to make wins
+ * more common, raise it to make them rarer.
  */
-export const PAR_GAP = -9.5;
+export const PAR_GAP = -4;
 
 /** Cut points below the win line, relative to par: a gap inside ±1 of par is
  *  the drawn 2–2, and 2–3 / 1–4 / 0–5 sit below it. */
