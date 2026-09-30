@@ -56,17 +56,19 @@ const draftCombosJson = json(draftSpinCombos());
     <main>
       <section class="fl-stage" aria-labelledby="fl-status-title">
         <div class="fl-reels">
-          <div class="fl-reel" id="fl-reel-era">
-            <span class="fl-reel-cap">Era</span>
-            <span class="fl-reel-val" id="fl-era">—</span>
-            <button type="button" class="fl-respin" id="fl-respin-era" hidden></button>
-          </div>
-          <span class="fl-x" aria-hidden="true">×</span>
           <div class="fl-reel" id="fl-reel-nation">
             <span class="fl-reel-cap">Nation</span>
             <span class="fl-reel-val" id="fl-nation">—</span>
-            <button type="button" class="fl-respin" id="fl-respin-nation" hidden></button>
           </div>
+          <span class="fl-x" aria-hidden="true">×</span>
+          <div class="fl-reel" id="fl-reel-era">
+            <span class="fl-reel-cap">Era</span>
+            <span class="fl-reel-val" id="fl-era">—</span>
+          </div>
+        </div>
+        <div class="fl-respins" id="fl-respins" aria-label="Respins" hidden>
+          <button type="button" class="fl-respin" id="fl-respin-nation" hidden></button>
+          <button type="button" class="fl-respin" id="fl-respin-era" hidden></button>
         </div>
         <button type="button" class="fl-spin" id="bm11-spin">Spin</button>
         <h1 class="fl-status" id="fl-status-title" tabindex="-1">Spin for your Legend</h1>
@@ -87,7 +89,6 @@ const draftCombosJson = json(draftSpinCombos());
     </main>
 
     <nav class="fl-dock" aria-label="Your XI">
-      <p class="fl-need" id="fl-need" aria-live="polite"></p>
       <div class="fl-slots" id="fl-slots"></div>
     </nav>
   </div>
@@ -153,6 +154,8 @@ const draftCombosJson = json(draftSpinCombos());
     const LEGEND_COMBOS = read('bm11-legend-combos') || [];
     const DRAFT_COMBOS = read('bm11-draft-combos') || [];
     const uidIndex = {};
+    // Drafts saved before player ids were cleaned up (spaces, capitals, apostrophes).
+    const legacyUid = (uid) => String(uid).trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9:-]/g, '');
     for (const eraId of Object.keys(byEra)) for (const p of byEra[eraId]) uidIndex[p.uid] = p;
 
     // A spin never re-lands on an era×nation combo already drawn, and a
@@ -413,6 +416,7 @@ const draftCombosJson = json(draftSpinCombos());
       const showEra = base && canRespinEra(draft, eraRedrawOptions().length);
       respinNationBtn.hidden = !showNation;
       respinEraBtn.hidden = !showEra;
+      $('fl-respins').hidden = !(showNation || showEra);
       if (showNation) {
         respinNationBtn.innerHTML = `${RESPIN_ICON} New nation <span>${draft.nationRespinsLeft} left</span>`;
         respinNationBtn.setAttribute('aria-label',
@@ -446,11 +450,14 @@ const draftCombosJson = json(draftSpinCombos());
         onDone();
         return;
       }
-      const eras = draft.currentRound === 0 && which === 'both' ? ['Legends'] : ERA_LIST;
+      // Round 1 always draws the Legends era: it stays fixed while only the nation spins.
+      const eraFixed = draft.currentRound === 0 && which === 'both';
+      if (eraFixed) setReel(eraEl, eraName(target.era), 'landed');
+      const eras = ERA_LIST;
       const t0 = performance.now();
-      const ERA_STOP = which === 'nation' ? 0 : 900;
+      const ERA_STOP = which === 'nation' || eraFixed ? 0 : 900;
       const NATION_STOP = which === 'era' ? 900 : 1500;
-      const rollEra = which !== 'nation';
+      const rollEra = which !== 'nation' && !eraFixed;
       const rollNation = which !== 'era';
       const tick = () => {
         const t = performance.now() - t0;
@@ -499,10 +506,12 @@ const draftCombosJson = json(draftSpinCombos());
       if (!allowed || !opts.length) return;
       const choice = opts[Math.floor(Math.random() * opts.length)];
       selectedUid = null;
+      scrollToTop();
       rollReels(kind, choice, () => {
         draft = kind === 'nation' ? applyNationRespin(draft, choice.nation) : applyEraRespin(draft, choice.era);
         persist();
         renderAll();
+        scrollToPool();
         announce(
           `Respin landed on ${eraName(draft.currentEra)}, ${draft.currentNation}. The old draw is gone. ` +
             `${unpickedCount(currentPool())} players available.`,
@@ -512,11 +521,19 @@ const draftCombosJson = json(draftSpinCombos());
     respinNationBtn.addEventListener('click', () => runRespin('nation'));
     respinEraBtn.addEventListener('click', () => runRespin('era'));
 
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: reduceMotion() ? 'auto' : 'smooth' });
+    }
+
     function scrollToPool() {
-      const pool = $('fl-pool');
-      const rect = pool.getBoundingClientRect();
-      if (rect.top > window.innerHeight * 0.6 || rect.top < 0) {
-        pool.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' });
+      const behavior = reduceMotion() ? 'auto' : 'smooth';
+      // Mobile: scroll just far enough to tuck the reels and spin button away,
+      // leaving respins, player cards and the XI slots in view.
+      const respins = $('fl-respins');
+      const target = window.matchMedia('(max-width: 1023px)').matches && !respins.hidden ? respins : $('fl-pool');
+      const rect = target.getBoundingClientRect();
+      if (rect.top > window.innerHeight * 0.6 || rect.top < 0 || target === respins) {
+        target.scrollIntoView({ behavior, block: 'start' });
       }
     }
 
@@ -643,7 +660,7 @@ const draftCombosJson = json(draftSpinCombos());
         $('fl-finish').scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'center' });
       } else if (roundDone()) {
         announce(`Placed ${p.name} at ${slot.label}${as}. Round ${draft.currentRound} complete — spin again.`);
-        document.querySelector('.fl-stage').scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' });
+        scrollToTop();
       } else {
         const left = selectionLimitForRound(draft.currentRound) - draft.picksThisRound.length;
         announce(`Placed ${p.name} at ${slot.label}${as}. ${left} more pick${left === 1 ? '' : 's'} this round.`);
@@ -743,25 +760,6 @@ const draftCombosJson = json(draftSpinCombos());
         }
       }
       prevFilled = filledNow;
-
-      // What the XI still needs.
-      const needEl = $('fl-need');
-      if (isXIValid(draft)) {
-        needEl.textContent = 'Valid XI — ready for the series';
-        needEl.classList.add('is-done');
-      } else {
-        needEl.classList.remove('is-done');
-        const counts = countsOf(draft);
-        const shapes = reachableShapes(counts);
-        const must = [];
-        if (shapes.length) {
-          for (const r of XI_ROLE_ORDER) {
-            const need = Math.min(...shapes.map((s) => s[r] - counts[r]));
-            if (need > 0) must.push(`${need} ${ROLE_PLURALS[r][need === 1 ? 0 : 1]}`);
-          }
-        }
-        needEl.textContent = must.length ? `Still need: ${must.join(', ')}` : '';
-      }
     }
 
     function onSlotClick(slotKey) {
@@ -925,7 +923,7 @@ const draftCombosJson = json(draftSpinCombos());
     (function restore() {
       const raw = loadDraft();
       if (raw) {
-        const restored = deserializeDraft(raw, (uid) => uidIndex[uid] || null);
+        const restored = deserializeDraft(raw, (uid) => uidIndex[uid] || uidIndex[legacyUid(uid)] || null);
         if (restored && restored.selectedPlayers.length) {
           draft = restored;
           renderAll();
@@ -940,6 +938,15 @@ const draftCombosJson = json(draftSpinCombos());
       }
       renderAll();
     })();
+
+    // Keep the page's bottom padding equal to the fixed dock's real height, so
+    // content that fits the screen never needs scrolling.
+    const dockEl = document.querySelector('.fl-dock');
+    if (dockEl && 'ResizeObserver' in window) {
+      new ResizeObserver(() => {
+        document.querySelector('.fl').style.setProperty('--fl-dock-h', `${dockEl.offsetHeight}px`);
+      }).observe(dockEl);
+    }
   </script>
 
   <style is:global>
@@ -963,7 +970,7 @@ const draftCombosJson = json(draftSpinCombos());
       background: var(--fl-bg);
       color: var(--fl-text);
       font-family: Inter, system-ui, sans-serif;
-      padding: 12px 16px 200px;
+      padding: 12px 16px calc(var(--fl-dock-h, 190px) + 8px);
       overflow-x: clip;
     }
     body:has(.fl) { background: #04060c; }
@@ -985,6 +992,7 @@ const draftCombosJson = json(draftSpinCombos());
     .fl-round { width: 20px; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.14); }
     .fl-round.is-done { background: var(--fl-lime); }
     .fl-round.is-now { background: #fff; box-shadow: 0 0 10px #fff; }
+    .fl-brand, .fl-count { white-space: nowrap; flex-shrink: 0; }
     .fl-count { margin: 0; font: 400 30px/1 var(--fl-display); }
 
     .fl-stage { text-align: center; max-width: 900px; margin: 18px auto 6px; }
@@ -1007,8 +1015,19 @@ const draftCombosJson = json(draftSpinCombos());
     .fl-reel.is-landed { border-color: var(--fl-lime); box-shadow: 0 0 28px rgba(198, 255, 61, 0.3); }
     .fl-reel.is-landed .fl-reel-val { animation: fl-land 0.4s cubic-bezier(0.2, 1.6, 0.4, 1); }
     @keyframes fl-land { from { transform: scale(1.25); } to { transform: none; } }
+    .fl-respins { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; max-width: 900px; margin: 8px auto 0; scroll-margin-top: 8px; }
+    .fl-respins[hidden] { display: none; }
+    @media (min-width: 720px) {
+      /* Desktop: each respin sits directly under its own reel. */
+      .fl-reels, .fl-respins { display: grid; grid-template-columns: minmax(0, 340px) 32px minmax(0, 340px); justify-content: center; gap: 0 10px; }
+      .fl-reel { max-width: none; }
+      .fl-x { text-align: center; }
+      .fl-respins { margin-top: 10px; }
+      #fl-respin-nation { grid-column: 1; justify-self: center; }
+      #fl-respin-era { grid-column: 3; justify-self: center; }
+    }
     .fl-respin {
-      display: inline-flex; align-items: center; gap: 4px; margin-top: 10px; min-height: 36px; padding: 6px 10px;
+      display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 6px 10px;
       border-radius: 999px; border: 1px solid rgba(198, 255, 61, 0.45); background: var(--fl-lime-soft);
       color: var(--fl-lime); font: 600 12px Inter, sans-serif; cursor: pointer; white-space: nowrap;
     }
@@ -1082,8 +1101,6 @@ const draftCombosJson = json(draftSpinCombos());
       background: linear-gradient(180deg, rgba(4, 6, 12, 0), rgba(4, 6, 12, 0.94) 22%);
       backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
     }
-    .fl-need { margin: 0 auto 6px; text-align: center; font: 500 12px Inter, sans-serif; color: var(--fl-muted); min-height: 16px; }
-    .fl-need.is-done { color: var(--fl-lime); }
     .fl-slots { display: grid; grid-template-columns: auto auto; justify-content: center; gap: 6px 10px; }
     .fl-group { display: flex; gap: 5px; padding-right: 10px; border-right: 1px solid rgba(255, 255, 255, 0.1); }
     .fl-group:nth-child(2n) { border-right: 0; padding-right: 0; }
@@ -1111,7 +1128,6 @@ const draftCombosJson = json(draftSpinCombos());
       .fl-group:last-child { border-right: 0; padding-right: 0; }
       .fl-slot { width: 62px; height: 64px; }
       .fl-slot-bottom { max-width: 58px; }
-      .fl { padding-bottom: 150px; }
     }
     @media (min-width: 1024px) {
       .fl-cards { flex-wrap: wrap; justify-content: center; overflow: visible; }
@@ -1122,6 +1138,33 @@ const draftCombosJson = json(draftSpinCombos());
       .fl-group { gap: 4px; padding-right: 6px; }
       .fl-slots { gap: 6px 6px; }
       .fl-card { flex-basis: 150px; }
+    }
+
+    /* Phones: squeeze the draft onto one screen (no scrolling when it fits). */
+    @media (max-width: 719px) {
+      .fl { padding-top: 8px; }
+      .fl-brand { font-size: 22px; }
+      .fl-count { font-size: 24px; }
+      .fl-round { width: 14px; }
+      .fl-stage { margin: 8px auto 4px; }
+      .fl-reel { padding: 6px 6px 8px; }
+      .fl-reel-val { font-size: clamp(24px, 7.5vw, 34px); margin-top: 2px; }
+      .fl-x { margin-top: -14px; font-size: 24px; }
+      .fl-spin { height: 44px; width: 150px; margin: 10px auto 2px; font-size: 26px; }
+      .fl-status { margin: 6px 0 0; font-size: 24px; }
+      .fl-sub { display: none; }
+      .fl-msg { margin-top: 4px; min-height: 0; }
+      .fl-respins { margin-top: 4px; }
+      .fl-respin { min-height: 32px; padding: 4px 10px; }
+      .fl-pool { margin-top: 6px; }
+      .fl-cards { padding: 4px 2px 8px; gap: 10px; }
+      .fl-card { flex-basis: 146px; min-height: 168px; padding: 10px; }
+      .fl-card-name { font-size: 22px; margin-top: 4px; }
+      .fl-card-stats { padding-top: 6px; }
+      .fl-empty { padding: 18px 8px; }
+      .fl-dock { padding-top: 4px; }
+      .fl-slot { height: 50px; }
+      .fl-slots { gap: 5px 10px; }
     }
 
     .fl-chooser { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 16px; }

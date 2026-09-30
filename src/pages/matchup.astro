@@ -543,22 +543,74 @@ const calibrationJson = safe(calibration);
       .rs-copied, .rs-save { grid-column: 1 / -1; }
     }
 
-    /* ---- Phone: three full-screen panels, one swipe apart ----
+    /* ---- Three full-screen panels, one swipe (or scroll) apart ----
        1. the series (scoreline + five Test cards)  2. share card + buttons
-       3. both XIs side by side. Each panel is one screen tall and every
-       panel is sized to fit it, so nothing inside scrolls. */
-    @media (max-width: 759px) {
-      html:has(.rs) { scroll-snap-type: y mandatory; }
-      .rs { padding: 0; min-height: 0; }
-      .rs-panel {
-        display: flex; flex-direction: column;
-        min-height: 100vh; min-height: 100svh; box-sizing: border-box;
-        padding: 8px 12px max(10px, env(safe-area-inset-bottom));
-        scroll-snap-align: start; scroll-snap-stop: always;
-      }
-      .rs-panel[hidden] { display: none; }
+       3. both XIs side by side. Each panel is one screen tall and sized to
+       fit it, so nothing inside scrolls. Phones get the compact sizes; wide
+       screens get roomier ones. */
+    html:has(.rs) { scroll-snap-type: y mandatory; }
+    .rs { padding: 0; min-height: 0; }
+    .rs-panel {
+      display: flex; flex-direction: column;
+      min-height: 100vh; min-height: 100svh; box-sizing: border-box;
+      padding: 8px 12px max(10px, env(safe-area-inset-bottom));
+      scroll-snap-align: start; scroll-snap-stop: always;
+    }
+    .rs-panel[hidden] { display: none; }
+    .rs-tests { flex: 1; width: 100%; grid-template-rows: repeat(5, minmax(0, 1fr)); }
+    .rs-test { display: flex; flex-direction: column; justify-content: center; min-height: 0; }
+    .rs-test-sum { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .rs-test-foot { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+    .rs-test-hero { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rs-test-run { flex: none; }
+    .rs-p2 { justify-content: center; align-items: center; }
+    .rs-card { margin: 0; width: 100%; display: flex; justify-content: center; }
+    .rs-card img { width: auto; max-width: 100%; aspect-ratio: 4 / 5; object-fit: contain; }
+    .rs-actions { margin: 0; width: 100%; }
+    .rs-xis { margin: 0 auto; }
+    .rs-cols { flex: 1; min-height: 0; grid-template-columns: 1fr 1fr; }
+    .rs-col { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+    .rs-h3 { text-align: center; }
+    .rs-list { flex: 1; min-height: 0; grid-template-rows: repeat(11, minmax(0, 1fr)); }
+    .rs-row { min-height: 0; }
+    .rs-who { flex: 1; }
+    .rs-meta { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-      /* 1 — the series */
+    /* Wide screens */
+    @media (min-width: 760px) {
+      .rs-panel { padding: 14px 32px 20px; }
+      .rs-top, .rs-verdict, .rs-tests { width: 100%; max-width: 760px; margin-left: auto; margin-right: auto; }
+      .rs-verdict { margin-top: 4px; margin-bottom: 0; }
+      .rs-title { margin: 2px 0 0; font-size: clamp(34px, 6.5vh, 58px); }
+      .rs-score { margin: 0; }
+      .rs-num { font-size: clamp(56px, 11vh, 100px); }
+      .rs-dash { font-size: 48px; margin-top: -14px; }
+      .rs-sub { margin: 2px 0 0; min-height: 20px; }
+      .rs-rank { margin-top: 6px; }
+      .rs-skip { margin-top: 2px; min-height: 32px; }
+      .rs-tests { margin-top: 8px; gap: 8px; }
+      .rs-test { gap: 2px; padding: 6px 14px; }
+      .rs-test-sum { margin: 0; font-size: 14px; line-height: 1.3; }
+      .rs-test-hero { margin: 0; font-size: 19px; }
+      .rs-test-run { margin: 0; }
+      .rs-p2 { gap: 16px; }
+      .rs-card img { max-height: calc(100vh - 210px); max-height: calc(100svh - 210px); }
+      .rs-actions { max-width: 640px; gap: 10px; }
+      .rs-share, .rs-again { min-height: 52px; line-height: 52px; }
+      .rs-xis { max-width: 1000px; width: 100%; }
+      .rs-h2 { padding-top: 4px; }
+      .rs-note { margin: 4px 0 10px; }
+      .rs-cols { gap: 28px; }
+      .rs-h3 { margin: 0 0 6px; }
+      .rs-list { gap: 4px; }
+      .rs-row { gap: 10px; padding: 2px 12px; }
+      .rs-rating { font-size: 26px; }
+      .rs-name { font-size: 14px; line-height: 1.2; }
+      .rs-meta { font-size: 11.5px; }
+    }
+
+    /* Phones */
+    @media (max-width: 759px) {
       .rs-brand { font-size: 22px; }
       .rs-again-top { padding: 4px; font-size: 12px; }
       .rs-verdict { margin: 4px auto 0; }
@@ -572,37 +624,31 @@ const calibrationJson = safe(calibration);
       .rs-sub { margin: 2px 0 0; min-height: 18px; font-size: 13px; }
       .rs-rank { margin-top: 4px; padding: 3px 10px; font-size: 12px; }
       .rs-skip { margin-top: 2px; min-height: 32px; font-size: 12px; }
-      .rs-tests { flex: 1; margin: 6px auto 0; width: 100%; gap: 6px; grid-template-rows: repeat(5, minmax(0, 1fr)); }
-      .rs-test { display: flex; flex-direction: column; justify-content: center; gap: 2px; min-height: 0; padding: 4px 10px; border-radius: 10px; }
+      .rs-tests { margin: 6px auto 0; gap: 6px; }
+      .rs-test { gap: 2px; padding: 4px 10px; border-radius: 10px; }
       .rs-test-n { font-size: 16px; }
       .rs-chip { padding: 2px 6px; font-size: 9.5px; }
-      .rs-test-sum { margin: 0; font-size: 12px; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-      .rs-test-foot { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
-      .rs-test-hero { margin: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; }
-      .rs-test-run { margin: 0; flex: none; font-size: 9.5px; }
+      .rs-test-sum { margin: 0; font-size: 12px; line-height: 1.25; }
+      .rs-test-hero { margin: 0; font-size: 15px; }
+      .rs-test-run { margin: 0; font-size: 9.5px; }
 
-      /* 2 — share card and buttons */
-      .rs-p2 { justify-content: center; align-items: center; gap: 12px; }
-      .rs-card { margin: 0; width: 100%; display: flex; justify-content: center; }
-      .rs-card img { width: auto; max-width: 100%; max-height: calc(100vh - 230px); max-height: calc(100svh - 230px); aspect-ratio: 4 / 5; object-fit: contain; }
-      .rs-actions { margin: 0; width: 100%; gap: 8px; }
+      .rs-p2 { gap: 12px; }
+      .rs-card img { max-height: calc(100vh - 230px); max-height: calc(100svh - 230px); }
+      .rs-actions { gap: 8px; }
       .rs-share, .rs-again { min-height: 48px; font-size: 24px; line-height: 48px; }
       .rs-save { padding: 2px; }
       .rs-copied { min-height: 16px; font-size: 12px; }
 
-      /* 3 — both XIs side by side */
-      .rs-xis { margin: 0; max-width: none; }
+      .rs-xis { max-width: none; }
       .rs-h2 { font-size: 26px; padding-top: 4px; }
       .rs-note { margin: 2px 0 6px; font-size: 11px; }
-      .rs-cols { flex: 1; min-height: 0; grid-template-columns: 1fr 1fr; gap: 8px; }
-      .rs-col { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
-      .rs-h3 { margin: 0 0 4px; font-size: 10px; letter-spacing: 0.18em; text-align: center; }
-      .rs-list { flex: 1; min-height: 0; gap: 3px; grid-template-rows: repeat(11, minmax(0, 1fr)); }
-      .rs-row { gap: 6px; padding: 2px 6px; border-radius: 8px; min-height: 0; }
+      .rs-cols { gap: 8px; }
+      .rs-h3 { margin: 0 0 4px; font-size: 10px; letter-spacing: 0.18em; }
+      .rs-list { gap: 3px; }
+      .rs-row { gap: 6px; padding: 2px 6px; border-radius: 8px; }
       .rs-rating { width: 26px; font-size: 22px; }
-      .rs-who { flex: 1; }
       .rs-name { font-size: 11.5px; line-height: 1.2; }
-      .rs-meta { font-size: 9.5px; letter-spacing: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .rs-meta { font-size: 9.5px; letter-spacing: 0; }
       .rs-badge { margin-left: 3px; padding: 1px 3px; font-size: 7.5px; }
     }
     @media (prefers-reduced-motion: reduce) {

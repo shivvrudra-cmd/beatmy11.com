@@ -31,7 +31,7 @@ bryan-strang	Bryan Strang	Zimbabwe	1990s	fast-bowler
 bs-chandrasekhar	B.S. Chandrasekhar	India	1970s	spinner
 cameron-green	Cameron Green	Australia	2020s	all-rounder
 chaminda-vaas	Chaminda Vaas	Sri Lanka	1990s	fast-bowler
-champaka -ramanayake 	Champaka  Ramanayake 	Sri Lanka	1990s	fast-bowler
+champaka-ramanayake	Champaka  Ramanayake 	Sri Lanka	1990s	fast-bowler
 chetan-sharma	Chetan Sharma	India	1980s	fast-bowler
 chris-cairns	Chris Cairns	New Zealand	1990s	all-rounder
 chris-martin	Chris Martin	New Zealand	2000s	fast-bowler
@@ -76,7 +76,7 @@ graeme-swann	Graeme Swann	England	2010s	spinner
 greg-matthews	Greg Matthews	Australia	1980s	all-rounder
 gus-atkinson	Gus Atkinson	England	2020s	fast-bowler
 harbhajan-singh	Harbhajan Singh	India	2000s	spinner
-hasan-Mahmud	Hasan Mahmud	Bangladesh	2020s	fast-bowler
+hasan-mahmud	Hasan Mahmud	Bangladesh	2020s	fast-bowler
 heath-streak	Heath Streak	Zimbabwe	1990s	all-rounder
 henry-olonga	Henry Olonga	Zimbabwe	1990s	fast-bowler
 ian-bishop	Ian Bishop	West Indies	1990s	fast-bowler
@@ -146,7 +146,7 @@ mike-hendrick	Mike Hendrick	England	1970s	fast-bowler
 mitchell-santner	Mitchell Santner	New Zealand	2010s	spinner
 mitchell-starc	Mitchell Starc	Australia	2010s	fast-bowler
 moeen-ali	Moeen Ali	England	2010s	all-rounder
-mohammad-abbas 	Mohammad  Abbas 	Pakistan	2020s	fast-bowler
+mohammad-abbas	Mohammad  Abbas 	Pakistan	2020s	fast-bowler
 mohammad-amir	Mohammad AMir	Pakistan	2010s	fast-bowler
 mohammad-asif	Mohammad Asif	Pakistan	2000s	fast-bowler
 mohammad-hafeez	Mohammad Hafeez	Pakistan	2010s	all-rounder
@@ -177,7 +177,7 @@ peter-siddle	Peter Siddle	Australia	2010s	fast-bowler
 phil-edmonds	Phil Edmonds	England	1980s	spinner
 phil-tufnell	Phil Tufnell	England	1990s	spinner
 prabath-jayasuriya	Prabath Jayasuriya	Sri Lanka	2020s	spinner
-pramoda-wickramasinghe 	Pramoda Wickramasinghe 	Sri Lanka	1990s	fast-bowler
+pramoda-wickramasinghe	Pramoda Wickramasinghe 	Sri Lanka	1990s	fast-bowler
 prosper-utseya	Prosper Utseya	Zimbabwe	2000s	spinner
 rahkeem-cornwall	Rahkeem Cornwall	West Indies	2020s	spinner
 rajesh-chauhan	Rajesh Chauhan	India	1990s	spinner
@@ -240,10 +240,10 @@ victor-nyauchi	Victor Nyauchi	Zimbabwe	2020s	fast-bowler
 vishwa-fernando	Vishwa Fernando	Sri Lanka	2010s	fast-bowler
 wahab-riaz	Wahab Riaz	Pakistan	2010s	fast-bowler
 waqar-younis	Waqar Younis	Pakistan	legends	fast-bowler
-washington-sundar 	Washington Sundar 	India	2020s	all-rounder
+washington-sundar	Washington Sundar 	India	2020s	all-rounder
 wasim-akram	Wasim Akram	Pakistan	legends	fast-bowler
 wellington-masakadza	Wellington Masakadza	Zimbabwe	2020s	spinner
 wiaan-mulder	Wiaan Mulder	South Africa	2020s	all-rounder
-will-o'rourke	Will O'Rourke	New Zealand	2020s	fast-bowler
+will-orourke	Will O'Rourke	New Zealand	2020s	fast-bowler
 yasir-shah	Yasir Shah	Pakistan	2010s	spinner
 zaheer-khan	Zaheer Khan	India	2000s	fast-bowler
