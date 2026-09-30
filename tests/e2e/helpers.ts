@@ -32,3 +32,13 @@ export async function placeNextPlayer(page: Page): Promise<void> {
   }
   throw new Error("no pool player had a legal slot");
 }
+
+/** Plays all six spins and places eleven players. */
+export async function draftFullXI(page: Page): Promise<void> {
+  const spin = page.locator("#bm11-spin");
+  for (let round = 0; round < 6; round++) {
+    await spin.click();
+    await page.locator(".bm11-prow[data-bm11-select]").first().waitFor();
+    for (let i = 0; i < (round === 0 ? 1 : 2); i++) await placeNextPlayer(page);
+  }
+}

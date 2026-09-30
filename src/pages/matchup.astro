@@ -72,9 +72,14 @@ const calibrationJson = safe(calibration);
 
       <ol class="rs-tests" id="rs-tests" aria-label="The five Tests"></ol>
 
+      <figure class="rs-card" id="rs-card" hidden>
+        <img id="rs-card-img" width="1080" height="1350" alt="Your share card: the series scoreline and your XI" />
+      </figure>
+
       <div class="rs-actions" id="rs-actions" hidden>
         <button type="button" class="rs-share" id="rs-share">Share result</button>
         <a class="rs-again" href="/play" data-rs-again>Draft again</a>
+        <a class="rs-save" id="rs-save" hidden>Save the card</a>
         <p class="rs-copied" id="rs-copied" role="status"></p>
       </div>
 
@@ -104,6 +109,8 @@ const calibrationJson = safe(calibration);
   <script>
     import { compareXIs } from '../lib/seven-metrics';
     import { playSeries, xiSeed } from '../lib/series';
+    import { SHARE_RESULTS, encodeXI } from '../lib/share-results';
+    import { drawShareCard, cardBlob } from '../lib/share-card';
 
     const read = (id) => JSON.parse(document.getElementById(id).textContent || 'null');
     const HOUSE_XI = read('bm11-house-xi') || [];
@@ -290,6 +297,8 @@ const calibrationJson = safe(calibration);
       let u = 0;
       let h = 0;
       let timer = 0;
+      let revealed = false;
+      let cardFile = null; // the share card, once drawn (see "share" below)
       const finish = () => {
         window.clearTimeout(timer);
         while (shown < 5) step(true);
@@ -300,6 +309,8 @@ const calibrationJson = safe(calibration);
         $('rs-skip').hidden = true;
         $('rs-actions').hidden = false;
         $('rs-xis').hidden = false;
+        revealed = true;
+        showCard();
         document.querySelector('.rs-verdict').classList.add(
           series.user > series.house ? 'is-win' : series.user < series.house ? 'is-loss' : 'is-draw',
           ...(series.user === 5 ? ['is-whitewash'] : []),
@@ -324,9 +335,11 @@ const calibrationJson = safe(calibration);
       else timer = window.setTimeout(() => step(false), 600);
 
       // ---- share ----
-      // Each scoreline has its own page (/r/3-2) whose link preview shows
-      // that result — see src/lib/share-results.ts.
-      const url = `${location.origin}/r/${series.user}-${series.house}`;
+      // The link goes to the scoreline's page (/r/3-2, whose link preview
+      // shows that result) and carries the XI so the page can list it. The
+      // XI itself travels as a picture: the share card, drawn here.
+      const slug = `${series.user}-${series.house}`;
+      const url = `${location.origin}/r/${slug}?xi=${encodeXI(userXI.map((p) => ({ id: p.id, role: p.role })))}`;
       const shareText =
         series.user === 5
           ? `I whitewashed the World XI 5–0 with my all-time Test XI 🏏 Can you?`
@@ -335,16 +348,65 @@ const calibrationJson = safe(calibration);
             : series.user === series.house
               ? `My all-time Test XI drew ${series.user}–${series.house} with the World XI 🏏 Can you beat it?`
               : `My all-time Test XI lost ${series.user}–${series.house} to the World XI 🏏 Can you beat it?`;
+
+      // Drawn straight away so it's ready when the reveal ends; the share
+      // sheet must open within the tap's activation window.
+      const fileName = `beat-my-11-${slug}.png`;
+      drawShareCard({
+        user: series.user,
+        house: series.house,
+        draws: series.draws,
+        headline: SHARE_RESULTS.find((r) => r.slug === slug)?.imageHeadline ?? 'Beat My 11',
+        xi: userXI.map((p) => ({ name: p.name, role: ROLE_SHORT[p.role] || '', nation: NATION_CODES[p.nation] || p.nation })),
+        rank: series.topPercent <= 50 ? `Top ${series.topPercent}% of drafts` : '',
+      })
+        .then(cardBlob)
+        .then((blob) => {
+          if (!blob) return;
+          cardFile = new File([blob], fileName, { type: 'image/png' });
+          const href = URL.createObjectURL(blob);
+          $('rs-card-img').src = href;
+          $('rs-save').href = href;
+          $('rs-save').download = fileName;
+          showCard();
+        })
+        .catch(() => {
+          /* no card — sharing falls back to text and link */
+        });
+      function showCard() {
+        if (!revealed || !cardFile) return;
+        $('rs-card').hidden = false;
+        $('rs-save').hidden = false;
+      }
+
       $('rs-share').addEventListener('click', async () => {
+        const message = `${shareText} ${url}`;
         try {
+          // Picture + link where the platform can share files (phones).
+          if (cardFile && navigator.canShare?.({ files: [cardFile] })) {
+            await navigator.share({ files: [cardFile], title: 'Beat My 11', text: message });
+            return;
+          }
           if (navigator.share) {
             await navigator.share({ title: 'Beat My 11', text: shareText, url });
             return;
           }
-          await navigator.clipboard.writeText(`${shareText} ${url}`);
-          $('rs-copied').textContent = 'Copied — paste it anywhere.';
-        } catch {
-          /* share sheet dismissed or clipboard blocked — nothing to do */
+          // Desktop: save the card and copy the message.
+          await navigator.clipboard.writeText(message);
+          if (cardFile) {
+            $('rs-save').click();
+            $('rs-copied').textContent = 'Card saved and link copied. Post them anywhere.';
+          } else {
+            $('rs-copied').textContent = 'Copied. Paste it anywhere.';
+          }
+        } catch (err) {
+          if (err && err.name === 'AbortError') return; // share sheet dismissed
+          try {
+            await navigator.clipboard.writeText(message);
+            $('rs-copied').textContent = 'Link copied. Paste it anywhere.';
+          } catch {
+            /* clipboard blocked too — nothing more to do */
+          }
         }
       });
     }
@@ -440,6 +502,14 @@ const calibrationJson = safe(calibration);
     .rs-share { background: var(--rs-lime); color: #04060c; box-shadow: 0 0 36px rgba(198, 255, 61, 0.4); }
     .rs-again { background: transparent; color: var(--rs-text); border: 1px solid rgba(255, 255, 255, 0.3); }
     .rs-copied { margin: 0; min-height: 18px; color: var(--rs-lime); font-size: 13px; }
+    .rs-save { justify-self: center; padding: 8px 4px; color: var(--rs-muted); font-size: 14px; cursor: pointer; }
+    .rs-save[hidden] { display: none; }
+    .rs-card { max-width: 340px; margin: 26px auto 0; }
+    .rs-card[hidden] { display: none; }
+    .rs-card img {
+      display: block; width: 100%; height: auto; border-radius: 16px;
+      border: 1px solid rgba(198, 255, 61, 0.3); box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(198, 255, 61, 0.12);
+    }
 
     .rs-xis { max-width: 900px; margin: 34px auto 0; }
     .rs-xis[hidden] { display: none; }
@@ -460,7 +530,7 @@ const calibrationJson = safe(calibration);
     @media (min-width: 760px) {
       .rs-cols { grid-template-columns: 1fr 1fr; }
       .rs-actions { grid-template-columns: 1fr 1fr; }
-      .rs-copied { grid-column: 1 / -1; }
+      .rs-copied, .rs-save { grid-column: 1 / -1; }
     }
     @media (prefers-reduced-motion: reduce) {
       .rs *, .rs *::before, .rs *::after { animation: none !important; transition: none !important; }

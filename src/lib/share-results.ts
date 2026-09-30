@@ -62,3 +62,51 @@ export const SHARE_RESULTS: ShareResult[] = OUTCOME_BANDS.map((b) => ({
 export function shareSlug(user: number, house: number): string {
   return `${user}-${house}`;
 }
+
+// ---------------------------------------------------------------- XI in link
+// A shared link carries the XI as `?xi=<id>.<role>,…` in batting order, e.g.
+// `jack-hobbs.o,sunil-gavaskar.o,don-bradman.b,…`. Player ids are the
+// stable slugs from src/data, so old links survive data updates; the /r page
+// only shows ids it knows, so the URL can't put arbitrary text on the page.
+
+export type ShareRole = 'opener' | 'middle-order' | 'wicketkeeper' | 'all-rounder' | 'spinner' | 'fast-bowler';
+
+const ROLE_CODE: Record<ShareRole, string> = {
+  opener: 'o',
+  'middle-order': 'b',
+  wicketkeeper: 'w',
+  'all-rounder': 'a',
+  spinner: 's',
+  'fast-bowler': 'f',
+};
+const CODE_ROLE = Object.fromEntries(Object.entries(ROLE_CODE).map(([r, c]) => [c, r])) as Record<string, ShareRole>;
+
+export interface SharedPick {
+  id: string;
+  role: ShareRole;
+}
+
+const ID_RE = /^[a-z0-9-]{1,60}$/;
+
+export function encodeXI(picks: SharedPick[]): string {
+  return picks.map((p) => `${p.id}.${ROLE_CODE[p.role] ?? 'b'}`).join(',');
+}
+
+/**
+ * Parses `?xi=`; returns null unless it is exactly 11 well-formed picks
+ * whose ids pass `known` (the page's player index).
+ */
+export function decodeXI(raw: string | null, known: (id: string) => boolean): SharedPick[] | null {
+  if (!raw) return null;
+  const parts = raw.split(',');
+  if (parts.length !== 11) return null;
+  const picks: SharedPick[] = [];
+  for (const part of parts) {
+    const dot = part.lastIndexOf('.');
+    const id = part.slice(0, dot);
+    const role = CODE_ROLE[part.slice(dot + 1)];
+    if (dot < 1 || !role || !ID_RE.test(id) || !known(id)) return null;
+    picks.push({ id, role });
+  }
+  return picks;
+}
