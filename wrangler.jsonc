@@ -2,6 +2,8 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "beatmy11",
   "compatibility_date": "2026-09-30",
+  "workers_dev": false,
+  "preview_urls": false,
   "routes": [
     { "pattern": "beatmy11.com", "custom_domain": true },
     { "pattern": "www.beatmy11.com", "custom_domain": true }
