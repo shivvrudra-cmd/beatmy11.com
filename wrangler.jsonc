@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "beatmy11",
+  "main": "worker/index.ts",
   "compatibility_date": "2026-09-30",
   "workers_dev": false,
   "preview_urls": false,
@@ -10,7 +11,18 @@
   ],
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"],
     "not_found_handling": "404-page",
     "html_handling": "auto-trailing-slash"
-  }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "beatmy11",
+      "database_id": "f59d23b5-4d3d-4149-a97a-71ea6fae4c85",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "observability": { "enabled": true }
 }

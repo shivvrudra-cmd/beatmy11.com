@@ -118,6 +118,7 @@ const calibrationJson = safe(calibration);
     import { playSeries, xiSeed } from '../lib/series';
     import { SHARE_RESULTS, encodeXI } from '../lib/share-results';
     import { drawShareCard, cardBlob } from '../lib/share-card';
+    import { reportScore, reportEvent } from '../lib/telemetry';
 
     const read = (id) => JSON.parse(document.getElementById(id).textContent || 'null');
     const HOUSE_XI = read('bm11-house-xi') || [];
@@ -283,6 +284,15 @@ const calibrationJson = safe(calibration);
         calibration: CALIBRATION,
         seed: xiSeed(userXI.map((p) => ({ id: p.id, role: p.role }))),
       });
+      // Anonymous score for recalibrating the series bands (src/lib/telemetry.ts).
+      reportScore({
+        seed: xiSeed(userXI.map((p) => ({ id: p.id, role: p.role }))),
+        userScore: cmp.userScore,
+        houseScore: cmp.opponentScore,
+        user: series.user,
+        house: series.house,
+        draws: series.draws,
+      });
 
       // Ratings, revealed: the best pick in the user's XI.
       const sorted = [...userXI].sort((a, b) => b.rating - a.rating);
@@ -389,6 +399,7 @@ const calibrationJson = safe(calibration);
       }
 
       $('rs-share').addEventListener('click', async () => {
+        reportEvent('shared');
         const message = `${shareText} ${url}`;
         try {
           // Picture + link where the platform can share files (phones).
