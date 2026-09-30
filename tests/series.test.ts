@@ -50,6 +50,9 @@ const sample = Array.from({ length: 200 }, (_, i) => 60 + i * 0.1);
 ok(rankPercentile(40, sample) < 0.01 && rankPercentile(99, sample) > 0.99, 'rank percentile extremes');
 ok(Math.abs(rankPercentile(sample[100], sample) - 0.5) < 0.01, 'median ranks ~0.5');
 
+ok(bandFor(-0.01).user === 3 && bandFor(0).user === 4 && bandFor(2.99).user === 4 && bandFor(3).user === 5, '4–1 needs a gap above 0 and 5–0 a gap of 3+');
+ok(OUTCOME_BANDS.filter((b) => b.user >= 4).every((b) => bandFor(-5).user < b.user), 'an XI behind the World XI never gets a 4–1 or 5–0 without luck');
+
 // ---- wobble: luck in score points, but skill still decides ----
 {
   const rng = mulberry32(99);

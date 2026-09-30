@@ -12,7 +12,8 @@
  *   3. gap' picks the scoreline from GAP_CUTS (bottom to top):
  *        0–5 · 1–4 · 2–3 · 2–2 (one draw) · 3–2 · 4–1 · 5–0
  *      You win the series by finishing ahead of par (PAR_GAP), which sits a
- *      little below the World XI's own score.
+ *      little below the World XI's own score — but a 4–1 needs to out-score
+ *      the World XI and a 5–0 to beat it by 3.
  *   4. Each Test gets a venue (owner-picked, fixed order), a result
  *      consistent with the scoreline, and one headline whose hero comes from
  *      the side that won that Test, with figures scaled from the hero's real
@@ -58,21 +59,29 @@ export const WOBBLE_SIGMA = 2.5;
  * The World XI is a legendary side (team score ~84), so a very good drafted XI
  * still scores below it. PAR_GAP is how far behind the World XI's team score
  * an XI can be and still count as level with it — the middle of the series
- * (drawn 2–2). Tuned so about a third of simulated drafts win the series
- * (scripts/calibrate-series.ts); lower it to make wins more common, raise it
- * to make them rarer.
+ * (drawn 2–2), and where a narrow 3–2 win starts. Tuned so about a fifth of
+ * simulated drafts win the series (scripts/calibrate-series.ts); lower it to
+ * make wins more common, raise it to make them rarer.
  */
 export const PAR_GAP = -9.5;
 
-/** Score-gap cut points relative to par: a gap inside ±1 of par is the drawn
- *  2–2; you must be ahead of par to win and 8+ ahead for a 5–0. */
-const SCORELINE_CUTS = [-14, -8, -1, 1, 4, 8] as const;
+/** Cut points below the win line, relative to par: a gap inside ±1 of par is
+ *  the drawn 2–2, and 2–3 / 1–4 / 0–5 sit below it. */
+const LOSS_AND_DRAW_CUTS = [-14, -8, -1, 1] as const;
+
+/**
+ * Cut points for the two big wins, in absolute gap (user − World XI): a 4–1
+ * needs a team score above the World XI's, and a 5–0 needs to beat it by 3.
+ * Par only makes a narrow win (3–2) reachable for an XI a little behind the
+ * World XI; it never hands out a rout.
+ */
+const ROUT_CUTS = [0, 3] as const;
 
 /**
  * Score-gap cut points (user − World XI, team-score points) between the seven
- * scorelines in OUTCOME_BANDS, shifted by PAR_GAP.
+ * scorelines in OUTCOME_BANDS.
  */
-export const GAP_CUTS = SCORELINE_CUTS.map((c) => c + PAR_GAP);
+export const GAP_CUTS = [...LOSS_AND_DRAW_CUTS.map((c) => c + PAR_GAP), ...ROUT_CUTS];
 
 export interface SeriesCalibration {
   /** Team scores of reference drafted XIs, sorted ascending. */
