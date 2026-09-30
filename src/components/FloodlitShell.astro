@@ -9,6 +9,7 @@
  *
  * Page content goes in the default slot; `wide` widens the content column.
  */
+import SiteLinks from './SiteLinks.astro';
 import { floodlightSvg, FLOODLIGHT_VIEWBOX } from '../lib/floodlight';
 
 interface Props {
@@ -37,6 +38,7 @@ const sides = ['l', 'r'] as const;
   <main id="main" class:list={['fs-main', { 'fs-main--wide': wide }]}>
     <slot />
   </main>
+  <SiteLinks />
 </div>
 
 <style is:global>
@@ -66,7 +68,7 @@ const sides = ['l', 'r'] as const;
   }
   .fs-pylon--l { left: -10px; }
   .fs-pylon--r { right: -10px; transform: scaleX(-1); }
-  .fs > .fs-top, .fs > .fs-main { position: relative; z-index: 1; }
+  .fs > .fs-top, .fs > .fs-main, .fs > .sl { position: relative; z-index: 1; }
   .fs :focus-visible { outline: 3px solid var(--fs-lime); outline-offset: 3px; }
   .fs-top { max-width: 900px; margin: 0 auto; text-align: center; }
   .fs-brand { font: 400 26px/1 var(--fs-display); letter-spacing: 0.1em; color: var(--fs-text); text-decoration: none; }

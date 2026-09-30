@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FloodlitShell from '../components/FloodlitShell.astro';
+
+const title = 'Privacy | Beat My 11';
+const description =
+  'What Beat My 11 stores: your draft stays in your browser; we keep only anonymous scores and daily page counts.';
+---
+
+<BaseLayout title={title} description={description}>
+  <FloodlitShell>
+    <article class="pv">
+      <p class="fs-eyebrow">Privacy</p>
+      <h1 class="fs-title">Your XI, <span class="fs-hl">your business.</span></h1>
+      <p class="fs-lede">Beat My 11 has no accounts and no ads. Here is everything it stores.</p>
+
+      <h2>On your device</h2>
+      <p>
+        Your draft in progress and your finished XI are saved in your browser’s local storage so you can
+        close the tab and come back. They never leave your device unless you share them. “Draft again”
+        clears them.
+      </p>
+
+      <h2>Anonymous scores</h2>
+      <p>
+        When a series is played, we record one anonymous row: a short fingerprint of the XI (so the same
+        XI isn’t counted twice), the two team scores, the series scoreline and the time. We use these
+        only to tune how hard the game is. The row has no name, account, IP address or cookie attached
+        to it.
+      </p>
+
+      <h2>Page counts</h2>
+      <p>
+        We keep daily totals of how many times the home, draft, result and shared-link pages were opened
+        and how often the share button was tapped. These are plain counters, not tied to a person.
+      </p>
+
+      <h2>Sharing</h2>
+      <p>
+        A share link contains the players in your XI in its address, so whoever opens the link can see
+        that XI. Nothing else about you is in it.
+      </p>
+
+      <h2>Hosting</h2>
+      <p>
+        The site runs on Cloudflare, which, like any web host, processes ordinary request data such as IP
+        addresses to deliver pages and protect the site. We don’t use it to identify anyone. If your
+        browser sends “Do Not Track”, the site doesn’t send the anonymous scores or counts at all.
+      </p>
+
+      <h2>Contact</h2>
+      <p>Questions: <a href="mailto:hello@beatmy11.com">hello@beatmy11.com</a>.</p>
+      <p class="pv-updated">Last updated 1 October 2026.</p>
+    </article>
+  </FloodlitShell>
+
+  <style is:global>
+    .pv { margin: 6vh auto 0; text-align: left; }
+    .pv .fs-eyebrow, .pv .fs-title, .pv .fs-lede { text-align: center; }
+    .pv h2 { margin: 28px 0 6px; font: 600 15px Inter, sans-serif; letter-spacing: 0.04em; color: var(--fs-text); }
+    .pv p { margin: 0 0 8px; color: var(--fs-muted); font-size: 15px; line-height: 1.6; }
+    .pv a { color: var(--fs-lime); }
+    .pv .pv-updated { margin-top: 28px; color: var(--fs-dim); font-size: 13px; }
+  </style>
+</BaseLayout>

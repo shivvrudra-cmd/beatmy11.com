@@ -8,6 +8,7 @@
  * continue it instead.
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import SiteLinks from '@/components/SiteLinks.astro';
 import { getHouseXI } from '@/lib/opponent-xi';
 
 const title = 'Beat My 11 — Can Your All-Time Test XI Beat the World XI?';
@@ -80,6 +81,7 @@ const steps = [
         <a class="hm-cta hm-cta--low" href="/play">Start drafting</a>
       </section>
     </main>
+    <SiteLinks />
   </div>
 
   <script>

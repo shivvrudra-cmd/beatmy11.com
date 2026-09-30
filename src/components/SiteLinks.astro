@@ -1,0 +1,17 @@
+---
+/**
+ * SiteLinks — the small "Privacy · contact" line under the Floodlit pages.
+ */
+---
+<p class="sl">
+  <a href="/privacy">Privacy</a>
+  <span aria-hidden="true">·</span>
+  <a href="mailto:hello@beatmy11.com">hello@beatmy11.com</a>
+</p>
+
+<style is:global>
+  .sl { margin: 36px auto 0; text-align: center; font: 500 13px Inter, system-ui, sans-serif; color: #6b7694; }
+  .sl a { color: #9aa6c4; text-decoration: none; padding: 6px 4px; }
+  .sl a:hover, .sl a:focus-visible { color: #eaf0ff; text-decoration: underline; text-underline-offset: 4px; }
+  .sl span { margin: 0 6px; }
+</style>
