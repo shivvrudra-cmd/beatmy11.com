@@ -74,6 +74,7 @@ const calibrationJson = safe(calibration);
         </section>
 
         <ol class="rs-tests" id="rs-tests" aria-label="The five Tests"></ol>
+        <a class="rs-again-bottom" href="/play" data-rs-again>Draft again</a>
       </div>
 
       <div class="rs-panel rs-p2" id="rs-p2" hidden>
@@ -196,17 +197,16 @@ const calibrationJson = safe(calibration);
     const $ = (id) => document.getElementById(id);
 
     function verdictCopy(s) {
-      const last = s.tests[4];
       if (s.user === 5) return { title: 'Whitewash.', sub: 'You beat the World XI five–nil. That almost never happens.' };
       if (s.house === 5) return { title: 'Whitewashed.', sub: 'The World XI won all five. Time for a new XI.' };
       if (s.draws === 1 && s.user === s.house) return { title: 'Series drawn', sub: `You held the World XI to ${s.user}–${s.house}.` };
       if (s.user > s.house) {
         return s.user === 3
-          ? { title: 'You beat the World XI', sub: `Level at 2–2, you won the decider at ${last.venue}.` }
+          ? { title: 'You beat the World XI', sub: '' }
           : { title: 'You beat the World XI', sub: `A ${s.user}–${s.house} series win. Convincing.` };
       }
       return s.house === 3
-        ? { title: 'So close', sub: `Level at 2–2 — the World XI took the decider at ${last.venue}.` }
+        ? { title: 'So close', sub: '' }
         : { title: 'World XI wins', sub: `Beaten ${s.user}–${s.house}. Your next XI could do better.` };
     }
 
@@ -557,6 +557,12 @@ const calibrationJson = safe(calibration);
       scroll-snap-align: start; scroll-snap-stop: always;
     }
     .rs-panel[hidden] { display: none; }
+    .rs-sub:empty { display: none; }
+    .rs-again-bottom {
+      display: block; box-sizing: border-box; width: 100%; max-width: 760px; margin: 8px auto 0; min-height: 44px;
+      border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.3); color: var(--rs-text); text-decoration: none;
+      text-align: center; font: 400 22px/44px var(--rs-display); letter-spacing: 0.1em;
+    }
     .rs-tests { flex: 1; width: 100%; grid-template-rows: repeat(5, minmax(0, 1fr)); }
     .rs-test { display: flex; flex-direction: column; justify-content: center; min-height: 0; }
     .rs-test-sum { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -581,17 +587,17 @@ const calibrationJson = safe(calibration);
       .rs-panel { padding: 14px 32px 20px; }
       .rs-top, .rs-verdict, .rs-tests { width: 100%; max-width: 760px; margin-left: auto; margin-right: auto; }
       .rs-verdict { margin-top: 4px; margin-bottom: 0; }
-      .rs-title { margin: 2px 0 0; font-size: clamp(34px, 6.5vh, 58px); }
+      .rs-title { margin: 2px 0 0; font-size: clamp(30px, 5.5vh, 52px); }
       .rs-score { margin: 0; }
-      .rs-num { font-size: clamp(56px, 11vh, 100px); }
+      .rs-num { font-size: clamp(46px, 9vh, 88px); }
       .rs-dash { font-size: 48px; margin-top: -14px; }
       .rs-sub { margin: 2px 0 0; min-height: 20px; }
-      .rs-rank { margin-top: 6px; }
+      .rs-rank { margin-top: 4px; }
       .rs-skip { margin-top: 2px; min-height: 32px; }
       .rs-tests { margin-top: 8px; gap: 8px; }
-      .rs-test { gap: 2px; padding: 6px 14px; }
-      .rs-test-sum { margin: 0; font-size: 14px; line-height: 1.3; }
-      .rs-test-hero { margin: 0; font-size: 19px; }
+      .rs-test { gap: 1px; padding: 3px 14px; }
+      .rs-test-sum { margin: 0; font-size: 13px; line-height: 1.25; }
+      .rs-test-hero { margin: 0; font-size: 17px; }
       .rs-test-run { margin: 0; }
       .rs-p2 { gap: 16px; }
       .rs-card img { max-height: calc(100vh - 210px); max-height: calc(100svh - 210px); }
