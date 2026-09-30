@@ -62,7 +62,7 @@ export const WOBBLE_SIGMA = 2.5;
  * (scripts/calibrate-series.ts); lower it to make wins more common, raise it
  * to make them rarer.
  */
-export const PAR_GAP = -11.5;
+export const PAR_GAP = -9.5;
 
 /** Score-gap cut points relative to par: a gap inside ±1 of par is the drawn
  *  2–2; you must be ahead of par to win and 8+ ahead for a 5–0. */
