@@ -68,10 +68,11 @@ const imageAlt = ogImageAlt ?? 'Beat My 11 — can your all-time Test XI beat th
       // Anonymous page-view counter (src/lib/telemetry.ts): daily totals only.
       import { reportEvent } from '../lib/telemetry';
       const path = location.pathname.replace(/\/+$/, '') || '/';
+      // /play, /matchup, /pick, /r/… for the Test game; the same under /odi, /t20i and /ipl.
+      const m = /^(?:\/(odi|t20i|ipl))?\/(play|matchup|pick|r)(?:\/|$)/.exec(path);
+      const page = { play: 'view_play', matchup: 'view_result', pick: 'view_pick', r: 'view_shared' };
       if (path === '/') reportEvent('view_home');
-      else if (path === '/play') reportEvent('view_play');
-      else if (path === '/matchup') reportEvent('view_result');
-      else if (path.startsWith('/r/')) reportEvent('view_shared');
+      else if (m) reportEvent(page[m[2]], m[1]);
     </script>
   </body>
 </html>

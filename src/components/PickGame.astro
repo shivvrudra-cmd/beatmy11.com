@@ -146,6 +146,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
     import { encodeXI, decodeXI } from '../lib/share-results';
     import { DUEL_CUTS, duelSeed, cleanName, xiLabel, badgesFor, recordH2H, h2hLine } from '../lib/pick-xi';
     import { sfx } from '../lib/sfx';
+    import { reportEvent } from '../lib/telemetry';
 
     const read = (id) => JSON.parse(document.getElementById(id).textContent);
     const PLAYERS = read('pk-players');
@@ -348,8 +349,9 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
 
     $('pk-go-friend').addEventListener('click', () => {
       if (!complete()) return;
-      if (theirXI) { showResult(xi, theirXI, myName, theirName, true); return; }
+      if (theirXI) { reportEvent('pick_played', FORMAT.id); showResult(xi, theirXI, myName, theirName, true); return; }
       const url = `${location.origin}${PATH}?${withName(`vs=${linkOf(xi)}`, 'n', myName)}`;
+      reportEvent('pick_sent', FORMAT.id);
       shareLink(url, `I picked my ${RESULT.xiNoun}. Pick yours and beat it 🏏`, $('pk-copied'));
     });
 

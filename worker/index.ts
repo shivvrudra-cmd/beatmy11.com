@@ -18,7 +18,13 @@ interface Env {
 }
 
 const ALLOWED_ORIGINS = new Set(['https://beatmy11.com', 'https://www.beatmy11.com']);
-const EVENT_NAMES = new Set(['shared', 'view_home', 'view_play', 'view_result', 'view_shared', 'daily_started', 'daily_completed', 'challenge_started', 'challenge_completed']);
+const BASE_EVENTS = ['shared', 'view_home', 'view_play', 'view_result', 'view_shared', 'daily_started', 'daily_completed', 'challenge_started', 'challenge_completed', 'view_pick', 'pick_sent', 'pick_played'];
+// ODI, T20I and IPL count under the same names with the format appended, e.g. "view_play_ipl"
+// (src/lib/telemetry.ts). The home page is one page, so it has no per-format counter.
+const EVENT_NAMES = new Set([
+  ...BASE_EVENTS,
+  ...['odi', 't20i', 'ipl'].flatMap((f) => BASE_EVENTS.filter((e) => e !== 'view_home').map((e) => `${e}_${f}`)),
+]);
 const MAX_BODY = 1024;
 
 const json = (status: number, body: unknown = {}) =>

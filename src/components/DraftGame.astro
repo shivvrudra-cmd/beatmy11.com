@@ -303,7 +303,6 @@ const formatJson = json(format);
     // Every format has its own daily, friend's challenge and saved drafts (owner, 2026-10-02).
     const SCOPE = FORMAT.id;
     const PLAY_HREF = FORMAT.id === 'test' ? '/play' : `/${FORMAT.id}/play`;
-    const TELEMETRY = FORMAT.id === 'test'; // counters stay Test-only (the worker's fixed event list)
     // Spins in a challenge link: the Test encoding, or `<era index><team code>` for the others.
     const readSpins = (raw) => (FORMAT.id === 'test'
       ? decodeSpins(raw, LEGEND_COMBOS, DRAFT_COMBOS)
@@ -570,7 +569,7 @@ const formatJson = json(format);
         challenge = { ...challenge, tries: challenge.tries + 1 };
         saveChallenge(challenge, SCOPE);
         showChallengeBanner();
-        if (TELEMETRY) reportEvent('challenge_started');
+        reportEvent('challenge_started', FORMAT.id);
       }
       selectedUid = null;
       moveFrom = null;
@@ -1170,7 +1169,7 @@ const formatJson = json(format);
         tag.textContent = `${FORMAT.id === 'test' ? '' : `${FORMAT.id.toUpperCase()} `}Daily Challenge #${dayNumber(dailyDay)} · same spins for everyone · no respins`;
         $('fl-mode').hidden = false;
         draft = { ...draft, eraRespinsLeft: 0, nationRespinsLeft: 0 };
-        if (TELEMETRY) reportEvent('daily_started');
+        reportEvent('daily_started', FORMAT.id);
       }
       const raw = loadDraft();
       if (raw) {

@@ -318,7 +318,7 @@ const formatJson = safe(format);
         if (!hasPlayed(state, dailyDay)) {
           state = recordResult(state, dailyDay, result);
           saveDaily(state, SCOPE);
-          if (FORMAT.telemetry) reportEvent('daily_completed');
+          reportEvent('daily_completed', FORMAT.id);
         }
         const streak = currentStreak(state, dailyDay);
         const mine = state.results[dailyDay] || result;
@@ -351,7 +351,7 @@ const formatJson = safe(format);
           `<span>Same six spins as your friend. ${out === 'short' ? 'Redraft and try to top it.' : 'Share it back, or redraft for a better one.'}</span>`;
         $('rs-challenge').hidden = false;
         challengeShare = challengeShareText(ch.vs, mine, tries);
-        if (FORMAT.telemetry) reportEvent('challenge_completed');
+        reportEvent('challenge_completed', FORMAT.id);
         // "Draft again" retries the same challenge (same spins, next attempt).
         for (const a of document.querySelectorAll('[data-rs-again]')) a.setAttribute('href', `${FORMAT.playHref}?c=${encodeURIComponent(ch.spins)}&vs=${ch.vs.user}-${ch.vs.house}`);
       }
@@ -544,7 +544,7 @@ const formatJson = safe(format);
       }
 
       $('rs-share').addEventListener('click', async () => {
-        if (FORMAT.telemetry) reportEvent('shared');
+        reportEvent('shared', FORMAT.id);
         const message = `${shareText} ${url}`;
         try {
           // Picture + link where the platform can share files (phones).
