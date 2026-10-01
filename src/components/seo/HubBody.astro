@@ -1,0 +1,10 @@
+---
+import type { HubPage } from '../../lib/seo-pages';
+interface Props { page: HubPage }
+const { page } = Astro.props;
+---
+<ul class="sp-hubgrid">
+  {page.entries.map((e) => (
+    <li><a href={e.path}><strong>{e.label}</strong><span>{e.blurb}</span></a></li>
+  ))}
+</ul>

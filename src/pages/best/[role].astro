@@ -1,0 +1,15 @@
+---
+import SeoLayout from '../../components/seo/SeoLayout.astro';
+import ListBody from '../../components/seo/ListBody.astro';
+import { ROLE_SLUGS, buildPublishedPages, formatBuildDate, getSeoData } from '../../lib/seo-pages';
+
+export function getStaticPaths() {
+  const pages = buildPublishedPages(getSeoData(), formatBuildDate(new Date()));
+  return pages.lists.map((page) => ({ params: { role: ROLE_SLUGS[page.role] }, props: { page } }));
+}
+
+const { page } = Astro.props;
+---
+<SeoLayout page={page} ctaLine="Pick your own at this position: draft an XI across seven eras and see if it beats mine.">
+  <ListBody page={page} />
+</SeoLayout>

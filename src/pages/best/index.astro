@@ -1,0 +1,10 @@
+---
+import SeoLayout from '../../components/seo/SeoLayout.astro';
+import HubBody from '../../components/seo/HubBody.astro';
+import { buildPublishedPages, formatBuildDate, getSeoData } from '../../lib/seo-pages';
+
+const page = buildPublishedPages(getSeoData(), formatBuildDate(new Date())).roleHub;
+---
+<SeoLayout page={page} ctaLine="Want to build your own? Spin six times, draft eleven players and see if your XI beats mine.">
+  <HubBody page={page} />
+</SeoLayout>

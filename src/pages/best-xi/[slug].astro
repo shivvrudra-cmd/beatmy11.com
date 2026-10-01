@@ -1,0 +1,15 @@
+---
+import SeoLayout from '../../components/seo/SeoLayout.astro';
+import XiBody from '../../components/seo/XiBody.astro';
+import { buildPublishedPages, formatBuildDate, getSeoData } from '../../lib/seo-pages';
+
+export function getStaticPaths() {
+  const pages = buildPublishedPages(getSeoData(), formatBuildDate(new Date()));
+  return pages.xi.map((page) => ({ params: { slug: page.slug }, props: { page } }));
+}
+
+const { page } = Astro.props;
+---
+<SeoLayout page={page} ctaLine="Think you can pick a better XI? Draft yours across seven eras and see if it beats mine.">
+  <XiBody page={page} />
+</SeoLayout>

@@ -1,0 +1,98 @@
+---
+/**
+ * SeoLayout.astro — shared frame for the data-backed SEO pages
+ * (/best-xi/*, /best/*): breadcrumbs, H1, intro, related links, "stats as of"
+ * line, /play call to action and the page's JSON-LD (BreadcrumbList +
+ * ItemList). BaseLayout supplies the canonical tag and site-wide schema.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FloodlitShell from '../FloodlitShell.astro';
+import type { SeoPage } from '../../lib/seo-pages';
+
+interface Props {
+  page: SeoPage;
+  ctaLine: string;
+}
+
+const { page, ctaLine } = Astro.props;
+const ld = (o: unknown) => JSON.stringify(o).replace(/</g, '\\u003c');
+---
+<BaseLayout title={page.title} description={page.description}>
+  {page.jsonLd.map((o) => <script slot="head" type="application/ld+json" set:html={ld(o)} />)}
+  <FloodlitShell wide>
+    <article class="sp">
+      <nav class="sp-crumbs" aria-label="Breadcrumb">
+        <ol>
+          {page.breadcrumbs.map((c, i) => (
+            <li>
+              {i < page.breadcrumbs.length - 1 ? (
+                <a href={c.path}>{c.name}</a>
+              ) : (
+                <span aria-current="page">{c.name}</span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </nav>
+
+      <header class="sp-head">
+        <p class="fs-eyebrow">{page.eyebrow}</p>
+        <h1 class="sp-h1">{page.h1}</h1>
+        {page.intro.map((t) => <p class="sp-intro">{t}</p>)}
+        <p class="sp-asof">{page.asOf}</p>
+      </header>
+
+      <slot />
+
+      <section class="sp-cta" aria-label="Play">
+        <p>{ctaLine}</p>
+        <a class="fs-cta sp-cta-btn" href="/play">Start drafting</a>
+      </section>
+
+      {page.related.map((group) => (
+        <nav class="sp-related" aria-label={group.heading}>
+          <h2>{group.heading}</h2>
+          <ul>
+            {group.links.map((l) => <li><a href={l.path}>{l.label}</a></li>)}
+          </ul>
+        </nav>
+      ))}
+    </article>
+  </FloodlitShell>
+
+  <style is:global>
+    .sp { margin: 3vh auto 0; text-align: left; max-width: 960px; }
+    .sp-crumbs ol { display: flex; flex-wrap: wrap; gap: 4px 8px; list-style: none; margin: 0 0 18px; padding: 0; font-size: 13px; color: var(--fs-dim); }
+    .sp-crumbs li + li::before { content: '/'; margin-right: 8px; color: var(--fs-dim); }
+    .sp-crumbs a { color: var(--fs-muted); padding: 6px 0; display: inline-block; }
+    .sp-head .fs-eyebrow { text-align: left; }
+    .sp-h1 { margin: 8px 0 14px; font: 400 clamp(38px, 9vw, 64px)/0.98 var(--fs-display); letter-spacing: 0.02em; }
+    .sp-intro { margin: 0 0 10px; color: var(--fs-muted); font-size: 16px; line-height: 1.6; max-width: 46rem; }
+    .sp-asof { margin: 6px 0 0; color: var(--fs-dim); font-size: 13px; }
+    .sp h2 { margin: 34px 0 10px; font: 600 13px Inter, sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fs-muted); }
+    .sp a { color: var(--fs-lime); }
+    .sp-tablewrap { overflow-x: auto; margin: 22px 0 0; border: 1px solid #1d2a47; border-radius: 12px; background: rgba(8, 13, 28, 0.7); }
+    .sp table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .sp th { text-align: left; font: 600 11px Inter, sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fs-dim); padding: 10px 12px; border-bottom: 1px solid #1d2a47; white-space: nowrap; }
+    .sp td { padding: 11px 12px; border-bottom: 1px solid #141d33; color: var(--fs-text); vertical-align: top; }
+    .sp tr:last-child td { border-bottom: 0; }
+    .sp td.sp-num, .sp th.sp-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .sp td.sp-pos { color: var(--fs-dim); width: 2.5rem; font-variant-numeric: tabular-nums; }
+    .sp td.sp-name { font-weight: 600; }
+    .sp td.sp-sub { color: var(--fs-muted); }
+    .sp tr.sp-top td.sp-name { color: var(--fs-lime); }
+    .sp-line { color: var(--fs-muted); font-size: 13px; line-height: 1.5; }
+    .sp-method { margin: 8px 0 0; color: var(--fs-muted); font-size: 14px; line-height: 1.6; max-width: 46rem; }
+    .sp-cta { margin: 40px 0 0; padding: 22px 18px 28px; border: 1px solid #1d2a47; border-radius: 16px; text-align: center; background: var(--fs-card); }
+    .sp-cta p { margin: 0; color: var(--fs-text); font-size: 17px; line-height: 1.5; }
+    .sp-cta a.sp-cta-btn { color: #04060c; }
+    .sp-related ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+    .sp-related a { display: inline-block; padding: 9px 14px; border: 1px solid #1d2a47; border-radius: 999px; color: var(--fs-text); text-decoration: none; font-size: 14px; }
+    .sp-related a:hover, .sp-related a:focus-visible { border-color: var(--fs-lime); color: var(--fs-lime); }
+    .sp-hubgrid { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+    .sp-hubgrid a { display: block; padding: 16px; border: 1px solid #1d2a47; border-radius: 14px; background: var(--fs-card); text-decoration: none; color: var(--fs-text); }
+    .sp-hubgrid a:hover, .sp-hubgrid a:focus-visible { border-color: var(--fs-lime); }
+    .sp-hubgrid strong { display: block; font-size: 16px; margin-bottom: 4px; }
+    .sp-hubgrid span { color: var(--fs-muted); font-size: 13px; }
+  </style>
+</BaseLayout>

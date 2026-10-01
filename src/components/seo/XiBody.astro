@@ -1,0 +1,61 @@
+---
+import type { XiPage } from '../../lib/seo-pages';
+import { methodText } from '../../lib/seo-pages';
+
+interface Props { page: XiPage }
+const { page } = Astro.props;
+const method = methodText();
+---
+<section>
+  <h2>The XI, in batting order</h2>
+  <div class="sp-tablewrap">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Player</th><th>Position</th><th>Nation</th><th>Played in</th><th>Career Test stats</th></tr>
+      </thead>
+      <tbody>
+        {page.xi.map((r, i) => (
+          <tr id={`player-${r.id}`}>
+            <td class="sp-pos">{i + 1}</td>
+            <td class="sp-name">{r.name}</td>
+            <td class="sp-sub">{r.roleLabel}</td>
+            <td class="sp-sub">{r.nation}</td>
+            <td class="sp-sub">{r.played}</td>
+            <td class="sp-line">{r.statLine}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Next in line</h2>
+  <div class="sp-tablewrap">
+    <table>
+      <thead>
+        <tr><th>Player</th><th>Position</th><th>Nation</th><th>Career Test stats</th></tr>
+      </thead>
+      <tbody>
+        {page.bench.map((r) => (
+          <tr id={`player-${r.id}`}>
+            <td class="sp-name">{r.name}</td>
+            <td class="sp-sub">{r.roleLabel}</td>
+            <td class="sp-sub">{r.nation}</td>
+            <td class="sp-line">{r.statLine}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>How this XI was picked</h2>
+  <p class="sp-method">{page.poolLine}</p>
+  <p class="sp-method">{method}</p>
+  <p class="sp-method">
+    The XI takes the highest-rated players at each position, then uses whichever of the three XI shapes
+    in the game rates best as a team. Ratings are not shown here: draft your own XI to see them.
+  </p>
+</section>
