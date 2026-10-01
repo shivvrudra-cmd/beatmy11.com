@@ -7,7 +7,7 @@ import { parseHowstat, matchHowstat } from '../scripts/cricsheet/howstat-check.m
 // @ts-expect-error plain .mjs script
 import { parseStrikeRates, parseBowlingTable, careerFits } from '../scripts/cricsheet/howstat.mjs';
 // @ts-expect-error plain .mjs script
-import { withOfficialBatting, withOfficialBowling } from '../scripts/cricsheet/build-white-ball.mjs';
+import { withOfficialBatting, withOfficialBowling, opponentOnlyRecord } from '../scripts/cricsheet/build-white-ball.mjs';
 
 let pass = 0, fail = 0;
 const ok = (cond: boolean, name: string, extra?: unknown) => {
@@ -100,7 +100,7 @@ ok(after.matches === 463 && after.runs === 18426 && after.strikeRate === 86.24 &
 ok(after.wickets === 154 && after.economy === 5.1 && after.battingSource === 'howstat-strike-rates', 'bowling is untouched and the source is recorded', after);
 ok(Math.abs(after.fiftyRate - (96 + 49) / 463) < 0.0001, 'fifty rate follows the official numbers', after.fiftyRate);
 
-// ---- the all-countries bowling table (100+ wickets)
+// ---- the all-countries bowling table (ODI 100+ wickets, T20I 50+)
 const bowl = parseBowlingTable([
   ',Player,Country,Mat,Balls,Runs,Wkts,BBI,4w,Avg,S/R,E/R,1 - 3,4 - 7,8 - 11,B,C,CB,LBW',
   '1.0,M Muralitharan,Sri Lanka/ACC Asian XI,350.0,18811.0,12326.0,534.0,46233.0,25.0,23.08,35.23,3.93,24.3,51.5,24.2,22.8,46.1,8.2,12.2',
@@ -114,7 +114,16 @@ const bBefore = { matches: 343, cricsheetMatches: 80, runs: 663, strikeRate: 77.
 const bAfter = withOfficialBowling(bBefore, bowl[0]);
 ok(bAfter.wickets === 534 && bAfter.ballsBowled === 18811 && bAfter.ballsPerWicket === 35.23 && bAfter.economy === 3.93 && bAfter.fourWicketInnings === 25, 'official full-career bowling line replaces the bowling numbers', bAfter);
 ok(bAfter.matches === 350 && Math.abs(bAfter.fourWicketRate - 25 / 350) < 0.0001, 'full career can add matches (Asia XI); the 4-wicket rate follows', bAfter);
-ok(bAfter.runs === 663 && bAfter.strikeRate === 77.5 && bAfter.bowlingSource === 'howstat-100-wickets', 'batting is untouched and the source is recorded', bAfter);
+ok(bAfter.runs === 663 && bAfter.strikeRate === 77.5 && bAfter.bowlingSource === 'howstat-wickets-table', 'batting is untouched and the source is recorded', bAfter);
 
+
+// ---- opponent-only players: the HowSTAT row plus the owner's catches, nothing else
+const oo = opponentOnlyRecord({ id: 'hs-x', name: 'M Muralitharan', howstatName: 'M Muralitharan', nation: 'Sri Lanka', primaryRole: 'spinner', bowlingType: 'spin', table: 'bowling', catches: 70, source: 'owner' }, bowl[0]);
+ok(oo.opponentOnly === true && oo.era.length === 0 && oo.stats.wickets === 534 && oo.stats.economy === 3.93 && oo.stats.matches === 350, 'opponent-only record carries the official bowling line', oo);
+ok(oo.stats.dismissals === 70 && oo.stats.dismissalsPerMatch === 0.2 && oo.stats.runs === undefined && oo.stats.strikeRate === undefined, 'fielding is the owner catches figure; batting is not filled in', oo.stats);
+let ooThrew = 0;
+try { opponentOnlyRecord({ name: 'Nobody', howstatName: 'N Obody', nation: 'X', table: 'bowling', catches: 1 }, undefined); } catch { ooThrew++; }
+try { opponentOnlyRecord({ name: 'No catches', howstatName: 'M Muralitharan', nation: 'Sri Lanka', table: 'bowling' }, bowl[0]); } catch { ooThrew++; }
+ok(ooThrew === 2, 'a missing HowSTAT row or missing catches stops the build (never estimated)', ooThrew);
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

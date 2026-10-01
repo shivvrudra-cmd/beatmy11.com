@@ -1,0 +1,60 @@
+{
+  "note": "T20I World XI, chosen by the owner on 2026-10-01. Fixed: it is NOT recomputed when ratings change. Players are identified by `id` (the name is for readers and may be corrected).",
+  "xi": [
+    {
+      "name": "Rohit Sharma",
+      "role": "opener",
+      "id": "cs-740742ef"
+    },
+    {
+      "name": "Abhishek Sharma",
+      "role": "opener",
+      "id": "cs-f29185a1"
+    },
+    {
+      "name": "Suryakumar Yadav",
+      "role": "middle-order",
+      "id": "cs-271f83cd"
+    },
+    {
+      "name": "Virat Kohli",
+      "role": "middle-order",
+      "id": "cs-ba607b88"
+    },
+    {
+      "name": "Glenn Maxwell",
+      "role": "middle-order",
+      "id": "cs-b681e71e"
+    },
+    {
+      "name": "Jos Buttler",
+      "role": "wicketkeeper",
+      "id": "cs-99b75528"
+    },
+    {
+      "name": "Rashid Khan",
+      "role": "spinner",
+      "id": "hs-t20i-rashid-khan"
+    },
+    {
+      "name": "Wanindu Hasaranga",
+      "role": "spinner",
+      "id": "cs-a97c8ec2"
+    },
+    {
+      "name": "Jasprit Bumrah",
+      "role": "fast-bowler",
+      "id": "cs-462411b3"
+    },
+    {
+      "name": "Lasith Malinga",
+      "role": "fast-bowler",
+      "id": "cs-a12e1d51"
+    },
+    {
+      "name": "Umar Gul",
+      "role": "fast-bowler",
+      "id": "cs-16dfcc19"
+    }
+  ]
+}

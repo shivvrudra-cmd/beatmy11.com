@@ -33,12 +33,12 @@ careers, exactly like `src/lib/seven-metrics.ts`.
 The owner approved *which* metrics, not their weights or thresholds. Until confirmed, use these
 neutral defaults, keep them in ONE config object per format, and label them `PROVISIONAL`:
 
-- Metric weights: ODI equal (1/4 each). T20I and IPL (owner, 2026-10-01: strike rate and economy count more): strike rate 40% of batting, economy 40% of bowling, the other three metrics 20% each. The 40/20 split is a proposal for the owner to confirm.
+- Metric weights: ODI equal (1/4 each). T20I and IPL (owner, 2026-10-01: strike rate and economy count more): strike rate 40% of batting, economy 40% of bowling, the other three metrics 20% each. The owner confirmed the 40/20 split on 2026-10-01.
 - Shrinkage prior: 30 matches (same as Test).
 - Longevity full credit / long-career bonus: ODI 100 / 330 matches; T20I 50 / 160; IPL 60 / 280 (the bonus completes only at the longest careers in the data, like 200 Tests in the Test game).
 - Team blend: 40% batting / 50% bowling / 10% fielding (same as Test).
 - Series ladder: reuse the Test `PAR_GAP` and cuts; report simulated win rates, do not tune.
-- Opponent XI: propose the highest-rated legal XI per format from the engine as a *candidate* only.
+- Opponent XI: chosen by the owner for all three formats (2026-10-01): `scripts/cricsheet/owner-allstar-{odi,t20i,ipl}.json`. Two picks have no ball-by-ball matches and are **opponent-only** (never draftable, not in the ranking populations): Viv Richards (ODI) and Rashid Khan (T20I). Their career lines come from the owner's HowSTAT tables and their catches from the owner (`scripts/cricsheet/owner-opponent-only.json` -> `src/data/formats/opponent-only.json`).
 
 ## Data rules (hard)
 

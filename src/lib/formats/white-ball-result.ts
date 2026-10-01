@@ -8,7 +8,7 @@ import odiSeries from '../../data/formats/odi-series.json';
 import t20iSeries from '../../data/formats/t20i-series.json';
 import iplSeries from '../../data/formats/ipl-series.json';
 import { WB_FORMATS, buildWbContext } from '../white-ball-metrics';
-import { wbPlayers, type WbFormatId } from './white-ball-store';
+import { wbPlayers, wbOpponentPool, type WbFormatId } from './white-ball-store';
 
 interface SeriesFile {
   opponentXI: { id: string; name: string; role: string }[];
@@ -21,7 +21,7 @@ const SERIES: Record<WbFormatId, SeriesFile> = {
 
 export function wbResultProps(id: WbFormatId) {
   const players = wbPlayers(id);
-  const byId = new Map(players.map((p) => [p.id, p]));
+  const byId = new Map(wbOpponentPool(id).map((p) => [p.id, p]));
   const series = SERIES[id];
   // The opponent is scored in the role it was picked for.
   const houseXI = series.opponentXI.map((h) => {

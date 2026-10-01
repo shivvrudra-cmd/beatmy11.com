@@ -22,7 +22,7 @@ import {
   reachableShapes, isXIValid, supplyFor, slotOf, XI_SLOTS, XI_SHAPES,
   type NormalizedPlayer, type DraftState, type XiRole,
 } from '../../src/lib/player-logic';
-import { wbPlayers, wbPlayersByEra, wbSpinCombos, type WbFormatId } from '../../src/lib/formats/white-ball-store';
+import { wbPlayers, wbOpponentPool, wbPlayersByEra, wbSpinCombos, type WbFormatId } from '../../src/lib/formats/white-ball-store';
 import { WB_FORMATS, buildWbContext, scoreWbPlayer, wbTeamBlend, type WbEntry } from '../../src/lib/white-ball-metrics';
 import { upcomingCombos } from '../../src/lib/daily';
 import { mulberry32, OUTCOME_BANDS, bandFor, wobble, PAR_GAP } from '../../src/lib/series';
@@ -64,7 +64,7 @@ function run(id: WbFormatId) {
     if (list.length !== 11) throw new Error(`${ownerFile} must list exactly 11 players`);
     xi = list.map((a) => {
       // By id when given (display names can be corrected later), otherwise by exact name.
-      const hits = players.filter((p) => (a.id ? p.id === a.id : p.name === a.name));
+      const hits = wbOpponentPool(id).filter((p) => (a.id ? p.id === a.id : p.name === a.name));
       if (hits.length !== 1) throw new Error(`${ownerFile}: "${a.name}" matches ${hits.length} ${FMT.label} players`);
       return { p: hits[0], role: a.role, score: scoreWbPlayer(hits[0], a.role, ctx, FMT).score };
     });

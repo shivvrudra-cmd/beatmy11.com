@@ -165,7 +165,7 @@ export function parseStrikeRates(text) {
 }
 
 /**
- * HowSTAT's "Players with 100+ wickets" table: Player, Country, Mat, Balls, Runs, Wkts, BBI, 4w,
+ * HowSTAT's "Players with 100+ wickets" table (50+ for T20I): Player, Country, Mat, Balls, Runs, Wkts, BBI, 4w,
  * Avg, S/R, E/R (plus wicket breakdowns that are not used). FULL career bowling totals with the
  * official bowling strike rate (balls per wicket) and economy.
  */

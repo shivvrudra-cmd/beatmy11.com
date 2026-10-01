@@ -697,7 +697,7 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
 | Shoaib Malik | 124 / 123 | 2435 / 2423 | 27 / 27 | 31.22 / 31.47 | 23.85 / 23.85 | 7 / 7 |
-| Shahid Afridi | 99 / 98 | 1416 / 1405 | 95 / 97 | 17.92 / 18.01 | 24.39 / 24.35 | 6.62 / 6.61 |
+| Shahid Afridi | 99 / 98 | 1416 / 1405 | 98 / 97 | 17.92 / 18.01 | 24.45 / 24.35 | 6.63 / 6.61 |
 | Babar Azam | 145 / 145 | 4596 / 4596 | 0 / 0 | 38.95 / 38.95 | – / – | – / – |
 | Shadab Khan | 124 / 124 | 1009 / 1009 | 123 / 123 | 19.4 / 19.4 | 24.26 / 24.26 | 7.38 / 7.38 |
 | Fakhar Zaman | 120 / 120 | 2494 / 2494 | 0 / 0 | 23.98 / 23.98 | – / – | 12 / 12 |
@@ -749,8 +749,8 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | David Miller | 140 / 137 | 2804 / 2763 | 0 / 0 | 33.78 / 34.11 | – / – | – / – |
 | Faf du Plessis | 50 / 47 | 1528 / 1466 | 0 / 0 | 35.53 / 36.65 | – / – | 2.25 / 2.25 |
 | Hashim Amla | 44 / 41 | 1277 / 1158 | 0 / 0 | 33.61 / 32.17 | – / – | – / – |
+| Imran Tahir | 38 / 35 | 19 / 19 | 63 / 61 | 19 / 19 | 15.05 / 14.08 | 6.73 / 6.57 |
 | Morne Morkel | 43 / 41 | 22 / 21 | 43 / 46 | 7.33 / 10.5 | 27.23 / 23.85 | 7.52 / 7.48 |
-| Imran Tahir | 37 / 35 | 19 / 19 | 61 / 61 | 19 / 19 | 15.15 / 14.08 | 6.75 / 6.57 |
 | Quinton de Kock | 110 / 110 | 3095 / 3095 | 0 / 0 | 30.95 / 30.95 | – / – | – / – |
 | Reeza Hendricks | 90 / 90 | 2504 / 2504 | 0 / 0 | 28.78 / 28.78 | – / – | 12 / 12 |
 | Jean-Paul Duminy | 81 / 81 | 1934 / 1934 | 21 / 21 | 38.68 / 38.68 | 28.52 / 28.52 | 7.76 / 7.76 |
@@ -794,7 +794,7 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
-| Thisara Perera | 84 / 80 | 1204 / 1047 | 48 / 45 | 23.15 / 21.37 | 35.08 / 35.09 | 9.37 / 9.25 |
+| Thisara Perera | 84 / 80 | 1204 / 1047 | 51 / 45 | 23.15 / 21.37 | 33.67 / 35.09 | 9.35 / 9.25 |
 | Dasun Shanaka | 137 / 137 | 2048 / 2048 | 46 / 46 | 20.69 / 20.69 | 26.28 / 26.28 | 8.35 / 8.35 |
 | Kusal Mendis | 109 / 109 | 2694 / 2694 | 0 / 0 | 26.16 / 26.16 | – / – | – / – |
 | Wanindu Hasaranga | 101 / 101 | 869 / 869 | 163 / 163 | 13.58 / 13.58 | 16.24 / 16.24 | 7.1 / 7.1 |
@@ -837,13 +837,14 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 ## T20I West Indies
 
-- HowSTAT rows: 110; our players: 102; paired: 102; identical on matches, runs and wickets: 100
+- HowSTAT rows: 110; our players: 102; paired: 102; identical on matches, runs and wickets: 99
 - Ours without a HowSTAT match: 0
 - HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 8
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
 | Hayden Walsh | 37 / 31 | 147 / 36 | 29 / 25 | 16.33 / 9 | 27.24 / 28.88 | 7.91 / 8.11 |
+| Samuel Badree | 52 / 50 | 43 / 43 | 56 / 54 | 7.17 / 7.17 | 21.07 / 20.76 | 6.18 / 6.09 |
 | Daren Sammy | 67 / 66 | 581 / 534 | 43 / 44 | 17.61 / 15.71 | 25.56 / 24.27 | 7.29 / 7.28 |
 | Rovman Powell | 120 / 120 | 2347 / 2347 | 5 / 5 | 26.37 / 26.37 | 47.2 / 47.2 | 10.34 / 10.34 |
 | Nicholas Pooran | 106 / 106 | 2275 / 2275 | 0 / 0 | 26.15 / 26.15 | – / – | – / – |
@@ -867,7 +868,6 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Sherfane Rutherford | 56 / 56 | 902 / 902 | 2 / 2 | 24.38 / 24.38 | 46 / 46 | 10.22 / 10.22 |
 | Sunil Narine | 51 / 51 | 155 / 155 | 52 / 52 | 10.33 / 10.33 | 21.25 / 21.25 | 6.02 / 6.02 |
 | Gudakesh Motie | 51 / 51 | 205 / 205 | 49 / 49 | 14.64 / 14.64 | 25.86 / 25.86 | 7.92 / 7.92 |
-| Samuel Badree | 50 / 50 | 43 / 43 | 54 / 54 | 7.17 / 7.17 | 20.76 / 20.76 | 6.09 / 6.09 |
 | Alzarri Joseph | 45 / 45 | 129 / 129 | 62 / 62 | 16.13 / 16.13 | 24.6 / 24.6 | 9.24 / 9.24 |
 | Sheldon Cottrell | 45 / 45 | 18 / 18 | 52 / 52 | 4.5 / 4.5 | 23.92 / 23.92 | 8.13 / 8.13 |
 | Obed McCoy | 43 / 43 | 68 / 68 | 52 / 52 | 9.71 / 9.71 | 23.12 / 23.12 | 8.73 / 8.73 |

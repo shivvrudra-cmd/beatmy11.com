@@ -11,6 +11,7 @@
 import odiData from '../../data/formats/odi.json';
 import t20iData from '../../data/formats/t20i.json';
 import iplData from '../../data/formats/ipl.json';
+import opponentOnlyData from '../../data/formats/opponent-only.json';
 import { normalizePlayer, type NormalizedPlayer, type RawPlayer } from '../player-logic';
 import { WB_FORMATS, canScoreAs, wbRole, type WbFormat, type WbRole } from '../white-ball-metrics';
 import { IPL_BLOCKS, IPL_TEAM_CODES } from './ipl-config';
@@ -45,6 +46,17 @@ export function wbPlayers(id: WbFormatId): WbRecord[] {
     out.push({ ...p, secondaryRoles: (p.secondaryRoles ?? []).filter((r) => canScoreAs(p, r as WbRole, fmt)) });
   }
   return out;
+}
+
+/**
+ * Everyone the fixed opponent XI may be picked from: the draftable players plus the owner's
+ * opponent-only players (official HowSTAT career lines, no ball-by-ball matches; see
+ * scripts/cricsheet/owner-opponent-only.json). Opponent-only players are never in a draft pool
+ * and never in the ranking populations.
+ */
+export function wbOpponentPool(id: WbFormatId): WbRecord[] {
+  const extra = ((opponentOnlyData as unknown as Record<string, WbRecord[]>)[id] ?? []);
+  return [...wbPlayers(id), ...extra];
 }
 
 /** The era/block ids of a format, in order. */

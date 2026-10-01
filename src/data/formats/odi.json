@@ -408,7 +408,7 @@
     2011
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -560,7 +560,7 @@
     2004,
     2014
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -1269,7 +1269,7 @@
     2016,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -1322,7 +1322,7 @@
     2009,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -1827,7 +1827,7 @@
     2008,
     2015
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -1932,7 +1932,7 @@
     2007
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -2947,7 +2947,7 @@
     1991,
     2003
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -3104,7 +3104,7 @@
     2016,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -3617,7 +3617,7 @@
     2001,
     2008
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -3773,7 +3773,7 @@
     2009
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -4034,7 +4034,7 @@
     2009
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -4342,7 +4342,7 @@
     null
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -4443,7 +4443,7 @@
     1990,
     2007
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -4898,7 +4898,7 @@
     2003
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -5204,7 +5204,7 @@
     2001,
     2011
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -5921,7 +5921,7 @@
     2007
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -6944,7 +6944,7 @@
     2012,
     2022
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -7505,7 +7505,7 @@
     1996,
     2008
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -8073,7 +8073,7 @@
     2012
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -8591,7 +8591,7 @@
     2003
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -9198,7 +9198,7 @@
     2008
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -9447,7 +9447,7 @@
     2001,
     2010
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -9802,7 +9802,7 @@
     2006
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -9855,7 +9855,7 @@
     2019
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -9909,7 +9909,7 @@
     2004
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -10267,7 +10267,7 @@
     2023
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -11551,7 +11551,7 @@
    "fourWicketRate": 0.056,
    "dismissalsPerMatch": 0.2258,
    "statsSource": "cricsheet",
-   "bowlingSource": "howstat-100-wickets",
+   "bowlingSource": "howstat-wickets-table",
    "cricsheetMatches": 124
   }
  },
@@ -11910,7 +11910,7 @@
     2015
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -12468,7 +12468,7 @@
     1994,
     2006
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -12622,7 +12622,7 @@
     2000,
     2010
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -13084,7 +13084,7 @@
     2015,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -14015,7 +14015,7 @@
     2001,
     2012
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -15192,7 +15192,7 @@
     2014
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -15593,7 +15593,7 @@
     2018
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -16500,7 +16500,7 @@
     2016
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -17820,7 +17820,7 @@
     1993,
     2007
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -17925,7 +17925,7 @@
     2009,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -18029,7 +18029,7 @@
     2000,
     2013
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -18290,7 +18290,7 @@
     2010
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -19247,7 +19247,7 @@
     2015
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -19353,7 +19353,7 @@
     2020,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -19608,7 +19608,7 @@
     2016,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -19970,7 +19970,7 @@
     2005
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -21053,7 +21053,7 @@
     2011,
     2019
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -21311,7 +21311,7 @@
     2012
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -21468,7 +21468,7 @@
     2007,
     2016
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -21722,7 +21722,7 @@
     2012
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -21778,7 +21778,7 @@
     2014
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -22185,7 +22185,7 @@
     2002,
     2015
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -23161,7 +23161,7 @@
     1996,
     2005
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -23214,7 +23214,7 @@
     2023
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -23469,7 +23469,7 @@
     2016,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -23520,7 +23520,7 @@
     1991,
     2003
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -24133,7 +24133,7 @@
     2003,
     2017
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -25620,7 +25620,7 @@
     2010,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -25978,7 +25978,7 @@
     2011,
     2019
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -26394,7 +26394,7 @@
     2015,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -27262,7 +27262,7 @@
     2008,
     2022
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -28632,7 +28632,7 @@
     2017,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -29152,7 +29152,7 @@
     2015
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -29562,7 +29562,7 @@
     2004
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -29664,7 +29664,7 @@
     2004,
     2019
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -30021,7 +30021,7 @@
     2005,
     2019
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -30727,7 +30727,7 @@
     2018,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -31289,7 +31289,7 @@
     1998,
     2009
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -32622,7 +32622,7 @@
     2020
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -32724,7 +32724,7 @@
     2014,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -33440,7 +33440,7 @@
     null
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -33538,7 +33538,7 @@
     1997,
     2005
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -34561,7 +34561,7 @@
     2005,
     2015
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -34768,7 +34768,7 @@
     null
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -34820,7 +34820,7 @@
     2010,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -34973,7 +34973,7 @@
     null
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -35334,7 +35334,7 @@
     2019
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -35740,7 +35740,7 @@
     2007
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -35947,7 +35947,7 @@
     2001,
     2015
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -36151,7 +36151,7 @@
     2013,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -36604,7 +36604,7 @@
    "fourWicketRate": 0.0769,
    "dismissalsPerMatch": 0.2672,
    "statsSource": "cricsheet",
-   "bowlingSource": "howstat-100-wickets",
+   "bowlingSource": "howstat-wickets-table",
    "cricsheetMatches": 116
   }
  },
@@ -37321,7 +37321,7 @@
     1989,
     2003
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -37373,7 +37373,7 @@
     2015,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -37476,7 +37476,7 @@
     1993,
     2011
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -38190,7 +38190,7 @@
     2001,
     2009
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -38746,7 +38746,7 @@
     2003,
     2010
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -39718,7 +39718,7 @@
     2017
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -39820,7 +39820,7 @@
     1997,
     2007
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -40577,7 +40577,7 @@
     2011,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -40784,7 +40784,7 @@
     2011
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -42206,7 +42206,7 @@
     2015
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -43185,7 +43185,7 @@
     2003,
     2015
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -43237,7 +43237,7 @@
     2010,
     2023
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -43294,7 +43294,7 @@
     null
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -43396,7 +43396,7 @@
     2002,
     2012
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -45592,7 +45592,7 @@
     2009,
     2021
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -46509,7 +46509,7 @@
     2012
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -46715,7 +46715,7 @@
     2008,
     2015
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -47586,7 +47586,7 @@
     2011
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -47891,7 +47891,7 @@
     1995,
     2003
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -48252,7 +48252,7 @@
     2011
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -48917,7 +48917,7 @@
     2018,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -48970,7 +48970,7 @@
     2015
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -49279,7 +49279,7 @@
     null
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -49782,7 +49782,7 @@
     2002,
     2010
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -49886,7 +49886,7 @@
     2003
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -49943,7 +49943,7 @@
     2015
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -50203,7 +50203,7 @@
     2008
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -50866,7 +50866,7 @@
     1998,
     2011
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -50922,7 +50922,7 @@
     2019
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -51845,7 +51845,7 @@
     2007
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -52253,7 +52253,7 @@
     2011,
     2017
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -52358,7 +52358,7 @@
     2006,
     2016
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -53121,7 +53121,7 @@
     2009,
     2021
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -54134,7 +54134,7 @@
     2014,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -54498,7 +54498,7 @@
     2013,
     2023
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -54906,7 +54906,7 @@
     2021
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -55011,7 +55011,7 @@
     2016
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -55063,7 +55063,7 @@
     2006,
     2015
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -55323,7 +55323,7 @@
     2008,
     2023
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -56398,7 +56398,7 @@
     2012,
     null
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -56706,7 +56706,7 @@
     2003,
     2016
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -56757,7 +56757,7 @@
     2010,
     2018
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -56859,7 +56859,7 @@
     2007
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -58183,7 +58183,7 @@
     2008,
     2020
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -58236,7 +58236,7 @@
     null
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -58287,7 +58287,7 @@
     1989,
     2003
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -58390,7 +58390,7 @@
     2003
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -59659,7 +59659,7 @@
     2017
    ],
    "battingSource": "howstat-strike-rates",
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -59711,7 +59711,7 @@
     2016,
     2023
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {
@@ -59813,7 +59813,7 @@
     2000,
     2012
    ],
-   "bowlingSource": "howstat-100-wickets"
+   "bowlingSource": "howstat-wickets-table"
   }
  },
  {

@@ -1,0 +1,71 @@
+{
+ "odi": [
+  {
+   "id": "hs-odi-viv-richards",
+   "name": "Viv Richards",
+   "scorecardName": "I V A Richards",
+   "nation": "West Indies",
+   "era": [],
+   "primaryRole": "middle-order",
+   "secondaryRoles": [],
+   "isWicketkeeper": false,
+   "bowlingType": null,
+   "roleSource": "owner",
+   "opponentOnly": true,
+   "catchesSource": "owner, 2026-10-01",
+   "stats": {
+    "matches": 187,
+    "catches": 100,
+    "stumpings": 0,
+    "dismissals": 100,
+    "dismissalsPerMatch": 0.5348,
+    "statsSource": "howstat",
+    "cricsheetMatches": 0,
+    "innings": 167,
+    "notOuts": 24,
+    "runs": 6721,
+    "highest": 189,
+    "hundreds": 11,
+    "fifties": 45,
+    "battingAverage": 47,
+    "strikeRate": 90.2,
+    "fiftyRate": 0.2995,
+    "battingSource": "howstat-strike-rates"
+   }
+  }
+ ],
+ "t20i": [
+  {
+   "id": "hs-t20i-rashid-khan",
+   "name": "Rashid Khan",
+   "scorecardName": "Rashid Khan",
+   "nation": "Afghanistan",
+   "era": [],
+   "primaryRole": "spinner",
+   "secondaryRoles": [],
+   "isWicketkeeper": false,
+   "bowlingType": "spin",
+   "roleSource": "owner",
+   "opponentOnly": true,
+   "catchesSource": "owner, 2026-10-01",
+   "stats": {
+    "matches": 118,
+    "catches": 49,
+    "stumpings": 0,
+    "dismissals": 49,
+    "dismissalsPerMatch": 0.4153,
+    "statsSource": "howstat",
+    "cricsheetMatches": 0,
+    "ballsBowled": 2693,
+    "runsConceded": 2763,
+    "wickets": 197,
+    "bowlingAverage": 14.03,
+    "economy": 6.16,
+    "ballsPerWicket": 13.67,
+    "fourWicketInnings": 11,
+    "fourWicketRate": 0.0932,
+    "bowlingSource": "howstat-wickets-table"
+   }
+  }
+ ]
+}

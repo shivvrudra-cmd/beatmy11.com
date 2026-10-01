@@ -30,6 +30,7 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 - Role source: match-data 432, kaggle 417, test-data 142, owner 29, match-data (stumpings) 5, wikidata 4
 - Kaggle profiles matched by surname + initial (one-to-one both ways): 13
 - Players with the official full-career batting line (strike rate, 50s, not outs): 112
+- Players with the official full-career bowling line (balls, bowling strike rate): 94
 - Official rows not used because they cover fewer matches than Cricsheet (the player also appeared for another side): 23
 
 ## IPL
@@ -68,6 +69,9 @@ For paired ODI and T20I players, matches, innings, runs, hundreds, highest score
 - ODI batting strike-rate table: 484 rows (all countries), 292 paired with our players
 - T20I batting strike-rate table: 250 rows (all countries), 112 paired with our players
 - ODI bowling table (100+ wickets): 179 rows (all countries), 129 paired with our players
+- T20I bowling table (50+ wickets): 235 rows (all countries), 94 paired with our players
+- Opponent-only (not draftable): Viv Richards, ODI, HowSTAT batting table + owner's catches (100)
+- Opponent-only (not draftable): Rashid Khan, T20I, HowSTAT bowling table + owner's catches (49)
 
 ## Provisional role rules (owner to confirm)
 

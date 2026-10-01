@@ -94,8 +94,8 @@ const TEAM_SHARES = { batting: 0.4, bowling: 0.5, fielding: 0.1 };
 
 /**
  * T20 weights (owner, 2026-10-01): strike rate and economy count for more than the other
- * metrics. The exact split is Claude's proposal until the owner confirms it: the headline
- * metric takes 40% of its half and the other three share the rest equally (20% each).
+ * metrics. The headline metric takes 40% of its half and the other three share the rest
+ * equally (20% each); the owner confirmed this split on 2026-10-01.
  */
 const T20_HEADLINE = 0.4;
 const T20_OTHER = (1 - T20_HEADLINE) / 3;

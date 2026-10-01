@@ -102,7 +102,8 @@ export const T20I_RESULT: ResultFormat = {
   playHref: '/t20i/play',
   homeHref: '/',
   flavour: { venues: T20I_VENUES, opponent: 'World XI', kind: 't20' },
-  teamCodes: TEST_FORMAT.teamCodes,
+  // Afghanistan is not draftable, but the World XI has an opponent-only Afghan player (Rashid Khan).
+  teamCodes: { ...TEST_FORMAT.teamCodes, Afghanistan: 'AFG' },
   eraNames: INTL_ERA_NAMES,
   shareLinks: false,
   telemetry: false,

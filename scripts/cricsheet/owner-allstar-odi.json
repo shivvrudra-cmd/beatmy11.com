@@ -1,0 +1,60 @@
+{
+  "note": "ODI World XI, chosen by the owner on 2026-10-01. Fixed: it is NOT recomputed when ratings change. Players are identified by `id` (the name is for readers and may be corrected).",
+  "xi": [
+    {
+      "name": "Sanath Jayasuriya",
+      "role": "opener",
+      "id": "cs-f233bbb4"
+    },
+    {
+      "name": "Sachin Tendulkar",
+      "role": "opener",
+      "id": "cs-d2c2b2d5"
+    },
+    {
+      "name": "Virat Kohli",
+      "role": "middle-order",
+      "id": "cs-ba607b88"
+    },
+    {
+      "name": "Viv Richards",
+      "role": "middle-order",
+      "id": "hs-odi-viv-richards"
+    },
+    {
+      "name": "AB de Villiers",
+      "role": "middle-order",
+      "id": "cs-c4487b84"
+    },
+    {
+      "name": "M S Dhoni",
+      "role": "wicketkeeper",
+      "id": "cs-4a8a2e3b"
+    },
+    {
+      "name": "Saqlain Mushtaq",
+      "role": "spinner",
+      "id": "cs-047c67ba"
+    },
+    {
+      "name": "Muttiah Muralitharan",
+      "role": "spinner",
+      "id": "cs-4ba44e19"
+    },
+    {
+      "name": "Wasim Akram",
+      "role": "fast-bowler",
+      "id": "cs-126e56a1"
+    },
+    {
+      "name": "Glenn McGrath",
+      "role": "fast-bowler",
+      "id": "cs-ee7d0c82"
+    },
+    {
+      "name": "Shaun Pollock",
+      "role": "fast-bowler",
+      "id": "cs-88fccd6c"
+    }
+  ]
+}

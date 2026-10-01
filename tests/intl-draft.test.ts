@@ -3,7 +3,8 @@
  * real, every player is scorable in every role they can be declared as, and random spin sequences
  * can be drafted into a legal XI.
  */
-import { wbPlayers, wbPlayersByEra, wbSpinCombos, wbEras, type WbFormatId } from '../src/lib/formats/white-ball-store';
+import { wbPlayers, wbOpponentPool, wbPlayersByEra, wbSpinCombos, wbEras, type WbFormatId } from '../src/lib/formats/white-ball-store';
+import { wbResultProps } from '../src/lib/formats/white-ball-result';
 import { WB_MIN_MATCHES } from '../src/lib/formats/white-ball-config';
 import { upcomingCombos, mulberry32 } from '../src/lib/daily';
 import { WB_FORMATS, buildWbContext, scoreWbPlayer, type WbRole } from '../src/lib/white-ball-metrics';
@@ -68,5 +69,15 @@ for (const id of ['odi', 't20i'] as WbFormatId[]) {
   ok(stalled === 0, `${id}: every random spin sequence can be drafted into a legal XI`, stalled);
 }
 
+
+// ---- opponent-only players (Viv Richards, Rashid Khan): in the World XI, never in a draft
+for (const id of ['odi', 't20i'] as WbFormatId[]) {
+  const draftIds = new Set(wbPlayers(id).map((p) => p.id));
+  const extra = wbOpponentPool(id).filter((p) => !draftIds.has(p.id));
+  const inPools = Object.values(wbPlayersByEra(id)).flat().filter((p) => extra.some((e) => e.id === p.id));
+  ok(extra.length === 1 && inPools.length === 0, `${id}: the opponent-only player is in no draft pool`, { extra: extra.map((p) => p.name), inPools: inPools.length });
+  const house = wbResultProps(id).houseXI;
+  ok(house.length === 11 && extra.every((e) => house.some((h) => h.id === e.id)), `${id}: the owner's World XI resolves, opponent-only player included`, house.map((h) => h.name));
+}
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

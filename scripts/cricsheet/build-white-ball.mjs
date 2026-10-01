@@ -276,12 +276,12 @@ export function withOfficialBatting(stats, b) {
 }
 
 /**
- * Official full-career BOWLING line from HowSTAT's 100+ wickets table: balls, runs conceded,
+ * Official full-career BOWLING line from HowSTAT's wickets table (ODI 100+ wickets, T20I 50+): balls, runs conceded,
  * wickets, 4-wicket innings, average, economy and the bowling strike rate (balls per wicket).
  * Batting and fielding are untouched.
  */
 export function withOfficialBowling(stats, b) {
-  const out = { ...stats, bowlingSource: 'howstat-100-wickets', cricsheetMatches: stats.cricsheetMatches ?? stats.matches };
+  const out = { ...stats, bowlingSource: 'howstat-wickets-table', cricsheetMatches: stats.cricsheetMatches ?? stats.matches };
   for (const k of ['ballsBowled', 'runsConceded', 'wickets', 'bowlingAverage', 'economy', 'ballsPerWicket']) {
     if (b[k] !== null && b[k] !== undefined) out[k] = b[k];
   }
@@ -290,6 +290,35 @@ export function withOfficialBowling(stats, b) {
   if (b.matches && b.matches > out.matches) out.matches = b.matches;
   if (out.matches && b.fourW !== null && b.fourW !== undefined) out.fourWicketRate = round(b.fourW / out.matches, 4);
   return out;
+}
+
+/**
+ * An opponent-only player (scripts/cricsheet/owner-opponent-only.json): someone the owner wants in
+ * a World XI who has no ball-by-ball matches. The career line is the row of the owner's HowSTAT
+ * all-countries table (`row`, batting or bowling); catches are the owner's figure. Everything
+ * else stays null. Never draftable: these records are written to opponent-only.json, not to the
+ * format's player file.
+ */
+export function opponentOnlyRecord(entry, row) {
+  if (!row) throw new Error(`opponent-only ${entry.name}: no "${entry.howstatName}" (${entry.nation}) row in the HowSTAT ${entry.table} table`);
+  if (!Number.isFinite(entry.catches)) throw new Error(`opponent-only ${entry.name}: catches missing (owner to supply)`);
+  const m = row.matches;
+  const stats = { matches: m, catches: entry.catches, stumpings: 0, dismissals: entry.catches, dismissalsPerMatch: round(entry.catches / m, 4), statsSource: 'howstat', cricsheetMatches: 0 };
+  if (entry.table === 'batting') {
+    for (const k of ['innings', 'notOuts', 'runs', 'highest', 'hundreds', 'fifties', 'battingAverage', 'strikeRate']) stats[k] = row[k] ?? null;
+    if (row.fifties !== null && row.hundreds !== null) stats.fiftyRate = round((row.fifties + row.hundreds) / m, 4);
+    stats.battingSource = 'howstat-strike-rates';
+  } else {
+    for (const k of ['ballsBowled', 'runsConceded', 'wickets', 'bowlingAverage', 'economy', 'ballsPerWicket']) stats[k] = row[k] ?? null;
+    stats.fourWicketInnings = row.fourW ?? null;
+    if (row.fourW !== null && row.fourW !== undefined) stats.fourWicketRate = round(row.fourW / m, 4);
+    stats.bowlingSource = 'howstat-wickets-table';
+  }
+  return {
+    id: entry.id, name: entry.name, scorecardName: entry.howstatName, nation: entry.nation, era: [],
+    primaryRole: entry.primaryRole, secondaryRoles: [], isWicketkeeper: false, bowlingType: entry.bowlingType ?? null,
+    roleSource: 'owner', opponentOnly: true, catchesSource: entry.source, stats,
+  };
 }
 
 // ------------------------------------------------------------------ main
@@ -449,10 +478,10 @@ function main() {
     }
     hsReport.push(`${id.toUpperCase()} batting strike-rate table: ${all.length} rows (all countries), ${paired} paired with our players`);
   }
-  // Full-career bowling lines (100+ wickets), all countries in one table per format.
+  // Full-career bowling lines (ODI 100+ wickets, T20I 50+), all countries in one table per format.
   const officialBowling = { odi: new Map(), t20i: new Map() };
   for (const id of ['odi', 't20i']) {
-    const file = join(hsDir, `${id}-bowling-100-wickets.csv`);
+    const file = join(hsDir, `${id}-bowling-wickets-table.csv`);
     if (!existsSync(file)) continue;
     const all = parseBowlingTable(readFileSync(file, 'utf8'));
     let paired = 0;
@@ -468,7 +497,21 @@ function main() {
       };
       for (const { ours: o, theirs } of matchHowstat(rows, ours, plausible).pairs) { officialBowling[id].set(o.id, theirs); paired++; }
     }
-    hsReport.push(`${id.toUpperCase()} bowling table (100+ wickets): ${all.length} rows (all countries), ${paired} paired with our players`);
+    hsReport.push(`${id.toUpperCase()} bowling table (${id === 'odi' ? '100+' : '50+'} wickets): ${all.length} rows (all countries), ${paired} paired with our players`);
+  }
+  // ---- opponent-only players (owner's World XI picks with no ball-by-ball matches)
+  const ooFile = join(ROOT, 'scripts/cricsheet/owner-opponent-only.json');
+  const opponentOnly = { odi: [], t20i: [] };
+  if (existsSync(ooFile) && existsSync(hsDir)) {
+    for (const e of JSON.parse(readFileSync(ooFile, 'utf8')).players) {
+      const file = join(hsDir, e.table === 'batting' ? `${e.format}-batting-strike-rates.csv` : `${e.format}-bowling-wickets-table.csv`);
+      const rows = (e.table === 'batting' ? parseStrikeRates : parseBowlingTable)(readFileSync(file, 'utf8'))
+        .filter((r) => r.name === e.howstatName && r.country === e.nation);
+      if (rows.length > 1) throw new Error(`opponent-only ${e.name}: ${rows.length} HowSTAT rows match`);
+      opponentOnly[e.format].push(opponentOnlyRecord(e, rows[0]));
+      hsReport.push(`Opponent-only (not draftable): ${e.name}, ${e.format.toUpperCase()}, HowSTAT ${e.table} table + owner's catches (${e.catches})`);
+    }
+    writeFileSync(join(ROOT, 'src/data/formats/opponent-only.json'), JSON.stringify(opponentOnly, null, 1) + '\n');
   }
   report.howstat = hsReport;
 

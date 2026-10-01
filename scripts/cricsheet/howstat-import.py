@@ -71,8 +71,8 @@ def main(folder):
                 continue
             rows = read_xlsx(os.path.join(d, f))
             if 'wickets' in f.lower():
-                # All-countries bowling table (100+ wickets): full-career balls, runs, wickets, S/R, E/R.
-                out = os.path.join(out_dir, f"{fmt}-bowling-100-wickets.csv")
+                # All-countries bowling table (ODI 100+ wickets, T20I 50+): full-career balls, runs, wickets, S/R, E/R.
+                out = os.path.join(out_dir, f"{fmt}-bowling-wickets-table.csv")
             elif 'strike rate' in f.lower():
                 # All-countries batting table (1000+ runs) with official strike rate, 50s and not outs.
                 out = os.path.join(out_dir, f"{fmt}-batting-strike-rates.csv")
