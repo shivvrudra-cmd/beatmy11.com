@@ -135,7 +135,8 @@
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4854,
    "statsSource": "howstat",
-   "cricsheetMatches": 103
+   "cricsheetMatches": 103,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -307,9 +308,9 @@
    "notOuts": 11,
    "highest": 79,
    "battingAverage": 26.13,
-   "strikeRate": 134.04,
+   "strikeRate": 135.17,
    "ballsFaced": 1187,
-   "fifties": 9,
+   "fifties": 10,
    "hundreds": 0,
    "ballsBowled": 0,
    "runsConceded": 0,
@@ -322,11 +323,12 @@
    "catches": 60,
    "stumpings": 7,
    "dismissals": 67,
-   "fiftyRate": 0.12,
+   "fiftyRate": 0.1282,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.8933,
    "statsSource": "howstat",
-   "cricsheetMatches": 75
+   "cricsheetMatches": 75,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -633,9 +635,9 @@
    "notOuts": 2,
    "highest": 135,
    "battingAverage": 32.6,
-   "strikeRate": 187.24,
+   "strikeRate": 194.35,
    "ballsFaced": 870,
-   "fifties": 11,
+   "fifties": 12,
    "hundreds": 3,
    "ballsBowled": 200,
    "runsConceded": 282,
@@ -648,11 +650,12 @@
    "catches": 22,
    "stumpings": 0,
    "dismissals": 22,
-   "fiftyRate": 0.2321,
+   "fiftyRate": 0.25,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3929,
    "statsSource": "howstat",
-   "cricsheetMatches": 56
+   "cricsheetMatches": 56,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -1184,13 +1187,13 @@
   "firstMatch": "2018-02-15",
   "lastMatch": "2024-12-15",
   "stats": {
-   "matches": 64,
-   "innings": 58,
-   "runs": 1031,
+   "matches": 70,
+   "innings": 64,
+   "runs": 1117,
    "notOuts": 9,
    "highest": 77,
-   "battingAverage": 21.04,
-   "strikeRate": 121.01,
+   "battingAverage": 20.31,
+   "strikeRate": 119.08,
    "ballsFaced": 852,
    "fifties": 3,
    "hundreds": 0,
@@ -1205,10 +1208,12 @@
    "catches": 16,
    "stumpings": 0,
    "dismissals": 16,
-   "fiftyRate": 0.0469,
+   "fiftyRate": 0.0429,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.25,
-   "statsSource": "cricsheet"
+   "statsSource": "cricsheet",
+   "battingSource": "howstat-strike-rates",
+   "cricsheetMatches": 64
   }
  },
  {
@@ -1373,7 +1378,7 @@
    "notOuts": 2,
    "highest": 111,
    "battingAverage": 25.81,
-   "strikeRate": 115.34,
+   "strikeRate": 114.74,
    "ballsFaced": 1245,
    "fifties": 7,
    "hundreds": 1,
@@ -1388,11 +1393,12 @@
    "catches": 14,
    "stumpings": 0,
    "dismissals": 14,
-   "fiftyRate": 0.1379,
+   "fiftyRate": 0.1356,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.2414,
    "statsSource": "howstat",
-   "cricsheetMatches": 58
+   "cricsheetMatches": 58,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -1468,7 +1474,7 @@
    "notOuts": 11,
    "highest": 86,
    "battingAverage": 31.71,
-   "strikeRate": 148.73,
+   "strikeRate": 147.6,
    "ballsFaced": 1303,
    "fifties": 14,
    "hundreds": 0,
@@ -1483,11 +1489,12 @@
    "catches": 46,
    "stumpings": 0,
    "dismissals": 46,
-   "fiftyRate": 0.1867,
+   "fiftyRate": 0.1818,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.6133,
    "statsSource": "howstat",
-   "cricsheetMatches": 75
+   "cricsheetMatches": 75,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -2124,7 +2131,7 @@
    "notOuts": 8,
    "highest": 116,
    "battingAverage": 30.96,
-   "strikeRate": 139.39,
+   "strikeRate": 138.36,
    "ballsFaced": 1452,
    "fifties": 12,
    "hundreds": 1,
@@ -2139,11 +2146,12 @@
    "catches": 38,
    "stumpings": 0,
    "dismissals": 38,
-   "fiftyRate": 0.1781,
+   "fiftyRate": 0.1733,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.5205,
    "statsSource": "howstat",
-   "cricsheetMatches": 73
+   "cricsheetMatches": 73,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -2829,7 +2837,7 @@
    "notOuts": 24,
    "highest": 71,
    "battingAverage": 22,
-   "strikeRate": 165.23,
+   "strikeRate": 163.8,
    "ballsFaced": 673,
    "fifties": 3,
    "hundreds": 0,
@@ -2844,11 +2852,12 @@
    "catches": 20,
    "stumpings": 0,
    "dismissals": 20,
-   "fiftyRate": 0.0357,
+   "fiftyRate": 0.0349,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.2381,
    "statsSource": "howstat",
-   "cricsheetMatches": 84
+   "cricsheetMatches": 84,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -3300,7 +3309,7 @@
    "notOuts": 22,
    "highest": 81,
    "battingAverage": 27.76,
-   "strikeRate": 118.64,
+   "strikeRate": 120.51,
    "ballsFaced": 1132,
    "fifties": 6,
    "hundreds": 0,
@@ -3315,11 +3324,12 @@
    "catches": 27,
    "stumpings": 0,
    "dismissals": 27,
-   "fiftyRate": 0.0698,
+   "fiftyRate": 0.0667,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.314,
    "statsSource": "howstat",
-   "cricsheetMatches": 86
+   "cricsheetMatches": 86,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -4700,9 +4710,9 @@
    "notOuts": 18,
    "highest": 122,
    "battingAverage": 38.95,
-   "strikeRate": 128.32,
+   "strikeRate": 128.02,
    "ballsFaced": 3542,
-   "fifties": 38,
+   "fifties": 39,
    "hundreds": 3,
    "ballsBowled": 0,
    "runsConceded": 0,
@@ -4715,11 +4725,12 @@
    "catches": 66,
    "stumpings": 0,
    "dismissals": 66,
-   "fiftyRate": 0.2887,
+   "fiftyRate": 0.2897,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4648,
    "statsSource": "howstat",
-   "cricsheetMatches": 142
+   "cricsheetMatches": 142,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -6156,9 +6167,9 @@
    "notOuts": 5,
    "highest": 85,
    "battingAverage": 25.35,
-   "strikeRate": 134.39,
+   "strikeRate": 132.98,
    "ballsFaced": 1416,
-   "fifties": 13,
+   "fifties": 14,
    "hundreds": 0,
    "ballsBowled": 0,
    "runsConceded": 0,
@@ -6171,11 +6182,12 @@
    "catches": 29,
    "stumpings": 0,
    "dismissals": 29,
-   "fiftyRate": 0.1625,
+   "fiftyRate": 0.1609,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3625,
    "statsSource": "howstat",
-   "cricsheetMatches": 80
+   "cricsheetMatches": 80,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -6254,7 +6266,7 @@
    "notOuts": 7,
    "highest": 123,
    "battingAverage": 24.32,
-   "strikeRate": 124.18,
+   "strikeRate": 122.33,
    "ballsFaced": 918,
    "fifties": 6,
    "hundreds": 1,
@@ -6269,11 +6281,12 @@
    "catches": 26,
    "stumpings": 1,
    "dismissals": 27,
-   "fiftyRate": 0.1373,
+   "fiftyRate": 0.1186,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.5294,
    "statsSource": "howstat",
-   "cricsheetMatches": 51
+   "cricsheetMatches": 51,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -6369,7 +6382,8 @@
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.6197,
    "statsSource": "howstat",
-   "cricsheetMatches": 71
+   "cricsheetMatches": 71,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -6537,9 +6551,9 @@
    "notOuts": 6,
    "highest": 111,
    "battingAverage": 33.79,
-   "strikeRate": 144.17,
+   "strikeRate": 142.5,
    "ballsFaced": 1406,
-   "fifties": 13,
+   "fifties": 12,
    "hundreds": 1,
    "ballsBowled": 182,
    "runsConceded": 261,
@@ -6552,11 +6566,12 @@
    "catches": 21,
    "stumpings": 0,
    "dismissals": 21,
-   "fiftyRate": 0.2059,
+   "fiftyRate": 0.1884,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3088,
    "statsSource": "howstat",
-   "cricsheetMatches": 68
+   "cricsheetMatches": 68,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -7557,7 +7572,7 @@
    "notOuts": 9,
    "highest": 80,
    "battingAverage": 22.25,
-   "strikeRate": 127.29,
+   "strikeRate": 125.04,
    "ballsFaced": 1136,
    "fifties": 6,
    "hundreds": 0,
@@ -7572,11 +7587,12 @@
    "catches": 22,
    "stumpings": 0,
    "dismissals": 22,
-   "fiftyRate": 0.0833,
+   "fiftyRate": 0.0759,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3056,
    "statsSource": "howstat",
-   "cricsheetMatches": 72
+   "cricsheetMatches": 72,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -7858,7 +7874,8 @@
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.2532,
    "statsSource": "howstat",
-   "cricsheetMatches": 79
+   "cricsheetMatches": 79,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -8699,7 +8716,8 @@
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.2615,
    "statsSource": "howstat",
-   "cricsheetMatches": 65
+   "cricsheetMatches": 65,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -8916,7 +8934,7 @@
    "notOuts": 4,
    "highest": 70,
    "battingAverage": 21.95,
-   "strikeRate": 105.8,
+   "strikeRate": 105.77,
    "ballsFaced": 1345,
    "fifties": 9,
    "hundreds": 0,
@@ -8931,11 +8949,12 @@
    "catches": 29,
    "stumpings": 0,
    "dismissals": 29,
-   "fiftyRate": 0.1385,
+   "fiftyRate": 0.1268,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4462,
    "statsSource": "howstat",
-   "cricsheetMatches": 65
+   "cricsheetMatches": 65,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -10081,7 +10100,7 @@
    "notOuts": 20,
    "highest": 72,
    "battingAverage": 26.84,
-   "strikeRate": 140.28,
+   "strikeRate": 140.54,
    "ballsFaced": 1306,
    "fifties": 8,
    "hundreds": 0,
@@ -10096,11 +10115,12 @@
    "catches": 55,
    "stumpings": 0,
    "dismissals": 55,
-   "fiftyRate": 0.08,
+   "fiftyRate": 0.0769,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.55,
    "statsSource": "howstat",
-   "cricsheetMatches": 100
+   "cricsheetMatches": 100,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -10175,7 +10195,7 @@
    "notOuts": 25,
    "highest": 76,
    "battingAverage": 20.69,
-   "strikeRate": 129.9,
+   "strikeRate": 129.62,
    "ballsFaced": 1545,
    "fifties": 9,
    "hundreds": 0,
@@ -10190,11 +10210,12 @@
    "catches": 49,
    "stumpings": 0,
    "dismissals": 49,
-   "fiftyRate": 0.0703,
+   "fiftyRate": 0.0657,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3828,
    "statsSource": "howstat",
-   "cricsheetMatches": 128
+   "cricsheetMatches": 128,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -10309,13 +10330,13 @@
   "firstMatch": "2010-05-20",
   "lastMatch": "2026-03-04",
   "stats": {
-   "matches": 137,
-   "innings": 121,
-   "runs": 2763,
+   "matches": 140,
+   "innings": 123,
+   "runs": 2804,
    "notOuts": 40,
    "highest": 106,
-   "battingAverage": 34.11,
-   "strikeRate": 141.07,
+   "battingAverage": 33.78,
+   "strikeRate": 141.4,
    "ballsFaced": 1960,
    "fifties": 9,
    "hundreds": 2,
@@ -10330,11 +10351,12 @@
    "catches": 86,
    "stumpings": 1,
    "dismissals": 87,
-   "fiftyRate": 0.0803,
+   "fiftyRate": 0.0786,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.635,
    "statsSource": "howstat",
-   "cricsheetMatches": 137
+   "cricsheetMatches": 137,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -10363,7 +10385,7 @@
    "notOuts": 12,
    "highest": 100,
    "battingAverage": 33.44,
-   "strikeRate": 142.88,
+   "strikeRate": 142.48,
    "ballsFaced": 2274,
    "fifties": 28,
    "hundreds": 1,
@@ -10378,11 +10400,12 @@
    "catches": 59,
    "stumpings": 0,
    "dismissals": 59,
-   "fiftyRate": 0.2685,
+   "fiftyRate": 0.2636,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.5463,
    "statsSource": "howstat",
-   "cricsheetMatches": 108
+   "cricsheetMatches": 108,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -10457,7 +10480,7 @@
    "notOuts": 8,
    "highest": 103,
    "battingAverage": 36.38,
-   "strikeRate": 134.05,
+   "strikeRate": 132.49,
    "ballsFaced": 1398,
    "fifties": 16,
    "hundreds": 1,
@@ -10472,11 +10495,12 @@
    "catches": 21,
    "stumpings": 0,
    "dismissals": 21,
-   "fiftyRate": 0.2787,
+   "fiftyRate": 0.2742,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3443,
    "statsSource": "howstat",
-   "cricsheetMatches": 61
+   "cricsheetMatches": 61,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -10924,7 +10948,7 @@
    "notOuts": 11,
    "highest": 99,
    "battingAverage": 35.37,
-   "strikeRate": 129.32,
+   "strikeRate": 128.6,
    "ballsFaced": 1388,
    "fifties": 13,
    "hundreds": 0,
@@ -10939,11 +10963,12 @@
    "catches": 43,
    "stumpings": 6,
    "dismissals": 49,
-   "fiftyRate": 0.194,
+   "fiftyRate": 0.1884,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.7313,
    "statsSource": "howstat",
-   "cricsheetMatches": 67
+   "cricsheetMatches": 67,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -11673,7 +11698,7 @@
    "notOuts": 7,
    "highest": 66,
    "battingAverage": 19.38,
-   "strikeRate": 103.46,
+   "strikeRate": 103.5,
    "ballsFaced": 1013,
    "fifties": 6,
    "hundreds": 0,
@@ -11688,11 +11713,12 @@
    "catches": 35,
    "stumpings": 6,
    "dismissals": 41,
-   "fiftyRate": 0.0882,
+   "fiftyRate": 0.087,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.6029,
    "statsSource": "howstat",
-   "cricsheetMatches": 68
+   "cricsheetMatches": 68,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -12336,7 +12362,7 @@
    "notOuts": 17,
    "highest": 66,
    "battingAverage": 22.02,
-   "strikeRate": 115.54,
+   "strikeRate": 115.03,
    "ballsFaced": 1062,
    "fifties": 4,
    "hundreds": 0,
@@ -12351,11 +12377,12 @@
    "catches": 42,
    "stumpings": 0,
    "dismissals": 42,
-   "fiftyRate": 0.0444,
+   "fiftyRate": 0.044,
    "fourWicketRate": 0.033,
    "dismissalsPerMatch": 0.4667,
    "statsSource": "howstat",
-   "cricsheetMatches": 90
+   "cricsheetMatches": 90,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -12709,7 +12736,7 @@
    "notOuts": 20,
    "highest": 91,
    "battingAverage": 28.58,
-   "strikeRate": 136.5,
+   "strikeRate": 136.18,
    "ballsFaced": 1781,
    "fifties": 14,
    "hundreds": 0,
@@ -12724,11 +12751,12 @@
    "catches": 44,
    "stumpings": 0,
    "dismissals": 44,
-   "fiftyRate": 0.1239,
+   "fiftyRate": 0.1217,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3894,
    "statsSource": "howstat",
-   "cricsheetMatches": 113
+   "cricsheetMatches": 113,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -12802,9 +12830,9 @@
    "notOuts": 4,
    "highest": 125,
    "battingAverage": 29.02,
-   "strikeRate": 161.24,
+   "strikeRate": 152.07,
    "ballsFaced": 996,
-   "fifties": 12,
+   "fifties": 13,
    "hundreds": 2,
    "ballsBowled": 0,
    "runsConceded": 0,
@@ -12817,11 +12845,12 @@
    "catches": 15,
    "stumpings": 0,
    "dismissals": 15,
-   "fiftyRate": 0.2414,
+   "fiftyRate": 0.2239,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.2586,
    "statsSource": "howstat",
-   "cricsheetMatches": 58
+   "cricsheetMatches": 58,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -12890,13 +12919,13 @@
   "firstMatch": "2012-09-08",
   "lastMatch": "2020-12-01",
   "stats": {
-   "matches": 49,
-   "innings": 49,
-   "runs": 1487,
+   "matches": 50,
+   "innings": 50,
+   "runs": 1528,
    "notOuts": 7,
    "highest": 119,
-   "battingAverage": 35.4,
-   "strikeRate": 133.96,
+   "battingAverage": 35.53,
+   "strikeRate": 134.39,
    "ballsFaced": 1110,
    "fifties": 10,
    "hundreds": 1,
@@ -12911,10 +12940,12 @@
    "catches": 24,
    "stumpings": 0,
    "dismissals": 24,
-   "fiftyRate": 0.2245,
+   "fiftyRate": 0.22,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4898,
-   "statsSource": "cricsheet"
+   "statsSource": "cricsheet",
+   "battingSource": "howstat-strike-rates",
+   "cricsheetMatches": 49
   }
  },
  {
@@ -12991,7 +13022,7 @@
    "notOuts": 6,
    "highest": 91,
    "battingAverage": 23.98,
-   "strikeRate": 133.58,
+   "strikeRate": 132.52,
    "ballsFaced": 1787,
    "fifties": 14,
    "hundreds": 0,
@@ -13006,11 +13037,12 @@
    "catches": 55,
    "stumpings": 0,
    "dismissals": 55,
-   "fiftyRate": 0.1228,
+   "fiftyRate": 0.1167,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4825,
    "statsSource": "howstat",
-   "cricsheetMatches": 114
+   "cricsheetMatches": 114,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -13363,7 +13395,7 @@
    "notOuts": 3,
    "highest": 137,
    "battingAverage": 28.67,
-   "strikeRate": 171.16,
+   "strikeRate": 170.74,
    "ballsFaced": 971,
    "fifties": 7,
    "hundreds": 3,
@@ -13378,11 +13410,12 @@
    "catches": 23,
    "stumpings": 0,
    "dismissals": 23,
-   "fiftyRate": 0.1695,
+   "fiftyRate": 0.1613,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3898,
    "statsSource": "howstat",
-   "cricsheetMatches": 59
+   "cricsheetMatches": 59,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -14295,9 +14328,9 @@
    "notOuts": 18,
    "highest": 145,
    "battingAverage": 28.97,
-   "strikeRate": 154.41,
+   "strikeRate": 154.42,
    "ballsFaced": 1803,
-   "fifties": 10,
+   "fifties": 12,
    "hundreds": 5,
    "ballsBowled": 1130,
    "runsConceded": 1525,
@@ -14310,11 +14343,12 @@
    "catches": 60,
    "stumpings": 0,
    "dismissals": 60,
-   "fiftyRate": 0.1172,
+   "fiftyRate": 0.1308,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4688,
    "statsSource": "howstat",
-   "cricsheetMatches": 128
+   "cricsheetMatches": 128,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -14390,7 +14424,7 @@
    "notOuts": 13,
    "highest": 108,
    "battingAverage": 31.75,
-   "strikeRate": 142.78,
+   "strikeRate": 142.7,
    "ballsFaced": 1559,
    "fifties": 12,
    "hundreds": 2,
@@ -14405,11 +14439,12 @@
    "catches": 60,
    "stumpings": 2,
    "dismissals": 62,
-   "fiftyRate": 0.1505,
+   "fiftyRate": 0.1443,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.6667,
    "statsSource": "howstat",
-   "cricsheetMatches": 93
+   "cricsheetMatches": 93,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -14900,9 +14935,9 @@
    "notOuts": 2,
    "highest": 93,
    "battingAverage": 25.97,
-   "strikeRate": 111.51,
+   "strikeRate": 117.21,
    "ballsFaced": 1103,
-   "fifties": 7,
+   "fifties": 11,
    "hundreds": 0,
    "ballsBowled": 72,
    "runsConceded": 113,
@@ -14915,11 +14950,12 @@
    "catches": 23,
    "stumpings": 0,
    "dismissals": 23,
-   "fiftyRate": 0.1296,
+   "fiftyRate": 0.1667,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4259,
    "statsSource": "howstat",
-   "cricsheetMatches": 54
+   "cricsheetMatches": 54,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -15181,7 +15217,7 @@
    "notOuts": 28,
    "highest": 71,
    "battingAverage": 28.25,
-   "strikeRate": 145.07,
+   "strikeRate": 145.92,
    "ballsFaced": 1531,
    "fifties": 9,
    "hundreds": 0,
@@ -15196,11 +15232,12 @@
    "catches": 62,
    "stumpings": 0,
    "dismissals": 62,
-   "fiftyRate": 0.0662,
+   "fiftyRate": 0.0652,
    "fourWicketRate": 0.0217,
    "dismissalsPerMatch": 0.4559,
    "statsSource": "howstat",
-   "cricsheetMatches": 136
+   "cricsheetMatches": 136,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -15319,7 +15356,7 @@
    "notOuts": 15,
    "highest": 114,
    "battingAverage": 36.21,
-   "strikeRate": 165.37,
+   "strikeRate": 164.92,
    "ballsFaced": 1005,
    "fifties": 8,
    "hundreds": 2,
@@ -15334,11 +15371,12 @@
    "catches": 39,
    "stumpings": 0,
    "dismissals": 39,
-   "fiftyRate": 0.1449,
+   "fiftyRate": 0.1408,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.5652,
    "statsSource": "howstat",
-   "cricsheetMatches": 69
+   "cricsheetMatches": 69,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -15686,13 +15724,13 @@
   "firstMatch": "2009-01-13",
   "lastMatch": "2018-08-14",
   "stats": {
-   "matches": 43,
-   "innings": 43,
-   "runs": 1272,
+   "matches": 44,
+   "innings": 44,
+   "runs": 1277,
    "notOuts": 6,
    "highest": 97,
-   "battingAverage": 34.38,
-   "strikeRate": 132.22,
+   "battingAverage": 33.61,
+   "strikeRate": 132.06,
    "ballsFaced": 962,
    "fifties": 8,
    "hundreds": 0,
@@ -15707,10 +15745,12 @@
    "catches": 19,
    "stumpings": 0,
    "dismissals": 19,
-   "fiftyRate": 0.186,
+   "fiftyRate": 0.1818,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4419,
-   "statsSource": "cricsheet"
+   "statsSource": "cricsheet",
+   "battingSource": "howstat-strike-rates",
+   "cricsheetMatches": 43
   }
  },
  {
@@ -15850,11 +15890,12 @@
    "catches": 33,
    "stumpings": 5,
    "dismissals": 38,
-   "fiftyRate": 0.0877,
+   "fiftyRate": 0.0862,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.6667,
    "statsSource": "howstat",
-   "cricsheetMatches": 57
+   "cricsheetMatches": 57,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -16911,7 +16952,7 @@
    "notOuts": 2,
    "highest": 103,
    "battingAverage": 29.84,
-   "strikeRate": 146.31,
+   "strikeRate": 145.51,
    "ballsFaced": 1099,
    "fifties": 12,
    "hundreds": 1,
@@ -16926,11 +16967,12 @@
    "catches": 29,
    "stumpings": 5,
    "dismissals": 34,
-   "fiftyRate": 0.2364,
+   "fiftyRate": 0.2203,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.6182,
    "statsSource": "howstat",
-   "cricsheetMatches": 55
+   "cricsheetMatches": 55,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -18057,7 +18099,8 @@
    "fourWicketRate": 0.019,
    "dismissalsPerMatch": 0.5,
    "statsSource": "howstat",
-   "cricsheetMatches": 102
+   "cricsheetMatches": 102,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -18691,7 +18734,7 @@
    "notOuts": 1,
    "highest": 78,
    "battingAverage": 24.16,
-   "strikeRate": 138.03,
+   "strikeRate": 137.61,
    "ballsFaced": 1099,
    "fifties": 8,
    "hundreds": 0,
@@ -18706,11 +18749,12 @@
    "catches": 19,
    "stumpings": 0,
    "dismissals": 19,
-   "fiftyRate": 0.127,
+   "fiftyRate": 0.125,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3016,
    "statsSource": "howstat",
-   "cricsheetMatches": 63
+   "cricsheetMatches": 63,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -18969,7 +19013,7 @@
    "notOuts": 25,
    "highest": 96,
    "battingAverage": 38.68,
-   "strikeRate": 126.09,
+   "strikeRate": 126.24,
    "ballsFaced": 1491,
    "fifties": 11,
    "hundreds": 0,
@@ -18984,11 +19028,12 @@
    "catches": 34,
    "stumpings": 0,
    "dismissals": 34,
-   "fiftyRate": 0.1392,
+   "fiftyRate": 0.1358,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4304,
    "statsSource": "howstat",
-   "cricsheetMatches": 79
+   "cricsheetMatches": 79,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -20039,7 +20084,7 @@
    "notOuts": 0,
    "highest": 118,
    "battingAverage": 22.43,
-   "strikeRate": 128.03,
+   "strikeRate": 129.02,
    "ballsFaced": 1106,
    "fifties": 5,
    "hundreds": 1,
@@ -20054,11 +20099,12 @@
    "catches": 22,
    "stumpings": 2,
    "dismissals": 24,
-   "fiftyRate": 0.0938,
+   "fiftyRate": 0.087,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.375,
    "statsSource": "howstat",
-   "cricsheetMatches": 64
+   "cricsheetMatches": 64,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -20136,7 +20182,7 @@
    "notOuts": 16,
    "highest": 90,
    "battingAverage": 29.84,
-   "strikeRate": 137.11,
+   "strikeRate": 137.53,
    "ballsFaced": 1210,
    "fifties": 10,
    "hundreds": 0,
@@ -20151,11 +20197,12 @@
    "catches": 45,
    "stumpings": 1,
    "dismissals": 46,
-   "fiftyRate": 0.1266,
+   "fiftyRate": 0.125,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.5823,
    "statsSource": "howstat",
-   "cricsheetMatches": 79
+   "cricsheetMatches": 79,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -20280,9 +20327,9 @@
    "notOuts": 24,
    "highest": 131,
    "battingAverage": 34.79,
-   "strikeRate": 150.12,
+   "strikeRate": 150.19,
    "ballsFaced": 2853,
-   "fifties": 29,
+   "fifties": 30,
    "hundreds": 2,
    "ballsBowled": 0,
    "runsConceded": 0,
@@ -20295,11 +20342,12 @@
    "catches": 96,
    "stumpings": 22,
    "dismissals": 118,
-   "fiftyRate": 0.195,
+   "fiftyRate": 0.1963,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.7421,
    "statsSource": "howstat",
-   "cricsheetMatches": 159
+   "cricsheetMatches": 159,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -20440,7 +20488,8 @@
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.6939,
    "statsSource": "howstat",
-   "cricsheetMatches": 49
+   "cricsheetMatches": 49,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -21223,7 +21272,7 @@
    "notOuts": 13,
    "highest": 95,
    "battingAverage": 33.44,
-   "strikeRate": 124.01,
+   "strikeRate": 123.09,
    "ballsFaced": 2037,
    "fifties": 18,
    "hundreds": 0,
@@ -21238,11 +21287,12 @@
    "catches": 43,
    "stumpings": 0,
    "dismissals": 43,
-   "fiftyRate": 0.1978,
+   "fiftyRate": 0.1935,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4725,
    "statsSource": "howstat",
-   "cricsheetMatches": 91
+   "cricsheetMatches": 91,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -21753,7 +21803,8 @@
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3784,
    "statsSource": "howstat",
-   "cricsheetMatches": 37
+   "cricsheetMatches": 37,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -22200,7 +22251,7 @@
    "notOuts": 21,
    "highest": 75,
    "battingAverage": 25.31,
-   "strikeRate": 135.63,
+   "strikeRate": 135.03,
    "ballsFaced": 1120,
    "fifties": 6,
    "hundreds": 0,
@@ -22215,11 +22266,12 @@
    "catches": 39,
    "stumpings": 0,
    "dismissals": 39,
-   "fiftyRate": 0.0612,
+   "fiftyRate": 0.0594,
    "fourWicketRate": 0.0099,
    "dismissalsPerMatch": 0.398,
    "statsSource": "howstat",
-   "cricsheetMatches": 98
+   "cricsheetMatches": 98,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -22295,9 +22347,9 @@
    "notOuts": 8,
    "highest": 110,
    "battingAverage": 37.75,
-   "strikeRate": 138.66,
+   "strikeRate": 139.13,
    "ballsFaced": 1539,
-   "fifties": 20,
+   "fifties": 22,
    "hundreds": 2,
    "ballsBowled": 0,
    "runsConceded": 0,
@@ -22310,11 +22362,12 @@
    "catches": 23,
    "stumpings": 1,
    "dismissals": 24,
-   "fiftyRate": 0.3188,
+   "fiftyRate": 0.3333,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3478,
    "statsSource": "howstat",
-   "cricsheetMatches": 69
+   "cricsheetMatches": 69,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -22506,7 +22559,8 @@
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.8036,
    "statsSource": "howstat",
-   "cricsheetMatches": 56
+   "cricsheetMatches": 56,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -22537,9 +22591,9 @@
    "notOuts": 6,
    "highest": 86,
    "battingAverage": 26.16,
-   "strikeRate": 129.81,
+   "strikeRate": 130.21,
    "ballsFaced": 1932,
-   "fifties": 19,
+   "fifties": 20,
    "hundreds": 0,
    "ballsBowled": 0,
    "runsConceded": 0,
@@ -22552,11 +22606,12 @@
    "catches": 40,
    "stumpings": 19,
    "dismissals": 59,
-   "fiftyRate": 0.1863,
+   "fiftyRate": 0.1835,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.5784,
    "statsSource": "howstat",
-   "cricsheetMatches": 102
+   "cricsheetMatches": 102,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -22587,7 +22642,7 @@
    "notOuts": 4,
    "highest": 101,
    "battingAverage": 26.24,
-   "strikeRate": 132.97,
+   "strikeRate": 132.9,
    "ballsFaced": 1735,
    "fifties": 16,
    "hundreds": 1,
@@ -22602,11 +22657,12 @@
    "catches": 27,
    "stumpings": 6,
    "dismissals": 33,
-   "fiftyRate": 0.1848,
+   "fiftyRate": 0.1789,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3587,
    "statsSource": "howstat",
-   "cricsheetMatches": 92
+   "cricsheetMatches": 92,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -23240,7 +23296,7 @@
    "notOuts": 10,
    "highest": 91,
    "battingAverage": 26.79,
-   "strikeRate": 120.88,
+   "strikeRate": 120.81,
    "ballsFaced": 1226,
    "fifties": 9,
    "hundreds": 0,
@@ -23255,11 +23311,12 @@
    "catches": 34,
    "stumpings": 0,
    "dismissals": 34,
-   "fiftyRate": 0.1406,
+   "fiftyRate": 0.1324,
    "fourWicketRate": 0.0147,
    "dismissalsPerMatch": 0.5313,
    "statsSource": "howstat",
-   "cricsheetMatches": 64
+   "cricsheetMatches": 64,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -23523,15 +23580,15 @@
   "firstMatch": "2015-07-05",
   "lastMatch": "2026-05-02",
   "stats": {
-   "matches": 111,
-   "innings": 109,
-   "runs": 2467,
-   "notOuts": 4,
+   "matches": 122,
+   "innings": 120,
+   "runs": 2702,
+   "notOuts": 5,
    "highest": 83,
    "battingAverage": 23.5,
-   "strikeRate": 128.96,
+   "strikeRate": 126.79,
    "ballsFaced": 1913,
-   "fifties": 14,
+   "fifties": 16,
    "hundreds": 0,
    "ballsBowled": 0,
    "runsConceded": 0,
@@ -23544,10 +23601,12 @@
    "catches": 71,
    "stumpings": 15,
    "dismissals": 86,
-   "fiftyRate": 0.1261,
+   "fiftyRate": 0.1311,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.7748,
-   "statsSource": "cricsheet"
+   "statsSource": "cricsheet",
+   "battingSource": "howstat-strike-rates",
+   "cricsheetMatches": 111
   }
  },
  {
@@ -24276,7 +24335,7 @@
    "notOuts": 42,
    "highest": 56,
    "battingAverage": 37.6,
-   "strikeRate": 125.02,
+   "strikeRate": 126.13,
    "ballsFaced": 1267,
    "fifties": 2,
    "hundreds": 0,
@@ -24291,11 +24350,12 @@
    "catches": 52,
    "stumpings": 34,
    "dismissals": 86,
-   "fiftyRate": 0.0211,
+   "fiftyRate": 0.0204,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.9053,
    "statsSource": "howstat",
-   "cricsheetMatches": 95
+   "cricsheetMatches": 95,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -24417,7 +24477,7 @@
    "notOuts": 8,
    "highest": 100,
    "battingAverage": 31.77,
-   "strikeRate": 132.55,
+   "strikeRate": 133.18,
    "ballsFaced": 1100,
    "fifties": 9,
    "hundreds": 1,
@@ -24432,11 +24492,12 @@
    "catches": 17,
    "stumpings": 0,
    "dismissals": 17,
-   "fiftyRate": 0.1887,
+   "fiftyRate": 0.1818,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3208,
    "statsSource": "howstat",
-   "cricsheetMatches": 53
+   "cricsheetMatches": 53,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -24597,13 +24658,13 @@
   "firstMatch": "2007-09-01",
   "lastMatch": "2024-10-12",
   "stats": {
-   "matches": 128,
-   "innings": 118,
-   "runs": 2223,
+   "matches": 141,
+   "innings": 130,
+   "runs": 2444,
    "notOuts": 26,
    "highest": 64,
-   "battingAverage": 24.16,
-   "strikeRate": 117.81,
+   "battingAverage": 23.5,
+   "strikeRate": 117.33,
    "ballsFaced": 1887,
    "fifties": 8,
    "hundreds": 0,
@@ -24618,10 +24679,12 @@
    "catches": 43,
    "stumpings": 0,
    "dismissals": 43,
-   "fiftyRate": 0.0625,
+   "fiftyRate": 0.0567,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3359,
-   "statsSource": "cricsheet"
+   "statsSource": "cricsheet",
+   "battingSource": "howstat-strike-rates",
+   "cricsheetMatches": 128
   }
  },
  {
@@ -25070,7 +25133,7 @@
    "notOuts": 24,
    "highest": 78,
    "battingAverage": 30.78,
-   "strikeRate": 148.39,
+   "strikeRate": 146.28,
    "ballsFaced": 930,
    "fifties": 6,
    "hundreds": 0,
@@ -25085,11 +25148,12 @@
    "catches": 24,
    "stumpings": 0,
    "dismissals": 24,
-   "fiftyRate": 0.0706,
+   "fiftyRate": 0.069,
    "fourWicketRate": 0.0115,
    "dismissalsPerMatch": 0.2824,
    "statsSource": "howstat",
-   "cricsheetMatches": 85
+   "cricsheetMatches": 85,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -25208,13 +25272,13 @@
   "firstMatch": "2014-03-16",
   "lastMatch": "2026-03-08",
   "stats": {
-   "matches": 105,
-   "innings": 87,
-   "runs": 1932,
+   "matches": 113,
+   "innings": 94,
+   "runs": 2074,
    "notOuts": 14,
    "highest": 104,
-   "battingAverage": 26.47,
-   "strikeRate": 137.9,
+   "battingAverage": 25.93,
+   "strikeRate": 135.73,
    "ballsFaced": 1401,
    "fifties": 10,
    "hundreds": 1,
@@ -25229,10 +25293,12 @@
    "catches": 46,
    "stumpings": 0,
    "dismissals": 46,
-   "fiftyRate": 0.1048,
+   "fiftyRate": 0.0973,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4381,
-   "statsSource": "cricsheet"
+   "statsSource": "cricsheet",
+   "battingSource": "howstat-strike-rates",
+   "cricsheetMatches": 105
   }
  },
  {
@@ -25353,9 +25419,9 @@
    "notOuts": 10,
    "highest": 89,
    "battingAverage": 29.29,
-   "strikeRate": 116.52,
+   "strikeRate": 116.23,
    "ballsFaced": 1253,
-   "fifties": 9,
+   "fifties": 10,
    "hundreds": 0,
    "ballsBowled": 479,
    "runsConceded": 622,
@@ -25368,11 +25434,12 @@
    "catches": 11,
    "stumpings": 0,
    "dismissals": 11,
-   "fiftyRate": 0.1429,
+   "fiftyRate": 0.1493,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.1746,
    "statsSource": "howstat",
-   "cricsheetMatches": 63
+   "cricsheetMatches": 63,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -25447,7 +25514,7 @@
    "notOuts": 7,
    "highest": 105,
    "battingAverage": 31.81,
-   "strikeRate": 135.83,
+   "strikeRate": 135.7,
    "ballsFaced": 2579,
    "fifties": 20,
    "hundreds": 2,
@@ -25462,11 +25529,12 @@
    "catches": 68,
    "stumpings": 0,
    "dismissals": 68,
-   "fiftyRate": 0.1818,
+   "fiftyRate": 0.1803,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.562,
    "statsSource": "howstat",
-   "cricsheetMatches": 121
+   "cricsheetMatches": 121,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -26147,7 +26215,7 @@
    "notOuts": 22,
    "highest": 80,
    "battingAverage": 26.13,
-   "strikeRate": 135.19,
+   "strikeRate": 134.15,
    "ballsFaced": 881,
    "fifties": 3,
    "hundreds": 0,
@@ -26162,11 +26230,12 @@
    "catches": 58,
    "stumpings": 6,
    "dismissals": 64,
-   "fiftyRate": 0.0333,
+   "fiftyRate": 0.0326,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.7111,
    "statsSource": "howstat",
-   "cricsheetMatches": 90
+   "cricsheetMatches": 90,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -27219,7 +27288,7 @@
    "notOuts": 14,
    "highest": 103,
    "battingAverage": 33.52,
-   "strikeRate": 141.98,
+   "strikeRate": 142.08,
    "ballsFaced": 1589,
    "fifties": 14,
    "hundreds": 1,
@@ -27234,11 +27303,12 @@
    "catches": 39,
    "stumpings": 0,
    "dismissals": 39,
-   "fiftyRate": 0.1744,
+   "fiftyRate": 0.1705,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4535,
    "statsSource": "howstat",
-   "cricsheetMatches": 86
+   "cricsheetMatches": 86,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -27360,7 +27430,7 @@
    "notOuts": 38,
    "highest": 77,
    "battingAverage": 20.52,
-   "strikeRate": 130.65,
+   "strikeRate": 130.66,
    "ballsFaced": 832,
    "fifties": 2,
    "hundreds": 0,
@@ -27375,11 +27445,12 @@
    "catches": 48,
    "stumpings": 0,
    "dismissals": 48,
-   "fiftyRate": 0.0149,
+   "fiftyRate": 0.0145,
    "fourWicketRate": 0.0217,
    "dismissalsPerMatch": 0.3582,
    "statsSource": "howstat",
-   "cricsheetMatches": 134
+   "cricsheetMatches": 134,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -27504,7 +27575,7 @@
    "notOuts": 17,
    "highest": 72,
    "battingAverage": 21.19,
-   "strikeRate": 143.9,
+   "strikeRate": 142.58,
    "ballsFaced": 820,
    "fifties": 7,
    "hundreds": 0,
@@ -27519,11 +27590,12 @@
    "catches": 21,
    "stumpings": 0,
    "dismissals": 21,
-   "fiftyRate": 0.0778,
+   "fiftyRate": 0.0761,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.2333,
    "statsSource": "howstat",
-   "cricsheetMatches": 90
+   "cricsheetMatches": 90,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -27745,7 +27817,7 @@
    "notOuts": 13,
    "highest": 99,
    "battingAverage": 26.46,
-   "strikeRate": 122.34,
+   "strikeRate": 122.04,
    "ballsFaced": 1992,
    "fifties": 14,
    "hundreds": 0,
@@ -27760,11 +27832,12 @@
    "catches": 30,
    "stumpings": 0,
    "dismissals": 30,
-   "fiftyRate": 0.1207,
+   "fiftyRate": 0.1176,
    "fourWicketRate": 0.0084,
    "dismissalsPerMatch": 0.2586,
    "statsSource": "howstat",
-   "cricsheetMatches": 116
+   "cricsheetMatches": 116,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -28077,7 +28150,7 @@
    "notOuts": 21,
    "highest": 104,
    "battingAverage": 47.42,
-   "strikeRate": 126.01,
+   "strikeRate": 125.38,
    "ballsFaced": 2687,
    "fifties": 30,
    "hundreds": 1,
@@ -28092,11 +28165,12 @@
    "catches": 53,
    "stumpings": 12,
    "dismissals": 65,
-   "fiftyRate": 0.2981,
+   "fiftyRate": 0.2925,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.625,
    "statsSource": "howstat",
-   "cricsheetMatches": 104
+   "cricsheetMatches": 104,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -29228,13 +29302,13 @@
   "firstMatch": "2007-09-01",
   "lastMatch": "2022-09-01",
   "stats": {
-   "matches": 90,
-   "innings": 82,
-   "runs": 1307,
+   "matches": 102,
+   "innings": 93,
+   "runs": 1500,
    "notOuts": 16,
    "highest": 72,
-   "battingAverage": 19.8,
-   "strikeRate": 115.15,
+   "battingAverage": 19.48,
+   "strikeRate": 115.12,
    "ballsFaced": 1135,
    "fifties": 6,
    "hundreds": 0,
@@ -29249,10 +29323,12 @@
    "catches": 39,
    "stumpings": 24,
    "dismissals": 63,
-   "fiftyRate": 0.0667,
+   "fiftyRate": 0.0588,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.7,
-   "statsSource": "cricsheet"
+   "statsSource": "cricsheet",
+   "battingSource": "howstat-strike-rates",
+   "cricsheetMatches": 90
   }
  },
  {
@@ -30712,9 +30788,9 @@
    "notOuts": 10,
    "highest": 98,
    "battingAverage": 26.15,
-   "strikeRate": 134.8,
+   "strikeRate": 136.39,
    "ballsFaced": 1615,
-   "fifties": 12,
+   "fifties": 13,
    "hundreds": 0,
    "ballsBowled": 0,
    "runsConceded": 0,
@@ -30727,11 +30803,12 @@
    "catches": 62,
    "stumpings": 8,
    "dismissals": 70,
-   "fiftyRate": 0.1143,
+   "fiftyRate": 0.1226,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.6667,
    "statsSource": "howstat",
-   "cricsheetMatches": 105
+   "cricsheetMatches": 105,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -32018,9 +32095,9 @@
    "notOuts": 5,
    "highest": 107,
    "battingAverage": 30.59,
-   "strikeRate": 127.85,
+   "strikeRate": 128.59,
    "ballsFaced": 2036,
-   "fifties": 18,
+   "fifties": 19,
    "hundreds": 2,
    "ballsBowled": 0,
    "runsConceded": 0,
@@ -32033,11 +32110,12 @@
    "catches": 22,
    "stumpings": 0,
    "dismissals": 22,
-   "fiftyRate": 0.2247,
+   "fiftyRate": 0.2165,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.2472,
    "statsSource": "howstat",
-   "cricsheetMatches": 89
+   "cricsheetMatches": 89,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -32649,7 +32727,8 @@
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.6154,
    "statsSource": "howstat",
-   "cricsheetMatches": 65
+   "cricsheetMatches": 65,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -33236,9 +33315,9 @@
    "notOuts": 9,
    "highest": 115,
    "battingAverage": 30.95,
-   "strikeRate": 142.46,
+   "strikeRate": 142.23,
    "ballsFaced": 2096,
-   "fifties": 18,
+   "fifties": 19,
    "hundreds": 2,
    "ballsBowled": 0,
    "runsConceded": 0,
@@ -33251,11 +33330,12 @@
    "catches": 94,
    "stumpings": 18,
    "dismissals": 112,
-   "fiftyRate": 0.1869,
+   "fiftyRate": 0.1909,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 1.0467,
    "statsSource": "howstat",
-   "cricsheetMatches": 107
+   "cricsheetMatches": 107,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -34086,7 +34166,8 @@
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4035,
    "statsSource": "howstat",
-   "cricsheetMatches": 57
+   "cricsheetMatches": 57,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -34632,7 +34713,7 @@
    "notOuts": 2,
    "highest": 117,
    "battingAverage": 28.78,
-   "strikeRate": 129.38,
+   "strikeRate": 129.21,
    "ballsFaced": 1913,
    "fifties": 18,
    "hundreds": 1,
@@ -34647,11 +34728,12 @@
    "catches": 41,
    "stumpings": 0,
    "dismissals": 41,
-   "fiftyRate": 0.2135,
+   "fiftyRate": 0.2111,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4607,
    "statsSource": "howstat",
-   "cricsheetMatches": 89
+   "cricsheetMatches": 89,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -35150,7 +35232,7 @@
    "notOuts": 14,
    "highest": 65,
    "battingAverage": 23.25,
-   "strikeRate": 125.49,
+   "strikeRate": 127.26,
    "ballsFaced": 910,
    "fifties": 3,
    "hundreds": 0,
@@ -35165,11 +35247,12 @@
    "catches": 37,
    "stumpings": 11,
    "dismissals": 48,
-   "fiftyRate": 0.0417,
+   "fiftyRate": 0.0395,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.6667,
    "statsSource": "howstat",
-   "cricsheetMatches": 72
+   "cricsheetMatches": 72,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -35707,9 +35790,9 @@
    "notOuts": 19,
    "highest": 121,
    "battingAverage": 32.05,
-   "strikeRate": 140.31,
+   "strikeRate": 140.85,
    "ballsFaced": 2870,
-   "fifties": 31,
+   "fifties": 32,
    "hundreds": 5,
    "ballsBowled": 68,
    "runsConceded": 113,
@@ -35722,11 +35805,12 @@
    "catches": 60,
    "stumpings": 0,
    "dismissals": 60,
-   "fiftyRate": 0.2288,
+   "fiftyRate": 0.2327,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3922,
    "statsSource": "howstat",
-   "cricsheetMatches": 153
+   "cricsheetMatches": 153,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -36038,7 +36122,7 @@
    "notOuts": 17,
    "highest": 107,
    "battingAverage": 26.37,
-   "strikeRate": 141.92,
+   "strikeRate": 141.98,
    "ballsFaced": 1634,
    "fifties": 10,
    "hundreds": 1,
@@ -36053,11 +36137,12 @@
    "catches": 57,
    "stumpings": 0,
    "dismissals": 57,
-   "fiftyRate": 0.0948,
+   "fiftyRate": 0.0917,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4914,
    "statsSource": "howstat",
-   "cricsheetMatches": 116
+   "cricsheetMatches": 116,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -36409,7 +36494,7 @@
    "notOuts": 36,
    "highest": 67,
    "battingAverage": 26.2,
-   "strikeRate": 127.1,
+   "strikeRate": 124.49,
    "ballsFaced": 1557,
    "fifties": 6,
    "hundreds": 0,
@@ -36424,11 +36509,12 @@
    "catches": 53,
    "stumpings": 0,
    "dismissals": 53,
-   "fiftyRate": 0.0526,
+   "fiftyRate": 0.0465,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4649,
    "statsSource": "howstat",
-   "cricsheetMatches": 114
+   "cricsheetMatches": 114,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -36971,7 +37057,7 @@
    "notOuts": 2,
    "highest": 100,
    "battingAverage": 30.35,
-   "strikeRate": 136.28,
+   "strikeRate": 136.65,
    "ballsFaced": 929,
    "fifties": 10,
    "hundreds": 2,
@@ -36986,11 +37072,12 @@
    "catches": 18,
    "stumpings": 0,
    "dismissals": 18,
-   "fiftyRate": 0.2857,
+   "fiftyRate": 0.2609,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4286,
    "statsSource": "howstat",
-   "cricsheetMatches": 42
+   "cricsheetMatches": 42,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -37110,7 +37197,7 @@
    "notOuts": 3,
    "highest": 98,
    "battingAverage": 21.28,
-   "strikeRate": 139.33,
+   "strikeRate": 135.92,
    "ballsFaced": 862,
    "fifties": 6,
    "hundreds": 0,
@@ -37125,11 +37212,12 @@
    "catches": 26,
    "stumpings": 0,
    "dismissals": 26,
-   "fiftyRate": 0.1,
+   "fiftyRate": 0.0896,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4333,
    "statsSource": "howstat",
-   "cricsheetMatches": 60
+   "cricsheetMatches": 60,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -37631,9 +37719,9 @@
    "notOuts": 5,
    "highest": 111,
    "battingAverage": 27.33,
-   "strikeRate": 156.16,
+   "strikeRate": 157.37,
    "ballsFaced": 917,
-   "fifties": 6,
+   "fifties": 8,
    "hundreds": 3,
    "ballsBowled": 0,
    "runsConceded": 0,
@@ -37646,11 +37734,12 @@
    "catches": 42,
    "stumpings": 6,
    "dismissals": 48,
-   "fiftyRate": 0.1385,
+   "fiftyRate": 0.1571,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.7385,
    "statsSource": "howstat",
-   "cricsheetMatches": 65
+   "cricsheetMatches": 65,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -38058,9 +38147,9 @@
    "notOuts": 8,
    "highest": 77,
    "battingAverage": 23.75,
-   "strikeRate": 129.75,
+   "strikeRate": 128.29,
    "ballsFaced": 1247,
-   "fifties": 11,
+   "fifties": 12,
    "hundreds": 0,
    "ballsBowled": 1242,
    "runsConceded": 1433,
@@ -38073,11 +38162,12 @@
    "catches": 28,
    "stumpings": 0,
    "dismissals": 28,
-   "fiftyRate": 0.1447,
+   "fiftyRate": 0.1412,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3684,
    "statsSource": "howstat",
-   "cricsheetMatches": 76
+   "cricsheetMatches": 76,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -38246,7 +38336,7 @@
    "notOuts": 17,
    "highest": 52,
    "battingAverage": 19.4,
-   "strikeRate": 146.98,
+   "strikeRate": 144.14,
    "ballsFaced": 613,
    "fifties": 1,
    "hundreds": 0,
@@ -38261,11 +38351,12 @@
    "catches": 44,
    "stumpings": 0,
    "dismissals": 44,
-   "fiftyRate": 0.0085,
+   "fiftyRate": 0.0081,
    "fourWicketRate": 0.0242,
    "dismissalsPerMatch": 0.3729,
    "statsSource": "howstat",
-   "cricsheetMatches": 118
+   "cricsheetMatches": 118,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -38499,55 +38590,6 @@
   }
  },
  {
-  "id": "cs-0dc00542",
-  "cricsheetId": "0dc00542",
-  "name": "Shahid Afridi",
-  "scorecardName": "Shahid Afridi",
-  "nation": "Pakistan",
-  "era": [
-   "2000s",
-   "2010s"
-  ],
-  "primaryRole": "all-rounder",
-  "secondaryRoles": [
-   "middle-order"
-  ],
-  "isWicketkeeper": false,
-  "bowlingType": null,
-  "roleSource": "match-data",
-  "bowlingTypeSource": null,
-  "firstMatch": "2006-08-28",
-  "lastMatch": "2018-05-31",
-  "stats": {
-   "matches": 98,
-   "innings": 90,
-   "runs": 1405,
-   "notOuts": 12,
-   "highest": 54,
-   "battingAverage": 18.01,
-   "strikeRate": 152.57,
-   "ballsFaced": 915,
-   "fifties": 4,
-   "hundreds": 0,
-   "ballsBowled": 2144,
-   "runsConceded": 2362,
-   "wickets": 97,
-   "bowlingAverage": 24.35,
-   "economy": 6.61,
-   "ballsPerWicket": 22.1,
-   "fourWicketInnings": 3,
-   "fiveWicketInnings": 0,
-   "catches": 30,
-   "stumpings": 0,
-   "dismissals": 30,
-   "fiftyRate": 0.0421,
-   "fourWicketRate": 0.0306,
-   "dismissalsPerMatch": 0.3158,
-   "statsSource": "howstat",
-   "cricsheetMatches": 95
-  }
- },
- {
   "id": "cs-7ccbb09f",
   "cricsheetId": "7ccbb09f",
   "name": "Shahnawaz Dhani",
@@ -38667,9 +38709,9 @@
    "notOuts": 10,
    "highest": 102,
    "battingAverage": 30.05,
-   "strikeRate": 137.35,
+   "strikeRate": 136.6,
    "ballsFaced": 1213,
-   "fifties": 11,
+   "fifties": 12,
    "hundreds": 1,
    "ballsBowled": 0,
    "runsConceded": 0,
@@ -38682,11 +38724,12 @@
    "catches": 28,
    "stumpings": 1,
    "dismissals": 29,
-   "fiftyRate": 0.1765,
+   "fiftyRate": 0.1857,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4265,
    "statsSource": "howstat",
-   "cricsheetMatches": 68
+   "cricsheetMatches": 68,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -38760,15 +38803,15 @@
   "firstMatch": "2007-09-13",
   "lastMatch": "2024-06-22",
   "stats": {
-   "matches": 113,
-   "innings": 110,
-   "runs": 2295,
-   "notOuts": 13,
+   "matches": 129,
+   "innings": 126,
+   "runs": 2551,
+   "notOuts": 16,
    "highest": 84,
-   "battingAverage": 23.66,
-   "strikeRate": 122.47,
+   "battingAverage": 23.19,
+   "strikeRate": 121.19,
    "ballsFaced": 1874,
-   "fifties": 12,
+   "fifties": 13,
    "hundreds": 0,
    "ballsBowled": 2378,
    "runsConceded": 2744,
@@ -38781,10 +38824,12 @@
    "catches": 30,
    "stumpings": 0,
    "dismissals": 30,
-   "fiftyRate": 0.1062,
+   "fiftyRate": 0.1008,
    "fourWicketRate": 0.0708,
    "dismissalsPerMatch": 0.2655,
-   "statsSource": "cricsheet"
+   "statsSource": "cricsheet",
+   "battingSource": "howstat-strike-rates",
+   "cricsheetMatches": 113
   }
  },
  {
@@ -39158,7 +39203,8 @@
    "fourWicketRate": 0.0172,
    "dismissalsPerMatch": 0.3448,
    "statsSource": "howstat",
-   "cricsheetMatches": 58
+   "cricsheetMatches": 58,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -39716,11 +39762,12 @@
    "catches": 19,
    "stumpings": 0,
    "dismissals": 19,
-   "fiftyRate": 0.1642,
+   "fiftyRate": 0.1618,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.2836,
    "statsSource": "howstat",
-   "cricsheetMatches": 67
+   "cricsheetMatches": 67,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -39748,7 +39795,7 @@
    "notOuts": 7,
    "highest": 85,
    "battingAverage": 24.68,
-   "strikeRate": 140.32,
+   "strikeRate": 140.42,
    "ballsFaced": 1121,
    "fifties": 9,
    "hundreds": 0,
@@ -39763,11 +39810,12 @@
    "catches": 42,
    "stumpings": 0,
    "dismissals": 42,
-   "fiftyRate": 0.1139,
+   "fiftyRate": 0.1059,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.5316,
    "statsSource": "howstat",
-   "cricsheetMatches": 79
+   "cricsheetMatches": 79,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -39841,9 +39889,9 @@
    "notOuts": 19,
    "highest": 66,
    "battingAverage": 29.26,
-   "strikeRate": 151.37,
+   "strikeRate": 151.73,
    "ballsFaced": 656,
-   "fifties": 4,
+   "fifties": 6,
    "hundreds": 0,
    "ballsBowled": 624,
    "runsConceded": 1023,
@@ -39856,11 +39904,12 @@
    "catches": 25,
    "stumpings": 0,
    "dismissals": 25,
-   "fiftyRate": 0.0597,
+   "fiftyRate": 0.0779,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3731,
    "statsSource": "howstat",
-   "cricsheetMatches": 67
+   "cricsheetMatches": 67,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -40070,13 +40119,13 @@
   "firstMatch": "2006-08-28",
   "lastMatch": "2021-11-20",
   "stats": {
-   "matches": 123,
-   "innings": 110,
-   "runs": 2423,
+   "matches": 124,
+   "innings": 111,
+   "runs": 2435,
    "notOuts": 33,
    "highest": 75,
-   "battingAverage": 31.47,
-   "strikeRate": 126.23,
+   "battingAverage": 31.22,
+   "strikeRate": 125.64,
    "ballsFaced": 1895,
    "fifties": 9,
    "hundreds": 0,
@@ -40091,11 +40140,12 @@
    "catches": 48,
    "stumpings": 0,
    "dismissals": 48,
-   "fiftyRate": 0.075,
+   "fiftyRate": 0.0726,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4,
    "statsSource": "howstat",
-   "cricsheetMatches": 120
+   "cricsheetMatches": 120,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -40213,7 +40263,7 @@
    "notOuts": 14,
    "highest": 80,
    "battingAverage": 31.47,
-   "strikeRate": 138.05,
+   "strikeRate": 137.84,
    "ballsFaced": 1025,
    "fifties": 10,
    "hundreds": 0,
@@ -40228,11 +40278,12 @@
    "catches": 21,
    "stumpings": 0,
    "dismissals": 21,
-   "fiftyRate": 0.1667,
+   "fiftyRate": 0.1538,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.35,
    "statsSource": "howstat",
-   "cricsheetMatches": 60
+   "cricsheetMatches": 60,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -40400,9 +40451,9 @@
    "notOuts": 12,
    "highest": 133,
    "battingAverage": 25.54,
-   "strikeRate": 135.72,
+   "strikeRate": 135.68,
    "ballsFaced": 2052,
-   "fifties": 15,
+   "fifties": 17,
    "hundreds": 1,
    "ballsBowled": 2450,
    "runsConceded": 2863,
@@ -40415,11 +40466,12 @@
    "catches": 49,
    "stumpings": 0,
    "dismissals": 49,
-   "fiftyRate": 0.128,
+   "fiftyRate": 0.125,
    "fourWicketRate": 0.0208,
    "dismissalsPerMatch": 0.392,
    "statsSource": "howstat",
-   "cricsheetMatches": 125
+   "cricsheetMatches": 125,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -40815,13 +40867,13 @@
   "firstMatch": "2015-04-24",
   "lastMatch": "2026-06-19",
   "stats": {
-   "matches": 85,
-   "innings": 84,
-   "runs": 1466,
+   "matches": 89,
+   "innings": 88,
+   "runs": 1494,
    "notOuts": 4,
    "highest": 68,
-   "battingAverage": 18.33,
-   "strikeRate": 123.09,
+   "battingAverage": 17.79,
+   "strikeRate": 122.06,
    "ballsFaced": 1191,
    "fifties": 5,
    "hundreds": 0,
@@ -40836,10 +40888,12 @@
    "catches": 43,
    "stumpings": 0,
    "dismissals": 43,
-   "fiftyRate": 0.0588,
+   "fiftyRate": 0.0562,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.5059,
-   "statsSource": "cricsheet"
+   "statsSource": "cricsheet",
+   "battingSource": "howstat-strike-rates",
+   "cricsheetMatches": 85
   }
  },
  {
@@ -41143,7 +41197,7 @@
    "notOuts": 12,
    "highest": 90,
    "battingAverage": 25.44,
-   "strikeRate": 125.58,
+   "strikeRate": 125.46,
    "ballsFaced": 868,
    "fifties": 5,
    "hundreds": 0,
@@ -41158,11 +41212,12 @@
    "catches": 41,
    "stumpings": 0,
    "dismissals": 41,
-   "fiftyRate": 0.0758,
+   "fiftyRate": 0.0746,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.6212,
    "statsSource": "howstat",
-   "cricsheetMatches": 66
+   "cricsheetMatches": 66,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -41930,7 +41985,7 @@
    "notOuts": 11,
    "highest": 101,
    "battingAverage": 29.18,
-   "strikeRate": 135.4,
+   "strikeRate": 134.87,
    "ballsFaced": 1144,
    "fifties": 5,
    "hundreds": 1,
@@ -41945,11 +42000,12 @@
    "catches": 41,
    "stumpings": 0,
    "dismissals": 41,
-   "fiftyRate": 0.0789,
+   "fiftyRate": 0.0769,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.5395,
    "statsSource": "howstat",
-   "cricsheetMatches": 76
+   "cricsheetMatches": 76,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -41976,9 +42032,9 @@
    "notOuts": 17,
    "highest": 117,
    "battingAverage": 36.36,
-   "strikeRate": 162.44,
+   "strikeRate": 162.95,
    "ballsFaced": 1978,
-   "fifties": 24,
+   "fifties": 25,
    "hundreds": 4,
    "ballsBowled": 6,
    "runsConceded": 5,
@@ -41991,11 +42047,12 @@
    "catches": 58,
    "stumpings": 0,
    "dismissals": 58,
-   "fiftyRate": 0.2545,
+   "fiftyRate": 0.2566,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.5273,
    "statsSource": "howstat",
-   "cricsheetMatches": 110
+   "cricsheetMatches": 110,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -42116,9 +42173,9 @@
    "notOuts": 5,
    "highest": 86,
    "battingAverage": 19.37,
-   "strikeRate": 129.44,
+   "strikeRate": 129.96,
    "ballsFaced": 1138,
-   "fifties": 8,
+   "fifties": 7,
    "hundreds": 0,
    "ballsBowled": 0,
    "runsConceded": 0,
@@ -42131,11 +42188,12 @@
    "catches": 30,
    "stumpings": 5,
    "dismissals": 35,
-   "fiftyRate": 0.1039,
+   "fiftyRate": 0.0897,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4545,
    "statsSource": "howstat",
-   "cricsheetMatches": 77
+   "cricsheetMatches": 77,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -42249,13 +42307,13 @@
   "firstMatch": "2007-09-01",
   "lastMatch": "2020-03-09",
   "stats": {
-   "matches": 71,
-   "innings": 71,
-   "runs": 1624,
+   "matches": 78,
+   "innings": 78,
+   "runs": 1758,
    "notOuts": 5,
    "highest": 103,
-   "battingAverage": 24.61,
-   "strikeRate": 120.03,
+   "battingAverage": 24.08,
+   "strikeRate": 116.97,
    "ballsFaced": 1353,
    "fifties": 7,
    "hundreds": 1,
@@ -42270,10 +42328,12 @@
    "catches": 16,
    "stumpings": 0,
    "dismissals": 16,
-   "fiftyRate": 0.1127,
+   "fiftyRate": 0.1026,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.2254,
-   "statsSource": "cricsheet"
+   "statsSource": "cricsheet",
+   "battingSource": "howstat-strike-rates",
+   "cricsheetMatches": 71
   }
  },
  {
@@ -42386,15 +42446,15 @@
   "firstMatch": "2024-05-03",
   "lastMatch": "2026-07-19",
   "stats": {
-   "matches": 48,
-   "innings": 48,
-   "runs": 1193,
+   "matches": 53,
+   "innings": 53,
+   "runs": 1331,
    "notOuts": 6,
    "highest": 89,
-   "battingAverage": 28.4,
-   "strikeRate": 127.59,
+   "battingAverage": 28.32,
+   "strikeRate": 127.25,
    "ballsFaced": 935,
-   "fifties": 11,
+   "fifties": 13,
    "hundreds": 0,
    "ballsBowled": 0,
    "runsConceded": 0,
@@ -42407,10 +42467,12 @@
    "catches": 28,
    "stumpings": 0,
    "dismissals": 28,
-   "fiftyRate": 0.2292,
+   "fiftyRate": 0.2453,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.5833,
-   "statsSource": "cricsheet"
+   "statsSource": "cricsheet",
+   "battingSource": "howstat-strike-rates",
+   "cricsheetMatches": 48
   }
  },
  {
@@ -43225,13 +43287,13 @@
   "firstMatch": "2010-05-03",
   "lastMatch": "2021-03-07",
   "stats": {
-   "matches": 83,
-   "innings": 73,
-   "runs": 1192,
+   "matches": 84,
+   "innings": 74,
+   "runs": 1204,
    "notOuts": 22,
    "highest": 61,
-   "battingAverage": 23.37,
-   "strikeRate": 151.65,
+   "battingAverage": 23.15,
+   "strikeRate": 151.64,
    "ballsFaced": 786,
    "fifties": 3,
    "hundreds": 0,
@@ -43246,10 +43308,12 @@
    "catches": 29,
    "stumpings": 0,
    "dismissals": 29,
-   "fiftyRate": 0.0361,
+   "fiftyRate": 0.0357,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3494,
-   "statsSource": "cricsheet"
+   "statsSource": "cricsheet",
+   "battingSource": "howstat-strike-rates",
+   "cricsheetMatches": 83
   }
  },
  {
@@ -43276,7 +43340,7 @@
    "notOuts": 22,
    "highest": 120,
    "battingAverage": 43.84,
-   "strikeRate": 145.72,
+   "strikeRate": 143.74,
    "ballsFaced": 1111,
    "fifties": 9,
    "hundreds": 2,
@@ -43291,11 +43355,12 @@
    "catches": 43,
    "stumpings": 0,
    "dismissals": 43,
-   "fiftyRate": 0.193,
+   "fiftyRate": 0.1746,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.7544,
    "statsSource": "howstat",
-   "cricsheetMatches": 57
+   "cricsheetMatches": 57,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -43323,9 +43388,9 @@
    "notOuts": 12,
    "highest": 104,
    "battingAverage": 28.19,
-   "strikeRate": 120.15,
+   "strikeRate": 120.55,
    "ballsFaced": 1454,
-   "fifties": 12,
+   "fifties": 13,
    "hundreds": 1,
    "ballsBowled": 258,
    "runsConceded": 313,
@@ -43338,11 +43403,12 @@
    "catches": 29,
    "stumpings": 1,
    "dismissals": 30,
-   "fiftyRate": 0.1688,
+   "fiftyRate": 0.175,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3896,
    "statsSource": "howstat",
-   "cricsheetMatches": 77
+   "cricsheetMatches": 77,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -43411,13 +43477,13 @@
   "firstMatch": "2019-07-22",
   "lastMatch": "2026-06-21",
   "stats": {
-   "matches": 73,
-   "innings": 62,
-   "runs": 1677,
+   "matches": 74,
+   "innings": 63,
+   "runs": 1679,
    "notOuts": 15,
    "highest": 102,
-   "battingAverage": 35.68,
-   "strikeRate": 168.88,
+   "battingAverage": 34.98,
+   "strikeRate": 168.41,
    "ballsFaced": 993,
    "fifties": 9,
    "hundreds": 1,
@@ -43432,10 +43498,12 @@
    "catches": 42,
    "stumpings": 0,
    "dismissals": 42,
-   "fiftyRate": 0.137,
+   "fiftyRate": 0.1351,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.5753,
-   "statsSource": "cricsheet"
+   "statsSource": "cricsheet",
+   "battingSource": "howstat-strike-rates",
+   "cricsheetMatches": 73
   }
  },
  {
@@ -43562,9 +43630,9 @@
    "notOuts": 11,
    "highest": 97,
    "battingAverage": 31.22,
-   "strikeRate": 146.14,
+   "strikeRate": 146.37,
    "ballsFaced": 1515,
-   "fifties": 16,
+   "fifties": 17,
    "hundreds": 0,
    "ballsBowled": 0,
    "runsConceded": 0,
@@ -43577,11 +43645,12 @@
    "catches": 43,
    "stumpings": 13,
    "dismissals": 56,
-   "fiftyRate": 0.1818,
+   "fiftyRate": 0.1889,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.6364,
    "statsSource": "howstat",
-   "cricsheetMatches": 88
+   "cricsheetMatches": 88,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -44357,13 +44426,13 @@
   "firstMatch": "2023-03-09",
   "lastMatch": "2026-07-19",
   "stats": {
-   "matches": 61,
-   "innings": 55,
-   "runs": 1303,
-   "notOuts": 9,
+   "matches": 65,
+   "innings": 59,
+   "runs": 1409,
+   "notOuts": 10,
    "highest": 83,
-   "battingAverage": 28.33,
-   "strikeRate": 125.17,
+   "battingAverage": 28.76,
+   "strikeRate": 125.92,
    "ballsFaced": 1041,
    "fifties": 7,
    "hundreds": 0,
@@ -44378,10 +44447,12 @@
    "catches": 21,
    "stumpings": 0,
    "dismissals": 21,
-   "fiftyRate": 0.1148,
+   "fiftyRate": 0.1077,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.3443,
-   "statsSource": "cricsheet"
+   "statsSource": "cricsheet",
+   "battingSource": "howstat-strike-rates",
+   "cricsheetMatches": 61
   }
  },
  {
@@ -44504,7 +44575,7 @@
    "notOuts": 4,
    "highest": 91,
    "battingAverage": 28.4,
-   "strikeRate": 157.24,
+   "strikeRate": 156.69,
    "ballsFaced": 849,
    "fifties": 6,
    "hundreds": 0,
@@ -44519,11 +44590,12 @@
    "catches": 9,
    "stumpings": 0,
    "dismissals": 9,
-   "fiftyRate": 0.1154,
+   "fiftyRate": 0.1132,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.1731,
    "statsSource": "howstat",
-   "cricsheetMatches": 52
+   "cricsheetMatches": 52,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -44738,7 +44810,7 @@
    "notOuts": 14,
    "highest": 94,
    "battingAverage": 26,
-   "strikeRate": 122.75,
+   "strikeRate": 122.73,
    "ballsFaced": 1354,
    "fifties": 8,
    "hundreds": 0,
@@ -44753,11 +44825,12 @@
    "catches": 49,
    "stumpings": 2,
    "dismissals": 51,
-   "fiftyRate": 0.0964,
+   "fiftyRate": 0.0952,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.6145,
    "statsSource": "howstat",
-   "cricsheetMatches": 83
+   "cricsheetMatches": 83,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -45665,9 +45738,9 @@
    "notOuts": 31,
    "highest": 122,
    "battingAverage": 48.7,
-   "strikeRate": 135.95,
+   "strikeRate": 137.04,
    "ballsFaced": 2915,
-   "fifties": 37,
+   "fifties": 38,
    "hundreds": 1,
    "ballsBowled": 152,
    "runsConceded": 204,
@@ -45680,11 +45753,12 @@
    "catches": 51,
    "stumpings": 0,
    "dismissals": 51,
-   "fiftyRate": 0.3136,
+   "fiftyRate": 0.312,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4322,
    "statsSource": "howstat",
-   "cricsheetMatches": 118
+   "cricsheetMatches": 118,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -46183,7 +46257,7 @@
    "notOuts": 8,
    "highest": 73,
    "battingAverage": 18.18,
-   "strikeRate": 114.32,
+   "strikeRate": 113.41,
    "ballsFaced": 1096,
    "fifties": 7,
    "hundreds": 0,
@@ -46198,11 +46272,12 @@
    "catches": 32,
    "stumpings": 0,
    "dismissals": 32,
-   "fiftyRate": 0.0886,
+   "fiftyRate": 0.0805,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.4051,
    "statsSource": "howstat",
-   "cricsheetMatches": 79
+   "cricsheetMatches": 79,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {
@@ -47023,7 +47098,7 @@
    "notOuts": 9,
    "highest": 77,
    "battingAverage": 28.02,
-   "strikeRate": 138.37,
+   "strikeRate": 136.38,
    "ballsFaced": 821,
    "fifties": 8,
    "hundreds": 0,
@@ -47038,11 +47113,12 @@
    "catches": 11,
    "stumpings": 0,
    "dismissals": 11,
-   "fiftyRate": 0.1455,
+   "fiftyRate": 0.1379,
    "fourWicketRate": 0,
    "dismissalsPerMatch": 0.2,
    "statsSource": "howstat",
-   "cricsheetMatches": 55
+   "cricsheetMatches": 55,
+   "battingSource": "howstat-strike-rates"
   }
  },
  {

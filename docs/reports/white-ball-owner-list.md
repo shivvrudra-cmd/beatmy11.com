@@ -8,7 +8,7 @@ Reply in chat with the answers (e.g. "1 pace, 2 spin" and "A Sai Sudharsan"). Th
 
 | # | Player (as listed) | Nation / teams | Matches | Wickets | Your answer |
 |---|---|---|---|---|---|
-| 1 | Shahid Afridi | Pakistan | ODI 207, IPL 10 | 251 | |
+| 1 | Shahid Afridi | Pakistan | ODI 207, T20I 95, IPL 10 | 346 | |
 | 2 | Naved-ul-Hasan | Pakistan | ODI 62, T20I 3 | 91 | |
 | 3 | Douglas Hondo | Zimbabwe | ODI 32 | 30 | |
 | 4 | Mosaddeck Hossain | Bangladesh | T20I 29 | 15 | |

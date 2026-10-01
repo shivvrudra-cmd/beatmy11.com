@@ -5,6 +5,7 @@ These regular bowlers are left out of the game until their bowling type is known
 | Format | Name | Nation / teams | Matches | Wickets | Cricsheet id | type |
 |---|---|---|---|---|---|---|
 | odi | Shahid Afridi | Pakistan | 207 | 242 | 0dc00542 | |
+| t20i | Shahid Afridi | Pakistan | 95 | 95 | 0dc00542 | |
 | odi | Naved-ul-Hasan | Pakistan | 62 | 86 | 33f28243 | |
 | odi | Douglas Hondo | Zimbabwe | 32 | 30 | 7fe5deb8 | |
 | t20i | Mosaddeck Hossain | Bangladesh | 29 | 15 | 8919756f | |
@@ -56,7 +57,7 @@ These regular bowlers are left out of the game until their bowling type is known
 | ipl | S Kaushik | Gujarat Lions | 10 | 6 | 1da489ff | |
 | ipl | Zeeshan Ansari | Sunrisers Hyderabad | 10 | 6 | 36619795 | |
 | ipl | Ashwani Kumar | Mumbai Indians | 10 | 17 | d45c29b1 | |
-| ipl | Shahid Afridi | Pakistan | 10 | 9 | 0dc00542 | |
+| ipl | Shahid Afridi | Deccan Chargers | 10 | 9 | 0dc00542 | |
 | ipl | J Theron | Punjab Kings, Deccan Chargers, Rajasthan Royals | 10 | 9 | dec8e038 | |
 | odi | Prabath Nissanka | Sri Lanka | 9 | 11 | 6cc006ef | |
 | odi | Richard Johnson | England | 9 | 9 | 3967930c | |

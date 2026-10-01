@@ -64,6 +64,16 @@ const sr = parseStrikeRates([
 ].join('\n'));
 ok(sr.length === 2 && sr[0].name === 'S R Tendulkar' && sr[0].highest === 200 && sr[0].strikeRate === 86.24 && sr[0].fifties === 96 && sr[0].notOuts === 41, 'strike-rate table parsed', sr[0]);
 ok(sr[1].name === 'V Kohli' && sr[1].country === 'India', 'the "current player" star is dropped from the name', sr[1]);
+// A header shifted one column left of the data (the T20I export): still read correctly.
+const shifted = parseStrikeRates([
+  'Player,Country,Mat,Inns,NO,Runs,HS,100s,50s,Avg,S/R',
+  '1.0,Babar Azam*,Pakistan,145.0,136.0,18.0,4596.0,122.0,3.0,39.0,38.95,128.02',
+  '3.0,R G Sharma*,India,159.0,151.0,19.0,4231.0,121*,5.0,32.0,32.05,140.85',
+].join('\n'));
+ok(shifted[0].name === 'Babar Azam' && shifted[0].country === 'Pakistan' && shifted[0].matches === 145 && shifted[0].runs === 4596 && shifted[0].strikeRate === 128.02 && shifted[0].fifties === 39,
+  'a header one column left of the data is detected and corrected', shifted[0]);
+ok(shifted[1].name === 'R G Sharma' && shifted[1].highest === 121 && shifted[1].hundreds === 5, 'shifted table: second row', shifted[1]);
+
 const before = { matches: 146, cricsheetMatches: 146, innings: 140, notOuts: 12, runs: 5800, battingAverage: 45.3, strikeRate: 86.77, hundreds: 16, fifties: 30, highest: 200, fiftyRate: 0.3, wickets: 154, economy: 5.1, statsSource: 'cricsheet', fourWicketInnings: null };
 const after = withOfficialBatting(before, sr[0]);
 ok(after.matches === 463 && after.runs === 18426 && after.strikeRate === 86.24 && after.fifties === 96 && after.notOuts === 41 && after.hundreds === 49, 'official full-career batting line replaces the batting numbers', after);

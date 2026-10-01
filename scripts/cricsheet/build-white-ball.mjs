@@ -453,9 +453,9 @@ function main() {
       const known = intlKnown.get(p.id);
       const intlNation = nation ?? known?.nation ?? null; // IPL: their international side, if any
       let stats = hs ? withOfficialTotals(careerStats(p, fmt), hs) : { ...careerStats(p, fmt), statsSource: 'cricsheet' };
-      // The full-career batting line needs the official bowling totals too (or no bowling at all),
-      // so the match count stays consistent across the player's record.
-      if (hb && (hs || p.ballsBowled === 0)) { stats = withOfficialBatting(stats, hb); counts.officialBatting = (counts.officialBatting ?? 0) + 1; }
+      // The strike-rate table holds full careers (World XI matches included), so it applies even
+      // when the per-country row above was partial and could not be used.
+      if (hb) { stats = withOfficialBatting(stats, hb); counts.officialBatting = (counts.officialBatting ?? 0) + 1; }
 
       // --- role evidence
       // IPL players without an international side: Indian domestic players (the large majority).

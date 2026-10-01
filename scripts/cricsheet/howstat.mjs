@@ -128,7 +128,14 @@ export function parseStrikeRates(text) {
     runs: col('runs'), highest: col('hs'), hundreds: col('100s'), fifties: col('50s'), battingAverage: col('avg', 'batavg'), strikeRate: col('s/r', 'sr') };
   if (idx.name < 0 || idx.strikeRate < 0 || idx.country < 0) throw new Error(`Strike-rate file: could not find Player, Country and S/R columns (saw: ${lines[0]})`);
   const num = (v) => { const x = Number(String(v ?? '').replace(/[,*]/g, '')); return String(v ?? '').trim() === '' || !Number.isFinite(x) ? null : x; };
-  return lines.slice(1).map(split).map((r) => ({
+  // Some exports have the header one column to the left of the data (the rank column has no
+  // heading and the header row starts at "Player"). The player name is the first cell of a row
+  // that is not a number, so its position tells us the shift to apply to every column.
+  const body = lines.slice(1).map(split);
+  const firstName = body.length ? body[0].findIndex((c) => c !== '' && num(c) === null) : idx.name;
+  const shift = firstName >= 0 ? firstName - idx.name : 0;
+  if (shift !== 0) for (const k of Object.keys(idx)) if (idx[k] >= 0) idx[k] += shift;
+  return body.map((r) => ({
     name: String(r[idx.name] ?? '').replace(/\*+$/, '').trim(),
     knownAs: '',
     country: r[idx.country] ?? '',
