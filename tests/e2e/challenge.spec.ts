@@ -14,6 +14,7 @@ async function draftAndRecordDraws(page: Page): Promise<string[]> {
 }
 
 test("challenge: a friend drafts from the same spins, can retry, and sees the try count", async ({ browser }) => {
+  test.setTimeout(180_000); // three full drafts across two browsers; ~85s on its own, slower in parallel
   // Friend 1 drafts normally and shares.
   const ctx1 = await browser.newContext();
   const p1 = await ctx1.newPage();
