@@ -148,6 +148,7 @@ const draftCombosJson = json(draftSpinCombos());
     import {
       utcDayKey, dayNumber, loadDaily, hasPlayed, activeDailyDay, setActiveDaily, dailySpinIndex, upcomingCombos,
     } from '../lib/daily';
+    import { switchMode } from '../lib/draft-slots';
     import {
       decodeSpins, parseScoreline, scorelineText, loadChallenge, saveChallenge,
     } from '../lib/challenge';
@@ -915,10 +916,7 @@ const draftCombosJson = json(draftSpinCombos());
       announce(msg);
     });
     $('fl-startover').addEventListener('click', () => {
-      setActiveDaily(null);
-      isDaily = false;
-      $('fl-daily').hidden = true;
-      draft = createDraft();
+      draft = isDaily || challenge ? { ...createDraft(), eraRespinsLeft: 0, nationRespinsLeft: 0 } : createDraft();
       selectedUid = null;
       moveFrom = null;
       clearUserXI();
@@ -953,55 +951,51 @@ const draftCombosJson = json(draftSpinCombos());
     });
 
     (function restore() {
+      // The link decides the mode; each mode keeps its own saved draft (src/lib/draft-slots.ts),
+      // so a daily or a friend's challenge never touches the normal game's draft, or the reverse.
       const qs = new URLSearchParams(location.search);
+      let mode = 'normal';
+      let newChallenge = null;
       if (qs.get('daily') === '1') {
-        saveChallenge(null); // the daily takes over from a friend's challenge
+        if (hasPlayed(loadDaily(), dailyDay)) {
+          location.replace('/');
+          return;
+        }
+        mode = 'daily';
       } else if (qs.get('c')) {
         const spins = decodeSpins(qs.get('c'), LEGEND_COMBOS, DRAFT_COMBOS);
         const vs = parseScoreline(qs.get('vs'));
         if (spins && vs) {
+          mode = 'challenge';
           const existing = loadChallenge();
-          if (existing && existing.spins === qs.get('c')) {
-            saveChallenge({ ...existing, vs }); // same spins again: keep the try count
-          } else {
-            const saved = loadDraft();
-            const inProgress = saved && Array.isArray(saved.picks) && saved.picks.length > 0;
-            if (inProgress && !window.confirm('Taking your friend’s challenge will replace your draft in progress. Continue?')) {
-              location.replace('/play');
-              return;
-            }
-            clearUserXI();
-            clearDraft();
-            setActiveDaily(null);
-            saveChallenge({ spins: qs.get('c'), vs, tries: 0, best: null });
-          }
+          if (existing && existing.spins === qs.get('c')) saveChallenge({ ...existing, vs }); // same spins: keep the tries
+          else newChallenge = { spins: qs.get('c'), vs, tries: 0, best: null };
         }
       }
-      challenge = loadChallenge();
+      switchMode(mode);
+      if (mode === 'daily' && activeDailyDay() !== dailyDay) {
+        clearUserXI(); // a draft left over from an earlier day
+        clearDraft();
+        setActiveDaily(dailyDay);
+      }
+      if (newChallenge) {
+        const saved = loadDraft();
+        if (saved && Array.isArray(saved.picks) && saved.picks.length > 0 &&
+            !window.confirm('Taking this challenge will replace your earlier challenge draft in progress. Continue?')) {
+          location.replace('/play');
+          return;
+        }
+        clearUserXI();
+        clearDraft();
+        saveChallenge(newChallenge);
+      }
+      challenge = mode === 'challenge' ? loadChallenge() : null;
       fixedSpins = challenge ? decodeSpins(challenge.spins, LEGEND_COMBOS, DRAFT_COMBOS) : null;
       if (challenge && !fixedSpins) {
         saveChallenge(null);
         challenge = null;
       }
-      if (new URLSearchParams(location.search).get('daily') === '1') {
-        if (hasPlayed(loadDaily(), dailyDay)) {
-          location.replace('/');
-          return;
-        }
-        if (activeDailyDay() !== dailyDay) {
-          // A fresh daily replaces any draft in progress.
-          const saved = loadDraft();
-          const inProgress = saved && Array.isArray(saved.picks) && saved.picks.length > 0;
-          if (inProgress && !window.confirm('Starting the Daily Challenge will replace your draft in progress. Continue?')) {
-            location.replace('/play');
-            return;
-          }
-          clearUserXI();
-          clearDraft();
-          setActiveDaily(dailyDay);
-        }
-      }
-      isDaily = !challenge && activeDailyDay() === dailyDay;
+      isDaily = mode === 'daily';
       if (challenge) {
         showChallengeBanner();
         draft = { ...draft, eraRespinsLeft: 0, nationRespinsLeft: 0 };
@@ -1010,8 +1004,8 @@ const draftCombosJson = json(draftSpinCombos());
         tag.textContent = `Daily Challenge #${dayNumber(dailyDay)} · same spins for everyone today · no respins`;
         tag.hidden = false;
         draft = { ...draft, eraRespinsLeft: 0, nationRespinsLeft: 0 };
+        reportEvent('daily_started');
       }
-      if (new URLSearchParams(location.search).get('daily') === '1' && isDaily) reportEvent('daily_started');
       const raw = loadDraft();
       if (raw) {
         const restored = deserializeDraft(raw, (uid) => uidIndex[uid] || uidIndex[legacyUid(uid)] || null);

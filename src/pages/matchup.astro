@@ -126,8 +126,9 @@ const calibrationJson = safe(calibration);
     import { reportScore, reportEvent } from '../lib/telemetry';
     import {
       utcDayKey, dayNumber, loadDaily, saveDaily, recordResult, hasPlayed, currentStreak,
-      activeDailyDay, setActiveDaily, dailyShareText,
+      activeDailyDay, dailyShareText,
     } from '../lib/daily';
+    import { currentMode } from '../lib/draft-slots';
     import {
       encodeSpins, loadChallenge, saveChallenge, betterOf, challengeOutcome, challengeShareText, scorelineText,
     } from '../lib/challenge';
@@ -309,7 +310,7 @@ const calibrationJson = safe(calibration);
       // Daily Challenge: record today's result once (streak, best) and show it.
       let dailyShare = '';
       const dailyDay = utcDayKey();
-      if (activeDailyDay() === dailyDay) {
+      if (currentMode() === 'daily' && activeDailyDay() === dailyDay) {
         const result = { user: series.user, house: series.house, draws: series.draws };
         let state = loadDaily();
         if (!hasPlayed(state, dailyDay)) {
@@ -330,7 +331,7 @@ const calibrationJson = safe(calibration);
 
       // Challenge-a-friend: compare with the scoreline to beat, count the tries.
       let challengeShare = '';
-      const ch = loadChallenge();
+      const ch = currentMode() === 'challenge' ? loadChallenge() : null;
       if (ch) {
         const mine = { user: series.user, house: series.house };
         const best = betterOf(ch.best, mine);
@@ -349,6 +350,8 @@ const calibrationJson = safe(calibration);
         $('rs-challenge').hidden = false;
         challengeShare = challengeShareText(ch.vs, mine, tries);
         reportEvent('challenge_completed');
+        // "Draft again" retries the same challenge (same spins, next attempt).
+        for (const a of document.querySelectorAll('[data-rs-again]')) a.setAttribute('href', `/play?c=${encodeURIComponent(ch.spins)}&vs=${ch.vs.user}-${ch.vs.house}`);
       }
 
       // Ratings, revealed: the best pick in the user's XI.
@@ -507,7 +510,6 @@ const calibrationJson = safe(calibration);
         try {
           localStorage.removeItem('beatmy11.userXI.v1');
           localStorage.removeItem('beatmy11.draft.v1');
-          setActiveDaily(null);
         } catch {
           /* storage unavailable — navigation still works */
         }

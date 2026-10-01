@@ -47,6 +47,7 @@ const steps = [
           Lord’s, the MCG, Eden Gardens, Newlands and Kensington Oval.
         </p>
         <a class="hm-cta" href="/play" id="hm-cta">Start drafting</a>
+        <p class="hm-resume"><a href="/play" id="hm-challenge" hidden></a></p>
         <p class="hm-resume" id="hm-resume" hidden>
           <a href="/play" id="hm-fresh">or start a new draft</a>
         </p>
@@ -112,7 +113,7 @@ const steps = [
         window.setInterval(tick, 30000);
       } else if (activeDailyDay() === day) {
         cta.textContent = 'Continue today’s challenge';
-        cta.setAttribute('href', '/play');
+        cta.setAttribute('href', '/play?daily=1');
       }
       if (streak > 0) {
         streakEl.textContent = `🔥 ${streak}-day streak` + (hasPlayed(st, day) ? '' : ' — play today to keep it going');
@@ -124,25 +125,31 @@ const steps = [
   <script>
     // A draft in progress turns the main button into "Continue your draft",
     // with a small link to start fresh instead.
+    // Only the NORMAL game's draft counts here: a daily or a friend's challenge keeps its own.
+    import { pickCountFor, clearDraftFor, switchMode } from '../lib/draft-slots';
+    import { loadChallenge } from '../lib/challenge';
     try {
-      const raw = localStorage.getItem('beatmy11.draft.v1');
-      const draft = raw ? JSON.parse(raw) : null;
-      const picks = Array.isArray(draft?.picks) ? draft.picks.length : 0;
+      const picks = pickCountFor('normal');
+      const ch = loadChallenge();
+      const chLink = document.getElementById('hm-challenge');
+      if (ch && chLink) {
+        chLink.textContent = `Your friend’s challenge (beat ${ch.vs.user}–${ch.vs.house}) is waiting — continue`;
+        chLink.setAttribute('href', `/play?c=${encodeURIComponent(ch.spins)}&vs=${ch.vs.user}-${ch.vs.house}`);
+        chLink.hidden = false;
+      }
       if (picks > 0) {
         const cta = document.getElementById('hm-cta');
         const complete = picks >= 11;
         if (cta) {
           cta.textContent = complete ? 'See your series' : `Continue your draft (${picks}/11)`;
           cta.setAttribute('href', complete ? '/matchup' : '/play');
+          cta.addEventListener('click', () => switchMode('normal')); // /matchup reads the live draft
         }
         const resume = document.getElementById('hm-resume');
         if (resume) resume.hidden = false;
         document.getElementById('hm-fresh')?.addEventListener('click', () => {
           try {
-            localStorage.removeItem('beatmy11.draft.v1');
-            localStorage.removeItem('beatmy11.userXI.v1');
-            localStorage.removeItem('bm11.daily.active');
-            localStorage.removeItem('bm11.challenge.v1');
+            clearDraftFor('normal'); // leaves a daily or challenge draft alone
           } catch {
             /* storage unavailable — navigation still works */
           }
@@ -193,6 +200,7 @@ const steps = [
     .hm-cta:hover { transform: scale(1.03); box-shadow: 0 0 0 10px rgba(198, 255, 61, 0.18), 0 0 64px rgba(198, 255, 61, 0.7); }
     .hm-cta:active { transform: scale(0.98); }
     .hm-resume { margin: 12px 0 0; }
+    .hm-resume:has(> a[hidden]) { display: none; }
     .hm-resume a { color: var(--hm-muted); font-size: 14px; }
 
     .hm-house { max-width: 520px; margin: 11vh auto 0; }
