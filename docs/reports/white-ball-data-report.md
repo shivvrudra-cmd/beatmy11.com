@@ -8,31 +8,31 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 
 - Matches counted: 2576
 - Players seen: 1998
-- Players kept: 920
+- Players kept: 932
 - Excluded, first Cricsheet ODI before 2004-01-01 (career likely began earlier, incomplete): 250
-- Excluded, regular bowler, spin/pace unknown (owner to supply): 95
 - Excluded, not one of the 10 game nations: 729
+- Excluded, regular bowler, spin/pace unknown (owner to supply): 83
 - Excluded, never batted or bowled regularly: 4
-- Role source: match-data 395, kaggle 405, test-data 110, match-data (stumpings) 2, wikidata 8
+- Role source: match-data 395, kaggle 404, test-data 111, match-data (stumpings) 2, owner 12, wikidata 8
 
 ## T20I
 
 - Matches counted: 3558
 - Players seen: 4755
-- Players kept: 997
-- Excluded, regular bowler, spin/pace unknown (owner to supply): 85
+- Players kept: 1010
+- Excluded, regular bowler, spin/pace unknown (owner to supply): 72
 - Excluded, not one of the 10 game nations: 3658
 - Excluded, never batted or bowled regularly: 15
-- Role source: match-data 434, kaggle 418, test-data 136, match-data (stumpings) 5, wikidata 4
+- Role source: match-data 434, kaggle 416, test-data 137, owner 14, match-data (stumpings) 5, wikidata 4
 
 ## IPL
 
 - Matches counted: 1243
 - Players seen: 809
-- Players kept: 706
-- Excluded, regular bowler, spin/pace unknown (owner to supply): 96
+- Players kept: 718
+- Excluded, regular bowler, spin/pace unknown (owner to supply): 84
 - Excluded, never batted or bowled regularly: 7
-- Role source: match-data 337, match-data (stumpings) 3, kaggle 292, test-data 71, wikidata 3
+- Role source: match-data 337, match-data (stumpings) 3, owner 12, kaggle 291, test-data 72, wikidata 3
 
 ## Provisional role rules (owner to confirm)
 

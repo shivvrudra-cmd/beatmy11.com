@@ -3,6 +3,7 @@
  *
  * Plan and owner decisions: docs/plans/white-ball-formats.md.
  *
+ * Owner-supplied facts: scripts/cricsheet/owner-overrides.json (spin/pace, names; source 'owner').
  * Inputs (downloaded into data-raw/, which is gitignored; see scripts/cricsheet/README.md):
  *   data-raw/cricsheet/{odis_male,t20s_male,ipl}/*.json   Cricsheet match files (ODC-By licence)
  *   data-raw/cricsheet/people.csv, names.csv               Cricsheet register (ids, full names)
@@ -224,7 +225,8 @@ function main() {
   const nameScore = (n) => {
     const words = n.split(/\s+/);
     const initials = words.filter((w) => /^[A-Z]{1,3}$/.test(w)).length; // "MS", "CH", "S"
-    return (initials === 0 ? 1000 : 0) + (words[0].length > 2 ? 100 : 0) + n.length;
+    // A full name has 2+ words and no initials; a lone surname ("Chakravarthy") ranks low.
+    return (initials === 0 && words.length >= 2 ? 1000 : 0) + (words.length >= 2 ? 200 : 0) + (words[0].length > 2 ? 100 : 0) + n.length;
   };
   const bestName = (id, extra) => {
     const all = new Set([...(nameVariants.get(id) ?? []), ...extra]);
@@ -251,6 +253,8 @@ function main() {
   const wd = new Map();
   for (const r of readCsv(join(RAW, 'cricsheet/wikidata_cricketers.csv'))) if (r.styleLabel) wd.set(r.ci, r.styleLabel);
 
+  // Facts the owner supplied (spin/pace, display names), keyed by Cricsheet id. Highest priority.
+  const overrides = JSON.parse(readFileSync(join(ROOT, 'scripts/cricsheet/owner-overrides.json'), 'utf8'));
   const report = { formats: {}, rolesNeeded: [], ambiguous: [] };
   // Resolved from ODI/T20I (same Cricsheet id): nation and bowling type, reused for IPL players.
   const intlKnown = new Map();
@@ -310,9 +314,12 @@ function main() {
       // Still only initials ("A T Rayudu")? Use the matched Kaggle profile's full name if it has none.
       let displayName = full;
       if (kg?.fullname && nameScore(full) < 1000 && nameScore(kg.fullname) >= 1000) displayName = kg.fullname;
+      if (overrides[p.id]?.name) displayName = overrides[p.id].name;
       const wdStyle = ['key_cricinfo', 'key_cricinfo_2', 'key_cricinfo_3'].map((k) => wd.get(reg[k])).find(Boolean);
 
       const bowlingType = (() => {
+        const ov = overrides[p.id];
+        if (ov?.bowlingType) return { type: ov.bowlingType, source: 'owner' };
         if (known?.bowlingType) return { type: known.bowlingType, source: known.bowlingTypeSource };
         const tr = test ? [test.primaryRole, ...(Array.isArray(test.secondaryRoles) ? test.secondaryRoles : [])].map((x) => String(x).toLowerCase()) : [];
         if (tr.some((r) => r.includes('spin'))) return { type: 'spin', source: 'test-data' };

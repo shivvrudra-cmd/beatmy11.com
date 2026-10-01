@@ -281,6 +281,72 @@
   }
  },
  {
+  "id": "cs-eef2536f",
+  "cricsheetId": "eef2536f",
+  "name": "Aavesh Khan",
+  "scorecardName": "Avesh Khan",
+  "nation": "India",
+  "iplSpells": [
+   {
+    "team": "Delhi Capitals",
+    "block": "2018-22"
+   },
+   {
+    "team": "Lucknow Super Giants",
+    "block": "2018-22"
+   },
+   {
+    "team": "Lucknow Super Giants",
+    "block": "2023+"
+   },
+   {
+    "team": "Rajasthan Royals",
+    "block": "2023+"
+   },
+   {
+    "team": "Royal Challengers Bengaluru",
+    "block": "2013-17"
+   }
+  ],
+  "iplTeams": [
+   "Royal Challengers Bengaluru",
+   "Delhi Capitals",
+   "Lucknow Super Giants",
+   "Rajasthan Royals"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "owner",
+  "bowlingTypeSource": "owner",
+  "firstMatch": "2017-05-14",
+  "lastMatch": "2026-05-10",
+  "stats": {
+   "matches": 82,
+   "innings": 18,
+   "runs": 68,
+   "notOuts": 14,
+   "highest": 19,
+   "battingAverage": 17,
+   "strikeRate": 158.14,
+   "ballsFaced": 43,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 1767,
+   "runsConceded": 2734,
+   "wickets": 93,
+   "bowlingAverage": 29.4,
+   "economy": 9.28,
+   "ballsPerWicket": 19,
+   "fourWicketInnings": 1,
+   "fiveWicketInnings": 0,
+   "catches": 15,
+   "stumpings": 0,
+   "dismissals": 15
+  }
+ },
+ {
   "id": "cs-c4487b84",
   "cricsheetId": "c4487b84",
   "name": "AB de Villiers",
@@ -4155,6 +4221,57 @@
   }
  },
  {
+  "id": "cs-957532de",
+  "cricsheetId": "957532de",
+  "name": "Arvind Sreenath",
+  "scorecardName": "S Aravind",
+  "nation": "India",
+  "iplSpells": [
+   {
+    "team": "Royal Challengers Bengaluru",
+    "block": "2008-12"
+   },
+   {
+    "team": "Royal Challengers Bengaluru",
+    "block": "2013-17"
+   }
+  ],
+  "iplTeams": [
+   "Royal Challengers Bengaluru"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "owner",
+  "bowlingTypeSource": "owner",
+  "firstMatch": "2011-04-14",
+  "lastMatch": "2017-05-07",
+  "stats": {
+   "matches": 38,
+   "innings": 12,
+   "runs": 59,
+   "notOuts": 8,
+   "highest": 14,
+   "battingAverage": 14.75,
+   "strikeRate": 103.51,
+   "ballsFaced": 57,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 760,
+   "runsConceded": 1039,
+   "wickets": 45,
+   "bowlingAverage": 23.09,
+   "economy": 8.2,
+   "ballsPerWicket": 16.9,
+   "fourWicketInnings": 2,
+   "fiveWicketInnings": 0,
+   "catches": 8,
+   "stumpings": 0,
+   "dismissals": 8
+  }
+ },
+ {
   "id": "cs-b9be6507",
   "cricsheetId": "b9be6507",
   "name": "AS Yadav",
@@ -6720,67 +6837,6 @@
   }
  },
  {
-  "id": "cs-23eeb873",
-  "cricsheetId": "23eeb873",
-  "name": "Chahar",
-  "scorecardName": "DL Chahar",
-  "nation": "India",
-  "iplSpells": [
-   {
-    "team": "Chennai Super Kings",
-    "block": "2018-22"
-   },
-   {
-    "team": "Chennai Super Kings",
-    "block": "2023+"
-   },
-   {
-    "team": "Mumbai Indians",
-    "block": "2023+"
-   },
-   {
-    "team": "Rising Pune Supergiant",
-    "block": "2013-17"
-   }
-  ],
-  "iplTeams": [
-   "Rising Pune Supergiant",
-   "Chennai Super Kings",
-   "Mumbai Indians"
-  ],
-  "primaryRole": "fast-bowler",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "pace",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2016-05-17",
-  "lastMatch": "2026-05-24",
-  "stats": {
-   "matches": 103,
-   "innings": 21,
-   "runs": 142,
-   "notOuts": 11,
-   "highest": 39,
-   "battingAverage": 14.2,
-   "strikeRate": 137.86,
-   "ballsFaced": 103,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 2068,
-   "runsConceded": 2862,
-   "wickets": 96,
-   "bowlingAverage": 29.81,
-   "economy": 8.3,
-   "ballsPerWicket": 21.5,
-   "fourWicketInnings": 2,
-   "fiveWicketInnings": 0,
-   "catches": 16,
-   "stumpings": 0,
-   "dismissals": 16
-  }
- },
- {
   "id": "cs-cfad138c",
   "cricsheetId": "cfad138c",
   "name": "Chamara Kapugedera",
@@ -8745,6 +8801,53 @@
   }
  },
  {
+  "id": "cs-6c79c098",
+  "cricsheetId": "6c79c098",
+  "name": "David Payne",
+  "scorecardName": "DA Payne",
+  "nation": "England",
+  "iplSpells": [
+   {
+    "team": "Sunrisers Hyderabad",
+    "block": "2023+"
+   }
+  ],
+  "iplTeams": [
+   "Sunrisers Hyderabad"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2026-03-28",
+  "lastMatch": "2026-04-02",
+  "stats": {
+   "matches": 2,
+   "innings": 1,
+   "runs": 6,
+   "notOuts": 1,
+   "highest": 6,
+   "battingAverage": null,
+   "strikeRate": 120,
+   "ballsFaced": 5,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 30,
+   "runsConceded": 70,
+   "wickets": 2,
+   "bowlingAverage": 35,
+   "economy": 14,
+   "ballsPerWicket": 15,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 0,
+   "stumpings": 0,
+   "dismissals": 0
+  }
+ },
+ {
   "id": "cs-dcce6f09",
   "cricsheetId": "dcce6f09",
   "name": "David Warner",
@@ -8866,6 +8969,62 @@
   }
  },
  {
+  "id": "cs-7f048519",
+  "cricsheetId": "7f048519",
+  "name": "David Willey",
+  "scorecardName": "DJ Willey",
+  "nation": "England",
+  "iplSpells": [
+   {
+    "team": "Chennai Super Kings",
+    "block": "2018-22"
+   },
+   {
+    "team": "Royal Challengers Bengaluru",
+    "block": "2018-22"
+   },
+   {
+    "team": "Royal Challengers Bengaluru",
+    "block": "2023+"
+   }
+  ],
+  "iplTeams": [
+   "Chennai Super Kings",
+   "Royal Challengers Bengaluru"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2018-05-05",
+  "lastMatch": "2023-04-26",
+  "stats": {
+   "matches": 11,
+   "innings": 5,
+   "runs": 53,
+   "notOuts": 3,
+   "highest": 20,
+   "battingAverage": 26.5,
+   "strikeRate": 85.48,
+   "ballsFaced": 62,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 216,
+   "runsConceded": 272,
+   "wickets": 6,
+   "bowlingAverage": 45.33,
+   "economy": 7.56,
+   "ballsPerWicket": 36,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 4,
+   "stumpings": 0,
+   "dismissals": 4
+  }
+ },
+ {
   "id": "cs-ad9c32a2",
   "cricsheetId": "ad9c32a2",
   "name": "Dawid Malan",
@@ -8965,6 +9124,67 @@
   }
  },
  {
+  "id": "cs-23eeb873",
+  "cricsheetId": "23eeb873",
+  "name": "Deepak Chahar",
+  "scorecardName": "DL Chahar",
+  "nation": "India",
+  "iplSpells": [
+   {
+    "team": "Chennai Super Kings",
+    "block": "2018-22"
+   },
+   {
+    "team": "Chennai Super Kings",
+    "block": "2023+"
+   },
+   {
+    "team": "Mumbai Indians",
+    "block": "2023+"
+   },
+   {
+    "team": "Rising Pune Supergiant",
+    "block": "2013-17"
+   }
+  ],
+  "iplTeams": [
+   "Rising Pune Supergiant",
+   "Chennai Super Kings",
+   "Mumbai Indians"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2016-05-17",
+  "lastMatch": "2026-05-24",
+  "stats": {
+   "matches": 103,
+   "innings": 21,
+   "runs": 142,
+   "notOuts": 11,
+   "highest": 39,
+   "battingAverage": 14.2,
+   "strikeRate": 137.86,
+   "ballsFaced": 103,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 2068,
+   "runsConceded": 2862,
+   "wickets": 96,
+   "bowlingAverage": 29.81,
+   "economy": 8.3,
+   "ballsPerWicket": 21.5,
+   "fourWicketInnings": 2,
+   "fiveWicketInnings": 0,
+   "catches": 16,
+   "stumpings": 0,
+   "dismissals": 16
+  }
+ },
+ {
   "id": "cs-73ad96ed",
   "cricsheetId": "73ad96ed",
   "name": "Deepak Jagbir Hooda",
@@ -9037,67 +9257,6 @@
    "catches": 55,
    "stumpings": 0,
    "dismissals": 55
-  }
- },
- {
-  "id": "cs-46a9bea1",
-  "cricsheetId": "46a9bea1",
-  "name": "Deshpande",
-  "scorecardName": "TU Deshpande",
-  "nation": "India",
-  "iplSpells": [
-   {
-    "team": "Chennai Super Kings",
-    "block": "2018-22"
-   },
-   {
-    "team": "Chennai Super Kings",
-    "block": "2023+"
-   },
-   {
-    "team": "Delhi Capitals",
-    "block": "2018-22"
-   },
-   {
-    "team": "Rajasthan Royals",
-    "block": "2023+"
-   }
-  ],
-  "iplTeams": [
-   "Delhi Capitals",
-   "Chennai Super Kings",
-   "Rajasthan Royals"
-  ],
-  "primaryRole": "fast-bowler",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "pace",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2020-10-14",
-  "lastMatch": "2026-05-29",
-  "stats": {
-   "matches": 53,
-   "innings": 10,
-   "runs": 54,
-   "notOuts": 6,
-   "highest": 25,
-   "battingAverage": 13.5,
-   "strikeRate": 150,
-   "ballsFaced": 36,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 1103,
-   "runsConceded": 1858,
-   "wickets": 55,
-   "bowlingAverage": 33.78,
-   "economy": 10.11,
-   "ballsPerWicket": 20.1,
-   "fourWicketInnings": 1,
-   "fiveWicketInnings": 0,
-   "catches": 10,
-   "stumpings": 0,
-   "dismissals": 10
   }
  },
  {
@@ -11578,67 +11737,6 @@
   }
  },
  {
-  "id": "cs-90de905a",
-  "cricsheetId": "90de905a",
-  "name": "Gowtham",
-  "scorecardName": "K Gowtham",
-  "nation": "India",
-  "iplSpells": [
-   {
-    "team": "Lucknow Super Giants",
-    "block": "2018-22"
-   },
-   {
-    "team": "Lucknow Super Giants",
-    "block": "2023+"
-   },
-   {
-    "team": "Punjab Kings",
-    "block": "2018-22"
-   },
-   {
-    "team": "Rajasthan Royals",
-    "block": "2018-22"
-   }
-  ],
-  "iplTeams": [
-   "Rajasthan Royals",
-   "Punjab Kings",
-   "Lucknow Super Giants"
-  ],
-  "primaryRole": "spinner",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "spin",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2018-04-09",
-  "lastMatch": "2024-05-08",
-  "stats": {
-   "matches": 36,
-   "innings": 27,
-   "runs": 247,
-   "notOuts": 9,
-   "highest": 33,
-   "battingAverage": 13.72,
-   "strikeRate": 166.89,
-   "ballsFaced": 148,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 588,
-   "runsConceded": 808,
-   "wickets": 21,
-   "bowlingAverage": 38.48,
-   "economy": 8.24,
-   "ballsPerWicket": 28,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 17,
-   "stumpings": 0,
-   "dismissals": 17
-  }
- },
- {
   "id": "cs-72861603",
   "cricsheetId": "72861603",
   "name": "Graeme Smith",
@@ -11930,6 +12028,80 @@
    "catches": 0,
    "stumpings": 0,
    "dismissals": 0
+  }
+ },
+ {
+  "id": "cs-f986ca1a",
+  "cricsheetId": "f986ca1a",
+  "name": "H V Patel",
+  "scorecardName": "HV Patel",
+  "nation": "India",
+  "iplSpells": [
+   {
+    "team": "Delhi Capitals",
+    "block": "2018-22"
+   },
+   {
+    "team": "Punjab Kings",
+    "block": "2023+"
+   },
+   {
+    "team": "Royal Challengers Bengaluru",
+    "block": "2008-12"
+   },
+   {
+    "team": "Royal Challengers Bengaluru",
+    "block": "2013-17"
+   },
+   {
+    "team": "Royal Challengers Bengaluru",
+    "block": "2018-22"
+   },
+   {
+    "team": "Royal Challengers Bengaluru",
+    "block": "2023+"
+   },
+   {
+    "team": "Sunrisers Hyderabad",
+    "block": "2023+"
+   }
+  ],
+  "iplTeams": [
+   "Royal Challengers Bengaluru",
+   "Delhi Capitals",
+   "Punjab Kings",
+   "Sunrisers Hyderabad"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "owner",
+  "bowlingTypeSource": "owner",
+  "firstMatch": "2012-04-07",
+  "lastMatch": "2026-05-22",
+  "stats": {
+   "matches": 123,
+   "innings": 49,
+   "runs": 280,
+   "notOuts": 17,
+   "highest": 36,
+   "battingAverage": 8.75,
+   "strikeRate": 117.65,
+   "ballsFaced": 238,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 2506,
+   "runsConceded": 3727,
+   "wickets": 151,
+   "bowlingAverage": 24.68,
+   "economy": 8.92,
+   "ballsPerWicket": 16.6,
+   "fourWicketInnings": 5,
+   "fiveWicketInnings": 1,
+   "catches": 28,
+   "stumpings": 0,
+   "dismissals": 28
   }
  },
  {
@@ -16884,6 +17056,67 @@
   }
  },
  {
+  "id": "cs-90de905a",
+  "cricsheetId": "90de905a",
+  "name": "Krishnappa Gowtham",
+  "scorecardName": "K Gowtham",
+  "nation": "India",
+  "iplSpells": [
+   {
+    "team": "Lucknow Super Giants",
+    "block": "2018-22"
+   },
+   {
+    "team": "Lucknow Super Giants",
+    "block": "2023+"
+   },
+   {
+    "team": "Punjab Kings",
+    "block": "2018-22"
+   },
+   {
+    "team": "Rajasthan Royals",
+    "block": "2018-22"
+   }
+  ],
+  "iplTeams": [
+   "Rajasthan Royals",
+   "Punjab Kings",
+   "Lucknow Super Giants"
+  ],
+  "primaryRole": "spinner",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2018-04-09",
+  "lastMatch": "2024-05-08",
+  "stats": {
+   "matches": 36,
+   "innings": 27,
+   "runs": 247,
+   "notOuts": 9,
+   "highest": 33,
+   "battingAverage": 13.72,
+   "strikeRate": 166.89,
+   "ballsFaced": 148,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 588,
+   "runsConceded": 808,
+   "wickets": 21,
+   "bowlingAverage": 38.48,
+   "economy": 8.24,
+   "ballsPerWicket": 28,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 17,
+   "stumpings": 0,
+   "dismissals": 17
+  }
+ },
+ {
   "id": "cs-5b8c830e",
   "cricsheetId": "5b8c830e",
   "name": "Krunal Pandya",
@@ -16998,53 +17231,6 @@
   }
  },
  {
-  "id": "cs-fef92afc",
-  "cricsheetId": "fef92afc",
-  "name": "Kuggeleijn",
-  "scorecardName": "SC Kuggeleijn",
-  "nation": "New Zealand",
-  "iplSpells": [
-   {
-    "team": "Chennai Super Kings",
-    "block": "2018-22"
-   }
-  ],
-  "iplTeams": [
-   "Chennai Super Kings"
-  ],
-  "primaryRole": "fast-bowler",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "pace",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2019-04-06",
-  "lastMatch": "2019-04-09",
-  "stats": {
-   "matches": 2,
-   "innings": 0,
-   "runs": 0,
-   "notOuts": 0,
-   "highest": 0,
-   "battingAverage": null,
-   "strikeRate": null,
-   "ballsFaced": 0,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 48,
-   "runsConceded": 71,
-   "wickets": 2,
-   "bowlingAverage": 35.5,
-   "economy": 8.88,
-   "ballsPerWicket": 24,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 0,
-   "stumpings": 0,
-   "dismissals": 0
-  }
- },
- {
   "id": "cs-2e78f685",
   "cricsheetId": "2e78f685",
   "name": "Kuldeep Sen",
@@ -17093,6 +17279,66 @@
    "catches": 4,
    "stumpings": 0,
    "dismissals": 4
+  }
+ },
+ {
+  "id": "cs-8d2c70ad",
+  "cricsheetId": "8d2c70ad",
+  "name": "Kuldeep Singh Yadav",
+  "scorecardName": "Kuldeep Yadav",
+  "nation": "India",
+  "iplSpells": [
+   {
+    "team": "Delhi Capitals",
+    "block": "2018-22"
+   },
+   {
+    "team": "Delhi Capitals",
+    "block": "2023+"
+   },
+   {
+    "team": "Kolkata Knight Riders",
+    "block": "2013-17"
+   },
+   {
+    "team": "Kolkata Knight Riders",
+    "block": "2018-22"
+   }
+  ],
+  "iplTeams": [
+   "Kolkata Knight Riders",
+   "Delhi Capitals"
+  ],
+  "primaryRole": "spinner",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "owner",
+  "bowlingTypeSource": "owner",
+  "firstMatch": "2016-04-13",
+  "lastMatch": "2026-05-24",
+  "stats": {
+   "matches": 111,
+   "innings": 42,
+   "runs": 210,
+   "notOuts": 24,
+   "highest": 35,
+   "battingAverage": 11.67,
+   "strikeRate": 83,
+   "ballsFaced": 253,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 2286,
+   "runsConceded": 3159,
+   "wickets": 112,
+   "bowlingAverage": 28.21,
+   "economy": 8.29,
+   "ballsPerWicket": 20.4,
+   "fourWicketInnings": 4,
+   "fiveWicketInnings": 0,
+   "catches": 22,
+   "stumpings": 0,
+   "dismissals": 22
   }
  },
  {
@@ -18367,6 +18613,53 @@
   }
  },
  {
+  "id": "cs-65b6943c",
+  "cricsheetId": "65b6943c",
+  "name": "Luke Wood",
+  "scorecardName": "L Wood",
+  "nation": "England",
+  "iplSpells": [
+   {
+    "team": "Mumbai Indians",
+    "block": "2023+"
+   }
+  ],
+  "iplTeams": [
+   "Mumbai Indians"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2024-03-24",
+  "lastMatch": "2024-04-27",
+  "stats": {
+   "matches": 2,
+   "innings": 1,
+   "runs": 9,
+   "notOuts": 1,
+   "highest": 9,
+   "battingAverage": null,
+   "strikeRate": 300,
+   "ballsFaced": 3,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 36,
+   "runsConceded": 93,
+   "wickets": 1,
+   "bowlingAverage": 93,
+   "economy": 15.5,
+   "ballsPerWicket": 36,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 0,
+   "stumpings": 0,
+   "dismissals": 0
+  }
+ },
+ {
   "id": "cs-cca50cd6",
   "cricsheetId": "cca50cd6",
   "name": "Luke Wright",
@@ -18521,6 +18814,63 @@
    "catches": 2,
    "stumpings": 0,
    "dismissals": 2
+  }
+ },
+ {
+  "id": "cs-85e0cf10",
+  "cricsheetId": "85e0cf10",
+  "name": "M Prasidh Krishna",
+  "scorecardName": "M Prasidh Krishna",
+  "nation": "India",
+  "iplSpells": [
+   {
+    "team": "Gujarat Titans",
+    "block": "2023+"
+   },
+   {
+    "team": "Kolkata Knight Riders",
+    "block": "2018-22"
+   },
+   {
+    "team": "Rajasthan Royals",
+    "block": "2018-22"
+   }
+  ],
+  "iplTeams": [
+   "Kolkata Knight Riders",
+   "Rajasthan Royals",
+   "Gujarat Titans"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "owner",
+  "bowlingTypeSource": "owner",
+  "firstMatch": "2018-05-06",
+  "lastMatch": "2026-05-31",
+  "stats": {
+   "matches": 78,
+   "innings": 11,
+   "runs": 15,
+   "notOuts": 8,
+   "highest": 6,
+   "battingAverage": 5,
+   "strikeRate": 48.39,
+   "ballsFaced": 31,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 1733,
+   "runsConceded": 2598,
+   "wickets": 90,
+   "bowlingAverage": 28.87,
+   "economy": 8.99,
+   "ballsPerWicket": 19.3,
+   "fourWicketInnings": 3,
+   "fiveWicketInnings": 0,
+   "catches": 19,
+   "stumpings": 0,
+   "dismissals": 19
   }
  },
  {
@@ -20770,7 +21120,7 @@
  {
   "id": "cs-7eae4418",
   "cricsheetId": "7eae4418",
-  "name": "Misbah-ul-Haq",
+  "name": "Misbah ul Haq",
   "scorecardName": "Misbah-ul-Haq",
   "nation": "Pakistan",
   "iplSpells": [
@@ -22326,6 +22676,53 @@
   }
  },
  {
+  "id": "cs-2cffab74",
+  "cricsheetId": "2cffab74",
+  "name": "Mukesh Kumar",
+  "scorecardName": "Mukesh Kumar",
+  "nation": "India",
+  "iplSpells": [
+   {
+    "team": "Delhi Capitals",
+    "block": "2023+"
+   }
+  ],
+  "iplTeams": [
+   "Delhi Capitals"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "owner",
+  "bowlingTypeSource": "owner",
+  "firstMatch": "2023-04-01",
+  "lastMatch": "2026-05-17",
+  "stats": {
+   "matches": 42,
+   "innings": 5,
+   "runs": 10,
+   "notOuts": 4,
+   "highest": 6,
+   "battingAverage": 10,
+   "strikeRate": 55.56,
+   "ballsFaced": 18,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 824,
+   "runsConceded": 1455,
+   "wickets": 42,
+   "bowlingAverage": 34.64,
+   "economy": 10.59,
+   "ballsPerWicket": 19.6,
+   "fourWicketInnings": 1,
+   "fiveWicketInnings": 0,
+   "catches": 12,
+   "stumpings": 0,
+   "dismissals": 12
+  }
+ },
+ {
   "id": "cs-f0f628c7",
   "cricsheetId": "f0f628c7",
   "name": "Munaf Patel",
@@ -23249,7 +23646,7 @@
  {
   "id": "cs-c0c411cb",
   "cricsheetId": "c0c411cb",
-  "name": "Naveen-ul-Haq",
+  "name": "Naveen ul Haq",
   "scorecardName": "Naveen-ul-Haq",
   "iplSpells": [
    {
@@ -23909,6 +24306,100 @@
   }
  },
  {
+  "id": "cs-23cca426",
+  "cricsheetId": "23cca426",
+  "name": "Odean Smith",
+  "scorecardName": "OF Smith",
+  "nation": "West Indies",
+  "iplSpells": [
+   {
+    "team": "Punjab Kings",
+    "block": "2018-22"
+   }
+  ],
+  "iplTeams": [
+   "Punjab Kings"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2022-03-27",
+  "lastMatch": "2022-04-17",
+  "stats": {
+   "matches": 6,
+   "innings": 6,
+   "runs": 51,
+   "notOuts": 3,
+   "highest": 25,
+   "battingAverage": 17,
+   "strikeRate": 115.91,
+   "ballsFaced": 44,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 90,
+   "runsConceded": 178,
+   "wickets": 6,
+   "bowlingAverage": 29.67,
+   "economy": 11.87,
+   "ballsPerWicket": 15,
+   "fourWicketInnings": 1,
+   "fiveWicketInnings": 0,
+   "catches": 2,
+   "stumpings": 0,
+   "dismissals": 2
+  }
+ },
+ {
+  "id": "cs-c6097d68",
+  "cricsheetId": "c6097d68",
+  "name": "Oshane Thomas",
+  "scorecardName": "O Thomas",
+  "nation": "West Indies",
+  "iplSpells": [
+   {
+    "team": "Rajasthan Royals",
+    "block": "2018-22"
+   }
+  ],
+  "iplTeams": [
+   "Rajasthan Royals"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2019-04-25",
+  "lastMatch": "2019-05-04",
+  "stats": {
+   "matches": 4,
+   "innings": 0,
+   "runs": 0,
+   "notOuts": 0,
+   "highest": 0,
+   "battingAverage": null,
+   "strikeRate": null,
+   "ballsFaced": 0,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 60,
+   "runsConceded": 79,
+   "wickets": 5,
+   "bowlingAverage": 15.8,
+   "economy": 7.9,
+   "ballsPerWicket": 12,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 1,
+   "stumpings": 0,
+   "dismissals": 1
+  }
+ },
+ {
   "id": "cs-7bf96684",
   "cricsheetId": "7bf96684",
   "name": "Owais Shah",
@@ -24072,57 +24563,6 @@
    "catches": 2,
    "stumpings": 0,
    "dismissals": 2
-  }
- },
- {
-  "id": "cs-0c432afb",
-  "cricsheetId": "0c432afb",
-  "name": "Parameswaran",
-  "scorecardName": "P Parameswaran",
-  "iplSpells": [
-   {
-    "team": "Kochi Tuskers Kerala",
-    "block": "2008-12"
-   },
-   {
-    "team": "Royal Challengers Bengaluru",
-    "block": "2008-12"
-   }
-  ],
-  "iplTeams": [
-   "Kochi Tuskers Kerala",
-   "Royal Challengers Bengaluru"
-  ],
-  "primaryRole": "fast-bowler",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "pace",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2011-05-02",
-  "lastMatch": "2012-05-20",
-  "stats": {
-   "matches": 8,
-   "innings": 2,
-   "runs": 1,
-   "notOuts": 2,
-   "highest": 1,
-   "battingAverage": null,
-   "strikeRate": 50,
-   "ballsFaced": 2,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 154,
-   "runsConceded": 224,
-   "wickets": 9,
-   "bowlingAverage": 24.89,
-   "economy": 8.73,
-   "ballsPerWicket": 17.1,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 1,
-   "stumpings": 0,
-   "dismissals": 1
   }
  },
  {
@@ -24677,53 +25117,6 @@
   }
  },
  {
-  "id": "cs-6c79c098",
-  "cricsheetId": "6c79c098",
-  "name": "Payne",
-  "scorecardName": "DA Payne",
-  "nation": "England",
-  "iplSpells": [
-   {
-    "team": "Sunrisers Hyderabad",
-    "block": "2023+"
-   }
-  ],
-  "iplTeams": [
-   "Sunrisers Hyderabad"
-  ],
-  "primaryRole": "fast-bowler",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "pace",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2026-03-28",
-  "lastMatch": "2026-04-02",
-  "stats": {
-   "matches": 2,
-   "innings": 1,
-   "runs": 6,
-   "notOuts": 1,
-   "highest": 6,
-   "battingAverage": null,
-   "strikeRate": 120,
-   "ballsFaced": 5,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 30,
-   "runsConceded": 70,
-   "wickets": 2,
-   "bowlingAverage": 35,
-   "economy": 14,
-   "ballsPerWicket": 15,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 0,
-   "stumpings": 0,
-   "dismissals": 0
-  }
- },
- {
   "id": "cs-6c882e9a",
   "cricsheetId": "6c882e9a",
   "name": "PBB Rajapaksa",
@@ -25226,6 +25619,57 @@
   }
  },
  {
+  "id": "cs-0c432afb",
+  "cricsheetId": "0c432afb",
+  "name": "Prasanth Parameswaran",
+  "scorecardName": "P Parameswaran",
+  "iplSpells": [
+   {
+    "team": "Kochi Tuskers Kerala",
+    "block": "2008-12"
+   },
+   {
+    "team": "Royal Challengers Bengaluru",
+    "block": "2008-12"
+   }
+  ],
+  "iplTeams": [
+   "Kochi Tuskers Kerala",
+   "Royal Challengers Bengaluru"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2011-05-02",
+  "lastMatch": "2012-05-20",
+  "stats": {
+   "matches": 8,
+   "innings": 2,
+   "runs": 1,
+   "notOuts": 2,
+   "highest": 1,
+   "battingAverage": null,
+   "strikeRate": 50,
+   "ballsFaced": 2,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 154,
+   "runsConceded": 224,
+   "wickets": 9,
+   "bowlingAverage": 24.89,
+   "economy": 8.73,
+   "ballsPerWicket": 17.1,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 1,
+   "stumpings": 0,
+   "dismissals": 1
+  }
+ },
+ {
   "id": "cs-8ac93ca2",
   "cricsheetId": "8ac93ca2",
   "name": "Prashant Chopra",
@@ -25443,6 +25887,57 @@
    "catches": 1,
    "stumpings": 0,
    "dismissals": 1
+  }
+ },
+ {
+  "id": "cs-6aed7e79",
+  "cricsheetId": "6aed7e79",
+  "name": "Pravin Tambe",
+  "scorecardName": "PV Tambe",
+  "iplSpells": [
+   {
+    "team": "Gujarat Lions",
+    "block": "2013-17"
+   },
+   {
+    "team": "Rajasthan Royals",
+    "block": "2013-17"
+   }
+  ],
+  "iplTeams": [
+   "Rajasthan Royals",
+   "Gujarat Lions"
+  ],
+  "primaryRole": "spinner",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2013-05-07",
+  "lastMatch": "2016-05-14",
+  "stats": {
+   "matches": 33,
+   "innings": 6,
+   "runs": 18,
+   "notOuts": 4,
+   "highest": 7,
+   "battingAverage": 9,
+   "strikeRate": 46.15,
+   "ballsFaced": 39,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 660,
+   "runsConceded": 853,
+   "wickets": 28,
+   "bowlingAverage": 30.46,
+   "economy": 7.75,
+   "ballsPerWicket": 23.6,
+   "fourWicketInnings": 1,
+   "fiveWicketInnings": 0,
+   "catches": 4,
+   "stumpings": 0,
+   "dismissals": 4
   }
  },
  {
@@ -25932,6 +26427,66 @@
   }
  },
  {
+  "id": "cs-26a85969",
+  "cricsheetId": "26a85969",
+  "name": "R R Dhawan",
+  "scorecardName": "R Dhawan",
+  "nation": "India",
+  "iplSpells": [
+   {
+    "team": "Mumbai Indians",
+    "block": "2013-17"
+   },
+   {
+    "team": "Punjab Kings",
+    "block": "2013-17"
+   },
+   {
+    "team": "Punjab Kings",
+    "block": "2018-22"
+   },
+   {
+    "team": "Punjab Kings",
+    "block": "2023+"
+   }
+  ],
+  "iplTeams": [
+   "Punjab Kings",
+   "Mumbai Indians"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "owner",
+  "bowlingTypeSource": "owner",
+  "firstMatch": "2013-04-09",
+  "lastMatch": "2024-05-19",
+  "stats": {
+   "matches": 39,
+   "innings": 24,
+   "runs": 210,
+   "notOuts": 13,
+   "highest": 25,
+   "battingAverage": 19.09,
+   "strikeRate": 112.3,
+   "ballsFaced": 187,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 662,
+   "runsConceded": 891,
+   "wickets": 25,
+   "bowlingAverage": 35.64,
+   "economy": 8.08,
+   "ballsPerWicket": 26.5,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 9,
+   "stumpings": 0,
+   "dismissals": 9
+  }
+ },
+ {
   "id": "cs-c1e53c3f",
   "cricsheetId": "c1e53c3f",
   "name": "R Smaran",
@@ -26197,6 +26752,67 @@
    "catches": 18,
    "stumpings": 0,
    "dismissals": 18
+  }
+ },
+ {
+  "id": "cs-5d9a1a73",
+  "cricsheetId": "5d9a1a73",
+  "name": "Rahul Sharma",
+  "scorecardName": "R Sharma",
+  "nation": "India",
+  "iplSpells": [
+   {
+    "team": "Deccan Chargers",
+    "block": "2008-12"
+   },
+   {
+    "team": "Delhi Capitals",
+    "block": "2013-17"
+   },
+   {
+    "team": "Pune Warriors",
+    "block": "2008-12"
+   },
+   {
+    "team": "Pune Warriors",
+    "block": "2013-17"
+   }
+  ],
+  "iplTeams": [
+   "Deccan Chargers",
+   "Pune Warriors",
+   "Delhi Capitals"
+  ],
+  "primaryRole": "spinner",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "owner",
+  "bowlingTypeSource": "owner",
+  "firstMatch": "2010-03-21",
+  "lastMatch": "2014-05-03",
+  "stats": {
+   "matches": 44,
+   "innings": 20,
+   "runs": 66,
+   "notOuts": 6,
+   "highest": 14,
+   "battingAverage": 4.71,
+   "strikeRate": 88,
+   "ballsFaced": 75,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 928,
+   "runsConceded": 1086,
+   "wickets": 40,
+   "bowlingAverage": 27.15,
+   "economy": 7.02,
+   "ballsPerWicket": 23.2,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 12,
+   "stumpings": 0,
+   "dismissals": 12
   }
  },
  {
@@ -26867,6 +27483,65 @@
   }
  },
  {
+  "id": "cs-5f547c8b",
+  "cricsheetId": "5f547c8b",
+  "name": "Rashid Khan",
+  "scorecardName": "Rashid Khan",
+  "iplSpells": [
+   {
+    "team": "Gujarat Titans",
+    "block": "2018-22"
+   },
+   {
+    "team": "Gujarat Titans",
+    "block": "2023+"
+   },
+   {
+    "team": "Sunrisers Hyderabad",
+    "block": "2013-17"
+   },
+   {
+    "team": "Sunrisers Hyderabad",
+    "block": "2018-22"
+   }
+  ],
+  "iplTeams": [
+   "Sunrisers Hyderabad",
+   "Gujarat Titans"
+  ],
+  "primaryRole": "spinner",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "owner",
+  "bowlingTypeSource": "owner",
+  "firstMatch": "2017-04-05",
+  "lastMatch": "2026-05-31",
+  "stats": {
+   "matches": 153,
+   "innings": 74,
+   "runs": 635,
+   "notOuts": 28,
+   "highest": 79,
+   "battingAverage": 13.8,
+   "strikeRate": 156.4,
+   "ballsFaced": 406,
+   "fifties": 1,
+   "hundreds": 0,
+   "ballsBowled": 3530,
+   "runsConceded": 4282,
+   "wickets": 179,
+   "bowlingAverage": 23.92,
+   "economy": 7.28,
+   "ballsPerWicket": 19.7,
+   "fourWicketInnings": 3,
+   "fiveWicketInnings": 0,
+   "catches": 53,
+   "stumpings": 0,
+   "dismissals": 53
+  }
+ },
+ {
   "id": "cs-b8527c3d",
   "cricsheetId": "b8527c3d",
   "name": "Rasikh Salam",
@@ -27436,6 +28111,58 @@
    "catches": 0,
    "stumpings": 0,
    "dismissals": 0
+  }
+ },
+ {
+  "id": "cs-8db7f47f",
+  "cricsheetId": "8db7f47f",
+  "name": "Reece Topley",
+  "scorecardName": "RJW Topley",
+  "nation": "England",
+  "iplSpells": [
+   {
+    "team": "Mumbai Indians",
+    "block": "2023+"
+   },
+   {
+    "team": "Royal Challengers Bengaluru",
+    "block": "2023+"
+   }
+  ],
+  "iplTeams": [
+   "Royal Challengers Bengaluru",
+   "Mumbai Indians"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2023-04-02",
+  "lastMatch": "2025-06-01",
+  "stats": {
+   "matches": 6,
+   "innings": 1,
+   "runs": 3,
+   "notOuts": 1,
+   "highest": 3,
+   "battingAverage": null,
+   "strikeRate": 50,
+   "ballsFaced": 6,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 120,
+   "runsConceded": 222,
+   "wickets": 5,
+   "bowlingAverage": 44.4,
+   "economy": 11.1,
+   "ballsPerWicket": 24,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 2,
+   "stumpings": 0,
+   "dismissals": 2
   }
  },
  {
@@ -28110,88 +28837,6 @@
   }
  },
  {
-  "id": "cs-1c17e270",
-  "cricsheetId": "1c17e270",
-  "name": "Robin",
-  "scorecardName": "RV Uthappa",
-  "nation": "India",
-  "iplSpells": [
-   {
-    "team": "Chennai Super Kings",
-    "block": "2018-22"
-   },
-   {
-    "team": "Kolkata Knight Riders",
-    "block": "2013-17"
-   },
-   {
-    "team": "Kolkata Knight Riders",
-    "block": "2018-22"
-   },
-   {
-    "team": "Mumbai Indians",
-    "block": "2008-12"
-   },
-   {
-    "team": "Pune Warriors",
-    "block": "2008-12"
-   },
-   {
-    "team": "Pune Warriors",
-    "block": "2013-17"
-   },
-   {
-    "team": "Rajasthan Royals",
-    "block": "2018-22"
-   },
-   {
-    "team": "Royal Challengers Bengaluru",
-    "block": "2008-12"
-   }
-  ],
-  "iplTeams": [
-   "Kolkata Knight Riders",
-   "Rajasthan Royals",
-   "Chennai Super Kings",
-   "Mumbai Indians",
-   "Royal Challengers Bengaluru",
-   "Pune Warriors"
-  ],
-  "primaryRole": "wicketkeeper",
-  "secondaryRoles": [
-   "middle-order"
-  ],
-  "isWicketkeeper": true,
-  "bowlingType": "pace",
-  "roleSource": "match-data (stumpings)",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2008-04-20",
-  "lastMatch": "2022-05-12",
-  "stats": {
-   "matches": 205,
-   "innings": 197,
-   "runs": 4952,
-   "notOuts": 17,
-   "highest": 88,
-   "battingAverage": 27.51,
-   "strikeRate": 130.35,
-   "ballsFaced": 3799,
-   "fifties": 27,
-   "hundreds": 0,
-   "ballsBowled": 0,
-   "runsConceded": 0,
-   "wickets": 0,
-   "bowlingAverage": null,
-   "economy": null,
-   "ballsPerWicket": null,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 92,
-   "stumpings": 32,
-   "dismissals": 124
-  }
- },
- {
   "id": "cs-bafd0398",
   "cricsheetId": "bafd0398",
   "name": "Robin Minz",
@@ -28284,6 +28929,88 @@
    "catches": 1,
    "stumpings": 0,
    "dismissals": 1
+  }
+ },
+ {
+  "id": "cs-1c17e270",
+  "cricsheetId": "1c17e270",
+  "name": "Robin Uthappa",
+  "scorecardName": "RV Uthappa",
+  "nation": "India",
+  "iplSpells": [
+   {
+    "team": "Chennai Super Kings",
+    "block": "2018-22"
+   },
+   {
+    "team": "Kolkata Knight Riders",
+    "block": "2013-17"
+   },
+   {
+    "team": "Kolkata Knight Riders",
+    "block": "2018-22"
+   },
+   {
+    "team": "Mumbai Indians",
+    "block": "2008-12"
+   },
+   {
+    "team": "Pune Warriors",
+    "block": "2008-12"
+   },
+   {
+    "team": "Pune Warriors",
+    "block": "2013-17"
+   },
+   {
+    "team": "Rajasthan Royals",
+    "block": "2018-22"
+   },
+   {
+    "team": "Royal Challengers Bengaluru",
+    "block": "2008-12"
+   }
+  ],
+  "iplTeams": [
+   "Kolkata Knight Riders",
+   "Rajasthan Royals",
+   "Chennai Super Kings",
+   "Mumbai Indians",
+   "Royal Challengers Bengaluru",
+   "Pune Warriors"
+  ],
+  "primaryRole": "wicketkeeper",
+  "secondaryRoles": [
+   "middle-order"
+  ],
+  "isWicketkeeper": true,
+  "bowlingType": "pace",
+  "roleSource": "match-data (stumpings)",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2008-04-20",
+  "lastMatch": "2022-05-12",
+  "stats": {
+   "matches": 205,
+   "innings": 197,
+   "runs": 4952,
+   "notOuts": 17,
+   "highest": 88,
+   "battingAverage": 27.51,
+   "strikeRate": 130.35,
+   "ballsFaced": 3799,
+   "fifties": 27,
+   "hundreds": 0,
+   "ballsBowled": 0,
+   "runsConceded": 0,
+   "wickets": 0,
+   "bowlingAverage": null,
+   "economy": null,
+   "ballsPerWicket": null,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 92,
+   "stumpings": 32,
+   "dismissals": 124
   }
  },
  {
@@ -28449,6 +29176,71 @@
    "catches": 102,
    "stumpings": 0,
    "dismissals": 102
+  }
+ },
+ {
+  "id": "cs-c5aef772",
+  "cricsheetId": "c5aef772",
+  "name": "Romario Shepherd",
+  "scorecardName": "R Shepherd",
+  "nation": "West Indies",
+  "iplSpells": [
+   {
+    "team": "Lucknow Super Giants",
+    "block": "2023+"
+   },
+   {
+    "team": "Mumbai Indians",
+    "block": "2023+"
+   },
+   {
+    "team": "Royal Challengers Bengaluru",
+    "block": "2023+"
+   },
+   {
+    "team": "Sunrisers Hyderabad",
+    "block": "2018-22"
+   }
+  ],
+  "iplTeams": [
+   "Sunrisers Hyderabad",
+   "Lucknow Super Giants",
+   "Mumbai Indians",
+   "Royal Challengers Bengaluru"
+  ],
+  "primaryRole": "all-rounder",
+  "secondaryRoles": [
+   "fast-bowler",
+   "middle-order"
+  ],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "match-data",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2022-03-29",
+  "lastMatch": "2026-05-31",
+  "stats": {
+   "matches": 33,
+   "innings": 19,
+   "runs": 268,
+   "notOuts": 8,
+   "highest": 53,
+   "battingAverage": 24.36,
+   "strikeRate": 175.16,
+   "ballsFaced": 153,
+   "fifties": 1,
+   "hundreds": 0,
+   "ballsBowled": 360,
+   "runsConceded": 706,
+   "wickets": 17,
+   "bowlingAverage": 41.53,
+   "economy": 11.77,
+   "ballsPerWicket": 21.2,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 7,
+   "stumpings": 0,
+   "dismissals": 7
   }
  },
  {
@@ -28888,6 +29680,67 @@
   }
  },
  {
+  "id": "cs-a2f46292",
+  "cricsheetId": "a2f46292",
+  "name": "S K K Ahmed",
+  "scorecardName": "KK Ahmed",
+  "nation": "India",
+  "iplSpells": [
+   {
+    "team": "Chennai Super Kings",
+    "block": "2023+"
+   },
+   {
+    "team": "Delhi Capitals",
+    "block": "2018-22"
+   },
+   {
+    "team": "Delhi Capitals",
+    "block": "2023+"
+   },
+   {
+    "team": "Sunrisers Hyderabad",
+    "block": "2018-22"
+   }
+  ],
+  "iplTeams": [
+   "Sunrisers Hyderabad",
+   "Delhi Capitals",
+   "Chennai Super Kings"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "owner",
+  "bowlingTypeSource": "owner",
+  "firstMatch": "2018-05-25",
+  "lastMatch": "2026-04-14",
+  "stats": {
+   "matches": 76,
+   "innings": 7,
+   "runs": 2,
+   "notOuts": 2,
+   "highest": 1,
+   "battingAverage": 0.4,
+   "strikeRate": 22.22,
+   "ballsFaced": 9,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 1657,
+   "runsConceded": 2474,
+   "wickets": 91,
+   "bowlingAverage": 27.19,
+   "economy": 8.96,
+   "ballsPerWicket": 18.2,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 5,
+   "stumpings": 0,
+   "dismissals": 5
+  }
+ },
+ {
   "id": "cs-f088b960",
   "cricsheetId": "f088b960",
   "name": "S N Khan",
@@ -29102,6 +29955,66 @@
    "catches": 1,
    "stumpings": 0,
    "dismissals": 1
+  }
+ },
+ {
+  "id": "cs-271f83cd",
+  "cricsheetId": "271f83cd",
+  "name": "SA Yadav",
+  "scorecardName": "SA Yadav",
+  "nation": "India",
+  "iplSpells": [
+   {
+    "team": "Kolkata Knight Riders",
+    "block": "2013-17"
+   },
+   {
+    "team": "Mumbai Indians",
+    "block": "2008-12"
+   },
+   {
+    "team": "Mumbai Indians",
+    "block": "2018-22"
+   },
+   {
+    "team": "Mumbai Indians",
+    "block": "2023+"
+   }
+  ],
+  "iplTeams": [
+   "Kolkata Knight Riders",
+   "Mumbai Indians"
+  ],
+  "primaryRole": "middle-order",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": null,
+  "roleSource": "match-data",
+  "bowlingTypeSource": null,
+  "firstMatch": "2012-04-06",
+  "lastMatch": "2026-05-24",
+  "stats": {
+   "matches": 179,
+   "innings": 164,
+   "runs": 4581,
+   "notOuts": 28,
+   "highest": 103,
+   "battingAverage": 33.68,
+   "strikeRate": 148.59,
+   "ballsFaced": 3083,
+   "fifties": 31,
+   "hundreds": 2,
+   "ballsBowled": 6,
+   "runsConceded": 8,
+   "wickets": 0,
+   "bowlingAverage": null,
+   "economy": 8,
+   "ballsPerWicket": null,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 77,
+   "stumpings": 0,
+   "dismissals": 77
   }
  },
  {
@@ -30283,6 +31196,53 @@
   }
  },
  {
+  "id": "cs-fef92afc",
+  "cricsheetId": "fef92afc",
+  "name": "Scott Kuggeleijn",
+  "scorecardName": "SC Kuggeleijn",
+  "nation": "New Zealand",
+  "iplSpells": [
+   {
+    "team": "Chennai Super Kings",
+    "block": "2018-22"
+   }
+  ],
+  "iplTeams": [
+   "Chennai Super Kings"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2019-04-06",
+  "lastMatch": "2019-04-09",
+  "stats": {
+   "matches": 2,
+   "innings": 0,
+   "runs": 0,
+   "notOuts": 0,
+   "highest": 0,
+   "battingAverage": null,
+   "strikeRate": null,
+   "ballsFaced": 0,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 48,
+   "runsConceded": 71,
+   "wickets": 2,
+   "bowlingAverage": 35.5,
+   "economy": 8.88,
+   "ballsPerWicket": 24,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 0,
+   "stumpings": 0,
+   "dismissals": 0
+  }
+ },
+ {
   "id": "cs-57efa3be",
   "cricsheetId": "57efa3be",
   "name": "Scott Styris",
@@ -31031,6 +31991,63 @@
   }
  },
  {
+  "id": "cs-6b8eb6e5",
+  "cricsheetId": "6b8eb6e5",
+  "name": "Shanthakumaran Sreesanth",
+  "scorecardName": "S Sreesanth",
+  "nation": "India",
+  "iplSpells": [
+   {
+    "team": "Kochi Tuskers Kerala",
+    "block": "2008-12"
+   },
+   {
+    "team": "Punjab Kings",
+    "block": "2008-12"
+   },
+   {
+    "team": "Rajasthan Royals",
+    "block": "2013-17"
+   }
+  ],
+  "iplTeams": [
+   "Punjab Kings",
+   "Kochi Tuskers Kerala",
+   "Rajasthan Royals"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "test-data",
+  "bowlingTypeSource": "test-data",
+  "firstMatch": "2008-04-19",
+  "lastMatch": "2013-05-09",
+  "stats": {
+   "matches": 44,
+   "innings": 14,
+   "runs": 34,
+   "notOuts": 10,
+   "highest": 15,
+   "battingAverage": 8.5,
+   "strikeRate": 61.82,
+   "ballsFaced": 55,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 880,
+   "runsConceded": 1194,
+   "wickets": 40,
+   "bowlingAverage": 29.85,
+   "economy": 8.14,
+   "ballsPerWicket": 22,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 3,
+   "stumpings": 0,
+   "dismissals": 3
+  }
+ },
+ {
   "id": "cs-1abb78f8",
   "cricsheetId": "1abb78f8",
   "name": "Shardul Thakur",
@@ -31411,71 +32428,6 @@
    "catches": 7,
    "stumpings": 2,
    "dismissals": 9
-  }
- },
- {
-  "id": "cs-c5aef772",
-  "cricsheetId": "c5aef772",
-  "name": "Shepherd",
-  "scorecardName": "R Shepherd",
-  "nation": "West Indies",
-  "iplSpells": [
-   {
-    "team": "Lucknow Super Giants",
-    "block": "2023+"
-   },
-   {
-    "team": "Mumbai Indians",
-    "block": "2023+"
-   },
-   {
-    "team": "Royal Challengers Bengaluru",
-    "block": "2023+"
-   },
-   {
-    "team": "Sunrisers Hyderabad",
-    "block": "2018-22"
-   }
-  ],
-  "iplTeams": [
-   "Sunrisers Hyderabad",
-   "Lucknow Super Giants",
-   "Mumbai Indians",
-   "Royal Challengers Bengaluru"
-  ],
-  "primaryRole": "all-rounder",
-  "secondaryRoles": [
-   "fast-bowler",
-   "middle-order"
-  ],
-  "isWicketkeeper": false,
-  "bowlingType": "pace",
-  "roleSource": "match-data",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2022-03-29",
-  "lastMatch": "2026-05-31",
-  "stats": {
-   "matches": 33,
-   "innings": 19,
-   "runs": 268,
-   "notOuts": 8,
-   "highest": 53,
-   "battingAverage": 24.36,
-   "strikeRate": 175.16,
-   "ballsFaced": 153,
-   "fifties": 1,
-   "hundreds": 0,
-   "ballsBowled": 360,
-   "runsConceded": 706,
-   "wickets": 17,
-   "bowlingAverage": 41.53,
-   "economy": 11.77,
-   "ballsPerWicket": 21.2,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 7,
-   "stumpings": 0,
-   "dismissals": 7
   }
  },
  {
@@ -32722,50 +33674,53 @@
   }
  },
  {
-  "id": "cs-23cca426",
-  "cricsheetId": "23cca426",
-  "name": "Smith",
-  "scorecardName": "OF Smith",
-  "nation": "West Indies",
+  "id": "cs-3d7e087f",
+  "cricsheetId": "3d7e087f",
+  "name": "SK Trivedi",
+  "scorecardName": "SK Trivedi",
   "iplSpells": [
    {
-    "team": "Punjab Kings",
-    "block": "2018-22"
+    "team": "Rajasthan Royals",
+    "block": "2008-12"
+   },
+   {
+    "team": "Rajasthan Royals",
+    "block": "2013-17"
    }
   ],
   "iplTeams": [
-   "Punjab Kings"
+   "Rajasthan Royals"
   ],
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
   "bowlingType": "pace",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2022-03-27",
-  "lastMatch": "2022-04-17",
+  "roleSource": "owner",
+  "bowlingTypeSource": "owner",
+  "firstMatch": "2008-04-19",
+  "lastMatch": "2013-05-24",
   "stats": {
-   "matches": 6,
-   "innings": 6,
-   "runs": 51,
-   "notOuts": 3,
-   "highest": 25,
-   "battingAverage": 17,
-   "strikeRate": 115.91,
-   "ballsFaced": 44,
+   "matches": 76,
+   "innings": 15,
+   "runs": 42,
+   "notOuts": 8,
+   "highest": 9,
+   "battingAverage": 6,
+   "strikeRate": 71.19,
+   "ballsFaced": 59,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 90,
-   "runsConceded": 178,
-   "wickets": 6,
-   "bowlingAverage": 29.67,
-   "economy": 11.87,
-   "ballsPerWicket": 15,
+   "ballsBowled": 1506,
+   "runsConceded": 1904,
+   "wickets": 65,
+   "bowlingAverage": 29.29,
+   "economy": 7.59,
+   "ballsPerWicket": 23.2,
    "fourWicketInnings": 1,
    "fiveWicketInnings": 0,
-   "catches": 2,
+   "catches": 14,
    "stumpings": 0,
-   "dismissals": 2
+   "dismissals": 14
   }
  },
  {
@@ -32864,63 +33819,6 @@
    "catches": 22,
    "stumpings": 0,
    "dismissals": 22
-  }
- },
- {
-  "id": "cs-6b8eb6e5",
-  "cricsheetId": "6b8eb6e5",
-  "name": "Sreesanth",
-  "scorecardName": "S Sreesanth",
-  "nation": "India",
-  "iplSpells": [
-   {
-    "team": "Kochi Tuskers Kerala",
-    "block": "2008-12"
-   },
-   {
-    "team": "Punjab Kings",
-    "block": "2008-12"
-   },
-   {
-    "team": "Rajasthan Royals",
-    "block": "2013-17"
-   }
-  ],
-  "iplTeams": [
-   "Punjab Kings",
-   "Kochi Tuskers Kerala",
-   "Rajasthan Royals"
-  ],
-  "primaryRole": "fast-bowler",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "pace",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2008-04-19",
-  "lastMatch": "2013-05-09",
-  "stats": {
-   "matches": 44,
-   "innings": 14,
-   "runs": 34,
-   "notOuts": 10,
-   "highest": 15,
-   "battingAverage": 8.5,
-   "strikeRate": 61.82,
-   "ballsFaced": 55,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 880,
-   "runsConceded": 1194,
-   "wickets": 40,
-   "bowlingAverage": 29.85,
-   "economy": 8.14,
-   "ballsPerWicket": 22,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 3,
-   "stumpings": 0,
-   "dismissals": 3
   }
  },
  {
@@ -33661,66 +34559,6 @@
   }
  },
  {
-  "id": "cs-271f83cd",
-  "cricsheetId": "271f83cd",
-  "name": "Surya",
-  "scorecardName": "SA Yadav",
-  "nation": "India",
-  "iplSpells": [
-   {
-    "team": "Kolkata Knight Riders",
-    "block": "2013-17"
-   },
-   {
-    "team": "Mumbai Indians",
-    "block": "2008-12"
-   },
-   {
-    "team": "Mumbai Indians",
-    "block": "2018-22"
-   },
-   {
-    "team": "Mumbai Indians",
-    "block": "2023+"
-   }
-  ],
-  "iplTeams": [
-   "Kolkata Knight Riders",
-   "Mumbai Indians"
-  ],
-  "primaryRole": "middle-order",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": null,
-  "roleSource": "match-data",
-  "bowlingTypeSource": null,
-  "firstMatch": "2012-04-06",
-  "lastMatch": "2026-05-24",
-  "stats": {
-   "matches": 179,
-   "innings": 164,
-   "runs": 4581,
-   "notOuts": 28,
-   "highest": 103,
-   "battingAverage": 33.68,
-   "strikeRate": 148.59,
-   "ballsFaced": 3083,
-   "fifties": 31,
-   "hundreds": 2,
-   "ballsBowled": 6,
-   "runsConceded": 8,
-   "wickets": 0,
-   "bowlingAverage": null,
-   "economy": 8,
-   "ballsPerWicket": null,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 77,
-   "stumpings": 0,
-   "dismissals": 77
-  }
- },
- {
   "id": "cs-970ddd24",
   "cricsheetId": "970ddd24",
   "name": "Suryansh Shedge",
@@ -34161,57 +34999,6 @@
    "catches": 1,
    "stumpings": 0,
    "dismissals": 1
-  }
- },
- {
-  "id": "cs-6aed7e79",
-  "cricsheetId": "6aed7e79",
-  "name": "Tambe",
-  "scorecardName": "PV Tambe",
-  "iplSpells": [
-   {
-    "team": "Gujarat Lions",
-    "block": "2013-17"
-   },
-   {
-    "team": "Rajasthan Royals",
-    "block": "2013-17"
-   }
-  ],
-  "iplTeams": [
-   "Rajasthan Royals",
-   "Gujarat Lions"
-  ],
-  "primaryRole": "spinner",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "spin",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2013-05-07",
-  "lastMatch": "2016-05-14",
-  "stats": {
-   "matches": 33,
-   "innings": 6,
-   "runs": 18,
-   "notOuts": 4,
-   "highest": 7,
-   "battingAverage": 9,
-   "strikeRate": 46.15,
-   "ballsFaced": 39,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 660,
-   "runsConceded": 853,
-   "wickets": 28,
-   "bowlingAverage": 30.46,
-   "economy": 7.75,
-   "ballsPerWicket": 23.6,
-   "fourWicketInnings": 1,
-   "fiveWicketInnings": 0,
-   "catches": 4,
-   "stumpings": 0,
-   "dismissals": 4
   }
  },
  {
@@ -34679,53 +35466,6 @@
    "catches": 12,
    "stumpings": 0,
    "dismissals": 12
-  }
- },
- {
-  "id": "cs-c6097d68",
-  "cricsheetId": "c6097d68",
-  "name": "Thomas",
-  "scorecardName": "O Thomas",
-  "nation": "West Indies",
-  "iplSpells": [
-   {
-    "team": "Rajasthan Royals",
-    "block": "2018-22"
-   }
-  ],
-  "iplTeams": [
-   "Rajasthan Royals"
-  ],
-  "primaryRole": "fast-bowler",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "pace",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2019-04-25",
-  "lastMatch": "2019-05-04",
-  "stats": {
-   "matches": 4,
-   "innings": 0,
-   "runs": 0,
-   "notOuts": 0,
-   "highest": 0,
-   "battingAverage": null,
-   "strikeRate": null,
-   "ballsFaced": 0,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 60,
-   "runsConceded": 79,
-   "wickets": 5,
-   "bowlingAverage": 15.8,
-   "economy": 7.9,
-   "ballsPerWicket": 12,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 1,
-   "stumpings": 0,
-   "dismissals": 1
   }
  },
  {
@@ -35234,58 +35974,6 @@
   }
  },
  {
-  "id": "cs-8db7f47f",
-  "cricsheetId": "8db7f47f",
-  "name": "Topley",
-  "scorecardName": "RJW Topley",
-  "nation": "England",
-  "iplSpells": [
-   {
-    "team": "Mumbai Indians",
-    "block": "2023+"
-   },
-   {
-    "team": "Royal Challengers Bengaluru",
-    "block": "2023+"
-   }
-  ],
-  "iplTeams": [
-   "Royal Challengers Bengaluru",
-   "Mumbai Indians"
-  ],
-  "primaryRole": "fast-bowler",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "pace",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2023-04-02",
-  "lastMatch": "2025-06-01",
-  "stats": {
-   "matches": 6,
-   "innings": 1,
-   "runs": 3,
-   "notOuts": 1,
-   "highest": 3,
-   "battingAverage": null,
-   "strikeRate": 50,
-   "ballsFaced": 6,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 120,
-   "runsConceded": 222,
-   "wickets": 5,
-   "bowlingAverage": 44.4,
-   "economy": 11.1,
-   "ballsPerWicket": 24,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 2,
-   "stumpings": 0,
-   "dismissals": 2
-  }
- },
- {
   "id": "cs-d2d4bb0a",
   "cricsheetId": "d2d4bb0a",
   "name": "Travis Birt",
@@ -35515,6 +36203,67 @@
    "catches": 24,
    "stumpings": 1,
    "dismissals": 25
+  }
+ },
+ {
+  "id": "cs-46a9bea1",
+  "cricsheetId": "46a9bea1",
+  "name": "Tushar Deshpande",
+  "scorecardName": "TU Deshpande",
+  "nation": "India",
+  "iplSpells": [
+   {
+    "team": "Chennai Super Kings",
+    "block": "2018-22"
+   },
+   {
+    "team": "Chennai Super Kings",
+    "block": "2023+"
+   },
+   {
+    "team": "Delhi Capitals",
+    "block": "2018-22"
+   },
+   {
+    "team": "Rajasthan Royals",
+    "block": "2023+"
+   }
+  ],
+  "iplTeams": [
+   "Delhi Capitals",
+   "Chennai Super Kings",
+   "Rajasthan Royals"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2020-10-14",
+  "lastMatch": "2026-05-29",
+  "stats": {
+   "matches": 53,
+   "innings": 10,
+   "runs": 54,
+   "notOuts": 6,
+   "highest": 25,
+   "battingAverage": 13.5,
+   "strikeRate": 150,
+   "ballsFaced": 36,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 1103,
+   "runsConceded": 1858,
+   "wickets": 55,
+   "bowlingAverage": 33.78,
+   "economy": 10.11,
+   "ballsPerWicket": 20.1,
+   "fourWicketInnings": 1,
+   "fiveWicketInnings": 0,
+   "catches": 10,
+   "stumpings": 0,
+   "dismissals": 10
   }
  },
  {
@@ -35986,6 +36735,62 @@
    "catches": 1,
    "stumpings": 0,
    "dismissals": 1
+  }
+ },
+ {
+  "id": "cs-5b7ab5a9",
+  "cricsheetId": "5b7ab5a9",
+  "name": "V Chakravarthy",
+  "scorecardName": "CV Varun",
+  "nation": "India",
+  "iplSpells": [
+   {
+    "team": "Kolkata Knight Riders",
+    "block": "2018-22"
+   },
+   {
+    "team": "Kolkata Knight Riders",
+    "block": "2023+"
+   },
+   {
+    "team": "Punjab Kings",
+    "block": "2018-22"
+   }
+  ],
+  "iplTeams": [
+   "Punjab Kings",
+   "Kolkata Knight Riders"
+  ],
+  "primaryRole": "spinner",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "owner",
+  "bowlingTypeSource": "owner",
+  "firstMatch": "2019-03-27",
+  "lastMatch": "2026-05-24",
+  "stats": {
+   "matches": 94,
+   "innings": 15,
+   "runs": 31,
+   "notOuts": 9,
+   "highest": 10,
+   "battingAverage": 5.17,
+   "strikeRate": 58.49,
+   "ballsFaced": 53,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 2134,
+   "runsConceded": 2745,
+   "wickets": 111,
+   "bowlingAverage": 24.73,
+   "economy": 7.72,
+   "ballsPerWicket": 19.2,
+   "fourWicketInnings": 2,
+   "fiveWicketInnings": 1,
+   "catches": 18,
+   "stumpings": 0,
+   "dismissals": 18
   }
  },
  {
@@ -37242,62 +38047,6 @@
   }
  },
  {
-  "id": "cs-7f048519",
-  "cricsheetId": "7f048519",
-  "name": "Willey",
-  "scorecardName": "DJ Willey",
-  "nation": "England",
-  "iplSpells": [
-   {
-    "team": "Chennai Super Kings",
-    "block": "2018-22"
-   },
-   {
-    "team": "Royal Challengers Bengaluru",
-    "block": "2018-22"
-   },
-   {
-    "team": "Royal Challengers Bengaluru",
-    "block": "2023+"
-   }
-  ],
-  "iplTeams": [
-   "Chennai Super Kings",
-   "Royal Challengers Bengaluru"
-  ],
-  "primaryRole": "fast-bowler",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "pace",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2018-05-05",
-  "lastMatch": "2023-04-26",
-  "stats": {
-   "matches": 11,
-   "innings": 5,
-   "runs": 53,
-   "notOuts": 3,
-   "highest": 20,
-   "battingAverage": 26.5,
-   "strikeRate": 85.48,
-   "ballsFaced": 62,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 216,
-   "runsConceded": 272,
-   "wickets": 6,
-   "bowlingAverage": 45.33,
-   "economy": 7.56,
-   "ballsPerWicket": 36,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 4,
-   "stumpings": 0,
-   "dismissals": 4
-  }
- },
- {
   "id": "cs-cb9b8664",
   "cricsheetId": "cb9b8664",
   "name": "William O'Rourke",
@@ -37342,53 +38091,6 @@
    "catches": 1,
    "stumpings": 0,
    "dismissals": 1
-  }
- },
- {
-  "id": "cs-65b6943c",
-  "cricsheetId": "65b6943c",
-  "name": "Wood",
-  "scorecardName": "L Wood",
-  "nation": "England",
-  "iplSpells": [
-   {
-    "team": "Mumbai Indians",
-    "block": "2023+"
-   }
-  ],
-  "iplTeams": [
-   "Mumbai Indians"
-  ],
-  "primaryRole": "fast-bowler",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "pace",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2024-03-24",
-  "lastMatch": "2024-04-27",
-  "stats": {
-   "matches": 2,
-   "innings": 1,
-   "runs": 9,
-   "notOuts": 1,
-   "highest": 9,
-   "battingAverage": null,
-   "strikeRate": 300,
-   "ballsFaced": 3,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 36,
-   "runsConceded": 93,
-   "wickets": 1,
-   "bowlingAverage": 93,
-   "economy": 15.5,
-   "ballsPerWicket": 36,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 0,
-   "stumpings": 0,
-   "dismissals": 0
   }
  },
  {

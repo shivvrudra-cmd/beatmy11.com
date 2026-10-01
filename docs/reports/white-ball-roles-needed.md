@@ -4,59 +4,32 @@ These regular bowlers are left out of the game until their bowling type is known
 
 | Format | Name | Nation / teams | Matches | Wickets | Cricsheet id | type |
 |---|---|---|---|---|---|---|
-| ipl | Rashid Khan | Sunrisers Hyderabad, Gujarat Titans | 153 | 179 | 5f547c8b | |
-| ipl | H V Patel | Royal Challengers Bengaluru, Delhi Capitals, Punjab Kings, Sunrisers Hyderabad | 123 | 151 | f986ca1a | |
-| odi | Kuldeep Singh Yadav | India | 117 | 191 | 8d2c70ad | |
-| ipl | Kuldeep Singh Yadav | Kolkata Knight Riders, Delhi Capitals | 111 | 112 | 8d2c70ad | |
-| ipl | Chakravarthy | Punjab Kings, Kolkata Knight Riders | 94 | 111 | 5b7ab5a9 | |
-| ipl | Aavesh Khan | Royal Challengers Bengaluru, Delhi Capitals, Lucknow Super Giants, Rajasthan Royals | 82 | 93 | eef2536f | |
-| ipl | Krishna | Kolkata Knight Riders, Rajasthan Royals, Gujarat Titans | 78 | 90 | 85e0cf10 | |
-| ipl | Ahmed | Sunrisers Hyderabad, Delhi Capitals, Chennai Super Kings | 76 | 91 | a2f46292 | |
-| ipl | SK Trivedi | Rajasthan Royals | 76 | 65 | 3d7e087f | |
-| odi | Junaid Khan | Pakistan | 73 | 104 | 086f5984 | |
-| t20i | Mehedi Hasan | Bangladesh | 73 | 74 | 9dad0f2e | |
-| odi | Muhammad Irfan | Pakistan | 60 | 83 | a8e3170f | |
-| t20i | Kuldeep Singh Yadav | India | 51 | 92 | 8d2c70ad | |
-| t20i | Chakravarthy | India | 48 | 74 | 5b7ab5a9 | |
-| ipl | R Sharma | Deccan Chargers, Pune Warriors, Delhi Capitals | 44 | 40 | 5d9a1a73 | |
-| ipl | Mukesh Kumar | Delhi Capitals | 42 | 42 | 2cffab74 | |
-| ipl | R R Dhawan | Punjab Kings, Mumbai Indians | 39 | 25 | 26a85969 | |
-| ipl | Arvind Sreenath | Royal Challengers Bengaluru | 38 | 45 | 957532de | |
-| t20i | Mohammad Wasim | Pakistan | 33 | 41 | 9e9af5f2 | |
 | t20i | Mosaddeck Hossain | Bangladesh | 29 | 15 | 8919756f | |
 | ipl | Harmeet Singh Bansal | Deccan Chargers, Punjab Kings | 27 | 26 | 2a72fd4f | |
-| odi | Krishna | India | 26 | 45 | 85e0cf10 | |
-| odi | Mohammad Wasim | Pakistan | 26 | 43 | 9e9af5f2 | |
 | odi | HMCM Bandara | Sri Lanka | 26 | 28 | 4fc516bd | |
-| t20i | H V Patel | India | 25 | 29 | f986ca1a | |
 | ipl | A Kamboj | Mumbai Indians, Chennai Super Kings | 25 | 31 | fcc21ace | |
 | ipl | KK Cooper | Rajasthan Royals | 25 | 33 | 557153ca | |
-| t20i | Aavesh Khan | India | 24 | 26 | eef2536f | |
 | t20i | Shamar Joseph | West Indies | 23 | 36 | 97290faf | |
 | ipl | DS Rathi | Lucknow Super Giants | 23 | 19 | 13fc5c6d | |
 | ipl | A Singh | Rajasthan Royals | 23 | 28 | 5b040b81 | |
-| t20i | Muhammad Irfan | Pakistan | 22 | 16 | a8e3170f | |
 | t20i | T Gwandu | Zimbabwe | 21 | 16 | d1d83db3 | |
 | odi | AD Mascarenhas | England | 20 | 13 | 3edb58fc | |
-| t20i | Williams | West Indies | 20 | 25 | 78cb83f3 | |
+| t20i | KOK Williams | West Indies | 20 | 25 | 78cb83f3 | |
 | ipl | Prince Yadav | Lucknow Super Giants | 20 | 19 | 80b2fb19 | |
 | ipl | V Nigam | Delhi Capitals | 19 | 13 | 5ffc0565 | |
 | ipl | Vikram Singh | Punjab Kings | 19 | 12 | 034b4b7d | |
-| t20i | Ahmed | India | 18 | 16 | a2f46292 | |
 | ipl | VY Mahesh | Delhi Capitals, Chennai Super Kings | 17 | 21 | 93a17209 | |
 | ipl | Abu Nechim Ahmed | Mumbai Indians, Royal Challengers Bengaluru | 17 | 12 | 2af1b6d2 | |
 | ipl | Joginder Sharma | Chennai Super Kings | 16 | 12 | 9f961c14 | |
 | ipl | B Akhil | Royal Challengers Bengaluru, Kochi Tuskers Kerala | 15 | 6 | af7dadf7 | |
 | ipl | Amal Thomas | Pune Warriors | 15 | 14 | b552a935 | |
-| t20i | Mukesh Kumar | India | 14 | 18 | 2cffab74 | |
 | t20i | Nqabayomzi Peter | South Africa | 14 | 10 | 212aeedd | |
 | t20i | AD Mascarenhas | England | 14 | 12 | 3edb58fc | |
 | ipl | SJ Srivastava | Punjab Kings | 14 | 14 | 2049f3a0 | |
-| odi | Atkinson | England | 13 | 16 | 70d57519 | |
+| odi | AAP Atkinson | England | 13 | 16 | 70d57519 | |
 | ipl | Brijesh Sharma | Rajasthan Royals | 13 | 14 | 133bbd61 | |
 | ipl | Shivang Kumar | Sunrisers Hyderabad | 13 | 9 | 7b44eb3e | |
 | ipl | AD Mascarenhas | Rajasthan Royals, Punjab Kings | 13 | 19 | 3edb58fc | |
-| odi | Mehedi Hasan | Bangladesh | 12 | 15 | 9dad0f2e | |
 | odi | AG Wharf | England | 12 | 17 | 2e0fcc58 | |
 | ipl | SH Johnson | Gujarat Titans, Kolkata Knight Riders, Chennai Super Kings | 12 | 7 | 83c3e8e3 | |
 | odi | Tanvir Islam | Bangladesh | 11 | 16 | aa467af0 | |
@@ -65,7 +38,6 @@ These regular bowlers are left out of the game until their bowling type is known
 | ipl | JB Little | Gujarat Titans | 11 | 11 | 9061a703 | |
 | ipl | AM Ghazanfar | Mumbai Indians | 11 | 15 | 9ca68676 | |
 | ipl | YA Abdulla | Punjab Kings | 11 | 15 | 4353bba5 | |
-| odi | Ahmed | India | 10 | 14 | a2f46292 | |
 | odi | PM Liyanagamage | Sri Lanka | 10 | 8 | 3ee0050f | |
 | odi | Blessing Mahwire | Zimbabwe | 10 | 7 | 0cc343b0 | |
 | odi | JJ van der Wath | South Africa | 10 | 13 | 6821ac10 | |
@@ -81,17 +53,14 @@ These regular bowlers are left out of the game until their bowling type is known
 | ipl | M Siddharth | Lucknow Super Giants | 9 | 9 | cf0ccafa | |
 | ipl | DP Vijaykumar | Deccan Chargers | 9 | 4 | acd4f5dc | |
 | ipl | Kamran Khan | Rajasthan Royals, Pune Warriors | 9 | 9 | 6ef60d3a | |
-| odi | Williams | West Indies | 8 | 9 | 78cb83f3 | |
-| odi | Aavesh Khan | India | 8 | 9 | eef2536f | |
+| odi | KOK Williams | West Indies | 8 | 9 | 78cb83f3 | |
 | odi | Shamar Joseph | West Indies | 8 | 4 | 97290faf | |
 | odi | Keegan Meth | Zimbabwe | 8 | 5 | 9fbc7bc4 | |
 | t20i | JRMVB Sanjaya | Sri Lanka | 8 | 9 | 530b20e3 | |
 | t20i | PM Liyanagamage | Sri Lanka | 8 | 12 | 3ee0050f | |
-| t20i | Krishna | India | 8 | 9 | 85e0cf10 | |
 | t20i | Jahandad Khan | Pakistan | 8 | 7 | 22d73540 | |
 | t20i | MADI Hemantha | Sri Lanka | 8 | 10 | 58431ca0 | |
 | t20i | Usman Tariq | Pakistan | 8 | 18 | e94d1dcd | |
-| t20i | Junaid Khan | Pakistan | 8 | 5 | 086f5984 | |
 | ipl | Gurjapneet Singh | Chennai Super Kings | 8 | 4 | cc61ee8f | |
 | ipl | Yash Raj Punja | Rajasthan Royals | 8 | 9 | 02dfebbe | |
 | ipl | Shoaib Ahmed | Deccan Chargers | 8 | 5 | 8a668774 | |
@@ -105,7 +74,6 @@ These regular bowlers are left out of the game until their bowling type is known
 | ipl | PP Hinge | Sunrisers Hyderabad | 7 | 14 | ece7b6b3 | |
 | ipl | AM Salvi | Delhi Capitals | 7 | 7 | 260fd380 | |
 | odi | T Muzarabani | Zimbabwe | 6 | 6 | a945bb28 | |
-| odi | Mukesh Kumar | India | 6 | 5 | 2cffab74 | |
 | odi | Gavin Ewing | Zimbabwe | 6 | 5 | 36fc8d18 | |
 | t20i | MW Parkinson | England | 6 | 7 | 19708692 | |
 | t20i | Tanvir Islam | Bangladesh | 6 | 4 | aa467af0 | |
@@ -130,7 +98,6 @@ These regular bowlers are left out of the game until their bowling type is known
 | ipl | Shivam Sharma | Punjab Kings | 5 | 4 | 6f49cc6e | |
 | odi | Zahid Mahmood | Pakistan | 4 | 4 | ba158afd | |
 | odi | MADI Hemantha | Sri Lanka | 4 | 2 | 58431ca0 | |
-| odi | Chakravarthy | India | 4 | 10 | 5b7ab5a9 | |
 | odi | NT Nyamhuri | Zimbabwe | 4 | 7 | 943ca0cd | |
 | odi | KDC Clarke | New Zealand | 4 | 7 | 1e1a8922 | |
 | odi | Nqabayomzi Peter | South Africa | 4 | 5 | 212aeedd | |
@@ -141,9 +108,8 @@ These regular bowlers are left out of the game until their bowling type is known
 | odi | Daniel Cullen | Australia | 4 | 2 | 51de2a80 | |
 | odi | MS Tshabalala | South Africa | 4 | 3 | e9c14262 | |
 | odi | Abdur Rauf | Pakistan | 4 | 8 | 43b375d4 | |
-| odi | R Sharma | India | 4 | 6 | 5d9a1a73 | |
 | odi | Asad Ali | Pakistan | 4 | 2 | f476d2a5 | |
-| t20i | Atkinson | England | 4 | 6 | 70d57519 | |
+| t20i | AAP Atkinson | England | 4 | 6 | 70d57519 | |
 | t20i | Duan Jansen | South Africa | 4 | 11 | 8dc152d1 | |
 | t20i | Andre Adams | New Zealand | 4 | 3 | 525c3f54 | |
 | t20i | Nathan Astle | New Zealand | 4 | 4 | 99639abf | |
@@ -158,10 +124,9 @@ These regular bowlers are left out of the game until their bowling type is known
 | odi | Adithya Ashok | New Zealand | 3 | 2 | 321be7e3 | |
 | odi | J Blades | West Indies | 3 | 1 | af4a9a0a | |
 | odi | Donovan Ferreira | South Africa | 3 | 2 | f0af99a7 | |
-| odi | Fisher | New Zealand | 3 | 3 | 7068c81e | |
+| odi | MJ Fisher | New Zealand | 3 | 3 | 7068c81e | |
 | odi | RS Higgins | Zimbabwe | 3 | 4 | c3224376 | |
 | odi | Mohammad Khalil | Pakistan | 3 | 5 | a5c5a126 | |
-| odi | R R Dhawan | India | 3 | 1 | 26a85969 | |
 | t20i | MA Aponso | Sri Lanka | 3 | 4 | e2ee90d9 | |
 | t20i | TZ Chataira | Zimbabwe | 3 | 5 | 2e4d5f94 | |
 | t20i | N Bidaisee | West Indies | 3 | 3 | af5b6464 | |
@@ -169,6 +134,7 @@ These regular bowlers are left out of the game until their bowling type is known
 | t20i | Abdul Gaffar Saqlain | Bangladesh | 3 | 4 | 62a99934 | |
 | t20i | Nikhil Chaudhary | Australia | 3 | 2 | 1f84183a | |
 | t20i | K Matigimu | Zimbabwe | 3 | 2 | f8929fe0 | |
+| t20i | R Naved | Pakistan | 3 | 5 | 33f28243 | |
 | t20i | SM Harwood | Australia | 3 | 3 | 63bff7f9 | |
 | t20i | Gayan Wijekoon | Sri Lanka | 3 | 2 | 1fbef290 | |
 | t20i | Lionel Baker | West Indies | 3 | 2 | 441b1b20 | |
@@ -208,7 +174,6 @@ These regular bowlers are left out of the game until their bowling type is known
 | t20i | ML Lewis | Australia | 2 | 4 | 8b8745fd | |
 | t20i | AA Noffke | Australia | 2 | 4 | b69e69ed | |
 | t20i | YA Abdulla | South Africa | 2 | 2 | 4353bba5 | |
-| t20i | R Sharma | India | 2 | 3 | 5d9a1a73 | |
 | t20i | Keegan Meth | Zimbabwe | 2 | 0 | 9fbc7bc4 | |
 | t20i | Kaushal Lokuarachchi | Sri Lanka | 2 | 2 | 3b50c63a | |
 | t20i | Asad Ali | Pakistan | 2 | 0 | f476d2a5 | |
@@ -243,7 +208,6 @@ These regular bowlers are left out of the game until their bowling type is known
 | odi | LJ Hamilton | New Zealand | 1 | 0 | 1efd9f52 | |
 | odi | Reon King | West Indies | 1 | 1 | 20fbf68c | |
 | odi | AW Mathieson | New Zealand | 1 | 1 | c661789d | |
-| t20i | R R Dhawan | India | 1 | 1 | 26a85969 | |
 | t20i | Zahid Mahmood | Pakistan | 1 | 3 | ba158afd | |
 | t20i | Ihsanullah | Pakistan | 1 | 0 | c290033d | |
 | t20i | Adithya Ashok | New Zealand | 1 | 1 | 321be7e3 | |
@@ -255,7 +219,7 @@ These regular bowlers are left out of the game until their bowling type is known
 | t20i | KDC Clarke | New Zealand | 1 | 1 | 1e1a8922 | |
 | t20i | KTH Ratnayake | Sri Lanka | 1 | 1 | 4eb02f2e | |
 | t20i | Vijayakanth Viyaskanth | Sri Lanka | 1 | 0 | 03a83c50 | |
-| t20i | Fisher | New Zealand | 1 | 0 | 7068c81e | |
+| t20i | MJ Fisher | New Zealand | 1 | 0 | 7068c81e | |
 | t20i | JW Wilson | New Zealand | 1 | 0 | 91c984a1 | |
 | t20i | Nico Boje | South Africa | 1 | 1 | 6a0537aa | |
 | t20i | DK Butler | West Indies | 1 | 0 | 671398e3 | |
@@ -264,8 +228,7 @@ These regular bowlers are left out of the game until their bowling type is known
 | t20i | EP Thompson | New Zealand | 1 | 1 | 7a653792 | |
 | t20i | Tanvir Ahmed | Pakistan | 1 | 1 | 93f104b4 | |
 | t20i | GW Aldridge | New Zealand | 1 | 1 | 42a05795 | |
-| t20i | Arvind Sreenath | India | 1 | 1 | 957532de | |
-| ipl | Sanjay | Mumbai Indians | 1 | 0 | 33ffc3dd | |
+| ipl | R Sanjay Yadav | Mumbai Indians | 1 | 0 | 33ffc3dd | |
 | ipl | Duan Jansen | Mumbai Indians | 1 | 1 | 8dc152d1 | |
 | ipl | R Goyal | Mumbai Indians | 1 | 0 | 266849c1 | |
 | ipl | S Joseph | Lucknow Super Giants | 1 | 0 | 97290faf | |
@@ -277,6 +240,6 @@ These regular bowlers are left out of the game until their bowling type is known
 | ipl | RR Bose | Punjab Kings | 1 | 0 | 21ac077a | |
 | ipl | GR Napier | Mumbai Indians | 1 | 1 | 611926bc | |
 | ipl | MB Parmar | Kolkata Knight Riders | 1 | 0 | 86ae8ef2 | |
-| ipl | Rimmington | Punjab Kings | 1 | 0 | 6042bf26 | |
+| ipl | NJ Rimmington | Punjab Kings | 1 | 0 | 6042bf26 | |
 | ipl | RR Bhatkal | Royal Challengers Bengaluru | 1 | 0 | 7d3720ba | |
 | ipl | Sunny Gupta | Delhi Capitals | 1 | 0 | ee3dfa89 | |
