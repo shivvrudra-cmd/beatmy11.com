@@ -1,5 +1,7 @@
 # BeatMy11 seven-metric engine — scoring review pack
 
+> **Note (2026-10-01):** player and house-XI numbers below match the live engine; the header formula omits the 2026-09-30 long-career bonus, and "XI shapes and head-to-heads" uses obsolete shapes (4 middle-order) and predates the series model — see `PROJECT_CONTEXT.md` §5–§6 for current rules.
+
 Generated 2026-09-30 from the current repo data (790 records, 536 unique players).
 Engine: seven metrics, percentile-rank 0–100 over eligible populations
 (every role, all-rounders included, ranked against the full populations — V2, owner-approved 2026-09-29),
