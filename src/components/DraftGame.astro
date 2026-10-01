@@ -167,7 +167,7 @@ const formatJson = json(format);
     } from '../lib/player-logic';
     import { reportEvent } from '../lib/telemetry';
     import {
-      utcDayKey, dayNumber, loadDaily, hasPlayed, activeDailyDay, setActiveDaily, dailySpinIndex, upcomingCombos,
+      utcDayKey, dayNumber, loadDaily, hasPlayed, activeDailyDay, setActiveDaily, dailySpinIndex, upcomingCombos, finalSpinOptions,
     } from '../lib/daily';
     import { switchMode } from '../lib/draft-slots';
     import {
@@ -194,7 +194,10 @@ const formatJson = json(format);
       for (const s of draft.spinHistory) counts[s.nation] = (counts[s.nation] || 0) + 1;
       return counts;
     };
-    const combosForUpcomingRound = () => upcomingCombos(draft.currentRound, draft.spinHistory, LEGEND_COMBOS, DRAFT_COMBOS);
+    const combosForUpcomingRound = () =>
+      finalSpinOptions(upcomingCombos(draft.currentRound, draft.spinHistory, LEGEND_COMBOS, DRAFT_COMBOS), draft.currentRound, FORMAT.finalSpinMinPool, DRAFT_ROUNDS);
+    // A respin in the final round follows the same rule (currentRound is already 6 there).
+    const finalRespin = (list) => finalSpinOptions(list, draft.currentRound - 1, FORMAT.finalSpinMinPool, DRAFT_ROUNDS);
     // Respins: a nation respin keeps the era; an era respin keeps the nation
     // and never lands on Legends (round 1 owns that era).
     const nationRedrawOptions = () => {
@@ -202,17 +205,17 @@ const formatJson = json(format);
       const base = draft.currentRound === 1 ? LEGEND_COMBOS : DRAFT_COMBOS;
       const used = usedComboKeys();
       const counts = nationCounts();
-      return base.filter(
+      return finalRespin(base.filter(
         (c) => c.era === draft.currentEra && c.nation !== draft.currentNation &&
           !used.has(`${c.era}|${c.nation}`) && (counts[c.nation] || 0) < 2,
-      );
+      ));
     };
     const eraRedrawOptions = () => {
       if (!draft.currentNation) return [];
       const used = usedComboKeys();
-      return DRAFT_COMBOS.filter(
+      return finalRespin(DRAFT_COMBOS.filter(
         (c) => c.nation === draft.currentNation && c.era !== draft.currentEra && !used.has(`${c.era}|${c.nation}`),
-      );
+      ));
     };
 
     // ---------------------------------------------------------- presentation

@@ -37,6 +37,10 @@ export interface DraftFormat {
   /** How the pool of a draw is shown. 'cards' (default): swipeable cards. 'tabs': one role at a
    *  time behind role tabs, as compact rows (owner, 2026-10-01, for the 25-player white-ball squads). */
   poolLayout?: 'cards' | 'tabs';
+  /** The sixth (final) spin never lands on a draw with fewer players than this (owner,
+   *  2026-10-02: a small IPL squad on the last spin was the main cause of dead-end drafts once
+   *  the four-overseas rule came in). Absent = no limit. */
+  finalSpinMinPool?: number;
   matchupHref: string;
   homeHref: string;
   copy: {
@@ -122,6 +126,7 @@ export const IPL_FORMAT: DraftFormat = {
   teamReel: IPL_TEAM_CODES,
   round1FixedEra: null,
   poolLayout: 'tabs',
+  finalSpinMinPool: 11,
   matchupHref: '/ipl/matchup',
   homeHref: '/',
   copy: {

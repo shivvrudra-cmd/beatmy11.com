@@ -431,6 +431,9 @@ export function playSeries(input: {
   flavour?: SeriesFlavour;
   /** Difficulty: how far below the opponent still counts as level. Defaults to the Test PAR_GAP. */
   parGap?: number;
+  /** Replaces the par-based ladder with these six cut points (the "Pick any XI" friend duel,
+   *  whose ladder is symmetric: see pick-xi.ts). */
+  gapCuts?: readonly number[];
 }): SeriesResult {
   const flavour = input.flavour ?? TEST_FLAVOUR;
   // Limited-overs story (T20 or ODI); the hero figures are sized for the format.
@@ -438,7 +441,13 @@ export function playSeries(input: {
   const odi = flavour.kind === 'odi';
   const rng = mulberry32(input.seed);
   const percentile = rankPercentile(input.userScore, input.calibration.scores);
-  const band = bandFor(wobble(input.userScore - input.houseScore, rng), input.parGap ?? PAR_GAP);
+  const wobbled = wobble(input.userScore - input.houseScore, rng);
+  let band = bandFor(wobbled, input.parGap ?? PAR_GAP);
+  if (input.gapCuts) {
+    let i = 0;
+    while (i < input.gapCuts.length && wobbled >= input.gapCuts[i]) i++;
+    band = OUTCOME_BANDS[i];
+  }
   const order = testOrder(band, rng);
   const used = new Set<string>();
   // Headline balance (owner, 2026-10-02): of the five matches, two or three are headed by a

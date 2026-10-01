@@ -13,7 +13,7 @@ for (const f of FORMATS) {
   test(`${f.id} (hidden preview): draft a full XI and play the series`, async ({ page }) => {
     test.setTimeout(150_000);
     await page.goto(`/${f.id}/play`);
-    await expect(page.locator("meta[name=robots]")).toHaveAttribute("content", "noindex");
+    await expect(page.locator("meta[name=robots]")).toHaveCount(0); // public and indexable since 2026-10-02
     await expect(page.locator("#fl-reel-nation .fl-reel-cap")).toHaveText(f.teamCap);
     await expect(page.locator("#fl-reel-era .fl-reel-cap")).toHaveText(f.eraCap);
 

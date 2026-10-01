@@ -1,0 +1,108 @@
+/**
+ * pick-xi.ts — the rules of the "Pick any XI" mode (owner, 2026-10-02): no spins, any player,
+ * the usual eleven slots, played against a friend's XI or the format's fixed opponent.
+ * Pure and browser-safe (the head-to-head store takes its storage as an argument).
+ *
+ * The XI travels in the link (`?vs=<xi>`), encoded like the share links (share-results.ts).
+ * Nothing is stored on a server and these XIs are not sent to the anonymous score collection.
+ */
+import { OUTCOME_BANDS, hashSeed, type OutcomeBand } from './series';
+
+/**
+ * Friend v friend scoreline ladder. PROVISIONAL (Claude's proposal; owner to confirm): unlike
+ * the game against the fixed opponent, neither side gets a head start, so the cuts are
+ * symmetric around a level gap. `gap` = my team score minus theirs, after the seeded wobble.
+ *   below -8: 0-5 | -8..-4: 1-4 | -4..-1: 2-3 | -1..1: 2-2 | 1..4: 3-2 | 4..8: 4-1 | 8+: 5-0
+ */
+export const DUEL_CUTS = [-8, -4, -1, 1, 4, 8] as const;
+
+export function duelBand(gap: number): OutcomeBand {
+  let i = 0;
+  while (i < DUEL_CUTS.length && gap >= DUEL_CUTS[i]) i++;
+  return OUTCOME_BANDS[i];
+}
+
+/** One seed for a pair of XIs, whoever is looking at it. `a` is the challenger (`vs`), `b` the responder. */
+export const duelSeed = (aKeys: string[], bKeys: string[]) => hashSeed(`${aKeys.join(',')}|${bKeys.join(',')}`);
+
+/** A display name typed by a player: plain text, trimmed, at most 20 characters. */
+export function cleanName(raw: string | null | undefined): string {
+  return String(raw ?? '').replace(/[^\p{L}\p{N} .'-]/gu, '').replace(/\s+/g, ' ').trim().slice(0, 20);
+}
+export const xiLabel = (name: string, fallback: string) => (name ? `${name}'s XI` : fallback);
+
+// ---------------------------------------------------------------- badges
+export interface BadgePlayer {
+  /** Nation (Test, ODI, T20I) or franchise (IPL). */
+  team: string;
+  /** Every era (decade, "legends", or IPL season block) the player belongs to. */
+  eras: string[];
+  overseas?: boolean;
+}
+export interface Badge { id: string; name: string; why: string }
+
+/**
+ * Badges for an interesting XI. They reward imagination, since the strongest possible XI is the
+ * same for everyone. `allEras`: the format's eras in order; `modern`: the eras that count as
+ * "new generation".
+ */
+export function badgesFor(xi: BadgePlayer[], opts: { format: 'test' | 'odi' | 't20i' | 'ipl'; allEras: readonly string[]; modern: readonly string[] }): Badge[] {
+  if (xi.length !== 11) return [];
+  const out: Badge[] = [];
+  const ipl = opts.format === 'ipl';
+  const teams = new Set(xi.map((p) => p.team));
+  if (teams.size === 1) out.push({ id: 'one-team', name: ipl ? 'One franchise' : 'One nation', why: `All eleven from ${[...teams][0]}` });
+  if (teams.size >= 7) out.push({ id: 'world-tour', name: ipl ? 'League tour' : 'World tour', why: `${teams.size} different ${ipl ? 'franchises' : 'nations'}` });
+  const covered = new Set(xi.flatMap((p) => p.eras));
+  if (opts.allEras.length >= 3 && opts.allEras.every((e) => covered.has(e))) out.push({ id: 'time-traveller', name: 'Time traveller', why: 'A player from every era' });
+  if (xi.every((p) => p.eras.some((e) => opts.modern.includes(e)))) out.push({ id: 'new-generation', name: 'New generation', why: 'Every player from the modern eras' });
+  if (opts.format === 'test' && xi.every((p) => !p.eras.includes('legends'))) out.push({ id: 'no-legends', name: 'No legends', why: 'Not one player from the Legends era' });
+  if (ipl && xi.every((p) => !p.overseas)) out.push({ id: 'homegrown', name: 'Homegrown', why: 'No overseas players' });
+  return out;
+}
+
+// ---------------------------------------------------------------- head-to-head record
+export interface H2HRecord { won: number; lost: number; drawn: number; seen: string[] }
+type Store = Pick<Storage, 'getItem' | 'setItem'>;
+const H2H_KEY = 'beatmy11.h2h.v1';
+const h2hId = (format: string, name: string) => `${format}:${name.toLowerCase()}`;
+
+function loadAll(store: Store): Record<string, H2HRecord> {
+  try {
+    const v = JSON.parse(store.getItem(H2H_KEY) || '{}');
+    return v && typeof v === 'object' ? v : {};
+  } catch {
+    return {};
+  }
+}
+
+/**
+ * Record one series against a named friend, once per pair of XIs (`matchKey`), and return the
+ * running record. Kept on this device only.
+ */
+export function recordH2H(store: Store, format: string, name: string, matchKey: string, mine: number, theirs: number): H2HRecord {
+  const all = loadAll(store);
+  const id = h2hId(format, name);
+  const rec: H2HRecord = all[id] && Array.isArray(all[id].seen) ? all[id] : { won: 0, lost: 0, drawn: 0, seen: [] };
+  if (!rec.seen.includes(matchKey)) {
+    if (mine > theirs) rec.won++;
+    else if (mine < theirs) rec.lost++;
+    else rec.drawn++;
+    rec.seen = [...rec.seen, matchKey].slice(-50);
+    all[id] = rec;
+    try {
+      store.setItem(H2H_KEY, JSON.stringify(all));
+    } catch {
+      /* not remembered */
+    }
+  }
+  return rec;
+}
+
+export function h2hLine(rec: H2HRecord, name: string): string {
+  const { won, lost, drawn } = rec;
+  const tail = drawn ? `, ${drawn} drawn` : '';
+  if (won > lost) return `You lead ${name} ${won}–${lost}${tail}`;
+  if (lost > won) return `${name} leads you ${lost}–${won}${tail}`;
+  return `You and ${name} are level ${won}–${lost}${tail}`;
+}

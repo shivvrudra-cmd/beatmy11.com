@@ -4,7 +4,8 @@
  */
 import { iplPlayers, iplPlayersByBlock, iplSpinCombos } from '../src/lib/formats/ipl-store';
 import { IPL_BLOCKS, IPL_TEAM_CODES, IPL_MIN_MATCHES } from '../src/lib/formats/ipl-config';
-import { upcomingCombos, mulberry32 } from '../src/lib/daily';
+import { upcomingCombos, finalSpinOptions, mulberry32 } from '../src/lib/daily';
+import { IPL_FORMAT } from '../src/lib/formats/draft-format';
 import { WB_FORMATS, buildWbContext, scoreWbPlayer, type WbRole } from '../src/lib/white-ball-metrics';
 import { playerGroups, createDraft, validatePoolPick, type NormalizedPlayer } from '../src/lib/player-logic';
 import { achievable } from './oracle';
@@ -68,16 +69,19 @@ ok(unscorable === 0, 'every declarable role of every player can be scored', unsc
 // random spin sequences under the live spin rules: how many can make a legal XI?
 const TRIALS = 300;
 let stalled = 0;
+let smallLast = 0;
 const rng = mulberry32(20261001);
 for (let t = 0; t < TRIALS; t++) {
   const history: { era: string; nation: string }[] = [];
   for (let round = 0; round < 6; round++) {
-    const options = upcomingCombos(round, history, combos, combos);
+    const options = finalSpinOptions(upcomingCombos(round, history, combos, combos), round, IPL_FORMAT.finalSpinMinPool);
     history.push(options[Math.floor(rng() * options.length)]);
   }
+  if (history[5] && (combos.find((c) => c.era === history[5].era && c.nation === history[5].nation)?.count ?? 0) < 11) smallLast++;
   if (!achievable(history.map((c) => poolFor(c.era, c.nation)))) stalled++;
 }
 console.log(`IPL: ${stalled} of ${TRIALS} random spin sequences cannot make a legal XI`);
+ok(smallLast === 0, 'the final spin never lands on a squad of fewer than 11', smallLast);
 ok(stalled === 0, 'every random IPL spin sequence can be drafted into a legal XI', stalled);
 
 console.log(`\n${pass} passed, ${fail} failed`);

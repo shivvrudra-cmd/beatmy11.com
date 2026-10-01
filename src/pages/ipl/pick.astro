@@ -1,0 +1,37 @@
+---
+/**
+ * /ipl/pick — "Pick any XI", IPL (linked from the home page since 2026-10-02; see docs/plans/next-2026-10-02.md).
+ */
+import PickGame, { type PickPlayer } from '../../components/PickGame.astro';
+import { wbResultProps } from '../../lib/formats/white-ball-result';
+import { wbPlayers } from '../../lib/formats/white-ball-store';
+import { IPL_FORMAT } from '../../lib/formats/draft-format';
+import { IPL_RESULT } from '../../lib/formats/result-format';
+import { IPL_BLOCKS, IPL_TEAM_CODES } from '../../lib/formats/ipl-config';
+
+const r = wbResultProps('ipl');
+// One entry per draftable player (IPL: per stint, so the link key carries the franchise and block).
+const players: PickPlayer[] = wbPlayers('ipl').map((p) => ({
+  key: p.stint ? `${p.id}--${(IPL_TEAM_CODES[p.stint.team] ?? '').toLowerCase()}${(IPL_BLOCKS as readonly string[]).indexOf(p.stint.block)}` : p.id,
+  id: p.id,
+  name: p.name,
+  nation: p.stint?.team ?? p.nation ?? '',
+  eras: p.stint ? [p.stint.block] : (p.era ?? []),
+  primaryRole: p.primaryRole,
+  secondaryRoles: p.secondaryRoles,
+  stats: p.stats,
+  ...(p.overseas === true ? { overseas: true } : {}),
+}));
+---
+<PickGame
+  format={IPL_FORMAT}
+  result={{ ...IPL_RESULT, parGap: r.parGap }}
+  players={players}
+  houseXI={r.houseXI}
+  scoringContext={r.scoringContext}
+  calibration={r.calibration}
+  path="/ipl/pick"
+  modernEras={['2018-22', '2023+']}
+  title="Pick any IPL XI — Beat My 11"
+  description="No spins: pick any IPL XI, then challenge a friend to beat it."
+/>
