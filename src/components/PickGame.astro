@@ -1,8 +1,10 @@
 ---
 /**
  * PickGame.astro — the "Pick any XI" mode (owner, 2026-10-02): no spins. Search every player in
- * the format, fill the usual eleven slots, then play a friend's XI (carried in the link) or the
- * format's fixed opponent. HIDDEN preview: noindex and not linked from anywhere yet.
+ * the format, fill the usual eleven slots, then play a friend's XI (carried in the link). The
+ * fixed World XI is NOT an opponent here (owner, 2026-10-02): with every player available it was
+ * beaten 5-0 by any all-star XI, and it stays the same XI the draft is measured against.
+ * friend's XI. Linked from the home page (owner, 2026-10-02).
  *
  * One page, three states: build (slots + live strength meter), the picker sheet, and the result
  * (slot-by-slot duels, the five-match series, both sides' strength, badges, head-to-head record).
@@ -43,12 +45,16 @@ const { format, result, players, houseXI, scoringContext, calibration, path, mod
 const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
 ---
 <BaseLayout title={title} description={description}>
-  <meta name="robots" content="noindex" slot="head" />
   <div class="pk" id="pk">
     <header class="pk-top">
       <a class="pk-brand" href={format.homeHref} aria-label="Beat My 11 home">BEAT MY 11</a>
       <span class="pk-mode">Pick any XI</span>
     </header>
+    <nav class="pk-games" aria-label="Choose a game">
+      {[['Test', '/pick'], ['ODI', '/odi/pick'], ['T20I', '/t20i/pick'], ['IPL', '/ipl/pick']].map(([label, href]) => (
+        <a href={href} class={href === path ? 'is-on' : ''} aria-current={href === path ? 'page' : undefined}>{label}</a>
+      ))}
+    </nav>
 
     <!-- ============ build ============ -->
     <main class="pk-build" id="pk-build">
@@ -59,12 +65,12 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       <h1 class="pk-h1" id="pk-h1">Pick your {result.xiNoun}</h1>
       <p class="pk-sub" id="pk-sub">Any player, no spins. Tap a slot to choose.</p>
 
-      <section class="pk-meter" aria-label="Your XI's strength so far">
+      <section class="pk-meter" id="pk-meter" aria-label="Your XI's strength">
         <div class="pk-m" data-m="bat"><span>Batting</span><i><b></b></i><em>–</em></div>
         <div class="pk-m" data-m="bowl"><span>Bowling</span><i><b></b></i><em>–</em></div>
         <div class="pk-m" data-m="field"><span>Fielding</span><i><b></b></i><em>–</em></div>
         <div class="pk-m is-overall" data-m="all"><span>Overall</span><i><b></b></i><em>–</em></div>
-        <p class="pk-meter-note" id="pk-meter-note">Fielding and overall appear when all eleven are in.</p>
+        <p class="pk-meter-note" id="pk-meter-note">Your XI’s strength shows here once all eleven are in.</p>
       </section>
 
       <ol class="pk-slots" id="pk-slots"></ol>
@@ -73,7 +79,6 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       <label class="pk-name">Your name (optional) <input type="text" id="pk-name" maxlength="20" autocomplete="nickname" placeholder="e.g. Shiva" /></label>
       <div class="pk-actions">
         <button type="button" class="pk-btn is-main" id="pk-go-friend" disabled></button>
-        <button type="button" class="pk-btn" id="pk-go-world" disabled>Play the {result.opponent}</button>
         <button type="button" class="pk-link" id="pk-clear">Clear my XI</button>
       </div>
       <p class="pk-copied" id="pk-copied" role="status"></p>
@@ -107,20 +112,19 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       </div>
       <p class="pk-h2h" id="pk-h2h" hidden></p>
 
+      <ol class="pk-tests" id="pk-tests"></ol>
+      <button type="button" class="pk-btn is-main pk-share-top" id="pk-share-top">Share the result</button>
+
+      <h2 class="pk-h2">Strength</h2>
+      <div class="pk-strength" id="pk-strength"></div>
+      <div class="pk-badges" id="pk-badges" hidden></div>
+
       <h2 class="pk-h2">Head to head, slot by slot</h2>
       <ol class="pk-duels" id="pk-duels"></ol>
       <p class="pk-tally" id="pk-tally"></p>
 
-      <h2 class="pk-h2">The series</h2>
-      <ol class="pk-tests" id="pk-tests"></ol>
-
-      <h2 class="pk-h2">Strength</h2>
-      <div class="pk-strength" id="pk-strength"></div>
-
-      <div class="pk-badges" id="pk-badges" hidden></div>
-
       <div class="pk-actions">
-        <button type="button" class="pk-btn is-main" id="pk-share"></button>
+        <button type="button" class="pk-btn is-main" id="pk-share">Share the result</button>
         <button type="button" class="pk-btn" id="pk-again"></button>
         <a class="pk-link" href={path}>Start a new challenge</a>
       </div>
@@ -136,16 +140,15 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
 
   <script>
     import { XI_SLOTS, declarableRoles, MAX_OVERSEAS } from '../lib/player-logic';
-    import { compareXIs, teamBlend, scorePlayer } from '../lib/seven-metrics';
-    import { compareWbXIs, wbTeamBlend, scoreWbPlayer, WB_FORMATS } from '../lib/white-ball-metrics';
-    import { playSeries, xiSeed } from '../lib/series';
+    import { compareXIs, teamBlend } from '../lib/seven-metrics';
+    import { compareWbXIs, wbTeamBlend, WB_FORMATS } from '../lib/white-ball-metrics';
+    import { playSeries } from '../lib/series';
     import { encodeXI, decodeXI } from '../lib/share-results';
     import { DUEL_CUTS, duelSeed, cleanName, xiLabel, badgesFor, recordH2H, h2hLine } from '../lib/pick-xi';
     import { sfx } from '../lib/sfx';
 
     const read = (id) => JSON.parse(document.getElementById(id).textContent);
     const PLAYERS = read('pk-players');
-    const HOUSE = read('pk-house');
     const CTX = read('pk-ctx');
     const CAL = read('pk-cal');
     const { draft: FORMAT, result: RESULT, path: PATH, modernEras: MODERN } = read('pk-format');
@@ -218,10 +221,8 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
 
     // ------------------------------------------------------------ scoring
     const entriesOf = (m) => picks(m).map((e) => ({ player: scoring(asPlayer(byKey.get(e.key))), declaredRole: e.role }));
-    const houseEntries = () => HOUSE.map((p) => ({ player: scoring(p), declaredRole: p.primaryRole }));
     const compare = (a, b) => (TEST ? compareXIs(a, b, CTX) : compareWbXIs(a, b, CTX, WBF));
     const blend = (e) => (TEST ? teamBlend(e, CTX) : wbTeamBlend(e, CTX, WBF));
-    const scoreOne = (e) => (TEST ? scorePlayer(e.player, e.declaredRole, CTX) : scoreWbPlayer(e.player, e.declaredRole, CTX, WBF));
 
     // ------------------------------------------------------------ build view
     function setMeter(m, v) {
@@ -229,22 +230,17 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       el.querySelector('b').style.width = v == null ? '0%' : `${Math.max(0, Math.min(100, v))}%`;
       el.querySelector('em').textContent = v == null ? '–' : String(Math.round(v));
     }
+    // The meter fills only for a complete XI (owner, 2026-10-02). With one or two players in, it
+    // would show that player's own rating, and swapping players in a slot would read them all out.
     function renderMeter() {
       const entries = entriesOf(xi);
-      const mean = (xs) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null);
-      let bat = null, bowl = null, field = null, all = null;
-      try {
-        if (entries.length === 11) {
-          const t = blend(entries);
-          bat = t.teamBatting; bowl = t.teamBowling; field = t.teamFielding; all = t.score;
-        } else {
-          const scores = entries.map(scoreOne);
-          bat = mean(scores.map((s) => s.battingScore).filter((v) => v != null));
-          bowl = mean(scores.map((s) => s.bowlingScore).filter((v) => v != null));
-        }
-      } catch { /* a statistic is missing: the meter stays blank for that part */ }
-      setMeter('bat', bat); setMeter('bowl', bowl); setMeter('field', field); setMeter('all', all);
-      $('pk-meter-note').hidden = entries.length === 11;
+      let t = null;
+      if (entries.length === 11) {
+        try { t = blend(entries); } catch { /* a statistic is missing: the meter stays blank */ }
+      }
+      setMeter('bat', t && t.teamBatting); setMeter('bowl', t && t.teamBowling); setMeter('field', t && t.teamFielding); setMeter('all', t && t.score);
+      $('pk-meter-note').hidden = !!t;
+      $('pk-meter').classList.toggle('is-waiting', !t);
     }
     function renderSlots() {
       $('pk-slots').innerHTML = XI_SLOTS.map((s, i) => {
@@ -252,7 +248,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
         const p = e && byKey.get(e.key);
         return `<li><button type="button" class="pk-slot${p ? ' is-filled' : ''}" data-pk-slot="${s.key}" aria-label="Spot ${i + 1}, ${SLOT_TAG[s.key]}${p ? `: ${esc(p.name)}. Change` : ': empty. Pick a player'}">` +
           `<span class="pk-slot-n">${i + 1}</span><span class="pk-slot-tag">${p ? ROLE_SHORT[e.role] : SLOT_TAG[s.key]}</span>` +
-          (p ? `<span class="pk-slot-name">${esc(p.name)}${p.overseas ? ' <b class="pk-os">OS</b>' : ''}</span><span class="pk-slot-meta">${esc(code(p.nation))} · ${esc(eraText(p))}</span>`
+          (p ? `<span class="pk-slot-name">${esc(p.name)}${p.overseas ? ' <b class="pk-os">OS</b>' : ''}</span><span class="pk-slot-stats">${statCells(p, 3)}</span>`
              : `<span class="pk-slot-name is-empty">Tap to pick</span>`) +
           `</button></li>`;
       }).join('');
@@ -264,7 +260,6 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       const n = filled().length;
       $('pk-sub').textContent = done ? 'Eleven in. Ready when you are.' : n ? `${11 - n} to go. Tap a slot to choose.` : 'Any player, no spins. Tap a slot to choose.';
       $('pk-go-friend').disabled = !done;
-      $('pk-go-world').disabled = !done;
       $('pk-go-friend').textContent = theirXI ? `Play ${xiLabel(theirName, "your friend's XI")}` : 'Challenge a friend';
     }
 
@@ -283,14 +278,15 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       if (window.matchMedia('(min-width: 720px)').matches) $('pk-q').focus();
     }
     function closeSheet() { $('pk-sheet').hidden = true; openSlot = null; }
-    const statCells = (p) => {
+    // `last`: only the last few of the four card stats (the slot rows have room for three).
+    const statCells = (p, last = 4) => {
       const r = p.primaryRole;
       const set = r === 'all-rounder' ? FORMAT.stats.allRounder : r === 'spinner' || r === 'fast-bowler' ? FORMAT.stats.bowler : r === 'wicketkeeper' ? FORMAT.stats.keeper : FORMAT.stats.batter;
       const s = p.stats || {};
       const first = (keys) => { for (const k of keys) if (s[k] != null) return s[k]; return undefined; };
       const int = (v) => (v == null || Number.isNaN(Number(v)) ? '–' : Math.round(Number(v)).toLocaleString('en-US'));
       const avg = (v) => (v == null || Number.isNaN(Number(v)) || Number(v) === 0 ? '–' : Number(v).toFixed(1));
-      return set.map((c) => `<span class="pk-stat"><b>${esc(c.kind === 'pair' ? `${int(s[c.keys[0]])}/${int(s[c.keys[1]])}` : c.kind === 'avg' ? avg(first(c.keys)) : int(first(c.keys)))}</b><i>${esc(c.label)}</i></span>`).join('');
+      return set.slice(-last).map((c) => `<span class="pk-stat"><b>${esc(c.kind === 'pair' ? `${int(s[c.keys[0]])}/${int(s[c.keys[1]])}` : c.kind === 'avg' ? avg(first(c.keys)) : int(first(c.keys)))}</b><i>${esc(c.label)}</i></span>`).join('');
     };
     function renderList() {
       if (!openSlot) return;
@@ -352,16 +348,32 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
 
     $('pk-go-friend').addEventListener('click', () => {
       if (!complete()) return;
-      if (theirXI) { showResult(xi, theirXI, myName, theirName, 'friend', true); return; }
+      if (theirXI) { showResult(xi, theirXI, myName, theirName, true); return; }
       const url = `${location.origin}${PATH}?${withName(`vs=${linkOf(xi)}`, 'n', myName)}`;
       shareLink(url, `I picked my ${RESULT.xiNoun}. Pick yours and beat it 🏏`, $('pk-copied'));
     });
-    $('pk-go-world').addEventListener('click', () => { if (complete()) showResult(xi, null, myName, '', 'world', true); });
 
     // ------------------------------------------------------------ result view
-    function showResult(mine, theirs, mineName, theirsName, mode, played) {
+    /**
+     * The opponent's XI lined up for the slot-by-slot view: when the same player is in both XIs
+     * in the same group of slots (openers 1-2, batters 3-5, slots 7-8, pace 9-11) but a different
+     * spot, he faces himself. Players in different groups are left where they are.
+     */
+    const GROUPS = [[0, 1], [2, 3, 4], [5], [6, 7], [8, 9, 10]];
+    function alignedOrder(mineIds, theirIds) {
+      const order = theirIds.map((_, i) => i);
+      for (const g of GROUPS) {
+        for (const i of g) {
+          const j = g.find((k) => theirIds[order[k]] === mineIds[i]);
+          if (j !== undefined && j !== i) [order[i], order[j]] = [order[j], order[i]];
+        }
+      }
+      return order;
+    }
+
+    function showResult(mine, theirs, mineName, theirsName, played) {
       const me = entriesOf(mine);
-      const them = theirs ? entriesOf(theirs) : houseEntries();
+      const them = entriesOf(theirs);
       let cmp, myBlend, theirBlend;
       try {
         cmp = compare(me, them);
@@ -372,7 +384,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
         return;
       }
       const meLab = played ? 'Your XI' : xiLabel(mineName, 'The challenger');
-      const themLab = theirs ? xiLabel(theirsName, played ? "Your friend's XI" : 'The first XI') : RESULT.opponent;
+      const themLab = xiLabel(theirsName, played ? "Your friend's XI" : 'The first XI');
       const toSeries = (entries, scores) => entries.map((e, i) => ({
         id: e.player.id, name: e.player.name, nation: e.player.nation, era: e.player.era, role: scores[i].role, rating: scores[i].score ?? 0, stats: e.player.stats,
       }));
@@ -381,10 +393,8 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
         userScore: cmp.userScore, houseScore: cmp.opponentScore,
         userXI: toSeries(me, cmp.userPlayers), houseXI: toSeries(them, cmp.opponentPlayers),
         calibration: CAL, flavour: { ...RESULT.flavour, opponent: themLab },
-        // Friend v friend: one seed for the pair and a symmetric ladder. Against the fixed opponent: the format's own difficulty.
-        ...(theirs
-          ? { seed: duelSeed(picks(theirs).map((e) => `${e.key}:${e.role}`), myKeys), gapCuts: DUEL_CUTS }
-          : { seed: xiSeed(me.map((e) => ({ id: e.player.id, role: e.declaredRole }))), parGap: RESULT.parGap }),
+        // Friend v friend: one seed for the pair and the symmetric ladder (owner-confirmed 2026-10-02).
+        seed: duelSeed(picks(theirs).map((e) => `${e.key}:${e.role}`), myKeys), gapCuts: DUEL_CUTS,
       });
 
       $('pk-build').hidden = true;
@@ -396,9 +406,12 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       const titleFinal = won ? `${meLab} win${played ? '' : 's'} ${series.user}–${series.house}` : lost ? `${themLab} wins ${series.house}–${series.user}` : `Series drawn ${series.user}–${series.house}`;
 
       // 1. Slot-by-slot duels: the rating of each pair decides the duel (no numbers shown).
+      const order = alignedOrder(me.map((e) => e.player.id), them.map((e) => e.player.id));
       const duels = XI_SLOTS.map((s, i) => {
-        const a = cmp.userPlayers[i].score, b = cmp.opponentPlayers[i].score;
-        return { n: i + 1, mine: me[i].player.name, theirs: them[i].player.name, res: a > b ? 'w' : a < b ? 'l' : 'd' };
+        const j = order[i];
+        const same = me[i].player.id === them[j].player.id;
+        const a = cmp.userPlayers[i].score, b = cmp.opponentPlayers[j].score;
+        return { n: i + 1, mine: me[i].player.name, theirs: them[j].player.name, res: same ? 'd' : a > b ? 'w' : a < b ? 'l' : 'd' };
       });
       $('pk-duels').innerHTML = duels.map((d) =>
         `<li class="pk-duel" data-res="${d.res}"><span class="pk-duel-a">${esc(d.mine)}</span><span class="pk-duel-n">${d.n}</span><span class="pk-duel-b">${esc(d.theirs)}</span></li>`).join('');
@@ -407,7 +420,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       // 2. The series, 3. strength of both sides.
       const ORD = ['1st', '2nd', '3rd', '4th', '5th'];
       $('pk-tests').innerHTML = series.tests.map((t) =>
-        `<li class="pk-test is-${t.result}"><span class="pk-test-n">${ORD[t.number - 1]} ${esc(RESULT.matchNoun)} · ${esc(t.venue)}</span>` +
+        `<li class="pk-test is-${t.result}"><span class="pk-test-res">${t.result === 'user' ? 'Won' : t.result === 'house' ? 'Lost' : TEST ? 'Drawn' : 'Level'}</span><span class="pk-test-n">${ORD[t.number - 1]} ${esc(RESULT.matchNoun)} · ${esc(t.venue)}</span>` +
         `<span class="pk-test-sum">${esc(t.summary.replace(/^Your XI/, meLab))}</span>` +
         (t.hero ? `<span class="pk-test-hero">★ ${esc(t.hero)} <em>(${esc(t.heroSide === 'user' ? meLab : themLab)})</em></span>` : '') + `</li>`).join('');
       const row = (label, a, b) => `<div class="pk-str"><span>${label}</span>` +
@@ -432,14 +445,10 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       }
 
       // Buttons.
-      const resultUrl = theirs
-        ? `${location.origin}${PATH}?${withName(withName(`vs=${linkOf(theirs)}`, 'n', theirsName) + `&me=${linkOf(mine)}`, 'm', mineName)}`
-        : `${location.origin}${PATH}?${withName(`vs=${linkOf(mine)}`, 'n', mineName)}`;
-      const shareText = theirs
-        ? `${meLab} ${won ? 'beat' : lost ? 'lost to' : 'drew with'} ${themLab} ${series.user}–${series.house} 🏏`
-        : `My ${RESULT.xiNoun} ${won ? 'beat' : lost ? 'lost to' : 'drew with'} the ${RESULT.opponent} ${series.user}–${series.house}. Pick yours and beat mine 🏏`;
-      $('pk-share').textContent = theirs ? 'Send the result' : 'Challenge a friend with this XI';
-      $('pk-share').onclick = () => shareLink(resultUrl, shareText, $('pk-r-copied'));
+      const resultUrl = `${location.origin}${PATH}?${withName(withName(`vs=${linkOf(theirs)}`, 'n', theirsName) + `&me=${linkOf(mine)}`, 'm', mineName)}`;
+      const shareLab = played ? 'My XI' : meLab;
+      const shareText = `${shareLab} ${won ? 'beat' : lost ? 'lost to' : 'drew with'} ${xiLabel(theirsName, "a friend's XI")} ${series.user}–${series.house} 🏏 Pick yours and take on the winner.`;
+      $('pk-share').onclick = $('pk-share-top').onclick = () => shareLink(resultUrl, shareText, $('pk-r-copied'));
       $('pk-again').textContent = played ? 'Change my XI' : 'Pick my own XI';
       $('pk-again').onclick = () => {
         if (!played) { location.href = `${PATH}?${withName(`vs=${linkOf(series.user >= series.house ? mine : theirs)}`, 'n', series.user >= series.house ? mineName : theirsName)}`; return; }
@@ -448,18 +457,27 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
         window.scrollTo(0, 0);
       };
 
-      // The reveal: duels one by one, then the scoreline.
-      const rows = [...document.querySelectorAll('.pk-duel')];
+      // The reveal: the five matches one by one with the running score, then everything else.
+      const rows = [...document.querySelectorAll('.pk-test')];
+      const duelRows = [...document.querySelectorAll('.pk-duel')];
+      let u = 0, h = 0, shown = 0;
+      const step = () => {
+        const t = series.tests[shown];
+        if (t.result === 'user') u++;
+        if (t.result === 'house') h++;
+        rows[shown].classList.add('is-shown');
+        shown++;
+        $('pk-r-me').textContent = String(u);
+        $('pk-r-them').textContent = String(h);
+      };
       const finish = () => {
-        rows.forEach((r) => r.classList.add('is-shown'));
-        $('pk-tally').textContent = `Duels: ${dw}–${dl}${11 - dw - dl ? `, ${11 - dw - dl} level` : ''}`;
-        $('pk-r-me').textContent = String(series.user);
-        $('pk-r-them').textContent = String(series.house);
+        while (shown < rows.length) step();
+        duelRows.forEach((r) => r.classList.add('is-shown'));
+        $('pk-tally').textContent = `Head to head: ${dw}–${dl}${11 - dw - dl ? `, ${11 - dw - dl} level` : ''}`;
         $('pk-r-title').textContent = titleFinal;
         $('pk-result').classList.toggle('is-win', won);
         $('pk-result').classList.toggle('is-loss', lost);
         $('pk-result').classList.add('is-done');
-        if (!reduceMotion) sfx.land(true);
       };
       $('pk-result').classList.remove('is-done', 'is-win', 'is-loss');
       $('pk-r-title').textContent = `${meLab} v ${themLab}`;
@@ -467,8 +485,8 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       $('pk-r-them').textContent = '0';
       $('pk-tally').textContent = '';
       if (reduceMotion) { finish(); return; }
-      rows.forEach((r, i) => window.setTimeout(() => { r.classList.add('is-shown'); sfx.tick(); }, 350 + i * 260));
-      window.setTimeout(finish, 350 + rows.length * 260 + 400);
+      rows.forEach((_, i) => window.setTimeout(() => { if (shown === i) { step(); sfx.tick(); } }, 500 + i * 700));
+      window.setTimeout(() => { finish(); sfx.land(true); }, 500 + rows.length * 700 + 200);
     }
 
     // ------------------------------------------------------------ start
@@ -478,7 +496,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       $('pk-vs-list').innerHTML = picks(theirXI).map((e) => { const p = byKey.get(e.key); return `<li><b>${ROLE_SHORT[e.role]}</b> ${esc(p.name)} <i>${esc(code(p.nation))}</i></li>`; }).join('');
     }
     renderBuild();
-    if (theirXI && linkedMine) showResult(linkedMine, theirXI, cleanName(params.get('m')), theirName, 'friend', false);
+    if (theirXI && linkedMine) showResult(linkedMine, theirXI, cleanName(params.get('m')), theirName, false);
   </script>
 
   <style is:global>
@@ -515,7 +533,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
 
     .pk-slots { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 5px; }
     .pk-slot {
-      width: 100%; min-height: 46px; display: grid; grid-template-columns: 22px 58px 1fr auto; align-items: center; gap: 8px; padding: 6px 10px; text-align: left; cursor: pointer;
+      width: 100%; min-height: 46px; display: grid; grid-template-columns: 20px 36px minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 6px 10px; text-align: left; cursor: pointer;
       border-radius: 10px; border: 1px dashed var(--pk-line); background: #0b1020; color: var(--pk-text);
     }
     .pk-slot.is-filled { border-style: solid; border-color: rgba(198, 255, 61, 0.35); background: linear-gradient(160deg, #16223a, #0b1020 70%); }
@@ -523,7 +541,20 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
     .pk-slot-tag { font: 700 10px Inter, sans-serif; letter-spacing: 0.08em; color: var(--pk-lime); }
     .pk-slot-name { font: 400 20px/1.05 var(--pk-display); letter-spacing: 0.03em; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .pk-slot-name.is-empty { color: var(--pk-dim); font: 500 13px Inter, sans-serif; }
-    .pk-slot-meta, .pk-row-meta { font-size: 11px; color: var(--pk-muted); white-space: nowrap; }
+    .pk-row-meta { font-size: 11px; color: var(--pk-muted); white-space: nowrap; }
+    .pk-slot-stats { display: grid; grid-template-columns: repeat(3, 46px); gap: 0 2px; text-align: right; }
+    .pk-slot-stats .pk-stat i { font-size: 7.5px; letter-spacing: 0; overflow: hidden; text-overflow: clip; }
+    .pk-slot-stats .pk-stat b { font-size: 15px; }
+    .pk-games { display: flex; justify-content: center; gap: 6px; margin-top: 10px; }
+    .pk-games a { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--pk-line); color: var(--pk-muted); font: 700 12px Inter, sans-serif; letter-spacing: 0.06em; text-decoration: none; }
+    .pk-games a.is-on { background: var(--pk-lime); border-color: var(--pk-lime); color: #04060c; }
+    .pk-meter.is-waiting .pk-m { opacity: 0.35; }
+    .pk-share-top { width: 100%; margin-top: 12px; }
+    .pk-test { opacity: 0.2; transition: opacity 0.3s; position: relative; }
+    .pk-test.is-shown { opacity: 1; }
+    .pk-test-res { position: absolute; top: 6px; right: 8px; padding: 2px 6px; border-radius: 5px; background: #2a3350; font: 700 9.5px Inter, sans-serif; letter-spacing: 0.1em; text-transform: uppercase; }
+    .pk-test.is-user .pk-test-res { background: var(--pk-lime); color: #04060c; }
+    .pk-test.is-house .pk-test-res { background: var(--pk-loss); color: #1a0402; }
     .pk-os { display: inline-block; padding: 0 3px; border-radius: 3px; background: rgba(255, 255, 255, 0.14); font: 700 8.5px Inter, sans-serif; letter-spacing: 0.06em; vertical-align: 3px; }
     .pk-msg { margin: 8px 0 0; min-height: 0; color: #ffb3aa; font-size: 13px; text-align: center; }
     .pk-name { display: flex; align-items: center; gap: 10px; margin: 14px 0 0; font-size: 12.5px; color: var(--pk-muted); }
@@ -566,6 +597,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
     .pk-h2h { margin: 10px auto 0; width: fit-content; padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(198, 255, 61, 0.4); color: var(--pk-lime); font: 600 12.5px Inter, sans-serif; }
     .pk-duels, .pk-tests { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
     .pk-duel { display: grid; grid-template-columns: 1fr 26px 1fr; align-items: center; gap: 6px; padding: 5px 8px; border-radius: 8px; background: rgba(255, 255, 255, 0.04); font: 400 16px/1.05 var(--pk-display); letter-spacing: 0.03em; opacity: 0.25; transition: opacity 0.25s; }
+    .pk-tests { margin-top: 12px; }
     .pk-duel.is-shown { opacity: 1; }
     .pk-duel-a { text-align: right; }
     .pk-duel-n { text-align: center; font-size: 13px; color: var(--pk-dim); }
@@ -581,7 +613,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
     .pk-test-sum { font-size: 12px; }
     .pk-test-hero { font: 400 15px/1.1 var(--pk-display); letter-spacing: 0.04em; color: var(--pk-lime); }
     .pk-test-hero em { font: 500 10.5px Inter, sans-serif; font-style: normal; color: var(--pk-muted); }
-    .pk-result:not(.is-done) .pk-tests, .pk-result:not(.is-done) .pk-strength, .pk-result:not(.is-done) .pk-badges { opacity: 0.15; }
+    .pk-result:not(.is-done) .pk-strength, .pk-result:not(.is-done) .pk-badges, .pk-result:not(.is-done) .pk-share-top { opacity: 0.15; }
     .pk-strength { display: grid; gap: 8px; }
     .pk-str { grid-template-columns: 70px 1fr 28px; row-gap: 3px; }
     .pk-str span { grid-row: span 2; }

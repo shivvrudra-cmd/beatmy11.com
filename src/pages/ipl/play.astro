@@ -1,7 +1,6 @@
 ---
 /**
- * /ipl/play — the IPL draft (HIDDEN: not linked from anywhere and noindex until the owner
- * approves the format; see docs/plans/white-ball-formats.md). Same screen and draft rules as
+ * /ipl/play — the IPL draft (public since 2026-10-02, linked from the home page; see docs/plans/white-ball-formats.md). Same screen and draft rules as
  * /play; the spin draws a franchise and a block of seasons.
  */
 import DraftGame from '@/components/DraftGame.astro';
@@ -12,10 +11,9 @@ const combos = iplSpinCombos();
 ---
 <DraftGame
   format={IPL_FORMAT}
-  title="Beat My 11 — IPL Draft (preview)"
+  title="Beat My 11 — IPL Draft"
   description="Spin for an IPL team and a block of seasons, draft eleven, then play five matches against the All-Star XI."
   playersByEra={iplPlayersByBlock()}
   round1Combos={combos}
   draftCombos={combos}
-  noindex
 />

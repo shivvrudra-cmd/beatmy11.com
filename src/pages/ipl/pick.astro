@@ -1,6 +1,6 @@
 ---
 /**
- * /ipl/pick — "Pick any XI", IPL (HIDDEN preview: noindex, not linked; see docs/plans/next-2026-10-02.md).
+ * /ipl/pick — "Pick any XI", IPL (linked from the home page since 2026-10-02; see docs/plans/next-2026-10-02.md).
  */
 import PickGame, { type PickPlayer } from '../../components/PickGame.astro';
 import { wbResultProps } from '../../lib/formats/white-ball-result';
@@ -32,6 +32,6 @@ const players: PickPlayer[] = wbPlayers('ipl').map((p) => ({
   calibration={r.calibration}
   path="/ipl/pick"
   modernEras={['2018-22', '2023+']}
-  title="Pick any IPL XI — Beat My 11 (preview)"
+  title="Pick any IPL XI — Beat My 11"
   description="No spins: pick any IPL XI, then challenge a friend to beat it."
 />

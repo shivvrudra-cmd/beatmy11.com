@@ -1,6 +1,6 @@
 ---
 /**
- * /pick — "Pick any XI", Test (HIDDEN preview: noindex, not linked; see docs/plans/next-2026-10-02.md).
+ * /pick — "Pick any XI", Test (linked from the home page since 2026-10-02; see docs/plans/next-2026-10-02.md).
  * Every unique Test player in the game, no spins; play a friend's XI or the World XI.
  */
 import PickGame, { type PickPlayer } from '../components/PickGame.astro';
@@ -34,6 +34,6 @@ const players: PickPlayer[] = unique.map((p) => ({
   calibration={calibration}
   path="/pick"
   modernEras={['2010s', '2020s']}
-  title="Pick any XI — Beat My 11 (preview)"
+  title="Pick any XI — Beat My 11"
   description="No spins: pick any all-time Test XI, then challenge a friend to beat it."
 />

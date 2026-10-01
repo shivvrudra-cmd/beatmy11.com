@@ -12,6 +12,7 @@ with the date; move an idea out of this file when it gets built.
 | 4 | More badges ("Under 30 Tests each", left-handers, one decade, etc.) | Pick any XI | 2026-10-02 | Six badges exist; each new one must be computable from data we hold. |
 | 5 | A limit to stop identical "best" XIs (two per nation, a Legends cap, or a points budget) | Pick any XI | 2026-10-02 | Owner chose no limits for version 1. Revisit if every shared XI looks the same. |
 | 6 | Taller 9:16 share card for phone screens and stories | Result page | 2026-10-02 | Owner said no for now. |
-| 7 | Small IPL squads never land in the final round | IPL draft | 2026-10-02 | Half of the simulated dead ends caused by the four-overseas rule happen when a one-season squad (8-10 players) is the sixth spin. |
 | 8 | "% of players who beat the World XI today" on the Test daily | Daily challenge | 2026-10-01 | From the handoff notes; needs the D1 scores. |
 | 9 | Sounds on the result page (series reveal, grade) | Result page | 2026-10-02 | The draft and the pick mode have sounds; the result page is silent. |
+| 10 | A "Boss XI" for Pick any XI: a second, stronger fixed opponent built for that mode | Pick any XI | 2026-10-02 | The owner dropped the World XI from this mode (any all-star XI beat it 5-0). The strongest possible XI cannot be beaten, only matched by picking the same eleven, so a Boss XI needs its own rule: e.g. beat it under a constraint, or win the series by matching it in most slots. |
+| 11 | Daily challenge, challenge-a-friend links and share pages for ODI, T20I and IPL | White-ball formats | 2026-10-02 | The formats are on the home page now; these Test-only features are the remaining part of "going public". |

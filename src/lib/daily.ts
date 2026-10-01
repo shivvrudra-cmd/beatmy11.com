@@ -148,6 +148,16 @@ export function upcomingCombos(
   return pairFresh.length > 0 ? pairFresh : base;
 }
 
+/**
+ * Drops draws with fewer than `minPool` players from the options for the final spin (formats
+ * that set DraftFormat.finalSpinMinPool). Falls back to the full list if nothing would be left.
+ */
+export function finalSpinOptions<T extends { count?: number }>(options: T[], round: number, minPool: number | undefined, rounds = 6): T[] {
+  if (!minPool || round !== rounds - 1) return options;
+  const big = options.filter((c) => (c.count ?? minPool) >= minPool);
+  return big.length ? big : options;
+}
+
 /** The whole day's six spins, in order. */
 export function dailySpins(day: string, legendCombos: SpinCombo[], draftCombos: SpinCombo[], rounds = 6): SpinCombo[] {
   const history: SpinCombo[] = [];

@@ -20,11 +20,12 @@ async function fillXI(page: Page, nth = 0) {
 }
 
 for (const f of FORMATS) {
-  test(`pick any XI ${f.path}: build, play the ${f.opponent}, then a friend's XI`, async ({ page, context }) => {
+  test(`pick any XI ${f.path}: build, challenge, a friend plays it`, async ({ page, context }) => {
     test.setTimeout(120_000);
     await page.goto(f.path);
-    await expect(page.locator("meta[name=robots]")).toHaveAttribute("content", "noindex");
-    await expect(page.locator("#pk-go-world")).toBeDisabled();
+    await expect(page.locator("#pk-go-friend")).toBeDisabled();
+    await expect(page.locator("#pk-go-world")).toHaveCount(0); // the fixed opponent is not played in this mode
+    await expect(page.locator('.pk-m[data-m="all"] em')).toHaveText("–"); // no strength until all eleven are in
 
     // Search narrows the list.
     await page.locator("[data-pk-slot]").first().click();
@@ -39,19 +40,10 @@ for (const f of FORMATS) {
     await expect(page.locator('.pk-m[data-m="all"] em')).not.toHaveText("–");
     await page.locator("#pk-name").fill("Asha");
 
-    // Against the fixed opponent.
-    await page.locator("#pk-go-world").click();
-    await expect(page.locator("#pk-result")).toHaveClass(/is-done/, { timeout: 10_000 });
-    await expect(page.locator("#pk-r-them-lab")).toHaveText(f.opponent);
-    await expect(page.locator(".pk-duel")).toHaveCount(11);
-    await expect(page.locator(".pk-test")).toHaveCount(5);
-    const u = Number(await page.locator("#pk-r-me").textContent());
-    const h = Number(await page.locator("#pk-r-them").textContent());
-    expect(u + h).toBeGreaterThanOrEqual(4);
-    expect(u + h).toBeLessThanOrEqual(5);
+    await expect(page.locator("#pk-go-friend")).toHaveText("Challenge a friend");
+    await expect(page.locator(".pk-slot-stats").first()).toBeVisible();
 
     // The challenge link: a friend opens it, sees the XI, picks their own and plays it.
-    await page.locator("#pk-again").click();
     const vs = await page.evaluate(() => {
       const s = JSON.parse(localStorage.getItem(Object.keys(localStorage).find((k) => k.startsWith("beatmy11.pick."))!)!);
       return Object.values(s.slots as Record<string, { key: string; role: string }>);
@@ -72,6 +64,12 @@ for (const f of FORMATS) {
     await friend.locator("#pk-go-friend").click();
     await expect(friend.locator("#pk-result")).toHaveClass(/is-done/, { timeout: 10_000 });
     await expect(friend.locator("#pk-r-them-lab")).toHaveText("Asha's XI");
+    await expect(friend.locator(".pk-test")).toHaveCount(5);
+    await expect(friend.locator(".pk-duel")).toHaveCount(11);
+    const fuN = Number(await friend.locator("#pk-r-me").textContent());
+    const fhN = Number(await friend.locator("#pk-r-them").textContent());
+    expect(fuN + fhN).toBeGreaterThanOrEqual(4);
+    expect(fuN + fhN).toBeLessThanOrEqual(5);
     await expect(friend.locator("#pk-h2h")).toContainText("Asha");
     const fu = await friend.locator("#pk-r-me").textContent();
     const fh = await friend.locator("#pk-r-them").textContent();

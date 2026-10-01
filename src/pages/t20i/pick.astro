@@ -1,6 +1,6 @@
 ---
 /**
- * /t20i/pick — "Pick any XI", T20I (HIDDEN preview: noindex, not linked; see docs/plans/next-2026-10-02.md).
+ * /t20i/pick — "Pick any XI", T20I (linked from the home page since 2026-10-02; see docs/plans/next-2026-10-02.md).
  */
 import PickGame, { type PickPlayer } from '../../components/PickGame.astro';
 import { wbResultProps } from '../../lib/formats/white-ball-result';
@@ -32,6 +32,6 @@ const players: PickPlayer[] = wbPlayers('t20i').map((p) => ({
   calibration={r.calibration}
   path="/t20i/pick"
   modernEras={['2010s', '2020s']}
-  title="Pick any T20I XI — Beat My 11 (preview)"
+  title="Pick any T20I XI — Beat My 11"
   description="No spins: pick any T20I XI, then challenge a friend to beat it."
 />

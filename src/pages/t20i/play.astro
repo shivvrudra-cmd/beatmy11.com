@@ -1,7 +1,7 @@
 ---
 /**
- * /t20i/play — the T20I draft (HIDDEN: not linked from anywhere and noindex until the owner approves
- * the format; see docs/plans/white-ball-formats.md). Same screen and draft rules as /play; the
+ * /t20i/play — the T20I draft (public since 2026-10-02, linked from the home page;
+ * see docs/plans/white-ball-formats.md). Same screen and draft rules as /play; the
  * spin draws a nation and a decade of T20I cricket.
  */
 import DraftGame from '@/components/DraftGame.astro';
@@ -12,10 +12,9 @@ const combos = wbSpinCombos('t20i');
 ---
 <DraftGame
   format={T20I_FORMAT}
-  title="Beat My 11 — T20I Draft (preview)"
+  title="Beat My 11 — T20I Draft"
   description="Spin for a nation and a decade, draft eleven, then play five T20Is against the World XI."
   playersByEra={wbPlayersByEra('t20i')}
   round1Combos={combos}
   draftCombos={combos}
-  noindex
 />

@@ -24,7 +24,8 @@ import {
 } from '../../src/lib/player-logic';
 import { wbPlayers, wbOpponentPool, wbPlayersByEra, wbSpinCombos, type WbFormatId } from '../../src/lib/formats/white-ball-store';
 import { WB_FORMATS, buildWbContext, scoreWbPlayer, wbTeamBlend, type WbEntry } from '../../src/lib/white-ball-metrics';
-import { upcomingCombos } from '../../src/lib/daily';
+import { upcomingCombos, finalSpinOptions } from '../../src/lib/daily';
+import { IPL_FORMAT } from '../../src/lib/formats/draft-format';
 import { mulberry32, OUTCOME_BANDS, bandFor, wobble, PAR_GAP } from '../../src/lib/series';
 
 const clamp01 = (x: number) => Math.max(0, Math.min(1, x));
@@ -114,7 +115,7 @@ function run(id: WbFormatId) {
     for (const p of players) noise.set(p.id, gaussian(rng) * MISJUDGE);
     let draft = createDraft();
     for (let r = 0; r < 6; r++) {
-      const options = upcomingCombos(r, draft.spinHistory, combos, combos);
+      const options = finalSpinOptions(upcomingCombos(r, draft.spinHistory, combos, combos), r, id === 'ipl' ? IPL_FORMAT.finalSpinMinPool : undefined);
       const c = options[Math.floor(rng() * options.length)];
       draft = applySpinResult(draft, c.era, c.nation);
       const pool = poolFor(c.era, c.nation);
