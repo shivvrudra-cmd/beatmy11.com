@@ -71,15 +71,15 @@ export function wbEras(id: WbFormatId): readonly string[] {
  * phone. Who stays: the players with the most matches for that team in that period, filling a
  * place count per role; spare places (a role the team is short of) go to the next most-played
  * players of any role. Then the draw's highest-rated players are guaranteed a place.
- * PROVISIONAL details (Claude's reading of "most matches, highest rated"; owner to confirm):
- * 5 guaranteed stars, who need at least 5 matches for that team in that period.
+ * Owner, 2026-10-01:
+ * 12 guaranteed stars, who need at least 20 matches for that team in that period.
  */
 export const SQUAD_SIZE = 25;
 export const SQUAD_QUOTA: Record<WbRole, number> = {
   opener: 4, 'middle-order': 6, wicketkeeper: 3, 'all-rounder': 3, spinner: 3, 'fast-bowler': 6,
 };
-const SQUAD_STARS = 5;
-const SQUAD_STAR_MIN_MATCHES = 5;
+const SQUAD_STARS = 12;
+const SQUAD_STAR_MIN_MATCHES = 20;
 
 export interface SquadCandidate { id: string; name: string; role: WbRole; periodMatches: number; careerMatches: number; rating: number }
 

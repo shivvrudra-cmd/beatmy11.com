@@ -82,7 +82,6 @@ matches for that team in that period, with a place count per role: 4 openers, 6 
 3 keepers, 3 all-rounders, 3 spinners, 6 fast bowlers. If a team is short of a role, the spare
 places go to the next most-played players of any role. Draws with 25 or fewer are untouched.
 
-PROVISIONAL (Claude's reading of "most matches, highest rated"; owner to confirm): the 5
-highest-rated players of a draw are guaranteed a place if they played at least 5 matches for that
-team in that period. Match counts per period come from the ball-by-ball files (`eraMatches`,
+Owner, 2026-10-01: the 12 highest-rated players of a draw are guaranteed a place if they played at
+least 20 matches for that team in that period. Match counts per period come from the ball-by-ball files (`eraMatches`,
 `iplSpells[].matches`), so pre-2003 ODIs are not counted.

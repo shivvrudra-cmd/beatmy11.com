@@ -80,10 +80,10 @@ for (const id of ['odi', 't20i'] as WbFormatId[]) {
   ok(kept.size === SQUAD_SIZE, 'a big draw is cut to 25', kept.size);
   ok(roles.every((r) => count(r) >= Math.min(SQUAD_QUOTA[r], 8)), 'every role keeps its place count', roles.map(count));
   ok(kept.has('p0') && !kept.has('p47'), 'the most-played stay, the least-played go');
-  const star = [...big.slice(0, 47), mk(47, 'fast-bowler', 6, 99)];
+  const star = [...big.slice(0, 47), mk(47, 'fast-bowler', 20, 99)];
   const keptStar = cutSquad(star);
   ok(keptStar.has('p47') && keptStar.size === SQUAD_SIZE, 'a top-rated player with few matches is guaranteed a place', keptStar.size);
-  ok(!cutSquad([...big.slice(0, 47), mk(47, 'fast-bowler', 2, 99)]).has('p47'), 'but not a visitor with under 5 matches for the team');
+  ok(!cutSquad([...big.slice(0, 47), mk(47, 'fast-bowler', 19, 99)]).has('p47'), 'but not a visitor with under 20 matches for the team');
   ok(cutSquad(big.slice(0, 20)).size === 20, 'a draw of 25 or fewer is left alone');
   for (const id of ['odi', 't20i', 'ipl'] as WbFormatId[]) {
     const sizes = new Map<string, number>();
