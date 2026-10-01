@@ -3,7 +3,7 @@
  * of the rest)? Backtracking over role counts, as in tests/full-draft.test.ts.
  */
 import {
-  createDraft, countsOf, reachableShapes, playerGroups, XI_SHAPES, XI_ROLES,
+  createDraft, countsOf, reachableShapes, playerGroups, XI_SHAPES, XI_ROLES, MAX_OVERSEAS,
   type NormalizedPlayer, type XiRole, type XiCounts,
 } from '../src/lib/player-logic';
 
@@ -15,6 +15,7 @@ const shapeMatch = (c: XiCounts) => XI_SHAPES.some((sh) => XI_ROLES.every((r) =>
 export function achievable(pools: NormalizedPlayer[][]): boolean {
   const memo = new Set<string>();
   const key = (c: XiCounts) => XI_ROLES.map((r) => c[r]).join(',');
+  const overseasIds = new Set(pools.flat().filter((p) => p.overseas).map((p) => p.id));
   function dfs(round: number, idx: number, total: number, counts: XiCounts, picked: string[]): boolean {
     if (total === 11) return shapeMatch(counts);
     if (round >= 6) return false;
@@ -22,8 +23,10 @@ export function achievable(pools: NormalizedPlayer[][]): boolean {
     const k = `${round}:${idx}:${key(counts)}:${[...picked].sort().join(',')}`;
     if (memo.has(k)) return false;
     const taken = new Set(picked);
+    const overseasFull = picked.filter((x) => overseasIds.has(x)).length >= MAX_OVERSEAS;
     for (const p of pools[round]) {
       if (taken.has(p.id)) continue;
+      if (p.overseas && overseasFull) continue;
       for (const role of playerGroups(p) as XiRole[]) {
         if (counts[role] + 1 > shapeMax[role]) continue;
         const c2 = { ...counts, [role]: counts[role] + 1 };

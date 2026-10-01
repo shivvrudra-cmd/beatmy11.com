@@ -31,6 +31,8 @@ export interface RawPlayer {
   primaryRole?: unknown;
   secondaryRoles?: unknown;
   stats?: Record<string, number | null | undefined>;
+  /** IPL only: an overseas player (counts toward MAX_OVERSEAS). */
+  overseas?: boolean | null;
 }
 
 /** Normalized player: stable identity, canonical roles, cloned stats. */
@@ -52,7 +54,14 @@ export interface NormalizedPlayer {
   secondaryRoles: string[];
   /** Cloned stats with `bowlingAverage` / `bowlingStrikeRate` mapped. */
   stats: Record<string, number>;
+  /** IPL only: true for an overseas player. Absent everywhere else. */
+  overseas?: boolean;
 }
+
+/** IPL rule (owner, 2026-10-02): an XI may hold at most this many overseas players. Only players
+ *  flagged `overseas` count, so formats without the flag are unaffected. */
+export const MAX_OVERSEAS = 4;
+export const overseasCount = (players: { overseas?: boolean }[]) => players.filter((p) => p.overseas === true).length;
 
 /** Era ids in chronological order — matches src/data/*.json and ERAS tokens. */
 export const ERA_IDS = [
@@ -123,6 +132,7 @@ export function normalizePlayer(p: RawPlayer, sourceEraId: string): NormalizedPl
     primaryRole,
     secondaryRoles: normalizeSecondaryRoles(p.secondaryRoles, primaryRole),
     stats,
+    ...(p.overseas === true ? { overseas: true } : {}),
   };
 }
 
@@ -786,8 +796,13 @@ export function validatePoolPick(
   ) {
     return 'Round complete — spin again for the next draw.';
   }
+  if (player.overseas === true && overseasCount(state.selectedPlayers) >= MAX_OVERSEAS) {
+    return 'Your XI already has four overseas players.';
+  }
   const counts = countsOf(state);
   const pickedIds = new Set(state.selectedPlayers.map((p) => p.id));
+  // Once the overseas places are full, overseas players left in the draw cannot complete the XI.
+  const capFullAfter = overseasCount(state.selectedPlayers) + (player.overseas === true ? 1 : 0) >= MAX_OVERSEAS;
 
   // Every role the player could declare in any slot. Per-role caps are the
   // most actionable reason and fire even when the matching slots are already
@@ -833,7 +848,7 @@ export function validatePoolPick(
               [s.key]: { uid: player.uid, role },
             };
             const candidates = supply.pool.filter(
-              (p) => p.id !== player.id && !pickedIds.has(p.id),
+              (p) => p.id !== player.id && !pickedIds.has(p.id) && !(capFullAfter && p.overseas),
             );
             const satisfiable = deficit.some((d) =>
               canFillRole(slotsAfter, candidates, d.role),
@@ -896,8 +911,9 @@ function rolePlacementReason(
       const needFromPool = Math.max(0, dTotal - supply.futurePicks);
       if (needFromPool === 0) return null;
       const pickedIds = new Set(state.selectedPlayers.map((p) => p.id));
+      const capFullAfter = overseasCount(state.selectedPlayers) + (player.overseas === true ? 1 : 0) >= MAX_OVERSEAS;
       const candidates = supply.pool.filter(
-        (p) => p.id !== player.id && !pickedIds.has(p.id),
+        (p) => p.id !== player.id && !pickedIds.has(p.id) && !(capFullAfter && p.overseas),
       );
       if (deficit.some((d) => canFillRole(slotsAfter, candidates, d.role))) {
         return null;
@@ -1051,7 +1067,8 @@ export function validateSlotMove(
       [toSlotKey]: { uid: occ.uid, role: newRole },
     };
     const pickedIds = new Set(state.selectedPlayers.map((p) => p.id));
-    const candidates = supply.pool.filter((p) => !pickedIds.has(p.id));
+    const capFull = overseasCount(state.selectedPlayers) >= MAX_OVERSEAS;
+    const candidates = supply.pool.filter((p) => !pickedIds.has(p.id) && !(capFull && p.overseas));
     const completable = reachableShapes(counts).some((shape) => {
       const deficit = deficitOf(counts, shape);
       const dTotal = deficit.reduce((n, d) => n + d.need, 0);

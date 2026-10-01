@@ -26,7 +26,11 @@ export interface WbRecord {
   era?: string[];
   /** Ball-by-ball matches per decade (ODI, T20I). */
   eraMatches?: Record<string, number>;
-  iplSpells?: { team: string; block: string; matches?: number }[];
+  iplSpells?: { team: string; block: string; matches?: number; stats?: Record<string, number | null> }[];
+  /** IPL: overseas for the four-overseas rule (null = not known, so not draftable). */
+  overseas?: boolean | null;
+  /** IPL draftable records are stints: this franchise and block. `stats` are that stint's. */
+  stint?: { team: string; block: string };
   primaryRole: string;
   secondaryRoles: string[];
   stats: Record<string, number | null>;
@@ -38,11 +42,27 @@ const DATA: Record<WbFormatId, WbRecord[]> = {
   ipl: iplData as unknown as WbRecord[],
 };
 
-/** Draftable players: enough matches, and every role they can be declared as is scorable. */
+/**
+ * IPL records are stints (owner, 2026-10-02): one per player, franchise and block of seasons,
+ * carrying only the numbers from those matches. A player has one record per stint (the same `id`),
+ * and can be in an XI once.
+ */
+function iplStints(): WbRecord[] {
+  const out: WbRecord[] = [];
+  for (const p of DATA.ipl) {
+    if (p.overseas == null) continue; // country not confirmed: cannot apply the overseas rule
+    for (const s of p.iplSpells ?? []) {
+      if (s.stats) out.push({ ...p, iplSpells: undefined, stats: s.stats, stint: { team: s.team, block: s.block } });
+    }
+  }
+  return out;
+}
+
+/** Draftable players (IPL: stints): enough matches, and every role they can be declared as is scorable. */
 export function wbPlayers(id: WbFormatId): WbRecord[] {
   const fmt = WB_FORMATS[id];
   const out: WbRecord[] = [];
-  for (const p of DATA[id]) {
+  for (const p of id === 'ipl' ? iplStints() : DATA[id]) {
     if ((p.stats.matches ?? 0) < WB_MIN_MATCHES[id]) continue;
     if (!canScoreAs(p, wbRole(p), fmt)) continue; // e.g. a batter never dismissed: no average
     out.push({ ...p, secondaryRoles: (p.secondaryRoles ?? []).filter((r) => canScoreAs(p, r as WbRole, fmt)) });
@@ -115,28 +135,27 @@ export function wbPlayersByEra(id: WbFormatId): Record<string, NormalizedPlayer[
   const all = wbPlayers(id);
   const fmt = WB_FORMATS[id];
   const ctx = buildWbContext(all, fmt);
-  const rating = new Map(all.map((p) => [p.id, scoreWbPlayer(p, null, ctx, fmt).score]));
+  const rating = new Map(all.map((p) => [p, scoreWbPlayer(p, null, ctx, fmt).score]));
   // Candidates per draw ("era|team"), then the ids that survive the cut.
   const draws = new Map<string, SquadCandidate[]>();
   const add = (era: string, team: string, p: WbRecord, periodMatches: number) => {
     const k = `${era}|${team}`;
     if (!draws.has(k)) draws.set(k, []);
-    draws.get(k)!.push({ id: p.id, name: p.name, role: wbRole(p), periodMatches, careerMatches: p.stats.matches ?? 0, rating: rating.get(p.id) ?? 0 });
+    draws.get(k)!.push({ id: p.id, name: p.name, role: wbRole(p), periodMatches, careerMatches: p.stats.matches ?? 0, rating: rating.get(p) ?? 0 });
   };
   for (const p of all) {
-    if (id === 'ipl') for (const s of p.iplSpells ?? []) add(s.block, s.team, p, s.matches ?? 0);
+    if (id === 'ipl') add(p.stint!.block, p.stint!.team, p, p.stats.matches ?? 0);
     else for (const e of p.era ?? []) add(e, p.nation ?? '', p, p.eraMatches?.[e] ?? 0);
   }
   const kept = new Map([...draws].map(([k, c]) => [k, cutSquad(c)]));
   const inSquad = (era: string, team: string, pid: string) => kept.get(`${era}|${team}`)?.has(pid) ?? false;
   for (const p of all) {
     if (id === 'ipl') {
-      for (const s of p.iplSpells ?? []) {
-        if (!(s.team in IPL_TEAM_CODES) || !(s.block in map) || !inSquad(s.block, s.team, p.id)) continue;
-        const raw: RawPlayer = { id: p.id, name: p.name, nation: s.team, era: [s.block], primaryRole: p.primaryRole, secondaryRoles: p.secondaryRoles, stats: p.stats };
-        // The team code in the source id keeps uids unique when a player had two teams in one block.
-        map[s.block].push(normalizePlayer(raw, `${s.block}@${IPL_TEAM_CODES[s.team]}`));
-      }
+      const s = p.stint!;
+      if (!(s.team in IPL_TEAM_CODES) || !(s.block in map) || !inSquad(s.block, s.team, p.id)) continue;
+      const raw: RawPlayer = { id: p.id, name: p.name, nation: s.team, era: [s.block], primaryRole: p.primaryRole, secondaryRoles: p.secondaryRoles, stats: p.stats, overseas: p.overseas };
+      // The team code in the source id keeps uids unique when a player had two teams in one block.
+      map[s.block].push(normalizePlayer(raw, `${s.block}@${IPL_TEAM_CODES[s.team]}`));
     } else {
       const eras = (p.era ?? []).filter((e) => e in map && inSquad(e, p.nation ?? '', p.id));
       for (const e of eras) {

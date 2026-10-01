@@ -1,0 +1,579 @@
+{
+ "note": "IPL players with no ODI or T20I record in our data, reviewed by the owner on 2026-10-02 (docs/reports/ipl-overseas-check.md): which are overseas for the four-overseas rule. Everyone else on the reviewed list is Indian. Players are identified by Cricsheet id; the name is for readers.",
+ "overseas": [
+  {
+   "id": "5f547c8b",
+   "name": "Rashid Khan"
+  },
+  {
+   "id": "efc04be7",
+   "name": "Noor Ahmad"
+  },
+  {
+   "id": "4ec07775",
+   "name": "RN ten Doeschate"
+  },
+  {
+   "id": "557153ca",
+   "name": "KK Cooper"
+  },
+  {
+   "id": "62af8546",
+   "name": "Mohammad Nabi"
+  },
+  {
+   "id": "05c2ca46",
+   "name": "Roelof van der Merwe"
+  },
+  {
+   "id": "8f6dd463",
+   "name": "Azmatullah Omarzai"
+  },
+  {
+   "id": "7d92277a",
+   "name": "Mujeeb Ur Rahman"
+  },
+  {
+   "id": "aa8d28ae",
+   "name": "David Wiese"
+  },
+  {
+   "id": "c0c411cb",
+   "name": "Naveen-ul-Haq"
+  },
+  {
+   "id": "0bacade8",
+   "name": "Rahmanullah Gurbaz"
+  },
+  {
+   "id": "e9c7f0d0",
+   "name": "Fazalhaq Farooqi"
+  },
+  {
+   "id": "9061a703",
+   "name": "Josh Little"
+  },
+  {
+   "id": "16043342",
+   "name": "Andrew McDonald"
+  }
+ ],
+ "indian": [
+  {
+   "id": "39a2dfa8",
+   "name": "Rahul Tewatia"
+  },
+  {
+   "id": "33a364a6",
+   "name": "Rajat Bhatia"
+  },
+  {
+   "id": "3d7e087f",
+   "name": "SK Trivedi"
+  },
+  {
+   "id": "9d80c5e1",
+   "name": "Shahbaz Nadeem"
+  },
+  {
+   "id": "8e514b4c",
+   "name": "Abdul Samad"
+  },
+  {
+   "id": "872b03f7",
+   "name": "Ayush Badoni"
+  },
+  {
+   "id": "9418198b",
+   "name": "Prabhsimran Singh"
+  },
+  {
+   "id": "7dcb9bc9",
+   "name": "Shahrukh Khan"
+  },
+  {
+   "id": "c8179c68",
+   "name": "Shadab Jakati"
+  },
+  {
+   "id": "f088b960",
+   "name": "S N Khan"
+  },
+  {
+   "id": "c03e2850",
+   "name": "Manan Vohra"
+  },
+  {
+   "id": "c42aaf71",
+   "name": "Mithun Manhas"
+  },
+  {
+   "id": "26989d80",
+   "name": "Shashank Singh"
+  },
+  {
+   "id": "7a8bd078",
+   "name": "Shreyas Gopal"
+  },
+  {
+   "id": "c05edf8e",
+   "name": "Harpreet Brar"
+  },
+  {
+   "id": "85aae393",
+   "name": "IQBAL ABDULLA"
+  },
+  {
+   "id": "b1451597",
+   "name": "Laxmi Shukla"
+  },
+  {
+   "id": "d1a60072",
+   "name": "Nehal Wadhera"
+  },
+  {
+   "id": "e2db2409",
+   "name": "Murugan Ashwin"
+  },
+  {
+   "id": "aaa1b522",
+   "name": "TL Suman"
+  },
+  {
+   "id": "7c3b3b78",
+   "name": "Vaibhav Arora"
+  },
+  {
+   "id": "7210d461",
+   "name": "Yash Dayal"
+  },
+  {
+   "id": "9fc0ef64",
+   "name": "Pradeep Sangwan"
+  },
+  {
+   "id": "da934ee8",
+   "name": "Mahipal Lomror"
+  },
+  {
+   "id": "5afd4539",
+   "name": "Manvinder Bisla"
+  },
+  {
+   "id": "9440ef41",
+   "name": "Suyash Sharma"
+  },
+  {
+   "id": "fffa744b",
+   "name": "Naman Dhir"
+  },
+  {
+   "id": "ad3b6e95",
+   "name": "Abishek Porel"
+  },
+  {
+   "id": "855a210c",
+   "name": "Aditya Tare"
+  },
+  {
+   "id": "d7017798",
+   "name": "Angkrish Raghuvanshi"
+  },
+  {
+   "id": "5d2eea49",
+   "name": "Kartik Tyagi"
+  },
+  {
+   "id": "626c5379",
+   "name": "Rajagopal Sathish"
+  },
+  {
+   "id": "c18496e1",
+   "name": "Bipul Sharma"
+  },
+  {
+   "id": "6aed7e79",
+   "name": "Pravin Tambe"
+  },
+  {
+   "id": "84d9c311",
+   "name": "Ashutosh Sharma"
+  },
+  {
+   "id": "b720a5d6",
+   "name": "Dwaraka Ravi Teja"
+  },
+  {
+   "id": "1c2a64cd",
+   "name": "Ashish Reddy"
+  },
+  {
+   "id": "7050a1e7",
+   "name": "Debabrata Das"
+  },
+  {
+   "id": "c33d8116",
+   "name": "Mohsin Khan"
+  },
+  {
+   "id": "b5797845",
+   "name": "Priyansh Arya"
+  },
+  {
+   "id": "541f85c9",
+   "name": "Shreevats Goswami"
+  },
+  {
+   "id": "db31895a",
+   "name": "Ankit Rajpoot"
+  },
+  {
+   "id": "8291f939",
+   "name": "Ashok Menaria"
+  },
+  {
+   "id": "0890552f",
+   "name": "Abhinav Manohar"
+  },
+  {
+   "id": "12314277",
+   "name": "Arshad Khan (2)"
+  },
+  {
+   "id": "2a72fd4f",
+   "name": "Harmeet Singh"
+  },
+  {
+   "id": "ad427b5c",
+   "name": "Lalit Yadav"
+  },
+  {
+   "id": "54e52590",
+   "name": "Vijaykumar Vyshak"
+  },
+  {
+   "id": "662c47a6",
+   "name": "Yogesh Nagar"
+  },
+  {
+   "id": "fcc21ace",
+   "name": "A Kamboj"
+  },
+  {
+   "id": "e4cdf230",
+   "name": "Anukul Roy"
+  },
+  {
+   "id": "871e9faf",
+   "name": "Basil Thampi"
+  },
+  {
+   "id": "063b3673",
+   "name": "Dishant Yagnik"
+  },
+  {
+   "id": "e0407c01",
+   "name": "Ishwar Chandra Pandey"
+  },
+  {
+   "id": "b8527c3d",
+   "name": "Rasikh Salam"
+  },
+  {
+   "id": "f89d3b11",
+   "name": "Sameer Rizvi"
+  },
+  {
+   "id": "a3b0600d",
+   "name": "Aniket Verma"
+  },
+  {
+   "id": "c8f5f961",
+   "name": "Anuj Rawat"
+  },
+  {
+   "id": "94253925",
+   "name": "Hanuma Vihari"
+  },
+  {
+   "id": "765a4731",
+   "name": "Mukesh Choudhary"
+  },
+  {
+   "id": "5b040b81",
+   "name": "A Singh"
+  },
+  {
+   "id": "69be866a",
+   "name": "Anureet Singh"
+  },
+  {
+   "id": "5451a2c1",
+   "name": "B Chipli"
+  },
+  {
+   "id": "13fc5c6d",
+   "name": "Digvesh Rathi"
+  },
+  {
+   "id": "25eeb281",
+   "name": "Paul Valthaty"
+  },
+  {
+   "id": "bb965e9a",
+   "name": "Priyam Garg"
+  },
+  {
+   "id": "c69a7b5c",
+   "name": "Abhishek Raut"
+  },
+  {
+   "id": "24d94623",
+   "name": "Ankit Sharma"
+  },
+  {
+   "id": "4125d931",
+   "name": "Jagadeesha Suchith"
+  },
+  {
+   "id": "a1f1829d",
+   "name": "K Goel"
+  },
+  {
+   "id": "3fca55af",
+   "name": "S Sohal"
+  },
+  {
+   "id": "2815fe50",
+   "name": "AA Jhunjhunwala"
+  },
+  {
+   "id": "0c94f480",
+   "name": "Unmukt Chand"
+  },
+  {
+   "id": "dc9dd038",
+   "name": "Sachin Baby"
+  },
+  {
+   "id": "6b2ff18f",
+   "name": "Shubham Dubey"
+  },
+  {
+   "id": "95a2ea61",
+   "name": "Srikkanth Anirudha"
+  },
+  {
+   "id": "ae091d39",
+   "name": "Swapnil A Asnodkar"
+  },
+  {
+   "id": "5ffc0565",
+   "name": "Vipraj Nigam"
+  },
+  {
+   "id": "de8d3876",
+   "name": "Mahesh Rawat"
+  },
+  {
+   "id": "6afb26d6",
+   "name": "Mithilesh Mishra"
+  },
+  {
+   "id": "2af1b6d2",
+   "name": "Abu Nechim Ahmed"
+  },
+  {
+   "id": "4bd09374",
+   "name": "Akash Madhwal"
+  },
+  {
+   "id": "dc4686e6",
+   "name": "Bhargav Bhatt"
+  },
+  {
+   "id": "7daedf2f",
+   "name": "K B Arun Karthick"
+  },
+  {
+   "id": "93a17209",
+   "name": "Yo Mahesh"
+  },
+  {
+   "id": "f6d8a7ab",
+   "name": "Kumar Kartikeya"
+  },
+  {
+   "id": "0aadc906",
+   "name": "P R Shah"
+  },
+  {
+   "id": "4e04666c",
+   "name": "Yogesh Takawale"
+  },
+  {
+   "id": "b552a935",
+   "name": "Amal Thomas"
+  },
+  {
+   "id": "af7dadf7",
+   "name": "B Akhil"
+  },
+  {
+   "id": "0a67aec0",
+   "name": "Akash Deep"
+  },
+  {
+   "id": "f10e94c4",
+   "name": "Aksh Deep Nath"
+  },
+  {
+   "id": "d7423da1",
+   "name": "Salil Arora"
+  },
+  {
+   "id": "30df8c66",
+   "name": "Simarjeet Singh"
+  },
+  {
+   "id": "2049f3a0",
+   "name": "SJ Srivastava"
+  },
+  {
+   "id": "983f2f61",
+   "name": "Swapnil Singh"
+  },
+  {
+   "id": "b2b4f545",
+   "name": "A Mhatre"
+  },
+  {
+   "id": "29d72eb2",
+   "name": "Ankeet Chavan"
+  },
+  {
+   "id": "133bbd61",
+   "name": "Brijesh Sharma"
+  },
+  {
+   "id": "30a2649b",
+   "name": "Chidhambaram Gautam"
+  },
+  {
+   "id": "0c9652b0",
+   "name": "Hrithik Shokeen"
+  },
+  {
+   "id": "d92e42f5",
+   "name": "KP Appanna"
+  },
+  {
+   "id": "bd54eef5",
+   "name": "Narayan Jagadeesan"
+  },
+  {
+   "id": "2728e7e9",
+   "name": "Paras Dogra"
+  },
+  {
+   "id": "b2570b38",
+   "name": "Raiphi Vincent Gomez"
+  },
+  {
+   "id": "7b44eb3e",
+   "name": "Shivang Kumar"
+  },
+  {
+   "id": "5f26df4f",
+   "name": "Vikramjeet Malik"
+  },
+  {
+   "id": "99b202b3",
+   "name": "Ajit Chandila"
+  },
+  {
+   "id": "b483905d",
+   "name": "Akash Singh"
+  },
+  {
+   "id": "2461eef2",
+   "name": "Akshath Reddy"
+  },
+  {
+   "id": "ef5da05c",
+   "name": "Ali Murtaza"
+  },
+  {
+   "id": "378daa89",
+   "name": "Aman Hakim Khan"
+  },
+  {
+   "id": "b4f5c2d9",
+   "name": "KAMLESH NAGARKOTI"
+  },
+  {
+   "id": "970ddd24",
+   "name": "Suryansh Shedge"
+  },
+  {
+   "id": "3dba85c2",
+   "name": "WA Mota"
+  },
+  {
+   "id": "25228673",
+   "name": "Harsh Dubey"
+  },
+  {
+   "id": "c64c2443",
+   "name": "Jamaluddin Syed Mohammad"
+  },
+  {
+   "id": "edb3d4f8",
+   "name": "K C Cariappa"
+  },
+  {
+   "id": "7b679de5",
+   "name": "Kartik Sharma"
+  },
+  {
+   "id": "90edaaa9",
+   "name": "Sachin Rana"
+  },
+  {
+   "id": "280fff14",
+   "name": "Sakib Hussain"
+  },
+  {
+   "id": "facb9086",
+   "name": "Siddharth Chitnis"
+  },
+  {
+   "id": "9385de2e",
+   "name": "Suyash Prabhudessai"
+  },
+  {
+   "id": "1ac746c8",
+   "name": "Atharva Taide"
+  },
+  {
+   "id": "1c84109e",
+   "name": "Mukesh Choudhary"
+  },
+  {
+   "id": "addbde6c",
+   "name": "N R SAINI"
+  },
+  {
+   "id": "5f4e9e8f",
+   "name": "Rohan Raje"
+  },
+  {
+   "id": "44a89551",
+   "name": "Srikar Bharat"
+  },
+  {
+   "id": "cf59b3f0",
+   "name": "Urvil Patel"
+  }
+ ]
+}

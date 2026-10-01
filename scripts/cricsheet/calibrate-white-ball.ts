@@ -31,8 +31,9 @@ const clamp01 = (x: number) => Math.max(0, Math.min(1, x));
 const num = (v: unknown, d: number) => (Number.isFinite(Number(v)) && v != null ? Number(v) : d);
 const gaussian = (rng: () => number) => Math.sqrt(-2 * Math.log(Math.max(rng(), 1e-12))) * Math.cos(2 * Math.PI * rng());
 const MISJUDGE = Number(process.env.MISJUDGE ?? 0.12);
-/** Formats whose difficulty the owner has spoken on (IPL: "good for now", 2026-10-01). */
-const OWNER_DIFFICULTY = new Set<string>(['ipl']);
+/** Formats whose difficulty the owner has fixed. None now: the IPL's "good for now" (2026-10-01) was for
+ *  career stats; with stint stats (2026-10-02) its par is tuned like the others until the owner decides. */
+const OWNER_DIFFICULTY = new Set<string>([]);
 /** Provisional target for the others: about the IPL's simulated series-win rate. */
 const TARGET_WIN = 0.15;
 const TRIALS = Number(process.env.TRIALS ?? 600);
@@ -65,8 +66,10 @@ function run(id: WbFormatId) {
     xi = list.map((a) => {
       // By id when given (display names can be corrected later), otherwise by exact name.
       const hits = wbOpponentPool(id).filter((p) => (a.id ? p.id === a.id : p.name === a.name));
-      if (hits.length !== 1) throw new Error(`${ownerFile}: "${a.name}" matches ${hits.length} ${FMT.label} players`);
-      return { p: hits[0], role: a.role, score: scoreWbPlayer(hits[0], a.role, ctx, FMT).score };
+      // IPL: a player has one record per stint; the opponent uses his best-rated one (owner, 2026-10-02).
+      if (id === 'ipl' ? hits.length < 1 : hits.length !== 1) throw new Error(`${ownerFile}: "${a.name}" matches ${hits.length} ${FMT.label} players`);
+      const best = hits.map((p) => ({ p, role: a.role, score: scoreWbPlayer(p, a.role, ctx, FMT).score })).sort((x, y) => y.score - x.score)[0];
+      return best;
     });
   } else {
     const base = [...top('opener', 2), ...top('middle-order', 3), ...top('wicketkeeper', 1)];
@@ -84,7 +87,7 @@ function run(id: WbFormatId) {
   }
   const oppScore = wbTeamBlend(xi.map((x) => ({ player: x.p, declaredRole: x.role })), ctx, FMT).score;
   console.log(`Opponent XI (${approved ? 'owner-approved' : 'CANDIDATE, owner to approve'}; team score ${oppScore}):`);
-  for (const x of xi) console.log(`  ${x.role.padEnd(13)} ${x.p.name.padEnd(24)} ${x.score}  (${x.p.stats.matches} matches)`);
+  for (const x of xi) console.log(`  ${x.role.padEnd(13)} ${x.p.name.padEnd(24)} ${x.score}  (${x.p.stats.matches} matches${x.p.stint ? `, ${x.p.stint.team} ${x.p.stint.block}` : ''}${x.p.overseas ? ', overseas' : ''})`);
   if (approved) {
     console.log('engine top-rated now: ' + ['opener', 'middle-order', 'wicketkeeper', 'all-rounder', 'spinner', 'fast-bowler']
       .map((r) => `${r}: ${top(r, 3).map((x) => x.p.name).join(', ')}`).join(' | '));
@@ -192,7 +195,7 @@ function run(id: WbFormatId) {
         : 'CANDIDATE opponent XI (engine top-rated legal XI) and simulated calibration; owner to approve (docs/plans/white-ball-formats.md).',
       generated: today,
       opponentApproved: approved,
-      opponentXI: xi.map((x) => ({ id: x.p.id, name: x.p.name, role: x.role })),
+      opponentXI: xi.map((x) => ({ id: x.p.id, name: x.p.name, role: x.role, ...(x.p.stint ? { team: x.p.stint.team, block: x.p.stint.block } : {}) })),
       opponentScore: oppScore,
       parGap,
       parGapProvisional: !OWNER_DIFFICULTY.has(id),

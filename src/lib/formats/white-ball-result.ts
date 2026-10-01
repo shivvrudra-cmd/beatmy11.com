@@ -11,7 +11,7 @@ import { WB_FORMATS, buildWbContext } from '../white-ball-metrics';
 import { wbPlayers, wbOpponentPool, type WbFormatId } from './white-ball-store';
 
 interface SeriesFile {
-  opponentXI: { id: string; name: string; role: string }[];
+  opponentXI: { id: string; name: string; role: string; team?: string; block?: string }[];
   parGap: number;
   calibration: { source: string; generated: string; scores: number[] };
 }
@@ -21,13 +21,16 @@ const SERIES: Record<WbFormatId, SeriesFile> = {
 
 export function wbResultProps(id: WbFormatId) {
   const players = wbPlayers(id);
-  const byId = new Map(wbOpponentPool(id).map((p) => [p.id, p]));
+  const pool = wbOpponentPool(id);
+  // IPL opponents are stints: the same player id exists once per franchise and block.
+  const find = (h: SeriesFile['opponentXI'][number]) =>
+    pool.find((p) => p.id === h.id && (!h.team || (p.stint?.team === h.team && p.stint?.block === h.block)));
   const series = SERIES[id];
   // The opponent is scored in the role it was picked for.
   const houseXI = series.opponentXI.map((h) => {
-    const p = byId.get(h.id);
+    const p = find(h);
     if (!p) throw new Error(`${id} opponent XI player ${h.name} (${h.id}) is not in the pool; rerun scripts/cricsheet/calibrate-white-ball.ts`);
-    return { id: p.id, uid: p.id, name: p.name, nation: p.nation ?? '', era: '', primaryRole: h.role, secondaryRoles: [], stats: p.stats };
+    return { id: p.id, uid: p.id, name: p.name, nation: p.stint?.team ?? p.nation ?? '', era: p.stint?.block ?? '', primaryRole: h.role, secondaryRoles: [], stats: p.stats };
   });
   return {
     houseXI,

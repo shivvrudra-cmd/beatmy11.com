@@ -125,7 +125,9 @@ export const WB_FORMATS: Record<WbFormat['id'], WbFormat> = {
   },
   ipl: {
     id: 'ipl', label: 'IPL', batting: T20_BATTING, bowling: T20_BOWLING,
-    priorMatches: 30, longevityWeight: 0.25, longevityFullMatches: 60, longevityBonusFill: 0.8, longevityBonusMatches: 280,
+    // IPL cards are stints (one franchise, one block of seasons; owner, 2026-10-02), so the
+    // long-career credit is sized to a block: full at 40 matches, the bonus complete at 75.
+    priorMatches: 30, longevityWeight: 0.25, longevityFullMatches: 40, longevityBonusFill: 0.8, longevityBonusMatches: 75,
     teamShares: TEAM_SHARES,
   },
 };
