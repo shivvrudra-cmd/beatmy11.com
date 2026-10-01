@@ -35,7 +35,7 @@ neutral defaults, keep them in ONE config object per format, and label them `PRO
 
 - Metric weights: equal (1/4 each) for batting and for bowling.
 - Shrinkage prior: 30 matches (same as Test).
-- Longevity full credit / long-career bonus: ODI 100 / 250 matches; T20I 50 / 120; IPL 60 / 180.
+- Longevity full credit / long-career bonus: ODI 100 / 330 matches; T20I 50 / 160; IPL 60 / 280 (the bonus completes only at the longest careers in the data, like 200 Tests in the Test game).
 - Team blend: 40% batting / 50% bowling / 10% fielding (same as Test).
 - Series ladder: reuse the Test `PAR_GAP` and cuts; report simulated win rates, do not tune.
 - Opponent XI: propose the highest-rated legal XI per format from the engine as a *candidate* only.

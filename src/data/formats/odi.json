@@ -2292,48 +2292,6 @@
   }
  },
  {
-  "id": "cs-ded9240e",
-  "cricsheetId": "ded9240e",
-  "name": "Anderson Cummins",
-  "scorecardName": "PJ Cummins",
-  "nation": "Australia",
-  "era": [
-   "2010s",
-   "2020s"
-  ],
-  "primaryRole": "fast-bowler",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "pace",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2011-10-19",
-  "lastMatch": "2024-11-08",
-  "stats": {
-   "matches": 88,
-   "innings": 58,
-   "runs": 525,
-   "notOuts": 21,
-   "highest": 37,
-   "battingAverage": 14.19,
-   "strikeRate": 82.68,
-   "ballsFaced": 635,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 4585,
-   "runsConceded": 4029,
-   "wickets": 140,
-   "bowlingAverage": 28.78,
-   "economy": 5.27,
-   "ballsPerWicket": 32.8,
-   "fourWicketInnings": 7,
-   "fiveWicketInnings": 1,
-   "catches": 24,
-   "stumpings": 0,
-   "dismissals": 24
-  }
- },
- {
   "id": "cs-ab6b1c45",
   "cricsheetId": "ab6b1c45",
   "name": "Andile Phehlukwayo",
@@ -5681,48 +5639,6 @@
   }
  },
  {
-  "id": "cs-dd37da14",
-  "cricsheetId": "dd37da14",
-  "name": "Chanaka Welegedara",
-  "scorecardName": "UWMBCA Welegedara",
-  "nation": "Sri Lanka",
-  "era": [
-   "2000s",
-   "2010s"
-  ],
-  "primaryRole": "fast-bowler",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "pace",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2009-12-15",
-  "lastMatch": "2010-06-22",
-  "stats": {
-   "matches": 10,
-   "innings": 3,
-   "runs": 4,
-   "notOuts": 2,
-   "highest": 2,
-   "battingAverage": 4,
-   "strikeRate": 44.44,
-   "ballsFaced": 9,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 457,
-   "runsConceded": 433,
-   "wickets": 15,
-   "bowlingAverage": 28.87,
-   "economy": 5.68,
-   "ballsPerWicket": 30.5,
-   "fourWicketInnings": 1,
-   "fiveWicketInnings": 1,
-   "catches": 2,
-   "stumpings": 0,
-   "dismissals": 2
-  }
- },
- {
   "id": "cs-9d450c28",
   "cricsheetId": "9d450c28",
   "name": "Chandrapaul Hemraj",
@@ -6943,44 +6859,44 @@
   }
  },
  {
-  "id": "cs-59559bc2",
-  "cricsheetId": "59559bc2",
-  "name": "Craig Overton",
-  "scorecardName": "J Overton",
-  "nation": "England",
+  "id": "cs-5b7ab5a9",
+  "cricsheetId": "5b7ab5a9",
+  "name": "CV Varun",
+  "scorecardName": "CV Varun",
+  "nation": "India",
   "era": [
    "2020s"
   ],
-  "primaryRole": "fast-bowler",
+  "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
-  "bowlingType": "pace",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2024-10-31",
-  "lastMatch": "2026-01-27",
+  "bowlingType": "spin",
+  "roleSource": "owner",
+  "bowlingTypeSource": "owner",
+  "firstMatch": "2025-02-09",
+  "lastMatch": "2025-03-09",
   "stats": {
-   "matches": 12,
-   "innings": 9,
-   "runs": 240,
+   "matches": 4,
+   "innings": 0,
+   "runs": 0,
    "notOuts": 0,
-   "highest": 68,
-   "battingAverage": 26.67,
-   "strikeRate": 111.11,
-   "ballsFaced": 216,
-   "fifties": 1,
+   "highest": 0,
+   "battingAverage": null,
+   "strikeRate": null,
+   "ballsFaced": 0,
+   "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 362,
-   "runsConceded": 341,
-   "wickets": 13,
-   "bowlingAverage": 26.23,
-   "economy": 5.65,
-   "ballsPerWicket": 27.8,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 5,
+   "ballsBowled": 240,
+   "runsConceded": 190,
+   "wickets": 10,
+   "bowlingAverage": 19,
+   "economy": 4.75,
+   "ballsPerWicket": 24,
+   "fourWicketInnings": 1,
+   "fiveWicketInnings": 1,
+   "catches": 0,
    "stumpings": 0,
-   "dismissals": 5
+   "dismissals": 0
   }
  },
  {
@@ -12714,48 +12630,6 @@
   }
  },
  {
-  "id": "cs-f5f18a18",
-  "cricsheetId": "f5f18a18",
-  "name": "HKSR Kaluhalamulla",
-  "scorecardName": "S Randiv",
-  "nation": "Sri Lanka",
-  "era": [
-   "2000s",
-   "2010s"
-  ],
-  "primaryRole": "spinner",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "spin",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2009-12-18",
-  "lastMatch": "2016-06-24",
-  "stats": {
-   "matches": 31,
-   "innings": 18,
-   "runs": 280,
-   "notOuts": 2,
-   "highest": 56,
-   "battingAverage": 17.5,
-   "strikeRate": 73.3,
-   "ballsFaced": 382,
-   "fifties": 1,
-   "hundreds": 0,
-   "ballsBowled": 1437,
-   "runsConceded": 1214,
-   "wickets": 36,
-   "bowlingAverage": 33.72,
-   "economy": 5.07,
-   "ballsPerWicket": 39.9,
-   "fourWicketInnings": 1,
-   "fiveWicketInnings": 1,
-   "catches": 7,
-   "stumpings": 0,
-   "dismissals": 7
-  }
- },
- {
   "id": "cs-65a05fe6",
   "cricsheetId": "65a05fe6",
   "name": "HP Rinke",
@@ -13100,7 +12974,7 @@
  {
   "id": "cs-40c041ea",
   "cricsheetId": "40c041ea",
-  "name": "Imam ul-Haq",
+  "name": "Imam-ul-Haq",
   "scorecardName": "Imam-ul-Haq",
   "nation": "Pakistan",
   "era": [
@@ -14523,6 +14397,47 @@
    "catches": 18,
    "stumpings": 0,
    "dismissals": 18
+  }
+ },
+ {
+  "id": "cs-59559bc2",
+  "cricsheetId": "59559bc2",
+  "name": "Jamie Overton",
+  "scorecardName": "J Overton",
+  "nation": "England",
+  "era": [
+   "2020s"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2024-10-31",
+  "lastMatch": "2026-01-27",
+  "stats": {
+   "matches": 12,
+   "innings": 9,
+   "runs": 240,
+   "notOuts": 0,
+   "highest": 68,
+   "battingAverage": 26.67,
+   "strikeRate": 111.11,
+   "ballsFaced": 216,
+   "fifties": 1,
+   "hundreds": 0,
+   "ballsBowled": 362,
+   "runsConceded": 341,
+   "wickets": 13,
+   "bowlingAverage": 26.23,
+   "economy": 5.65,
+   "ballsPerWicket": 27.8,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 5,
+   "stumpings": 0,
+   "dismissals": 5
   }
  },
  {
@@ -20607,7 +20522,7 @@
  {
   "id": "cs-ae78bc32",
   "cricsheetId": "ae78bc32",
-  "name": "Manpreet Singh Grewal",
+  "name": "Manpreet Gony",
   "scorecardName": "MS Gony",
   "nation": "India",
   "era": [
@@ -22696,48 +22611,6 @@
   }
  },
  {
-  "id": "cs-e174dadd",
-  "cricsheetId": "e174dadd",
-  "name": "Mohammad Aamer",
-  "scorecardName": "Mohammad Amir",
-  "nation": "Pakistan",
-  "era": [
-   "2000s",
-   "2010s"
-  ],
-  "primaryRole": "fast-bowler",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "pace",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2009-07-30",
-  "lastMatch": "2019-10-02",
-  "stats": {
-   "matches": 60,
-   "innings": 30,
-   "runs": 363,
-   "notOuts": 10,
-   "highest": 73,
-   "battingAverage": 18.15,
-   "strikeRate": 81.76,
-   "ballsFaced": 444,
-   "fifties": 2,
-   "hundreds": 0,
-   "ballsBowled": 2953,
-   "runsConceded": 2359,
-   "wickets": 81,
-   "bowlingAverage": 29.12,
-   "economy": 4.79,
-   "ballsPerWicket": 36.5,
-   "fourWicketInnings": 2,
-   "fiveWicketInnings": 1,
-   "catches": 7,
-   "stumpings": 0,
-   "dismissals": 7
-  }
- },
- {
   "id": "cs-a86a37ab",
   "cricsheetId": "a86a37ab",
   "name": "Mohammad Ali",
@@ -22776,6 +22649,48 @@
    "catches": 0,
    "stumpings": 0,
    "dismissals": 0
+  }
+ },
+ {
+  "id": "cs-e174dadd",
+  "cricsheetId": "e174dadd",
+  "name": "Mohammad Amir",
+  "scorecardName": "Mohammad Amir",
+  "nation": "Pakistan",
+  "era": [
+   "2000s",
+   "2010s"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "test-data",
+  "bowlingTypeSource": "test-data",
+  "firstMatch": "2009-07-30",
+  "lastMatch": "2019-10-02",
+  "stats": {
+   "matches": 60,
+   "innings": 30,
+   "runs": 363,
+   "notOuts": 10,
+   "highest": 73,
+   "battingAverage": 18.15,
+   "strikeRate": 81.76,
+   "ballsFaced": 444,
+   "fifties": 2,
+   "hundreds": 0,
+   "ballsBowled": 2953,
+   "runsConceded": 2359,
+   "wickets": 81,
+   "bowlingAverage": 29.12,
+   "economy": 4.79,
+   "ballsPerWicket": 36.5,
+   "fourWicketInnings": 2,
+   "fiveWicketInnings": 1,
+   "catches": 7,
+   "stumpings": 0,
+   "dismissals": 7
   }
  },
  {
@@ -23030,7 +22945,7 @@
  {
   "id": "cs-3086f7a4",
   "cricsheetId": "3086f7a4",
-  "name": "Mohammad Nawaz (3)",
+  "name": "Mohammad Nawaz",
   "scorecardName": "Mohammad Nawaz",
   "nation": "Pakistan",
   "era": [
@@ -24073,6 +23988,47 @@
   }
  },
  {
+  "id": "cs-dd468277",
+  "cricsheetId": "dd468277",
+  "name": "N M'shangwe",
+  "scorecardName": "N M'shangwe",
+  "nation": "Zimbabwe",
+  "era": [
+   "2010s"
+  ],
+  "primaryRole": "spinner",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "wikidata",
+  "bowlingTypeSource": "wikidata",
+  "firstMatch": "2011-10-25",
+  "lastMatch": "2013-08-03",
+  "stats": {
+   "matches": 4,
+   "innings": 4,
+   "runs": 38,
+   "notOuts": 0,
+   "highest": 16,
+   "battingAverage": 9.5,
+   "strikeRate": 88.37,
+   "ballsFaced": 43,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 216,
+   "runsConceded": 163,
+   "wickets": 1,
+   "bowlingAverage": 163,
+   "economy": 4.53,
+   "ballsPerWicket": 216,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 0,
+   "stumpings": 0,
+   "dismissals": 0
+  }
+ },
+ {
   "id": "cs-02e83ac5",
   "cricsheetId": "02e83ac5",
   "name": "Naeem Islam",
@@ -24692,47 +24648,6 @@
    "catches": 14,
    "stumpings": 0,
    "dismissals": 14
-  }
- },
- {
-  "id": "cs-dd468277",
-  "cricsheetId": "dd468277",
-  "name": "Natsai Mushangwe",
-  "scorecardName": "N M'shangwe",
-  "nation": "Zimbabwe",
-  "era": [
-   "2010s"
-  ],
-  "primaryRole": "spinner",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "spin",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2011-10-25",
-  "lastMatch": "2013-08-03",
-  "stats": {
-   "matches": 4,
-   "innings": 4,
-   "runs": 38,
-   "notOuts": 0,
-   "highest": 16,
-   "battingAverage": 9.5,
-   "strikeRate": 88.37,
-   "ballsFaced": 43,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 216,
-   "runsConceded": 163,
-   "wickets": 1,
-   "bowlingAverage": 163,
-   "economy": 4.53,
-   "ballsPerWicket": 216,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 0,
-   "stumpings": 0,
-   "dismissals": 0
   }
  },
  {
@@ -25946,6 +25861,48 @@
   }
  },
  {
+  "id": "cs-ded9240e",
+  "cricsheetId": "ded9240e",
+  "name": "Pat Cummins",
+  "scorecardName": "PJ Cummins",
+  "nation": "Australia",
+  "era": [
+   "2010s",
+   "2020s"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "test-data",
+  "bowlingTypeSource": "test-data",
+  "firstMatch": "2011-10-19",
+  "lastMatch": "2024-11-08",
+  "stats": {
+   "matches": 88,
+   "innings": 58,
+   "runs": 525,
+   "notOuts": 21,
+   "highest": 37,
+   "battingAverage": 14.19,
+   "strikeRate": 82.68,
+   "ballsFaced": 635,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 4585,
+   "runsConceded": 4029,
+   "wickets": 140,
+   "bowlingAverage": 28.78,
+   "economy": 5.27,
+   "ballsPerWicket": 32.8,
+   "fourWicketInnings": 7,
+   "fiveWicketInnings": 1,
+   "catches": 24,
+   "stumpings": 0,
+   "dismissals": 24
+  }
+ },
+ {
   "id": "cs-8ee36b18",
   "cricsheetId": "8ee36b18",
   "name": "Pathum Nissanka",
@@ -27113,6 +27070,47 @@
    "catches": 0,
    "stumpings": 0,
    "dismissals": 0
+  }
+ },
+ {
+  "id": "cs-9c821d2e",
+  "cricsheetId": "9c821d2e",
+  "name": "RA Herman",
+  "scorecardName": "RA Herman",
+  "nation": "South Africa",
+  "era": [
+   "2020s"
+  ],
+  "primaryRole": "middle-order",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": null,
+  "roleSource": "match-data",
+  "bowlingTypeSource": null,
+  "firstMatch": "2025-11-08",
+  "lastMatch": "2026-09-09",
+  "stats": {
+   "matches": 2,
+   "innings": 2,
+   "runs": 9,
+   "notOuts": 0,
+   "highest": 8,
+   "battingAverage": 4.5,
+   "strikeRate": 112.5,
+   "ballsFaced": 8,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 0,
+   "runsConceded": 0,
+   "wickets": 0,
+   "bowlingAverage": null,
+   "economy": null,
+   "ballsPerWicket": null,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 1,
+   "stumpings": 0,
+   "dismissals": 1
   }
  },
  {
@@ -29045,47 +29043,6 @@
    "catches": 18,
    "stumpings": 0,
    "dismissals": 18
-  }
- },
- {
-  "id": "cs-9c821d2e",
-  "cricsheetId": "9c821d2e",
-  "name": "Rubin Hermann",
-  "scorecardName": "RA Herman",
-  "nation": "South Africa",
-  "era": [
-   "2020s"
-  ],
-  "primaryRole": "middle-order",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": null,
-  "roleSource": "match-data",
-  "bowlingTypeSource": null,
-  "firstMatch": "2025-11-08",
-  "lastMatch": "2026-09-09",
-  "stats": {
-   "matches": 2,
-   "innings": 2,
-   "runs": 9,
-   "notOuts": 0,
-   "highest": 8,
-   "battingAverage": 4.5,
-   "strikeRate": 112.5,
-   "ballsFaced": 8,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 0,
-   "runsConceded": 0,
-   "wickets": 0,
-   "bowlingAverage": null,
-   "economy": null,
-   "ballsPerWicket": null,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 1,
-   "stumpings": 0,
-   "dismissals": 1
   }
  },
  {
@@ -32438,7 +32395,7 @@
  {
   "id": "cs-48a1d7b7",
   "cricsheetId": "48a1d7b7",
-  "name": "Shimron Hetmeyer",
+  "name": "Shimron Hetmyer",
   "scorecardName": "SO Hetmyer",
   "nation": "West Indies",
   "era": [
@@ -34102,6 +34059,48 @@
    "catches": 13,
    "stumpings": 0,
    "dismissals": 13
+  }
+ },
+ {
+  "id": "cs-f5f18a18",
+  "cricsheetId": "f5f18a18",
+  "name": "Suraj Randiv",
+  "scorecardName": "S Randiv",
+  "nation": "Sri Lanka",
+  "era": [
+   "2000s",
+   "2010s"
+  ],
+  "primaryRole": "spinner",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2009-12-18",
+  "lastMatch": "2016-06-24",
+  "stats": {
+   "matches": 31,
+   "innings": 18,
+   "runs": 280,
+   "notOuts": 2,
+   "highest": 56,
+   "battingAverage": 17.5,
+   "strikeRate": 73.3,
+   "ballsFaced": 382,
+   "fifties": 1,
+   "hundreds": 0,
+   "ballsBowled": 1437,
+   "runsConceded": 1214,
+   "wickets": 36,
+   "bowlingAverage": 33.72,
+   "economy": 5.07,
+   "ballsPerWicket": 39.9,
+   "fourWicketInnings": 1,
+   "fiveWicketInnings": 1,
+   "catches": 7,
+   "stumpings": 0,
+   "dismissals": 7
   }
  },
  {
@@ -36796,7 +36795,7 @@
  {
   "id": "cs-bafb9238",
   "cricsheetId": "bafb9238",
-  "name": "Usman Khan (2)",
+  "name": "Usman Khan",
   "scorecardName": "Usman Khan",
   "nation": "Pakistan",
   "era": [
@@ -37000,47 +36999,6 @@
    "catches": 3,
    "stumpings": 0,
    "dismissals": 3
-  }
- },
- {
-  "id": "cs-5b7ab5a9",
-  "cricsheetId": "5b7ab5a9",
-  "name": "V Chakravarthy",
-  "scorecardName": "CV Varun",
-  "nation": "India",
-  "era": [
-   "2020s"
-  ],
-  "primaryRole": "spinner",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "spin",
-  "roleSource": "owner",
-  "bowlingTypeSource": "owner",
-  "firstMatch": "2025-02-09",
-  "lastMatch": "2025-03-09",
-  "stats": {
-   "matches": 4,
-   "innings": 0,
-   "runs": 0,
-   "notOuts": 0,
-   "highest": 0,
-   "battingAverage": null,
-   "strikeRate": null,
-   "ballsFaced": 0,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 240,
-   "runsConceded": 190,
-   "wickets": 10,
-   "bowlingAverage": 19,
-   "economy": 4.75,
-   "ballsPerWicket": 24,
-   "fourWicketInnings": 1,
-   "fiveWicketInnings": 1,
-   "catches": 0,
-   "stumpings": 0,
-   "dismissals": 0
   }
  },
  {
@@ -37497,48 +37455,6 @@
    "catches": 29,
    "stumpings": 0,
    "dismissals": 29
-  }
- },
- {
-  "id": "cs-a97c8ec2",
-  "cricsheetId": "a97c8ec2",
-  "name": "Wanindu Hasaranga",
-  "scorecardName": "PWH de Silva",
-  "nation": "Sri Lanka",
-  "era": [
-   "2010s",
-   "2020s"
-  ],
-  "primaryRole": "spinner",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "spin",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2017-07-02",
-  "lastMatch": "2026-06-03",
-  "stats": {
-   "matches": 63,
-   "innings": 54,
-   "runs": 1031,
-   "notOuts": 8,
-   "highest": 80,
-   "battingAverage": 22.41,
-   "strikeRate": 106.84,
-   "ballsFaced": 965,
-   "fifties": 4,
-   "hundreds": 0,
-   "ballsBowled": 2944,
-   "runsConceded": 2526,
-   "wickets": 98,
-   "bowlingAverage": 25.78,
-   "economy": 5.15,
-   "ballsPerWicket": 30,
-   "fourWicketInnings": 8,
-   "fiveWicketInnings": 4,
-   "catches": 16,
-   "stumpings": 0,
-   "dismissals": 16
   }
  },
  {
@@ -38629,7 +38545,7 @@
  {
   "id": "cs-9fd3a210",
   "cricsheetId": "9fd3a210",
-  "name": "Zafar Gohar Khan",
+  "name": "Zafar Gohar",
   "scorecardName": "Zafar Gohar",
   "nation": "Pakistan",
   "era": [

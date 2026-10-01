@@ -1,0 +1,29 @@
+---
+/**
+ * /ipl/matchup — the IPL series result (HIDDEN preview; see docs/plans/white-ball-formats.md).
+ * Same screen as /matchup, with the white-ball engine, the candidate All-Star XI and the
+ * simulated IPL calibration from src/data/formats/ipl-series.json.
+ */
+import SeriesResult from '../../components/SeriesResult.astro';
+import { iplPlayers } from '../../lib/formats/ipl-store';
+import { WB_FORMATS, buildWbContext } from '../../lib/white-ball-metrics';
+import { IPL_RESULT } from '../../lib/formats/result-format';
+import iplSeries from '../../data/formats/ipl-series.json';
+
+const players = iplPlayers();
+const byId = new Map(players.map((p) => [p.id, p]));
+// The opponent is scored in the role it was picked for.
+const houseXI = iplSeries.allStarXI.map((h) => {
+  const p = byId.get(h.id);
+  if (!p) throw new Error(`All-Star XI player ${h.name} (${h.id}) is not in the IPL pool; rerun scripts/cricsheet/calibrate-ipl.ts`);
+  return { id: p.id, uid: p.id, name: p.name, nation: '', era: '', primaryRole: h.role, secondaryRoles: [], stats: p.stats };
+});
+---
+<SeriesResult
+  format={IPL_RESULT}
+  title="The IPL Series — Beat My 11 (preview)"
+  description="Your IPL XI against the All-Star XI over five matches."
+  houseXI={houseXI}
+  scoringContext={buildWbContext(players, WB_FORMATS.ipl)}
+  calibration={iplSeries.calibration}
+/>

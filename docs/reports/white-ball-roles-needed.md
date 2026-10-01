@@ -4,8 +4,11 @@ These regular bowlers are left out of the game until their bowling type is known
 
 | Format | Name | Nation / teams | Matches | Wickets | Cricsheet id | type |
 |---|---|---|---|---|---|---|
+| t20i | PWH de Silva | Sri Lanka | 92 | 155 | a97c8ec2 | |
+| odi | PWH de Silva | Sri Lanka | 63 | 98 | a97c8ec2 | |
+| ipl | PWH de Silva | Royal Challengers Bengaluru, Rajasthan Royals | 37 | 46 | a97c8ec2 | |
 | t20i | Mosaddeck Hossain | Bangladesh | 29 | 15 | 8919756f | |
-| ipl | Harmeet Singh Bansal | Deccan Chargers, Punjab Kings | 27 | 26 | 2a72fd4f | |
+| ipl | Harmeet Singh | Deccan Chargers, Punjab Kings | 27 | 26 | 2a72fd4f | |
 | odi | HMCM Bandara | Sri Lanka | 26 | 28 | 4fc516bd | |
 | ipl | A Kamboj | Mumbai Indians, Chennai Super Kings | 25 | 31 | fcc21ace | |
 | ipl | KK Cooper | Rajasthan Royals | 25 | 33 | 557153ca | |
@@ -42,7 +45,7 @@ These regular bowlers are left out of the game until their bowling type is known
 | odi | Blessing Mahwire | Zimbabwe | 10 | 7 | 0cc343b0 | |
 | odi | JJ van der Wath | South Africa | 10 | 13 | 6821ac10 | |
 | odi | Iain O'Brien | New Zealand | 10 | 14 | 78f34e15 | |
-| t20i | Aminul Islam Biplob | Bangladesh | 10 | 12 | f8ce577b | |
+| odi | UWMBCA Welegedara | Sri Lanka | 10 | 15 | dd37da14 | |
 | ipl | S Kaushik | Gujarat Lions | 10 | 6 | 1da489ff | |
 | ipl | Zeeshan Ansari | Sunrisers Hyderabad | 10 | 6 | 36619795 | |
 | ipl | Ashwani Kumar | Mumbai Indians | 10 | 17 | d45c29b1 | |
@@ -64,7 +67,7 @@ These regular bowlers are left out of the game until their bowling type is known
 | ipl | Gurjapneet Singh | Chennai Super Kings | 8 | 4 | cc61ee8f | |
 | ipl | Yash Raj Punja | Rajasthan Royals | 8 | 9 | 02dfebbe | |
 | ipl | Shoaib Ahmed | Deccan Chargers | 8 | 5 | 8a668774 | |
-| ipl | Jaskaran Singh Buttar | Deccan Chargers | 8 | 6 | d7b3a420 | |
+| ipl | Jaskarandeep Singh | Deccan Chargers | 8 | 6 | d7b3a420 | |
 | odi | Arshad Khan | Pakistan | 7 | 7 | 0a4c6dfd | |
 | odi | Ishara Amerasinghe | Sri Lanka | 7 | 9 | 11ce1151 | |
 | odi | Lionel Baker | West Indies | 7 | 7 | 441b1b20 | |
@@ -80,6 +83,7 @@ These regular bowlers are left out of the game until their bowling type is known
 | t20i | J Blades | West Indies | 6 | 6 | af4a9a0a | |
 | t20i | Nqobani Mokoena | South Africa | 6 | 6 | 201facae | |
 | t20i | Prince Yadav | India | 6 | 9 | 80b2fb19 | |
+| ipl | GC Viljoen | Punjab Kings | 6 | 7 | a316d663 | |
 | ipl | Raghu Sharma | Mumbai Indians | 6 | 1 | 5b615e7c | |
 | ipl | P Amarnath | Chennai Super Kings | 6 | 7 | 6ad3a659 | |
 | odi | MW Parkinson | England | 5 | 5 | 19708692 | |
@@ -134,7 +138,6 @@ These regular bowlers are left out of the game until their bowling type is known
 | t20i | Abdul Gaffar Saqlain | Bangladesh | 3 | 4 | 62a99934 | |
 | t20i | Nikhil Chaudhary | Australia | 3 | 2 | 1f84183a | |
 | t20i | K Matigimu | Zimbabwe | 3 | 2 | f8929fe0 | |
-| t20i | R Naved | Pakistan | 3 | 5 | 33f28243 | |
 | t20i | SM Harwood | Australia | 3 | 3 | 63bff7f9 | |
 | t20i | Gayan Wijekoon | Sri Lanka | 3 | 2 | 1fbef290 | |
 | t20i | Lionel Baker | West Indies | 3 | 2 | 441b1b20 | |
@@ -174,6 +177,7 @@ These regular bowlers are left out of the game until their bowling type is known
 | t20i | ML Lewis | Australia | 2 | 4 | 8b8745fd | |
 | t20i | AA Noffke | Australia | 2 | 4 | b69e69ed | |
 | t20i | YA Abdulla | South Africa | 2 | 2 | 4353bba5 | |
+| t20i | UWMBCA Welegedara | Sri Lanka | 2 | 1 | dd37da14 | |
 | t20i | Keegan Meth | Zimbabwe | 2 | 0 | 9fbc7bc4 | |
 | t20i | Kaushal Lokuarachchi | Sri Lanka | 2 | 2 | 3b50c63a | |
 | t20i | Asad Ali | Pakistan | 2 | 0 | f476d2a5 | |

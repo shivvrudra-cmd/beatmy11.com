@@ -19,7 +19,10 @@
  *
  * PROVISIONAL: the owner approved WHICH metrics count, not the numbers below
  * (weights, shrinkage, longevity thresholds). They are neutral defaults kept in
- * one config per format until the owner confirms them.
+ * one config per format until the owner confirms them. The long-career bonus is
+ * scaled like the Test game's (full only at 200 Tests, the longest career ever):
+ * it completes at the longest careers in each format's data (ODI ~330 matches,
+ * T20I ~160, IPL ~280), so it stays rare instead of lifting every regular.
  *
  * Pure: no DOM, no storage, no data imports.
  */
@@ -101,17 +104,17 @@ export const WB_FORMATS: Record<WbFormat['id'], WbFormat> = {
       { key: 'centuryRate', label: 'Century rate', higherIsBetter: true, value: (s) => per(s.hundreds, s.matches) }]),
     bowling: equal([BOWL_AVG, WKTS_PM, ECON,
       { key: 'fourWicketRate', label: '4+ wicket innings rate', higherIsBetter: true, value: (s) => per(s.fourWicketInnings, s.matches) }]),
-    priorMatches: 30, longevityWeight: 0.25, longevityFullMatches: 100, longevityBonusFill: 0.8, longevityBonusMatches: 250,
+    priorMatches: 30, longevityWeight: 0.25, longevityFullMatches: 100, longevityBonusFill: 0.8, longevityBonusMatches: 330,
     teamShares: TEAM_SHARES,
   },
   t20i: {
     id: 't20i', label: 'T20I', batting: T20_BATTING, bowling: T20_BOWLING,
-    priorMatches: 30, longevityWeight: 0.25, longevityFullMatches: 50, longevityBonusFill: 0.8, longevityBonusMatches: 120,
+    priorMatches: 30, longevityWeight: 0.25, longevityFullMatches: 50, longevityBonusFill: 0.8, longevityBonusMatches: 160,
     teamShares: TEAM_SHARES,
   },
   ipl: {
     id: 'ipl', label: 'IPL', batting: T20_BATTING, bowling: T20_BOWLING,
-    priorMatches: 30, longevityWeight: 0.25, longevityFullMatches: 60, longevityBonusFill: 0.8, longevityBonusMatches: 180,
+    priorMatches: 30, longevityWeight: 0.25, longevityFullMatches: 60, longevityBonusFill: 0.8, longevityBonusMatches: 280,
     teamShares: TEAM_SHARES,
   },
 };

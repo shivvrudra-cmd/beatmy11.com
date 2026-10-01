@@ -5,7 +5,7 @@
  */
 import { readFileSync } from 'node:fs';
 // @ts-expect-error plain .mjs build script
-import { aggregate, careerStats, NATIONS, IPL_BLOCKS, ODI_FIRST_SEEN_CUTOFF } from '../scripts/cricsheet/build-white-ball.mjs';
+import { aggregate, careerStats, sameIdentity, NATIONS, IPL_BLOCKS, ODI_FIRST_SEEN_CUTOFF } from '../scripts/cricsheet/build-white-ball.mjs';
 
 let pass = 0, fail = 0;
 const ok = (cond: boolean, name: string, extra?: unknown) => {
@@ -85,6 +85,8 @@ const big1 = careerStats(Pb.get('a1'), { id: 'odi' }), bigB2 = careerStats(Pb.ge
 ok(big1.hundreds === 1 && big1.fifties === 0 && big1.highest === 100, 'a hundred counts as a hundred, not also a fifty', big1);
 ok(bigB2.fourWicketInnings === 1 && bigB2.fiveWicketInnings === 0 && bigB2.wickets === 4, '4-wicket innings counted', bigB2);
 
+ok(sameIdentity('PJ Cummins', 'Pat Cummins') && !sameIdentity('PJ Cummins', 'Anderson Cummins') && sameIdentity('MS Dhoni', 'Mahendra Singh Dhoni') && sameIdentity('SL Malinga', 'Lasith Malinga') && !sameIdentity('PJ Cummins', 'Miguel Cummins'), 'name identity: surname plus a shared initial (middle names allowed)');
+
 // ---- 2. generated data sanity
 const ROLES = new Set(['opener', 'middle-order', 'wicketkeeper', 'all-rounder', 'spinner', 'fast-bowler']);
 for (const fmt of ['odi', 't20i', 'ipl']) {
@@ -97,6 +99,8 @@ for (const fmt of ['odi', 't20i', 'ipl']) {
     if (ids.has(p.id)) bad.push(`dup ${p.id}`);
     ids.add(p.id);
     if (!ROLES.has(p.primaryRole)) bad.push(`role ${p.name}`);
+    // The display name must be the same person as the scorecard name (owner-supplied names excepted).
+    if (p.bowlingTypeSource !== 'owner' && !sameIdentity(p.scorecardName, p.name)) bad.push(`name ${p.scorecardName} -> ${p.name}`);
     if (fmt !== 'ipl' && !NATIONS.includes(p.nation)) bad.push(`nation ${p.name}`);
     if (fmt === 'odi' && p.firstMatch < ODI_FIRST_SEEN_CUTOFF) bad.push(`odi cutoff ${p.name}`);
     if (fmt === 'ipl' && !(p.iplSpells?.length && p.iplSpells.every((x: { block: string }) => IPL_BLOCKS.some((b: { id: string }) => b.id === x.block)))) bad.push(`ipl spells ${p.name}`);

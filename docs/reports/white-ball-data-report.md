@@ -8,12 +8,12 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 
 - Matches counted: 2576
 - Players seen: 1998
-- Players kept: 932
+- Players kept: 930
 - Excluded, first Cricsheet ODI before 2004-01-01 (career likely began earlier, incomplete): 250
 - Excluded, not one of the 10 game nations: 729
-- Excluded, regular bowler, spin/pace unknown (owner to supply): 83
+- Excluded, regular bowler, spin/pace unknown (owner to supply): 85
 - Excluded, never batted or bowled regularly: 4
-- Role source: match-data 395, kaggle 404, test-data 111, match-data (stumpings) 2, owner 12, wikidata 8
+- Role source: match-data 395, kaggle 399, test-data 113, match-data (stumpings) 2, owner 12, wikidata 9
 
 ## T20I
 
@@ -23,16 +23,16 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 - Excluded, regular bowler, spin/pace unknown (owner to supply): 72
 - Excluded, not one of the 10 game nations: 3658
 - Excluded, never batted or bowled regularly: 15
-- Role source: match-data 434, kaggle 416, test-data 137, owner 14, match-data (stumpings) 5, wikidata 4
+- Role source: match-data 434, kaggle 413, test-data 139, owner 14, match-data (stumpings) 5, wikidata 5
 
 ## IPL
 
 - Matches counted: 1243
 - Players seen: 809
-- Players kept: 718
-- Excluded, regular bowler, spin/pace unknown (owner to supply): 84
+- Players kept: 716
+- Excluded, regular bowler, spin/pace unknown (owner to supply): 86
 - Excluded, never batted or bowled regularly: 7
-- Role source: match-data 337, match-data (stumpings) 3, owner 12, kaggle 291, test-data 72, wikidata 3
+- Role source: match-data 337, match-data (stumpings) 3, owner 12, kaggle 288, test-data 73, wikidata 3
 
 ## Provisional role rules (owner to confirm)
 
@@ -46,7 +46,7 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 - Matches involving Afghanistan are withheld by Cricsheet, so every ODI/T20I career here misses its matches against Afghanistan (totals slightly below official records).
 - Afghanistan: matches withheld by Cricsheet; not a game nation.
 
-## Ambiguous name matches (role lookup skipped): 24
+## Ambiguous name matches (role lookup skipped): 26
 
 - odi: Junaid Khan (086f5984)
 - odi: Mehedi Hasan (9dad0f2e)
@@ -68,7 +68,9 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 - ipl: Rashid Khan (5f547c8b)
 - ipl: Rinku Singh (0a509d6b)
 - ipl: Shashank Singh (26989d80)
+- ipl: Harpreet Singh (28c78fb3)
 - ipl: Shahid Afridi (0dc00542)
 - ipl: Gagandeep Singh (890de8cb)
+- ipl: Harmeet Singh (2a72fd4f)
 - ipl: Harmeet Singh (0bf15e52)
 - ipl: Shivam Sharma (6f49cc6e)
