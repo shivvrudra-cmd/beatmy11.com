@@ -173,7 +173,11 @@ export interface UniquePlayer {
  * dedupe rule /matchup uses. Casing/format differences (e.g. "Fast bowler"
  * vs "fast-bowler") are not conflicts: normalizePlayer canonicalises them.
  */
+export const OWNER_RECLASS = 'owner';
+
 export const ROLE_OVERRIDES: Record<string, { role: string; file: string; note: string }> = {
+  // Single-record player reclassified by the owner (role is his listed secondary role).
+  'don-bradman': { role: 'middle-order', file: OWNER_RECLASS, note: 'owner: classed as middle-order on these pages (data says opener, secondary middle-order)' },
   'manoj-prabhakar': { role: 'opener', file: '1990s', note: 'owner: the 1990s record (opener)' },
   'hamilton-masakadza': { role: 'opener', file: '2000s', note: 'owner: the 2000s record (opener)' },
   'brendan-taylor': { role: 'wicketkeeper', file: '2010s', note: 'owner: the 2010s record (wicketkeeper)' },
@@ -247,8 +251,20 @@ export function buildPopulation(
     let chosen = u.records[0];
     const alternativesOf = (c: { file: string; role: string }) =>
       u.records.filter((r) => r.role !== c.role);
-    if (alternativesOf(chosen).length === 0) continue; // all records agree
     const ov = overrides[u.player.id];
+    if (ov && ov.file === OWNER_RECLASS) {
+      // Owner reclassification of a single-record player: no data conflict,
+      // but the new role must be one the data already lists for him
+      // (a secondary role), so nothing is invented.
+      if (!u.player.secondaryRoles.includes(ov.role) && !u.records.some((r) => r.role === ov.role)) {
+        throw new Error(
+          `[seo-pages] reclassification of ${u.player.id} to ${ov.role} is not a role listed in his data`,
+        );
+      }
+      u.player = { ...u.player, primaryRole: ov.role };
+      continue;
+    }
+    if (alternativesOf(chosen).length === 0) continue; // all records agree
     let overridden = false;
     if (ov) {
       const rec = u.records.find((r) => r.file === ov.file && r.role === ov.role);

@@ -55,8 +55,8 @@ ok(data.populationSize === rawIds.size, 'populationSize counts unique players');
 // ---- role conflicts and owner overrides ----
 {
   const ids = data.conflicts.map((c) => c.id).sort();
-  const expected = Object.keys(ROLE_OVERRIDES).sort();
-  ok(JSON.stringify(ids) === JSON.stringify(expected), 'exactly the five owner-decided conflicts exist', ids);
+  const expected = Object.keys(ROLE_OVERRIDES).filter((k) => k !== 'don-bradman').sort();
+  ok(JSON.stringify(ids) === JSON.stringify(expected), 'exactly the five owner-decided data conflicts exist', ids);
   ok(data.conflicts.every((c) => c.overridden), 'every real conflict has an owner override');
   ok(!ids.includes('dale-steyn') && !ids.includes('roston-chase'), 'format-only role differences are not conflicts');
   const roleOf = (id: string) => data.ranked.find((r) => r.player.id === id)?.role;
@@ -66,6 +66,12 @@ ok(data.populationSize === rawIds.size, 'populationSize counts unique players');
   ok(roleOf('rohit-sharma') === 'opener', 'Rohit Sharma is an opener');
   ok(roleOf('usman-khawaja') === 'middle-order', 'Khawaja is middle-order');
   ok(roleOf('dale-steyn') === 'fast-bowler', 'Steyn is a fast bowler');
+  ok(roleOf('don-bradman') === 'middle-order', 'Bradman is middle-order (owner reclassification)');
+  ok(!ids.includes('don-bradman'), 'Bradman reclassification is not a data conflict');
+  ok(buildPopulation(byEra, {}).players.find((u) => u.player.id === 'don-bradman')!.player.primaryRole === 'opener', 'without overrides Bradman stays opener (data untouched)');
+  let threw2 = false;
+  try { buildPopulation(byEra, { 'don-bradman': { role: 'spinner', file: 'owner', note: 'bogus' } }); } catch { threw2 = true; }
+  ok(threw2, 'reclassifying to a role not in the data throws');
   const bad = { 'rohit-sharma': { role: 'spinner', file: '2020s', note: 'bogus' } };
   let threw = false;
   try { buildPopulation(byEra, bad); } catch { threw = true; }
