@@ -55,9 +55,9 @@ Give the name fans know them by. Leave any that are right as they are (e.g. AB d
 
 | Letter | Shown as | Nation / teams | Matches | Should be |
 |---|---|---|---|---|
-| A | AB de Villiers | South Africa | ODI 223, T20I 78, IPL 183 | |
+| A | AB de Villiers | South Africa | ODI 228, T20I 78, IPL 183 | |
 | B | KL Rahul | India | ODI 100, T20I 72, IPL 160 | |
-| C | M S Dhoni | India | ODI 347, T20I 98, IPL 277 | |
+| C | M S Dhoni | India | ODI 350, T20I 98, IPL 277 | |
 | D | R P Singh | India | ODI 55, IPL 82 | |
 | E | S N Khan | Royal Challengers Bengaluru, Punjab Kings, Delhi Capitals | IPL 58 | |
 | F | SK Trivedi | Rajasthan Royals | IPL 76 | |

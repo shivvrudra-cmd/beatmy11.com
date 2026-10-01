@@ -4,6 +4,10 @@
  */
 // @ts-expect-error plain .mjs script
 import { parseHowstat, matchHowstat } from '../scripts/cricsheet/howstat-check.mjs';
+// @ts-expect-error plain .mjs script
+import { parseStrikeRates } from '../scripts/cricsheet/howstat.mjs';
+// @ts-expect-error plain .mjs script
+import { withOfficialBatting } from '../scripts/cricsheet/build-white-ball.mjs';
 
 let pass = 0, fail = 0;
 const ok = (cond: boolean, name: string, extra?: unknown) => {
@@ -51,6 +55,20 @@ ok(m.pairs.length === 2 && m.pairs.every((x: { ours: { name: string }; theirs: {
   (x.ours.name === 'Virat Kohli' && x.theirs.knownAs === 'Virat Kohli') || (x.ours.name === 'Mahendra Singh Dhoni' && x.theirs.knownAs === 'MS Dhoni')),
   'Kohli and Dhoni pair up', m.pairs.map((x: { ours: { name: string } }) => x.ours.name));
 ok(m.unmatchedOurs.length === 1 && m.unmatchedOurs[0].name === 'R Sharma', '"R Sharma" fits two HowSTAT players, so it is left unmatched');
+
+// ---- the all-countries batting table (1000+ runs) with official strike rates
+const sr = parseStrikeRates([
+  ',Player,Country,Mat,Inns,NO,Runs,HS,100s,50s,Avg,S/R',
+  '1.0,S R Tendulkar,India,463.0,452.0,41.0,18426.0,200*,49.0,96.0,44.83,86.24',
+  '2.0,V Kohli*,India,316.0,304.0,48.0,15109.0,183.0,55.0,79.0,59.02,94.37',
+].join('\n'));
+ok(sr.length === 2 && sr[0].name === 'S R Tendulkar' && sr[0].highest === 200 && sr[0].strikeRate === 86.24 && sr[0].fifties === 96 && sr[0].notOuts === 41, 'strike-rate table parsed', sr[0]);
+ok(sr[1].name === 'V Kohli' && sr[1].country === 'India', 'the "current player" star is dropped from the name', sr[1]);
+const before = { matches: 146, cricsheetMatches: 146, innings: 140, notOuts: 12, runs: 5800, battingAverage: 45.3, strikeRate: 86.77, hundreds: 16, fifties: 30, highest: 200, fiftyRate: 0.3, wickets: 154, economy: 5.1, statsSource: 'cricsheet', fourWicketInnings: null };
+const after = withOfficialBatting(before, sr[0]);
+ok(after.matches === 463 && after.runs === 18426 && after.strikeRate === 86.24 && after.fifties === 96 && after.notOuts === 41 && after.hundreds === 49, 'official full-career batting line replaces the batting numbers', after);
+ok(after.wickets === 154 && after.economy === 5.1 && after.battingSource === 'howstat-strike-rates', 'bowling is untouched and the source is recorded', after);
+ok(Math.abs(after.fiftyRate - (96 + 49) / 463) < 0.0001, 'fifty rate follows the official numbers', after.fiftyRate);
 
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

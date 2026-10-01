@@ -15,6 +15,7 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 - Excluded, first Cricsheet ODI before 2004-01-01 and no official totals (career incomplete): 2
 - Role source: match-data 512, kaggle 449, test-data 166, match-data (stumpings) 3, owner 12, wikidata 10
 - Kaggle profiles matched by surname + initial (one-to-one both ways): 18
+- Players with the official full-career batting line (strike rate, 50s, not outs): 294
 - Official rows not used because they cover fewer matches than Cricsheet (the player also appeared for another side): 11
 
 ## T20I
@@ -62,6 +63,7 @@ For paired ODI and T20I players, matches, innings, runs, hundreds, highest score
 - T20I Sri Lanka: 113 HowSTAT rows, 101 paired, 5 of ours unpaired
 - T20I West Indies: 110 HowSTAT rows, 107 paired, 0 of ours unpaired
 - T20I Zimbabwe: 84 HowSTAT rows, 78 paired, 7 of ours unpaired
+- ODI batting strike-rate table: 484 rows (all countries), 295 paired with our players
 
 ## Provisional role rules (owner to confirm)
 

@@ -100,3 +100,40 @@ export function matchHowstat(rows, players) {
   }
   return { pairs, unmatchedOurs: players.filter((p) => !usedPlayer.has(p)), unmatchedTheirs: rows.filter((h) => !usedRow.has(h)) };
 }
+
+/**
+ * Parse HowSTAT's "Batsman Strike Rates" table (all countries, batters with 1000+ runs):
+ * Player, Country, Mat, Inns, NO, Runs, HS, 100s, 50s, Avg, S/R. These are FULL career totals
+ * (they include ICC World XI / Asia XI matches) with the official strike rate.
+ * A trailing "*" on a name marks a current player and is dropped.
+ */
+export function parseStrikeRates(text) {
+  const lines = text.replace(/^\uFEFF/, '').split(/\r?\n/).filter((l) => l.trim() !== '');
+  if (!lines.length) return [];
+  const split = (l) => {
+    const out = []; let cur = '', q = false;
+    for (let i = 0; i < l.length; i++) {
+      const ch = l[i];
+      if (q) { if (ch === '"' && l[i + 1] === '"') { cur += '"'; i++; } else if (ch === '"') q = false; else cur += ch; }
+      else if (ch === '"') q = true;
+      else if (ch === ',' || ch === '\t') { out.push(cur.trim()); cur = ''; }
+      else cur += ch;
+    }
+    out.push(cur.trim());
+    return out;
+  };
+  const head = split(lines[0]).map((h) => h.toLowerCase().replace(/[^a-z0-9/]/g, ''));
+  const col = (...names) => names.map((n) => head.indexOf(n)).find((i) => i >= 0) ?? -1;
+  const idx = { name: col('player', 'name'), country: col('country'), matches: col('mat', 'matches'), innings: col('inns'), notOuts: col('no'),
+    runs: col('runs'), highest: col('hs'), hundreds: col('100s'), fifties: col('50s'), battingAverage: col('avg', 'batavg'), strikeRate: col('s/r', 'sr') };
+  if (idx.name < 0 || idx.strikeRate < 0 || idx.country < 0) throw new Error(`Strike-rate file: could not find Player, Country and S/R columns (saw: ${lines[0]})`);
+  const num = (v) => { const x = Number(String(v ?? '').replace(/[,*]/g, '')); return String(v ?? '').trim() === '' || !Number.isFinite(x) ? null : x; };
+  return lines.slice(1).map(split).map((r) => ({
+    name: String(r[idx.name] ?? '').replace(/\*+$/, '').trim(),
+    knownAs: '',
+    country: r[idx.country] ?? '',
+    matches: num(r[idx.matches]), innings: num(r[idx.innings]), notOuts: num(r[idx.notOuts]), runs: num(r[idx.runs]),
+    highest: num(r[idx.highest]), hundreds: num(r[idx.hundreds]), fifties: num(r[idx.fifties]),
+    battingAverage: num(r[idx.battingAverage]), strikeRate: num(r[idx.strikeRate]),
+  })).filter((p) => p.name);
+}

@@ -22,7 +22,7 @@
 import { readFileSync, readdirSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { norm, sameIdentity } from './names.mjs';
-import { parseHowstat, matchHowstat } from './howstat.mjs';
+import { parseHowstat, parseStrikeRates, matchHowstat } from './howstat.mjs';
 
 export { norm, sameIdentity };
 
@@ -256,6 +256,25 @@ export function withOfficialTotals(stats, h) {
   return out;
 }
 
+/**
+ * Official full-career BATTING line from HowSTAT's strike-rate table (batters with 1000+ runs):
+ * matches, innings, not outs, runs, highest, hundreds, fifties, average and the official strike
+ * rate. It replaces the batting numbers (the per-country table's and Cricsheet's); bowling and
+ * fielding are untouched.
+ */
+export function withOfficialBatting(stats, b) {
+  const out = { ...stats, battingSource: 'howstat-strike-rates', cricsheetMatches: stats.cricsheetMatches ?? stats.matches };
+  for (const k of ['matches', 'innings', 'notOuts', 'runs', 'highest', 'hundreds', 'fifties', 'battingAverage', 'strikeRate']) {
+    if (b[k] !== null && b[k] !== undefined) out[k] = b[k];
+  }
+  if (b.matches && b.fifties !== null && b.hundreds !== null) out.fiftyRate = round((b.fifties + b.hundreds) / b.matches, 4);
+  // Bowling and fielding rates were measured per the earlier match count; keep them per match.
+  if (stats.matches && out.matches !== stats.matches && stats.statsSource === 'howstat' && stats.fourWicketInnings !== null) {
+    out.fourWicketRate = round(stats.fourWicketInnings / out.matches, 4);
+  }
+  return out;
+}
+
 // ------------------------------------------------------------------ main
 function main() {
   const people = new Map(readCsv(join(RAW, 'cricsheet/people.csv')).map((r) => [r.identifier, r]));
@@ -387,6 +406,21 @@ function main() {
       }
     }
   }
+  // Full-career batting lines with official strike rates (all countries in one table per format).
+  const officialBatting = { odi: new Map(), t20i: new Map() };
+  for (const id of ['odi', 't20i']) {
+    const file = join(hsDir, `${id}-batting-strike-rates.csv`);
+    if (!existsSync(file)) continue;
+    const all = parseStrikeRates(readFileSync(file, 'utf8'));
+    let paired = 0;
+    for (const nation of NATIONS) {
+      const rows = all.filter((r) => r.country === nation);
+      const ours = [...counted[id].acc.values()].filter((p) => mainTeam(p) === nation)
+        .map((p) => ({ id: p.id, scorecardName: people.get(p.id)?.name ?? p.scoreName, name: bestName(p.id, p.names) }));
+      for (const { ours: o, theirs } of matchHowstat(rows, ours).pairs) { officialBatting[id].set(o.id, theirs); paired++; }
+    }
+    hsReport.push(`${id.toUpperCase()} batting strike-rate table: ${all.length} rows (all countries), ${paired} paired with our players`);
+  }
   report.howstat = hsReport;
 
   // ---- pass 2: roles and output
@@ -410,13 +444,18 @@ function main() {
       const hsRow = official[fmt.id]?.get(p.id) ?? null;
       const hs = hsRow && hsRow.matches !== null && hsRow.matches >= p.matches ? hsRow : null;
       if (hsRow && !hs) counts.partialOfficial = (counts.partialOfficial ?? 0) + 1;
+      const hb0 = officialBatting[fmt.id]?.get(p.id) ?? null;
+      const hb = hb0 && hb0.matches !== null && hb0.matches >= p.matches ? hb0 : null;
       if (fmt.id === 'odi' && p.firstDate < ODI_FIRST_SEEN_CUTOFF && !hs) { exclude(`first Cricsheet ODI before ${ODI_FIRST_SEEN_CUTOFF} and no official totals (career incomplete)`); continue; }
 
       const reg = people.get(p.id) ?? {};
       const full = bestName(p.id, p.names);
       const known = intlKnown.get(p.id);
       const intlNation = nation ?? known?.nation ?? null; // IPL: their international side, if any
-      const stats = hs ? withOfficialTotals(careerStats(p, fmt), hs) : { ...careerStats(p, fmt), statsSource: 'cricsheet' };
+      let stats = hs ? withOfficialTotals(careerStats(p, fmt), hs) : { ...careerStats(p, fmt), statsSource: 'cricsheet' };
+      // The full-career batting line needs the official bowling totals too (or no bowling at all),
+      // so the match count stays consistent across the player's record.
+      if (hb && (hs || p.ballsBowled === 0)) { stats = withOfficialBatting(stats, hb); counts.officialBatting = (counts.officialBatting ?? 0) + 1; }
 
       // --- role evidence
       // IPL players without an international side: Indian domestic players (the large majority).
@@ -562,6 +601,7 @@ function writeReports(report) {
     for (const [why, n] of Object.entries(c.excluded)) L.push(`- Excluded, ${why}: ${n}`);
     L.push(`- Role source: ${Object.entries(c.roleSource).map(([k, v]) => `${k} ${v}`).join(', ')}`);
     L.push(`- Kaggle profiles matched by surname + initial (one-to-one both ways): ${c.fuzzy ?? 0}`);
+    if (c.officialBatting) L.push(`- Players with the official full-career batting line (strike rate, 50s, not outs): ${c.officialBatting}`);
     if (c.partialOfficial) L.push(`- Official rows not used because they cover fewer matches than Cricsheet (the player also appeared for another side): ${c.partialOfficial}`);
     L.push('');
   }

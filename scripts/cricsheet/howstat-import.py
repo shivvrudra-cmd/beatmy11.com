@@ -3,7 +3,8 @@ howstat-import.py: converts the owner's HowSTAT Excel exports into the CSVs that
 scripts/cricsheet/howstat-check.mjs and the build read.
 
   input   <folder>/ODI/*.xlsx and <folder>/T20I/*.xlsx   (one sheet each, headers as on the site)
-  output  data-raw/howstat/<format>-<nation>.csv
+  output  data-raw/howstat/<format>-<nation>.csv, and <format>-batting-strike-rates.csv for a
+          "Batsman Strike Rates-<FORMAT>.xlsx" table (all countries, 1000+ runs)
 
 No extra libraries: an .xlsx is a zip of XML. Values are copied as they are; nothing is changed.
 Usage: python scripts/cricsheet/howstat-import.py "C:/Users/shiva/Downloads/Player CSV"
@@ -68,12 +69,16 @@ def main(folder):
         for f in sorted(os.listdir(d)):
             if not f.lower().endswith('.xlsx'):
                 continue
-            nation = nation_of(f)
-            if not nation:
-                print('skipped (nation not recognised):', f)
-                continue
             rows = read_xlsx(os.path.join(d, f))
-            out = os.path.join(out_dir, f"{fmt}-{nation.lower().replace(' ', '-')}.csv")
+            if 'strike rate' in f.lower():
+                # All-countries batting table (1000+ runs) with official strike rate, 50s and not outs.
+                out = os.path.join(out_dir, f"{fmt}-batting-strike-rates.csv")
+            else:
+                nation = nation_of(f)
+                if not nation:
+                    print('skipped (nation not recognised):', f)
+                    continue
+                out = os.path.join(out_dir, f"{fmt}-{nation.lower().replace(' ', '-')}.csv")
             with open(out, 'w', newline='', encoding='utf-8') as fh:
                 csv.writer(fh).writerows(rows)
             print(f'{out}: {len(rows) - 1} rows | header: {rows[0]}')
