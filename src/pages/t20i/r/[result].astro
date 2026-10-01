@@ -1,0 +1,20 @@
+---
+/**
+ * /t20i/r/<user>-<house> — a shared T20I series result. The screen is components/SharedResult.astro.
+ */
+import SharedResult from '../../../components/SharedResult.astro';
+import { shareResultsFor, type ShareResult } from '../../../lib/share-results';
+import { wbPlayers } from '../../../lib/formats/white-ball-store';
+import { T20I_FORMAT } from '../../../lib/formats/draft-format';
+import { T20I_RESULT } from '../../../lib/formats/result-format';
+
+export function getStaticPaths() {
+  return shareResultsFor({ opponent: T20I_RESULT.opponent, xiNoun: T20I_RESULT.xiNoun }).map((r) => ({ params: { result: r.slug }, props: { r } }));
+}
+
+const { r } = Astro.props as { r: ShareResult };
+// One name per player id (IPL: a player has several stints; the list shows the name only).
+const names: Record<string, [string, string]> = {};
+for (const p of wbPlayers('t20i')) names[p.id] ??= [p.name, T20I_FORMAT.teamCodes[p.stint?.team ?? p.nation ?? ''] ?? ''];
+---
+<SharedResult r={r} names={names} eyebrow={T20I_RESULT.eyebrow} opponent={T20I_RESULT.opponent} playHref={T20I_RESULT.playHref} ogImage={`/og/t20i/${r.slug}.png`} />

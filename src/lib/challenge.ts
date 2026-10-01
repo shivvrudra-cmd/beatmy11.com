@@ -69,6 +69,46 @@ export function decodeSpins(raw: string | null | undefined, legend: SpinCombo[],
   return out;
 }
 
+/**
+ * Spins of the other formats (ODI, T20I, IPL). Their era ids ("2008-12", "2023+") and team codes
+ * ("PBKS") do not fit the Test encoding, so each spin is `<era index><TEAM CODE>`, e.g.
+ * `2MI.0CSK.…`: the era's position in the format's era list, then the team's short code.
+ */
+export interface SpinCodec {
+  /** The format's era ids, in order. */
+  eras: readonly string[];
+  /** Team (nation or franchise) → short code of 2-4 capital letters. */
+  teamCodes: Record<string, string>;
+}
+
+export function encodeSpinsWith(spins: SpinCombo[], codec: SpinCodec): string {
+  return spins.map((s) => `${codec.eras.indexOf(s.era)}${codec.teamCodes[s.nation] ?? ''}`).join('.');
+}
+
+/** Decode and validate against the format's real draws: six spins, each a real draw, none twice. */
+export function decodeSpinsWith(raw: string | null | undefined, codec: SpinCodec, round1: SpinCombo[], draft: SpinCombo[]): SpinCombo[] | null {
+  if (!raw || raw.length > 200) return null;
+  const parts = raw.split('.');
+  if (parts.length !== 6) return null;
+  const byCode = Object.fromEntries(Object.entries(codec.teamCodes).map(([team, c]) => [c, team]));
+  const out: SpinCombo[] = [];
+  const seen = new Set<string>();
+  for (let i = 0; i < 6; i++) {
+    const m = /^(\d)([A-Z]{2,4})$/.exec(parts[i]);
+    if (!m) return null;
+    const era = codec.eras[Number(m[1])];
+    const nation = byCode[m[2]];
+    if (!era || !nation) return null;
+    const pool = i === 0 ? round1 : draft;
+    if (!pool.some((c) => c.era === era && c.nation === nation)) return null;
+    const key = `${era}|${nation}`;
+    if (seen.has(key)) return null;
+    seen.add(key);
+    out.push({ era, nation });
+  }
+  return out;
+}
+
 /** '3-2' → { user: 3, house: 2 }; the five-Test total must be ≤ 5. */
 export function parseScoreline(raw: string | null | undefined): Scoreline | null {
   const m = /^([0-5])-([0-5])$/.exec(raw ?? '');
@@ -103,9 +143,12 @@ export function challengeShareText(target: Scoreline, mine: Scoreline, tries: nu
 
 // ---------------------------------------------------------------- browser storage
 
-export function loadChallenge(): ChallengeState | null {
+/** Each format keeps its own friend's challenge; `scope` is the format id (Test: absent or 'test'). */
+const scopedKey = (scope?: string) => (scope && scope !== 'test' ? `${CHALLENGE_STORAGE_KEY}.${scope}` : CHALLENGE_STORAGE_KEY);
+
+export function loadChallenge(scope?: string): ChallengeState | null {
   try {
-    const raw = JSON.parse(localStorage.getItem(CHALLENGE_STORAGE_KEY) || 'null');
+    const raw = JSON.parse(localStorage.getItem(scopedKey(scope)) || 'null');
     if (!raw || typeof raw.spins !== 'string' || !raw.vs || typeof raw.tries !== 'number') return null;
     const vs = parseScoreline(`${raw.vs.user}-${raw.vs.house}`);
     if (!vs) return null;
@@ -116,10 +159,10 @@ export function loadChallenge(): ChallengeState | null {
   }
 }
 
-export function saveChallenge(c: ChallengeState | null): void {
+export function saveChallenge(c: ChallengeState | null, scope?: string): void {
   try {
-    if (c) localStorage.setItem(CHALLENGE_STORAGE_KEY, JSON.stringify(c));
-    else localStorage.removeItem(CHALLENGE_STORAGE_KEY);
+    if (c) localStorage.setItem(scopedKey(scope), JSON.stringify(c));
+    else localStorage.removeItem(scopedKey(scope));
   } catch {
     /* storage unavailable: the challenge just won't persist */
   }

@@ -24,8 +24,11 @@ export interface ResultFormat {
   flavour: SeriesFlavour;
   teamCodes: Record<string, string>;
   eraNames: Record<string, string>;
-  /** Test only: /r/<scoreline> share pages, challenge links, daily streaks. */
+  /** Share pages (/r/<scoreline>, or /<format>/r/<scoreline>) and challenge links. All formats
+   *  since 2026-10-02. */
   shareLinks: boolean;
+  /** Shown before "Daily Challenge" outside the Test game: "ODI", "T20I", "IPL". */
+  dailyLabel?: string;
   /** Test only for now: anonymous score and event counters (keeps the Test calibration clean). */
   telemetry: boolean;
   /** Data credit (required by the data licence). Shown on /privacy, not on the result page. */
@@ -66,7 +69,8 @@ export const IPL_RESULT: ResultFormat = {
   flavour: { venues: IPL_VENUES, opponent: 'All-Star XI', kind: 't20' },
   teamCodes: IPL_TEAM_CODES,
   eraNames: IPL_BLOCK_NAMES,
-  shareLinks: false,
+  shareLinks: true,
+  dailyLabel: 'IPL',
   telemetry: false,
   credit: 'Match data: Cricsheet (cricsheet.org), Open Data Commons Attribution licence. Totals leave out matches Cricsheet withholds.',
 };
@@ -85,7 +89,8 @@ export const ODI_RESULT: ResultFormat = {
   flavour: { venues: ODI_VENUES, opponent: 'World XI', kind: 'odi' },
   teamCodes: TEST_FORMAT.teamCodes,
   eraNames: INTL_ERA_NAMES,
-  shareLinks: false,
+  shareLinks: true,
+  dailyLabel: 'ODI',
   telemetry: false,
   credit: 'Match data: Cricsheet (cricsheet.org), Open Data Commons Attribution licence. Totals leave out matches Cricsheet withholds.',
 };
@@ -105,7 +110,8 @@ export const T20I_RESULT: ResultFormat = {
   // Afghanistan is not draftable, but the World XI has an opponent-only Afghan player (Rashid Khan).
   teamCodes: { ...TEST_FORMAT.teamCodes, Afghanistan: 'AFG' },
   eraNames: INTL_ERA_NAMES,
-  shareLinks: false,
+  shareLinks: true,
+  dailyLabel: 'T20I',
   telemetry: false,
   credit: 'Match data: Cricsheet (cricsheet.org), Open Data Commons Attribution licence. Totals leave out matches Cricsheet withholds.',
 };

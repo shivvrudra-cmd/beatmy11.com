@@ -122,9 +122,9 @@ const formatJson = safe(format);
       utcDayKey, dayNumber, loadDaily, saveDaily, recordResult, hasPlayed, currentStreak,
       activeDailyDay, dailyShareText,
     } from '../lib/daily';
-    import { currentMode, switchMode, FORMAT_MODES } from '../lib/draft-slots';
+    import { currentMode, switchMode, modeFor, formatOfMode, kindOfMode } from '../lib/draft-slots';
     import {
-      encodeSpins, loadChallenge, saveChallenge, betterOf, challengeOutcome, challengeShareText, scorelineText,
+      encodeSpins, encodeSpinsWith, loadChallenge, saveChallenge, betterOf, challengeOutcome, challengeShareText, scorelineText,
     } from '../lib/challenge';
 
     const read = (id) => JSON.parse(document.getElementById(id).textContent || 'null');
@@ -135,8 +135,10 @@ const formatJson = safe(format);
     const FORMAT = read('bm11-result-format');
     const OPP = FORMAT.opponent;
     // Each format keeps its own saved draft; make this page's format the live one.
-    if (FORMAT.slotMode !== 'normal') switchMode(FORMAT.slotMode);
-    else if (FORMAT_MODES.includes(currentMode())) switchMode('normal');
+    // (A daily or a friend's challenge of THIS format stays live; anything else is parked.)
+    if (formatOfMode(currentMode()) !== FORMAT.id) switchMode(modeFor(FORMAT.id, 'normal'));
+    const SCOPE = FORMAT.id;
+    const MODE_KIND = kindOfMode(currentMode());
 
     // ---------- normalization of stored players (lenient; never zero-fills) ----------
     const VALID_ROLES = new Set(['opener', 'middle-order', 'all-rounder', 'wicketkeeper', 'spinner', 'fast-bowler']);
@@ -310,20 +312,20 @@ const formatJson = safe(format);
       // Daily Challenge: record today's result once (streak, best) and show it.
       let dailyShare = '';
       const dailyDay = utcDayKey();
-      if (currentMode() === 'daily' && activeDailyDay() === dailyDay) {
+      if (MODE_KIND === 'daily' && activeDailyDay(SCOPE) === dailyDay) {
         const result = { user: series.user, house: series.house, draws: series.draws };
-        let state = loadDaily();
+        let state = loadDaily(SCOPE);
         if (!hasPlayed(state, dailyDay)) {
           state = recordResult(state, dailyDay, result);
-          saveDaily(state);
-          reportEvent('daily_completed');
+          saveDaily(state, SCOPE);
+          if (FORMAT.telemetry) reportEvent('daily_completed');
         }
         const streak = currentStreak(state, dailyDay);
         const mine = state.results[dailyDay] || result;
-        dailyShare = dailyShareText(dailyDay, mine, streak);
+        dailyShare = dailyShareText(dailyDay, mine, streak, FORMAT.id === 'test' ? {} : { label: FORMAT.dailyLabel, xiNoun: FORMAT.xiNoun, opponent: OPP });
         const el = $('rs-daily');
         el.innerHTML =
-          `<strong>Daily Challenge #${dayNumber(dailyDay)}</strong> done · ` +
+          `<strong>${FORMAT.dailyLabel ? `${esc(FORMAT.dailyLabel)} ` : ''}Daily Challenge #${dayNumber(dailyDay)}</strong> done · ` +
           (streak > 1 ? `🔥 ${streak}-day streak (best ${state.best})` : 'streak started — come back tomorrow') +
           `<span>New spins at 00:00 UTC. Everyone drafted the same draws today.</span>`;
         el.hidden = false;
@@ -331,11 +333,11 @@ const formatJson = safe(format);
 
       // Challenge-a-friend: compare with the scoreline to beat, count the tries.
       let challengeShare = '';
-      const ch = currentMode() === 'challenge' ? loadChallenge() : null;
+      const ch = MODE_KIND === 'challenge' ? loadChallenge(SCOPE) : null;
       if (ch) {
         const mine = { user: series.user, house: series.house };
         const best = betterOf(ch.best, mine);
-        saveChallenge({ ...ch, best });
+        saveChallenge({ ...ch, best }, SCOPE);
         const out = challengeOutcome(ch.vs, mine);
         const tries = Math.max(1, ch.tries);
         const head =
@@ -349,9 +351,9 @@ const formatJson = safe(format);
           `<span>Same six spins as your friend. ${out === 'short' ? 'Redraft and try to top it.' : 'Share it back, or redraft for a better one.'}</span>`;
         $('rs-challenge').hidden = false;
         challengeShare = challengeShareText(ch.vs, mine, tries);
-        reportEvent('challenge_completed');
+        if (FORMAT.telemetry) reportEvent('challenge_completed');
         // "Draft again" retries the same challenge (same spins, next attempt).
-        for (const a of document.querySelectorAll('[data-rs-again]')) a.setAttribute('href', `/play?c=${encodeURIComponent(ch.spins)}&vs=${ch.vs.user}-${ch.vs.house}`);
+        for (const a of document.querySelectorAll('[data-rs-again]')) a.setAttribute('href', `${FORMAT.playHref}?c=${encodeURIComponent(ch.spins)}&vs=${ch.vs.user}-${ch.vs.house}`);
       }
 
       // ---- screen 2: strength bars, overall score, grade, titles and a tip ----
@@ -479,13 +481,16 @@ const formatJson = safe(format);
       let spinsParam = '';
       try {
         const hist = JSON.parse(localStorage.getItem('beatmy11.draft.v1') || 'null')?.spinHistory;
-        if (Array.isArray(hist) && hist.length === 6) spinsParam = encodeSpins(hist.map((h) => ({ era: h.era, nation: h.nation })));
+        if (Array.isArray(hist) && hist.length === 6) {
+          const spins = hist.map((h) => ({ era: h.era, nation: h.nation }));
+          spinsParam = FORMAT.id === 'test' ? encodeSpins(spins) : encodeSpinsWith(spins, { eras: Object.keys(FORMAT.eraNames), teamCodes: FORMAT.teamCodes });
+        }
       } catch {
         /* no spins: the link still works as a normal share */
       }
-      // Formats without share pages yet (IPL preview) share the card and a link to the site.
+      // Every format has its own share pages: /r/<slug> (Test), /odi/r/<slug> and so on.
       const url = FORMAT.shareLinks
-        ? `${location.origin}/r/${slug}?xi=${encodeXI(userXI.map((p) => ({ id: p.id, role: p.role })))}${spinsParam ? `&c=${spinsParam}` : ''}`
+        ? `${location.origin}${FORMAT.id === 'test' ? '' : `/${FORMAT.id}`}/r/${slug}?xi=${encodeXI(userXI.map((p) => ({ id: p.id, role: p.role })))}${spinsParam ? `&c=${spinsParam}` : ''}`
         : `${location.origin}${FORMAT.homeHref}`;
       const XI = FORMAT.xiNoun;
       const shareText = challengeShare || dailyShare ||
@@ -496,7 +501,7 @@ const formatJson = safe(format);
             : series.user === series.house
               ? `My ${XI} drew ${series.user}–${series.house} with the ${OPP} 🏏 Can you beat it?`
               : `My ${XI} lost ${series.user}–${series.house} to the ${OPP} 🏏 Can you beat it?`);
-      const cardHeadline = FORMAT.shareLinks
+      const cardHeadline = FORMAT.id === 'test'
         ? SHARE_RESULTS.find((r) => r.slug === slug)?.imageHeadline ?? 'Beat My 11'
         : series.user === 5 ? `I whitewashed the ${OPP}`
           : series.user > series.house ? `I beat the ${OPP}`
@@ -572,7 +577,7 @@ const formatJson = safe(format);
     }
 
     $('rs-leave')?.addEventListener('click', () => {
-      saveChallenge(null);
+      saveChallenge(null, SCOPE);
       $('rs-challenge').hidden = true;
     });
 

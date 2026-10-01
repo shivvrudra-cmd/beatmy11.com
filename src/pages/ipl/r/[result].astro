@@ -1,0 +1,20 @@
+---
+/**
+ * /ipl/r/<user>-<house> — a shared IPL series result. The screen is components/SharedResult.astro.
+ */
+import SharedResult from '../../../components/SharedResult.astro';
+import { shareResultsFor, type ShareResult } from '../../../lib/share-results';
+import { wbPlayers } from '../../../lib/formats/white-ball-store';
+import { IPL_FORMAT } from '../../../lib/formats/draft-format';
+import { IPL_RESULT } from '../../../lib/formats/result-format';
+
+export function getStaticPaths() {
+  return shareResultsFor({ opponent: IPL_RESULT.opponent, xiNoun: IPL_RESULT.xiNoun }).map((r) => ({ params: { result: r.slug }, props: { r } }));
+}
+
+const { r } = Astro.props as { r: ShareResult };
+// One name per player id (IPL: a player has several stints; the list shows the name only).
+const names: Record<string, [string, string]> = {};
+for (const p of wbPlayers('ipl')) names[p.id] ??= [p.name, ''];
+---
+<SharedResult r={r} names={names} eyebrow={IPL_RESULT.eyebrow} opponent={IPL_RESULT.opponent} playHref={IPL_RESULT.playHref} ogImage={`/og/ipl/${r.slug}.png`} />
