@@ -8,6 +8,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 5
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -58,6 +61,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -109,6 +115,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 58,
+   "2020s": 45
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -160,6 +170,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 18
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -213,6 +226,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 16
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -264,6 +280,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 4,
+   "2010s": 3
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -315,6 +335,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 22,
+   "2010s": 53
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -368,6 +392,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 24
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -419,6 +446,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 8,
+   "2010s": 23
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "middle-order"
@@ -471,6 +502,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 5
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -521,6 +555,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 3
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -572,6 +609,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 10,
+   "2010s": 19
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -618,6 +659,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 6
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -668,6 +713,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 56
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -719,6 +767,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 37
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -770,6 +821,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 11
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -815,6 +869,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -860,6 +917,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -905,6 +965,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 10
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -955,6 +1018,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 13
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -1008,6 +1074,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 21,
+   "2020s": 34
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1060,6 +1130,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 4,
+   "2010s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1111,6 +1185,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 27,
+   "2020s": 89
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1164,6 +1242,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 5,
+   "2010s": 34,
+   "2020s": 111
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1215,6 +1298,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1266,6 +1352,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 6,
+   "2020s": 58
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1314,6 +1404,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 8,
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1359,6 +1453,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 48
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1404,6 +1501,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1455,6 +1555,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 56
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1506,6 +1610,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1557,6 +1664,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 2,
+   "2020s": 73
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -1611,6 +1722,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 1,
+   "2020s": 6
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1661,6 +1776,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 5
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1712,6 +1830,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 10,
+   "2010s": 27
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1764,6 +1886,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 2,
+   "2020s": 5
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1814,6 +1940,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 20
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1864,6 +1993,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1914,6 +2046,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -1964,6 +2099,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 98
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -2016,6 +2154,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 22,
+   "2020s": 10
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -2067,6 +2209,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 27,
+   "2020s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -2112,6 +2258,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 4
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -2163,6 +2312,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 23,
+   "2010s": 25
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -2217,6 +2370,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 25,
+   "2020s": 17
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -2270,6 +2427,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 59,
+   "2020s": 14
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -2321,6 +2482,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 14
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -2372,6 +2536,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 5,
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -2417,6 +2585,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -2467,6 +2638,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 44
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -2518,6 +2692,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 6
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -2568,6 +2745,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 6
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -2620,6 +2800,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 10
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -2671,6 +2854,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 12,
+   "2020s": 6
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener",
@@ -2719,6 +2906,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 5
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -2770,6 +2960,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 23,
+   "2020s": 19
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -2821,6 +3015,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 11
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -2871,6 +3068,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -2923,6 +3123,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 8,
+   "2010s": 33,
+   "2020s": 18
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener",
@@ -2976,6 +3181,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -3026,6 +3234,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -3077,6 +3288,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 46,
+   "2020s": 38
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -3132,6 +3347,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 5
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -3182,6 +3400,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 7
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -3232,6 +3453,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -3282,6 +3506,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -3332,6 +3559,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 4
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -3382,6 +3612,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 14
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -3436,6 +3669,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 26,
+   "2020s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -3486,6 +3723,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -3536,6 +3776,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -3590,6 +3833,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 12,
+   "2010s": 59,
+   "2020s": 15
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -3644,6 +3892,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 6
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -3695,6 +3946,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 1,
+   "2020s": 45
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -3746,6 +4001,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -3796,6 +4054,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 4
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -3846,6 +4107,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 15
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -3896,6 +4160,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -3946,6 +4213,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 10
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -3991,6 +4261,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 8
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -4036,6 +4309,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -4086,6 +4362,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 86
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -4137,6 +4416,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 10
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -4189,6 +4471,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 12
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -4242,6 +4527,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -4292,6 +4580,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 5
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -4343,6 +4634,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 24
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -4393,6 +4688,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 13
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -4444,6 +4742,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -4494,6 +4796,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -4545,6 +4850,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 21,
+   "2020s": 27
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -4596,6 +4905,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 11,
+   "2020s": 8
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -4646,6 +4959,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -4696,6 +5012,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -4746,6 +5065,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -4796,6 +5118,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 24
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -4847,6 +5172,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 10,
+   "2020s": 28
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -4899,6 +5228,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 5
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -4950,6 +5282,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 11,
+   "2020s": 86
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -5001,6 +5337,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 12
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -5054,6 +5393,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 3
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -5107,6 +5450,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 36,
+   "2020s": 106
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -5160,6 +5507,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -5210,6 +5560,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 7
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -5256,6 +5609,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 1,
+   "2020s": 20
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order",
@@ -5309,6 +5666,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 5
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -5361,6 +5721,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 15
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -5411,6 +5774,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -5464,6 +5830,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 6,
+   "2010s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -5515,6 +5885,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -5566,6 +5940,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 12,
+   "2020s": 13
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order",
@@ -5619,6 +5997,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -5669,6 +6050,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 28
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -5720,6 +6104,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 22,
+   "2020s": 19
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -5773,6 +6161,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -5823,6 +6214,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 8
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -5873,6 +6267,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 13
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -5924,6 +6321,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 11,
+   "2020s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -5974,6 +6375,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 11
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -6025,6 +6429,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 5,
+   "2020s": 36
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -6076,6 +6484,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 43,
+   "2020s": 43
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -6127,6 +6539,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -6177,6 +6592,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 19
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -6228,6 +6646,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 2,
+   "2020s": 21
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -6279,6 +6701,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 2,
+   "2020s": 30
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -6330,6 +6756,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 3,
+   "2020s": 15
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -6381,6 +6811,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 4,
+   "2020s": 85
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -6432,6 +6866,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -6482,6 +6919,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 39
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -6534,6 +6974,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 10,
+   "2010s": 24
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -6587,6 +7031,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 13
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -6638,6 +7086,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 8,
+   "2010s": 7
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -6689,6 +7141,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 3,
+   "2020s": 77
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -6741,6 +7197,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 3,
+   "2020s": 8
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -6793,6 +7253,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 31,
+   "2020s": 18
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order",
@@ -6847,6 +7312,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -6898,6 +7366,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 30,
+   "2010s": 41
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener",
@@ -6952,6 +7424,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -7002,6 +7477,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -7053,6 +7531,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 17,
+   "2010s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -7103,6 +7585,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 68
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -7156,6 +7641,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -7206,6 +7694,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 11
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -7256,6 +7747,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 14
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -7306,6 +7800,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -7356,6 +7853,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -7406,6 +7906,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -7458,6 +7961,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 7
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -7508,6 +8014,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 27
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -7561,6 +8070,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 8,
+   "2010s": 39
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -7611,6 +8124,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 9
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -7661,6 +8177,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 37
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -7712,6 +8231,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -7762,6 +8285,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 4
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -7807,6 +8333,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 11
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -7857,6 +8386,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 16
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -7910,6 +8442,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 10,
+   "2010s": 31
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -7961,6 +8497,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 15,
+   "2010s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8011,6 +8551,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 43
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8061,6 +8604,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8111,6 +8657,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8161,6 +8710,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8206,6 +8758,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8256,6 +8811,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 72
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8308,6 +8866,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 4,
+   "2010s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8358,6 +8920,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 13
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8408,6 +8973,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8458,6 +9026,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8509,6 +9080,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8561,6 +9136,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 12,
+   "2010s": 46,
+   "2020s": 21
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -8614,6 +9194,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8665,6 +9248,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 42,
+   "2020s": 52
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8716,6 +9303,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 18
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8766,6 +9356,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8816,6 +9409,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 22
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8867,6 +9463,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 24,
+   "2020s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -8917,6 +9517,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -8970,6 +9573,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 8,
+   "2020s": 24
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -9020,6 +9627,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -9070,6 +9680,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 6
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -9120,6 +9733,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 4
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -9170,6 +9786,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -9220,6 +9839,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -9270,6 +9892,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 47
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -9317,6 +9942,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 21
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "spinner",
@@ -9371,6 +9999,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 33,
+   "2020s": 8
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -9421,6 +10053,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 9
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -9472,6 +10107,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 60,
+   "2020s": 5
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -9525,6 +10164,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 10
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -9575,6 +10217,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 14
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -9625,6 +10270,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 22
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -9676,6 +10324,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 31,
+   "2020s": 11
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -9725,6 +10377,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 19,
+   "2020s": 46
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -9778,6 +10434,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 24
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -9830,6 +10489,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 8
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -9881,6 +10543,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 20,
+   "2020s": 3
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -9931,6 +10597,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -9983,6 +10652,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 14,
+   "2010s": 29,
+   "2020s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10034,6 +10708,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 4
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10085,6 +10762,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 16,
+   "2020s": 7
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10135,6 +10816,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 4
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10185,6 +10869,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 13
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -10237,6 +10924,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10287,6 +10977,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -10340,6 +11033,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 4,
+   "2010s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10390,6 +11087,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 10
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10441,6 +11141,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 18,
+   "2010s": 16
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10491,6 +11195,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10541,6 +11248,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 7
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10592,6 +11302,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 21,
+   "2020s": 22
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10642,6 +11356,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 5
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10692,6 +11409,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 5
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10743,6 +11463,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 9,
+   "2010s": 58
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10789,6 +11513,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 20,
+   "2020s": 6
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10839,6 +11567,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10889,6 +11620,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10939,6 +11673,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 4
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -10990,6 +11727,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 9,
+   "2020s": 91
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -11042,6 +11783,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -11093,6 +11838,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 35,
+   "2020s": 93
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -11144,6 +11893,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -11195,6 +11947,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 11,
+   "2010s": 28
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -11246,6 +12002,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 71,
+   "2020s": 66
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -11299,6 +12059,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 8,
+   "2010s": 68,
+   "2020s": 32
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -11351,6 +12116,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 27,
+   "2020s": 15
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -11403,6 +12172,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 9,
+   "2020s": 52
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -11454,6 +12227,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -11504,6 +12280,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 5
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -11554,6 +12333,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 7
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -11605,6 +12387,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 10,
+   "2020s": 14
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -11655,6 +12441,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 20
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -11706,6 +12495,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 16,
+   "2010s": 52
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -11758,6 +12551,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -11808,6 +12604,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -11858,6 +12657,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 7
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -11908,6 +12710,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 67
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener",
@@ -11962,6 +12767,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 6
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -12014,6 +12822,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 2,
+   "2020s": 9
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -12066,6 +12879,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 34
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -12116,6 +12932,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -12167,6 +12986,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 13,
+   "2020s": 31
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -12217,6 +13040,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -12267,6 +13093,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -12314,6 +13143,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 4
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -12366,6 +13198,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -12416,6 +13251,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 5
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -12467,6 +13305,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 13,
+   "2010s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -12517,6 +13359,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -12567,6 +13412,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 19
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -12617,6 +13465,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 13
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -12669,6 +13520,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 14
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -12720,6 +13574,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 53,
+   "2020s": 15
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -12775,6 +13633,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 6,
+   "2010s": 25,
+   "2020s": 27
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -12827,6 +13690,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -12877,6 +13743,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 40
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -12928,6 +13797,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 3,
+   "2010s": 14
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -12973,6 +13846,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 10
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -13024,6 +13900,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 7,
+   "2020s": 9
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -13074,6 +13954,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 16
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -13124,6 +14007,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 9
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -13175,6 +14061,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 18,
+   "2020s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -13225,6 +14115,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 17
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "spinner",
@@ -13278,6 +14171,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 8
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -13329,6 +14225,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 18,
+   "2020s": 62
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -13381,6 +14281,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 6,
+   "2020s": 24
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -13436,6 +14340,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 15,
+   "2010s": 50,
+   "2020s": 25
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -13492,6 +14401,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 5,
+   "2010s": 28
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -13544,6 +14457,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -13594,6 +14510,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -13639,6 +14558,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -13689,6 +14611,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -13739,6 +14664,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 4
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -13786,6 +14714,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 42,
+   "2020s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -13838,6 +14771,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 3,
+   "2010s": 81,
+   "2020s": 29
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -13889,6 +14827,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 13
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -13940,6 +14881,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 22,
+   "2020s": 36
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -13992,6 +14937,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 10,
+   "2020s": 31
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -14043,6 +14992,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 43,
+   "2020s": 6
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -14091,6 +15044,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 27,
+   "2020s": 53
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -14143,6 +15100,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 34,
+   "2020s": 80
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -14196,6 +15157,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -14246,6 +15210,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 38
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -14297,6 +15264,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 6,
+   "2010s": 5
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -14343,6 +15314,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 6,
+   "2010s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -14393,6 +15368,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -14444,6 +15422,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 14,
+   "2010s": 9
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -14496,6 +15478,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 12,
+   "2010s": 8,
+   "2020s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -14546,6 +15533,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 59
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -14597,6 +15587,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -14647,6 +15640,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -14699,6 +15695,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -14744,6 +15743,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -14795,6 +15797,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 9
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -14847,6 +15853,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -14897,6 +15906,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -14947,6 +15959,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -14997,6 +16012,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -15048,6 +16066,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 18,
+   "2010s": 16
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -15098,6 +16120,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -15148,6 +16173,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 30
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -15193,6 +16221,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -15243,6 +16274,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 36
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "spinner",
@@ -15296,6 +16330,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -15346,6 +16383,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -15398,6 +16438,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 18
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -15448,6 +16491,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -15500,6 +16546,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -15551,6 +16600,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 61,
+   "2020s": 67
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -15603,6 +16656,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -15654,6 +16710,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 11,
+   "2020s": 82
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -15707,6 +16767,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -15758,6 +16821,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 24,
+   "2020s": 7
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -15809,6 +16876,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 19,
+   "2010s": 12
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -15860,6 +16931,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 9,
+   "2010s": 29
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -15912,6 +16987,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 16
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -15957,6 +17036,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 5
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16007,6 +17089,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 47
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16057,6 +17142,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16107,6 +17195,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16157,6 +17248,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 34
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16208,6 +17302,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 52
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16259,6 +17357,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 11
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16309,6 +17410,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16359,6 +17463,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 8
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16409,6 +17516,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 5
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16460,6 +17570,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 16,
+   "2010s": 10
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16511,6 +17625,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 40,
+   "2020s": 96
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -16566,6 +17684,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 90
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16617,6 +17738,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 14
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16667,6 +17791,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 69
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16718,6 +17845,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16768,6 +17898,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 25
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16818,6 +17951,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 14
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16869,6 +18005,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 30,
+   "2020s": 26
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16920,6 +18060,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 25
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -16965,6 +18108,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 22
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -17017,6 +18163,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 3
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -17070,6 +18219,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 41
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -17118,6 +18271,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 11,
+   "2020s": 26
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -17164,6 +18321,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 6
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -17217,6 +18378,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 9,
+   "2020s": 48
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -17270,6 +18435,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 9
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -17321,6 +18489,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 5,
+   "2020s": 5
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -17371,6 +18543,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 5
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -17422,6 +18597,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 20,
+   "2010s": 3
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -17475,6 +18654,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 14,
+   "2020s": 9
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -17526,6 +18709,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 5,
+   "2010s": 3
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -17576,6 +18763,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -17627,6 +18817,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 12,
+   "2010s": 7
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -17678,6 +18872,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 6,
+   "2020s": 58
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -17728,6 +18926,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -17779,6 +18980,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 41,
+   "2020s": 30
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -17830,6 +19035,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -17880,6 +19088,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 7
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -17930,6 +19141,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -17981,6 +19195,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 12,
+   "2010s": 12
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -18031,6 +19249,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 37
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -18078,6 +19299,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 14
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -18123,6 +19347,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 19
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -18175,6 +19402,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -18225,6 +19455,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 14
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -18276,6 +19509,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 15,
+   "2010s": 7
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -18330,6 +19567,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 40,
+   "2020s": 100
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -18381,6 +19622,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 55
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener",
@@ -18436,6 +19680,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 11,
+   "2010s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -18488,6 +19736,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 5,
+   "2010s": 22,
+   "2020s": 7
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -18538,6 +19791,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -18588,6 +19844,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -18638,6 +19897,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -18688,6 +19950,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 36
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -18738,6 +20003,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 47
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -18790,6 +20058,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 20,
+   "2010s": 16
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -18844,6 +20116,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 10,
+   "2010s": 14
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -18898,6 +20174,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -18948,6 +20227,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -18999,6 +20281,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 33,
+   "2020s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -19044,6 +20330,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -19089,6 +20378,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 8
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -19139,6 +20431,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 44
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -19186,6 +20481,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 19
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -19236,6 +20534,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 3
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -19286,6 +20587,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 24
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -19336,6 +20640,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 5
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -19389,6 +20696,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 10,
+   "2010s": 28
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -19440,6 +20751,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 11,
+   "2010s": 1
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -19493,6 +20808,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -19543,6 +20861,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 5
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -19594,6 +20915,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 18,
+   "2020s": 84
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -19649,6 +20974,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -19699,6 +21027,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 17
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -19750,6 +21081,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 11,
+   "2020s": 5
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -19800,6 +21135,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 5
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -19850,6 +21188,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 26
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -19900,6 +21241,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 5
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -19952,6 +21296,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 14
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20003,6 +21350,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 2,
+   "2020s": 9
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20054,6 +21405,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 7,
+   "2020s": 10
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20104,6 +21459,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20155,6 +21513,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 14,
+   "2020s": 81
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -20209,6 +21571,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 6
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20259,6 +21624,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20305,6 +21673,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 31,
+   "2020s": 32
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20356,6 +21728,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 11
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20407,6 +21782,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 42,
+   "2020s": 50
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20458,6 +21837,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20508,6 +21890,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20558,6 +21943,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 10
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20609,6 +21997,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 18,
+   "2010s": 61
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20660,6 +22052,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 11
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20710,6 +22105,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 22
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20761,6 +22159,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 10,
+   "2020s": 7
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20811,6 +22213,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 15
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20861,6 +22266,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20912,6 +22320,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 12,
+   "2010s": 15
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -20963,6 +22375,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 9,
+   "2010s": 13
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -21013,6 +22429,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 5
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -21064,6 +22483,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 9,
+   "2020s": 9
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -21114,6 +22537,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 13
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -21167,6 +22593,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 8,
+   "2020s": 12
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -21214,6 +22644,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 3,
+   "2010s": 7,
+   "2020s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -21266,6 +22701,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 31
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -21316,6 +22754,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 3
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -21367,6 +22808,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 1,
+   "2020s": 49
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -21418,6 +22863,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -21469,6 +22917,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 16,
+   "2010s": 24
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -21519,6 +22971,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -21569,6 +23024,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -21619,6 +23077,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 9
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -21669,6 +23130,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -21719,6 +23183,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 14
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -21764,6 +23231,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -21815,6 +23285,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 33,
+   "2020s": 31
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -21867,6 +23341,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 5,
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -21918,6 +23396,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 33,
+   "2020s": 46
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order",
@@ -21972,6 +23454,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 8
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -22024,6 +23509,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 6
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -22075,6 +23563,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 64,
+   "2020s": 95
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener",
@@ -22129,6 +23621,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 13
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -22180,6 +23675,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 7,
+   "2020s": 51
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -22231,6 +23730,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 49
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -22284,6 +23786,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 17
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order",
@@ -22337,6 +23842,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 5
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -22387,6 +23895,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 3
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -22437,6 +23948,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -22482,6 +23996,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -22533,6 +24050,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 5,
+   "2010s": 2
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -22579,6 +24100,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 9,
+   "2020s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -22631,6 +24156,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 22,
+   "2020s": 3
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -22683,6 +24213,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -22733,6 +24266,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 7
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -22784,6 +24320,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 3,
+   "2010s": 11
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -22835,6 +24375,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 20,
+   "2020s": 56
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -22886,6 +24430,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 25
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -22939,6 +24486,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 4,
+   "2020s": 42
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -22990,6 +24541,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 24,
+   "2010s": 31
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener",
@@ -23044,6 +24599,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 15,
+   "2020s": 20
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -23095,6 +24654,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 57,
+   "2020s": 34
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -23148,6 +24711,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -23199,6 +24765,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 10,
+   "2020s": 7
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -23249,6 +24819,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 4
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -23299,6 +24872,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -23349,6 +24925,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -23399,6 +24978,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 7
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -23449,6 +25031,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 9
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -23500,6 +25085,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 16,
+   "2020s": 5
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -23551,6 +25140,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -23602,6 +25195,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 9
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -23652,6 +25249,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 52
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -23704,6 +25304,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 18,
+   "2020s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -23755,6 +25359,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 20,
+   "2010s": 17
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -23806,6 +25414,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 6
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -23856,6 +25467,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -23902,6 +25516,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 14,
+   "2020s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -23952,6 +25570,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 12
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -24005,6 +25626,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 7,
+   "2020s": 5
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -24055,6 +25680,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 4
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -24105,6 +25733,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -24156,6 +25787,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 1,
+   "2020s": 35
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -24206,6 +25841,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -24258,6 +25896,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 10,
+   "2010s": 55,
+   "2020s": 33
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -24309,6 +25952,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -24360,6 +26006,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 34,
+   "2020s": 35
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -24413,6 +26063,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 12
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -24464,6 +26117,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 18,
+   "2020s": 1
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "spinner",
@@ -24518,6 +26175,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 19,
+   "2020s": 32
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -24570,6 +26231,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 20,
+   "2010s": 36
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -24624,6 +26289,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 24,
+   "2020s": 78
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener",
@@ -24679,6 +26348,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 42,
+   "2020s": 50
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order",
@@ -24733,6 +26406,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 22
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -24783,6 +26459,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 20
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -24833,6 +26512,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 32
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -24883,6 +26565,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 18
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -24933,6 +26618,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 41
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -24984,6 +26672,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 15,
+   "2010s": 27
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -25034,6 +26726,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -25085,6 +26780,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 3,
+   "2020s": 21
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -25136,6 +26835,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 2,
+   "2020s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -25186,6 +26889,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 25
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -25237,6 +26943,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 14,
+   "2020s": 6
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -25287,6 +26997,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -25339,6 +27052,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 20,
+   "2010s": 59,
+   "2020s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -25392,6 +27110,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 7,
+   "2010s": 38,
+   "2020s": 19
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -25446,6 +27169,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 5,
+   "2020s": 4
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -25496,6 +27223,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 17
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -25549,6 +27279,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 6,
+   "2020s": 32
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -25600,6 +27334,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 2,
+   "2020s": 57
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "spinner",
@@ -25654,6 +27392,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 20
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -25705,6 +27447,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 20,
+   "2020s": 91
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener",
@@ -25755,6 +27501,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 20
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -25806,6 +27555,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 8,
+   "2020s": 43
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -25858,6 +27611,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 22
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -25909,6 +27666,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 5,
+   "2010s": 7
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -25959,6 +27720,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 9
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -26010,6 +27774,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 6,
+   "2020s": 54
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -26061,6 +27829,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -26107,6 +27878,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 3,
+   "2010s": 30
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -26154,6 +27929,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 17
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -26204,6 +27982,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -26255,6 +28036,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 16,
+   "2010s": 34
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -26308,6 +28093,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 7,
+   "2020s": 56
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -26360,6 +28149,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 5,
+   "2020s": 10
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -26410,6 +28203,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -26460,6 +28256,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -26506,6 +28305,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 19,
+   "2010s": 76
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -26560,6 +28363,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 1,
+   "2020s": 72
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -26607,6 +28414,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 82
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -26659,6 +28469,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 21,
+   "2010s": 32
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -26713,6 +28527,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 4,
+   "2010s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -26763,6 +28581,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -26813,6 +28634,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 3
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -26860,6 +28684,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 8,
+   "2010s": 66,
+   "2020s": 54
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -26908,6 +28737,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 9,
+   "2010s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -26958,6 +28791,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 25
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -27008,6 +28844,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -27058,6 +28897,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 7
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -27111,6 +28953,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 32,
+   "2020s": 7
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -27161,6 +29007,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -27211,6 +29060,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -27261,6 +29113,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 28
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -27311,6 +29166,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -27362,6 +29220,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 19,
+   "2020s": 66
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -27417,6 +29279,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 3
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -27470,6 +29335,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 20,
+   "2010s": 4
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -27523,6 +29392,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 19,
+   "2020s": 86
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -27570,6 +29443,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 11
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -27621,6 +29497,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 5,
+   "2020s": 32
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -27673,6 +29553,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 6,
+   "2010s": 57
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -27724,6 +29608,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -27776,6 +29663,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 12,
+   "2010s": 71,
+   "2020s": 38
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -27827,6 +29719,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -27878,6 +29773,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 10,
+   "2010s": 39
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -27923,6 +29822,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -27973,6 +29875,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 24
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -28024,6 +29929,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 6,
+   "2020s": 34
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -28075,6 +29984,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 9
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -28125,6 +30037,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 24
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -28177,6 +30092,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 13
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -28227,6 +30145,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 25
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -28277,6 +30198,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 9
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -28327,6 +30251,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 8
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -28377,6 +30304,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -28428,6 +30358,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 8,
+   "2010s": 2
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -28480,6 +30414,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -28531,6 +30468,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 26,
+   "2020s": 64
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order",
@@ -28585,6 +30526,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -28635,6 +30579,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -28686,6 +30633,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 12,
+   "2020s": 19
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -28731,6 +30682,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -28776,6 +30730,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 46
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "middle-order"
@@ -28828,6 +30785,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -28879,6 +30839,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 19,
+   "2010s": 15
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -28932,6 +30896,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 18,
+   "2010s": 20
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -28982,6 +30950,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -29032,6 +31003,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -29082,6 +31056,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 27
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -29132,6 +31109,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -29182,6 +31162,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -29233,6 +31216,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 3,
+   "2010s": 11
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -29283,6 +31270,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -29333,6 +31323,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 21
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -29383,6 +31376,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 31
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -29434,6 +31430,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 2,
+   "2020s": 3
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -29486,6 +31486,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -29537,6 +31540,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 21,
+   "2010s": 16
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -29587,6 +31594,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 12
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -29638,6 +31648,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 12,
+   "2010s": 18
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -29689,6 +31703,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 11,
+   "2020s": 75
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -29742,6 +31760,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 29
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -29787,6 +31808,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 15
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -29838,6 +31862,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 39,
+   "2020s": 95
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "spinner",
@@ -29894,6 +31922,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 28,
+   "2020s": 37
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -29946,6 +31978,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 1,
+   "2020s": 7
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -29997,6 +32033,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 24,
+   "2020s": 66
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "spinner",
@@ -30052,6 +32092,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -30104,6 +32147,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 10,
+   "2010s": 38,
+   "2020s": 14
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -30156,6 +32204,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 12,
+   "2010s": 8
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -30204,6 +32256,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 9,
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -30256,6 +32312,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 8,
+   "2010s": 79,
+   "2020s": 29
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "spinner",
@@ -30312,6 +32373,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 29
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order",
@@ -30366,6 +32430,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 4,
+   "2020s": 23
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -30416,6 +32484,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 22
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -30467,6 +32538,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 14,
+   "2020s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -30515,6 +32590,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 3,
+   "2020s": 32
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -30561,6 +32640,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 16,
+   "2020s": 75
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -30613,6 +32696,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 16,
+   "2020s": 88
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -30667,6 +32754,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 11,
+   "2020s": 35
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -30714,6 +32805,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -30764,6 +32858,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 13
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -30814,6 +32911,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -30859,6 +32959,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 33
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -30910,6 +33013,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -30961,6 +33068,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 8,
+   "2020s": 16
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31012,6 +33123,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 3,
+   "2020s": 14
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31062,6 +33177,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31114,6 +33232,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 10,
+   "2020s": 17
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31159,6 +33282,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 6
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31204,6 +33330,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31254,6 +33383,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31305,6 +33437,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 9,
+   "2010s": 34
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31351,6 +33487,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 6
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -31404,6 +33544,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 10,
+   "2020s": 19
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31449,6 +33593,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31495,6 +33642,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 1,
+   "2020s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31545,6 +33696,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 14
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31595,6 +33749,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 6
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31645,6 +33802,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31690,6 +33850,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31740,6 +33903,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 3
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31785,6 +33951,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31835,6 +34004,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 8
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31887,6 +34059,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 11,
+   "2010s": 63,
+   "2020s": 16
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -31937,6 +34114,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 35,
+   "2020s": 82
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -31984,6 +34165,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -32035,6 +34219,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 9,
+   "2010s": 3
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -32085,6 +34273,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -32131,6 +34322,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 4,
+   "2010s": 6
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -32176,6 +34371,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 5
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -32222,6 +34420,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 1,
+   "2020s": 45
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -32269,6 +34471,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -32321,6 +34526,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -32371,6 +34579,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 8
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -32421,6 +34632,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 34
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -32471,6 +34685,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 27
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -32516,6 +34733,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 18
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -32568,6 +34788,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 44
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -32615,6 +34838,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 19
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -32665,6 +34891,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 28
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -32715,6 +34944,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 39
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -32766,6 +34998,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 3
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -32816,6 +35051,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -32867,6 +35105,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 12,
+   "2010s": 51
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -32918,6 +35160,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -32968,6 +35213,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33018,6 +35266,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 5
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33068,6 +35319,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33119,6 +35373,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 5,
+   "2020s": 5
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33170,6 +35428,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33220,6 +35482,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 7
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33266,6 +35531,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33311,6 +35580,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 10
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33357,6 +35629,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 9,
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33407,6 +35683,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33457,6 +35736,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 12
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33508,6 +35790,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 16,
+   "2020s": 89
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -33561,6 +35847,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 7
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33611,6 +35900,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 7
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33661,6 +35953,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33711,6 +36006,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 6
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33762,6 +36060,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 8
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33813,6 +36115,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 23,
+   "2020s": 5
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener",
@@ -33866,6 +36172,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33916,6 +36225,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -33966,6 +36278,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -34016,6 +36331,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 14
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -34067,6 +36385,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 9,
+   "2020s": 45
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -34115,6 +36437,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 8,
+   "2010s": 48
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -34167,6 +36493,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 14,
+   "2020s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -34217,6 +36547,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 27
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -34267,6 +36600,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -34318,6 +36654,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 2,
+   "2020s": 40
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -34370,6 +36710,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 2,
+   "2020s": 25
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -34420,6 +36764,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -34470,6 +36817,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 6
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -34521,6 +36871,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 3,
+   "2020s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -34572,6 +36926,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 10,
+   "2020s": 11
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -34622,6 +36980,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 21
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -34672,6 +37033,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 17
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -34722,6 +37086,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -34774,6 +37141,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 35
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener",
@@ -34822,6 +37192,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -34872,6 +37245,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -34922,6 +37298,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -34973,6 +37352,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 25,
+   "2020s": 30
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -35024,6 +37407,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 89
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -35075,6 +37461,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 7
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -35129,6 +37518,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 22,
+   "2010s": 14
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -35174,6 +37567,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -35226,6 +37622,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 15
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -35276,6 +37675,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -35327,6 +37729,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 11,
+   "2010s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -35377,6 +37783,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -35427,6 +37836,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -35478,6 +37890,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 8,
+   "2010s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -35528,6 +37944,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 17
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -35580,6 +37999,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 9
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -35633,6 +38055,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -35683,6 +38109,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 65
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -35736,6 +38165,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -35788,6 +38220,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -35838,6 +38273,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 10
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -35888,6 +38326,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 7
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -35939,6 +38380,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 4,
+   "2010s": 2
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -35989,6 +38434,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36039,6 +38487,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 5
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36090,6 +38541,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36140,6 +38595,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 6
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36190,6 +38648,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36240,6 +38701,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36291,6 +38755,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 28
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36341,6 +38809,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36392,6 +38863,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 37,
+   "2020s": 70
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -36445,6 +38920,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 5
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36490,6 +38968,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 9
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36540,6 +39021,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 50
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -36592,6 +39076,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36643,6 +39130,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 1,
+   "2020s": 5
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36693,6 +39184,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36743,6 +39237,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36793,6 +39290,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 5
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36843,6 +39343,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 3
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36888,6 +39391,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36938,6 +39444,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -36988,6 +39497,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 4
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -37038,6 +39550,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -37089,6 +39604,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 11,
+   "2010s": 7
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -37139,6 +39658,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -37189,6 +39711,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 16
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -37240,6 +39765,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 4,
+   "2010s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -37286,6 +39815,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 9,
+   "2020s": 48
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -37337,6 +39870,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 45
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -37389,6 +39925,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 8,
+   "2010s": 30
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -37443,6 +39983,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 5,
+   "2010s": 18,
+   "2020s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -37494,6 +40039,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 45,
+   "2020s": 17
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -37547,6 +40096,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 5,
+   "2010s": 40,
+   "2020s": 26
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "spinner",
@@ -37601,6 +40155,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -37651,6 +40208,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 12
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -37701,6 +40261,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -37751,6 +40314,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -37801,6 +40367,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 10
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -37852,6 +40421,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 6,
+   "2020s": 29
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -37903,6 +40476,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 22,
+   "2020s": 67
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -37955,6 +40532,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 9,
+   "2020s": 35
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener",
@@ -38008,6 +40589,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 14
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -38058,6 +40642,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -38108,6 +40695,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 13
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -38159,6 +40749,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 1,
+   "2020s": 88
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -38211,6 +40805,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 16,
+   "2020s": 4
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -38263,6 +40861,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 17
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -38314,6 +40915,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 15,
+   "2020s": 14
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -38364,6 +40969,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -38414,6 +41022,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 44
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -38465,6 +41076,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 26,
+   "2020s": 46
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -38518,6 +41133,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 57
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -38565,6 +41183,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -38615,6 +41236,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 9
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -38665,6 +41289,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -38715,6 +41342,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -38765,6 +41395,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -38815,6 +41448,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 21
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -38866,6 +41502,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 4,
+   "2010s": 16
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -38917,6 +41557,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 8,
+   "2010s": 4
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -38967,6 +41611,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -39017,6 +41664,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -39071,6 +41721,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 14,
+   "2010s": 89,
+   "2020s": 50
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -39122,6 +41777,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 81
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -39176,6 +41834,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 15
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -39227,6 +41888,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 1,
+   "2020s": 9
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -39273,6 +41938,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 5
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -39325,6 +41994,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 24,
+   "2010s": 71,
+   "2020s": 11
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -39370,6 +42044,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 60
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "spinner",
@@ -39424,6 +42101,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 20,
+   "2020s": 96
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -39477,6 +42158,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 3,
+   "2010s": 22,
+   "2020s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -39522,6 +42208,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 17
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -39572,6 +42261,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -39622,6 +42314,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -39673,6 +42368,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 5,
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -39723,6 +42422,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -39773,6 +42475,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 22
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -39824,6 +42529,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 12,
+   "2020s": 102
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -39876,6 +42585,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -39927,6 +42639,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 10
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -39977,6 +42693,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 28
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener",
@@ -40031,6 +42750,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 8,
+   "2010s": 10
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -40081,6 +42804,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -40132,6 +42858,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 39,
+   "2020s": 4
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -40177,6 +42907,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -40227,6 +42960,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 5
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -40277,6 +43013,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 24
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -40328,6 +43067,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 7,
+   "2020s": 9
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -40381,6 +43124,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 11,
+   "2010s": 53
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -40433,6 +43180,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 3,
+   "2020s": 39
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -40484,6 +43235,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -40534,6 +43288,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 25
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -40581,6 +43338,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 60
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -40632,6 +43392,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -40683,6 +43446,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 14,
+   "2010s": 8
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -40733,6 +43500,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 16
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -40784,6 +43554,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 26,
+   "2020s": 11
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -40832,6 +43606,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 5,
+   "2020s": 74
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -40886,6 +43664,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 17
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -40936,6 +43717,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 48
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -40988,6 +43772,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 22,
+   "2010s": 8
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "spinner",
@@ -41041,6 +43829,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -41091,6 +43882,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -41142,6 +43936,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 1,
+   "2020s": 64
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener",
@@ -41197,6 +43995,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 3,
+   "2020s": 17
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -41247,6 +44049,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -41293,6 +44098,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 58,
+   "2020s": 3
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -41345,6 +44154,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -41395,6 +44207,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -41446,6 +44261,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 9,
+   "2020s": 9
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -41497,6 +44316,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 22,
+   "2010s": 9
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -41551,6 +44374,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 4,
+   "2020s": 25
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -41602,6 +44429,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 32,
+   "2020s": 44
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "spinner",
@@ -41656,6 +44487,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 20
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -41706,6 +44540,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 5
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -41756,6 +44593,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -41807,6 +44647,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 38,
+   "2020s": 80
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "spinner",
@@ -41863,6 +44707,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 16,
+   "2020s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -41909,6 +44757,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 3,
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -41954,6 +44806,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -41999,6 +44854,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -42050,6 +44908,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 10,
+   "2020s": 89
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -42102,6 +44964,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 23,
+   "2010s": 72
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -42150,6 +45016,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 11
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -42196,6 +45065,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 4,
+   "2010s": 6
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -42247,6 +45120,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 12,
+   "2020s": 56
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener",
@@ -42301,6 +45178,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -42355,6 +45235,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 10,
+   "2010s": 56,
+   "2020s": 47
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "spinner",
@@ -42406,6 +45291,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 23
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -42456,6 +45344,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -42506,6 +45397,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 13
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -42558,6 +45452,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 46
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -42603,6 +45500,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -42653,6 +45553,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 9
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -42698,6 +45601,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 19
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -42749,6 +45655,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 13,
+   "2010s": 7
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -42800,6 +45710,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 7,
+   "2010s": 51
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -42855,6 +45769,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -42906,6 +45823,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 7,
+   "2020s": 16
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -42957,6 +45878,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 14,
+   "2020s": 6
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43008,6 +45933,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 3,
+   "2010s": 12
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -43060,6 +45989,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 11
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43111,6 +46043,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 3,
+   "2010s": 18
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43161,6 +46097,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43212,6 +46151,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 15,
+   "2020s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43262,6 +46205,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43313,6 +46259,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 19,
+   "2020s": 23
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43365,6 +46315,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 1,
+   "2020s": 52
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43416,6 +46370,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 58,
+   "2020s": 9
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43468,6 +46426,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 17,
+   "2020s": 62
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43519,6 +46481,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 7
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43570,6 +46535,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 6,
+   "2020s": 61
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43621,6 +46590,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43672,6 +46644,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 15,
+   "2010s": 7
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -43725,6 +46701,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 6,
+   "2010s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43775,6 +46755,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43822,6 +46805,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 24,
+   "2010s": 84,
+   "2020s": 12
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43873,6 +46861,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43918,6 +46909,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 58
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -43966,6 +46960,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 14,
+   "2020s": 46
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -44017,6 +47015,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 35
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -44067,6 +47068,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 5
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -44112,6 +47116,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -44163,6 +47170,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 25,
+   "2020s": 100
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "spinner",
@@ -44218,6 +47229,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 3
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -44268,6 +47282,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -44318,6 +47335,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 10
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -44364,6 +47384,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 19,
+   "2020s": 6
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -44414,6 +47438,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -44465,6 +47492,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 14,
+   "2010s": 41
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -44516,6 +47547,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 7
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -44569,6 +47603,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -44620,6 +47657,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 43,
+   "2020s": 42
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -44669,6 +47710,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 11
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -44719,6 +47763,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -44769,6 +47816,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 9
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -44819,6 +47869,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 5
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -44869,6 +47922,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 5
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -44919,6 +47975,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -44969,6 +48028,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 7
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45020,6 +48082,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 36,
+   "2020s": 30
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45072,6 +48138,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 4
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -45124,6 +48194,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 20
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45174,6 +48247,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45225,6 +48301,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 18,
+   "2010s": 37
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45276,6 +48356,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 9
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45327,6 +48410,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45377,6 +48464,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45427,6 +48517,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45477,6 +48570,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45527,6 +48623,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 15
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45577,6 +48676,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45623,6 +48725,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 10,
+   "2010s": 13
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45673,6 +48779,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45718,6 +48827,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 48
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45769,6 +48881,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 7
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45819,6 +48934,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 11
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45870,6 +48988,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 11,
+   "2010s": 65
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45921,6 +49043,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 110
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -45972,6 +49097,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -46018,6 +49146,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 16,
+   "2020s": 53
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -46069,6 +49201,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 77
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -46122,6 +49257,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -46172,6 +49310,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -46219,6 +49360,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 12,
+   "2010s": 56,
+   "2020s": 3
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -46266,6 +49412,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 3
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -46316,6 +49465,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 7
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -46366,6 +49518,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 6
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -46411,6 +49566,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 48
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -46458,6 +49616,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 38
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -46504,6 +49665,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 6,
+   "2020s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -46554,6 +49719,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 42
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -46600,6 +49768,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 19,
+   "2020s": 65
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -46648,6 +49820,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 11
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -46700,6 +49876,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -46750,6 +49929,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 5
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -46801,6 +49983,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 2,
+   "2020s": 34
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -46854,6 +50040,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 17,
+   "2020s": 36
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -46906,6 +50096,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 9,
+   "2020s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -46956,6 +50150,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -47006,6 +50203,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 4
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -47056,6 +50256,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -47101,6 +50304,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -47151,6 +50357,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -47202,6 +50411,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 4,
+   "2010s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -47253,6 +50466,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -47304,6 +50521,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 78,
+   "2020s": 5
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
@@ -47355,6 +50576,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 57
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -47407,6 +50631,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 21,
+   "2010s": 56
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -47459,6 +50687,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 3,
+   "2010s": 31
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -47510,6 +50742,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 12,
+   "2020s": 61
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -47558,6 +50794,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 11
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -47605,6 +50845,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 31
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -47658,6 +50901,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 19,
+   "2020s": 69
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener",
@@ -47714,6 +50961,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 9,
+   "2010s": 57,
+   "2020s": 59
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -47765,6 +51017,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -47817,6 +51072,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 10
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -47867,6 +51125,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 12
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -47917,6 +51178,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 13
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -47967,6 +51231,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -48017,6 +51284,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 19
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -48068,6 +51338,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 11,
+   "2020s": 2
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -48119,6 +51393,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 3,
+   "2020s": 2
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -48170,6 +51448,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 3,
+   "2020s": 39
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -48223,6 +51505,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 3,
+   "2020s": 6
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -48276,6 +51562,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 15,
+   "2020s": 6
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -48322,6 +51612,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 15,
+   "2020s": 15
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -48373,6 +51667,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 13,
+   "2020s": 16
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order",
@@ -48426,6 +51724,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 10
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -48479,6 +51780,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 5,
+   "2020s": 39
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -48524,6 +51829,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 61
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -48571,6 +51879,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 4
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -48622,6 +51933,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 1
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -48673,6 +51988,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 16,
+   "2020s": 36
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -48727,6 +52046,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 27,
+   "2020s": 32
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -48778,6 +52101,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 21
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -48823,6 +52149,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 50
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -48875,6 +52204,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -48926,6 +52258,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 5,
+   "2020s": 11
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -48972,6 +52308,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 3,
+   "2010s": 80
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49023,6 +52363,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 13
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49074,6 +52417,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 21,
+   "2010s": 37
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49126,6 +52473,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 7,
+   "2020s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49176,6 +52527,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49227,6 +52581,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 8,
+   "2010s": 18
+  },
   "primaryRole": "opener",
   "secondaryRoles": [
    "middle-order"
@@ -49279,6 +52637,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 5
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49329,6 +52690,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 37
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
@@ -49381,6 +52745,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 9
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49431,6 +52798,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 24
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49481,6 +52851,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 16
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49531,6 +52904,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 6
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49576,6 +52952,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 48
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49627,6 +53006,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49677,6 +53059,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 9
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49727,6 +53112,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 7
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49777,6 +53165,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49827,6 +53218,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 9
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49877,6 +53271,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 3
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49927,6 +53324,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 9
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -49978,6 +53378,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 74,
+   "2020s": 44
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -50030,6 +53434,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 13,
+   "2010s": 4
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -50080,6 +53488,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -50131,6 +53542,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 2,
+   "2010s": 23
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -50183,6 +53598,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 30,
+   "2020s": 5
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -50234,6 +53654,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 8,
+   "2020s": 84
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -50285,6 +53709,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 1
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -50336,6 +53763,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 18,
+   "2020s": 39
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -50388,6 +53819,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 1,
+   "2010s": 4
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -50440,6 +53875,11 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2000s": 8,
+   "2010s": 32,
+   "2020s": 16
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -50492,6 +53932,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 9,
+   "2020s": 65
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -50543,6 +53987,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 79
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -50596,6 +54043,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 15
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -50646,6 +54096,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -50696,6 +54149,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 47
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -50748,6 +54204,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 20
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [
    "opener"
@@ -50800,6 +54259,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -50850,6 +54312,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 7
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -50900,6 +54365,9 @@
   "era": [
    "2000s"
   ],
+  "eraMatches": {
+   "2000s": 1
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -50952,6 +54420,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 22
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -51002,6 +54473,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 11
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -51052,6 +54526,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -51102,6 +54579,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 2
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -51152,6 +54632,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 20
+  },
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -51202,6 +54685,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 13
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -51248,6 +54734,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 5,
+   "2010s": 8
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -51298,6 +54788,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -51349,6 +54842,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 20,
+   "2010s": 3
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -51400,6 +54897,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 11,
+   "2010s": 10
+  },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "spinner",
@@ -51454,6 +54955,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 16,
+   "2010s": 39
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -51506,6 +55011,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 36,
+   "2020s": 44
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -51558,6 +55067,10 @@
    "2000s",
    "2010s"
   ],
+  "eraMatches": {
+   "2000s": 9,
+   "2010s": 6
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -51608,6 +55121,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 22
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -51659,6 +55175,10 @@
    "2010s",
    "2020s"
   ],
+  "eraMatches": {
+   "2010s": 1,
+   "2020s": 3
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "opener"
@@ -51706,6 +55226,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 7
+  },
   "primaryRole": "fast-bowler",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -51756,6 +55279,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 11
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -51801,6 +55327,9 @@
   "era": [
    "2020s"
   ],
+  "eraMatches": {
+   "2020s": 1
+  },
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -51851,6 +55380,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 6
+  },
   "primaryRole": "spinner",
   "secondaryRoles": [],
   "isWicketkeeper": false,
@@ -51901,6 +55433,9 @@
   "era": [
    "2010s"
   ],
+  "eraMatches": {
+   "2010s": 2
+  },
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
    "middle-order"
