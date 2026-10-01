@@ -50,6 +50,7 @@ const draftCombosJson = json(draftSpinCombos());
 
     <main>
       <section class="fl-stage" aria-labelledby="fl-status-title">
+        <p class="fl-daily" id="fl-daily" hidden></p>
         <div class="fl-reels">
           <div class="fl-reel" id="fl-reel-nation">
             <span class="fl-reel-cap">Nation</span>
@@ -142,6 +143,10 @@ const draftCombosJson = json(draftSpinCombos());
       XI_SLOTS,
       POOL_GROUPS,
     } from '../lib/player-logic';
+    import { reportEvent } from '../lib/telemetry';
+    import {
+      utcDayKey, dayNumber, loadDaily, hasPlayed, activeDailyDay, setActiveDaily, dailySpinIndex, upcomingCombos,
+    } from '../lib/daily';
 
     // ------------------------------------------------------------------ data
     const read = (id) => JSON.parse(document.getElementById(id).textContent || 'null');
@@ -161,15 +166,7 @@ const draftCombosJson = json(draftSpinCombos());
       for (const s of draft.spinHistory) counts[s.nation] = (counts[s.nation] || 0) + 1;
       return counts;
     };
-    const combosForUpcomingRound = () => {
-      const base = draft.currentRound === 0 ? LEGEND_COMBOS : DRAFT_COMBOS;
-      const used = usedComboKeys();
-      const counts = nationCounts();
-      const fresh = base.filter((c) => !used.has(`${c.era}|${c.nation}`) && (counts[c.nation] || 0) < 2);
-      if (fresh.length > 0) return fresh;
-      const pairFresh = base.filter((c) => !used.has(`${c.era}|${c.nation}`));
-      return pairFresh.length > 0 ? pairFresh : base;
-    };
+    const combosForUpcomingRound = () => upcomingCombos(draft.currentRound, draft.spinHistory, LEGEND_COMBOS, DRAFT_COMBOS);
     // Respins: a nation respin keeps the era; an era respin keeps the nation
     // and never lands on Legends (round 1 owns that era).
     const nationRedrawOptions = () => {
@@ -280,6 +277,9 @@ const draftCombosJson = json(draftSpinCombos());
     // persist() + renderAll(). UI-only: selectedUid (pool player awaiting a
     // slot), moveFrom (slot armed for a move), chooserState (role chooser).
     let draft = createDraft();
+    // Daily Challenge (/play?daily=1): same spins for everyone each UTC day, no respins.
+    let isDaily = false;
+    const dailyDay = utcDayKey();
     let selectedUid = null;
     let moveFrom = null;
     let chooserState = null;
@@ -477,7 +477,10 @@ const draftCombosJson = json(draftSpinCombos());
       if (spinningReel || !canSpin(draft, unpickedCount(currentPool()))) return;
       const options = combosForUpcomingRound();
       if (!options.length) return;
-      const combo = options[Math.floor(Math.random() * options.length)];
+      // Daily Challenge: the spin is fixed by the date, so every player draws the same.
+      const combo = isDaily
+        ? options[dailySpinIndex(dailyDay, draft.currentRound, options.length)]
+        : options[Math.floor(Math.random() * options.length)];
       selectedUid = null;
       moveFrom = null;
       flashMsg('');
@@ -895,6 +898,9 @@ const draftCombosJson = json(draftSpinCombos());
       announce(msg);
     });
     $('fl-startover').addEventListener('click', () => {
+      setActiveDaily(null);
+      isDaily = false;
+      $('fl-daily').hidden = true;
       draft = createDraft();
       selectedUid = null;
       moveFrom = null;
@@ -916,11 +922,37 @@ const draftCombosJson = json(draftSpinCombos());
     }
 
     (function restore() {
+      if (new URLSearchParams(location.search).get('daily') === '1') {
+        if (hasPlayed(loadDaily(), dailyDay)) {
+          location.replace('/');
+          return;
+        }
+        if (activeDailyDay() !== dailyDay) {
+          // A fresh daily replaces any draft in progress.
+          const saved = loadDraft();
+          const inProgress = saved && Array.isArray(saved.picks) && saved.picks.length > 0;
+          if (inProgress && !window.confirm('Starting the Daily Challenge will replace your draft in progress. Continue?')) {
+            location.replace('/play');
+            return;
+          }
+          clearUserXI();
+          clearDraft();
+          setActiveDaily(dailyDay);
+        }
+      }
+      isDaily = activeDailyDay() === dailyDay;
+      if (isDaily) {
+        const tag = $('fl-daily');
+        tag.textContent = `Daily Challenge #${dayNumber(dailyDay)} · same spins for everyone today · no respins`;
+        tag.hidden = false;
+        draft = { ...draft, eraRespinsLeft: 0, nationRespinsLeft: 0 };
+      }
+      if (new URLSearchParams(location.search).get('daily') === '1' && isDaily) reportEvent('daily_started');
       const raw = loadDraft();
       if (raw) {
         const restored = deserializeDraft(raw, (uid) => uidIndex[uid] || uidIndex[legacyUid(uid)] || null);
         if (restored && restored.selectedPlayers.length) {
-          draft = restored;
+          draft = isDaily ? { ...restored, eraRespinsLeft: 0, nationRespinsLeft: 0 } : restored;
           renderAll();
           announce(
             draft.gameComplete
@@ -1088,6 +1120,8 @@ const draftCombosJson = json(draftSpinCombos());
     }
     .fl-cta:hover { box-shadow: 0 0 60px rgba(255, 255, 255, 0.55); }
     .fl-cta[hidden] { display: none; }
+    .fl-daily { margin: 0 auto 10px; max-width: 520px; text-align: center; font: 600 12px/1.4 Inter, sans-serif; letter-spacing: 0.04em; color: var(--fl-lime); background: var(--fl-lime-soft); border: 1px solid rgba(198, 255, 61, 0.35); border-radius: 999px; padding: 6px 14px; }
+    .fl-daily[hidden] { display: none; }
     .fl-link { display: block; margin: 12px auto 0; background: none; border: 0; color: var(--fl-muted); text-decoration: underline; cursor: pointer; font: 500 14px Inter, sans-serif; min-height: 40px; }
 
     .fl-dock {

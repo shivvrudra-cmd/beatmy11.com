@@ -18,7 +18,7 @@ interface Env {
 }
 
 const ALLOWED_ORIGINS = new Set(['https://beatmy11.com', 'https://www.beatmy11.com']);
-const EVENT_NAMES = new Set(['shared', 'view_home', 'view_play', 'view_result', 'view_shared']);
+const EVENT_NAMES = new Set(['shared', 'view_home', 'view_play', 'view_result', 'view_shared', 'daily_started', 'daily_completed']);
 const MAX_BODY = 1024;
 
 const json = (status: number, body: unknown = {}) =>

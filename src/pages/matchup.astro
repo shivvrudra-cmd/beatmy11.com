@@ -79,6 +79,7 @@ const calibrationJson = safe(calibration);
 
       <div class="rs-panel rs-p2" id="rs-p2" hidden>
         <p class="rs-error" id="rs-error" hidden></p>
+        <p class="rs-daily" id="rs-daily" hidden></p>
 
         <figure class="rs-card" id="rs-card" hidden>
           <img id="rs-card-img" width="1080" height="1350" alt="Your share card: the series scoreline and your XI" />
@@ -119,6 +120,10 @@ const calibrationJson = safe(calibration);
     import { SHARE_RESULTS, encodeXI } from '../lib/share-results';
     import { drawShareCard, cardBlob } from '../lib/share-card';
     import { reportScore, reportEvent } from '../lib/telemetry';
+    import {
+      utcDayKey, dayNumber, loadDaily, saveDaily, recordResult, hasPlayed, currentStreak,
+      activeDailyDay, setActiveDaily, dailyShareText,
+    } from '../lib/daily';
 
     const read = (id) => JSON.parse(document.getElementById(id).textContent || 'null');
     const HOUSE_XI = read('bm11-house-xi') || [];
@@ -294,6 +299,28 @@ const calibrationJson = safe(calibration);
         draws: series.draws,
       });
 
+      // Daily Challenge: record today's result once (streak, best) and show it.
+      let dailyShare = '';
+      const dailyDay = utcDayKey();
+      if (activeDailyDay() === dailyDay) {
+        const result = { user: series.user, house: series.house, draws: series.draws };
+        let state = loadDaily();
+        if (!hasPlayed(state, dailyDay)) {
+          state = recordResult(state, dailyDay, result);
+          saveDaily(state);
+          reportEvent('daily_completed');
+        }
+        const streak = currentStreak(state, dailyDay);
+        const mine = state.results[dailyDay] || result;
+        dailyShare = dailyShareText(dailyDay, mine, streak);
+        const el = $('rs-daily');
+        el.innerHTML =
+          `<strong>Daily Challenge #${dayNumber(dailyDay)}</strong> done · ` +
+          (streak > 1 ? `🔥 ${streak}-day streak (best ${state.best})` : 'streak started — come back tomorrow') +
+          `<span>New spins at 00:00 UTC. Everyone drafted the same draws today.</span>`;
+        el.hidden = false;
+      }
+
       // Ratings, revealed: the best pick in the user's XI.
       const sorted = [...userXI].sort((a, b) => b.rating - a.rating);
       const marks = {
@@ -359,14 +386,14 @@ const calibrationJson = safe(calibration);
       // XI itself travels as a picture: the share card, drawn here.
       const slug = `${series.user}-${series.house}`;
       const url = `${location.origin}/r/${slug}?xi=${encodeXI(userXI.map((p) => ({ id: p.id, role: p.role })))}`;
-      const shareText =
-        series.user === 5
+      const shareText = dailyShare ||
+        (series.user === 5
           ? `I whitewashed the World XI 5–0 with my all-time Test XI 🏏 Can you?`
           : series.user > series.house
             ? `My all-time Test XI beat the World XI ${series.user}–${series.house} 🏏 Can yours?`
             : series.user === series.house
               ? `My all-time Test XI drew ${series.user}–${series.house} with the World XI 🏏 Can you beat it?`
-              : `My all-time Test XI lost ${series.user}–${series.house} to the World XI 🏏 Can you beat it?`;
+              : `My all-time Test XI lost ${series.user}–${series.house} to the World XI 🏏 Can you beat it?`);
 
       // Drawn straight away so it's ready when the reveal ends; the share
       // sheet must open within the tap's activation window.
@@ -437,6 +464,7 @@ const calibrationJson = safe(calibration);
         try {
           localStorage.removeItem('beatmy11.userXI.v1');
           localStorage.removeItem('beatmy11.draft.v1');
+          setActiveDaily(null);
         } catch {
           /* storage unavailable — navigation still works */
         }
@@ -547,6 +575,9 @@ const calibrationJson = safe(calibration);
     .rs-nm { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .rs-badge { flex: none; margin-left: 4px; font: 700 9.5px Inter, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; vertical-align: 2px; }
     .rs-badge.is-best { background: var(--rs-lime); color: #04060c; }
+    .rs-daily { max-width: 560px; margin: 14px auto 0; padding: 12px 16px; text-align: center; font: 600 15px/1.4 Inter, sans-serif; color: #c6ff3d; background: rgba(198, 255, 61, 0.1); border: 1px solid rgba(198, 255, 61, 0.35); border-radius: 14px; }
+    .rs-daily span { display: block; margin-top: 4px; font: 400 12px/1.4 Inter, sans-serif; color: #9aa6c4; }
+    .rs-daily[hidden] { display: none; }
     .rs-error { max-width: 560px; margin: 18px auto 0; text-align: center; color: #ffd2cc; }
     @media (min-width: 760px) {
       .rs-cols { grid-template-columns: 1fr 1fr; }
