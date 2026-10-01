@@ -26,6 +26,10 @@ export interface CardData {
   xi: CardPlayer[];
   /** e.g. "Top 12% of all drafts"; omitted when empty. */
   rank?: string;
+  /** Per-format wording; defaults are the Test game's. */
+  seriesLabel?: string;
+  opponent?: string;
+  challengeLine?: string;
 }
 
 const W = 1080;
@@ -132,7 +136,7 @@ export async function drawShareCard(d: CardData): Promise<HTMLCanvasElement> {
   c.fillStyle = TEXT;
   c.font = `400 40px ${DISPLAY}`;
   spaced(c, 5);
-  c.fillText('BEAT MY 11 · THE FIVE-TEST SERIES', W / 2, 84);
+  c.fillText(`BEAT MY 11 · ${(d.seriesLabel ?? 'The five-Test series').toUpperCase()}`, W / 2, 84);
 
   // Headline.
   const won = d.user > d.house;
@@ -170,7 +174,7 @@ export async function drawShareCard(d: CardData): Promise<HTMLCanvasElement> {
   spaced(c, 5);
   c.fillStyle = MUTED;
   c.fillText('ME', W / 2 - 150, numY + 42);
-  c.fillText('WORLD XI', W / 2 + 150, numY + 42);
+  c.fillText((d.opponent ?? 'World XI').toUpperCase(), W / 2 + 150, numY + 42);
 
   // One pip per Test: wins, draws, losses.
   const pips = [...Array(d.user).fill('w'), ...Array(d.draws).fill('d'), ...Array(d.house).fill('l')];
@@ -250,7 +254,7 @@ export async function drawShareCard(d: CardData): Promise<HTMLCanvasElement> {
   c.font = `600 24px ${BODY}`;
   spaced(c, 5);
   c.fillStyle = MUTED;
-  c.fillText('CAN YOUR ALL-TIME XI DO BETTER?', W / 2, H - 78);
+  c.fillText((d.challengeLine ?? 'Can your all-time XI do better?').toUpperCase(), W / 2, H - 78);
   c.font = `700 30px ${BODY}`;
   spaced(c, 6);
   c.fillStyle = LIME;

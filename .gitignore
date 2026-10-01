@@ -37,3 +37,4 @@ playwright-report/
 
 # Wrangler local state
 .wrangler/
+data-raw/

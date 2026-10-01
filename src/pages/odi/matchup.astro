@@ -1,0 +1,19 @@
+---
+/**
+ * /odi/matchup — the ODI series result (HIDDEN preview; see docs/plans/white-ball-formats.md).
+ * Same screen as /matchup, with the white-ball engine and a CANDIDATE World XI.
+ */
+import SeriesResult from '../../components/SeriesResult.astro';
+import { wbResultProps } from '../../lib/formats/white-ball-result';
+import { ODI_RESULT } from '../../lib/formats/result-format';
+
+const r = wbResultProps('odi');
+---
+<SeriesResult
+  format={{ ...ODI_RESULT, parGap: r.parGap }}
+  title="The ODI Series — Beat My 11 (preview)"
+  description="Your ODI XI against the World XI over five ODIs."
+  houseXI={r.houseXI}
+  scoringContext={r.scoringContext}
+  calibration={r.calibration}
+/>

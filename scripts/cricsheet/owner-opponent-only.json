@@ -1,0 +1,28 @@
+{
+  "note": "Opponent-only players, asked for by the owner on 2026-10-01 for the World XIs. They are NOT draftable: Cricsheet has no ball-by-ball matches for them (Viv Richards played before the files start; Afghanistan matches are withheld). Their career line is read from the owner's HowSTAT table named in `table`; `catches` is the owner's own figure (run outs are not counted, as for every other player). Nothing else is filled in.",
+  "players": [
+    {
+      "format": "odi",
+      "id": "hs-odi-viv-richards",
+      "name": "Viv Richards",
+      "howstatName": "I V A Richards",
+      "nation": "West Indies",
+      "primaryRole": "middle-order",
+      "table": "batting",
+      "catches": 100,
+      "source": "owner, 2026-10-01"
+    },
+    {
+      "format": "t20i",
+      "id": "hs-t20i-rashid-khan",
+      "name": "Rashid Khan",
+      "howstatName": "Rashid Khan",
+      "nation": "Afghanistan",
+      "primaryRole": "spinner",
+      "bowlingType": "spin",
+      "table": "bowling",
+      "catches": 49,
+      "source": "owner, 2026-10-01"
+    }
+  ]
+}

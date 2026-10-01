@@ -1,0 +1,19 @@
+---
+/**
+ * /ipl/matchup — the IPL series result (HIDDEN preview; see docs/plans/white-ball-formats.md).
+ * Same screen as /matchup, with the white-ball engine and the owner-approved All-Star XI.
+ */
+import SeriesResult from '../../components/SeriesResult.astro';
+import { wbResultProps } from '../../lib/formats/white-ball-result';
+import { IPL_RESULT } from '../../lib/formats/result-format';
+
+const r = wbResultProps('ipl');
+---
+<SeriesResult
+  format={{ ...IPL_RESULT, parGap: r.parGap }}
+  title="The IPL Series — Beat My 11 (preview)"
+  description="Your IPL XI against the All-Star XI over five matches."
+  houseXI={r.houseXI}
+  scoringContext={r.scoringContext}
+  calibration={r.calibration}
+/>

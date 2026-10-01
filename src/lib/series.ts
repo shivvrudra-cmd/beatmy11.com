@@ -32,6 +32,19 @@
 
 export const VENUES = ["Lord's", 'MCG', 'Eden Gardens', 'Newlands', 'Kensington Oval'] as const;
 
+/**
+ * What changes between formats in the story of a series (the scoreline logic is shared).
+ * Default: the Test series against the World XI. Limited-overs formats (IPL, later ODI/T20I)
+ * get their own venues, opponent name and scorecard style: no innings wins, a tie or washout
+ * in place of the drawn Test, and T20-sized hero figures from the hero's career numbers.
+ */
+export interface SeriesFlavour {
+  venues: readonly string[];
+  opponent: string;
+  kind: 'test' | 't20' | 'odi';
+}
+export const TEST_FLAVOUR: SeriesFlavour = { venues: VENUES, opponent: 'World XI', kind: 'test' };
+
 export interface OutcomeBand {
   user: number;
   house: number;
@@ -91,6 +104,9 @@ const ROUT_CUTS = [4, 7] as const;
  */
 export const GAP_CUTS = [...LOSS_AND_DRAW_CUTS, ...ROUT_CUTS].map((c) => c + PAR_GAP);
 
+/** The same ladder hung off a different par (other formats set their own difficulty). */
+export const gapCutsFor = (parGap: number): number[] => [...LOSS_AND_DRAW_CUTS, ...ROUT_CUTS].map((c) => c + parGap);
+
 export interface SeriesCalibration {
   /** Team scores of reference drafted XIs, sorted ascending. */
   scores: number[];
@@ -110,6 +126,10 @@ export interface SeriesPlayer {
     testAverage?: number | null;
     testBowlingAverage?: number | null;
     bowlingAverage?: number | null;
+    /** Limited-overs formats. */
+    battingAverage?: number | null;
+    strikeRate?: number | null;
+    economy?: number | null;
   };
 }
 
@@ -228,10 +248,11 @@ export function wobble(gap: number, rng: () => number, sigma: number = WOBBLE_SI
   return gap + sigma * gaussian(rng);
 }
 
-/** Scoreline for a (wobbled) score gap: user − World XI. */
-export function bandFor(gap: number): OutcomeBand {
+/** Scoreline for a (wobbled) score gap: user − World XI. `parGap` defaults to the Test game's. */
+export function bandFor(gap: number, parGap: number = PAR_GAP): OutcomeBand {
+  const cuts = parGap === PAR_GAP ? GAP_CUTS : gapCutsFor(parGap);
   let i = 0;
-  while (i < GAP_CUTS.length && gap >= GAP_CUTS[i]) i++;
+  while (i < cuts.length && gap >= cuts[i]) i++;
   return OUTCOME_BANDS[i];
 }
 
@@ -268,7 +289,14 @@ export function testOrder(band: OutcomeBand, rng: () => number): TestResult[] {
 
 const BAT_ROLES = new Set(['opener', 'middle-order', 'wicketkeeper', 'all-rounder']);
 const BOWL_ROLES = new Set(['spinner', 'fast-bowler', 'all-rounder']);
-const surname = (name: string) => name.trim().split(/\s+/).slice(-1)[0];
+/** Last name for headlines, keeping particles: "AB de Villiers" -> "de Villiers", "Faf du Plessis" -> "du Plessis". */
+const PARTICLES = new Set(['de', 'du', 'van', 'der', 'den', 'le', 'la', 'ten']);
+const surname = (name: string) => {
+  const words = name.trim().split(/\s+/);
+  let i = words.length - 1;
+  while (i > 1 && PARTICLES.has(words[i - 1].toLowerCase())) i--;
+  return words.slice(i).join(' ');
+};
 const intIn = (rng: () => number, lo: number, hi: number) => lo + Math.floor(rng() * (hi - lo + 1));
 
 /** Rating-weighted pick (weight = rating²), avoiding repeat heroes when possible. */
@@ -298,6 +326,50 @@ function bowlingLine(p: SeriesPlayer, rng: () => number): string {
   // (e.g. Murali, avg 22.7: 7/55–7/95).
   const runs = Math.round(wkts * avg * (0.35 + 0.25 * rng()));
   return `${surname(p.name)} ${wkts}/${runs}`;
+}
+
+/** T20 batting hero: a match-winning knock scaled from career average and strike rate, e.g. "Gayle 87 (44)". */
+function t20BattingLine(p: SeriesPlayer, rng: () => number): string {
+  const avg = Number(p.stats.battingAverage) || 25;
+  const sr = Number(p.stats.strikeRate) || 130;
+  const runs = Math.max(48, Math.min(124, Math.round(avg * (1.5 + 1.5 * rng()))));
+  return `${surname(p.name)} ${runs} (${Math.max(runs > 60 ? 28 : 22, Math.round((runs / sr) * 100))})`;
+}
+
+/** T20 bowling hero: four overs well under the career economy, e.g. "Bumrah 4/17". */
+function t20BowlingLine(p: SeriesPlayer, rng: () => number): string {
+  const econ = Number(p.stats.economy) || 8;
+  return `${surname(p.name)} ${intIn(rng, 3, 5)}/${Math.round(4 * econ * (0.5 + 0.3 * rng()))}`;
+}
+
+/** ODI batting hero: "Kohli 118 (104)". */
+function odiBattingLine(p: SeriesPlayer, rng: () => number): string {
+  const avg = Number(p.stats.battingAverage) || 30;
+  const sr = Number(p.stats.strikeRate) || 85;
+  const runs = Math.max(62, Math.min(183, Math.round(avg * (1.6 + 1.6 * rng()))));
+  return `${surname(p.name)} ${runs} (${Math.max(40, Math.round((runs / sr) * 100))})`;
+}
+
+/** ODI bowling hero: ten overs under the career economy, e.g. "Starc 5/38". */
+function odiBowlingLine(p: SeriesPlayer, rng: () => number): string {
+  const econ = Number(p.stats.economy) || 5;
+  return `${surname(p.name)} ${intIn(rng, 3, 6)}/${Math.round(10 * econ * (0.55 + 0.3 * rng()))}`;
+}
+
+function t20HeroLine(side: SeriesPlayer[], used: Set<string>, rng: () => number, odi = false): string {
+  const bowl = rng() < 0.5;
+  const pool = side.filter((p) =>
+    bowl ? BOWL_ROLES.has(p.role) && Number(p.stats.economy) > 0 : BAT_ROLES.has(p.role) && Number(p.stats.battingAverage) > 0,
+  );
+  const hero = pickHero(pool, used, rng);
+  if (!hero) return '';
+  used.add(hero.id);
+  if (odi) return bowl ? odiBowlingLine(hero, rng) : odiBattingLine(hero, rng);
+  return bowl ? t20BowlingLine(hero, rng) : t20BattingLine(hero, rng);
+}
+
+function t20WinSummary(team: string, rng: () => number, odi = false): string {
+  return rng() < 0.5 ? `${team} win by ${intIn(rng, odi ? 6 : 4, odi ? 148 : 62)} runs` : `${team} win by ${intIn(rng, 3, 9)} wickets`;
 }
 
 function heroLine(side: SeriesPlayer[], used: Set<string>, rng: () => number, battingOnly = false): string {
@@ -331,19 +403,38 @@ export function playSeries(input: {
   houseXI: SeriesPlayer[];
   calibration: SeriesCalibration;
   seed: number;
+  /** Defaults to the Test series against the World XI. */
+  flavour?: SeriesFlavour;
+  /** Difficulty: how far below the opponent still counts as level. Defaults to the Test PAR_GAP. */
+  parGap?: number;
 }): SeriesResult {
+  const flavour = input.flavour ?? TEST_FLAVOUR;
+  // Limited-overs story (T20 or ODI); the hero figures are sized for the format.
+  const t20 = flavour.kind !== 'test';
+  const odi = flavour.kind === 'odi';
   const rng = mulberry32(input.seed);
   const percentile = rankPercentile(input.userScore, input.calibration.scores);
-  const band = bandFor(wobble(input.userScore - input.houseScore, rng));
+  const band = bandFor(wobble(input.userScore - input.houseScore, rng), input.parGap ?? PAR_GAP);
   const order = testOrder(band, rng);
   const used = new Set<string>();
   const tests: TestMatch[] = order.map((result, i) => {
     if (result === 'draw') {
       const washout = rng() < 0.5;
       const heroSide: 'user' | 'house' = rng() < 0.5 ? 'user' : 'house';
+      if (t20) {
+        // No draws in T20: the level match is a tie (with a hero) or a washout.
+        return {
+          number: i + 1,
+          venue: flavour.venues[i],
+          result,
+          summary: washout ? 'Rain — no result' : 'Match tied',
+          hero: washout ? '' : t20HeroLine(heroSide === 'user' ? input.userXI : input.houseXI, used, rng, odi),
+          heroSide: washout ? null : heroSide,
+        };
+      }
       return {
         number: i + 1,
-        venue: VENUES[i],
+        venue: flavour.venues[i],
         result,
         summary: washout ? 'Rain wipes out day five — match drawn' : 'Match drawn',
         hero: washout ? '' : heroLine(heroSide === 'user' ? input.userXI : input.houseXI, used, rng, true),
@@ -351,12 +442,13 @@ export function playSeries(input: {
       };
     }
     const side = result === 'user' ? input.userXI : input.houseXI;
+    const team = result === 'user' ? 'Your XI' : flavour.opponent;
     return {
       number: i + 1,
-      venue: VENUES[i],
+      venue: flavour.venues[i],
       result,
-      summary: winSummary(result === 'user' ? 'Your XI' : 'World XI', rng),
-      hero: heroLine(side, used, rng),
+      summary: t20 ? t20WinSummary(team, rng, odi) : winSummary(team, rng),
+      hero: t20 ? t20HeroLine(side, used, rng, odi) : heroLine(side, used, rng),
       heroSide: result,
     };
   });
