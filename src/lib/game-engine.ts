@@ -1,7 +1,30 @@
 // Game Engine for BeatMy11
 // Handles spins, team building, and game logic
 
-import type { Player } from './ratings';
+export interface Player {
+  id: string;
+  name: string;
+  nation: string;
+  era: string;
+  primaryRole: string;
+  secondaryRoles: string[];
+  stats: {
+    testAverage: number;
+    testRuns: number;
+    testWickets: number;
+    testMatches: number;
+    testCenturies: number;
+    testFifties: number;
+    // Bowling stats
+    bowlingAverage?: number;
+    bowlingStrikeRate?: number;
+    // Derived stats
+    battingIndex?: number;
+    bowlingIndex?: number;
+    volumeMultiplier?: number;
+    finalRating?: number;
+  };
+}
 
 interface SpinResult {
   nation: string;

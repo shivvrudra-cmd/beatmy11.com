@@ -7,7 +7,7 @@ const DATA_DIR = join(import.meta.dirname, "..", "..", "src", "data");
 
 describe("player data schema validation", () => {
   it("every record in every era JSON file matches the player schema", () => {
-    const files = readdirSync(DATA_DIR).filter((f) => f.endsWith(".json"));
+    const files = readdirSync(DATA_DIR).filter((f) => f.endsWith(".json") && f !== "series-calibration.json"); // calibration output, not player records
     expect(files.length).toBeGreaterThan(0);
 
     let total = 0;
