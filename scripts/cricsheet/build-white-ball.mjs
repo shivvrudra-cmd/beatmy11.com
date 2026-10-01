@@ -95,7 +95,7 @@ export function aggregate(matches, fmt) {
   const get = (id, name) => {
     if (!P.has(id)) {
       P.set(id, {
-        id, scoreName: name, names: new Set([name]), teams: new Map(), years: new Set(), blocks: new Set(), firstDate: null, lastDate: null,
+        id, scoreName: name, names: new Set([name]), teams: new Map(), years: new Set(), blocks: new Set(), periodMatches: new Map(), firstDate: null, lastDate: null,
         matches: 0, innings: 0, runs: 0, ballsFaced: 0, outs: 0, fifties: 0, hundreds: 0, highest: 0,
         positions: [], ballsBowled: 0, runsConceded: 0, wickets: 0, fourPlusInnings: 0, fiveWInnings: 0,
         catches: 0, stumpings: 0, keptMatches: 0,
@@ -117,10 +117,14 @@ export function aggregate(matches, fmt) {
         p.matches += 1;
         p.teams.set(t, (p.teams.get(t) ?? 0) + 1);
         p.years.add(year);
+        // Matches per draw period (decade, or franchise + season block): used to pick each squad.
+        let period = decade(year);
         if (!fmt.intl) {
           const b = IPL_BLOCKS.find((x) => year >= x.from && year <= x.to);
           p.blocks.add(`${t}|${b.id}`);
+          period = `${t}|${b.id}`;
         }
+        p.periodMatches.set(period, (p.periodMatches.get(period) ?? 0) + 1);
         if (!p.firstDate || date < p.firstDate) p.firstDate = date;
         if (!p.lastDate || date > p.lastDate) p.lastDate = date;
       }
@@ -665,7 +669,8 @@ function main() {
         scorecardName: reg.name ?? p.scoreName,
         nation: intlNation ?? undefined,
         era: fmt.intl ? [...new Set(years.map(decade))] : undefined,
-        iplSpells: fmt.intl ? undefined : [...p.blocks].sort().map((s) => { const [team, block] = s.split('|'); return { team, block }; }),
+        eraMatches: fmt.intl ? Object.fromEntries([...p.periodMatches].sort()) : undefined,
+        iplSpells: fmt.intl ? undefined : [...p.blocks].sort().map((s) => { const [team, block] = s.split('|'); return { team, block, matches: p.periodMatches.get(s) }; }),
         iplTeams: fmt.intl ? undefined : [...p.teams.keys()],
         primaryRole,
         secondaryRoles,

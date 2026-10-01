@@ -3,7 +3,7 @@
  * real, every player is scorable in every role they can be declared as, and random spin sequences
  * can be drafted into a legal XI.
  */
-import { wbPlayers, wbOpponentPool, wbPlayersByEra, wbSpinCombos, wbEras, type WbFormatId } from '../src/lib/formats/white-ball-store';
+import { wbPlayers, wbOpponentPool, wbPlayersByEra, wbSpinCombos, wbEras, cutSquad, SQUAD_SIZE, SQUAD_QUOTA, type SquadCandidate, type WbFormatId } from '../src/lib/formats/white-ball-store';
 import { wbResultProps } from '../src/lib/formats/white-ball-result';
 import { WB_MIN_MATCHES } from '../src/lib/formats/white-ball-config';
 import { upcomingCombos, mulberry32 } from '../src/lib/daily';
@@ -69,6 +69,29 @@ for (const id of ['odi', 't20i'] as WbFormatId[]) {
   ok(stalled === 0, `${id}: every random spin sequence can be drafted into a legal XI`, stalled);
 }
 
+
+// ---- squad cut: at most 25 per draw, the regulars first, the top-rated guaranteed
+{
+  const mk = (i: number, role: WbRole, periodMatches: number, rating = 50): SquadCandidate => ({ id: `p${i}`, name: `P${String(i).padStart(2, '0')}`, role, periodMatches, careerMatches: periodMatches, rating });
+  const roles: WbRole[] = ['opener', 'middle-order', 'wicketkeeper', 'all-rounder', 'spinner', 'fast-bowler'];
+  const big = Array.from({ length: 48 }, (_, i) => mk(i, roles[i % 6], 60 - i));
+  const kept = cutSquad(big);
+  const count = (r: WbRole) => big.filter((c) => kept.has(c.id) && c.role === r).length;
+  ok(kept.size === SQUAD_SIZE, 'a big draw is cut to 25', kept.size);
+  ok(roles.every((r) => count(r) >= Math.min(SQUAD_QUOTA[r], 8)), 'every role keeps its place count', roles.map(count));
+  ok(kept.has('p0') && !kept.has('p47'), 'the most-played stay, the least-played go');
+  const star = [...big.slice(0, 47), mk(47, 'fast-bowler', 20, 99)];
+  const keptStar = cutSquad(star);
+  ok(keptStar.has('p47') && keptStar.size === SQUAD_SIZE, 'a top-rated player with few matches is guaranteed a place', keptStar.size);
+  ok(!cutSquad([...big.slice(0, 47), mk(47, 'fast-bowler', 19, 99)]).has('p47'), 'but not a visitor with under 20 matches for the team');
+  ok(cutSquad(big.slice(0, 20)).size === 20, 'a draw of 25 or fewer is left alone');
+  for (const id of ['odi', 't20i', 'ipl'] as WbFormatId[]) {
+    const sizes = new Map<string, number>();
+    for (const [era, list] of Object.entries(wbPlayersByEra(id))) for (const p of list) sizes.set(`${era}|${p.nation}`, (sizes.get(`${era}|${p.nation}`) ?? 0) + 1);
+    const over = [...sizes].filter(([, n]) => n > SQUAD_SIZE);
+    ok(over.length === 0, `${id}: no draw shows more than 25 players`, over);
+  }
+}
 
 // ---- opponent-only players (Viv Richards, Rashid Khan): in the World XI, never in a draft
 for (const id of ['odi', 't20i'] as WbFormatId[]) {

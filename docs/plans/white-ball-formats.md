@@ -73,3 +73,15 @@ neutral defaults, keep them in ONE config object per format, and label them `PRO
 - `docs/reports/white-ball-roles-needed.md` — players whose bowling type the owner must supply.
 - IPL mode on `/play?format=ipl` (hidden: no link anywhere; noindex), result page support, tests.
 - One PR with a preview link; never merged without the owner.
+
+## Squad cut (owner, 2026-10-01)
+
+A draw (nation × decade, or franchise × season block) shows at most **25 players**
+(`cutSquad` in `src/lib/formats/white-ball-store.ts`). Who stays: the players with the most
+matches for that team in that period, with a place count per role: 4 openers, 6 middle order,
+3 keepers, 3 all-rounders, 3 spinners, 6 fast bowlers. If a team is short of a role, the spare
+places go to the next most-played players of any role. Draws with 25 or fewer are untouched.
+
+Owner, 2026-10-01: the 12 highest-rated players of a draw are guaranteed a place if they played at
+least 20 matches for that team in that period. Match counts per period come from the ball-by-ball files (`eraMatches`,
+`iplSpells[].matches`), so pre-2003 ODIs are not counted.
