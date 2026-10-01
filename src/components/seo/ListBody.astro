@@ -1,0 +1,30 @@
+---
+import type { ListPage } from '../../lib/seo-pages';
+
+interface Props { page: ListPage }
+const { page } = Astro.props;
+---
+<section>
+  <h2>Ranking</h2>
+  <div class="sp-tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>Player</th><th>Nation</th><th>Played in</th>
+          {page.columns.map((c) => <th class="sp-num">{c.label}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {page.rows.map((r, i) => (
+          <tr id={`player-${r.id}`} class:list={{ 'sp-top': i < 10 }}>
+            <td class="sp-pos">{i + 1}</td>
+            <td class="sp-name">{r.name}</td>
+            <td class="sp-sub">{r.nation}</td>
+            <td class="sp-sub">{r.played}</td>
+            {r.values.map((v) => <td class="sp-num">{v}</td>)}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>
