@@ -8,11 +8,11 @@
  * under that mode's own keys and loads the other mode's draft (or an empty one).
  *
  * Which mode /play runs is decided only by the link: /play = normal,
- * /play?daily=1 = daily, /play?c=… = challenge. Nothing a player did earlier
- * can turn a plain /play into a daily.
+ * /play?daily=1 = daily, /play?c=… = challenge, /ipl/play = the IPL format.
+ * Nothing a player did earlier can turn a plain /play into a daily.
  */
 
-export type DraftMode = 'normal' | 'daily' | 'challenge';
+export type DraftMode = 'normal' | 'daily' | 'challenge' | 'ipl';
 
 const LIVE_DRAFT = 'beatmy11.draft.v1';
 const LIVE_XI = 'beatmy11.userXI.v1';
@@ -38,7 +38,7 @@ const set = (k: string, v: string | null): void => {
 /** The mode that currently owns the live draft keys (normal if never set). */
 export function currentMode(): DraftMode {
   const v = get(SLOT_KEY);
-  return v === 'daily' || v === 'challenge' ? v : 'normal';
+  return v === 'daily' || v === 'challenge' || v === 'ipl' ? v : 'normal';
 }
 
 /** Make `mode` the owner of the live keys, parking the previous owner's draft. */
