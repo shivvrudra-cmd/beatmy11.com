@@ -11,9 +11,10 @@
  *      (upsets) while the same XI always gets the same series.
  *   3. gap' picks the scoreline from GAP_CUTS (bottom to top):
  *        0–5 · 1–4 · 2–3 · 2–2 (one draw) · 3–2 · 4–1 · 5–0
- *      You win the series by finishing ahead of par (PAR_GAP), which sits a
- *      little below the World XI's own score — but a 4–1 needs to out-score
- *      the World XI and a 5–0 to beat it by 3.
+ *      The ladder hangs off par (PAR_GAP, currently -7, i.e. 7 points below
+ *      the World XI's 89.4): drawn 2–2 within 1 of par, 3–2 up to 4 above it,
+ *      4–1 from 4 above par and 5–0 from 7 above (gaps of -3 and 0 today).
+ *      You win the series by finishing ahead of par.
  *   4. Each Test gets a venue (owner-picked, fixed order), a result
  *      consistent with the scoreline, and one headline whose hero comes from
  *      the side that won that Test, with figures scaled from the hero's real
@@ -56,33 +57,39 @@ export const OUTCOME_BANDS: OutcomeBand[] = [
 export const WOBBLE_SIGMA = 2.5;
 
 /**
- * The World XI is a legendary side (team score ~84), so a very good drafted XI
- * still scores below it. PAR_GAP is how far behind the World XI's team score
- * an XI can be and still count as level with it — the middle of the series
- * (drawn 2–2), and where a narrow 3–2 win starts. Tuned for strong human
- * drafts: the simulated drafters in scripts/calibrate-series.ts are much
- * weaker (only ~3% of them win at -4; -9.5 gave ~22%). Lower it to make wins
- * more common, raise it to make them rarer.
+ * The World XI is a legendary side (team score 89.4 under the live engine), so
+ * even a very good drafted XI scores below it. PAR_GAP is how far behind the
+ * World XI's team score an XI can be and still count as level with it - the
+ * middle of the series (drawn 2-2), where a narrow 3-2 win begins just above.
+ *
+ * The whole scoreline ladder hangs off par: every cut below is par plus a fixed
+ * offset, so changing PAR_GAP moves all seven scorelines together. Raise it to
+ * make wins rarer, lower it to make them more common.
+ *
+ * History: -11.5 -> -9.5 -> -4 (2026-09-30) -> -7 (2026-10-01, owner-approved,
+ * docs/difficulty-analysis.md). Against the simulated drafters in
+ * scripts/calibrate-series.ts (human-like) and scripts/beat-house-analysis.ts
+ * (score-greedy), -7 gives series wins of about 6.7% and 26.6%; the owner's
+ * intended share is 35%. How real players fare is not yet known.
  */
-export const PAR_GAP = -4;
+export const PAR_GAP = -7;
 
-/** Cut points below the win line, relative to par: a gap inside ±1 of par is
- *  the drawn 2–2, and 2–3 / 1–4 / 0–5 sit below it. */
+/** Cut points below the win line, relative to par: a gap inside +-1 of par is
+ *  the drawn 2-2, and 2-3 / 1-4 / 0-5 sit below it. */
 const LOSS_AND_DRAW_CUTS = [-14, -8, -1, 1] as const;
 
 /**
- * Cut points for the two big wins, in absolute gap (user − World XI): a 4–1
- * needs a team score above the World XI's, and a 5–0 needs to beat it by 3.
- * Par only makes a narrow win (3–2) reachable for an XI a little behind the
- * World XI; it never hands out a rout.
+ * Cut points for the two big wins, also relative to par: a 4-1 starts 4 points
+ * above par and a 5-0 starts 7 above it. At par -7 that is a gap of -3 (an XI
+ * 3 points short of the World XI) and 0 (level with it).
  */
-const ROUT_CUTS = [0, 3] as const;
+const ROUT_CUTS = [4, 7] as const;
 
 /**
  * Score-gap cut points (user − World XI, team-score points) between the seven
  * scorelines in OUTCOME_BANDS.
  */
-export const GAP_CUTS = [...LOSS_AND_DRAW_CUTS.map((c) => c + PAR_GAP), ...ROUT_CUTS];
+export const GAP_CUTS = [...LOSS_AND_DRAW_CUTS, ...ROUT_CUTS].map((c) => c + PAR_GAP);
 
 export interface SeriesCalibration {
   /** Team scores of reference drafted XIs, sorted ascending. */

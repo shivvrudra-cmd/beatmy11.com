@@ -31,17 +31,23 @@ since 2026-09-30):
 2. A seeded Gaussian **wobble** is added: `gap' = gap + 2.5·ε` (`WOBBLE_SIGMA = 2.5`),
    seeded from the XI (`xiSeed`: FNV-1a over sorted `id:role` pairs), so the same XI
    always gets the same series but a near-level XI can land either side.
-3. `gap'` is cut into seven scorelines by `GAP_CUTS`, with `PAR_GAP = -4`:
+3. `gap'` is cut into seven scorelines by `GAP_CUTS`. Every cut is **par plus a fixed
+   offset** (offsets -14, -8, -1, +1, +4, +7), with `PAR_GAP = -7` (since 2026-10-01),
+   so `GAP_CUTS = [-21, -15, -8, -6, -3, 0]` and changing `PAR_GAP` moves the whole ladder:
 
    | gap' (user − World XI) | scoreline |
    |---|---|
-   | below −18 | 0–5 |
-   | −18 to −12 | 1–4 |
-   | −12 to −5 | 2–3 |
-   | −5 to −3 | 2–2 (one draw) |
-   | −3 to 0 | 3–2 |
-   | 0 to +3 | 4–1 (must out-score the World XI) |
-   | +3 or more | 5–0 (must beat it by 3) |
+   | below −21 | 0–5 |
+   | −21 to −15 | 1–4 |
+   | −15 to −8 | 2–3 |
+   | −8 to −6 | 2–2 (one draw) |
+   | −6 to −3 | 3–2 |
+   | −3 to 0 | 4–1 |
+   | 0 or more | 5–0 (level with or ahead of the World XI) |
+
+   (Before 2026-10-01 par was −4 and the two big-win cuts were fixed at gaps 0 and +3,
+   so a 4–1 needed out-scoring the World XI. That rule is gone. A series win is gap' ≥ −6,
+   i.e. 3–2 or better; the 2–2 draw is not a win.)
 
 4. Each Test gets a venue in fixed order (Lord's, MCG, Eden Gardens, Newlands,
    Kensington Oval), a result consistent with the scoreline (a 3–2 / 2–3 series is
@@ -60,13 +66,21 @@ comes from `userScore − houseScore` (plus wobble). Change the house XI, the en
 or any constant and difficulty changes. Current numbers: the house XI scores **89.4**
 under the live engine (§6c); the simulated drafters in the calibration sample score
 62.1–86.5 (median 76.4, 90th percentile 82.1) so none of them out-scores it. Applying
-the real cuts and wobble to that sample gives roughly 0–5 18%, 1–4 40%, 2–3 37%,
-2–2 3%, 3–2 1.5%, 4–1 0.2%, 5–0 0% (reproduced with a throwaway script on
-2026-10-01). So a simulated drafter wins the series ~2% of the time; `PAR_GAP`
-was tuned (−11.5 → −9.5 → −4) because real human drafts are expected to be much
-stronger than the simulated drafter. **How often real players beat the house is
-UNCONFIRMED - owner to confirm** (D1 holds the real scores; this doc did not read
-production).
+the live cuts and wobble to 5000 simulated drafts per drafter model
+(`docs/difficulty-analysis.md`, PR #4; shipped constants re-verified on 2026-10-01)
+gives, in percent:
+
+| | 0–5 | 1–4 | 2–3 | 2–2 | 3–2 | 4–1 | 5–0 | series wins |
+|---|---|---|---|---|---|---|---|---|
+| Owner's intended shares | 10 | 10 | 35 | 10 | 20 | 10 | 5 | **35** |
+| Human-like drafter, par −7 | 8.0 | 28.9 | 47.8 | 8.6 | 5.3 | 1.4 | 0.1 | **6.7** |
+| Score-greedy "smart" drafter, par −7 | 1.2 | 9.4 | 46.6 | 16.1 | 17.0 | 7.8 | 1.8 | **26.6** |
+| (previous, par −4: human-like / smart) | | | | | | | | 1.5 / 9.7 |
+
+`PAR_GAP` history: −11.5 → −9.5 → −4 → **−7** (2026-10-01, owner-approved; ladder
+shift). The owner's 35% is the target for real players. **How often real players beat
+the house is UNCONFIRMED - owner to confirm** (D1 `drafts` holds the real scores; this
+doc did not read production). Re-tune `PAR_GAP` once enough real games exist.
 
 `/matchup` shows the animated Test-by-Test reveal, the scoreline, verdict copy, the
 XI's "top X% of drafts" rank, a share card (PNG) with Share / Save buttons, and —
@@ -374,10 +388,10 @@ AR logic, W=30), bowling weights 40/35/20/5 (09-30), long-career bonus (09-30). 
 | `tests/xi-logic.test.ts` | 192 passed, 0 failed — slots, declared roles, blocking, move-stranding regression, persistence migration |
 | `tests/full-draft.test.ts` | 242 passed, 0 failed — 120-trial real-data full-draft simulation, all XI shapes, backtracking achievability oracle |
 | `tests/seven-metrics.test.ts` | 147 passed, 0 failed — metrics, roles, V2 all-rounder/longevity/shrinkage, team blend, determinism, missing-data flags |
-| `tests/series.test.ts` | 29 passed, 0 failed — gap cuts, wobble, seeding, test order, full series |
+| `tests/series.test.ts` | 45 passed, 0 failed (after the par −7 change) — exact gap cuts, scorelines at representative gaps, wobble, seeding, test order, full series |
 | `tests/share.test.ts` | 9 passed, 0 failed — share slugs, XI encode/decode |
 
-Total **619** assertions in `npm test`.
+Total **635** assertions in `npm test`.
 
 `npx vitest run` (`tests/unit/`): **4 passed, 1 FAILED** (2 files). The failure is
 `player-schema.test.ts` ("every record in every era JSON file matches the player
@@ -474,7 +488,7 @@ Vitest, so CI-style checks that only run `npm test` miss it.
 - **Series now compares your XI to the World XI** (`d766073`): scoreline from the
   score gap + wobble instead of rank vs the sample; **bowling weights 40/35/20/5**.
   Then tuned: `PAR_GAP` −11.5 → −9.5 → −4; 4–1 needs gap > 0 and 5–0 needs +3
-  (`c2b23ce`, `1f2a6d7`).
+  (`c2b23ce`, `1f2a6d7`). (Superseded 2026-10-01: par −7, big-win cuts relative to par.)
 - **Long-career bonus** for batting/bowling halves (`b00e249`); "Weakest pick" sticker
   dropped. House XI score is now **89.4**.
 - Mobile result page as three one-swipe panels; one-screen draft page; desktop
@@ -486,6 +500,10 @@ Vitest, so CI-style checks that only run `npm test` miss it.
   counter (§12).
 
 **2026-10-01**
+- **Difficulty ladder shifted to par −7:** `PAR_GAP` −4 → −7 and the 4–1 / 5–0 cuts are
+  now par +4 / +7 (`GAP_CUTS = [-21,-15,-8,-6,-3,0]`), so the whole scoreline ladder
+  moves with par. Simulated series-win rate: human-like 1.5% → 6.7%, smart 9.7% →
+  26.6% (intended 35%; real rates unknown). See `docs/difficulty-analysis.md`.
 - First-party page-view counters (home, play, result, shared link) (`9021e6f`);
   Privacy page + footer links, contact `hello@beatmy11.com` (`54ffd9f`);
   `robots.txt` with sitemap (`d53b636`).
