@@ -268,7 +268,7 @@ function drawBothXIs(c: CanvasRenderingContext2D, d: CardData) {
       c.fillText(String(i + 1), x + 24, y);
       // Role tag on the right; the name takes what is left, shrinking to fit.
       c.textAlign = 'right';
-      c.fillStyle = mine ? LIME : MUTED;
+      c.fillStyle = LIME;
       c.font = `700 17px ${BODY}`;
       spaced(c, 2);
       c.fillText(p.role, x + colW - 22, y - 4);

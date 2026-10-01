@@ -441,6 +441,7 @@ const formatJson = safe(format);
         $('rs-grade-panel').hidden = false;
         if (!('IntersectionObserver' in window)) playBars();
         if (series.playerOfSeries) {
+          $('rs-pots').classList.toggle('is-house', series.playerOfSeries.side === 'house');
           $('rs-pots').innerHTML = `<span>Player of the series</span><b>${esc(series.playerOfSeries.name)}</b><em>${series.playerOfSeries.side === 'house' ? esc(OPP) : 'Your XI'}</em>`;
           $('rs-pots').hidden = false;
         }
@@ -722,6 +723,16 @@ const formatJson = safe(format);
     }
     .rs-pots span { font: 700 10px Inter, sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rs-lime); }
     .rs-pots b { flex: 1; min-width: 0; font: 400 19px/1 var(--rs-display); letter-spacing: 0.04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rs-pots b { color: var(--rs-lime); }
+    .rs-pots.is-house b { color: #ffb3aa; }
+    .rs-pots.is-house { border-color: rgba(255, 107, 94, 0.4); }
+    /* Screen 1 is exactly one screen tall: the match cards give up the room the lines above and
+       below them need, so nothing scrolls inside it. */
+    .rs-p1 { height: 100vh; height: 100svh; }
+    .rs-p1 .rs-test { overflow: hidden; }
+    .rs-p1 .rs-tests { min-height: 0; }
+    /* Short phones: the second performer and the summary line make way. */
+    @media (max-height: 700px) { .rs-p1 .rs-test-also, .rs-p1 .rs-test-sum, .rs-p1 .rs-sub { display: none; } }
     .rs-pots em { font: 600 10.5px Inter, sans-serif; font-style: normal; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rs-muted); }
     .rs-pots[hidden] { display: none; }
     .rs-test-also { margin: 0; font: 500 11.5px Inter, sans-serif; color: var(--rs-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
