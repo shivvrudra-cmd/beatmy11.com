@@ -49,8 +49,10 @@ for (const f of FORMATS) {
     await expect(page.locator("#rs-user-xi li")).toHaveCount(11);
     await expect(page.locator("#rs-house-xi li")).toHaveCount(11);
     if (f.inHouse) await expect(page.locator("#rs-house-xi")).toContainText(f.inHouse);
-    // Ratings are real numbers, never blank or NaN.
-    for (const t of await page.locator(".rs-rating").allTextContents()) expect(Number(t)).toBeGreaterThan(0);
+    // Player ratings are hidden; the three strength bars show real numbers for both sides.
+    await expect(page.locator(".rs-rating")).toHaveCount(0);
+    await expect(page.locator(".rs-bar-val")).toHaveCount(6);
+    for (const t of await page.locator(".rs-bar-val").allTextContents()) expect(Number(t)).toBeGreaterThan(0);
     await expect(page.locator("#rs-rank")).toContainText("% of all drafts");
     await expect(page.locator(".rs-credit")).toContainText("Cricsheet");
 
