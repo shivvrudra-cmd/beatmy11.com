@@ -8,12 +8,12 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 
 - Matches counted: 2576
 - Players seen: 1998
-- Players kept: 1152
+- Players kept: 1178
 - Excluded, not one of the 10 game nations: 729
-- Excluded, regular bowler, spin/pace unknown (owner to supply): 111
+- Excluded, regular bowler, spin/pace unknown (owner to supply): 85
 - Excluded, never batted or bowled regularly: 4
 - Excluded, first Cricsheet ODI before 2004-01-01 and no official totals (career incomplete): 2
-- Role source: match-data 512, kaggle 449, test-data 166, match-data (stumpings) 3, owner 12, wikidata 10
+- Role source: match-data 512, kaggle 449, test-data 166, match-data (stumpings) 3, owner 38, wikidata 10
 - Kaggle profiles matched by surname + initial (one-to-one both ways): 18
 - Players with the official full-career batting line (strike rate, 50s, not outs): 294
 - Official rows not used because they cover fewer matches than Cricsheet (the player also appeared for another side): 11
@@ -22,11 +22,11 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 
 - Matches counted: 3558
 - Players seen: 4755
-- Players kept: 1014
-- Excluded, regular bowler, spin/pace unknown (owner to supply): 68
+- Players kept: 1029
+- Excluded, regular bowler, spin/pace unknown (owner to supply): 53
 - Excluded, not one of the 10 game nations: 3658
 - Excluded, never batted or bowled regularly: 15
-- Role source: match-data 432, kaggle 417, test-data 142, owner 14, match-data (stumpings) 5, wikidata 4
+- Role source: match-data 432, kaggle 417, test-data 142, owner 29, match-data (stumpings) 5, wikidata 4
 - Kaggle profiles matched by surname + initial (one-to-one both ways): 13
 - Players with the official full-career batting line (strike rate, 50s, not outs): 112
 - Official rows not used because they cover fewer matches than Cricsheet (the player also appeared for another side): 29
@@ -35,10 +35,10 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 
 - Matches counted: 1243
 - Players seen: 809
-- Players kept: 719
-- Excluded, regular bowler, spin/pace unknown (owner to supply): 83
+- Players kept: 739
+- Excluded, regular bowler, spin/pace unknown (owner to supply): 63
 - Excluded, never batted or bowled regularly: 7
-- Role source: match-data 336, match-data (stumpings) 3, owner 12, kaggle 290, test-data 75, wikidata 3
+- Role source: match-data 336, match-data (stumpings) 3, owner 32, kaggle 290, test-data 75, wikidata 3
 - Kaggle profiles matched by surname + initial (one-to-one both ways): 11
 
 ## Official totals (HowSTAT, supplied by the owner)
@@ -79,7 +79,7 @@ For paired ODI and T20I players, matches, innings, runs, hundreds, highest score
 - Matches involving Afghanistan are withheld by Cricsheet, so every ODI/T20I career here misses its matches against Afghanistan (totals slightly below official records).
 - Afghanistan: matches withheld by Cricsheet; not a game nation.
 
-## Ambiguous name matches (role lookup skipped): 26
+## Ambiguous name matches (role lookup skipped): 27
 
 - odi: Junaid Khan (086f5984)
 - odi: Mehedi Hasan (9dad0f2e)
@@ -103,6 +103,7 @@ For paired ODI and T20I players, matches, innings, runs, hundreds, highest score
 - ipl: Rinku Singh (0a509d6b)
 - ipl: Shashank Singh (26989d80)
 - ipl: Harpreet Singh (28c78fb3)
+- ipl: Shahid Afridi (0dc00542)
 - ipl: Gagandeep Singh (890de8cb)
 - ipl: Harmeet Singh (2a72fd4f)
 - ipl: Harmeet Singh (0bf15e52)

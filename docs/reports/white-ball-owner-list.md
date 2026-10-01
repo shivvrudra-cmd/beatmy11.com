@@ -4,50 +4,50 @@ Reply in chat with the answers (e.g. "1 pace, 2 spin" and "A Sai Sudharsan"). Th
 
 ## 1. Spin or pace? The 40 most-played bowlers with no known type
 
-206 regular bowlers are left out of the game because no source says whether they bowl spin or pace. These are the ones with the most matches (ball-by-ball matches; older ODI players show only their matches from 2003 on).
+166 regular bowlers are left out of the game because no source says whether they bowl spin or pace. These are the ones with the most matches (ball-by-ball matches; older ODI players show only their matches from 2003 on).
 
 | # | Player (as listed) | Nation / teams | Matches | Wickets | Your answer |
 |---|---|---|---|---|---|
-| 1 | Shahid Afridi | Pakistan | ODI 207, T20I 95, IPL 10 | 346 | |
-| 2 | Naved-ul-Hasan | Pakistan | ODI 62, T20I 3 | 91 | |
-| 3 | Douglas Hondo | Zimbabwe | ODI 32 | 30 | |
-| 4 | Mosaddeck Hossain | Bangladesh | T20I 29 | 15 | |
-| 5 | Harmeet Singh | Deccan Chargers, Punjab Kings | IPL 27 | 26 | |
-| 6 | C Bandara | Sri Lanka | ODI 26, T20I 4 | 32 | |
-| 7 | A Kamboj | Mumbai Indians, Chennai Super Kings | IPL 25 | 31 | |
-| 8 | KK Cooper | Rajasthan Royals | IPL 25 | 33 | |
-| 9 | Shamar Joseph | West Indies | T20I 23, ODI 8, IPL 1 | 40 | |
-| 10 | Sachin Rathi | Lucknow Super Giants | IPL 23 | 19 | |
-| 11 | A Singh | Rajasthan Royals | IPL 23 | 28 | |
-| 12 | Nico Boje | South Africa | ODI 21, T20I 1 | 17 | |
-| 13 | Merwyn Dillon | West Indies | ODI 21 | 23 | |
-| 14 | T Gwandu | Zimbabwe | T20I 21, ODI 5 | 21 | |
-| 15 | Brad Williams | Australia | ODI 20 | 31 | |
-| 16 | Kesrick Williams | West Indies | T20I 20, ODI 8 | 34 | |
-| 17 | Prince Yadav | Lucknow Super Giants | IPL 20, T20I 6, ODI 1 | 29 | |
-| 18 | Nuwan Zoysa | Sri Lanka | ODI 19, IPL 3 | 24 | |
-| 19 | V Nigam | Delhi Capitals | IPL 19 | 13 | |
-| 20 | Vikram Singh | Punjab Kings | IPL 19, ODI 2 | 12 | |
-| 21 | Andre Adams | New Zealand | ODI 18, T20I 4 | 28 | |
-| 22 | Abu Nechim Ahmed | Mumbai Indians, Royal Challengers Bengaluru | IPL 17 | 12 | |
-| 23 | Joginder Sharma | Chennai Super Kings | IPL 16, T20I 4, ODI 2 | 17 | |
-| 24 | Shabbir Ahmed | Pakistan | ODI 15 | 16 | |
-| 25 | B Akhil | Royal Challengers Bengaluru, Kochi Tuskers Kerala | IPL 15 | 6 | |
-| 26 | Amal Thomas | Pune Warriors | IPL 15 | 14 | |
-| 27 | Kaushal Lokuarachchi | Sri Lanka | ODI 14, T20I 2 | 18 | |
-| 28 | Nqabayomzi Peter | South Africa | T20I 14, ODI 4 | 15 | |
-| 29 | SJ Srivastava | Punjab Kings | IPL 14 | 14 | |
-| 30 | Brijesh Sharma | Rajasthan Royals | IPL 13 | 14 | |
-| 31 | Shivang Kumar | Sunrisers Hyderabad | IPL 13 | 9 | |
-| 32 | Vasbert Drakes | West Indies | ODI 12 | 15 | |
-| 33 | Lance Klusener | South Africa | ODI 12 | 11 | |
-| 34 | Alexander Wharf | England | ODI 12 | 17 | |
-| 35 | Douglas Marillier | Zimbabwe | ODI 12 | 5 | |
-| 36 | SH Johnson | Gujarat Titans, Kolkata Knight Riders, Chennai Super Kings | IPL 12, T20I 11, ODI 5 | 27 | |
-| 37 | Tanvir Islam | Bangladesh | ODI 11, T20I 6 | 20 | |
-| 38 | Mluleki Nkala | Zimbabwe | ODI 11 | 4 | |
-| 39 | Andy Caddick | England | ODI 11 | 17 | |
-| 40 | JB Little | Gujarat Titans | IPL 11 | 11 | |
+| 1 | AM Ghazanfar | Mumbai Indians | IPL 11 | 15 | |
+| 2 | YA Abdulla | Punjab Kings | IPL 11, T20I 2 | 17 | |
+| 3 | PM Liyanagamage | Sri Lanka | ODI 10, T20I 8 | 20 | |
+| 4 | Blessing Mahwire | Zimbabwe | ODI 10 | 7 | |
+| 5 | Johannes van der Wath | South Africa | ODI 10, T20I 7, IPL 3 | 23 | |
+| 6 | Iain O'Brien | New Zealand | ODI 10, T20I 4 | 20 | |
+| 7 | Ronald Irani | England | ODI 10 | 8 | |
+| 8 | Aminul Islam Biplob | Bangladesh | T20I 10 | 12 | |
+| 9 | S Kaushik | Gujarat Lions | IPL 10 | 6 | |
+| 10 | Zeeshan Ansari | Sunrisers Hyderabad | IPL 10 | 6 | |
+| 11 | Ashwani Kumar | Mumbai Indians | IPL 10 | 17 | |
+| 12 | J Theron | Punjab Kings, Deccan Chargers, Rajasthan Royals | IPL 10 | 9 | |
+| 13 | Prabath Nissanka | Sri Lanka | ODI 9 | 11 | |
+| 14 | Richard Johnson | England | ODI 9 | 9 | |
+| 15 | Yudhvir Singh | Lucknow Super Giants, Rajasthan Royals | IPL 9 | 8 | |
+| 16 | M Siddharth | Lucknow Super Giants | IPL 9 | 9 | |
+| 17 | DP Vijaykumar | Deccan Chargers | IPL 9 | 4 | |
+| 18 | Kamran Khan | Rajasthan Royals, Pune Warriors | IPL 9 | 9 | |
+| 19 | Keegan Meth | Zimbabwe | ODI 8, T20I 2 | 5 | |
+| 20 | Kumar Dharmasena | Sri Lanka | ODI 8 | 4 | |
+| 21 | Vikum Sanjaya | Sri Lanka | T20I 8 | 9 | |
+| 22 | Jahandad Khan | Pakistan | T20I 8 | 7 | |
+| 23 | Usman Tariq | Pakistan | T20I 8 | 18 | |
+| 24 | Gurjapneet Singh | Chennai Super Kings | IPL 8 | 4 | |
+| 25 | Yash Raj Punja | Rajasthan Royals | IPL 8 | 9 | |
+| 26 | Shoaib Ahmed | Deccan Chargers | IPL 8 | 5 | |
+| 27 | Jaskaran Singh Buttar | Deccan Chargers | IPL 8 | 6 | |
+| 28 | Arshad Khan | Pakistan | ODI 7 | 7 | |
+| 29 | Ishara Amerasinghe | Sri Lanka | ODI 7 | 9 | |
+| 30 | Paul Hitchcock | New Zealand | ODI 7, T20I 1 | 7 | |
+| 31 | Lionel Baker | West Indies | ODI 7, T20I 3 | 9 | |
+| 32 | Pulasthi Gunaratne | Sri Lanka | ODI 7 | 6 | |
+| 33 | Taurai Muzarabani | Zimbabwe | T20I 7, ODI 6 | 11 | |
+| 34 | Newman Nyamhuri | Zimbabwe | T20I 7, ODI 4 | 12 | |
+| 35 | PP Hinge | Sunrisers Hyderabad | IPL 7 | 14 | |
+| 36 | AM Salvi | Delhi Capitals | IPL 7 | 7 | |
+| 37 | Gavin Ewing | Zimbabwe | ODI 6 | 5 | |
+| 38 | Charitha Fernando | Sri Lanka | ODI 6 | 1 | |
+| 39 | Matt Parkinson | England | T20I 6, ODI 5 | 12 | |
+| 40 | Jediah Blades | West Indies | T20I 6, ODI 3 | 7 | |
 
 ## 2. Full names? Players with 30+ matches still shown with initials
 
@@ -56,10 +56,11 @@ Give the name fans know them by. Leave any that are right as they are (e.g. AB d
 | Letter | Shown as | Nation / teams | Matches | Should be |
 |---|---|---|---|---|
 | A | AB de Villiers | South Africa | ODI 228, T20I 78, IPL 183 | |
-| B | KL Rahul | India | ODI 100, T20I 72, IPL 160 | |
-| C | M S Dhoni | India | ODI 350, T20I 98, IPL 277 | |
-| D | R P Singh | India | ODI 55, IPL 82 | |
-| E | S N Khan | Royal Challengers Bengaluru, Punjab Kings, Delhi Capitals | IPL 58 | |
-| F | SK Trivedi | Rajasthan Royals | IPL 76 | |
-| G | TL Suman | Deccan Chargers, Mumbai Indians, Pune Warriors | IPL 43 | |
-| H | V V S Laxman | India | ODI 86 | |
+| B | C Bandara | Sri Lanka | ODI 31 | |
+| C | KL Rahul | India | ODI 100, T20I 72, IPL 160 | |
+| D | M S Dhoni | India | ODI 350, T20I 98, IPL 277 | |
+| E | R P Singh | India | ODI 55, IPL 82 | |
+| F | S N Khan | Royal Challengers Bengaluru, Punjab Kings, Delhi Capitals | IPL 58 | |
+| G | SK Trivedi | Rajasthan Royals | IPL 76 | |
+| H | TL Suman | Deccan Chargers, Mumbai Indians, Pune Warriors | IPL 43 | |
+| I | V V S Laxman | India | ODI 86 | |

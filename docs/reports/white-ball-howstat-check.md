@@ -4,9 +4,9 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 ## ODI Australia
 
-- HowSTAT rows: 254; our players: 118; paired: 118; identical on matches, runs and wickets: 113
+- HowSTAT rows: 254; our players: 120; paired: 120; identical on matches, runs and wickets: 115
 - Ours without a HowSTAT match: 0
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 136
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 134
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
@@ -53,9 +53,9 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 ## ODI Bangladesh
 
-- HowSTAT rows: 154; our players: 100; paired: 95; identical on matches, runs and wickets: 92
+- HowSTAT rows: 154; our players: 101; paired: 96; identical on matches, runs and wickets: 93
 - Ours without a HowSTAT match: 5 (Enamul Haque jnr, Mehrab Hossain jnr, Raqibul Hasan, Yasir Ali Chowdhury, Zakir Hasan)
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 59
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 58
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
@@ -102,9 +102,9 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 ## ODI England
 
-- HowSTAT rows: 282; our players: 119; paired: 119; identical on matches, runs and wickets: 114
+- HowSTAT rows: 282; our players: 121; paired: 121; identical on matches, runs and wickets: 116
 - Ours without a HowSTAT match: 0
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 163
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 161
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
@@ -147,13 +147,13 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Matthew Prior | 68 / 68 | 1282 / 1282 | 0 / 0 | 24.19 / 24.19 | – / – | – / – |
 | Ashley Giles | 62 / 62 | 385 / 385 | 55 / 55 | 17.5 / 17.5 | 37.62 / 37.62 | 4.35 / 4.35 |
 | Steve Harmison | 58 / 58 | 91 / 91 | 76 / 76 | 8.27 / 8.27 | 32.64 / 32.64 | 5.13 / 5.13 |
-| Vikram Solanki | 51 / 51 | 1097 / 1097 | 1 / 1 | 26.76 / 26.76 | 105 / 105 | 5.68 / 5.68 |
+| Andy Caddick | 54 / 54 | 249 / 249 | 69 / 69 | 12.45 / 12.45 | 28.48 / 28.48 | 4.01 / 4.01 |
 
 ## ODI India
 
-- HowSTAT rows: 265; our players: 130; paired: 129; identical on matches, runs and wickets: 122
+- HowSTAT rows: 265; our players: 133; paired: 132; identical on matches, runs and wickets: 125
 - Ours without a HowSTAT match: 1 (R P Singh)
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 136
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 133
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
@@ -200,9 +200,9 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 ## ODI New Zealand
 
-- HowSTAT rows: 226; our players: 104; paired: 104; identical on matches, runs and wickets: 98
+- HowSTAT rows: 226; our players: 105; paired: 105; identical on matches, runs and wickets: 99
 - Ours without a HowSTAT match: 0
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 122
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 121
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
@@ -249,15 +249,16 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 ## ODI Pakistan
 
-- HowSTAT rows: 262; our players: 131; paired: 128; identical on matches, runs and wickets: 122
+- HowSTAT rows: 262; our players: 134; paired: 131; identical on matches, runs and wickets: 124
 - Ours without a HowSTAT match: 3 (Agha Salman, Mohammad Wasim Jr, Shahnawaz Dhani)
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 134
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 131
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
 | Iftikhar Ahmed | 250 / 28 | 6564 / 614 | 16 / 16 | 32.33 / 38.38 | 46.38 / 46.38 | 5.59 / 5.59 |
 | Irfan Khan | 175 / 9 | 3709 / 48 | 3 / 3 | 33.41 / 8 | 17 / 17 | 10.2 / 10.2 |
 | Mohammad Yousuf | 288 / 281 | 9720 / 9554 | 1 / 1 | 41.72 / 42.09 | 1 / 1 | 3 / 3 |
+| Shahid Afridi | 398 / 393 | 8064 / 8027 | 393 / 393 | 23.58 / 23.82 | 34.53 / 34.53 | 4.63 / 4.63 |
 | Abdul Razzaq | 265 / 261 | 5080 / 5031 | 268 / 268 | 29.71 / 29.95 | 31.54 / 31.54 | 4.67 / 4.67 |
 | Inzamam-ul-Haq | 378 / 375 | 11739 / 11701 | 3 / 3 | 39.53 / 39.53 | 21.33 / 21.33 | 6.62 / 6.62 |
 | Ehsan Adil | 9 / 6 | 43 / 27 | 9 / 4 | 10.75 / 9 | 37.22 / 55.75 | 5.19 / 5.95 |
@@ -290,17 +291,16 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Shaheen Shah Afridi | 77 / 77 | 332 / 332 | 146 / 146 | 13.28 / 13.28 | 24.51 / 24.51 | 5.56 / 5.56 |
 | Junaid Khan | 76 / 76 | 68 / 68 | 110 / 110 | 4.86 / 4.86 | 29.24 / 29.24 | 5.36 / 5.36 |
 | Imam-ul-Haq | 75 / 75 | 3152 / 3152 | 0 / 0 | 47.04 / 47.04 | – / – | – / – |
+| Naved-ul-Hasan | 74 / 74 | 524 / 524 | 110 / 110 | 15.88 / 15.88 | 29.28 / 29.28 | 5.58 / 5.58 |
 | Shadab Khan | 73 / 73 | 955 / 955 | 87 / 87 | 28.09 / 28.09 | 35.61 / 35.61 | 5.24 / 5.24 |
 | Hasan Ali | 68 / 68 | 383 / 383 | 102 / 102 | 13.68 / 13.68 | 31.17 / 31.17 | 5.8 / 5.8 |
 | Iftikhar Anjum | 62 / 62 | 234 / 234 | 77 / 77 | 15.6 / 15.6 | 31.56 / 31.56 | 4.93 / 4.93 |
-| Sohail Tanvir | 62 / 62 | 399 / 399 | 71 / 71 | 13.76 / 13.76 | 36.14 / 36.14 | 5.22 / 5.22 |
-| Mohammad Amir | 61 / 61 | 363 / 363 | 81 / 81 | 18.15 / 18.15 | 29.63 / 29.63 | 4.78 / 4.78 |
 
 ## ODI South Africa
 
-- HowSTAT rows: 169; our players: 110; paired: 110; identical on matches, runs and wickets: 98
+- HowSTAT rows: 169; our players: 113; paired: 113; identical on matches, runs and wickets: 100
 - Ours without a HowSTAT match: 0
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 59
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 56
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
@@ -312,6 +312,7 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | AB de Villiers | 228 / 223 | 9577 / 9427 | 7 / 7 | 53.5 / 54.18 | 25.71 / 25.71 | 6 / 6 |
 | Ashwell Prince | 52 / 49 | 1018 / 940 | 0 / 0 | 35.1 / 34.81 | – / – | 1.5 / 1.5 |
 | Morne Morkel | 116 / 114 | 268 / 239 | 187 / 180 | 9.24 / 8.54 | 25.13 / 25.53 | 4.95 / 4.94 |
+| Nico Boje | 115 / 113 | 1414 / 1410 | 95 / 95 | 26.68 / 27.65 | 35.27 / 35.27 | 4.51 / 4.51 |
 | Jacques Rudolph | 45 / 43 | 1174 / 1157 | 0 / 0 | 35.58 / 37.32 | – / – | 6.5 / 6.5 |
 | Graeme Smith | 197 / 196 | 6989 / 6989 | 18 / 18 | 37.98 / 38.19 | 52.83 / 52.83 | 5.56 / 5.56 |
 | Dale Steyn | 124 / 123 | 365 / 361 | 193 / 194 | 9.36 / 9.76 | 26.11 / 26.01 | 4.88 / 4.89 |
@@ -323,6 +324,7 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Hashim Amla | 181 / 181 | 8113 / 8113 | 0 / 0 | 49.47 / 49.47 | – / – | – / – |
 | David Miller | 180 / 180 | 4762 / 4762 | 0 / 0 | 42.9 / 42.9 | – / – | – / – |
 | Makhaya Ntini | 172 / 172 | 199 / 199 | 265 / 265 | 8.65 / 8.65 | 24.53 / 24.53 | 4.51 / 4.51 |
+| Lance Klusener | 171 / 171 | 3576 / 3576 | 192 / 192 | 41.1 / 41.1 | 29.95 / 29.95 | 4.7 / 4.7 |
 | Allan Donald | 164 / 164 | 95 / 95 | 272 / 272 | 4.32 / 4.32 | 21.79 / 21.79 | 4.15 / 4.15 |
 | Quinton de Kock | 164 / 164 | 7152 / 7152 | 0 / 0 | 45.85 / 45.85 | – / – | – / – |
 | Faf du Plessis | 143 / 143 | 5507 / 5507 | 2 / 2 | 47.47 / 47.47 | 94.5 / 94.5 | 5.91 / 5.91 |
@@ -342,14 +344,12 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Lonwabo Tsotsobe | 61 / 61 | 56 / 56 | 94 / 94 | 7 / 7 | 24.97 / 24.97 | 4.75 / 4.75 |
 | Heinrich Klaasen | 60 / 60 | 2141 / 2141 | 0 / 0 | 43.69 / 43.69 | – / – | 6.6 / 6.6 |
 | Farhaan Behardien | 59 / 59 | 1074 / 1074 | 14 / 14 | 30.69 / 30.69 | 51.36 / 51.36 | 5.77 / 5.77 |
-| Keshav Maharaj | 58 / 58 | 328 / 328 | 79 / 79 | 13.67 / 13.67 | 29.7 / 29.7 | 4.69 / 4.69 |
-| Temba Bavuma | 57 / 57 | 2168 / 2168 | 0 / 0 | 43.36 / 43.36 | – / – | 3.57 / 3.57 |
 
 ## ODI Sri Lanka
 
-- HowSTAT rows: 220; our players: 117; paired: 113; identical on matches, runs and wickets: 106
+- HowSTAT rows: 220; our players: 120; paired: 116; identical on matches, runs and wickets: 109
 - Ours without a HowSTAT match: 4 (Chamindu Wickramasinghe, KNM Fernando, P Rathnayake, RMMP Rathnayake)
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 107
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 104
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
@@ -379,6 +379,7 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Kusal Perera | 116 / 116 | 3237 / 3237 | 0 / 0 | 30.54 / 30.54 | – / – | – / – |
 | Farveez Maharoof | 109 / 109 | 1113 / 1113 | 135 / 135 | 19.53 / 19.53 | 28.07 / 28.07 | 4.9 / 4.9 |
 | Chamara Kapugedera | 102 / 102 | 1624 / 1624 | 2 / 2 | 21.09 / 21.09 | 112.5 / 112.5 | 5.11 / 5.11 |
+| Nuwan Zoysa | 95 / 95 | 343 / 343 | 108 / 108 | 13.19 / 13.19 | 29.75 / 29.75 | 4.53 / 4.53 |
 | Dhananjaya de Silva | 93 / 93 | 1924 / 1924 | 48 / 48 | 25.65 / 25.65 | 41.9 / 41.9 | 5.09 / 5.09 |
 | Charith Asalanka | 88 / 88 | 2798 / 2798 | 19 / 19 | 40.55 / 40.55 | 35.53 / 35.53 | 4.99 / 4.99 |
 | Ajantha Mendis | 87 / 87 | 188 / 188 | 152 / 152 | 8.17 / 8.17 | 21.87 / 21.87 | 4.8 / 4.8 |
@@ -392,13 +393,12 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Dushmantha Chameera | 61 / 61 | 303 / 303 | 70 / 70 | 11.65 / 11.65 | 34.39 / 34.39 | 5.55 / 5.55 |
 | Maheesh Theekshana | 61 / 61 | 344 / 344 | 81 / 81 | 16.38 / 16.38 | 27.67 / 27.67 | 4.56 / 4.56 |
 | Jeevan Mendis | 58 / 58 | 636 / 636 | 28 / 28 | 18.71 / 18.71 | 43 / 43 | 5.15 / 5.15 |
-| Niroshan Dickwella | 55 / 55 | 1604 / 1604 | 0 / 0 | 31.45 / 31.45 | – / – | – / – |
 
 ## ODI West Indies
 
-- HowSTAT rows: 230; our players: 127; paired: 127; identical on matches, runs and wickets: 124
+- HowSTAT rows: 230; our players: 131; paired: 131; identical on matches, runs and wickets: 128
 - Ours without a HowSTAT match: 0
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 103
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 99
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
@@ -419,6 +419,7 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Darren Bravo | 122 / 122 | 3109 / 3109 | 0 / 0 | 30.18 / 30.18 | – / – | – / – |
 | Wavell Hinds | 119 / 119 | 2880 / 2880 | 28 / 28 | 28.51 / 28.51 | 29.89 / 29.89 | 5.31 / 5.31 |
 | Ricardo Powell | 109 / 109 | 2085 / 2085 | 11 / 11 | 24.82 / 24.82 | 44.64 / 44.64 | 6.23 / 6.23 |
+| Merwyn Dillon | 108 / 108 | 227 / 227 | 130 / 130 | 7.32 / 7.32 | 32.45 / 32.45 | 4.62 / 4.62 |
 | Dwayne Smith | 105 / 105 | 1560 / 1560 | 61 / 61 | 18.57 / 18.57 | 37.46 / 37.46 | 5.03 / 5.03 |
 | Kemar Roach | 95 / 95 | 308 / 308 | 125 / 125 | 12.83 / 12.83 | 31.08 / 31.08 | 5.09 / 5.09 |
 | Ravi Rampaul | 92 / 92 | 362 / 362 | 117 / 117 | 12.48 / 12.48 | 29.35 / 29.35 | 5.11 / 5.11 |
@@ -441,13 +442,12 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Ashley Nurse | 54 / 54 | 502 / 502 | 49 / 49 | 19.31 / 19.31 | 43.37 / 43.37 | 5.35 / 5.35 |
 | Rovman Powell | 51 / 51 | 979 / 979 | 3 / 3 | 21.76 / 21.76 | 91.67 / 91.67 | 5.89 / 5.89 |
 | Fidel Edwards | 50 / 50 | 73 / 73 | 60 / 60 | 9.13 / 9.13 | 30.2 / 30.2 | 5.09 / 5.09 |
-| Nikita Miller | 50 / 50 | 284 / 284 | 45 / 45 | 20.29 / 20.29 | 36.89 / 36.89 | 4.69 / 4.69 |
 
 ## ODI Zimbabwe
 
-- HowSTAT rows: 163; our players: 96; paired: 95; identical on matches, runs and wickets: 90
+- HowSTAT rows: 163; our players: 100; paired: 99; identical on matches, runs and wickets: 94
 - Ours without a HowSTAT match: 1 (Cephas Zhuwao)
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 68
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 64
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
@@ -481,22 +481,22 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Blessing Muzarabani | 62 / 62 | 138 / 138 | 74 / 74 | 5.11 / 5.11 | 34.53 / 34.53 | 5.09 / 5.09 |
 | Regis Chakabva | 61 / 61 | 1188 / 1188 | 0 / 0 | 22 / 22 | – / – | – / – |
 | Richard Ngarava | 57 / 57 | 299 / 299 | 76 / 76 | 13.59 / 13.59 | 29.39 / 29.39 | 5.29 / 5.29 |
+| Douglas Hondo | 56 / 56 | 127 / 127 | 61 / 61 | 7.47 / 7.47 | 35.59 / 35.59 | 5.47 / 5.47 |
 | Andy Blignaut | 54 / 54 | 626 / 626 | 50 / 50 | 18.97 / 18.97 | 41.26 / 41.26 | 5.27 / 5.27 |
 | Ryan Burl | 52 / 52 | 938 / 938 | 19 / 19 | 24.68 / 24.68 | 40.32 / 40.32 | 6.3 / 6.3 |
 | Travis Friend | 51 / 51 | 548 / 548 | 37 / 37 | 16.12 / 16.12 | 48.08 / 48.08 | 5.53 / 5.53 |
 | Henry Olonga | 50 / 50 | 95 / 95 | 58 / 58 | 7.31 / 7.31 | 34.09 / 34.09 | 5.76 / 5.76 |
+| Mluleki Nkala | 50 / 50 | 324 / 324 | 22 / 22 | 10.8 / 10.8 | 71.36 / 71.36 | 5.95 / 5.95 |
 | Kyle Jarvis | 49 / 49 | 222 / 222 | 58 / 58 | 9.65 / 9.65 | 36 / 36 | 5.3 / 5.3 |
 | Peter Moor | 49 / 49 | 827 / 827 | 0 / 0 | 20.68 / 20.68 | – / – | – / – |
+| Douglas Marillier | 48 / 48 | 672 / 672 | 30 / 30 | 18.16 / 18.16 | 41.17 / 41.17 | 4.71 / 4.71 |
 | Solomon Mire | 47 / 47 | 955 / 955 | 12 / 12 | 20.32 / 20.32 | 42.92 / 42.92 | 6.09 / 6.09 |
-| Wessley Madhevere | 46 / 46 | 921 / 921 | 18 / 18 | 21.42 / 21.42 | 46 / 46 | 5.17 / 5.17 |
-| Wellington Masakadza | 45 / 45 | 274 / 274 | 35 / 35 | 11.42 / 11.42 | 43.94 / 43.94 | 4.95 / 4.95 |
-| Luke Jongwe | 43 / 43 | 430 / 430 | 40 / 40 | 13.87 / 13.87 | 33.48 / 33.48 | 5.68 / 5.68 |
 
 ## T20I Australia
 
-- HowSTAT rows: 118; our players: 112; paired: 111; identical on matches, runs and wickets: 105
+- HowSTAT rows: 118; our players: 113; paired: 112; identical on matches, runs and wickets: 106
 - Ours without a HowSTAT match: 1 (Luke Pomersbach)
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 7
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 6
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
@@ -592,9 +592,9 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 ## T20I India
 
-- HowSTAT rows: 124; our players: 120; paired: 119; identical on matches, runs and wickets: 119
+- HowSTAT rows: 124; our players: 122; paired: 121; identical on matches, runs and wickets: 121
 - Ours without a HowSTAT match: 1 (V Suryavanshi)
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 5
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 3
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
@@ -641,9 +641,9 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 ## T20I New Zealand
 
-- HowSTAT rows: 111; our players: 98; paired: 98; identical on matches, runs and wickets: 91
+- HowSTAT rows: 111; our players: 99; paired: 99; identical on matches, runs and wickets: 92
 - Ours without a HowSTAT match: 0
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 13
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 12
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
@@ -690,13 +690,14 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 ## T20I Pakistan
 
-- HowSTAT rows: 125; our players: 112; paired: 109; identical on matches, runs and wickets: 108
+- HowSTAT rows: 125; our players: 114; paired: 111; identical on matches, runs and wickets: 109
 - Ours without a HowSTAT match: 3 (Agha Salman, Shahnawaz Dhani, Shoaib Khan jnr)
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 16
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 14
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
 | Shoaib Malik | 124 / 123 | 2435 / 2423 | 27 / 27 | 31.22 / 31.47 | 23.85 / 23.85 | 7 / 7 |
+| Shahid Afridi | 99 / 98 | 1416 / 1405 | 97 / 97 | 17.92 / 18.01 | 24.35 / 24.35 | 6.61 / 6.61 |
 | Babar Azam | 145 / 145 | 4596 / 4596 | 0 / 0 | 38.95 / 38.95 | – / – | – / – |
 | Shadab Khan | 124 / 124 | 1009 / 1009 | 123 / 123 | 19.4 / 19.4 | 24.26 / 24.26 | 7.38 / 7.38 |
 | Fakhar Zaman | 120 / 120 | 2494 / 2494 | 0 / 0 | 23.98 / 23.98 | – / – | 12 / 12 |
@@ -735,13 +736,12 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Usman Qadir | 25 / 25 | 36 / 36 | 31 / 31 | 9 / 9 | 18.48 / 18.48 | 7.96 / 7.96 |
 | Younis Khan | 25 / 25 | 442 / 442 | 3 / 3 | 22.1 / 22.1 | 6 / 6 | 4.91 / 4.91 |
 | Hasan Nawaz | 25 / 25 | 457 / 457 | 0 / 0 | 20.77 / 20.77 | – / – | – / – |
-| Abbas Afridi | 24 / 24 | 135 / 135 | 38 / 38 | 12.27 / 12.27 | 15.53 / 15.53 | 8.49 / 8.49 |
 
 ## T20I South Africa
 
-- HowSTAT rows: 122; our players: 112; paired: 109; identical on matches, runs and wickets: 103
+- HowSTAT rows: 122; our players: 114; paired: 111; identical on matches, runs and wickets: 105
 - Ours without a HowSTAT match: 3 (G Van Heerden, Jason Raubenheimer, M Joseph)
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 13
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 11
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
@@ -788,9 +788,9 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 ## T20I Sri Lanka
 
-- HowSTAT rows: 113; our players: 99; paired: 97; identical on matches, runs and wickets: 95
+- HowSTAT rows: 113; our players: 101; paired: 99; identical on matches, runs and wickets: 97
 - Ours without a HowSTAT match: 2 (Chamindu Wickramasinghe, Tharindu Ratnayake)
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 16
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 14
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
@@ -837,9 +837,9 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 ## T20I West Indies
 
-- HowSTAT rows: 110; our players: 100; paired: 100; identical on matches, runs and wickets: 98
+- HowSTAT rows: 110; our players: 102; paired: 102; identical on matches, runs and wickets: 100
 - Ours without a HowSTAT match: 0
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 10
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 8
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
@@ -881,20 +881,21 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Ravi Rampaul | 27 / 27 | 15 / 15 | 31 / 31 | 7.5 / 7.5 | 25.9 / 25.9 | 8.38 / 8.38 |
 | Darren Bravo | 26 / 26 | 405 / 405 | 0 / 0 | 21.32 / 21.32 | – / – | – / – |
 | Fidel Edwards | 26 / 26 | 11 / 11 | 20 / 20 | 5.5 / 5.5 | 30.85 / 30.85 | 8.24 / 8.24 |
-| Sulieman Benn | 24 / 24 | 37 / 37 | 18 / 18 | 12.33 / 12.33 | 33.67 / 33.67 | 7.21 / 7.21 |
-| Keemo Paul | 23 / 23 | 187 / 187 | 25 / 25 | 20.78 / 20.78 | 28 / 28 | 9.09 / 9.09 |
+| Kesrick Williams | 26 / 26 | 19 / 19 | 41 / 41 | 6.33 / 6.33 | 19.63 / 19.63 | 8.77 / 8.77 |
+| Shamar Joseph | 25 / 25 | 43 / 43 | 37 / 37 | 43 / 43 | 21.54 / 21.54 | 9.16 / 9.16 |
 
 ## T20I Zimbabwe
 
-- HowSTAT rows: 84; our players: 73; paired: 70; identical on matches, runs and wickets: 67
+- HowSTAT rows: 84; our players: 74; paired: 71; identical on matches, runs and wickets: 67
 - Ours without a HowSTAT match: 3 (Cephas Zhuwao, R Mupfudza, Tashinga Musekiwa)
-- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 14
+- HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 13
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
 | Johnathan Campbell | 14 / 9 | 238 / 123 | 1 / 0 | 21.64 / 15.38 | 5 / – | 2.5 / – |
 | Clive Madande | 47 / 44 | 600 / 494 | 0 / 0 | 21.43 / 17.03 | – / – | – / – |
 | Tony Munyonga | 44 / 41 | 382 / 394 | 3 / 0 | 13.64 / 14.07 | 21.33 / – | 4.92 / 3 |
+| Trevor Gwandu | 21 / 19 | 16 / 24 | 16 / 16 | 8 / 12 | 26.31 / 25.94 | 8.42 / 8.74 |
 | Sikandar Raza | 144 / 144 | 3244 / 3244 | 114 / 114 | 25.54 / 25.54 | 25.11 / 25.11 | 7.01 / 7.01 |
 | Ryan Burl | 129 / 129 | 2201 / 2201 | 62 / 62 | 26.2 / 26.2 | 23.9 / 23.9 | 7.36 / 7.36 |
 | Blessing Muzarabani | 99 / 99 | 65 / 65 | 117 / 117 | 3.42 / 3.42 | 21.84 / 21.84 | 7.27 / 7.27 |
@@ -931,5 +932,4 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Neville Madziva | 15 / 15 | 88 / 88 | 12 / 12 | 17.6 / 17.6 | 34.75 / 34.75 | 8.9 / 8.9 |
 | Tinashe Kamunhukamwe | 15 / 15 | 304 / 304 | 0 / 0 | 20.27 / 20.27 | – / – | – / – |
 | Tinotenda Mutombodzi | 15 / 15 | 134 / 134 | 7 / 7 | 12.18 / 12.18 | 26.86 / 26.86 | 7.23 / 7.23 |
-| Tendai Chisoro | 14 / 14 | 43 / 43 | 12 / 12 | 10.75 / 10.75 | 30.67 / 30.67 | 6.94 / 6.94 |
 
