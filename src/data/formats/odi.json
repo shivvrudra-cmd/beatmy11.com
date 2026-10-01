@@ -1880,9 +1880,9 @@
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
-  "bowlingType": null,
+  "bowlingType": "spin",
   "roleSource": "match-data",
-  "bowlingTypeSource": null,
+  "bowlingTypeSource": "kaggle",
   "firstMatch": "2006-06-28",
   "lastMatch": "2014-12-16",
   "stats": {
@@ -2202,6 +2202,47 @@
    "catches": 17,
    "stumpings": 0,
    "dismissals": 17
+  }
+ },
+ {
+  "id": "cs-e2ee90d9",
+  "cricsheetId": "e2ee90d9",
+  "name": "Amila Aponso",
+  "scorecardName": "MA Aponso",
+  "nation": "Sri Lanka",
+  "era": [
+   "2010s"
+  ],
+  "primaryRole": "spinner",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2016-08-21",
+  "lastMatch": "2018-10-20",
+  "stats": {
+   "matches": 9,
+   "innings": 7,
+   "runs": 10,
+   "notOuts": 4,
+   "highest": 4,
+   "battingAverage": 3.33,
+   "strikeRate": 22.22,
+   "ballsFaced": 45,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 423,
+   "runsConceded": 377,
+   "wickets": 10,
+   "bowlingAverage": 37.7,
+   "economy": 5.35,
+   "ballsPerWicket": 42.3,
+   "fourWicketInnings": 1,
+   "fiveWicketInnings": 0,
+   "catches": 0,
+   "stumpings": 0,
+   "dismissals": 0
   }
  },
  {
@@ -3042,6 +3083,47 @@
   }
  },
  {
+  "id": "cs-fec50c96",
+  "cricsheetId": "fec50c96",
+  "name": "Ashan Priyanjan",
+  "scorecardName": "SMA Priyanjan",
+  "nation": "Sri Lanka",
+  "era": [
+   "2010s"
+  ],
+  "primaryRole": "middle-order",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "match-data",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2013-12-25",
+  "lastMatch": "2015-07-26",
+  "stats": {
+   "matches": 23,
+   "innings": 20,
+   "runs": 420,
+   "notOuts": 2,
+   "highest": 74,
+   "battingAverage": 23.33,
+   "strikeRate": 80.46,
+   "ballsFaced": 522,
+   "fifties": 2,
+   "hundreds": 0,
+   "ballsBowled": 265,
+   "runsConceded": 233,
+   "wickets": 5,
+   "bowlingAverage": 46.6,
+   "economy": 5.28,
+   "ballsPerWicket": 53,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 7,
+   "stumpings": 0,
+   "dismissals": 7
+  }
+ },
+ {
   "id": "cs-4a745f65",
   "cricsheetId": "4a745f65",
   "name": "Ashley Nurse",
@@ -3330,6 +3412,47 @@
    "catches": 6,
    "stumpings": 0,
    "dismissals": 6
+  }
+ },
+ {
+  "id": "cs-7a98bc7a",
+  "cricsheetId": "7a98bc7a",
+  "name": "Atticus Browne",
+  "scorecardName": "PA Browne",
+  "nation": "West Indies",
+  "era": [
+   "2000s"
+  ],
+  "primaryRole": "middle-order",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "match-data",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2008-01-27",
+  "lastMatch": "2008-06-27",
+  "stats": {
+   "matches": 5,
+   "innings": 5,
+   "runs": 134,
+   "notOuts": 1,
+   "highest": 49,
+   "battingAverage": 33.5,
+   "strikeRate": 74.86,
+   "ballsFaced": 179,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 0,
+   "runsConceded": 0,
+   "wickets": 0,
+   "bowlingAverage": null,
+   "economy": null,
+   "ballsPerWicket": null,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 2,
+   "stumpings": 0,
+   "dismissals": 2
   }
  },
  {
@@ -4130,6 +4253,47 @@
    "catches": 4,
    "stumpings": 0,
    "dismissals": 4
+  }
+ },
+ {
+  "id": "cs-6c882e9a",
+  "cricsheetId": "6c882e9a",
+  "name": "Bhanuka Rajapaksa",
+  "scorecardName": "PBB Rajapaksa",
+  "nation": "Sri Lanka",
+  "era": [
+   "2020s"
+  ],
+  "primaryRole": "middle-order",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "match-data",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2021-07-18",
+  "lastMatch": "2021-09-04",
+  "stats": {
+   "matches": 5,
+   "innings": 5,
+   "runs": 89,
+   "notOuts": 0,
+   "highest": 65,
+   "battingAverage": 17.8,
+   "strikeRate": 104.71,
+   "ballsFaced": 85,
+   "fifties": 1,
+   "hundreds": 0,
+   "ballsBowled": 0,
+   "runsConceded": 0,
+   "wickets": 0,
+   "bowlingAverage": null,
+   "economy": null,
+   "ballsPerWicket": null,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 0,
+   "stumpings": 0,
+   "dismissals": 0
   }
  },
  {
@@ -5639,6 +5803,48 @@
   }
  },
  {
+  "id": "cs-dd37da14",
+  "cricsheetId": "dd37da14",
+  "name": "Chanaka Welegedara",
+  "scorecardName": "UWMBCA Welegedara",
+  "nation": "Sri Lanka",
+  "era": [
+   "2000s",
+   "2010s"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2009-12-15",
+  "lastMatch": "2010-06-22",
+  "stats": {
+   "matches": 10,
+   "innings": 3,
+   "runs": 4,
+   "notOuts": 2,
+   "highest": 2,
+   "battingAverage": 4,
+   "strikeRate": 44.44,
+   "ballsFaced": 9,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 457,
+   "runsConceded": 433,
+   "wickets": 15,
+   "bowlingAverage": 28.87,
+   "economy": 5.68,
+   "ballsPerWicket": 30.5,
+   "fourWicketInnings": 1,
+   "fiveWicketInnings": 1,
+   "catches": 2,
+   "stumpings": 0,
+   "dismissals": 2
+  }
+ },
+ {
   "id": "cs-9d450c28",
   "cricsheetId": "9d450c28",
   "name": "Chandrapaul Hemraj",
@@ -6856,47 +7062,6 @@
    "catches": 4,
    "stumpings": 0,
    "dismissals": 4
-  }
- },
- {
-  "id": "cs-5b7ab5a9",
-  "cricsheetId": "5b7ab5a9",
-  "name": "CV Varun",
-  "scorecardName": "CV Varun",
-  "nation": "India",
-  "era": [
-   "2020s"
-  ],
-  "primaryRole": "spinner",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "spin",
-  "roleSource": "owner",
-  "bowlingTypeSource": "owner",
-  "firstMatch": "2025-02-09",
-  "lastMatch": "2025-03-09",
-  "stats": {
-   "matches": 4,
-   "innings": 0,
-   "runs": 0,
-   "notOuts": 0,
-   "highest": 0,
-   "battingAverage": null,
-   "strikeRate": null,
-   "ballsFaced": 0,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 240,
-   "runsConceded": 190,
-   "wickets": 10,
-   "bowlingAverage": 19,
-   "economy": 4.75,
-   "ballsPerWicket": 24,
-   "fourWicketInnings": 1,
-   "fiveWicketInnings": 1,
-   "catches": 0,
-   "stumpings": 0,
-   "dismissals": 0
   }
  },
  {
@@ -8702,6 +8867,47 @@
   }
  },
  {
+  "id": "cs-3edb58fc",
+  "cricsheetId": "3edb58fc",
+  "name": "Dimitri Mascarenhas",
+  "scorecardName": "AD Mascarenhas",
+  "nation": "England",
+  "era": [
+   "2000s"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2007-07-01",
+  "lastMatch": "2009-09-17",
+  "stats": {
+   "matches": 20,
+   "innings": 13,
+   "runs": 245,
+   "notOuts": 2,
+   "highest": 52,
+   "battingAverage": 22.27,
+   "strikeRate": 95.33,
+   "ballsFaced": 257,
+   "fifties": 1,
+   "hundreds": 0,
+   "ballsBowled": 822,
+   "runsConceded": 634,
+   "wickets": 13,
+   "bowlingAverage": 48.77,
+   "economy": 4.63,
+   "ballsPerWicket": 63.2,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 4,
+   "stumpings": 0,
+   "dismissals": 4
+  }
+ },
+ {
   "id": "cs-400e2d4d",
   "cricsheetId": "400e2d4d",
   "name": "Dimuth Karunaratne",
@@ -9079,47 +9285,6 @@
    "catches": 5,
    "stumpings": 0,
    "dismissals": 5
-  }
- },
- {
-  "id": "cs-3473e5f2",
-  "cricsheetId": "3473e5f2",
-  "name": "DS Weerakkody",
-  "scorecardName": "DS Weerakkody",
-  "nation": "Sri Lanka",
-  "era": [
-   "2010s"
-  ],
-  "primaryRole": "middle-order",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": null,
-  "roleSource": "match-data",
-  "bowlingTypeSource": null,
-  "firstMatch": "2017-01-28",
-  "lastMatch": "2017-02-10",
-  "stats": {
-   "matches": 3,
-   "innings": 3,
-   "runs": 73,
-   "notOuts": 0,
-   "highest": 58,
-   "battingAverage": 24.33,
-   "strikeRate": 110.61,
-   "ballsFaced": 66,
-   "fifties": 1,
-   "hundreds": 0,
-   "ballsBowled": 0,
-   "runsConceded": 0,
-   "wickets": 0,
-   "bowlingAverage": null,
-   "economy": null,
-   "ballsPerWicket": null,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 2,
-   "stumpings": 0,
-   "dismissals": 2
   }
  },
  {
@@ -9635,9 +9800,9 @@
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
-  "bowlingType": null,
+  "bowlingType": "spin",
   "roleSource": "match-data",
-  "bowlingTypeSource": null,
+  "bowlingTypeSource": "kaggle",
   "firstMatch": "2017-08-31",
   "lastMatch": "2017-09-03",
   "stats": {
@@ -12630,6 +12795,48 @@
   }
  },
  {
+  "id": "cs-f5f18a18",
+  "cricsheetId": "f5f18a18",
+  "name": "HKSR Kaluhalamulla",
+  "scorecardName": "S Randiv",
+  "nation": "Sri Lanka",
+  "era": [
+   "2000s",
+   "2010s"
+  ],
+  "primaryRole": "spinner",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2009-12-18",
+  "lastMatch": "2016-06-24",
+  "stats": {
+   "matches": 31,
+   "innings": 18,
+   "runs": 280,
+   "notOuts": 2,
+   "highest": 56,
+   "battingAverage": 17.5,
+   "strikeRate": 73.3,
+   "ballsFaced": 382,
+   "fifties": 1,
+   "hundreds": 0,
+   "ballsBowled": 1437,
+   "runsConceded": 1214,
+   "wickets": 36,
+   "bowlingAverage": 33.72,
+   "economy": 5.07,
+   "ballsPerWicket": 39.9,
+   "fourWicketInnings": 1,
+   "fiveWicketInnings": 1,
+   "catches": 7,
+   "stumpings": 0,
+   "dismissals": 7
+  }
+ },
+ {
   "id": "cs-65a05fe6",
   "cricsheetId": "65a05fe6",
   "name": "HP Rinke",
@@ -12974,7 +13181,7 @@
  {
   "id": "cs-40c041ea",
   "cricsheetId": "40c041ea",
-  "name": "Imam-ul-Haq",
+  "name": "Imam ul-Haq",
   "scorecardName": "Imam-ul-Haq",
   "nation": "Pakistan",
   "era": [
@@ -19935,47 +20142,6 @@
   }
  },
  {
-  "id": "cs-85e0cf10",
-  "cricsheetId": "85e0cf10",
-  "name": "M Prasidh Krishna",
-  "scorecardName": "M Prasidh Krishna",
-  "nation": "India",
-  "era": [
-   "2020s"
-  ],
-  "primaryRole": "fast-bowler",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "pace",
-  "roleSource": "owner",
-  "bowlingTypeSource": "owner",
-  "firstMatch": "2021-03-23",
-  "lastMatch": "2026-07-19",
-  "stats": {
-   "matches": 26,
-   "innings": 8,
-   "runs": 2,
-   "notOuts": 5,
-   "highest": 2,
-   "battingAverage": 0.67,
-   "strikeRate": 10,
-   "ballsFaced": 20,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 1272,
-   "runsConceded": 1273,
-   "wickets": 45,
-   "bowlingAverage": 28.29,
-   "economy": 6,
-   "ballsPerWicket": 28.3,
-   "fourWicketInnings": 3,
-   "fiveWicketInnings": 0,
-   "catches": 4,
-   "stumpings": 0,
-   "dismissals": 4
-  }
- },
- {
   "id": "cs-6d9560f3",
   "cricsheetId": "6d9560f3",
   "name": "Maaz Sadaqat",
@@ -20014,6 +20180,47 @@
    "catches": 0,
    "stumpings": 0,
    "dismissals": 0
+  }
+ },
+ {
+  "id": "cs-58431ca0",
+  "cricsheetId": "58431ca0",
+  "name": "MADI Hemantha",
+  "scorecardName": "MADI Hemantha",
+  "nation": "Sri Lanka",
+  "era": [
+   "2020s"
+  ],
+  "primaryRole": "spinner",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2023-07-07",
+  "lastMatch": "2023-11-02",
+  "stats": {
+   "matches": 4,
+   "innings": 3,
+   "runs": 17,
+   "notOuts": 2,
+   "highest": 13,
+   "battingAverage": 17,
+   "strikeRate": 89.47,
+   "ballsFaced": 19,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 156,
+   "runsConceded": 143,
+   "wickets": 2,
+   "bowlingAverage": 71.5,
+   "economy": 5.5,
+   "ballsPerWicket": 78,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 1,
+   "stumpings": 0,
+   "dismissals": 1
   }
  },
  {
@@ -20183,49 +20390,6 @@
    "catches": 0,
    "stumpings": 0,
    "dismissals": 0
-  }
- },
- {
-  "id": "cs-bf1d7d3e",
-  "cricsheetId": "bf1d7d3e",
-  "name": "Mahmudullah",
-  "scorecardName": "Mahmudullah",
-  "nation": "Bangladesh",
-  "era": [
-   "2000s",
-   "2010s",
-   "2020s"
-  ],
-  "primaryRole": "middle-order",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": null,
-  "roleSource": "match-data",
-  "bowlingTypeSource": null,
-  "firstMatch": "2007-07-25",
-  "lastMatch": "2025-02-24",
-  "stats": {
-   "matches": 215,
-   "innings": 189,
-   "runs": 5131,
-   "notOuts": 47,
-   "highest": 128,
-   "battingAverage": 36.13,
-   "strikeRate": 77.92,
-   "ballsFaced": 6585,
-   "fifties": 29,
-   "hundreds": 4,
-   "ballsBowled": 3983,
-   "runsConceded": 3559,
-   "wickets": 75,
-   "bowlingAverage": 47.45,
-   "economy": 5.36,
-   "ballsPerWicket": 53.1,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 73,
-   "stumpings": 0,
-   "dismissals": 73
   }
  },
  {
@@ -20522,7 +20686,7 @@
  {
   "id": "cs-ae78bc32",
   "cricsheetId": "ae78bc32",
-  "name": "Manpreet Gony",
+  "name": "Manpreet Singh Grewal",
   "scorecardName": "MS Gony",
   "nation": "India",
   "era": [
@@ -22611,6 +22775,48 @@
   }
  },
  {
+  "id": "cs-e174dadd",
+  "cricsheetId": "e174dadd",
+  "name": "Mohammad Aamer",
+  "scorecardName": "Mohammad Amir",
+  "nation": "Pakistan",
+  "era": [
+   "2000s",
+   "2010s"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2009-07-30",
+  "lastMatch": "2019-10-02",
+  "stats": {
+   "matches": 60,
+   "innings": 30,
+   "runs": 363,
+   "notOuts": 10,
+   "highest": 73,
+   "battingAverage": 18.15,
+   "strikeRate": 81.76,
+   "ballsFaced": 444,
+   "fifties": 2,
+   "hundreds": 0,
+   "ballsBowled": 2953,
+   "runsConceded": 2359,
+   "wickets": 81,
+   "bowlingAverage": 29.12,
+   "economy": 4.79,
+   "ballsPerWicket": 36.5,
+   "fourWicketInnings": 2,
+   "fiveWicketInnings": 1,
+   "catches": 7,
+   "stumpings": 0,
+   "dismissals": 7
+  }
+ },
+ {
   "id": "cs-a86a37ab",
   "cricsheetId": "a86a37ab",
   "name": "Mohammad Ali",
@@ -22649,48 +22855,6 @@
    "catches": 0,
    "stumpings": 0,
    "dismissals": 0
-  }
- },
- {
-  "id": "cs-e174dadd",
-  "cricsheetId": "e174dadd",
-  "name": "Mohammad Amir",
-  "scorecardName": "Mohammad Amir",
-  "nation": "Pakistan",
-  "era": [
-   "2000s",
-   "2010s"
-  ],
-  "primaryRole": "fast-bowler",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "pace",
-  "roleSource": "test-data",
-  "bowlingTypeSource": "test-data",
-  "firstMatch": "2009-07-30",
-  "lastMatch": "2019-10-02",
-  "stats": {
-   "matches": 60,
-   "innings": 30,
-   "runs": 363,
-   "notOuts": 10,
-   "highest": 73,
-   "battingAverage": 18.15,
-   "strikeRate": 81.76,
-   "ballsFaced": 444,
-   "fifties": 2,
-   "hundreds": 0,
-   "ballsBowled": 2953,
-   "runsConceded": 2359,
-   "wickets": 81,
-   "bowlingAverage": 29.12,
-   "economy": 4.79,
-   "ballsPerWicket": 36.5,
-   "fourWicketInnings": 2,
-   "fiveWicketInnings": 1,
-   "catches": 7,
-   "stumpings": 0,
-   "dismissals": 7
   }
  },
  {
@@ -22860,6 +23024,49 @@
   }
  },
  {
+  "id": "cs-bf1d7d3e",
+  "cricsheetId": "bf1d7d3e",
+  "name": "Mohammad Mahmudullah",
+  "scorecardName": "Mahmudullah",
+  "nation": "Bangladesh",
+  "era": [
+   "2000s",
+   "2010s",
+   "2020s"
+  ],
+  "primaryRole": "middle-order",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "match-data",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2007-07-25",
+  "lastMatch": "2025-02-24",
+  "stats": {
+   "matches": 215,
+   "innings": 189,
+   "runs": 5131,
+   "notOuts": 47,
+   "highest": 128,
+   "battingAverage": 36.13,
+   "strikeRate": 77.92,
+   "ballsFaced": 6585,
+   "fifties": 29,
+   "hundreds": 4,
+   "ballsBowled": 3983,
+   "runsConceded": 3559,
+   "wickets": 75,
+   "bowlingAverage": 47.45,
+   "economy": 5.36,
+   "ballsPerWicket": 53.1,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 73,
+   "stumpings": 0,
+   "dismissals": 73
+  }
+ },
+ {
   "id": "cs-77191792",
   "cricsheetId": "77191792",
   "name": "Mohammad Mithun",
@@ -22945,7 +23152,7 @@
  {
   "id": "cs-3086f7a4",
   "cricsheetId": "3086f7a4",
-  "name": "Mohammad Nawaz",
+  "name": "Mohammad Nawaz (3)",
   "scorecardName": "Mohammad Nawaz",
   "nation": "Pakistan",
   "era": [
@@ -23988,47 +24195,6 @@
   }
  },
  {
-  "id": "cs-dd468277",
-  "cricsheetId": "dd468277",
-  "name": "N M'shangwe",
-  "scorecardName": "N M'shangwe",
-  "nation": "Zimbabwe",
-  "era": [
-   "2010s"
-  ],
-  "primaryRole": "spinner",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "spin",
-  "roleSource": "wikidata",
-  "bowlingTypeSource": "wikidata",
-  "firstMatch": "2011-10-25",
-  "lastMatch": "2013-08-03",
-  "stats": {
-   "matches": 4,
-   "innings": 4,
-   "runs": 38,
-   "notOuts": 0,
-   "highest": 16,
-   "battingAverage": 9.5,
-   "strikeRate": 88.37,
-   "ballsFaced": 43,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 216,
-   "runsConceded": 163,
-   "wickets": 1,
-   "bowlingAverage": 163,
-   "economy": 4.53,
-   "ballsPerWicket": 216,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 0,
-   "stumpings": 0,
-   "dismissals": 0
-  }
- },
- {
   "id": "cs-02e83ac5",
   "cricsheetId": "02e83ac5",
   "name": "Naeem Islam",
@@ -24651,6 +24817,47 @@
   }
  },
  {
+  "id": "cs-dd468277",
+  "cricsheetId": "dd468277",
+  "name": "Natsai Mushangwe",
+  "scorecardName": "N M'shangwe",
+  "nation": "Zimbabwe",
+  "era": [
+   "2010s"
+  ],
+  "primaryRole": "spinner",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2011-10-25",
+  "lastMatch": "2013-08-03",
+  "stats": {
+   "matches": 4,
+   "innings": 4,
+   "runs": 38,
+   "notOuts": 0,
+   "highest": 16,
+   "battingAverage": 9.5,
+   "strikeRate": 88.37,
+   "ballsFaced": 43,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 216,
+   "runsConceded": 163,
+   "wickets": 1,
+   "bowlingAverage": 163,
+   "economy": 4.53,
+   "ballsPerWicket": 216,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 0,
+   "stumpings": 0,
+   "dismissals": 0
+  }
+ },
+ {
   "id": "cs-a6c84e0e",
   "cricsheetId": "a6c84e0e",
   "name": "Naumanullah",
@@ -24939,6 +25146,47 @@
    "catches": 2,
    "stumpings": 0,
    "dismissals": 2
+  }
+ },
+ {
+  "id": "cs-127bc5ca",
+  "cricsheetId": "127bc5ca",
+  "name": "NGRP Jayasuriya",
+  "scorecardName": "NGRP Jayasuriya",
+  "nation": "Sri Lanka",
+  "era": [
+   "2010s"
+  ],
+  "primaryRole": "spinner",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2018-08-01",
+  "lastMatch": "2018-08-05",
+  "stats": {
+   "matches": 2,
+   "innings": 2,
+   "runs": 11,
+   "notOuts": 1,
+   "highest": 11,
+   "battingAverage": 11,
+   "strikeRate": 84.62,
+   "ballsFaced": 13,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 96,
+   "runsConceded": 95,
+   "wickets": 0,
+   "bowlingAverage": null,
+   "economy": 5.94,
+   "ballsPerWicket": null,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 0,
+   "stumpings": 0,
+   "dismissals": 0
   }
  },
  {
@@ -25654,47 +25902,6 @@
   }
  },
  {
-  "id": "cs-7a98bc7a",
-  "cricsheetId": "7a98bc7a",
-  "name": "PA Browne",
-  "scorecardName": "PA Browne",
-  "nation": "West Indies",
-  "era": [
-   "2000s"
-  ],
-  "primaryRole": "middle-order",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": null,
-  "roleSource": "match-data",
-  "bowlingTypeSource": null,
-  "firstMatch": "2008-01-27",
-  "lastMatch": "2008-06-27",
-  "stats": {
-   "matches": 5,
-   "innings": 5,
-   "runs": 134,
-   "notOuts": 1,
-   "highest": 49,
-   "battingAverage": 33.5,
-   "strikeRate": 74.86,
-   "ballsFaced": 179,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 0,
-   "runsConceded": 0,
-   "wickets": 0,
-   "bowlingAverage": null,
-   "economy": null,
-   "ballsPerWicket": null,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 2,
-   "stumpings": 0,
-   "dismissals": 2
-  }
- },
- {
   "id": "cs-e32d22f6",
   "cricsheetId": "e32d22f6",
   "name": "Pankaj Singh",
@@ -26025,47 +26232,6 @@
    "catches": 20,
    "stumpings": 3,
    "dismissals": 23
-  }
- },
- {
-  "id": "cs-6c882e9a",
-  "cricsheetId": "6c882e9a",
-  "name": "PBB Rajapaksa",
-  "scorecardName": "PBB Rajapaksa",
-  "nation": "Sri Lanka",
-  "era": [
-   "2020s"
-  ],
-  "primaryRole": "middle-order",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": null,
-  "roleSource": "match-data",
-  "bowlingTypeSource": null,
-  "firstMatch": "2021-07-18",
-  "lastMatch": "2021-09-04",
-  "stats": {
-   "matches": 5,
-   "innings": 5,
-   "runs": 89,
-   "notOuts": 0,
-   "highest": 65,
-   "battingAverage": 17.8,
-   "strikeRate": 104.71,
-   "ballsFaced": 85,
-   "fifties": 1,
-   "hundreds": 0,
-   "ballsBowled": 0,
-   "runsConceded": 0,
-   "wickets": 0,
-   "bowlingAverage": null,
-   "economy": null,
-   "ballsPerWicket": null,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 0,
-   "stumpings": 0,
-   "dismissals": 0
   }
  },
  {
@@ -26698,6 +26864,47 @@
   }
  },
  {
+  "id": "cs-85e0cf10",
+  "cricsheetId": "85e0cf10",
+  "name": "Prasidh Krishna",
+  "scorecardName": "M Prasidh Krishna",
+  "nation": "India",
+  "era": [
+   "2020s"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "owner",
+  "bowlingTypeSource": "owner",
+  "firstMatch": "2021-03-23",
+  "lastMatch": "2026-07-19",
+  "stats": {
+   "matches": 26,
+   "innings": 8,
+   "runs": 2,
+   "notOuts": 5,
+   "highest": 2,
+   "battingAverage": 0.67,
+   "strikeRate": 10,
+   "ballsFaced": 20,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 1272,
+   "runsConceded": 1273,
+   "wickets": 45,
+   "bowlingAverage": 28.29,
+   "economy": 6,
+   "ballsPerWicket": 28.3,
+   "fourWicketInnings": 3,
+   "fiveWicketInnings": 0,
+   "catches": 4,
+   "stumpings": 0,
+   "dismissals": 4
+  }
+ },
+ {
   "id": "cs-b7d1eadd",
   "cricsheetId": "b7d1eadd",
   "name": "Praveen Jayawickrama",
@@ -27070,47 +27277,6 @@
    "catches": 0,
    "stumpings": 0,
    "dismissals": 0
-  }
- },
- {
-  "id": "cs-9c821d2e",
-  "cricsheetId": "9c821d2e",
-  "name": "RA Herman",
-  "scorecardName": "RA Herman",
-  "nation": "South Africa",
-  "era": [
-   "2020s"
-  ],
-  "primaryRole": "middle-order",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": null,
-  "roleSource": "match-data",
-  "bowlingTypeSource": null,
-  "firstMatch": "2025-11-08",
-  "lastMatch": "2026-09-09",
-  "stats": {
-   "matches": 2,
-   "innings": 2,
-   "runs": 9,
-   "notOuts": 0,
-   "highest": 8,
-   "battingAverage": 4.5,
-   "strikeRate": 112.5,
-   "ballsFaced": 8,
-   "fifties": 0,
-   "hundreds": 0,
-   "ballsBowled": 0,
-   "runsConceded": 0,
-   "wickets": 0,
-   "bowlingAverage": null,
-   "economy": null,
-   "ballsPerWicket": null,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 1,
-   "stumpings": 0,
-   "dismissals": 1
   }
  },
  {
@@ -28418,6 +28584,88 @@
   }
  },
  {
+  "id": "cs-81147b00",
+  "cricsheetId": "81147b00",
+  "name": "Rizwan Ahmed",
+  "scorecardName": "Rizwan Ahmed",
+  "nation": "Pakistan",
+  "era": [
+   "2000s"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2008-02-02",
+  "lastMatch": "2008-02-02",
+  "stats": {
+   "matches": 1,
+   "innings": 0,
+   "runs": 0,
+   "notOuts": 0,
+   "highest": 0,
+   "battingAverage": null,
+   "strikeRate": null,
+   "ballsFaced": 0,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 24,
+   "runsConceded": 26,
+   "wickets": 0,
+   "bowlingAverage": null,
+   "economy": 6.5,
+   "ballsPerWicket": null,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 1,
+   "stumpings": 0,
+   "dismissals": 1
+  }
+ },
+ {
+  "id": "cs-afe830a2",
+  "cricsheetId": "afe830a2",
+  "name": "RMMP Rathnayake",
+  "scorecardName": "RMMP Rathnayake",
+  "nation": "Sri Lanka",
+  "era": [
+   "2020s"
+  ],
+  "primaryRole": "fast-bowler",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "pace",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2025-07-02",
+  "lastMatch": "2026-06-03",
+  "stats": {
+   "matches": 2,
+   "innings": 2,
+   "runs": 22,
+   "notOuts": 0,
+   "highest": 22,
+   "battingAverage": 11,
+   "strikeRate": 68.75,
+   "ballsFaced": 32,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 66,
+   "runsConceded": 64,
+   "wickets": 0,
+   "bowlingAverage": null,
+   "economy": 5.82,
+   "ballsPerWicket": null,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 2,
+   "stumpings": 0,
+   "dismissals": 2
+  }
+ },
+ {
   "id": "cs-8d8c24fd",
   "cricsheetId": "8d8c24fd",
   "name": "Robert Nicol",
@@ -29043,6 +29291,47 @@
    "catches": 18,
    "stumpings": 0,
    "dismissals": 18
+  }
+ },
+ {
+  "id": "cs-9c821d2e",
+  "cricsheetId": "9c821d2e",
+  "name": "Rubin Hermann",
+  "scorecardName": "RA Herman",
+  "nation": "South Africa",
+  "era": [
+   "2020s"
+  ],
+  "primaryRole": "middle-order",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": null,
+  "roleSource": "match-data",
+  "bowlingTypeSource": null,
+  "firstMatch": "2025-11-08",
+  "lastMatch": "2026-09-09",
+  "stats": {
+   "matches": 2,
+   "innings": 2,
+   "runs": 9,
+   "notOuts": 0,
+   "highest": 8,
+   "battingAverage": 4.5,
+   "strikeRate": 112.5,
+   "ballsFaced": 8,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 0,
+   "runsConceded": 0,
+   "wickets": 0,
+   "bowlingAverage": null,
+   "economy": null,
+   "ballsPerWicket": null,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 1,
+   "stumpings": 0,
+   "dismissals": 1
   }
  },
  {
@@ -30423,6 +30712,49 @@
    "catches": 6,
    "stumpings": 0,
    "dismissals": 6
+  }
+ },
+ {
+  "id": "cs-3473e5f2",
+  "cricsheetId": "3473e5f2",
+  "name": "Sandun Weerakkody",
+  "scorecardName": "DS Weerakkody",
+  "nation": "Sri Lanka",
+  "era": [
+   "2010s"
+  ],
+  "primaryRole": "wicketkeeper",
+  "secondaryRoles": [
+   "middle-order"
+  ],
+  "isWicketkeeper": true,
+  "bowlingType": null,
+  "roleSource": "kaggle",
+  "bowlingTypeSource": null,
+  "firstMatch": "2017-01-28",
+  "lastMatch": "2017-02-10",
+  "stats": {
+   "matches": 3,
+   "innings": 3,
+   "runs": 73,
+   "notOuts": 0,
+   "highest": 58,
+   "battingAverage": 24.33,
+   "strikeRate": 110.61,
+   "ballsFaced": 66,
+   "fifties": 1,
+   "hundreds": 0,
+   "ballsBowled": 0,
+   "runsConceded": 0,
+   "wickets": 0,
+   "bowlingAverage": null,
+   "economy": null,
+   "ballsPerWicket": null,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 2,
+   "stumpings": 0,
+   "dismissals": 2
   }
  },
  {
@@ -32395,7 +32727,7 @@
  {
   "id": "cs-48a1d7b7",
   "cricsheetId": "48a1d7b7",
-  "name": "Shimron Hetmyer",
+  "name": "Shimron Hetmeyer",
   "scorecardName": "SO Hetmyer",
   "nation": "West Indies",
   "era": [
@@ -32598,48 +32930,6 @@
    "catches": 29,
    "stumpings": 0,
    "dismissals": 29
-  }
- },
- {
-  "id": "cs-488b7e1b",
-  "cricsheetId": "488b7e1b",
-  "name": "SHT Kandamby",
-  "scorecardName": "SHT Kandamby",
-  "nation": "Sri Lanka",
-  "era": [
-   "2000s",
-   "2010s"
-  ],
-  "primaryRole": "middle-order",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": null,
-  "roleSource": "match-data",
-  "bowlingTypeSource": null,
-  "firstMatch": "2004-04-27",
-  "lastMatch": "2014-12-03",
-  "stats": {
-   "matches": 35,
-   "innings": 32,
-   "runs": 827,
-   "notOuts": 6,
-   "highest": 93,
-   "battingAverage": 31.81,
-   "strikeRate": 70.38,
-   "ballsFaced": 1175,
-   "fifties": 5,
-   "hundreds": 0,
-   "ballsBowled": 174,
-   "runsConceded": 173,
-   "wickets": 2,
-   "bowlingAverage": 86.5,
-   "economy": 5.97,
-   "ballsPerWicket": 87,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 7,
-   "stumpings": 0,
-   "dismissals": 7
   }
  },
  {
@@ -33014,47 +33304,6 @@
    "catches": 0,
    "stumpings": 0,
    "dismissals": 0
-  }
- },
- {
-  "id": "cs-fec50c96",
-  "cricsheetId": "fec50c96",
-  "name": "SMA Priyanjan",
-  "scorecardName": "SMA Priyanjan",
-  "nation": "Sri Lanka",
-  "era": [
-   "2010s"
-  ],
-  "primaryRole": "middle-order",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": null,
-  "roleSource": "match-data",
-  "bowlingTypeSource": null,
-  "firstMatch": "2013-12-25",
-  "lastMatch": "2015-07-26",
-  "stats": {
-   "matches": 23,
-   "innings": 20,
-   "runs": 420,
-   "notOuts": 2,
-   "highest": 74,
-   "battingAverage": 23.33,
-   "strikeRate": 80.46,
-   "ballsFaced": 522,
-   "fifties": 2,
-   "hundreds": 0,
-   "ballsBowled": 265,
-   "runsConceded": 233,
-   "wickets": 5,
-   "bowlingAverage": 46.6,
-   "economy": 5.28,
-   "ballsPerWicket": 53,
-   "fourWicketInnings": 0,
-   "fiveWicketInnings": 0,
-   "catches": 7,
-   "stumpings": 0,
-   "dismissals": 7
   }
  },
  {
@@ -34059,48 +34308,6 @@
    "catches": 13,
    "stumpings": 0,
    "dismissals": 13
-  }
- },
- {
-  "id": "cs-f5f18a18",
-  "cricsheetId": "f5f18a18",
-  "name": "Suraj Randiv",
-  "scorecardName": "S Randiv",
-  "nation": "Sri Lanka",
-  "era": [
-   "2000s",
-   "2010s"
-  ],
-  "primaryRole": "spinner",
-  "secondaryRoles": [],
-  "isWicketkeeper": false,
-  "bowlingType": "spin",
-  "roleSource": "kaggle",
-  "bowlingTypeSource": "kaggle",
-  "firstMatch": "2009-12-18",
-  "lastMatch": "2016-06-24",
-  "stats": {
-   "matches": 31,
-   "innings": 18,
-   "runs": 280,
-   "notOuts": 2,
-   "highest": 56,
-   "battingAverage": 17.5,
-   "strikeRate": 73.3,
-   "ballsFaced": 382,
-   "fifties": 1,
-   "hundreds": 0,
-   "ballsBowled": 1437,
-   "runsConceded": 1214,
-   "wickets": 36,
-   "bowlingAverage": 33.72,
-   "economy": 5.07,
-   "ballsPerWicket": 39.9,
-   "fourWicketInnings": 1,
-   "fiveWicketInnings": 1,
-   "catches": 7,
-   "stumpings": 0,
-   "dismissals": 7
   }
  },
  {
@@ -35311,6 +35518,48 @@
    "catches": 4,
    "stumpings": 0,
    "dismissals": 4
+  }
+ },
+ {
+  "id": "cs-488b7e1b",
+  "cricsheetId": "488b7e1b",
+  "name": "Thilina Kandamby",
+  "scorecardName": "SHT Kandamby",
+  "nation": "Sri Lanka",
+  "era": [
+   "2000s",
+   "2010s"
+  ],
+  "primaryRole": "middle-order",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "match-data",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2004-04-27",
+  "lastMatch": "2014-12-03",
+  "stats": {
+   "matches": 35,
+   "innings": 32,
+   "runs": 827,
+   "notOuts": 6,
+   "highest": 93,
+   "battingAverage": 31.81,
+   "strikeRate": 70.38,
+   "ballsFaced": 1175,
+   "fifties": 5,
+   "hundreds": 0,
+   "ballsBowled": 174,
+   "runsConceded": 173,
+   "wickets": 2,
+   "bowlingAverage": 86.5,
+   "economy": 5.97,
+   "ballsPerWicket": 87,
+   "fourWicketInnings": 0,
+   "fiveWicketInnings": 0,
+   "catches": 7,
+   "stumpings": 0,
+   "dismissals": 7
   }
  },
  {
@@ -36795,7 +37044,7 @@
  {
   "id": "cs-bafb9238",
   "cricsheetId": "bafb9238",
-  "name": "Usman Khan",
+  "name": "Usman Khan (2)",
   "scorecardName": "Usman Khan",
   "nation": "Pakistan",
   "era": [
@@ -36999,6 +37248,47 @@
    "catches": 3,
    "stumpings": 0,
    "dismissals": 3
+  }
+ },
+ {
+  "id": "cs-5b7ab5a9",
+  "cricsheetId": "5b7ab5a9",
+  "name": "V Chakravarthy",
+  "scorecardName": "CV Varun",
+  "nation": "India",
+  "era": [
+   "2020s"
+  ],
+  "primaryRole": "spinner",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "owner",
+  "bowlingTypeSource": "owner",
+  "firstMatch": "2025-02-09",
+  "lastMatch": "2025-03-09",
+  "stats": {
+   "matches": 4,
+   "innings": 0,
+   "runs": 0,
+   "notOuts": 0,
+   "highest": 0,
+   "battingAverage": null,
+   "strikeRate": null,
+   "ballsFaced": 0,
+   "fifties": 0,
+   "hundreds": 0,
+   "ballsBowled": 240,
+   "runsConceded": 190,
+   "wickets": 10,
+   "bowlingAverage": 19,
+   "economy": 4.75,
+   "ballsPerWicket": 24,
+   "fourWicketInnings": 1,
+   "fiveWicketInnings": 1,
+   "catches": 0,
+   "stumpings": 0,
+   "dismissals": 0
   }
  },
  {
@@ -37455,6 +37745,48 @@
    "catches": 29,
    "stumpings": 0,
    "dismissals": 29
+  }
+ },
+ {
+  "id": "cs-a97c8ec2",
+  "cricsheetId": "a97c8ec2",
+  "name": "Wanindu Hasaranga",
+  "scorecardName": "PWH de Silva",
+  "nation": "Sri Lanka",
+  "era": [
+   "2010s",
+   "2020s"
+  ],
+  "primaryRole": "spinner",
+  "secondaryRoles": [],
+  "isWicketkeeper": false,
+  "bowlingType": "spin",
+  "roleSource": "kaggle",
+  "bowlingTypeSource": "kaggle",
+  "firstMatch": "2017-07-02",
+  "lastMatch": "2026-06-03",
+  "stats": {
+   "matches": 63,
+   "innings": 54,
+   "runs": 1031,
+   "notOuts": 8,
+   "highest": 80,
+   "battingAverage": 22.41,
+   "strikeRate": 106.84,
+   "ballsFaced": 965,
+   "fifties": 4,
+   "hundreds": 0,
+   "ballsBowled": 2944,
+   "runsConceded": 2526,
+   "wickets": 98,
+   "bowlingAverage": 25.78,
+   "economy": 5.15,
+   "ballsPerWicket": 30,
+   "fourWicketInnings": 8,
+   "fiveWicketInnings": 4,
+   "catches": 16,
+   "stumpings": 0,
+   "dismissals": 16
   }
  },
  {
@@ -38344,9 +38676,9 @@
   "primaryRole": "middle-order",
   "secondaryRoles": [],
   "isWicketkeeper": false,
-  "bowlingType": null,
+  "bowlingType": "pace",
   "roleSource": "match-data",
-  "bowlingTypeSource": null,
+  "bowlingTypeSource": "kaggle",
   "firstMatch": "2022-03-18",
   "lastMatch": "2023-03-20",
   "stats": {

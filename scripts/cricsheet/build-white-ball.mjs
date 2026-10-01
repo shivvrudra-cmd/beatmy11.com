@@ -250,13 +250,25 @@ function main() {
     // A full name has 2+ words and no initials; a lone surname ("Chakravarthy") ranks low.
     return (initials === 0 && words.length >= 2 ? 1000 : 0) + (words.length >= 2 ? 200 : 0) + (words[0].length > 2 ? 100 : 0) + n.length;
   };
-  // A variant is only trusted if it agrees with the register's main name on the first initial and
-  // the surname. Cricsheet's alternate names contain errors (Pat Cummins's id also lists
-  // "Anderson Cummins", a different player), so the longest variant alone is not safe.
+  // Cricsheet's alternate names contain errors: Pat Cummins's id ("PJ Cummins") also lists
+  // "Anderson Cummins", who is a different registered player ("AC Cummins"). So an alias that does
+  // not fit this player's own register name is dropped when it fits ANOTHER registered player.
+  // Aliases that fit nobody else are kept: "PWH de Silva" really is "Wanindu Hasaranga".
+  const registerBySurname = new Map();
+  for (const r of people.values()) {
+    const k = norm(r.name.trim().split(/\s+/).slice(-1)[0]);
+    if (!registerBySurname.has(k)) registerBySurname.set(k, []);
+    registerBySurname.get(k).push(r);
+  }
+  const trustedAlias = (id, canonical, v) => {
+    if (sameIdentity(canonical, v)) return true;
+    const sameSurname = registerBySurname.get(norm(v.trim().split(/\s+/).slice(-1)[0])) ?? [];
+    return !sameSurname.some((r) => r.identifier !== id && sameIdentity(r.name, v));
+  };
   const bestName = (id, extra) => {
     const canonical = people.get(id)?.name ?? [...extra][0];
     const all = new Set([...(nameVariants.get(id) ?? []), ...extra]);
-    const ok = [...all].filter((v) => sameIdentity(canonical, v));
+    const ok = [...all].filter((v) => trustedAlias(id, canonical, v));
     return (ok.length ? ok : [canonical]).sort((a, b) => nameScore(b) - nameScore(a))[0];
   };
 
@@ -286,6 +298,8 @@ function main() {
   // Resolved from ODI/T20I (same Cricsheet id): nation and bowling type, reused for IPL players.
   const intlKnown = new Map();
 
+  // ---- pass 1: count every format
+  const counted = {};
   for (const fmt of FORMATS) {
     const dir = join(RAW, 'cricsheet', fmt.dir);
     const matches = [];
@@ -296,7 +310,48 @@ function main() {
       if (!fmt.intl && m.info.event?.name !== 'Indian Premier League') continue;
       matches.push(m);
     }
-    const acc = aggregate(matches, fmt);
+    counted[fmt.id] = { matches: matches.length, acc: aggregate(matches, fmt) };
+  }
+
+  // ---- who is who: each Cricsheet player's nation (international side; IPL-only players are
+  // treated as Indian domestic players), indexed by surname for the looser Kaggle match below.
+  const mainTeam = (p) => [...p.teams.entries()].sort((a, b) => b[1] - a[1])[0][0];
+  const nationOf = new Map();
+  for (const id of ['odi', 't20i']) for (const p of counted[id].acc.values()) if (!nationOf.has(p.id)) nationOf.set(p.id, mainTeam(p));
+  for (const p of counted.ipl.acc.values()) if (!nationOf.has(p.id)) nationOf.set(p.id, 'India');
+  const lastWord = (n) => norm(String(n).trim().split(/\s+/).slice(-1)[0]);
+  const csBySurname = new Map();
+  for (const [id, nation] of nationOf) {
+    const name = people.get(id)?.name;
+    if (!name) continue;
+    const key = `${lastWord(name)}|${nation}`;
+    if (!csBySurname.has(key)) csBySurname.set(key, []);
+    csBySurname.get(key).push({ id, name });
+  }
+  const kgBySurname = new Map();
+  for (const r of kaggle) {
+    const key = `${lastWord(r.fullname)}|${r.country_name}`;
+    if (!kgBySurname.has(key)) kgBySurname.set(key, []);
+    kgBySurname.get(key).push(r);
+  }
+  /**
+   * Looser Kaggle match for names the exact lookups miss ("HV Patel" ~ "Harshal Patel"): same
+   * nation and surname with a shared initial, accepted only when it is one-to-one in BOTH
+   * directions (exactly one Kaggle profile fits this player, and exactly one of our players fits
+   * that profile). Anything less certain is left unmatched.
+   */
+  const fuzzyKaggle = (id, regName, nation) => {
+    const key = `${lastWord(regName)}|${nation}`;
+    const fits = (kgBySurname.get(key) ?? []).filter((r) => sameIdentity(regName, r.fullname));
+    if (fits.length !== 1) return null;
+    const rivals = (csBySurname.get(key) ?? []).filter((c) => sameIdentity(c.name, fits[0].fullname));
+    return rivals.length === 1 && rivals[0].id === id ? fits[0] : null;
+  };
+
+  // ---- pass 2: roles and output
+  for (const fmt of FORMATS) {
+    const { acc } = counted[fmt.id];
+    const matches = { length: counted[fmt.id].matches };
     const out = [];
     const counts = { matches: matches.length, players: acc.size, kept: 0, roleSource: {}, excluded: {} };
     const exclude = (why) => { counts.excluded[why] = (counts.excluded[why] ?? 0) + 1; };
@@ -338,6 +393,11 @@ function main() {
         kg = hits.size === 1 ? [...hits][0] : hits.size > 1 ? 'AMBIGUOUS' : null;
       }
       if (kg === 'AMBIGUOUS') { report.ambiguous.push({ format: fmt.id, name: full, id: p.id }); kg = null; }
+      let kgHow = kg ? 'exact' : null;
+      if (!kg && reg.name && lookupNation) {
+        kg = fuzzyKaggle(p.id, reg.name, lookupNation);
+        if (kg) { kgHow = 'surname + initial, one-to-one'; counts.fuzzy = (counts.fuzzy ?? 0) + 1; }
+      }
       // Still only initials ("A T Rayudu")? Use the matched Kaggle profile's full name if it has none.
       let displayName = full;
       if (kg?.fullname && nameScore(full) < 1000 && nameScore(kg.fullname) >= 1000 && sameIdentity(reg.name ?? full, kg.fullname)) displayName = kg.fullname;
@@ -447,7 +507,8 @@ function writeReports(report) {
   for (const [id, c] of Object.entries(report.formats)) {
     L.push(`## ${id.toUpperCase()}`, '', `- Matches counted: ${c.matches}`, `- Players seen: ${c.players}`, `- Players kept: ${c.kept}`);
     for (const [why, n] of Object.entries(c.excluded)) L.push(`- Excluded, ${why}: ${n}`);
-    L.push(`- Role source: ${Object.entries(c.roleSource).map(([k, v]) => `${k} ${v}`).join(', ')}`, '');
+    L.push(`- Role source: ${Object.entries(c.roleSource).map(([k, v]) => `${k} ${v}`).join(', ')}`);
+    L.push(`- Kaggle profiles matched by surname + initial (one-to-one both ways): ${c.fuzzy ?? 0}`, '');
   }
   L.push('## Provisional role rules (owner to confirm)', '',
     '- Regular bowler: averages at least 40% of the format\'s bowling quota per match (ODI 24 balls, T20 9.6 balls).',

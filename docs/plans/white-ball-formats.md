@@ -33,7 +33,7 @@ careers, exactly like `src/lib/seven-metrics.ts`.
 The owner approved *which* metrics, not their weights or thresholds. Until confirmed, use these
 neutral defaults, keep them in ONE config object per format, and label them `PROVISIONAL`:
 
-- Metric weights: equal (1/4 each) for batting and for bowling.
+- Metric weights: ODI equal (1/4 each). T20I and IPL (owner, 2026-10-01: strike rate and economy count more): strike rate 40% of batting, economy 40% of bowling, the other three metrics 20% each. The 40/20 split is a proposal for the owner to confirm.
 - Shrinkage prior: 30 matches (same as Test).
 - Longevity full credit / long-career bonus: ODI 100 / 330 matches; T20I 50 / 160; IPL 60 / 280 (the bonus completes only at the longest careers in the data, like 200 Tests in the Test game).
 - Team blend: 40% batting / 50% bowling / 10% fielding (same as Test).

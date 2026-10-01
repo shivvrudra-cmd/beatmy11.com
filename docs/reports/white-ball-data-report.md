@@ -8,31 +8,34 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 
 - Matches counted: 2576
 - Players seen: 1998
-- Players kept: 930
+- Players kept: 938
 - Excluded, first Cricsheet ODI before 2004-01-01 (career likely began earlier, incomplete): 250
 - Excluded, not one of the 10 game nations: 729
-- Excluded, regular bowler, spin/pace unknown (owner to supply): 85
+- Excluded, regular bowler, spin/pace unknown (owner to supply): 77
 - Excluded, never batted or bowled regularly: 4
-- Role source: match-data 395, kaggle 399, test-data 113, match-data (stumpings) 2, owner 12, wikidata 9
+- Role source: match-data 394, kaggle 410, test-data 112, match-data (stumpings) 2, owner 12, wikidata 8
+- Kaggle profiles matched by surname + initial (one-to-one both ways): 16
 
 ## T20I
 
 - Matches counted: 3558
 - Players seen: 4755
-- Players kept: 1010
-- Excluded, regular bowler, spin/pace unknown (owner to supply): 72
+- Players kept: 1014
+- Excluded, regular bowler, spin/pace unknown (owner to supply): 68
 - Excluded, not one of the 10 game nations: 3658
 - Excluded, never batted or bowled regularly: 15
-- Role source: match-data 434, kaggle 413, test-data 139, owner 14, match-data (stumpings) 5, wikidata 5
+- Role source: match-data 434, kaggle 419, test-data 138, owner 14, match-data (stumpings) 5, wikidata 4
+- Kaggle profiles matched by surname + initial (one-to-one both ways): 13
 
 ## IPL
 
 - Matches counted: 1243
 - Players seen: 809
-- Players kept: 716
-- Excluded, regular bowler, spin/pace unknown (owner to supply): 86
+- Players kept: 719
+- Excluded, regular bowler, spin/pace unknown (owner to supply): 83
 - Excluded, never batted or bowled regularly: 7
-- Role source: match-data 337, match-data (stumpings) 3, owner 12, kaggle 288, test-data 73, wikidata 3
+- Role source: match-data 336, match-data (stumpings) 3, owner 12, kaggle 292, test-data 73, wikidata 3
+- Kaggle profiles matched by surname + initial (one-to-one both ways): 11
 
 ## Provisional role rules (owner to confirm)
 

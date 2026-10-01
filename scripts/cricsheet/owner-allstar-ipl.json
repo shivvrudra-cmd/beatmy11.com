@@ -1,0 +1,16 @@
+{
+  "note": "IPL All-Star XI, approved by the owner on 2026-10-01. Fixed: it is NOT recomputed when ratings change. Names are the display names in src/data/formats/ipl.json.",
+  "xi": [
+    { "name": "Virat Kohli", "role": "opener" },
+    { "name": "Chris Gayle", "role": "opener" },
+    { "name": "Rohit Sharma", "role": "middle-order" },
+    { "name": "SA Yadav", "role": "middle-order" },
+    { "name": "Suresh Raina", "role": "middle-order" },
+    { "name": "AB de Villiers", "role": "wicketkeeper" },
+    { "name": "Yuzvendra Chahal", "role": "spinner" },
+    { "name": "Rashid Khan", "role": "spinner" },
+    { "name": "Lasith Malinga", "role": "fast-bowler" },
+    { "name": "Jasprit Bumrah", "role": "fast-bowler" },
+    { "name": "Bhuvneshwar Kumar", "role": "fast-bowler" }
+  ]
+}

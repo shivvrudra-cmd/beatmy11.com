@@ -34,6 +34,9 @@ for (const f of Object.values(WB_FORMATS)) {
   const s = f.teamShares;
   ok(Math.abs(s.batting + s.bowling + s.fielding - 1) < 1e-9, `${f.id}: team shares sum to 1`);
 }
+const w = (f: 'ipl' | 't20i' | 'odi', half: 'batting' | 'bowling', key: string) => WB_FORMATS[f][half].find((m) => m.key === key)!.weight;
+ok(w('ipl', 'batting', 'strikeRate') > w('ipl', 'batting', 'battingAverage') && w('t20i', 'bowling', 'economy') > w('t20i', 'bowling', 'bowlingAverage'), 'T20: strike rate and economy weigh more than the other metrics (owner)');
+ok(w('odi', 'batting', 'strikeRate') === w('odi', 'batting', 'battingAverage'), 'ODI: equal weights for now');
 ok(WB_FORMATS.odi.batting.some((m) => m.key === 'centuryRate') && WB_FORMATS.ipl.batting.some((m) => m.key === 'fiftyRate'), 'ODI uses century rate, T20 uses fifty rate');
 ok(WB_FORMATS.ipl.bowling.filter((m) => !m.higherIsBetter).map((m) => m.key).sort().join() === 'ballsPerWicket,bowlingAverage,economy', 'lower-is-better: average, economy, balls per wicket');
 

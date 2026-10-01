@@ -92,10 +92,21 @@ const ECON: Omit<WbMetric, 'weight'> = { key: 'economy', label: 'Economy rate', 
 const equal = (defs: Omit<WbMetric, 'weight'>[]): WbMetric[] => defs.map((d) => ({ ...d, weight: 1 / defs.length }));
 const TEAM_SHARES = { batting: 0.4, bowling: 0.5, fielding: 0.1 };
 
-const T20_BATTING = equal([BAT_AVG, RUNS_PM, STRIKE,
-  { key: 'fiftyRate', label: 'Fifty rate', higherIsBetter: true, value: (s) => per((n(s.fifties) ?? NaN) + (n(s.hundreds) ?? NaN), s.matches) }]);
-const T20_BOWLING = equal([BOWL_AVG, WKTS_PM, ECON,
-  { key: 'ballsPerWicket', label: 'Balls per wicket', higherIsBetter: false, value: (s) => positive(s.ballsPerWicket) }]);
+/**
+ * T20 weights (owner, 2026-10-01): strike rate and economy count for more than the other
+ * metrics. The exact split is Claude's proposal until the owner confirms it: the headline
+ * metric takes 40% of its half and the other three share the rest equally (20% each).
+ */
+const T20_HEADLINE = 0.4;
+const T20_OTHER = (1 - T20_HEADLINE) / 3;
+const FIFTY_RATE: Omit<WbMetric, 'weight'> = { key: 'fiftyRate', label: 'Fifty rate', higherIsBetter: true, value: (s) => per((n(s.fifties) ?? NaN) + (n(s.hundreds) ?? NaN), s.matches) };
+const BALLS_PW: Omit<WbMetric, 'weight'> = { key: 'ballsPerWicket', label: 'Balls per wicket', higherIsBetter: false, value: (s) => positive(s.ballsPerWicket) };
+const T20_BATTING: WbMetric[] = [
+  { ...BAT_AVG, weight: T20_OTHER }, { ...RUNS_PM, weight: T20_OTHER }, { ...STRIKE, weight: T20_HEADLINE }, { ...FIFTY_RATE, weight: T20_OTHER },
+];
+const T20_BOWLING: WbMetric[] = [
+  { ...BOWL_AVG, weight: T20_OTHER }, { ...WKTS_PM, weight: T20_OTHER }, { ...ECON, weight: T20_HEADLINE }, { ...BALLS_PW, weight: T20_OTHER },
+];
 
 export const WB_FORMATS: Record<WbFormat['id'], WbFormat> = {
   odi: {

@@ -1,8 +1,8 @@
 /**
  * calibrate-ipl.ts — writes src/data/formats/ipl-series.json:
  *
- *   allStarXI     the CANDIDATE opponent for the IPL series: the highest-scoring legal XI the
- *                 engine can field from primary roles (owner to approve or change).
+ *   allStarXI     the opponent for the IPL series: the XI the owner approved on 2026-10-01
+ *                 (owner-allstar-ipl.json), with its team score under the current engine.
  *   calibration   team scores of simulated human-like drafts, for the "top X% of drafts" line.
  *
  * It also prints how often those drafts would win the series under the current ladder
@@ -14,10 +14,10 @@
  * Run: npx esbuild scripts/cricsheet/calibrate-ipl.ts --bundle --platform=node --format=cjs \
  *        --outfile=.test-dist/calibrate-ipl.cjs --log-level=error && node .test-dist/calibrate-ipl.cjs
  */
-import { writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import {
   createDraft, applySpinResult, applyDraftPick, validatePoolPick, placementOptions, countsOf,
-  reachableShapes, isXIValid, supplyFor, slotOf, XI_SLOTS, XI_SHAPES,
+  reachableShapes, isXIValid, supplyFor, slotOf, XI_SLOTS,
   type NormalizedPlayer, type DraftState, type XiRole,
 } from '../../src/lib/player-logic';
 import { iplPlayers, iplPlayersByBlock, iplSpinCombos } from '../../src/lib/formats/ipl-store';
@@ -32,23 +32,28 @@ const combos = iplSpinCombos();
 const ctx = buildWbContext(players, FMT);
 const poolFor = (era: string, nation: string) => byBlock[era].filter((p) => p.nation === nation);
 
-// ---------------------------------------------------------------- All-Star XI candidate
+// ---------------------------------------------------------------- All-Star XI (owner-approved, fixed)
+// The opponent is the XI the owner approved (scripts/cricsheet/owner-allstar-ipl.json), scored in
+// the roles they approved. It is never recomputed from ratings, so changing a weight changes the
+// XI's score but not who is in it.
 const rated = players.map((p) => ({ p, s: scoreWbPlayer(p, null, ctx, FMT) }));
-const top = (role: string, n: number, skip = new Set<string>()) =>
-  rated.filter((x) => x.s.role === role && !skip.has(x.p.id)).sort((a, b) => b.s.score - a.s.score).slice(0, n);
-const base = [...top('opener', 2), ...top('middle-order', 3), ...top('wicketkeeper', 1)];
-const pace = top('fast-bowler', 3);
-let best: { xi: typeof rated; score: number } | null = null;
-for (const shape of XI_SHAPES) {
-  const flex = [...top('all-rounder', shape['all-rounder']), ...top('spinner', shape.spinner)];
-  if (flex.length !== 2) continue;
-  const xi = [...base, ...flex, ...pace];
-  const score = wbTeamBlend(xi.map((x) => ({ player: x.p, declaredRole: x.s.role })), ctx, FMT).score;
-  if (!best || score > best.score) best = { xi, score };
-}
-if (!best) throw new Error('no legal All-Star XI');
-console.log(`All-Star XI candidate (team score ${best.score}):`);
+const approved: { name: string; role: string }[] = JSON.parse(readFileSync('scripts/cricsheet/owner-allstar-ipl.json', 'utf8')).xi;
+if (approved.length !== 11) throw new Error('owner-allstar-ipl.json must list exactly 11 players');
+const xiPlayers = approved.map((a) => {
+  const hits = players.filter((p) => p.name === a.name);
+  if (hits.length !== 1) throw new Error(`All-Star XI: "${a.name}" matches ${hits.length} IPL players; fix owner-allstar-ipl.json`);
+  return { p: hits[0], role: a.role, s: scoreWbPlayer(hits[0], a.role, ctx, FMT) };
+});
+const best = {
+  xi: xiPlayers,
+  score: wbTeamBlend(xiPlayers.map((x) => ({ player: x.p, declaredRole: x.role })), ctx, FMT).score,
+};
+console.log(`All-Star XI (owner-approved; team score ${best.score}):`);
 for (const x of best.xi) console.log(`  ${x.s.role.padEnd(13)} ${x.p.name.padEnd(24)} ${x.s.score}  (${x.p.stats.matches} matches)`);
+// For information only: what the engine itself would pick today.
+const top = (role: string, n: number) => rated.filter((x) => x.s.role === role).sort((a, b) => b.s.score - a.s.score).slice(0, n);
+console.log('engine top-rated now: ' + ['opener', 'middle-order', 'wicketkeeper', 'all-rounder', 'spinner', 'fast-bowler']
+  .map((r) => `${r}: ${top(r, 3).map((x) => x.p.name).join(', ')}`).join(' | '));
 
 // ---------------------------------------------------------------- human-like drafter
 const clamp01 = (x: number) => Math.max(0, Math.min(1, x));
@@ -138,7 +143,7 @@ console.log(`series wins: ${(wins * 100).toFixed(1)}% of simulated drafts`);
 writeFileSync(
   'src/data/formats/ipl-series.json',
   JSON.stringify({
-    note: 'CANDIDATE All-Star XI and simulated calibration; owner to confirm (docs/plans/white-ball-formats.md).',
+    note: 'All-Star XI approved by the owner (scripts/cricsheet/owner-allstar-ipl.json); calibration is a simulated sample.',
     generated: new Date().toISOString().slice(0, 10),
     allStarXI: best.xi.map((x) => ({ id: x.p.id, name: x.p.name, role: x.s.role })),
     allStarScore: best.score,
