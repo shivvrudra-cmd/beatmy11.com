@@ -3,564 +3,468 @@
 > **Purpose of this file:** give any AI assistant (or human) the full picture of what
 > BeatMy11 is and what has actually been built, so it can work on the project without
 > guessing. Facts here come from the code in this repo, not from memory.
-> Last updated: 2026-10-01 — **regenerated from the code and git history at
-> `origin/master` commit `498e793`** (the 2026-09-25 version was badly stale: it said
-> the old model was live and the result was two scores). Anything the code could not
-> settle is marked `UNCONFIRMED - owner to confirm`. `beatmy11.md` is the original
-> vision/spec document and is **partly superseded** — where the two disagree, this
-> file describes what is live. `SCORING_REVIEW.md` is a generated snapshot of the
-> scoring numbers (see the pointer at its top).
+> Last updated: 2026-10-02 — **regenerated from the code at `origin/master` commit
+> `5030e14`** (the previous version described a Test-only game that showed player ratings;
+> both are no longer true). Anything the code could not settle is marked
+> `UNCONFIRMED - owner to confirm`. Numbers were re-run on 2026-10-02 unless a line says otherwise.
+> Other documents: `docs/plans/` (decisions and plans), `docs/plans/future-ideas.md` (parked
+> ideas), `docs/reports/` (generated data reports), `beatmy11.md` (the original vision, largely
+> superseded).
 
 ---
 
 ## 1. What BeatMy11 is
 
-BeatMy11 is a fantasy cricket web game (Astro + React islands + Tailwind +
-TypeScript), hosted on Cloudflare Workers with a D1 database. The loop:
+A fantasy cricket web game (Astro + React islands + Tailwind + TypeScript) on Cloudflare
+Workers with a D1 database. There are now **four formats and two ways to play**.
 
-1. The user builds an **all-time Test XI** through a spin-based draft (`/play`).
-2. The user's XI is scored with the seven-metric engine and compared with a
-   **fixed, deterministic house XI**, called the **World XI** in the UI (`/matchup`).
-3. The result is a **five-Test series** between the two XIs, with a share card and a
-   shareable link.
+| | Test | ODI | T20I | IPL |
+|---|---|---|---|---|
+| Spin draft | `/play` | `/odi/play` | `/t20i/play` | `/ipl/play` |
+| Result | `/matchup` | `/odi/matchup` | `/t20i/matchup` | `/ipl/matchup` |
+| Pick any XI | `/pick` | `/odi/pick` | `/t20i/pick` | `/ipl/pick` |
+| A spin draws | era × nation | decade × nation | decade × nation | season block × franchise |
+| Fixed opponent | World XI | World XI | World XI | All-Star XI |
+| Engine | `seven-metrics.ts` | `white-ball-metrics.ts` | same | same |
+| Daily challenge, friend-challenge links, `/r/` share pages, telemetry | yes | no | no | no |
 
-**How the scoreline is chosen** (`src/lib/series.ts`, current code — head-to-head,
-since 2026-09-30):
+**The spin draft loop** (all formats): six spins give exactly eleven picks into fixed slots →
+the XI is scored and compared with the format's fixed opponent → a **five-match series**
+scoreline, shown on a three-screen result page with a share card.
 
-1. `gap = userTeamScore − houseTeamScore` (both from `teamBlend`, see §6).
-2. A seeded Gaussian **wobble** is added: `gap' = gap + 2.5·ε` (`WOBBLE_SIGMA = 2.5`),
-   seeded from the XI (`xiSeed`: FNV-1a over sorted `id:role` pairs), so the same XI
-   always gets the same series but a near-level XI can land either side.
-3. `gap'` is cut into seven scorelines by `GAP_CUTS`. Every cut is **par plus a fixed
-   offset** (offsets -14, -8, -1, +1, +4, +7), with `PAR_GAP = -7` (since 2026-10-01),
-   so `GAP_CUTS = [-21, -15, -8, -6, -3, 0]` and changing `PAR_GAP` moves the whole ladder:
+**Pick any XI** (2026-10-02): no spins. Search every player, fill the same eleven slots, send a
+link to a friend, who picks their own XI; both see the same five-match series. See §9.
 
-   | gap' (user − World XI) | scoreline |
+**How a scoreline is chosen** (`src/lib/series.ts`):
+
+1. `gap = userTeamScore − opponentTeamScore`.
+2. A seeded Gaussian wobble is added (`WOBBLE_SIGMA = 2.5`, seeded from the XI by `xiSeed`), so
+   the same XI always gets the same series.
+3. The wobbled gap is cut into seven scorelines. Every cut is **par plus a fixed offset**
+   (−14, −8, −1, +1, +4, +7):
+
+   | wobbled gap, relative to par | scoreline |
    |---|---|
-   | below −21 | 0–5 |
-   | −21 to −15 | 1–4 |
-   | −15 to −8 | 2–3 |
-   | −8 to −6 | 2–2 (one draw) |
-   | −6 to −3 | 3–2 |
-   | −3 to 0 | 4–1 |
-   | 0 or more | 5–0 (level with or ahead of the World XI) |
+   | below −14 | 0–5 |
+   | −14 to −8 | 1–4 |
+   | −8 to −1 | 2–3 |
+   | −1 to +1 | 2–2 (one draw; a tie or washout in limited overs) |
+   | +1 to +4 | 3–2 |
+   | +4 to +7 | 4–1 |
+   | +7 or more | 5–0 |
 
-   (Before 2026-10-01 par was −4 and the two big-win cuts were fixed at gaps 0 and +3,
-   so a 4–1 needed out-scoring the World XI. That rule is gone. A series win is gap' ≥ −6,
-   i.e. 3–2 or better; the 2–2 draw is not a win.)
+4. Par per format (difficulty):
 
-4. Each Test gets a venue in fixed order (Lord's, MCG, Eden Gardens, Newlands,
-   Kensington Oval), a result consistent with the scoreline (a 3–2 / 2–3 series is
-   level 2–2 going into the fifth Test), and one flavour headline whose hero comes
-   from the side that won it, with figures scaled from the hero's real career
-   numbers. It is **not** a ball-by-ball simulation.
-5. The **calibration sample** (`src/data/series-calibration.json`, 600 team scores
-   from a simulated "human-like" drafter, generated 2026-09-30 by
-   `scripts/calibrate-series.ts`) is used **only for the "top X% of drafts" line**
-   (and by the script's reports). It does **not** pick the scoreline any more. The
-   older design (rank vs the sample picks the scoreline, 5–0 5% … 0–5 10%) was
-   replaced on 2026-09-30; `OUTCOME_BANDS[].share` survives only as a design reference.
+   | Format | Par | Opponent score | Simulated series wins (human-like drafter, 600 drafts) | Status |
+   |---|---|---|---|---|
+   | Test | −7 (`PAR_GAP`) | 89.4 | 6.7% (smart drafter 26.6%); figures from 2026-10-01, not re-run | owner-approved |
+   | ODI | −10 | 92.4 | 16.2% | PROVISIONAL, tuned to about 15% |
+   | T20I | −12.5 | 93.8 | 14.0% | PROVISIONAL, tuned to about 15% |
+   | IPL | −18.5 | 92.8 | 14.8% | PROVISIONAL, tuned to about 15% |
 
-**Does the house XI score influence the result? Yes — completely.** The scoreline
-comes from `userScore − houseScore` (plus wobble). Change the house XI, the engine
-or any constant and difficulty changes. Current numbers: the house XI scores **89.4**
-under the live engine (§6c); the simulated drafters in the calibration sample score
-62.1–86.5 (median 76.4, 90th percentile 82.1) so none of them out-scores it. Applying
-the live cuts and wobble to 5000 simulated drafts per drafter model
-(`docs/difficulty-analysis.md`, PR #4; shipped constants re-verified on 2026-10-01)
-gives, in percent:
+   White-ball pars are written by `scripts/cricsheet/calibrate-white-ball.ts` into
+   `src/data/formats/<format>-series.json`. The owner said "ok" to about 15% for ODI and T20I;
+   the IPL figure was reset after the stint change (§6) and **is `UNCONFIRMED - owner to confirm`**.
+   How often real players win is `UNCONFIRMED - owner to confirm` (production D1 was not read).
 
-| | 0–5 | 1–4 | 2–3 | 2–2 | 3–2 | 4–1 | 5–0 | series wins |
-|---|---|---|---|---|---|---|---|---|
-| Owner's intended shares | 10 | 10 | 35 | 10 | 20 | 10 | 5 | **35** |
-| Human-like drafter, par −7 | 8.0 | 28.9 | 47.8 | 8.6 | 5.3 | 1.4 | 0.1 | **6.7** |
-| Score-greedy "smart" drafter, par −7 | 1.2 | 9.4 | 46.6 | 16.1 | 17.0 | 7.8 | 1.8 | **26.6** |
-| (previous, par −4: human-like / smart) | | | | | | | | 1.5 / 9.7 |
+5. Each match gets a venue, a result consistent with the scoreline, a headline performer and a
+   second performer. It is **not** a ball-by-ball simulation (§8).
 
-`PAR_GAP` history: −11.5 → −9.5 → −4 → **−7** (2026-10-01, owner-approved; ladder
-shift). The owner's 35% is the target for real players. **How often real players beat
-the house is UNCONFIRMED - owner to confirm** (D1 `drafts` holds the real scores; this
-doc did not read production). Re-tune `PAR_GAP` once enough real games exist.
-
-`/matchup` shows the animated Test-by-Test reveal, the scoreline, verdict copy, the
-XI's "top X% of drafts" rank, a share card (PNG) with Share / Save buttons, and —
-revealed here for the first time — every player's rating (0–100) for both XIs, with
-a "Best pick" badge on the user's highest-rated player. The two raw team scores are
-**not displayed** (owner decision, 2026-09-29), but they are what drives the series
-and are sent anonymously to D1 (§12).
-
-Repo: `https://github.com/shivvrudra-cmd/beatmy11.com` (public). `master` is the
-live branch and deploys to Cloudflare (see §2). Work goes through feature branches
-and PRs (CLAUDE.md); the owner tests on their own PC.
+Repo: `https://github.com/shivvrudra-cmd/beatmy11.com` (public). `master` is live. Work goes
+through feature branches and PRs; the owner merges (CLAUDE.md).
 
 ---
 
 ## 2. Tech stack & repo layout
 
-- **Astro 7** (static site, 13 pages built), **React 19 islands** (shadcn/ui, lucide,
-  motion), **Tailwind 4**, **TypeScript**. Node 24 (`.node-version`).
-- **Hosting:** Cloudflare Workers with static assets. `wrangler.jsonc`: worker
-  `beatmy11`, entry `worker/index.ts`, assets from `./dist`, the Worker runs **only
-  for `/api/*`** (`run_worker_first`), custom domains `beatmy11.com` and
-  `www.beatmy11.com`, `workers_dev: false`, `preview_urls: true`, D1 binding `DB`
-  (database `beatmy11`; a separate empty D1 database is used for preview deployments).
-  Git commits show deploys moved Pages → Workers on 2026-09-30. Whether Cloudflare
-  auto-deploys from GitHub `master` is **UNCONFIRMED - owner to confirm** (commit
-  "Trigger Cloudflare auto-deploy" suggests it; nothing in the repo defines it).
-- **Tests:** `npm test` (esbuild-bundled node suites, see §8), `npm run test:unit`
-  (Vitest), `npm run test:e2e` (Playwright). `npm run build` must pass before any
-  change is done.
+- **Astro 7** (static, **35 pages built**), **React 19** islands, **Tailwind 4**, TypeScript.
+  Node 24 (`.node-version`).
+- **Hosting:** Cloudflare Workers with static assets (`wrangler.jsonc`): worker `beatmy11`,
+  entry `worker/index.ts`, assets from `./dist`, the Worker runs only for `/api/*`, custom
+  domains `beatmy11.com` and `www.beatmy11.com`, `workers_dev: false`, `preview_urls: true`,
+  D1 binding `DB` (database `beatmy11`; previews use a separate empty database). Each branch
+  gets a preview at `https://<branch-with-dashes>-beatmy11.shivvrudra.workers.dev`, and merging
+  to `master` deploys (the owner confirmed "merged and deployed" repeatedly on 2026-10-01/02).
+- **Tests:** `npm test` (14 esbuild-bundled node suites), `npx vitest run`, `npx playwright test`.
+  `npm run build` must pass before any change is done.
 
 ```
 src/
   pages/
-    index.astro       Landing page ("Floodlit" one-screen home)
-    play.astro        The spin draft + XI builder ("Floodlit night" field/dock UI)
-    matchup.astro     Result page: five-Test series, share card, player ratings (noindex)
-    r/[result].astro  Shared-result landing pages, one per scoreline (7 pages, noindex)
-    privacy.astro     What the site stores (links in footer)
-    share-demo.astro  Share-card demo page (not in sitemap)
-    404.astro
+    index.astro            Home: hero, Daily Challenge card, "More ways to play" cards, World XI
+    play.astro             Test spin draft
+    matchup.astro          Test result (noindex)
+    pick.astro             Test "Pick any XI"
+    odi/ t20i/ ipl/        play.astro, matchup.astro (noindex), pick.astro for each format
+    r/[result].astro       Shared-result landing pages, one per scoreline (7, noindex)
+    best-xi/ best/         12 data-backed SEO pages (index + [slug] / [role])
+    privacy.astro  share-demo.astro  404.astro
+  components/
+    DraftGame.astro        THE draft screen, shared by all four formats
+    SeriesResult.astro     THE result screen, shared by all four formats
+    PickGame.astro         THE "Pick any XI" screen, shared by all four formats
+    SiteLinks.astro, seo/, ui/ and older unused pieces
   lib/
-    game-engine.ts    Spin logic (era+nation generation; only imports a type from ratings.ts)
-    player-logic.ts   Draft rules: slots, shapes, placement, moves, respins, persistence
-    player-store.ts   Player data access / normalization
-    player-schema.ts  zod schema for a player record (used by the Vitest suite)
-    opponent-xi.ts    The FIXED deterministic house XI (never random)
-    seven-metrics.ts  THE live rating engine (V2) — see §6
-    series.ts         Five-Test series from the score gap — see §1
-    share-results.ts  Seven shareable scorelines + XI encode/decode for /r links
-    share-card.ts     Canvas drawing of the 1080x1350 share card (browser only)
-    telemetry.ts      Fire-and-forget anonymous POSTs to the Worker
-    floodlight.ts, design-tokens.ts, utils.ts
-    ratings.ts        OLD scoring model — DEAD CODE, see §6a
+    player-logic.ts        Draft rules: slots, shapes, placement, moves, respins, persistence,
+                           the IPL four-overseas rule
+    player-store.ts        Test player access (era files)
+    game-engine.ts         Test spin generation
+    opponent-xi.ts         The fixed Test World XI
+    seven-metrics.ts       Test rating engine (§5)
+    white-ball-metrics.ts  ODI / T20I / IPL rating engine (§6)
+    series.ts              Five-match series from the score gap (§1, §8)
+    result-insights.ts     Grade, titles and tips on the result page (§8)
+    pick-xi.ts             "Pick any XI" rules: link XI, duel ladder, badges, head-to-head (§9)
+    daily.ts               Daily Challenge rules and streak; spin-option helpers
+    challenge.ts           Challenge-a-friend links for the Test draft
+    draft-slots.ts         One saved draft per mode (normal, daily, challenge, ipl, odi, t20i)
+    share-results.ts       Scoreline slugs, XI encode/decode for links
+    share-card.ts          Canvas drawing of the 1080x1350 share card
+    sfx.ts                 Synthesised sound effects, mute setting
+    seo-pages.ts           Page models for /best-xi and /best
+    telemetry.ts           Fire-and-forget anonymous POSTs
+    formats/
+      draft-format.ts      Per-format labels, card stats, pool layout, final-spin rule
+      result-format.ts     Per-format result wording, venues, flags
+      white-ball-store.ts  ODI/T20I/IPL player loading, IPL stints, the 25-player squad cut
+      white-ball-result.ts Opponent XI, scoring context and calibration for a result page
+      white-ball-config.ts, ipl-config.ts, ipl-store.ts
   data/
-    legends.json 1970s.json 1980s.json 1990s.json 2000s.json 2010s.json 2020s.json
-        790 records, 536 unique players (see §7)
-    series-calibration.json   600 simulated-drafter team scores (see §1)
-  components/ layouts/ styles/
-worker/index.ts     Cloudflare Worker: /api/scores and /api/events -> D1 (see §12)
+    legends.json 1970s.json … 2020s.json     Test: 790 records, 536 unique players
+    series-calibration.json                   Test: 600 simulated-drafter team scores
+    formats/odi.json t20i.json ipl.json       1,178 / 1,029 / 739 players
+    formats/<format>-series.json              opponent XI, par, calibration sample
+    formats/opponent-only.json                Viv Richards (ODI), Rashid Khan (T20I)
+worker/index.ts            /api/scores and /api/events → D1
 migrations/0001_init.sql   D1 schema: drafts, events
-public/             favicon/icons, og-image.png, og/<u>-<h>.png (7 scoreline previews),
-                    robots.txt, _headers (cache rules), site.webmanifest
-scripts/            calibrate-series.ts, gen-og-images.ts, review-report.ts and
-                    diagnostics (§6d)
-tests/              see §8
-docs/               design-system.md, ui-ux-guidelines.md, image-prompts.md,
-                    archive/ (ESPN investigation notes, stats summary, id_map.json)
+scripts/                   Test diagnostics; cricsheet/ = the white-ball data pipeline (§7)
+tests/                     §11
+docs/                      plans/, reports/, previews/ (screenshots), design docs, archive/
 ```
 
 ---
 
-## 3. Game flow (`/play`)
+## 3. The spin draft (`components/DraftGame.astro`)
 
-**Spin-first draft, 6 spins → exactly 11 picks:**
+**Six spins → eleven picks:** one pick from the first spin, two from each of the other five.
+Test round 1 is always the Legends era; the other formats have no fixed first era.
 
-- **Round 1:** always the **Legends** era, 1 pick.
-- **Rounds 2–6:** the other eras, 2 picks each. Total = 11 players.
-- **"Floodlit night" design** (rebuilt 2026-09-29, mobile-first): Era × Nation
-  reels, a swipeable/scrollable pool of player cards for the draw, and the XI
-  shown as a cricket field (desktop) or grouped dock (phone: 1–2 / 3–5 /
-  6–8 / 9–11).
-- **Respins:** one nation respin and one era respin per draft (a forced redraw; the
-  era respin is unavailable in round 1; unavailable once a pick is made from the
-  draw). A respin can never re-land on an era×nation pair already drawn, spins never
-  re-land on a drawn era×nation combo, and a nation can land **at most twice per
-  draft** (`play.astro`).
-- Cards show **real Test stats only — no ratings** — ordered by role, then A–Z, never
-  by strength, so the best pick is the player's judgment. Ratings are revealed on the
-  result screen.
-- **Slot-first placement:** tap a card, then the XI slot; the tapped slot decides the
-  declared role. A chooser appears only when a slot/player allows more than one legal
-  declaration (e.g. slots 7–8: all-rounder or spinner).
-- Picked players display the era the spin landed on.
-- "Start over" / "Draft again" is available only after the verdict.
+- **Reels:** slot-machine style. When both reels spin, the nation/team stops first (about 1.1s)
+  and the era about a second later. `prefers-reduced-motion` skips the animation.
+- **Respins:** one nation/team respin and one era respin per draft, before a pick is made from
+  the draw; no era respin in a fixed-era round; none in the Daily Challenge or a friend's challenge.
+  Spins never repeat an era×nation pair, and a nation/team lands at most twice per draft.
+- **Sounds** (`sfx.ts`): reel ticks, landings, picking, placing, removing, a blocked pick, the
+  completed XI. Web Audio, no files. Mute button in the header, remembered in `beatmy11.sound`.
+  On by default.
+- **Cards show real career stats only, never ratings**, ordered by role then A–Z.
+- **Slot-first placement:** tap a player, then a glowing slot; the slot decides the declared role.
+- **Unavailable players go to the end** of the pool: players already in the XI or with no place
+  left for their role *when the spin landed*. Decided once per spin, not as you pick.
+- **Final-round picks stay changeable** after the XI is complete, until "Play the series".
+  Earlier rounds are locked.
+- **Pool layout** (`DraftFormat.poolLayout`):
+  - Test: `'cards'` — swipeable cards and large reels. The owner wants the Test game kept as it is.
+  - ODI, T20I, IPL: `'tabs'` — one role at a time behind role tabs, players as compact rows, slim
+    reels on phones. After a placement the tab moves to the first role that still has a pick; a
+    tab the player opens (tap or swipe left/right) stays open even if everything in it is greyed out.
 
-**Hard rules enforced during the draft** (`src/lib/player-logic.ts`):
-
-- Exactly **1 wicketkeeper**, mandatory, and the keeper's spot is spot 6 only.
-  A draft cannot complete without one; the fixed spin pools guarantee a keeper is
-  obtainable.
-- Pool cards for filled role groups disable with the reason as a tooltip.
-
----
-
-## 4. Positional XI system
-
-The XI is **11 fixed slots** (`XI_SLOTS`), each storing a **declared role**:
+### The positional XI (all formats)
 
 | Spots | Slot keys | Accepts |
-|-------|-----------|---------|
-| 1–2   | `opener-1/2` | openers only |
-| 3–5   | `bat-3/4/5`  | middle order only |
-| 6     | `bat-6`      | wicketkeeper only (since 2026-09-29) |
-| 7–8   | `flex-7/8`   | all-rounder **or** spinner |
-| 9–11  | `fast-1/2/3` | fast bowlers only |
+|---|---|---|
+| 1–2 | `opener-1/2` | openers |
+| 3–5 | `bat-3/4/5` | middle order |
+| 6 | `bat-6` | wicketkeeper (the only keeper slot) |
+| 7–8 | `flex-7/8` | all-rounder **or** spinner |
+| 9–11 | `fast-1/2/3` | fast bowlers |
 
-Exactly **three valid completed XI shapes** exist (`XI_SHAPES`; unchanged):
+Three valid shapes: 2 all-rounders, 1 all-rounder + 1 spinner, or 2 spinners in the flex pair.
+Illegal picks are blocked with a reason, including picks that would leave the XI impossible to
+complete from the current draw. Persistence: `beatmy11.userXI.v1` (XI array) and
+`beatmy11.draft.v1` (serialized v4; players are stored by uid and re-resolved on load).
+`draft-slots.ts` parks each mode's draft under its own keys so modes never overwrite each other.
 
-1. 2 openers / 3 middle order / 1 keeper / 2 all-rounders / 0 spinners / 3 fast
-2. 2 openers / 3 middle order / 1 keeper / 1 all-rounder / 1 spinner / 3 fast
-3. 2 openers / 3 middle order / 1 keeper / 0 all-rounders / 2 spinners / 3 fast
+### White-ball squads
 
-Mechanics:
-
-- **Hard blocking with supply context**: illegal picks/moves are blocked and the UI
-  explains why.
-- **After the XI is complete, players can only be rearranged within the same slot
-  group.** Moves can re-declare roles and can strand the XI; handled, not forbidden.
-- **Persistence:** the XI array is stored under `beatmy11.userXI.v1` (plain 11-player
-  array, slot/batting order); draft extras (spin history, respin tokens, picks with
-  slot and declared role) under `beatmy11.draft.v1`, serialized as **v4** (v1–v3
-  blobs migrate/remap).
-- `/matchup` reads both keys: the XI array for the players and the draft blob for
-  each pick's **declared role**, which is the role the pick is scored under.
-
----
-
-## 5. The opponent: fixed house XI ("World XI")
-
-`src/lib/opponent-xi.ts` supplies one **fixed, deterministic** house XI; no random
-opponent selection exists anywhere. Player selection and scoring are separated:
-scoring functions take explicit XI arrays.
-
-Current `HOUSE_PLAYER_IDS` (batting order): Don Bradman (opener, AUS), Sunil
-Gavaskar (opener, IND), Sachin Tendulkar (MO, IND), Brian Lara (MO, WIN), Joe Root
-(MO, ENG), Andy Flower (WK, ZIM), Jacques Kallis (AR, RSA), Muttiah Muralitharan
-(spinner, SRI), Joel Garner (fast, WIN), Wasim Akram (fast, PAK), Shaun Pollock
-(fast, RSA) — 8 nations. Its shape is shape 2 (1 AR + 1 spinner). The roster has
-been unchanged since 2026-09-29 (commit `8dfa7cd`). **Declared role for scoring =
-each player's `primaryRole`** (not a user declaration).
-
-**House XI team score = 89.4** under the live engine (batting unit 98.0, bowling
-unit 88.9, fielding unit 57.2; per-player: Bradman 100.0, Gavaskar 98.1, Tendulkar
-99.6, Lara 99.1, Root 99.0, Flower 91.1, Kallis 99.6, Muralitharan 99.7, Garner
-86.1, Akram 94.0, Pollock 88.4 — these match `SCORING_REVIEW.md`).
-
-**The "80.8" in earlier versions of this file was a stale number, not a context
-mismatch.** It was correct on 2026-09-29 (commit `8dfa7cd`) and went out of date after
-two later scoring changes. Reproduced on 2026-10-01 with throwaway scripts (since
-deleted) using exactly the context `matchup.astro` builds (`buildScoringContext`
-over every unique player from `playersForEra` over `ERA_IDS`, deduped by id, house
-players round-tripped through the page's `toScoringPlayer` and declared as
-`primaryRole`):
-
-| engine state | house team score |
-|---|---|
-| V2 as of 2026-09-29 (bowling weights 1/4 each, no long-career bonus) | **80.8** |
-| + bowling weights 40/35/20/5 only (`d766073`, 09-30) | 84.2 |
-| + long-career bonus only (`b00e249`, 09-30) | 86.7 |
-| both (current code) | **89.4** |
-
-The independent check that gave 89.4 (SEO-page code using `getSeoData().ctx` and
-`primaryRole`) was therefore also right: that context is the same population as
-`/matchup` (the SEO code comments say so), and with the current constants every
-reproduction gives 89.4. There is no second context; the only discrepancy was the
-documentation lagging the code. (`getSeoData` lives on branch `content/mvp-pages`,
-not on `master`.)
-
-Stale numbers elsewhere in the repo that this doc cannot fix: the header comment of
-`src/lib/opponent-xi.ts` still says "Blend 80.8", `series.ts` says the World XI
-scores "~84", and `scripts/beat-house-analysis.ts` says "confirm 87.5". Code
-comments were left alone (docs-only change); the owner may want them refreshed.
+- **Squad cut:** a draw shows at most **25 players** (`cutSquad` in `white-ball-store.ts`): the
+  most matches for that team in that period, with places per role (4 openers, 6 middle order, 3
+  keepers, 3 all-rounders, 3 spinners, 6 fast). The 12 highest-rated players of a draw are
+  guaranteed a place if they played 20+ matches for that team in that period. Draws of 25 or
+  fewer are untouched. Minimum pool to be spinnable: 5.
+- **IPL four-overseas rule** (`MAX_OVERSEAS = 4`): a fifth overseas pick is blocked with a reason;
+  overseas players carry an "OS" tag and the tab row shows "Overseas n/4".
+- **IPL final spin** (`finalSpinMinPool: 11`): the sixth spin, and a respin in it, never lands on
+  a squad of fewer than 11. Four one-season squads are that small (Kochi 2008–12, Pune Warriors
+  2013–17, Gujarat Titans 2018–22, Lucknow 2018–22).
+- A careless simulated IPL drafter still dead-ends in about 2.8% of drafts (17 of 600) because of
+  the overseas rule. Every random set of six spins can be drafted into a legal XI (tested).
 
 ---
 
-## 6. Rating engines
+## 4. The fixed opponents
 
-### 6a. `src/lib/ratings.ts` — OLD model, **no longer used by any page**
+Scoring never selects players; each opponent is a fixed list.
 
-`/matchup` has used the seven-metric engine since 2026-09-25 (`ba25ac6`).
-`ratings.ts` is imported only for a `Player` **type** in `game-engine.ts`; nothing
-calls its scoring or simulator. It mutates player stats and estimates/zero-fills
-missing figures — do not copy those patterns. It is dead code that could be deleted
-(removal not done here; `UNCONFIRMED - owner to confirm` whether to delete).
+- **Test World XI** (`opponent-xi.ts`, unchanged since 2026-09-29): Bradman, Gavaskar,
+  Tendulkar, Lara, Root, Andy Flower (wk), Kallis, Muralitharan, Garner, Wasim Akram, Pollock.
+  Team score **89.4** (batting 98.0, bowling 88.9, fielding 57.2; recomputed 2026-10-02).
+  The file's header comment still says "Blend 80.8"; that comment is stale.
+- **ODI World XI** (`scripts/cricsheet/owner-allstar-odi.json`, owner 2026-10-01): Jayasuriya,
+  Tendulkar, Kohli, Viv Richards, de Villiers, Dhoni (wk), Saqlain Mushtaq, Muralitharan, Wasim
+  Akram, McGrath, Pollock. Score 92.4.
+- **T20I World XI** (`owner-allstar-t20i.json`): Rohit Sharma, Abhishek Sharma, Suryakumar Yadav,
+  Kohli, Maxwell, Buttler (wk), Rashid Khan, Hasaranga, Bumrah, Malinga, Umar Gul. Score 93.8.
+- **IPL All-Star XI** (`owner-allstar-ipl.json`): the owner's eleven players, each at his
+  **best-rated stint** (chosen by the calibrate script): Kohli RCB 2023+, Gayle RCB 2013–17, Rohit
+  MI 2013–17, Suryakumar MI 2023+, Raina CSK 2008–12, de Villiers RCB 2013–17 (wk), Chahal RCB
+  2018–22, Rashid Khan SRH 2018–22, Malinga MI 2008–12, Bumrah MI 2018–22, Bhuvneshwar SRH
+  2013–17. Score 92.8. Exactly four overseas.
+- **Opponent-only players** (`owner-opponent-only.json` → `opponent-only.json`): Viv Richards
+  (ODI) and Rashid Khan (T20I) have no ball-by-ball matches in the data. Their career line comes
+  from the owner's HowSTAT tables and their catches from the owner (100 and 49; run outs are not
+  counted for anyone). They are never draftable and are not in the ranking populations.
 
-### 6b. `src/lib/seven-metrics.ts` — the live engine (V2 + 2026-09-30 changes)
+---
 
-Pure, deterministic, wired into `/matchup`. All constants below are read from the
-code on 2026-10-01.
+## 5. Test rating engine (`seven-metrics.ts`) — unchanged since 2026-09-30
 
-- **Seven metrics** from existing JSON fields (never recalculated or estimated;
-  missing stays `null`): Batting Average, Runs per Match (`testRuns/testMatches`),
-  Century Rate; Bowling Average (the only lower-is-better metric), Wickets per
-  Bowler-Match, Five-Wicket-Haul Rate, Ten-Wicket-Match Rate. Rates use `testMatches`.
-- **Role → metrics:** openers, middle order, wicketkeepers → 3 batting metrics;
-  spinners, fast bowlers → 4 bowling metrics only (no batting score for specialists);
-  all-rounders → all 7 as separate batting and bowling halves. The **declared role**
-  (slot) is the scoring role; a non-AR declaration is never silently scored as AR.
-- **Percentile normalization:** each metric value is ranked 0–100 against the full
-  eligible population (batting metrics: every unique player whose *primary* role is
-  batting-evaluated, incl. all-rounders; bowling likewise), never split by era,
-  nation or XI. Bowling average inverted. Ties share averaged rank. **All-rounders
-  are ranked against the same full populations as specialists** (V2; the earlier
-  AR-only populations are gone).
-- **Shrinkage:** `adjusted = (matches·raw + 30·populationMean) / (matches + 30)`
-  (`SHRINKAGE_PRIOR_MATCHES = 30`, was 20), on all seven metrics and on fielding,
-  using `testMatches`. Population = 536 unique players (batting metrics n=334,
-  bowling n=248, per `SCORING_REVIEW.md`).
-- **Half score** (batting half / bowling half) = 75% weighted metric mean + 25%
-  **longevity** (`min(1, Tests/50)·100`; `LONGEVITY_WEIGHT 0.25`,
-  `LONGEVITY_FULL_CREDIT_TESTS 50`), then the **long-career bonus**: the half fills
-  up to 80% of its remaining gap to 100, reached at 200 Tests, scaled linearly from
-  50 Tests (`LONGEVITY_BONUS_FILL 0.8`, `LONGEVITY_BONUS_FULL_TESTS 200`; owner
-  2026-09-30, added so Tendulkar's 200 Tests aren't under-rated vs shorter careers).
-- **Weights inside the 75%:** batting 1/3 each; bowling **40% average / 35% wickets
-  per match / 20% five-wicket rate / 5% ten-wicket rate** (owner-approved
-  2026-09-30; was 1/4 each).
-- **All-rounder:** the stronger half leads and the weaker half fills 50% of the gap
-  to 100: `100·(1 − (1−S)(1 − 0.5·W))` (`ALL_ROUNDER_GAP_FILL 0.5`). A second skill
-  only adds. (This replaced V1's 50/50 and the interim 60/40.)
-- **Fielding** is not a player metric: dismissals per match (shrunk, percentile-ranked
-  over all unique players, one population, no role split) enters only at the XI level.
-- **Team score (`teamBlend`)** = `0.4·battingUnit + 0.5·bowlingUnit + 0.1·fieldingUnit`
-  (`TEAM_BATTING_SHARE 0.4`, `TEAM_BOWLING_SHARE 0.5`, `TEAM_FIELDING_SHARE 0.1`).
-  The batting unit is the mean batting half over batting-role entries, the bowling
-  unit the mean bowling half over bowling-role entries (an all-rounder feeds both),
-  fielding the mean over all 11. Rounded to 1 decimal.
-- `compareXIs(userXI, houseXI, ctx)` returns the two team scores, difference and
-  per-player `PlayerScore`s; missing data throws `IncompletePlayerData` (a misleading
-  score is never produced; `/matchup` shows an error and tells the user to draft again).
-- **The page scores players with a stats subset:** `matchup.astro`'s
-  `toScoringPlayer` keeps only the engine's stat fields and turns `testAverage` /
-  bowling averages that are not > 0 into `null`.
+- **Seven metrics** from existing JSON fields (missing stays `null`): batting average, runs per
+  match, century rate; bowling average (lower is better), wickets per match, five-wicket rate,
+  ten-wicket rate. Rates use `testMatches`.
+- **Role → metrics:** openers, middle order, keepers → batting; spinners, fast bowlers → bowling
+  only; all-rounders → both halves. The **declared role** (slot) is the scoring role.
+- **Percentiles** against the full eligible population (536 unique players), never split by era
+  or nation. **Shrinkage:** `(matches·raw + 30·mean) / (matches + 30)`.
+- **Half score** = 75% weighted metrics + 25% longevity (`min(1, Tests/50)`), then the long-career
+  bonus (fills up to 80% of the remaining gap, complete at 200 Tests).
+- **Weights:** batting 1/3 each; bowling 40% average / 35% wickets per match / 20% five-wicket
+  rate / 5% ten-wicket rate.
+- **All-rounder:** `100·(1 − (1−S)(1 − 0.5·W))`, stronger half S, weaker half W.
+- **Team score** = 0.4·batting unit + 0.5·bowling unit + 0.1·fielding unit (fielding =
+  dismissals per match over all eleven). Missing data throws; a misleading score is never shown.
+- `ratings.ts` (the old model) was deleted on 2026-10-01 (PR #6).
 
-### 6c. Reproducing numbers
+## 6. White-ball rating engine (`white-ball-metrics.ts`)
 
-`buildScoringContext(unique players)` once, then `teamBlend`/`compareXIs`. The house
-XI scores 89.4 (§5). `SCORING_REVIEW.md` (generated by `scripts/review-report.ts`)
-lists the per-player numbers; its header and house-XI section match the live engine
-except where its own pointer note says otherwise.
+Same design as the Test engine (percentiles, shrinkage prior 30 matches, 25% longevity,
+long-career bonus fill 0.8, all-rounder formula, 40/50/10 team blend), with per-format metrics:
 
-### 6d. Scripts (`scripts/`, dev only, not in the build)
+| | ODI | T20I and IPL |
+|---|---|---|
+| Batting | average, runs per match, strike rate, century rate (1/4 each) | strike rate **40%**; average, runs per match, fifty rate 20% each |
+| Bowling | average, wickets per match, economy, 4+ wicket innings rate (1/4 each) | economy **40%**; average, wickets per match, balls per wicket 20% each |
+| Full longevity credit / bonus complete | 100 / 330 matches | T20I 50 / 160; IPL 40 / 75 |
 
-`calibrate-series.ts` (rewrites `series-calibration.json`; uses `getHouseXI`,
-`teamBlend`, `bandFor`, `wobble` and the real draft rules to report scoreline shares),
-`gen-og-images.ts` (Playwright-rendered link-preview PNGs, §13), `review-report.ts`
-(regenerates `SCORING_REVIEW.md`), `seven-metric-diagnostic.ts`,
-`xi-shape-diagnostic.ts`, `beat-house-analysis.ts` (can any XI beat the house?),
-`house-xi-candidates.ts`, `ar-investigation.ts`, `gen-populations.ts`
-(writes `scripts/populations/*.tsv`). Several comments in these scripts are stale
-(old shapes, old house score, "W=20"). **The 2026-09-29 claim "score-greedy simulated
-drafts beat the house ~14% of the time" is superseded and has not been re-run
-against the 89.4 house: UNCONFIRMED - owner to confirm.**
-
-### Scoring decisions (owner-specified; history)
-
-V1 (2026-09-25): percentile normalization 0–100; batting 1/3 each, bowling 1/4 each;
-50/50 all-rounder; mean-of-11 XI score; `testMatches` as the rate denominator;
-declared non-AR role scored as declared; shrinkage W=20; all-rounder-only
-populations ("Option A"). **Superseded since:** 40/50/10 team blend (09-27),
-60/40 AR blend (09-27, then replaced), V2 (09-29: full populations, longevity, stronger
-AR logic, W=30), bowling weights 40/35/20/5 (09-30), long-career bonus (09-30). See §11.
+- The 40/20 T20 split is owner-confirmed (2026-10-01). IPL "40 matches" is owner-approved;
+  **"75" is `UNCONFIRMED - owner to confirm`**.
+- Populations are never mixed across formats. Draftable minimum: 10 matches (`WB_MIN_MATCHES`).
+- **IPL cards are stints** (owner, 2026-10-02): one player, one franchise, one block of seasons
+  (2008–12, 2013–17, 2018–22, 2023+), carrying only the numbers from those matches. 947 draftable
+  stints (10+ matches in the stint). A player has one record per stint (same `id`) and can be in
+  an XI once. Roles stay per player (whole career). ODI and T20I use whole careers.
 
 ---
 
 ## 7. Data
 
-- 7 era files, **790 normalized player records, 536 unique players** (players spanning
-  eras appear in several files; the engine dedupes by `id`). Each record carries `id,
-  name, era[], nation, primaryRole, roles[], battingHand, bowlingArm, isWicketkeeper`,
-  plus `stats` with `testMatches, testRuns, testAverage, testCenturies, testWickets,
-  testBowlingAverage, fiveWs, tenWs, dismissals` (among others). `dismissals` is
-  required for the fielding unit.
-- `TestStat.csv` (and a NZ stats CSV) sit next to the JSON for provenance — the JSON
-  files are the source of truth. Data is maintained by editing the JSONs directly
-  (the one-off Python scripts were removed 2026-09-28). Recent data-only edits:
-  stat corrections, dead duplicate records dropped, Zimbabwe spinner (Adam Huckle)
-  added, Joel Garner / Joe Root / extra India opener added to Legends, Jerome Taylor,
-  Azharuddin, Shakib, Campbell fixes (2026-09-27 → 09-29).
-- The seven missing-data records the owner filled on 2026-09-25 (Saqlain Mushtaq x2,
-  Siraj, Lahiru Kumara, Zahid Mahmood, Prosper Utseya, Tanunurwa Makoni) remain
-  filled; the missing-data audit test expects zero gaps. Re-run tests after any data edit.
-- **Data-validation caveat:** `src/data/series-calibration.json` is a JSON object
-  living in the same folder as the era files, and the Vitest schema test globs
-  `src/data/*.json` (see §8).
+**Test:** 7 era files, 790 records, 536 unique players, edited by hand; the JSON files are the
+source of truth. `series-calibration.json` holds 600 simulated team scores for the "top X% of
+drafts" line and the grade.
+
+**White-ball** (`scripts/cricsheet/`, see `README.md` there and `docs/plans/white-ball-formats.md`):
+
+- Built from **Cricsheet** ball-by-ball files (ODC-By; credited on `/privacy`), plus the owner's
+  hand-exported **HowSTAT** tables for official career totals (ODI and T20I), plus the Kaggle
+  players dataset (CC0) and the Test data for roles. Raw downloads live in gitignored `data-raw/`.
+- Rebuild order: `howstat-import.py` → `build-white-ball.mjs` → `calibrate-white-ball.ts` →
+  `howstat-check.mjs` → `owner-list.py` → tests and build.
+- Owner-supplied facts, never guessed: `owner-overrides.json` (spin/pace, names, some roles),
+  `owner-ipl-overseas.json` (14 overseas and 129 Indian among IPL players with no international
+  record), the three `owner-allstar-*.json`, `owner-opponent-only.json`.
+- Players: ODI 1,178 (820 draftable), T20I 1,029 (588 draftable), IPL 739 players (947 draftable
+  stints). Every IPL player's stints add up exactly to his career.
+- Afghanistan is not a draftable nation (Cricsheet withholds its matches); ODI data before 2003
+  is thin, so older stars' totals come from HowSTAT while their role, fielding rate and some
+  strike rates rest on few matches.
+- **Open data items** (`UNCONFIRMED - owner to confirm`): roles of older ODI stars (Fleming,
+  Astle, de Silva, Whittall, Streak and others), spin/pace for 167 minor bowlers and proper names
+  for 9 initials-only players (`docs/reports/white-ball-owner-list.md`).
+- Traps already hit are listed in `docs/handoff-2026-10-01.md` (namesake pairing, HowSTAT export
+  quirks, do not scrape HowSTAT, Windows `git push` credential helper, never run `astro check`
+  unattended).
 
 ---
 
-## 8. Tests (run 2026-10-01 on `origin/master` `498e793`)
+## 8. The result page (`components/SeriesResult.astro`) — three screens, all formats
 
-`npm test` (esbuild bundle + node, five suites) — **all pass**:
+Revised 2026-10-02. **Per-player ratings are not shown anywhere** (owner: they taught players
+which names to pick). Each screen is one phone screen tall.
 
-| Suite | Result |
-|---|---|
-| `tests/xi-logic.test.ts` | 192 passed, 0 failed — slots, declared roles, blocking, move-stranding regression, persistence migration |
-| `tests/full-draft.test.ts` | 242 passed, 0 failed — 120-trial real-data full-draft simulation, all XI shapes, backtracking achievability oracle |
-| `tests/seven-metrics.test.ts` | 147 passed, 0 failed — metrics, roles, V2 all-rounder/longevity/shrinkage, team blend, determinism, missing-data flags |
-| `tests/series.test.ts` | 45 passed, 0 failed (after the par −7 change) — exact gap cuts, scorelines at representative gaps, wobble, seeding, test order, full series |
-| `tests/share.test.ts` | 9 passed, 0 failed — share slugs, XI encode/decode |
+1. **The series.** Large scoreline, verdict, "top/bottom X% of drafts", five match cards revealed
+   one at a time, a "Player of the series" card (from the winning side; from the user's XI when
+   level), "Draft again". Headlines use initials ("M Muralitharan 7/86"); two or three of the
+   five are headed by a batter and the rest by a bowler; each card also shows the other side's
+   best effort with the other skill. On phones under 700px tall the cards drop the result line
+   and the second performer so nothing scrolls.
+2. **Strength and grade.** Batting, bowling and fielding bars fill together, then the overall bar
+   (the rounded team score), then the grade, two titles and one tip (`result-insights.ts`):
+   - Grade by rank among drafts: A+ top 5%, A top 20%, B top 50%, C the rest.
+   - Titles: Dynasty / All-time contender / Solid XI / Work in progress ("Unbeatable" for a 5–0),
+     and Batting heavy / Bowling attack / Well balanced (10-point gap between the two units).
+   - Tips: 16 to 18 true statements per format about how scoring works; half the time about the
+     unit furthest behind the opponent. They never name a player.
+3. **Share.** The 1080×1350 share card (`share-card.ts`) lists **both XIs** side by side with a
+   "Best pick" badge (no number) on the user's best player; "Share result", "Draft again",
+   "Save the card". Test results share `/r/<u>-<h>?xi=…&c=<spins>`; other formats share the card
+   and a link to the site (`shareLinks: false`).
 
-Total **635** assertions in `npm test`.
-
-`npx vitest run` (`tests/unit/`): **4 passed, 1 FAILED** (2 files). The failure is
-`player-schema.test.ts` ("every record in every era JSON file matches the player
-schema"): it globs `src/data/*.json` and `series-calibration.json` is an object, not an
-array, so it fails with "series-calibration.json should be a JSON array". It is a
-test-scope bug introduced when the calibration file was added (2026-09-29), not a
-data problem; fix (not done here, docs-only task) is to exclude that file or move it.
-`scoring.test.ts` (4 tests, `percentileRank`) passes. `npm test` does not run
-Vitest, so CI-style checks that only run `npm test` miss it.
-
-`npm run test:e2e` (Playwright: `tests/e2e/draft.spec.ts`, `share.spec.ts`,
-`xi-complete.spec.ts`): **not run** for this update (needs browsers) —
-`UNCONFIRMED - owner to confirm` it passes today.
-
-`npm run build`: passes, **13 pages** (`/`, `/play`, `/matchup`, `/privacy`, `/404`,
-`/share-demo`, 7 x `/r/<u>-<h>`) plus `sitemap-index.xml`.
+`/r/<slug>` pages (Test only): seven static pages with per-scoreline link-preview images
+(`public/og/`), showing the sender's XI decoded from `?xi=` and, when `c=` is present, a
+"same spins" challenge.
 
 ---
 
-## 9. Hard rules for anyone (human or AI) working on this project
+## 9. Pick any XI (`components/PickGame.astro`, `lib/pick-xi.ts`)
 
-1. **Work in this repo, in place.** Never create a new project, copy, ZIP, or repository.
-2. **Inspect actual JSON/schema and existing code before changing anything.** An early
-   implementation assumed the wrong game flow and had to be fully rebuilt.
-3. **Do not invent unresolved mathematical rules** (normalization, weights,
-   aggregation, series cuts). Ask the owner.
-4. **Never fabricate player data, statistics, eras, or historical-player
-   photographs.** Missing data is flagged, never estimated or zero-filled.
-   For imagery: legally sourced/public-domain (attributed), neutral silhouettes,
-   stylized portraits, or abstract cricket imagery only.
-5. **Wicketkeepers are evaluated on batting. Genuine all-rounders get batting AND
-   bowling evaluation. Specialist spinners/fast bowlers get no batting score.**
-   (Still true in the code.)
-6. **Keep the spin/draft system separate from scoring.** Scoring takes explicit
-   XIs; it never selects players.
-7. **~~First release shows only: Your XI score, My XI score, no series sim~~ — CONTRADICTED
-   BY THE CODE (flagged).** The shipped result is the five-Test series and the raw team
-   scores are not shown. The surviving parts: no ball-by-ball simulation and no AI
-   explanations exist. Owner to confirm the replacement wording:
-   `UNCONFIRMED - owner to confirm`.
-8. **~~After verified changes: commit and push to `master` with a PAT~~ — CONTRADICTED
-   BY CLAUDE.md (flagged).** CLAUDE.md says: feature branch + PR, never push directly to
-   `master`, never commit secrets. Follow CLAUDE.md.
+- **Build:** tap one of the eleven slots, search by name or filter by nation/team, pick. Same
+  slot rules as the draft; IPL keeps the four-overseas rule. Slot rows show three career stats.
+  A switcher at the top changes format.
+- **Strength meter:** fills **only when all eleven are in**. A part-built XI would reveal single
+  players' ratings (owner spotted this on 2026-10-02).
+- **Challenge a friend:** the XI travels in the link (`?vs=<xi>&n=<name>`), encoded like the
+  share links; nothing is stored on a server. The friend sees the XI (owner: visible), picks
+  their own and plays. The result link (`&me=<xi>&m=<name>`) shows the same series to anyone.
+- **Scoring between friends:** a symmetric ladder (`DUEL_CUTS`, owner-confirmed 2026-10-02):
+  within 1 point 2–2, up to 4 points 3–2, up to 8 points 4–1, beyond 5–0; one seed per pair of XIs.
+- **Result order:** scoreline and five matches → strength bars for both sides → slot-by-slot
+  head to head (the same player in both XIs within a slot group faces himself) → share buttons.
+- **Badges:** One nation / One franchise, World tour / League tour, Time traveller, New
+  generation, No legends (Test), Homegrown (IPL).
+- **Head-to-head record** against a named friend, per format, in `beatmy11.h2h.v1` on the device.
+- **No fixed opponent in this mode** (owner, 2026-10-02): any all-star XI beat the World XI 5–0.
+- These XIs are **never sent** to the anonymous score collection. Saved build:
+  `beatmy11.pick.<format>.v1`.
 
 ---
 
-## 10. History (2026-09-24 → 2026-09-25, kept as background)
+## 10. Daily Challenge, friend challenges, telemetry (Test only)
 
-- Game-flow rebuild: spin-first draft, fixed house XI.
-- Quota rules → revised positional XI (fixed slots, declared roles, hard blocking,
-  persistence) → pool/move follow-up (own Wicketkeeper pool group, same-group
-  rearrangement after completion).
-- Rating audit: old model mapped, data gaps flagged; owner filled the 7 missing-data
-  records (2026-09-25).
-- Seven-metric engine specified, then finalized to the owner's V1 spec (percentile
-  normalization, weights, 50/50 all-rounders, mean aggregation, `compareXIs`), then
-  shrinkage (W=20) and AR-only populations ("Option A"), then **wired into `/matchup`
-  on 2026-09-25 (`ba25ac6`, owner-approved)** — the old model stopped being used there.
-  Everything after that is in §11.
+- **Daily Challenge** (`daily.ts`, `/play?daily=1`): the same six spins for everyone each UTC
+  day, no respins, one scored attempt a day, streak kept in the browser (`bm11.daily.v1`).
+  Challenge #1 is 2026-10-01. The home page card shows the number, streak and countdown.
+- **Challenge a friend** (`challenge.ts`): a Test result link carries the six spins (`c=`) and
+  the scoreline (`vs=`); the friend drafts from the same spins, any number of tries.
+- **Telemetry** (`telemetry.ts`, `worker/index.ts`, `migrations/0001_init.sql`): fire-and-forget,
+  never throws, does nothing under Do Not Track.
+  - `POST /api/scores` — one finished Test series: XI hash, both team scores, scoreline. Stored
+    with `INSERT OR IGNORE` in `drafts`.
+  - `POST /api/events` — per-day counters in `events` for: `shared`, `view_home`, `view_play`,
+    `view_result`, `view_shared`, `daily_started`, `daily_completed`, `challenge_started`,
+    `challenge_completed`.
+  - Not stored: IP, cookie, user agent, account, player list. Requests must come from the two
+    site origins. The white-ball formats and Pick any XI send nothing (`telemetry: false`).
+  - Row counts and whether the migration is applied in production:
+    `UNCONFIRMED - owner to confirm` (production was not queried).
+- `/privacy` describes all of this and carries the Cricsheet data credit.
 
 ---
 
-## 11. Changelog since 2026-09-25 (from git history)
+## 11. Tests (run 2026-10-02 on `5030e14`)
 
-**2026-09-27**
-- Spins never re-land on a drawn era×nation combo; one nation respin + one era
-  respin per draft; nation capped at two landings per draft (09-27).
-- Slot-reel spin UI; slot-first placement replaces the role bar; slot-first
-  declarations (the tapped slot decides the role); decluttered pool cards and slots.
-- Scoring: all-rounder blend 60/40 toward the stronger discipline; then
-  **team score = 40% batting / 50% bowling / 10% fielding** with fielding (dismissals
-  per match) for all players (`762ad2d`). House XI swapped several times (Miandad,
-  Murali, Lara, Root, Wasim in; Ambrose in for Marshall).
-- Results: nation-code badge replaces flag emoji; cards stripped to name/code/era.
+`npm test` — **14 suites, all pass, 1,114 assertions:**
 
-**2026-09-28**
-- Design B formation (2 openers / 3 MO / 1 WK / 3 fast + all-rounder/spinner flex
-  pair) — the current three-shape system (`3cdf3da`). Mobile rework (draw sheet,
-  grouped XI slots, dense pool rows). Bold Dark theme; 6-segment round bar; design
-  docs added; 59 obsolete Python scripts removed.
+| Suite | Passed | Covers |
+|---|---|---|
+| `xi-logic` | 195 | slots, roles, blocking, moves, persistence, final-round changes |
+| `full-draft` | 242 | 120-trial real-data draft simulation, achievability oracle |
+| `seven-metrics` | 147 | Test engine |
+| `series` | 63 | ladder, wobble, headlines and balance, player of the series, grades, titles, tips |
+| `share` | 9 | share slugs, XI encode/decode |
+| `seo-pages` | 246 | /best-xi and /best page models |
+| `daily` | 29 | daily spins, streaks |
+| `challenge` | 21 | challenge links |
+| `white-ball-data` | 28 | aggregation on hand-checked matches, generated data sanity |
+| `white-ball-metrics` | 32 | white-ball engine |
+| `ipl-draft` | 16 | stints, overseas flags and rule, squads, final spin, achievability |
+| `intl-draft` | 27 | ODI/T20I pools, squad cut, opponent-only players |
+| `howstat` | 36 | HowSTAT readers and pairing |
+| `pick-xi` | 23 | duel ladder, names, badges, head-to-head record |
 
-**2026-09-29**
-- **Rating engine V2** (`eca0ea3`): all-rounders ranked against full populations,
-  stronger-half-leads gap-fill 0.5, 25% longevity (full credit at 50 Tests),
-  shrinkage prior 30. House XI to 80.8 at the time (Flower, Pollock, Kallis in).
-- **Five-Test series result** and Floodlit `/matchup` (`ac739ac`) — the result is now
-  a series, not two scores. Floodlit `/play` and homepage redesigns. Keepers only on
-  spot 6 (rules change). Vitest + Playwright + zod + shadcn/ui foundations. Data fixes
-  (data only). `npm test` made to run on Windows.
+`npx vitest run`: 2 files, **5 passed** (the schema-test failure noted in the previous version
+of this file was fixed in PR #6).
 
-**2026-09-30**
-- Share previews, per-scoreline OG images, `/r/<u>-<h>` pages, 404 and share-demo
-  restyled; share card with the drafted XI; shared links list the XI (`cf5a098`).
-- **Series now compares your XI to the World XI** (`d766073`): scoreline from the
-  score gap + wobble instead of rank vs the sample; **bowling weights 40/35/20/5**.
-  Then tuned: `PAR_GAP` −11.5 → −9.5 → −4; 4–1 needs gap > 0 and 5–0 needs +3
-  (`c2b23ce`, `1f2a6d7`). (Superseded 2026-10-01: par −7, big-win cuts relative to par.)
-- **Long-career bonus** for batting/bowling halves (`b00e249`); "Weakest pick" sticker
-  dropped. House XI score is now **89.4**.
-- Mobile result page as three one-swipe panels; one-screen draft page; desktop
-  three-panel result page; "Draft again" at the bottom of the series screen.
-- Deployment: Cloudflare Pages tweaks, then Workers static assets, custom domains
-  `beatmy11.com`/`www`, workers.dev disabled. Repo root cleaned (one-off scripts
-  removed, ESPN notes archived to `docs/archive/`).
-- **Anonymous score collection** (`267dd90`): Worker + D1 + telemetry client + share
-  counter (§12).
+`npx playwright test`: **19 passed** — draft, share, XI-complete, daily, challenge, modes
+isolated, mobile one-screen fit (several phone sizes), white-ball draft-to-result for all three
+formats, and the Pick any XI flow for all four.
+
+`npm run build`: passes, **35 pages** plus `sitemap-index.xml`. The sitemap leaves out `/404`,
+`/matchup` pages, `/share-demo` and `/r/*`; the white-ball play pages and the pick pages are in
+it and indexable since 2026-10-02.
+
+Not verified by a test or by Claude: the sounds (need a human ear) and the swipe gesture
+between role tabs (needs a touch screen).
+
+---
+
+## 12. Hard rules for anyone (human or AI) working on this project
+
+1. **Work in this repo, in place.** Never create a new project, copy or repository.
+2. **Inspect actual data and code before changing anything.**
+3. **Do not invent scoring rules** (weights, thresholds, ladders, difficulty). Ask the owner.
+   Where a value had to be proposed, it is labelled PROVISIONAL in the code and listed here.
+4. **Never fabricate player data, statistics, roles, names or photographs.** Missing data is
+   flagged and listed for the owner, never estimated or zero-filled.
+5. **Wicketkeepers are scored on batting; all-rounders on both; specialist bowlers on bowling
+   only.** The declared role (slot) is the scoring role.
+6. **Keep the draft separate from scoring.** Scoring takes explicit XIs and never selects players.
+7. **Ratings are hidden.** No per-player rating appears on any screen; unit strengths and the
+   overall score appear only for a complete XI. Do not add anything that lets a player read off
+   an individual rating (this was a real leak in the first Pick any XI meter).
+8. **The World XI / All-Star XI are fixed benchmarks.** They change only when the owner says so.
+9. **Feature branch + PR; the owner merges.** Never push to `master`; never commit secrets.
+10. **The owner is new to coding:** explain what was done and why in plain language, and park
+    unchosen ideas in `docs/plans/future-ideas.md`.
+
+---
+
+## 13. Open items
+
+**Waiting on the owner**
+- Difficulty: play each white-ball format, especially the IPL after the stint change.
+- IPL long-career bonus complete at 75 matches in a stint (proposed, not approved).
+- Old ODI roles; spin/pace and names (`docs/reports/white-ball-owner-list.md`).
+
+**Not built**
+- Daily challenge, challenge-a-friend links and `/r/` share pages for ODI, T20I and IPL.
+- Parked ideas: `docs/plans/future-ideas.md` (clock, daily themes, chain challenges, more badges,
+  a "Boss XI", sounds on the result page, "% who beat the World XI today").
+
+**Stale things this file cannot fix**
+- `src/lib/opponent-xi.ts` header says "Blend 80.8" (the score is 89.4).
+- `docs/handoff-2026-10-01.md` and `docs/plans/white-ball-formats.md` describe the white-ball
+  formats as hidden and on career stats; both changed on 2026-10-02 (`docs/plans/next-2026-10-02.md`).
+- Unused components remain in `src/components/` (EraCard, Hero, Navbar and others).
+
+---
+
+## 14. Changelog since 2026-10-01 (from git history, PR numbers)
 
 **2026-10-01**
-- **Difficulty ladder shifted to par −7:** `PAR_GAP` −4 → −7 and the 4–1 / 5–0 cuts are
-  now par +4 / +7 (`GAP_CUTS = [-21,-15,-8,-6,-3,0]`), so the whole scoreline ladder
-  moves with par. Simulated series-win rate: human-like 1.5% → 6.7%, smart 9.7% →
-  26.6% (intended 35%; real rates unknown). See `docs/difficulty-analysis.md`.
-- First-party page-view counters (home, play, result, shared link) (`9021e6f`);
-  Privacy page + footer links, contact `hello@beatmy11.com` (`54ffd9f`);
-  `robots.txt` with sitemap (`d53b636`).
-- **SEO foundation (PR #1, `498e793`):** canonical tags, richer schema.org JSON-LD,
-  `/matchup` and `/r/*` set `noindex` and are excluded from the sitemap, self-hosted
-  fonts (Bebas Neue, Inter via `@fontsource`), `@astrojs/sitemap`, a Wrangler
-  `previews` block with a separate preview D1 database, and `CLAUDE.md` added.
+- #6 test fix, `ratings.ts` removed. #7 Daily Challenge. #8 challenge-a-friend links and separate
+  saved drafts per mode. #9 one-screen mobile draft layout.
+- #10 ODI, T20I and IPL data, the white-ball engine and hidden playable modes; owner's ODI and
+  T20I World XIs; opponent-only players; T20I official bowling lines.
+- #11 white-ball squads cut to 25. #12 role tabs and slim reels for white-ball drafts.
+- #13 owner fixes: final-round changes, SPIN centred, result-page tidy-ups, unavailable players
+  to the end of the pool.
+- #14 result page revision (three screens, strength and grade, both XIs on the card, ratings
+  hidden). #15 slot-machine reels and sounds; nation stops before era.
+- #16 role tabs stay on a chosen tab; swipe between roles.
+- #17 IPL stint stats and the four-overseas rule.
+- #18 Pick any XI for all four formats; home page cards; white-ball and pick pages public; small
+  IPL squads never on the final spin; the pick-mode rework.
 
-(There is also a branch `origin/content/mvp-pages` with 12 data-backed SEO pages
-(`/best-xi/*`, `/best/*`). It is **not merged to `master`**, so it is not documented
-as live here; add a section when it lands.)
-
----
-
-## 12. Telemetry and D1 (what is collected)
-
-Code: `src/lib/telemetry.ts` (client), `worker/index.ts` (server),
-`migrations/0001_init.sql` (schema). **Nothing was queried in production for this
-update; row counts are `UNCONFIRMED - owner to confirm`, and whether the D1 migration
-has been applied to the production database is `UNCONFIRMED - owner to confirm`.**
-
-- **Client:** fire-and-forget `fetch` with `keepalive`, never throws, **does nothing
-  when the browser sends Do Not Track (`navigator.doNotTrack === '1'`)**.
-- **`POST /api/scores`** — one finished series: `{ xi, userScore, houseScore, user,
-  house, draws }`. `xi` is the 8-hex-digit `xiSeed` hash of the XI (not the player
-  list). Validated (scores 0–100, user+house+draws = 5). Stored with
-  `INSERT OR IGNORE` into **`drafts`** (`xi_hash` PRIMARY KEY, `created_at`,
-  `user_score`, `house_score`, `series_user`, `series_house`, `draws`) — a repeat XI is
-  not counted twice. Purpose: recalibrating the series bands from real drafts.
-- **`POST /api/events`** — `{ name }` where name ∈ `shared`, `view_home`, `view_play`,
-  `view_result`, `view_shared`; upserts a per-day counter in **`events`**
-  (`day`, `name`, `count`, PK `(day, name)`). Page views are reported from
-  `BaseLayout.astro` by path (`/`, `/play`, `/matchup`, `/r/*`); `shared` is reported
-  when the Share button is tapped.
-- **Not stored:** IP, cookie, user agent, account, or player list. Body limit 1 KB;
-  only POST; requests must carry an `Origin` of `https://beatmy11.com` or
-  `https://www.beatmy11.com`. `/api/` is disallowed in `robots.txt`.
-- `/privacy` describes all of this in plain language (last updated 1 Oct 2026).
-- No third-party analytics scripts are present in `src/` (checked by search).
-
----
-
-## 13. Sharing
-
-- **`/matchup`** builds a share URL `/r/<user>-<house>?xi=<encoded ids+roles>`
-  (`encodeXI` in `share-results.ts`) and a **1080x1350 PNG share card** drawn in the
-  browser (`share-card.ts`: scoreline, headline, the 11 players with role/nation tags,
-  "Top X% of drafts" when in the top half). "Share result" uses the Web Share API
-  with the card file where supported, else shares text+link, else (desktop) saves the
-  card and copies the message. A "Save the card" link is also offered.
-- **`/r/<slug>`** — seven static pages (`5-0 4-1 3-2 2-2 2-3 1-4 0-5`, from
-  `OUTCOME_BANDS`), `noindex`, each with its own title/description and link-preview
-  image `public/og/<slug>.png` (1200x630, made by `scripts/gen-og-images.ts` with
-  Playwright; PNGs are committed). The page shows the challenge, the sender's XI
-  decoded client-side from `?xi=` (unknown ids ignored), and a "Draft your XI" button.
-  Because the site is static, **previews exist per scoreline, not per XI**; the XI
-  itself travels in the share card and the link.
-- `public/og-image.png` is the default preview for other pages.
-
----
+**Earlier history** (2026-09-24 → 2026-10-01: the game-flow rebuild, positional XI, engine V1 →
+V2, five-Test series, share cards, Cloudflare Workers, telemetry, SEO foundation, par −7) is in
+git and in `docs/difficulty-analysis.md`; it is not repeated here.
