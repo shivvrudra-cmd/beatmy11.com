@@ -5,7 +5,7 @@
  */
 import { readFileSync } from 'node:fs';
 // @ts-expect-error plain .mjs build script
-import { aggregate, careerStats, sameIdentity, NATIONS, IPL_BLOCKS, ODI_FIRST_SEEN_CUTOFF } from '../scripts/cricsheet/build-white-ball.mjs';
+import { aggregate, careerStats, withOfficialTotals, sameIdentity, NATIONS, IPL_BLOCKS, ODI_FIRST_SEEN_CUTOFF } from '../scripts/cricsheet/build-white-ball.mjs';
 
 let pass = 0, fail = 0;
 const ok = (cond: boolean, name: string, extra?: unknown) => {
@@ -87,6 +87,17 @@ ok(bigB2.fourWicketInnings === 1 && bigB2.fiveWicketInnings === 0 && bigB2.wicke
 
 ok(sameIdentity('PJ Cummins', 'Pat Cummins') && !sameIdentity('PJ Cummins', 'Anderson Cummins') && sameIdentity('MS Dhoni', 'Mahendra Singh Dhoni') && sameIdentity('SL Malinga', 'Lasith Malinga') && !sameIdentity('PJ Cummins', 'Miguel Cummins'), 'name identity: surname plus a shared initial (middle names allowed)');
 
+// ---- official totals (owner's HowSTAT tables) on top of the ball-by-ball counts
+{
+  const cs = { matches: 100, innings: 90, runs: 3000, notOuts: 10, battingAverage: 37.5, strikeRate: 88.8, fifties: 20, hundreds: 4, wickets: 5, bowlingAverage: 40, economy: 5.5, ballsBowled: 218, runsConceded: 200, ballsPerWicket: 43.6, fourWicketInnings: 0, fiveWicketInnings: 0, catches: 30, stumpings: 0, dismissals: 30, fiftyRate: 0.24, fourWicketRate: 0, dismissalsPerMatch: 0.3, highest: 150 };
+  const o = withOfficialTotals(cs, { matches: 106, innings: 95, runs: 3300, hundreds: 5, highest: 160, battingAverage: 38.82, wickets: 6, fourW: 0, bowlingAverage: 41.5, economy: 5.6 });
+  ok(o.matches === 106 && o.runs === 3300 && o.hundreds === 5 && o.battingAverage === 38.82 && o.wickets === 6 && o.economy === 5.6, 'official totals replace the counts they cover', o);
+  ok(o.strikeRate === 88.8 && o.fiftyRate === 0.24 && o.dismissalsPerMatch === 0.3 && o.cricsheetMatches === 100 && o.statsSource === 'howstat', 'strike rate, fifty rate and fielding rate stay from the ball-by-ball data', o);
+  ok(o.notOuts === 10 && o.ballsPerWicket === 44.5, 'derived values follow the official numbers (not outs, balls per wicket)', o);
+  const z = withOfficialTotals({ ...cs, battingAverage: null }, { matches: 3, innings: 2, runs: 0, hundreds: 0, highest: 0, battingAverage: 0, wickets: 0, fourW: 0, bowlingAverage: null, economy: null });
+  ok(z.battingAverage === null && z.bowlingAverage === null && z.ballsPerWicket === null, 'a printed 0 average is not taken as a real average; no wickets means no bowling average', z);
+}
+
 // ---- 2. generated data sanity
 const ROLES = new Set(['opener', 'middle-order', 'wicketkeeper', 'all-rounder', 'spinner', 'fast-bowler']);
 for (const fmt of ['odi', 't20i', 'ipl']) {
@@ -102,13 +113,24 @@ for (const fmt of ['odi', 't20i', 'ipl']) {
     // Known register error: Pat Cummins's id also lists "Anderson Cummins" (a different player).
     if (p.scorecardName === 'PJ Cummins' && p.name !== 'Pat Cummins') bad.push(`name ${p.scorecardName} -> ${p.name}`);
     if (fmt !== 'ipl' && !NATIONS.includes(p.nation)) bad.push(`nation ${p.name}`);
-    if (fmt === 'odi' && p.firstMatch < ODI_FIRST_SEEN_CUTOFF) bad.push(`odi cutoff ${p.name}`);
+    // Before the cut-off only with official career totals (Cricsheet alone would be a partial career).
+    if (fmt === 'odi' && p.firstMatch < ODI_FIRST_SEEN_CUTOFF && st.statsSource !== 'howstat') bad.push(`odi cutoff ${p.name}`);
     if (fmt === 'ipl' && !(p.iplSpells?.length && p.iplSpells.every((x: { block: string }) => IPL_BLOCKS.some((b: { id: string }) => b.id === x.block)))) bad.push(`ipl spells ${p.name}`);
     if ((p.primaryRole === 'spinner' || p.primaryRole === 'fast-bowler') && !p.bowlingType) bad.push(`bowler without type ${p.name}`);
     if (st.matches < 1 || st.innings > st.matches || st.notOuts < 0 || st.notOuts > st.innings) bad.push(`counts ${p.name}`);
-    if (st.fifties + st.hundreds > st.innings) bad.push(`milestones ${p.name}`);
-    if (st.battingAverage != null && Math.abs(st.battingAverage - st.runs / (st.innings - st.notOuts)) > 0.01) bad.push(`avg ${p.name}`);
-    if (st.economy != null && Math.abs(st.economy - (st.runsConceded / st.ballsBowled) * 6) > 0.01) bad.push(`econ ${p.name}`);
+    if (st.statsSource === 'howstat') {
+      // Official totals: never fewer matches than the ball-by-ball files hold, and sane values.
+      if (fmt === 'ipl') bad.push(`ipl has no official totals ${p.name}`);
+      if (st.matches < st.cricsheetMatches) bad.push(`official matches below Cricsheet ${p.name} ${st.matches} < ${st.cricsheetMatches}`);
+      if (st.hundreds > st.innings) bad.push(`milestones ${p.name}`);
+      if (st.battingAverage != null && (st.battingAverage < 0 || st.battingAverage > 150)) bad.push(`avg ${p.name} ${st.battingAverage}`);
+      if (st.wickets > 0 && !(st.bowlingAverage > 0)) bad.push(`bowling avg ${p.name}`);
+    } else {
+      if (st.fifties + st.hundreds > st.innings) bad.push(`milestones ${p.name}`);
+      if (st.battingAverage != null && Math.abs(st.battingAverage - st.runs / (st.innings - st.notOuts)) > 0.01) bad.push(`avg ${p.name}`);
+      if (st.economy != null && Math.abs(st.economy - (st.runsConceded / st.ballsBowled) * 6) > 0.01) bad.push(`econ ${p.name}`);
+    }
+    for (const k of ['fiftyRate', 'fourWicketRate', 'dismissalsPerMatch']) if (!(st[k] >= 0)) bad.push(`${k} ${p.name}`);
     if (st.wickets > 0 && st.ballsBowled === 0) bad.push(`wickets without balls ${p.name}`);
     for (const [k, v] of Object.entries(st)) if (typeof v === 'number' && !Number.isFinite(v)) bad.push(`${k} ${p.name}`);
   }

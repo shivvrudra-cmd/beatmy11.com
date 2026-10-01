@@ -60,10 +60,11 @@ function run(id: WbFormatId) {
   let xi: { p: (typeof players)[number]; role: string; score: number }[];
   const approved = existsSync(ownerFile);
   if (approved) {
-    const list: { name: string; role: string }[] = JSON.parse(readFileSync(ownerFile, 'utf8')).xi;
+    const list: { id?: string; name: string; role: string }[] = JSON.parse(readFileSync(ownerFile, 'utf8')).xi;
     if (list.length !== 11) throw new Error(`${ownerFile} must list exactly 11 players`);
     xi = list.map((a) => {
-      const hits = players.filter((p) => p.name === a.name);
+      // By id when given (display names can be corrected later), otherwise by exact name.
+      const hits = players.filter((p) => (a.id ? p.id === a.id : p.name === a.name));
       if (hits.length !== 1) throw new Error(`${ownerFile}: "${a.name}" matches ${hits.length} ${FMT.label} players`);
       return { p: hits[0], role: a.role, score: scoreWbPlayer(hits[0], a.role, ctx, FMT).score };
     });

@@ -1,16 +1,60 @@
 {
-  "note": "IPL All-Star XI, approved by the owner on 2026-10-01. Fixed: it is NOT recomputed when ratings change. Names are the display names in src/data/formats/ipl.json.",
+  "note": "IPL All-Star XI, approved by the owner on 2026-10-01. Fixed: it is NOT recomputed when ratings change. Players are identified by `id` (the name is for readers and may be corrected).",
   "xi": [
-    { "name": "Virat Kohli", "role": "opener" },
-    { "name": "Chris Gayle", "role": "opener" },
-    { "name": "Rohit Sharma", "role": "middle-order" },
-    { "name": "SA Yadav", "role": "middle-order" },
-    { "name": "Suresh Raina", "role": "middle-order" },
-    { "name": "AB de Villiers", "role": "wicketkeeper" },
-    { "name": "Yuzvendra Chahal", "role": "spinner" },
-    { "name": "Rashid Khan", "role": "spinner" },
-    { "name": "Lasith Malinga", "role": "fast-bowler" },
-    { "name": "Jasprit Bumrah", "role": "fast-bowler" },
-    { "name": "Bhuvneshwar Kumar", "role": "fast-bowler" }
+    {
+      "name": "Virat Kohli",
+      "role": "opener",
+      "id": "cs-ba607b88"
+    },
+    {
+      "name": "Chris Gayle",
+      "role": "opener",
+      "id": "cs-db584dad"
+    },
+    {
+      "name": "Rohit Sharma",
+      "role": "middle-order",
+      "id": "cs-740742ef"
+    },
+    {
+      "name": "Suryakumar Yadav",
+      "role": "middle-order",
+      "id": "cs-271f83cd"
+    },
+    {
+      "name": "Suresh Raina",
+      "role": "middle-order",
+      "id": "cs-1dc12ab9"
+    },
+    {
+      "name": "AB de Villiers",
+      "role": "wicketkeeper",
+      "id": "cs-c4487b84"
+    },
+    {
+      "name": "Yuzvendra Chahal",
+      "role": "spinner",
+      "id": "cs-57ee1fde"
+    },
+    {
+      "name": "Rashid Khan",
+      "role": "spinner",
+      "id": "cs-5f547c8b"
+    },
+    {
+      "name": "Lasith Malinga",
+      "role": "fast-bowler",
+      "id": "cs-a12e1d51"
+    },
+    {
+      "name": "Jasprit Bumrah",
+      "role": "fast-bowler",
+      "id": "cs-462411b3"
+    },
+    {
+      "name": "Bhuvneshwar Kumar",
+      "role": "fast-bowler",
+      "id": "cs-2e81a32d"
+    }
   ]
 }

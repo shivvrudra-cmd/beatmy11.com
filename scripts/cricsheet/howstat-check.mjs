@@ -15,84 +15,14 @@
  */
 import { existsSync, readFileSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { sameIdentity, NATIONS } from './build-white-ball.mjs';
+import { NATIONS } from './build-white-ball.mjs';
+import { parseHowstat, matchHowstat } from './howstat.mjs';
+
+export { parseHowstat, matchHowstat };
 
 const ROOT = process.cwd();
 const DIR = join(ROOT, 'data-raw/howstat');
 const slug = (n) => n.toLowerCase().replace(/\s+/g, '-');
-
-/** Parse one HowSTAT table (comma or tab separated; quoted fields allowed). */
-export function parseHowstat(text) {
-  const clean = text.replace(/^﻿/, '');
-  const firstLine = clean.split(/\r?\n/)[0] ?? '';
-  const sep = firstLine.includes('\t') ? '\t' : ',';
-  const rows = [];
-  let row = [], field = '', q = false;
-  for (let i = 0; i < clean.length; i++) {
-    const ch = clean[i];
-    if (q) {
-      if (ch === '"' && clean[i + 1] === '"') { field += '"'; i++; }
-      else if (ch === '"') q = false;
-      else field += ch;
-    } else if (ch === '"') q = true;
-    else if (ch === sep) { row.push(field.trim()); field = ''; }
-    else if (ch === '\n' || ch === '\r') {
-      if (ch === '\r' && clean[i + 1] === '\n') i++;
-      row.push(field.trim()); field = '';
-      if (row.some((c) => c !== '')) rows.push(row);
-      row = [];
-    } else field += ch;
-  }
-  if (field !== '' || row.length) { row.push(field.trim()); if (row.some((c) => c !== '')) rows.push(row); }
-  if (!rows.length) return [];
-  const head = rows[0].map((h) => h.toLowerCase().replace(/[^a-z0-9/]/g, ''));
-  const col = (...names) => names.map((n) => head.indexOf(n)).find((i) => i >= 0) ?? -1;
-  const idx = {
-    name: col('name'), knownAs: col('knownas'), born: col('born'), career: col('career'),
-    matches: col('matches', 'mat'), innings: col('inns', 'innings'), runs: col('runs'), hundreds: col('100s'),
-    highest: col('hs'), battingAverage: col('batavg'), wickets: col('wkts'), fourW: col('4w'),
-    bowlingAverage: col('bowlavg'), economy: col('e/r', 'er'), best: col('best'),
-  };
-  if (idx.name < 0 || idx.matches < 0) throw new Error(`HowSTAT file: could not find the Name and Matches columns (saw: ${rows[0].join(' | ')})`);
-  // Blank, "-" and similar mean "no value" (e.g. no bowling average): null, never 0.
-  const numOrNull = (v) => { const x = Number(String(v ?? '').replace(/[,*]/g, '')); return v === undefined || String(v).trim() === '' || !Number.isFinite(x) ? null : x; };
-  const at = (r, i) => (i >= 0 ? r[i] : undefined);
-  return rows.slice(1).map((r) => {
-    const career = String(at(r, idx.career) ?? '');
-    const years = career.match(/(\d{4})(?:\D+(\d{4}))?/);
-    return {
-      name: at(r, idx.name) ?? '',
-      knownAs: at(r, idx.knownAs) ?? '',
-      born: at(r, idx.born) ?? '',
-      careerFrom: years ? Number(years[1]) : null,
-      careerTo: years && years[2] ? Number(years[2]) : years ? Number(years[1]) : null,
-      matches: numOrNull(at(r, idx.matches)),
-      innings: numOrNull(at(r, idx.innings)),
-      runs: numOrNull(at(r, idx.runs)),
-      hundreds: numOrNull(at(r, idx.hundreds)),
-      highest: numOrNull(String(at(r, idx.highest) ?? '').replace('*', '')),
-      battingAverage: numOrNull(at(r, idx.battingAverage)),
-      wickets: numOrNull(at(r, idx.wickets)),
-      fourW: numOrNull(at(r, idx.fourW)),
-      bowlingAverage: numOrNull(at(r, idx.bowlingAverage)),
-      economy: numOrNull(at(r, idx.economy)),
-    };
-  }).filter((p) => p.name);
-}
-
-/** Pair HowSTAT rows with our players of one nation: same surname and a shared initial, one-to-one both ways. */
-export function matchHowstat(rows, players) {
-  const names = (h) => [h.knownAs, h.name].filter(Boolean);
-  const fits = (h, p) => names(h).some((n) => sameIdentity(p.scorecardName, n) || sameIdentity(p.name, n));
-  const pairs = [], unmatchedOurs = [];
-  for (const p of players) {
-    const hs = rows.filter((h) => fits(h, p));
-    if (hs.length === 1 && players.filter((o) => fits(hs[0], o)).length === 1) pairs.push({ ours: p, theirs: hs[0] });
-    else unmatchedOurs.push(p);
-  }
-  const used = new Set(pairs.map((x) => x.theirs));
-  return { pairs, unmatchedOurs, unmatchedTheirs: rows.filter((h) => !used.has(h)) };
-}
 
 function main() {
   mkdirSync(join(ROOT, 'docs/reports'), { recursive: true });

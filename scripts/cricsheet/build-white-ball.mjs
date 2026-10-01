@@ -21,6 +21,10 @@
  */
 import { readFileSync, readdirSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { norm, sameIdentity } from './names.mjs';
+import { parseHowstat, matchHowstat } from './howstat.mjs';
+
+export { norm, sameIdentity };
 
 const ROOT = process.cwd();
 export const ODI_FIRST_SEEN_CUTOFF = '2004-01-01';
@@ -81,30 +85,6 @@ function readCsv(path) {
   if (field !== '' || row.length) { row.push(field); rows.push(row); }
   const [head, ...body] = rows;
   return body.map((r) => Object.fromEntries(head.map((h, i) => [h, r[i] ?? ''])));
-}
-export const norm = (s) =>
-  String(s || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z]/g, '');
-/**
- * Same person by name: same surname, and the first names agree on an initial. Initials may be any
- * of a run of capitals, because many players go by a middle name: "SL Malinga" ~ "Lasith Malinga",
- * "PJ Cummins" ~ "Pat Cummins", but not "Anderson Cummins".
- */
-export function sameIdentity(a, b) {
-  const wa = String(a).trim().split(/\s+/), wb = String(b).trim().split(/\s+/);
-  if (norm(wa[wa.length - 1]) !== norm(wb[wb.length - 1])) return false;
-  const initials = (words) => {
-    const out = new Set();
-    for (const w of words.slice(0, -1)) {
-      if (/^[A-Z]{1,5}$/.test(w)) for (const ch of w) out.add(ch.toLowerCase());
-      else if (norm(w)) out.add(norm(w)[0]);
-    }
-    if (words.length === 1 && norm(words[0])) out.add(norm(words[0])[0]);
-    return out;
-  };
-  const ia = initials(wa), ib = initials(wb);
-  if (ia.size === 0 || ib.size === 0) return true; // single-word names: surname already matched
-  for (const x of ia) if (ib.has(x)) return true;
-  return false;
 }
 const round = (v, d = 2) => (v == null || !Number.isFinite(v) ? null : Math.round(v * 10 ** d) / 10 ** d);
 const decade = (year) => `${Math.floor(year / 10) * 10}s`;
@@ -232,7 +212,48 @@ export function careerStats(p, fmt) {
     catches: p.catches,
     stumpings: p.stumpings,
     dismissals: p.catches + p.stumpings,
+    // Rates measured on the ball-by-ball matches. They stay valid when the totals above are
+    // replaced by official career totals that include matches Cricsheet does not have.
+    fiftyRate: p.matches > 0 ? round((p.fifties + p.hundreds) / p.matches, 4) : null,
+    fourWicketRate: p.matches > 0 ? round(p.fourPlusInnings / p.matches, 4) : null,
+    dismissalsPerMatch: p.matches > 0 ? round((p.catches + p.stumpings) / p.matches, 4) : null,
   };
+}
+
+/**
+ * Official career totals from the owner's HowSTAT tables replace the Cricsheet counts they cover
+ * (matches, innings, runs, hundreds, highest, averages, wickets, economy, 4-wicket innings), so
+ * matches Cricsheet withholds or lacks are included. What HowSTAT's list does not have stays on
+ * Cricsheet: strike rate, fifties and fielding, kept as rates so they are not understated.
+ * A "-" in HowSTAT (no average) stays null.
+ */
+export function withOfficialTotals(stats, h) {
+  const out = { ...stats, statsSource: 'howstat', cricsheetMatches: stats.matches };
+  const set = (k, v) => { if (v !== null && v !== undefined) out[k] = v; };
+  set('matches', h.matches);
+  set('innings', h.innings);
+  set('runs', h.runs);
+  set('hundreds', h.hundreds);
+  set('highest', h.highest);
+  // HowSTAT prints 0 for "no average" as well as for a real 0, so a 0 falls back to the
+  // ball-by-ball figure, which knows whether the player was ever dismissed.
+  out.battingAverage = h.battingAverage ? h.battingAverage : stats.battingAverage;
+  if (h.innings !== null && h.runs !== null && h.battingAverage) out.notOuts = Math.max(0, h.innings - Math.round(h.runs / h.battingAverage));
+  set('wickets', h.wickets);
+  out.bowlingAverage = h.wickets ? h.bowlingAverage : null;
+  if (h.economy !== null) out.economy = h.economy;
+  set('fourWicketInnings', h.fourW);
+  if (h.wickets && h.bowlingAverage) {
+    out.runsConceded = Math.round(h.bowlingAverage * h.wickets);
+    if (h.economy) {
+      out.ballsBowled = Math.round((out.runsConceded / h.economy) * 6);
+      out.ballsPerWicket = round((h.bowlingAverage / h.economy) * 6, 1);
+    }
+  } else if (h.wickets === 0) {
+    out.ballsPerWicket = null;
+  }
+  if (h.matches && h.fourW !== null) out.fourWicketRate = round(h.fourW / h.matches, 4);
+  return out;
 }
 
 // ------------------------------------------------------------------ main
@@ -348,6 +369,26 @@ function main() {
     return rivals.length === 1 && rivals[0].id === id ? fits[0] : null;
   };
 
+  // ---- official career totals (owner's HowSTAT tables), paired per format and nation
+  const official = { odi: new Map(), t20i: new Map() };
+  const hsDir = join(RAW, 'howstat');
+  const hsReport = [];
+  if (existsSync(hsDir)) {
+    for (const id of ['odi', 't20i']) {
+      for (const nation of NATIONS) {
+        const file = join(hsDir, `${id}-${nation.toLowerCase().replace(/\s+/g, '-')}.csv`);
+        if (!existsSync(file)) continue;
+        const rows = parseHowstat(readFileSync(file, 'utf8'));
+        const ours = [...counted[id].acc.values()].filter((p) => mainTeam(p) === nation)
+          .map((p) => ({ id: p.id, scorecardName: people.get(p.id)?.name ?? p.scoreName, name: bestName(p.id, p.names) }));
+        const { pairs, unmatchedOurs } = matchHowstat(rows, ours);
+        for (const { ours: o, theirs } of pairs) official[id].set(o.id, theirs);
+        hsReport.push(`${id.toUpperCase()} ${nation}: ${rows.length} HowSTAT rows, ${pairs.length} paired, ${unmatchedOurs.length} of ours unpaired`);
+      }
+    }
+  }
+  report.howstat = hsReport;
+
   // ---- pass 2: roles and output
   for (const fmt of FORMATS) {
     const { acc } = counted[fmt.id];
@@ -362,18 +403,27 @@ function main() {
       // Cricsheet's ODIs start in late 2002; anyone first seen before 2004 almost always debuted
       // earlier (Ponting, Gayle), so their totals would be partial. From 2004 first appearances
       // match real debuts (Dhoni Dec 2004, de Villiers 2005). Owner to confirm this cut-off.
-      if (fmt.id === 'odi' && p.firstDate < ODI_FIRST_SEEN_CUTOFF) { exclude(`first Cricsheet ODI before ${ODI_FIRST_SEEN_CUTOFF} (career likely began earlier, incomplete)`); continue; }
+      // ...unless the owner's HowSTAT table supplies the player's official career totals.
+      // HowSTAT's tables are per country, so a player who also appeared for another side (ICC World
+      // XI, or a second country) has MORE matches in Cricsheet than in his country's table. Those
+      // official rows are partial careers and are not used; the ball-by-ball counts are kept.
+      const hsRow = official[fmt.id]?.get(p.id) ?? null;
+      const hs = hsRow && hsRow.matches !== null && hsRow.matches >= p.matches ? hsRow : null;
+      if (hsRow && !hs) counts.partialOfficial = (counts.partialOfficial ?? 0) + 1;
+      if (fmt.id === 'odi' && p.firstDate < ODI_FIRST_SEEN_CUTOFF && !hs) { exclude(`first Cricsheet ODI before ${ODI_FIRST_SEEN_CUTOFF} and no official totals (career incomplete)`); continue; }
 
       const reg = people.get(p.id) ?? {};
       const full = bestName(p.id, p.names);
       const known = intlKnown.get(p.id);
       const intlNation = nation ?? known?.nation ?? null; // IPL: their international side, if any
-      const stats = careerStats(p, fmt);
+      const stats = hs ? withOfficialTotals(careerStats(p, fmt), hs) : { ...careerStats(p, fmt), statsSource: 'cricsheet' };
 
       // --- role evidence
       // IPL players without an international side: Indian domestic players (the large majority).
       const lookupNation = intlNation ?? (fmt.intl ? null : 'India');
-      const test = lookupNation ? testByKey.get(`${norm(full)}|${lookupNation}`) : null;
+      const test = lookupNation
+        ? testByKey.get(`${norm(full)}|${lookupNation}`) ?? (hs?.knownAs ? testByKey.get(`${norm(hs.knownAs)}|${lookupNation}`) : null) ?? null
+        : null;
       let kg = null;
       if (lookupNation) {
         kg = kgFull.get(`${norm(full)}|${lookupNation}`) ?? null;
@@ -401,6 +451,9 @@ function main() {
       // Still only initials ("A T Rayudu")? Use the matched Kaggle profile's full name if it has none.
       let displayName = full;
       if (kg?.fullname && nameScore(full) < 1000 && nameScore(kg.fullname) >= 1000 && sameIdentity(reg.name ?? full, kg.fullname)) displayName = kg.fullname;
+      // HowSTAT's "Known As" is the name fans use ("Suryakumar Yadav" for "SA Yadav").
+      if (hs?.knownAs) displayName = hs.knownAs;
+      else if (known?.name) displayName = known.name;
       if (overrides[p.id]?.name) displayName = overrides[p.id].name;
       const wdStyle = ['key_cricinfo', 'key_cricinfo_2', 'key_cricinfo_3'].map((k) => wd.get(reg[k])).find(Boolean);
 
@@ -486,7 +539,7 @@ function main() {
       out.push(player);
       counts.kept += 1;
       if (fmt.intl && (bowlingType.type || !intlKnown.has(p.id))) {
-        intlKnown.set(p.id, { nation: intlNation, bowlingType: bowlingType.type, bowlingTypeSource: bowlingType.source, format: fmt.id });
+        intlKnown.set(p.id, { nation: intlNation, bowlingType: bowlingType.type, bowlingTypeSource: bowlingType.source, format: fmt.id, name: hs?.knownAs ?? intlKnown.get(p.id)?.name });
       }
     }
     out.sort((a, b) => a.name.localeCompare(b.name));
@@ -508,7 +561,14 @@ function writeReports(report) {
     L.push(`## ${id.toUpperCase()}`, '', `- Matches counted: ${c.matches}`, `- Players seen: ${c.players}`, `- Players kept: ${c.kept}`);
     for (const [why, n] of Object.entries(c.excluded)) L.push(`- Excluded, ${why}: ${n}`);
     L.push(`- Role source: ${Object.entries(c.roleSource).map(([k, v]) => `${k} ${v}`).join(', ')}`);
-    L.push(`- Kaggle profiles matched by surname + initial (one-to-one both ways): ${c.fuzzy ?? 0}`, '');
+    L.push(`- Kaggle profiles matched by surname + initial (one-to-one both ways): ${c.fuzzy ?? 0}`);
+    if (c.partialOfficial) L.push(`- Official rows not used because they cover fewer matches than Cricsheet (the player also appeared for another side): ${c.partialOfficial}`);
+    L.push('');
+  }
+  if (report.howstat?.length) {
+    L.push('## Official totals (HowSTAT, supplied by the owner)', '',
+      'For paired ODI and T20I players, matches, innings, runs, hundreds, highest score, both averages, wickets, economy and 4-wicket innings are the official career totals (including matches Cricsheet withholds). Strike rate, fifties and fielding are rates measured on the Cricsheet ball-by-ball matches. Unpaired players keep Cricsheet counts.', '',
+      ...report.howstat.map((x) => `- ${x}`), '');
   }
   L.push('## Provisional role rules (owner to confirm)', '',
     '- Regular bowler: averages at least 40% of the format\'s bowling quota per match (ODI 24 balls, T20 9.6 balls).',

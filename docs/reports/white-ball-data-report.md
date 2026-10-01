@@ -8,24 +8,26 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 
 - Matches counted: 2576
 - Players seen: 1998
-- Players kept: 938
-- Excluded, first Cricsheet ODI before 2004-01-01 (career likely began earlier, incomplete): 250
+- Players kept: 1152
 - Excluded, not one of the 10 game nations: 729
-- Excluded, regular bowler, spin/pace unknown (owner to supply): 77
+- Excluded, regular bowler, spin/pace unknown (owner to supply): 111
 - Excluded, never batted or bowled regularly: 4
-- Role source: match-data 394, kaggle 410, test-data 112, match-data (stumpings) 2, owner 12, wikidata 8
-- Kaggle profiles matched by surname + initial (one-to-one both ways): 16
+- Excluded, first Cricsheet ODI before 2004-01-01 and no official totals (career incomplete): 2
+- Role source: match-data 512, kaggle 449, test-data 166, match-data (stumpings) 3, owner 12, wikidata 10
+- Kaggle profiles matched by surname + initial (one-to-one both ways): 18
+- Official rows not used because they cover fewer matches than Cricsheet (the player also appeared for another side): 11
 
 ## T20I
 
 - Matches counted: 3558
 - Players seen: 4755
-- Players kept: 1014
-- Excluded, regular bowler, spin/pace unknown (owner to supply): 68
+- Players kept: 1015
+- Excluded, regular bowler, spin/pace unknown (owner to supply): 67
 - Excluded, not one of the 10 game nations: 3658
 - Excluded, never batted or bowled regularly: 15
-- Role source: match-data 434, kaggle 419, test-data 138, owner 14, match-data (stumpings) 5, wikidata 4
+- Role source: match-data 433, kaggle 417, test-data 142, owner 14, match-data (stumpings) 5, wikidata 4
 - Kaggle profiles matched by surname + initial (one-to-one both ways): 13
+- Official rows not used because they cover fewer matches than Cricsheet (the player also appeared for another side): 29
 
 ## IPL
 
@@ -34,8 +36,32 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 - Players kept: 719
 - Excluded, regular bowler, spin/pace unknown (owner to supply): 83
 - Excluded, never batted or bowled regularly: 7
-- Role source: match-data 336, match-data (stumpings) 3, owner 12, kaggle 292, test-data 73, wikidata 3
+- Role source: match-data 336, match-data (stumpings) 3, owner 12, kaggle 290, test-data 75, wikidata 3
 - Kaggle profiles matched by surname + initial (one-to-one both ways): 11
+
+## Official totals (HowSTAT, supplied by the owner)
+
+For paired ODI and T20I players, matches, innings, runs, hundreds, highest score, both averages, wickets, economy and 4-wicket innings are the official career totals (including matches Cricsheet withholds). Strike rate, fifties and fielding are rates measured on the Cricsheet ball-by-ball matches. Unpaired players keep Cricsheet counts.
+
+- ODI Australia: 254 HowSTAT rows, 125 paired, 0 of ours unpaired
+- ODI Bangladesh: 154 HowSTAT rows, 103 paired, 6 of ours unpaired
+- ODI England: 282 HowSTAT rows, 131 paired, 0 of ours unpaired
+- ODI India: 265 HowSTAT rows, 133 paired, 1 of ours unpaired
+- ODI New Zealand: 226 HowSTAT rows, 118 paired, 0 of ours unpaired
+- ODI Pakistan: 262 HowSTAT rows, 142 paired, 3 of ours unpaired
+- ODI South Africa: 169 HowSTAT rows, 118 paired, 1 of ours unpaired
+- ODI Sri Lanka: 220 HowSTAT rows, 124 paired, 8 of ours unpaired
+- ODI West Indies: 230 HowSTAT rows, 142 paired, 0 of ours unpaired
+- ODI Zimbabwe: 163 HowSTAT rows, 113 paired, 1 of ours unpaired
+- T20I Australia: 118 HowSTAT rows, 116 paired, 1 of ours unpaired
+- T20I England: 112 HowSTAT rows, 108 paired, 0 of ours unpaired
+- T20I India: 124 HowSTAT rows, 123 paired, 1 of ours unpaired
+- T20I New Zealand: 111 HowSTAT rows, 110 paired, 0 of ours unpaired
+- T20I Pakistan: 125 HowSTAT rows, 119 paired, 3 of ours unpaired
+- T20I South Africa: 122 HowSTAT rows, 117 paired, 11 of ours unpaired
+- T20I Sri Lanka: 113 HowSTAT rows, 101 paired, 5 of ours unpaired
+- T20I West Indies: 110 HowSTAT rows, 107 paired, 0 of ours unpaired
+- T20I Zimbabwe: 84 HowSTAT rows, 78 paired, 7 of ours unpaired
 
 ## Provisional role rules (owner to confirm)
 
@@ -49,13 +75,14 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 - Matches involving Afghanistan are withheld by Cricsheet, so every ODI/T20I career here misses its matches against Afghanistan (totals slightly below official records).
 - Afghanistan: matches withheld by Cricsheet; not a game nation.
 
-## Ambiguous name matches (role lookup skipped): 26
+## Ambiguous name matches (role lookup skipped): 27
 
 - odi: Junaid Khan (086f5984)
 - odi: Mehedi Hasan (9dad0f2e)
 - odi: Zahid Mahmood (ba158afd)
 - odi: Ihsanullah (c290033d)
 - odi: Rinku Singh (0a509d6b)
+- odi: Shahid Afridi (0dc00542)
 - odi: Muhammad Irfan (a8e3170f)
 - odi: Asad Ali (f476d2a5)
 - t20i: Mandeep Singh (c3a96caf)

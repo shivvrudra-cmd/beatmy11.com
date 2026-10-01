@@ -99,7 +99,7 @@ const TEAM_SHARES = { batting: 0.4, bowling: 0.5, fielding: 0.1 };
  */
 const T20_HEADLINE = 0.4;
 const T20_OTHER = (1 - T20_HEADLINE) / 3;
-const FIFTY_RATE: Omit<WbMetric, 'weight'> = { key: 'fiftyRate', label: 'Fifty rate', higherIsBetter: true, value: (s) => per((n(s.fifties) ?? NaN) + (n(s.hundreds) ?? NaN), s.matches) };
+const FIFTY_RATE: Omit<WbMetric, 'weight'> = { key: 'fiftyRate', label: 'Fifty rate', higherIsBetter: true, value: (s) => n(s.fiftyRate) ?? per((n(s.fifties) ?? NaN) + (n(s.hundreds) ?? NaN), s.matches) };
 const BALLS_PW: Omit<WbMetric, 'weight'> = { key: 'ballsPerWicket', label: 'Balls per wicket', higherIsBetter: false, value: (s) => positive(s.ballsPerWicket) };
 const T20_BATTING: WbMetric[] = [
   { ...BAT_AVG, weight: T20_OTHER }, { ...RUNS_PM, weight: T20_OTHER }, { ...STRIKE, weight: T20_HEADLINE }, { ...FIFTY_RATE, weight: T20_OTHER },
@@ -114,7 +114,7 @@ export const WB_FORMATS: Record<WbFormat['id'], WbFormat> = {
     batting: equal([BAT_AVG, RUNS_PM, STRIKE,
       { key: 'centuryRate', label: 'Century rate', higherIsBetter: true, value: (s) => per(s.hundreds, s.matches) }]),
     bowling: equal([BOWL_AVG, WKTS_PM, ECON,
-      { key: 'fourWicketRate', label: '4+ wicket innings rate', higherIsBetter: true, value: (s) => per(s.fourWicketInnings, s.matches) }]),
+      { key: 'fourWicketRate', label: '4+ wicket innings rate', higherIsBetter: true, value: (s) => n(s.fourWicketRate) ?? per(s.fourWicketInnings, s.matches) }]),
     priorMatches: 30, longevityWeight: 0.25, longevityFullMatches: 100, longevityBonusFill: 0.8, longevityBonusMatches: 330,
     teamShares: TEAM_SHARES,
   },
@@ -156,8 +156,10 @@ export interface WbContext {
   priorMatches: number;
 }
 
+/** Dismissals per match. Uses the stored rate when present: it is measured on the ball-by-ball
+ *  matches, so it is not understated when `matches` is an official total that includes more. */
 function rawFielding(p: WbPlayer): number | null {
-  return per(p.stats?.dismissals, p.stats?.matches);
+  return n(p.stats?.dismissalsPerMatch) ?? per(p.stats?.dismissals, p.stats?.matches);
 }
 const shrink = (raw: number, matches: number, mean: number, prior: number) => (matches * raw + prior * mean) / (matches + prior);
 
