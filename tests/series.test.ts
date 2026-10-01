@@ -50,8 +50,19 @@ const sample = Array.from({ length: 200 }, (_, i) => 60 + i * 0.1);
 ok(rankPercentile(40, sample) < 0.01 && rankPercentile(99, sample) > 0.99, 'rank percentile extremes');
 ok(Math.abs(rankPercentile(sample[100], sample) - 0.5) < 0.01, 'median ranks ~0.5');
 
-ok(bandFor(-0.01).user === 3 && bandFor(0).user === 4 && bandFor(2.99).user === 4 && bandFor(3).user === 5, '4–1 needs a gap above 0 and 5–0 a gap of 3+');
-ok(OUTCOME_BANDS.filter((b) => b.user >= 4).every((b) => bandFor(-5).user < b.user), 'an XI behind the World XI never gets a 4–1 or 5–0 without luck');
+// The whole ladder hangs off par: exact cuts at par -7, and the big wins sit 4 / 7 above par.
+ok(PAR_GAP === -7, 'par is 7 points below the World XI');
+ok(JSON.stringify(GAP_CUTS) === JSON.stringify([-21, -15, -8, -6, -3, 0]), 'exact gap cuts at par -7', GAP_CUTS);
+ok(GAP_CUTS[4] === PAR_GAP + 4 && GAP_CUTS[5] === PAR_GAP + 7, 'rout cuts are relative to par (+4 / +7)');
+{
+  const line = (g: number) => { const b = bandFor(g); return b.user + '-' + b.house; };
+  const cases: [number, string][] = [
+    [-25, '0-5'], [-21, '1-4'], [-16, '1-4'], [-15, '2-3'], [-9, '2-3'], [-8, '2-2'], [-7, '2-2'], [-6.01, '2-2'],
+    [-6, '3-2'], [-3.01, '3-2'], [-3, '4-1'], [-0.01, '4-1'], [0, '5-0'], [10, '5-0'],
+  ];
+  for (const [g, want] of cases) ok(line(g) === want, `gap ${g} → ${want}`, line(g));
+}
+ok(OUTCOME_BANDS.filter((b) => b.user >= 4).every((b) => bandFor(PAR_GAP).user < b.user), 'an XI exactly at par never gets a 4–1 or 5–0 without luck');
 
 // ---- wobble: luck in score points, but skill still decides ----
 {
