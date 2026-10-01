@@ -474,8 +474,8 @@ const formatJson = json(format);
     }
 
     // Reel animation, slot-machine style (owner, 2026-10-02): each reel steps through values like
-    // a strip rolling past its window, slows down, and drops into place. The era stops first,
-    // then the nation keeps going a little longer. `which` limits a respin to its own reel.
+    // a strip rolling past its window, slows down, and drops into place. The nation (team) stops
+    // first, then the era keeps going a little longer. `which` limits a respin to its own reel.
     function rollReels(which, target, onDone) {
       spinningReel = which;
       renderAll();
@@ -489,8 +489,8 @@ const formatJson = json(format);
       if (eraFixed) setReel(eraEl, eraName(target.era), 'landed');
       const rollEra = which !== 'nation' && !eraFixed;
       const rollNation = which !== 'era';
-      const ERA_STOP = 1100;
-      const NATION_STOP = rollEra ? 2100 : 1400;
+      const NATION_STOP = rollEra ? 1100 : 1400;
+      const ERA_STOP = rollNation ? 2100 : 1400;
       let running = (rollEra ? 1 : 0) + (rollNation ? 1 : 0);
       if (!running) { spinningReel = null; onDone(); return; }
       const spinOne = (el, stop, values, final, last) => {
@@ -521,8 +521,8 @@ const formatJson = json(format);
         };
         step();
       };
-      if (rollEra) spinOne(eraEl, ERA_STOP, ERA_LIST, eraName(target.era), !rollNation);
-      if (rollNation) spinOne(nationEl, NATION_STOP, NATIONS.map(reelTeam), reelTeam(target.nation), true);
+      if (rollNation) spinOne(nationEl, NATION_STOP, NATIONS.map(reelTeam), reelTeam(target.nation), !rollEra);
+      if (rollEra) spinOne(eraEl, ERA_STOP, ERA_LIST, eraName(target.era), true);
     }
 
     // Sound on/off (remembered on this device).
