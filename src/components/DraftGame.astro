@@ -585,6 +585,38 @@ const formatJson = json(format);
       }
     }
 
+    // ------------------------------------------------------------------ PROTOTYPE: pool layouts
+    // Throwaway (branch prototype/role-sheet): four layouts of the player pool on the real draft
+    // page, switchable with ?variant=A|B|C|D and the floating bar. A = the current swipe cards.
+    const PV_NAMES = { A: 'Swipe cards (today)', B: 'Role sheet', C: 'Role tabs', D: 'Role grid' };
+    const PV_KEYS = Object.keys(PV_NAMES);
+    const PV_GROUPS = { opener: 'Openers', 'middle-order': 'Middle order', wicketkeeper: 'Keepers', 'all-rounder': 'All-rounders', spinner: 'Spinners', 'fast-bowler': 'Fast bowlers' };
+    let pv = (new URLSearchParams(location.search).get('variant') || 'A').toUpperCase();
+    if (!PV_KEYS.includes(pv)) pv = 'A';
+    let pvTab = null;
+    const pvBar = document.createElement('div');
+    pvBar.className = 'pv-bar';
+    document.body.appendChild(pvBar);
+    function pvSet(next, render = true) {
+      pv = next;
+      document.documentElement.dataset.poolVariant = pv;
+      const u = new URL(location.href);
+      u.searchParams.set('variant', pv);
+      history.replaceState(null, '', u);
+      pvBar.innerHTML = `<button type="button" data-pv="-1" aria-label="Previous layout">←</button><span>${pv} · ${PV_NAMES[pv]}</span><button type="button" data-pv="1" aria-label="Next layout">→</button>`;
+      cardsEl.scrollTop = 0; cardsEl.scrollLeft = 0;
+      if (!render) return;
+      renderPool();
+    }
+    pvSet(pv, false);
+    const pvStep = (d) => pvSet(PV_KEYS[(PV_KEYS.indexOf(pv) + d + PV_KEYS.length) % PV_KEYS.length]);
+    pvBar.addEventListener('click', (e) => { const b = e.target.closest('[data-pv]'); if (b) pvStep(Number(b.dataset.pv)); });
+    document.addEventListener('keydown', (e) => {
+      if (e.target.closest('input, textarea, [contenteditable]')) return;
+      if (e.key === 'ArrowLeft') pvStep(-1);
+      if (e.key === 'ArrowRight') pvStep(1);
+    });
+
     // ------------------------------------------------------------------ pool
     function renderPool() {
       const metaEl = $('fl-pool-meta');
@@ -595,10 +627,10 @@ const formatJson = json(format);
         return;
       }
       const pool = currentPool();
-      metaEl.innerHTML = `${pool.length} players <span class="fl-swipe">· swipe for more →</span>`;
+      metaEl.innerHTML = pv === 'A' ? `${pool.length} players <span class="fl-swipe">· swipe for more →</span>` : `${pool.length} players · scroll`;
       const done = roundDone();
       const supply = draftSupply();
-      cardsEl.innerHTML = pool.map((p) => {
+      const cardHtml = (p) => {
         const pick = draft.selectedPlayers.find((s) => s.id === p.id);
         let cls = '';
         let tag = '';
@@ -644,10 +676,25 @@ const formatJson = json(format);
           tag +
           `</button>`
         );
-      }).join('');
+      };
+      if (pv === 'A') { cardsEl.innerHTML = pool.map(cardHtml).join(''); return; }
+      // PROTOTYPE: grouped by primary role, in XI order.
+      const groups = XI_ROLE_ORDER.map((r) => ({ r, list: pool.filter((p) => p.primaryRole === r) })).filter((g) => g.list.length);
+      if (pv === 'C') {
+        if (!groups.some((g) => g.r === pvTab)) pvTab = groups[0]?.r ?? null;
+        const left = (g) => g.list.filter((p) => !draft.selectedPlayers.some((s) => s.id === p.id)).length;
+        cardsEl.innerHTML =
+          `<div class="pv-tabs" role="tablist">` + groups.map((g) =>
+            `<button type="button" role="tab" class="pv-tab${g.r === pvTab ? ' is-on' : ''}" data-pv-tab="${g.r}" aria-selected="${g.r === pvTab}">${esc(PV_GROUPS[g.r])} <b>${left(g)}</b></button>`).join('') + `</div>` +
+          (groups.find((g) => g.r === pvTab)?.list ?? []).map(cardHtml).join('');
+        return;
+      }
+      cardsEl.innerHTML = groups.map((g) => `<h3 class="pv-head">${esc(PV_GROUPS[g.r])} <b>${g.list.length}</b></h3>` + g.list.map(cardHtml).join('')).join('');
     }
 
     cardsEl.addEventListener('click', (e) => {
+      const tab = e.target.closest('[data-pv-tab]');
+      if (tab) { pvTab = tab.getAttribute('data-pv-tab'); cardsEl.scrollTop = 0; renderPool(); return; }
       const btn = e.target.closest('[data-bm11-select]');
       if (btn) onPoolClick(btn.getAttribute('data-bm11-select'), btn);
     });
@@ -1397,6 +1444,50 @@ const formatJson = json(format);
       .fl-status { margin-top: 4px; }
     }
 
+    /* ============ PROTOTYPE (branch prototype/role-sheet): pool layouts B, C, D ============ */
+    .pv-bar {
+      position: fixed; top: 6px; left: 50%; transform: translateX(-50%); z-index: 80; display: flex; align-items: center; gap: 8px;
+      padding: 4px 6px; border-radius: 999px; background: #ff3ea5; color: #fff; font: 700 12px Inter, sans-serif; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6); white-space: nowrap;
+    }
+    .pv-bar button { width: 30px; height: 30px; border: 0; border-radius: 50%; background: rgba(0, 0, 0, 0.3); color: #fff; font-size: 16px; cursor: pointer; }
+    html:is([data-pool-variant="B"], [data-pool-variant="C"], [data-pool-variant="D"]) .fl-cards {
+      flex-direction: column; flex-wrap: nowrap; align-items: stretch; justify-content: flex-start; gap: 5px; padding: 0 2px 10px;
+      overflow-x: hidden; overflow-y: auto; scroll-snap-type: none; touch-action: pan-y; overscroll-behavior: contain;
+      max-height: 62vh; width: 100%; max-width: 680px; margin: 6px auto 0;
+    }
+    html:is([data-pool-variant="B"], [data-pool-variant="C"], [data-pool-variant="D"]) .fl-pool { justify-content: flex-start; }
+    .pv-head, .pv-tabs { position: sticky; top: 0; z-index: 3; background: #070a14; }
+    .pv-head { margin: 0; padding: 7px 4px 5px; font: 700 11px Inter, sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fl-lime); border-bottom: 1px solid var(--fl-line); }
+    .pv-head b { color: var(--fl-dim); font-weight: 600; margin-left: 4px; }
+    html:is([data-pool-variant="B"], [data-pool-variant="C"]) .fl-card {
+      flex: none; min-height: 52px; max-height: none; container-type: normal; flex-direction: row; align-items: center; gap: 10px;
+      padding: 7px 10px; border-radius: 10px; transform: none; overflow: visible;
+    }
+    html:is([data-pool-variant="B"], [data-pool-variant="C"]) .fl-card-role { flex: none; width: 34px; font-size: 9.5px; letter-spacing: 0.04em; line-height: 1.15; }
+    html:is([data-pool-variant="B"], [data-pool-variant="C"], [data-pool-variant="D"]) .fl-card-from { display: none; }
+    html:is([data-pool-variant="B"], [data-pool-variant="C"]) .fl-card-id { flex: 1; min-width: 0; }
+    html:is([data-pool-variant="B"], [data-pool-variant="C"]) .fl-card-name { margin: 0; font-size: 19px; line-height: 1.02; }
+    html:is([data-pool-variant="B"], [data-pool-variant="C"]) .fl-card-stats { flex: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 44px); gap: 0 4px; text-align: right; }
+    html:is([data-pool-variant="B"], [data-pool-variant="C"], [data-pool-variant="D"]) .fl-stat b { font-size: 16px; }
+    html:is([data-pool-variant="B"], [data-pool-variant="C"], [data-pool-variant="D"]) .fl-stat i { font-size: 8px; letter-spacing: 0.04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    html:is([data-pool-variant="B"], [data-pool-variant="C"], [data-pool-variant="D"]) .fl-tag { top: -5px; right: 6px; font-size: 8.5px; padding: 2px 5px; }
+    /* C: one role at a time */
+    .pv-tabs { display: flex; gap: 6px; overflow-x: auto; padding: 6px 0; scrollbar-width: none; flex: none; }
+    .pv-tab { flex: none; padding: 7px 11px; border-radius: 999px; border: 1px solid var(--fl-line); background: #10172a; color: var(--fl-muted); font: 700 12px Inter, sans-serif; cursor: pointer; }
+    .pv-tab b { color: var(--fl-dim); margin-left: 3px; }
+    .pv-tab.is-on { background: var(--fl-lime); color: #04060c; border-color: var(--fl-lime); }
+    .pv-tab.is-on b { color: #04060c; }
+    /* D: two-column grid of small cards under role headers */
+    html[data-pool-variant="D"] .fl-cards { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-auto-rows: max-content; align-content: start; gap: 6px; }
+    html[data-pool-variant="D"] :is(.pv-head, .fl-empty) { grid-column: 1 / -1; }
+    html[data-pool-variant="D"] .fl-card { flex: none; min-height: 0; max-height: none; container-type: normal; padding: 8px 9px; border-radius: 10px; gap: 4px; transform: none; overflow: visible; }
+    html[data-pool-variant="D"] .fl-card-role { font-size: 9px; }
+    html[data-pool-variant="D"] .fl-card-name { margin: 0; font-size: 18px; line-height: 1.02; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    html[data-pool-variant="D"] .fl-card-stats { margin: 0; padding: 2px 0 0; grid-template-columns: repeat(4, 1fr); gap: 0 3px; }
+    @media (max-width: 719px) {
+      html:is([data-pool-variant="B"], [data-pool-variant="C"], [data-pool-variant="D"]) .fl-cards { max-height: none; margin: 4px 0 0; }
+      html:is([data-pool-variant="B"], [data-pool-variant="C"]) .fl-card-stats { grid-template-columns: repeat(4, 38px); }
+    }
     .fl-chooser { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 16px; }
     .fl-chooser[hidden] { display: none; }
     .fl-chooser-backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.6); }
