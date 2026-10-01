@@ -22,7 +22,7 @@
 import { readFileSync, readdirSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { norm, sameIdentity } from './names.mjs';
-import { parseHowstat, parseStrikeRates, matchHowstat } from './howstat.mjs';
+import { parseHowstat, parseStrikeRates, matchHowstat, careerFits } from './howstat.mjs';
 
 export { norm, sameIdentity };
 
@@ -228,7 +228,7 @@ export function careerStats(p, fmt) {
  * A "-" in HowSTAT (no average) stays null.
  */
 export function withOfficialTotals(stats, h) {
-  const out = { ...stats, statsSource: 'howstat', cricsheetMatches: stats.matches };
+  const out = { ...stats, statsSource: 'howstat', cricsheetMatches: stats.matches, officialCareer: [h.careerFrom, h.careerTo] };
   const set = (k, v) => { if (v !== null && v !== undefined) out[k] = v; };
   set('matches', h.matches);
   set('innings', h.innings);
@@ -390,6 +390,11 @@ function main() {
 
   // ---- official career totals (owner's HowSTAT tables), paired per format and nation
   const official = { odi: new Map(), t20i: new Map() };
+  /** What the pairing needs to know about one of our players. */
+  const identity = (p) => ({
+    id: p.id, scorecardName: people.get(p.id)?.name ?? p.scoreName, name: bestName(p.id, p.names),
+    firstYear: Number(p.firstDate.slice(0, 4)), lastYear: Number(p.lastDate.slice(0, 4)), matches: p.matches, runs: p.runs,
+  });
   const hsDir = join(RAW, 'howstat');
   const hsReport = [];
   if (existsSync(hsDir)) {
@@ -398,9 +403,8 @@ function main() {
         const file = join(hsDir, `${id}-${nation.toLowerCase().replace(/\s+/g, '-')}.csv`);
         if (!existsSync(file)) continue;
         const rows = parseHowstat(readFileSync(file, 'utf8'));
-        const ours = [...counted[id].acc.values()].filter((p) => mainTeam(p) === nation)
-          .map((p) => ({ id: p.id, scorecardName: people.get(p.id)?.name ?? p.scoreName, name: bestName(p.id, p.names) }));
-        const { pairs, unmatchedOurs } = matchHowstat(rows, ours);
+        const ours = [...counted[id].acc.values()].filter((p) => mainTeam(p) === nation).map(identity);
+        const { pairs, unmatchedOurs } = matchHowstat(rows, ours, careerFits);
         for (const { ours: o, theirs } of pairs) official[id].set(o.id, theirs);
         hsReport.push(`${id.toUpperCase()} ${nation}: ${rows.length} HowSTAT rows, ${pairs.length} paired, ${unmatchedOurs.length} of ours unpaired`);
       }
@@ -415,9 +419,16 @@ function main() {
     let paired = 0;
     for (const nation of NATIONS) {
       const rows = all.filter((r) => r.country === nation);
-      const ours = [...counted[id].acc.values()].filter((p) => mainTeam(p) === nation)
-        .map((p) => ({ id: p.id, scorecardName: people.get(p.id)?.name ?? p.scoreName, name: bestName(p.id, p.names) }));
-      for (const { ours: o, theirs } of matchHowstat(rows, ours).pairs) { officialBatting[id].set(o.id, theirs); paired++; }
+      const ours = [...counted[id].acc.values()].filter((p) => mainTeam(p) === nation).map(identity);
+      // This table has no career years, so it must agree with the player's per-country record
+      // (already checked against his career years); without one, it must be close to what the
+      // match files show (a full modern career, not a namesake's).
+      const plausible = (o, b) => {
+        const hs = official[id].get(o.id);
+        if (hs) return b.matches >= hs.matches && b.matches <= hs.matches + 12 && b.runs >= hs.runs && b.runs <= hs.runs + 600;
+        return b.matches >= o.matches && b.matches <= o.matches * 1.2 + 5 && b.runs >= o.runs;
+      };
+      for (const { ours: o, theirs } of matchHowstat(rows, ours, plausible).pairs) { officialBatting[id].set(o.id, theirs); paired++; }
     }
     hsReport.push(`${id.toUpperCase()} batting strike-rate table: ${all.length} rows (all countries), ${paired} paired with our players`);
   }

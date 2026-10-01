@@ -122,6 +122,11 @@ for (const fmt of ['odi', 't20i', 'ipl']) {
       // Official totals: never fewer matches than the ball-by-ball files hold, and sane values.
       if (fmt === 'ipl') bad.push(`ipl has no official totals ${p.name}`);
       if (st.matches < st.cricsheetMatches) bad.push(`official matches below Cricsheet ${p.name} ${st.matches} < ${st.cricsheetMatches}`);
+      // The official record must be this player's: his matches fall inside its career years
+      // (guards against namesakes, e.g. Iftikhar Ahmed taking Ijaz Ahmed's record).
+      const [from, to] = st.officialCareer ?? [];
+      if (from != null && Number(p.firstMatch.slice(0, 4)) < from) bad.push(`career years ${p.name}: first match ${p.firstMatch} before ${from}`);
+      if (to != null && Number(p.lastMatch.slice(0, 4)) > to + 1) bad.push(`career years ${p.name}: last match ${p.lastMatch} after ${to}`);
       if (st.hundreds > st.innings) bad.push(`milestones ${p.name}`);
       if (st.battingAverage != null && (st.battingAverage < 0 || st.battingAverage > 150)) bad.push(`avg ${p.name} ${st.battingAverage}`);
       if (st.wickets > 0 && !(st.bowlingAverage > 0)) bad.push(`bowling avg ${p.name}`);

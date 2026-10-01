@@ -4,7 +4,7 @@ Reply in chat with the answers (e.g. "1 pace, 2 spin" and "A Sai Sudharsan"). Th
 
 ## 1. Spin or pace? The 40 most-played bowlers with no known type
 
-166 regular bowlers are left out of the game because no source says whether they bowl spin or pace. These are the ones with the most matches (ball-by-ball matches; older ODI players show only their matches from 2003 on).
+167 regular bowlers are left out of the game because no source says whether they bowl spin or pace. These are the ones with the most matches (ball-by-ball matches; older ODI players show only their matches from 2003 on).
 
 | # | Player (as listed) | Nation / teams | Matches | Wickets | Your answer |
 |---|---|---|---|---|---|
@@ -59,7 +59,7 @@ Give the name fans know them by. Leave any that are right as they are (e.g. AB d
 | B | C Bandara | Sri Lanka | ODI 31 | |
 | C | KL Rahul | India | ODI 100, T20I 72, IPL 160 | |
 | D | M S Dhoni | India | ODI 350, T20I 98, IPL 277 | |
-| E | R P Singh | India | ODI 55, IPL 82 | |
+| E | R P Singh | India | ODI 58, IPL 82 | |
 | F | S N Khan | Royal Challengers Bengaluru, Punjab Kings, Delhi Capitals | IPL 58 | |
 | G | SK Trivedi | Rajasthan Royals | IPL 76 | |
 | H | TL Suman | Deccan Chargers, Mumbai Indians, Pune Warriors | IPL 43 | |

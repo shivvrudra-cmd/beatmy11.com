@@ -165,6 +165,7 @@ These regular bowlers are left out of the game until their bowling type is known
 | odi | Tanvir Ahmed | Pakistan | 1 | 1 | 93f104b4 | |
 | odi | Njabulo Ncube | Zimbabwe | 1 | 3 | fd4afedb | |
 | odi | Jamaluddin Ahmed | Bangladesh | 1 | 0 | 4dcd505e | |
+| odi | Dinusha | Sri Lanka | 1 | 2 | 4cd3960e | |
 | odi | Kerry Walmsley | New Zealand | 1 | 1 | 91bbd893 | |
 | odi | Tareq Aziz | Bangladesh | 1 | 2 | 2a731841 | |
 | odi | Sridharan Sriram | India | 1 | 3 | 64a4c383 | |

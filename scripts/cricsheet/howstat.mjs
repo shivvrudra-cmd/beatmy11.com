@@ -45,11 +45,14 @@ export function parseHowstat(text) {
     const career = String(at(r, idx.career) ?? '');
     const years = career.match(/(\d{4})(?:\D+(\d{4}))?/);
     return {
-      name: at(r, idx.name) ?? '',
-      knownAs: at(r, idx.knownAs) ?? '',
+      // A trailing "*" marks a current player.
+      name: String(at(r, idx.name) ?? '').replace(/\*+$/, '').trim(),
+      knownAs: String(at(r, idx.knownAs) ?? '').replace(/\*+$/, '').trim(),
+      active: /\*\s*$/.test(String(at(r, idx.name) ?? '')) || /\d{4}\s*-\s*$/.test(career),
       born: at(r, idx.born) ?? '',
       careerFrom: years ? Number(years[1]) : null,
-      careerTo: years && years[2] ? Number(years[2]) : years ? Number(years[1]) : null,
+      // "2008-2019" ends in 2019; "2012" is a one-year career; "2008-" is still going (no end).
+      careerTo: years && years[2] ? Number(years[2]) : years && !/\d{4}\s*-\s*$/.test(career) ? Number(years[1]) : null,
       matches: numOrNull(at(r, idx.matches)),
       innings: numOrNull(at(r, idx.innings)),
       runs: numOrNull(at(r, idx.runs)),
@@ -70,8 +73,15 @@ export function parseHowstat(text) {
  *   2. HowSTAT "Known As" equals our display name;
  *   3. same surname with a shared initial, one-to-one in both directions.
  * Each HowSTAT row is used once. Anything less certain stays unmatched.
+ *
+ * `compatible(player, row)` is a hard guard applied at every step: a row can only be paired with
+ * a player it could really belong to (see careerFits). Without it, namesakes pair up: "Iftikhar
+ * Ahmed" (2015-) took "Ijaz Ahmed" (1986-2000), and "Irfan Khan" took "Imran Khan".
  */
-export function matchHowstat(rows, players) {
+export function matchHowstat(rows, players, compatible = () => true) {
+  rows = [...rows];
+  const allRows = rows;
+  const rowsFor = (p) => allRows.filter((h) => compatible(p, h));
   const pairs = [];
   const usedRow = new Set(), usedPlayer = new Set();
   const take = (p, h) => { pairs.push({ ours: p, theirs: h }); usedRow.add(h); usedPlayer.add(p); };
@@ -86,17 +96,17 @@ export function matchHowstat(rows, players) {
       if (usedPlayer.has(p)) continue;
       const k = ourKey(p);
       if (!k) continue;
-      const h = unique(rows.filter((r) => !usedRow.has(r) && theirKey(r) === k));
+      const h = unique(rowsFor(p).filter((r) => !usedRow.has(r) && theirKey(r) === k));
       // ...and no other unpaired player of ours shares that key
-      if (h && players.filter((o) => !usedPlayer.has(o) && ourKey(o) === k).length === 1) take(p, h);
+      if (h && players.filter((o) => !usedPlayer.has(o) && ourKey(o) === k && compatible(o, h)).length === 1) take(p, h);
     }
   }
   const names = (h) => [h.knownAs, h.name].filter(Boolean);
   const fits = (h, p) => names(h).some((n) => sameIdentity(p.scorecardName, n) || sameIdentity(p.name, n));
   for (const p of players) {
     if (usedPlayer.has(p)) continue;
-    const hs = rows.filter((h) => !usedRow.has(h) && fits(h, p));
-    if (hs.length === 1 && players.filter((o) => !usedPlayer.has(o) && fits(hs[0], o)).length === 1) take(p, hs[0]);
+    const hs = rowsFor(p).filter((h) => !usedRow.has(h) && fits(h, p));
+    if (hs.length === 1 && players.filter((o) => !usedPlayer.has(o) && fits(hs[0], o) && compatible(o, hs[0])).length === 1) take(p, hs[0]);
   }
   return { pairs, unmatchedOurs: players.filter((p) => !usedPlayer.has(p)), unmatchedTheirs: rows.filter((h) => !usedRow.has(h)) };
 }
@@ -143,4 +153,16 @@ export function parseStrikeRates(text) {
     highest: num(r[idx.highest]), hundreds: num(r[idx.hundreds]), fifties: num(r[idx.fifties]),
     battingAverage: num(r[idx.battingAverage]), strikeRate: num(r[idx.strikeRate]),
   })).filter((p) => p.name);
+}
+
+/**
+ * Could this official record belong to a player seen in the match files from `firstYear` to
+ * `lastYear`? His matches must fall inside the record's career years (one year of slack at the
+ * end, because the match files can be newer than the table), and the record cannot have fewer
+ * runs than the match files already show for him.
+ */
+export function careerFits(player, row) {
+  if (row.careerFrom != null && player.firstYear != null && player.firstYear < row.careerFrom) return false;
+  if (row.careerTo != null && player.lastYear != null && player.lastYear > row.careerTo + 1) return false;
+  return true;
 }

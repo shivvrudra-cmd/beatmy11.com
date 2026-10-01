@@ -10,13 +10,13 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 - Players seen: 1998
 - Players kept: 1178
 - Excluded, not one of the 10 game nations: 729
-- Excluded, regular bowler, spin/pace unknown (owner to supply): 85
+- Excluded, regular bowler, spin/pace unknown (owner to supply): 86
 - Excluded, never batted or bowled regularly: 4
-- Excluded, first Cricsheet ODI before 2004-01-01 and no official totals (career incomplete): 2
+- Excluded, first Cricsheet ODI before 2004-01-01 and no official totals (career incomplete): 1
 - Role source: match-data 512, kaggle 449, test-data 166, match-data (stumpings) 3, owner 38, wikidata 10
 - Kaggle profiles matched by surname + initial (one-to-one both ways): 18
-- Players with the official full-career batting line (strike rate, 50s, not outs): 294
-- Official rows not used because they cover fewer matches than Cricsheet (the player also appeared for another side): 11
+- Players with the official full-career batting line (strike rate, 50s, not outs): 292
+- Official rows not used because they cover fewer matches than Cricsheet (the player also appeared for another side): 6
 
 ## T20I
 
@@ -29,7 +29,7 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 - Role source: match-data 432, kaggle 417, test-data 142, owner 29, match-data (stumpings) 5, wikidata 4
 - Kaggle profiles matched by surname + initial (one-to-one both ways): 13
 - Players with the official full-career batting line (strike rate, 50s, not outs): 112
-- Official rows not used because they cover fewer matches than Cricsheet (the player also appeared for another side): 29
+- Official rows not used because they cover fewer matches than Cricsheet (the player also appeared for another side): 23
 
 ## IPL
 
@@ -46,25 +46,25 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 For paired ODI and T20I players, matches, innings, runs, hundreds, highest score, both averages, wickets, economy and 4-wicket innings are the official career totals (including matches Cricsheet withholds). Strike rate, fifties and fielding are rates measured on the Cricsheet ball-by-ball matches. Unpaired players keep Cricsheet counts.
 
 - ODI Australia: 254 HowSTAT rows, 125 paired, 0 of ours unpaired
-- ODI Bangladesh: 154 HowSTAT rows, 103 paired, 6 of ours unpaired
-- ODI England: 282 HowSTAT rows, 131 paired, 0 of ours unpaired
-- ODI India: 265 HowSTAT rows, 133 paired, 1 of ours unpaired
-- ODI New Zealand: 226 HowSTAT rows, 118 paired, 0 of ours unpaired
-- ODI Pakistan: 262 HowSTAT rows, 142 paired, 3 of ours unpaired
-- ODI South Africa: 169 HowSTAT rows, 118 paired, 1 of ours unpaired
-- ODI Sri Lanka: 220 HowSTAT rows, 124 paired, 8 of ours unpaired
-- ODI West Indies: 230 HowSTAT rows, 142 paired, 0 of ours unpaired
+- ODI Bangladesh: 154 HowSTAT rows, 105 paired, 4 of ours unpaired
+- ODI England: 282 HowSTAT rows, 129 paired, 2 of ours unpaired
+- ODI India: 265 HowSTAT rows, 134 paired, 0 of ours unpaired
+- ODI New Zealand: 226 HowSTAT rows, 116 paired, 2 of ours unpaired
+- ODI Pakistan: 262 HowSTAT rows, 143 paired, 2 of ours unpaired
+- ODI South Africa: 169 HowSTAT rows, 117 paired, 2 of ours unpaired
+- ODI Sri Lanka: 220 HowSTAT rows, 127 paired, 5 of ours unpaired
+- ODI West Indies: 230 HowSTAT rows, 141 paired, 1 of ours unpaired
 - ODI Zimbabwe: 163 HowSTAT rows, 113 paired, 1 of ours unpaired
-- T20I Australia: 118 HowSTAT rows, 116 paired, 1 of ours unpaired
-- T20I England: 112 HowSTAT rows, 108 paired, 0 of ours unpaired
+- T20I Australia: 118 HowSTAT rows, 114 paired, 3 of ours unpaired
+- T20I England: 112 HowSTAT rows, 106 paired, 2 of ours unpaired
 - T20I India: 124 HowSTAT rows, 123 paired, 1 of ours unpaired
-- T20I New Zealand: 111 HowSTAT rows, 110 paired, 0 of ours unpaired
-- T20I Pakistan: 125 HowSTAT rows, 119 paired, 3 of ours unpaired
+- T20I New Zealand: 111 HowSTAT rows, 107 paired, 3 of ours unpaired
+- T20I Pakistan: 125 HowSTAT rows, 118 paired, 4 of ours unpaired
 - T20I South Africa: 122 HowSTAT rows, 117 paired, 11 of ours unpaired
-- T20I Sri Lanka: 113 HowSTAT rows, 101 paired, 5 of ours unpaired
+- T20I Sri Lanka: 113 HowSTAT rows, 103 paired, 3 of ours unpaired
 - T20I West Indies: 110 HowSTAT rows, 107 paired, 0 of ours unpaired
-- T20I Zimbabwe: 84 HowSTAT rows, 78 paired, 7 of ours unpaired
-- ODI batting strike-rate table: 484 rows (all countries), 295 paired with our players
+- T20I Zimbabwe: 84 HowSTAT rows, 79 paired, 6 of ours unpaired
+- ODI batting strike-rate table: 484 rows (all countries), 292 paired with our players
 - T20I batting strike-rate table: 250 rows (all countries), 112 paired with our players
 
 ## Provisional role rules (owner to confirm)

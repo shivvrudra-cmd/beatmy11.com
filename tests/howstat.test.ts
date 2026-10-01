@@ -5,7 +5,7 @@
 // @ts-expect-error plain .mjs script
 import { parseHowstat, matchHowstat } from '../scripts/cricsheet/howstat-check.mjs';
 // @ts-expect-error plain .mjs script
-import { parseStrikeRates } from '../scripts/cricsheet/howstat.mjs';
+import { parseStrikeRates, careerFits } from '../scripts/cricsheet/howstat.mjs';
 // @ts-expect-error plain .mjs script
 import { withOfficialBatting } from '../scripts/cricsheet/build-white-ball.mjs';
 
@@ -55,6 +55,26 @@ ok(m.pairs.length === 2 && m.pairs.every((x: { ours: { name: string }; theirs: {
   (x.ours.name === 'Virat Kohli' && x.theirs.knownAs === 'Virat Kohli') || (x.ours.name === 'Mahendra Singh Dhoni' && x.theirs.knownAs === 'MS Dhoni')),
   'Kohli and Dhoni pair up', m.pairs.map((x: { ours: { name: string } }) => x.ours.name));
 ok(m.unmatchedOurs.length === 1 && m.unmatchedOurs[0].name === 'R Sharma', '"R Sharma" fits two HowSTAT players, so it is left unmatched');
+
+// ---- current players: "V Kohli*" with an open-ended career ("2008-")
+{
+  const rows = parseHowstat([HEAD,
+    ['V Kohli*', 'Virat Kohli', '', '2008-', '316', '304', '15109', '55', '183*', '59.02', '5', '0', '136.0', '6.16', '1/13'],
+  ].map((r) => r.join('\t')).join('\n'));
+  ok(rows[0].name === 'V Kohli' && rows[0].careerFrom === 2008 && rows[0].careerTo === null && rows[0].active === true, 'an open-ended career has no end year (still playing)', rows[0]);
+  ok(careerFits({ firstYear: 2008, lastYear: 2026 }, rows[0]), 'so a current player still pairs with his own record');
+}
+
+// ---- namesakes: the career-years guard
+{
+  const rows = parseHowstat([HEAD,
+    ['Ijaz Ahmed', 'Ijaz Ahmed', '', '1986-2000', '250', '232', '6564', '10', '139*', '32.33', '5', '0', '95.00', '4.9', '2/31'],
+  ].map((r) => r.join('\t')).join('\n'));
+  const iftikhar = [{ name: 'Iftikhar Ahmed', scorecardName: 'Iftikhar Ahmed', firstYear: 2015, lastYear: 2024, matches: 25, runs: 600 }];
+  ok(matchHowstat(rows, iftikhar).pairs.length === 1, 'without the guard a namesake pairs up (the bug)');
+  ok(matchHowstat(rows, iftikhar, careerFits).pairs.length === 0, 'with the career-years guard Iftikhar Ahmed does not take Ijaz Ahmed\'s record');
+  ok(careerFits({ firstYear: 2003, lastYear: 2012 }, { careerFrom: 1989, careerTo: 2012 }) && !careerFits({ firstYear: 2003, lastYear: 2012 }, { careerFrom: 2005, careerTo: 2012 }), 'career years must contain the player\'s matches');
+}
 
 // ---- the all-countries batting table (1000+ runs) with official strike rates
 const sr = parseStrikeRates([
