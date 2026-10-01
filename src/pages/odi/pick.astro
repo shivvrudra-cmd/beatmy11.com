@@ -1,0 +1,37 @@
+---
+/**
+ * /odi/pick — "Pick any XI", ODI (HIDDEN preview: noindex, not linked; see docs/plans/next-2026-10-02.md).
+ */
+import PickGame, { type PickPlayer } from '../../components/PickGame.astro';
+import { wbResultProps } from '../../lib/formats/white-ball-result';
+import { wbPlayers } from '../../lib/formats/white-ball-store';
+import { ODI_FORMAT } from '../../lib/formats/draft-format';
+import { ODI_RESULT } from '../../lib/formats/result-format';
+import { IPL_BLOCKS, IPL_TEAM_CODES } from '../../lib/formats/ipl-config';
+
+const r = wbResultProps('odi');
+// One entry per draftable player (IPL: per stint, so the link key carries the franchise and block).
+const players: PickPlayer[] = wbPlayers('odi').map((p) => ({
+  key: p.stint ? `${p.id}--${(IPL_TEAM_CODES[p.stint.team] ?? '').toLowerCase()}${(IPL_BLOCKS as readonly string[]).indexOf(p.stint.block)}` : p.id,
+  id: p.id,
+  name: p.name,
+  nation: p.stint?.team ?? p.nation ?? '',
+  eras: p.stint ? [p.stint.block] : (p.era ?? []),
+  primaryRole: p.primaryRole,
+  secondaryRoles: p.secondaryRoles,
+  stats: p.stats,
+  ...(p.overseas === true ? { overseas: true } : {}),
+}));
+---
+<PickGame
+  format={ODI_FORMAT}
+  result={{ ...ODI_RESULT, parGap: r.parGap }}
+  players={players}
+  houseXI={r.houseXI}
+  scoringContext={r.scoringContext}
+  calibration={r.calibration}
+  path="/odi/pick"
+  modernEras={['2010s', '2020s']}
+  title="Pick any ODI XI — Beat My 11 (preview)"
+  description="No spins: pick any ODI XI, then challenge a friend to beat it."
+/>

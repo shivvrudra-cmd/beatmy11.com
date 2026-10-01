@@ -1,0 +1,39 @@
+---
+/**
+ * /pick — "Pick any XI", Test (HIDDEN preview: noindex, not linked; see docs/plans/next-2026-10-02.md).
+ * Every unique Test player in the game, no spins; play a friend's XI or the World XI.
+ */
+import PickGame, { type PickPlayer } from '../components/PickGame.astro';
+import { getHouseXI } from '../lib/opponent-xi';
+import { buildScoringContext } from '../lib/seven-metrics';
+import { playersForEra } from '../lib/player-store';
+import { ERA_IDS, type NormalizedPlayer } from '../lib/player-logic';
+import { TEST_FORMAT } from '../lib/formats/draft-format';
+import { TEST_RESULT } from '../lib/formats/result-format';
+import calibration from '../data/series-calibration.json';
+
+// One entry per unique player, with every era they appear in.
+const unique: NormalizedPlayer[] = [];
+const eras = new Map<string, string[]>();
+for (const eraId of ERA_IDS) {
+  for (const p of playersForEra(eraId)) {
+    if (!eras.has(p.id)) { eras.set(p.id, []); unique.push(p); }
+    eras.get(p.id)!.push(eraId);
+  }
+}
+const players: PickPlayer[] = unique.map((p) => ({
+  key: p.id, id: p.id, name: p.name, nation: p.nation, eras: eras.get(p.id)!, primaryRole: p.primaryRole, secondaryRoles: p.secondaryRoles, stats: p.stats,
+}));
+---
+<PickGame
+  format={TEST_FORMAT}
+  result={TEST_RESULT}
+  players={players}
+  houseXI={getHouseXI()}
+  scoringContext={buildScoringContext(unique)}
+  calibration={calibration}
+  path="/pick"
+  modernEras={['2010s', '2020s']}
+  title="Pick any XI — Beat My 11 (preview)"
+  description="No spins: pick any all-time Test XI, then challenge a friend to beat it."
+/>

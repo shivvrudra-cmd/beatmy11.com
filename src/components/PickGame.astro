@@ -1,0 +1,597 @@
+---
+/**
+ * PickGame.astro — the "Pick any XI" mode (owner, 2026-10-02): no spins. Search every player in
+ * the format, fill the usual eleven slots, then play a friend's XI (carried in the link) or the
+ * format's fixed opponent. HIDDEN preview: noindex and not linked from anywhere yet.
+ *
+ * One page, three states: build (slots + live strength meter), the picker sheet, and the result
+ * (slot-by-slot duels, the five-match series, both sides' strength, badges, head-to-head record).
+ * The rules live in ../lib/pick-xi.ts; scoring is the same engine as the draft.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import type { DraftFormat } from '../lib/formats/draft-format';
+import type { ResultFormat } from '../lib/formats/result-format';
+
+export interface PickPlayer {
+  /** Link key: the player id (IPL: id + franchise + block, one per stint). */
+  key: string;
+  id: string;
+  name: string;
+  /** Nation, or the franchise for an IPL stint. */
+  nation: string;
+  eras: string[];
+  primaryRole: string;
+  secondaryRoles: string[];
+  stats: Record<string, number | null>;
+  overseas?: boolean;
+}
+export interface Props {
+  format: DraftFormat;
+  result: ResultFormat;
+  players: PickPlayer[];
+  houseXI: unknown[];
+  scoringContext: unknown;
+  calibration: unknown;
+  /** This page's path, e.g. "/pick". */
+  path: string;
+  /** Eras that count as "modern" for the New generation badge. */
+  modernEras: string[];
+  title: string;
+  description: string;
+}
+const { format, result, players, houseXI, scoringContext, calibration, path, modernEras, title, description } = Astro.props;
+const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
+---
+<BaseLayout title={title} description={description}>
+  <meta name="robots" content="noindex" slot="head" />
+  <div class="pk" id="pk">
+    <header class="pk-top">
+      <a class="pk-brand" href={format.homeHref} aria-label="Beat My 11 home">BEAT MY 11</a>
+      <span class="pk-mode">Pick any XI</span>
+    </header>
+
+    <!-- ============ build ============ -->
+    <main class="pk-build" id="pk-build">
+      <div class="pk-vs" id="pk-vs" hidden>
+        <p class="pk-vs-title" id="pk-vs-title"></p>
+        <details class="pk-vs-xi"><summary>See their XI</summary><ol id="pk-vs-list"></ol></details>
+      </div>
+      <h1 class="pk-h1" id="pk-h1">Pick your {result.xiNoun}</h1>
+      <p class="pk-sub" id="pk-sub">Any player, no spins. Tap a slot to choose.</p>
+
+      <section class="pk-meter" aria-label="Your XI's strength so far">
+        <div class="pk-m" data-m="bat"><span>Batting</span><i><b></b></i><em>–</em></div>
+        <div class="pk-m" data-m="bowl"><span>Bowling</span><i><b></b></i><em>–</em></div>
+        <div class="pk-m" data-m="field"><span>Fielding</span><i><b></b></i><em>–</em></div>
+        <div class="pk-m is-overall" data-m="all"><span>Overall</span><i><b></b></i><em>–</em></div>
+        <p class="pk-meter-note" id="pk-meter-note">Fielding and overall appear when all eleven are in.</p>
+      </section>
+
+      <ol class="pk-slots" id="pk-slots"></ol>
+      <p class="pk-msg" id="pk-msg" role="status"></p>
+
+      <label class="pk-name">Your name (optional) <input type="text" id="pk-name" maxlength="20" autocomplete="nickname" placeholder="e.g. Shiva" /></label>
+      <div class="pk-actions">
+        <button type="button" class="pk-btn is-main" id="pk-go-friend" disabled></button>
+        <button type="button" class="pk-btn" id="pk-go-world" disabled>Play the {result.opponent}</button>
+        <button type="button" class="pk-link" id="pk-clear">Clear my XI</button>
+      </div>
+      <p class="pk-copied" id="pk-copied" role="status"></p>
+    </main>
+
+    <!-- ============ picker sheet ============ -->
+    <div class="pk-sheet" id="pk-sheet" hidden>
+      <div class="pk-sheet-back" data-pk-close></div>
+      <div class="pk-sheet-card" role="dialog" aria-modal="true" aria-labelledby="pk-sheet-title">
+        <div class="pk-sheet-head">
+          <h2 id="pk-sheet-title"></h2>
+          <button type="button" class="pk-x" data-pk-close aria-label="Close">×</button>
+        </div>
+        <div class="pk-filters">
+          <input type="search" id="pk-q" placeholder="Search a name" autocomplete="off" aria-label="Search players by name" />
+          <select id="pk-team" aria-label={`Filter by ${format.teamLabel.toLowerCase()}`}></select>
+        </div>
+        <p class="pk-count" id="pk-count"></p>
+        <div class="pk-list" id="pk-list"></div>
+      </div>
+    </div>
+
+    <!-- ============ result ============ -->
+    <main class="pk-result" id="pk-result" hidden>
+      <p class="pk-eyebrow">{result.eyebrow}</p>
+      <h1 class="pk-h1" id="pk-r-title"></h1>
+      <div class="pk-score" aria-hidden="true">
+        <div><b id="pk-r-me">0</b><span id="pk-r-me-lab"></span></div>
+        <i>–</i>
+        <div><b id="pk-r-them">0</b><span id="pk-r-them-lab"></span></div>
+      </div>
+      <p class="pk-h2h" id="pk-h2h" hidden></p>
+
+      <h2 class="pk-h2">Head to head, slot by slot</h2>
+      <ol class="pk-duels" id="pk-duels"></ol>
+      <p class="pk-tally" id="pk-tally"></p>
+
+      <h2 class="pk-h2">The series</h2>
+      <ol class="pk-tests" id="pk-tests"></ol>
+
+      <h2 class="pk-h2">Strength</h2>
+      <div class="pk-strength" id="pk-strength"></div>
+
+      <div class="pk-badges" id="pk-badges" hidden></div>
+
+      <div class="pk-actions">
+        <button type="button" class="pk-btn is-main" id="pk-share"></button>
+        <button type="button" class="pk-btn" id="pk-again"></button>
+        <a class="pk-link" href={path}>Start a new challenge</a>
+      </div>
+      <p class="pk-copied" id="pk-r-copied" role="status"></p>
+    </main>
+  </div>
+
+  <script id="pk-players" type="application/json" set:html={safe(players)} />
+  <script id="pk-house" type="application/json" set:html={safe(houseXI)} />
+  <script id="pk-ctx" type="application/json" set:html={safe(scoringContext)} />
+  <script id="pk-cal" type="application/json" set:html={safe(calibration)} />
+  <script id="pk-format" type="application/json" set:html={safe({ draft: format, result, path, modernEras })} />
+
+  <script>
+    import { XI_SLOTS, declarableRoles, MAX_OVERSEAS } from '../lib/player-logic';
+    import { compareXIs, teamBlend, scorePlayer } from '../lib/seven-metrics';
+    import { compareWbXIs, wbTeamBlend, scoreWbPlayer, WB_FORMATS } from '../lib/white-ball-metrics';
+    import { playSeries, xiSeed } from '../lib/series';
+    import { encodeXI, decodeXI } from '../lib/share-results';
+    import { DUEL_CUTS, duelSeed, cleanName, xiLabel, badgesFor, recordH2H, h2hLine } from '../lib/pick-xi';
+    import { sfx } from '../lib/sfx';
+
+    const read = (id) => JSON.parse(document.getElementById(id).textContent);
+    const PLAYERS = read('pk-players');
+    const HOUSE = read('pk-house');
+    const CTX = read('pk-ctx');
+    const CAL = read('pk-cal');
+    const { draft: FORMAT, result: RESULT, path: PATH, modernEras: MODERN } = read('pk-format');
+    const TEST = FORMAT.id === 'test';
+    const IPL = FORMAT.id === 'ipl';
+    const WBF = TEST ? null : WB_FORMATS[FORMAT.id];
+    const byKey = new Map(PLAYERS.map((p) => [p.key, p]));
+    const $ = (id) => document.getElementById(id);
+    const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const ROLE_SHORT = { opener: 'OPN', 'middle-order': 'BAT', wicketkeeper: 'WK', 'all-rounder': 'AR', spinner: 'SPIN', 'fast-bowler': 'PACE' };
+    const SLOT_TAG = { 'opener-1': 'OPN', 'opener-2': 'OPN', 'bat-3': 'BAT', 'bat-4': 'BAT', 'bat-5': 'BAT', 'bat-6': 'WK', 'flex-7': 'AR/SPIN', 'flex-8': 'AR/SPIN', 'fast-1': 'PACE', 'fast-2': 'PACE', 'fast-3': 'PACE' };
+    const code = (team) => FORMAT.teamCodes[team] || team;
+    const eraText = (p) => (p.eras.length > 1 ? `${FORMAT.eraNames[p.eras[0]] || p.eras[0]}–${FORMAT.eraNames[p.eras[p.eras.length - 1]] || p.eras[p.eras.length - 1]}` : FORMAT.eraNames[p.eras[0]] || p.eras[0] || '');
+    const asPlayer = (p) => ({ ...p, uid: p.key, era: p.eras[0] ?? '', displayEra: p.eras[0] ?? '' });
+    // What the engine scores. Test: the same stat subset as the result page, where an average
+    // that is not above zero means "none" (null), never zero.
+    const fin = (v) => { const n = Number(v); return Number.isFinite(n) ? n : null; };
+    const pos = (v) => { const n = Number(v); return Number.isFinite(n) && n > 0 ? n : null; };
+    const scoring = (p) => {
+      if (FORMAT.id !== 'test') return p;
+      const s = p.stats ?? {};
+      return { ...p, stats: {
+        testAverage: pos(s.testAverage), testRuns: fin(s.testRuns), testMatches: fin(s.testMatches), testCenturies: fin(s.testCenturies),
+        testWickets: fin(s.testWickets), testBowlingAverage: pos(s.testBowlingAverage), bowlingAverage: pos(s.bowlingAverage),
+        fiveWs: fin(s.fiveWs), tenWs: fin(s.tenWs), dismissals: fin(s.dismissals),
+      } };
+    };
+
+    // ------------------------------------------------------------ state
+    const STORE = `beatmy11.pick.${FORMAT.id}.v1`;
+    /** slot key -> { key, role } */
+    let xi = {};
+    let myName = '';
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORE) || 'null');
+      if (saved && typeof saved === 'object') {
+        for (const s of XI_SLOTS) {
+          const e = saved.slots?.[s.key];
+          const p = e && byKey.get(e.key);
+          if (p && declarableRoles(asPlayer(p), s.key).includes(e.role)) xi[s.key] = { key: e.key, role: e.role };
+        }
+        myName = cleanName(saved.name);
+      }
+    } catch { /* fresh start */ }
+    const persist = () => { try { localStorage.setItem(STORE, JSON.stringify({ slots: xi, name: myName })); } catch { /* not remembered */ } };
+    const filled = () => XI_SLOTS.filter((s) => xi[s.key]);
+    const complete = () => filled().length === 11;
+    const picks = (m) => XI_SLOTS.map((s) => m[s.key]).filter(Boolean);
+
+    // The friend's XI from the link (?vs=), and a finished pair (?vs=&me=) to show as a result.
+    const params = new URLSearchParams(location.search);
+    function fromLink(raw) {
+      const list = decodeXI(raw, (k) => byKey.has(k));
+      if (!list) return null;
+      const m = {};
+      for (let i = 0; i < 11; i++) {
+        const s = XI_SLOTS[i];
+        const p = byKey.get(list[i].id);
+        if (!declarableRoles(asPlayer(p), s.key).includes(list[i].role)) return null;
+        m[s.key] = { key: list[i].id, role: list[i].role };
+      }
+      if (new Set(picks(m).map((e) => byKey.get(e.key).id)).size !== 11) return null;
+      return m;
+    }
+    const theirXI = fromLink(params.get('vs'));
+    const theirName = theirXI ? cleanName(params.get('n')) : '';
+    const linkedMine = theirXI ? fromLink(params.get('me')) : null;
+    const linkOf = (m) => encodeXI(picks(m).map((e) => ({ id: e.key, role: e.role })));
+
+    // ------------------------------------------------------------ scoring
+    const entriesOf = (m) => picks(m).map((e) => ({ player: scoring(asPlayer(byKey.get(e.key))), declaredRole: e.role }));
+    const houseEntries = () => HOUSE.map((p) => ({ player: scoring(p), declaredRole: p.primaryRole }));
+    const compare = (a, b) => (TEST ? compareXIs(a, b, CTX) : compareWbXIs(a, b, CTX, WBF));
+    const blend = (e) => (TEST ? teamBlend(e, CTX) : wbTeamBlend(e, CTX, WBF));
+    const scoreOne = (e) => (TEST ? scorePlayer(e.player, e.declaredRole, CTX) : scoreWbPlayer(e.player, e.declaredRole, CTX, WBF));
+
+    // ------------------------------------------------------------ build view
+    function setMeter(m, v) {
+      const el = document.querySelector(`.pk-m[data-m="${m}"]`);
+      el.querySelector('b').style.width = v == null ? '0%' : `${Math.max(0, Math.min(100, v))}%`;
+      el.querySelector('em').textContent = v == null ? '–' : String(Math.round(v));
+    }
+    function renderMeter() {
+      const entries = entriesOf(xi);
+      const mean = (xs) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null);
+      let bat = null, bowl = null, field = null, all = null;
+      try {
+        if (entries.length === 11) {
+          const t = blend(entries);
+          bat = t.teamBatting; bowl = t.teamBowling; field = t.teamFielding; all = t.score;
+        } else {
+          const scores = entries.map(scoreOne);
+          bat = mean(scores.map((s) => s.battingScore).filter((v) => v != null));
+          bowl = mean(scores.map((s) => s.bowlingScore).filter((v) => v != null));
+        }
+      } catch { /* a statistic is missing: the meter stays blank for that part */ }
+      setMeter('bat', bat); setMeter('bowl', bowl); setMeter('field', field); setMeter('all', all);
+      $('pk-meter-note').hidden = entries.length === 11;
+    }
+    function renderSlots() {
+      $('pk-slots').innerHTML = XI_SLOTS.map((s, i) => {
+        const e = xi[s.key];
+        const p = e && byKey.get(e.key);
+        return `<li><button type="button" class="pk-slot${p ? ' is-filled' : ''}" data-pk-slot="${s.key}" aria-label="Spot ${i + 1}, ${SLOT_TAG[s.key]}${p ? `: ${esc(p.name)}. Change` : ': empty. Pick a player'}">` +
+          `<span class="pk-slot-n">${i + 1}</span><span class="pk-slot-tag">${p ? ROLE_SHORT[e.role] : SLOT_TAG[s.key]}</span>` +
+          (p ? `<span class="pk-slot-name">${esc(p.name)}${p.overseas ? ' <b class="pk-os">OS</b>' : ''}</span><span class="pk-slot-meta">${esc(code(p.nation))} · ${esc(eraText(p))}</span>`
+             : `<span class="pk-slot-name is-empty">Tap to pick</span>`) +
+          `</button></li>`;
+      }).join('');
+    }
+    function renderBuild() {
+      renderSlots();
+      renderMeter();
+      const done = complete();
+      const n = filled().length;
+      $('pk-sub').textContent = done ? 'Eleven in. Ready when you are.' : n ? `${11 - n} to go. Tap a slot to choose.` : 'Any player, no spins. Tap a slot to choose.';
+      $('pk-go-friend').disabled = !done;
+      $('pk-go-world').disabled = !done;
+      $('pk-go-friend').textContent = theirXI ? `Play ${xiLabel(theirName, "your friend's XI")}` : 'Challenge a friend';
+    }
+
+    // ------------------------------------------------------------ picker sheet
+    let openSlot = null;
+    function openSheet(slotKey) {
+      openSlot = slotKey;
+      const i = XI_SLOTS.findIndex((s) => s.key === slotKey);
+      $('pk-sheet-title').textContent = `Spot ${i + 1} · ${SLOT_TAG[slotKey]}`;
+      $('pk-q').value = '';
+      const pool = PLAYERS.filter((p) => declarableRoles(asPlayer(p), slotKey).length);
+      const teams = [...new Set(pool.map((p) => p.nation))].sort();
+      $('pk-team').innerHTML = `<option value="">All ${esc(FORMAT.teamLabel.toLowerCase())}s</option>` + teams.map((t) => `<option value="${esc(t)}">${esc(t)}</option>`).join('');
+      $('pk-sheet').hidden = false;
+      renderList();
+      if (window.matchMedia('(min-width: 720px)').matches) $('pk-q').focus();
+    }
+    function closeSheet() { $('pk-sheet').hidden = true; openSlot = null; }
+    const statCells = (p) => {
+      const r = p.primaryRole;
+      const set = r === 'all-rounder' ? FORMAT.stats.allRounder : r === 'spinner' || r === 'fast-bowler' ? FORMAT.stats.bowler : r === 'wicketkeeper' ? FORMAT.stats.keeper : FORMAT.stats.batter;
+      const s = p.stats || {};
+      const first = (keys) => { for (const k of keys) if (s[k] != null) return s[k]; return undefined; };
+      const int = (v) => (v == null || Number.isNaN(Number(v)) ? '–' : Math.round(Number(v)).toLocaleString('en-US'));
+      const avg = (v) => (v == null || Number.isNaN(Number(v)) || Number(v) === 0 ? '–' : Number(v).toFixed(1));
+      return set.map((c) => `<span class="pk-stat"><b>${esc(c.kind === 'pair' ? `${int(s[c.keys[0]])}/${int(s[c.keys[1]])}` : c.kind === 'avg' ? avg(first(c.keys)) : int(first(c.keys)))}</b><i>${esc(c.label)}</i></span>`).join('');
+    };
+    function renderList() {
+      if (!openSlot) return;
+      const q = $('pk-q').value.trim().toLowerCase();
+      const team = $('pk-team').value;
+      const occupant = xi[openSlot];
+      const taken = new Set(picks(xi).filter((e) => e !== occupant).map((e) => byKey.get(e.key).id));
+      const osNow = picks(xi).filter((e) => e !== occupant && byKey.get(e.key).overseas).length;
+      const all = PLAYERS.filter((p) => declarableRoles(asPlayer(p), openSlot).length && (!team || p.nation === team) && (!q || p.name.toLowerCase().includes(q)))
+        .sort((a, b) => a.name.localeCompare(b.name) || a.key.localeCompare(b.key));
+      const shown = all.slice(0, 80);
+      $('pk-count').textContent = all.length > shown.length ? `${all.length} players. Showing the first ${shown.length}: type a name to narrow it down.` : `${all.length} player${all.length === 1 ? '' : 's'}`;
+      $('pk-list').innerHTML = shown.map((p) => {
+        const inXI = taken.has(p.id);
+        const capped = IPL && p.overseas && osNow >= MAX_OVERSEAS;
+        const off = inXI || capped;
+        const here = occupant && occupant.key === p.key;
+        return `<button type="button" class="pk-row${off ? ' is-off' : ''}${here ? ' is-here' : ''}" data-pk-pick="${esc(p.key)}"${off ? ' aria-disabled="true"' : ''}>` +
+          `<span class="pk-row-id"><span class="pk-row-name">${esc(p.name)}${p.overseas ? ' <b class="pk-os">OS</b>' : ''}</span>` +
+          `<span class="pk-row-meta">${esc(code(p.nation))} · ${esc(eraText(p))}${inXI ? ' · in your XI' : capped ? ' · four overseas already' : here ? ' · in this spot' : ''}</span></span>` +
+          `<span class="pk-row-stats">${statCells(p)}</span></button>`;
+      }).join('') || '<p class="pk-empty">No players match.</p>';
+    }
+    $('pk-q').addEventListener('input', renderList);
+    $('pk-team').addEventListener('change', renderList);
+    $('pk-sheet').addEventListener('click', (e) => {
+      if (e.target.closest('[data-pk-close]')) { closeSheet(); return; }
+      const row = e.target.closest('[data-pk-pick]');
+      if (!row) return;
+      if (row.getAttribute('aria-disabled') === 'true') { sfx.blocked(); return; }
+      const p = byKey.get(row.getAttribute('data-pk-pick'));
+      const roles = declarableRoles(asPlayer(p), openSlot);
+      xi[openSlot] = { key: p.key, role: roles.includes(p.primaryRole) ? p.primaryRole : roles[0] };
+      persist();
+      closeSheet();
+      if (complete()) sfx.complete(); else sfx.place();
+      renderBuild();
+    });
+    $('pk-slots').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-pk-slot]');
+      if (b) { sfx.select(); openSheet(b.getAttribute('data-pk-slot')); }
+    });
+    $('pk-clear').addEventListener('click', () => { xi = {}; persist(); sfx.remove(); renderBuild(); });
+    $('pk-name').value = myName;
+    $('pk-name').addEventListener('input', () => { myName = cleanName($('pk-name').value); persist(); });
+
+    // ------------------------------------------------------------ sharing
+    async function shareLink(url, text, outEl) {
+      try {
+        if (navigator.share) { await navigator.share({ title: 'Beat My 11', text, url }); return; }
+        await navigator.clipboard.writeText(`${text} ${url}`);
+        outEl.textContent = 'Link copied. Paste it to your friend.';
+      } catch (err) {
+        if (err && err.name === 'AbortError') return;
+        outEl.textContent = url;
+      }
+    }
+    const withName = (q, key, name) => (name ? `${q}&${key}=${encodeURIComponent(name)}` : q);
+
+    $('pk-go-friend').addEventListener('click', () => {
+      if (!complete()) return;
+      if (theirXI) { showResult(xi, theirXI, myName, theirName, 'friend', true); return; }
+      const url = `${location.origin}${PATH}?${withName(`vs=${linkOf(xi)}`, 'n', myName)}`;
+      shareLink(url, `I picked my ${RESULT.xiNoun}. Pick yours and beat it 🏏`, $('pk-copied'));
+    });
+    $('pk-go-world').addEventListener('click', () => { if (complete()) showResult(xi, null, myName, '', 'world', true); });
+
+    // ------------------------------------------------------------ result view
+    function showResult(mine, theirs, mineName, theirsName, mode, played) {
+      const me = entriesOf(mine);
+      const them = theirs ? entriesOf(theirs) : houseEntries();
+      let cmp, myBlend, theirBlend;
+      try {
+        cmp = compare(me, them);
+        myBlend = blend(me);
+        theirBlend = blend(them);
+      } catch {
+        $('pk-msg').textContent = 'A statistic one of these XIs needs is missing from our data, so the series can’t be played. Change a player and try again.';
+        return;
+      }
+      const meLab = played ? 'Your XI' : xiLabel(mineName, 'The challenger');
+      const themLab = theirs ? xiLabel(theirsName, played ? "Your friend's XI" : 'The first XI') : RESULT.opponent;
+      const toSeries = (entries, scores) => entries.map((e, i) => ({
+        id: e.player.id, name: e.player.name, nation: e.player.nation, era: e.player.era, role: scores[i].role, rating: scores[i].score ?? 0, stats: e.player.stats,
+      }));
+      const myKeys = picks(mine).map((e) => `${e.key}:${e.role}`);
+      const series = playSeries({
+        userScore: cmp.userScore, houseScore: cmp.opponentScore,
+        userXI: toSeries(me, cmp.userPlayers), houseXI: toSeries(them, cmp.opponentPlayers),
+        calibration: CAL, flavour: { ...RESULT.flavour, opponent: themLab },
+        // Friend v friend: one seed for the pair and a symmetric ladder. Against the fixed opponent: the format's own difficulty.
+        ...(theirs
+          ? { seed: duelSeed(picks(theirs).map((e) => `${e.key}:${e.role}`), myKeys), gapCuts: DUEL_CUTS }
+          : { seed: xiSeed(me.map((e) => ({ id: e.player.id, role: e.declaredRole }))), parGap: RESULT.parGap }),
+      });
+
+      $('pk-build').hidden = true;
+      $('pk-result').hidden = false;
+      window.scrollTo(0, 0);
+      $('pk-r-me-lab').textContent = meLab;
+      $('pk-r-them-lab').textContent = themLab;
+      const won = series.user > series.house, lost = series.user < series.house;
+      const titleFinal = won ? `${meLab} win${played ? '' : 's'} ${series.user}–${series.house}` : lost ? `${themLab} wins ${series.house}–${series.user}` : `Series drawn ${series.user}–${series.house}`;
+
+      // 1. Slot-by-slot duels: the rating of each pair decides the duel (no numbers shown).
+      const duels = XI_SLOTS.map((s, i) => {
+        const a = cmp.userPlayers[i].score, b = cmp.opponentPlayers[i].score;
+        return { n: i + 1, mine: me[i].player.name, theirs: them[i].player.name, res: a > b ? 'w' : a < b ? 'l' : 'd' };
+      });
+      $('pk-duels').innerHTML = duels.map((d) =>
+        `<li class="pk-duel" data-res="${d.res}"><span class="pk-duel-a">${esc(d.mine)}</span><span class="pk-duel-n">${d.n}</span><span class="pk-duel-b">${esc(d.theirs)}</span></li>`).join('');
+      const dw = duels.filter((d) => d.res === 'w').length, dl = duels.filter((d) => d.res === 'l').length;
+
+      // 2. The series, 3. strength of both sides.
+      const ORD = ['1st', '2nd', '3rd', '4th', '5th'];
+      $('pk-tests').innerHTML = series.tests.map((t) =>
+        `<li class="pk-test is-${t.result}"><span class="pk-test-n">${ORD[t.number - 1]} ${esc(RESULT.matchNoun)} · ${esc(t.venue)}</span>` +
+        `<span class="pk-test-sum">${esc(t.summary.replace(/^Your XI/, meLab))}</span>` +
+        (t.hero ? `<span class="pk-test-hero">★ ${esc(t.hero)} <em>(${esc(t.heroSide === 'user' ? meLab : themLab)})</em></span>` : '') + `</li>`).join('');
+      const row = (label, a, b) => `<div class="pk-str"><span>${label}</span>` +
+        `<i class="is-me"><b style="width:${Math.max(0, Math.min(100, a))}%"></b></i><em>${Math.round(a)}</em>` +
+        `<i class="is-them"><b style="width:${Math.max(0, Math.min(100, b))}%"></b></i><em>${Math.round(b)}</em></div>`;
+      $('pk-strength').innerHTML = `<p class="pk-str-key"><span class="is-me">${esc(meLab)}</span><span class="is-them">${esc(themLab)}</span></p>` +
+        row('Batting', myBlend.teamBatting, theirBlend.teamBatting) + row('Bowling', myBlend.teamBowling, theirBlend.teamBowling) +
+        row('Fielding', myBlend.teamFielding, theirBlend.teamFielding) + row('Overall', cmp.userScore, cmp.opponentScore);
+
+      // 4. Badges for the XI on the left.
+      const badges = badgesFor(picks(mine).map((e) => { const p = byKey.get(e.key); return { team: p.nation, eras: p.eras, overseas: p.overseas }; }),
+        { format: FORMAT.id, allEras: TEST ? ['legends', ...FORMAT.eraList] : Object.keys(FORMAT.eraNames), modern: MODERN });
+      $('pk-badges').hidden = !badges.length;
+      $('pk-badges').innerHTML = badges.map((b) => `<span class="pk-badge" title="${esc(b.why)}"><b>${esc(b.name)}</b>${esc(b.why)}</span>`).join('');
+
+      // 5. Head-to-head record against a named friend (this device only; only for a series I played).
+      $('pk-h2h').hidden = true;
+      if (played && theirs && theirsName) {
+        const rec = recordH2H(localStorage, FORMAT.id, theirsName, `${linkOf(theirs)}|${linkOf(mine)}`, series.user, series.house);
+        $('pk-h2h').textContent = h2hLine(rec, theirsName);
+        $('pk-h2h').hidden = false;
+      }
+
+      // Buttons.
+      const resultUrl = theirs
+        ? `${location.origin}${PATH}?${withName(withName(`vs=${linkOf(theirs)}`, 'n', theirsName) + `&me=${linkOf(mine)}`, 'm', mineName)}`
+        : `${location.origin}${PATH}?${withName(`vs=${linkOf(mine)}`, 'n', mineName)}`;
+      const shareText = theirs
+        ? `${meLab} ${won ? 'beat' : lost ? 'lost to' : 'drew with'} ${themLab} ${series.user}–${series.house} 🏏`
+        : `My ${RESULT.xiNoun} ${won ? 'beat' : lost ? 'lost to' : 'drew with'} the ${RESULT.opponent} ${series.user}–${series.house}. Pick yours and beat mine 🏏`;
+      $('pk-share').textContent = theirs ? 'Send the result' : 'Challenge a friend with this XI';
+      $('pk-share').onclick = () => shareLink(resultUrl, shareText, $('pk-r-copied'));
+      $('pk-again').textContent = played ? 'Change my XI' : 'Pick my own XI';
+      $('pk-again').onclick = () => {
+        if (!played) { location.href = `${PATH}?${withName(`vs=${linkOf(series.user >= series.house ? mine : theirs)}`, 'n', series.user >= series.house ? mineName : theirsName)}`; return; }
+        $('pk-result').hidden = true;
+        $('pk-build').hidden = false;
+        window.scrollTo(0, 0);
+      };
+
+      // The reveal: duels one by one, then the scoreline.
+      const rows = [...document.querySelectorAll('.pk-duel')];
+      const finish = () => {
+        rows.forEach((r) => r.classList.add('is-shown'));
+        $('pk-tally').textContent = `Duels: ${dw}–${dl}${11 - dw - dl ? `, ${11 - dw - dl} level` : ''}`;
+        $('pk-r-me').textContent = String(series.user);
+        $('pk-r-them').textContent = String(series.house);
+        $('pk-r-title').textContent = titleFinal;
+        $('pk-result').classList.toggle('is-win', won);
+        $('pk-result').classList.toggle('is-loss', lost);
+        $('pk-result').classList.add('is-done');
+        if (!reduceMotion) sfx.land(true);
+      };
+      $('pk-result').classList.remove('is-done', 'is-win', 'is-loss');
+      $('pk-r-title').textContent = `${meLab} v ${themLab}`;
+      $('pk-r-me').textContent = '0';
+      $('pk-r-them').textContent = '0';
+      $('pk-tally').textContent = '';
+      if (reduceMotion) { finish(); return; }
+      rows.forEach((r, i) => window.setTimeout(() => { r.classList.add('is-shown'); sfx.tick(); }, 350 + i * 260));
+      window.setTimeout(finish, 350 + rows.length * 260 + 400);
+    }
+
+    // ------------------------------------------------------------ start
+    if (theirXI) {
+      $('pk-vs').hidden = false;
+      $('pk-vs-title').textContent = `Can you beat ${xiLabel(theirName, "your friend's XI")}?`;
+      $('pk-vs-list').innerHTML = picks(theirXI).map((e) => { const p = byKey.get(e.key); return `<li><b>${ROLE_SHORT[e.role]}</b> ${esc(p.name)} <i>${esc(code(p.nation))}</i></li>`; }).join('');
+    }
+    renderBuild();
+    if (theirXI && linkedMine) showResult(linkedMine, theirXI, cleanName(params.get('m')), theirName, 'friend', false);
+  </script>
+
+  <style is:global>
+    .pk {
+      --pk-text: #eaf0ff; --pk-muted: #9aa6c4; --pk-dim: #6b7694; --pk-lime: #c6ff3d; --pk-loss: #ff6b5e; --pk-line: rgba(255, 255, 255, 0.12);
+      --pk-display: 'Bebas Neue', 'Oswald', 'Arial Narrow', sans-serif;
+      min-height: 100vh; min-height: 100svh; box-sizing: border-box; padding: 10px 12px 40px; background: #04060c; color: var(--pk-text); font-family: Inter, system-ui, sans-serif;
+    }
+    .pk > * { max-width: 560px; margin-left: auto; margin-right: auto; }
+    .pk [hidden] { display: none !important; }
+    .pk :focus-visible { outline: 3px solid var(--pk-lime); outline-offset: 2px; }
+    .pk-top { display: flex; align-items: baseline; justify-content: space-between; }
+    .pk-brand { font: 400 24px/1 var(--pk-display); letter-spacing: 0.08em; color: var(--pk-text); text-decoration: none; }
+    .pk-mode, .pk-eyebrow { margin: 0; font: 700 10.5px Inter, sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: var(--pk-lime); }
+    .pk-eyebrow { text-align: center; margin-top: 14px; color: var(--pk-muted); }
+    .pk-h1 { margin: 12px 0 2px; text-align: center; font: 400 clamp(30px, 9vw, 44px)/1 var(--pk-display); letter-spacing: 0.03em; }
+    .pk-h2 { margin: 20px 0 8px; font: 700 11px Inter, sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: var(--pk-muted); }
+    .pk-sub { margin: 0 0 10px; text-align: center; color: var(--pk-muted); font-size: 13.5px; }
+    .pk-vs { margin-top: 12px; padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(198, 255, 61, 0.4); background: rgba(198, 255, 61, 0.06); }
+    .pk-vs-title { margin: 0; font: 400 22px/1.1 var(--pk-display); letter-spacing: 0.04em; color: var(--pk-lime); }
+    .pk-vs-xi summary { margin-top: 6px; cursor: pointer; font-size: 12.5px; color: var(--pk-muted); }
+    .pk-vs-xi ol { margin: 6px 0 0; padding-left: 22px; font-size: 13px; line-height: 1.6; }
+    .pk-vs-xi li b { display: inline-block; width: 40px; font-size: 10px; color: var(--pk-lime); }
+    .pk-vs-xi li i { font-style: normal; color: var(--pk-dim); font-size: 11px; }
+
+    .pk-meter { display: grid; gap: 6px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--pk-line); background: linear-gradient(160deg, #16223a, #0b1020 70%); }
+    .pk-m, .pk-str { display: grid; grid-template-columns: 70px 1fr 28px; align-items: center; gap: 8px; }
+    .pk-m span, .pk-str span { font: 400 17px/1 var(--pk-display); letter-spacing: 0.06em; }
+    .pk-m i, .pk-str i { height: 9px; border-radius: 999px; background: rgba(255, 255, 255, 0.09); overflow: hidden; }
+    .pk-m i b, .pk-str i b { display: block; height: 100%; width: 0; border-radius: 999px; background: var(--pk-lime); transition: width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .pk-m em, .pk-str em { font: 400 20px/1 var(--pk-display); font-style: normal; text-align: right; }
+    .pk-m.is-overall span, .pk-m.is-overall em { color: var(--pk-lime); }
+    .pk-meter-note { margin: 0; font-size: 11px; color: var(--pk-dim); }
+
+    .pk-slots { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 5px; }
+    .pk-slot {
+      width: 100%; min-height: 46px; display: grid; grid-template-columns: 22px 58px 1fr auto; align-items: center; gap: 8px; padding: 6px 10px; text-align: left; cursor: pointer;
+      border-radius: 10px; border: 1px dashed var(--pk-line); background: #0b1020; color: var(--pk-text);
+    }
+    .pk-slot.is-filled { border-style: solid; border-color: rgba(198, 255, 61, 0.35); background: linear-gradient(160deg, #16223a, #0b1020 70%); }
+    .pk-slot-n { font: 400 18px/1 var(--pk-display); color: var(--pk-dim); text-align: center; }
+    .pk-slot-tag { font: 700 10px Inter, sans-serif; letter-spacing: 0.08em; color: var(--pk-lime); }
+    .pk-slot-name { font: 400 20px/1.05 var(--pk-display); letter-spacing: 0.03em; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pk-slot-name.is-empty { color: var(--pk-dim); font: 500 13px Inter, sans-serif; }
+    .pk-slot-meta, .pk-row-meta { font-size: 11px; color: var(--pk-muted); white-space: nowrap; }
+    .pk-os { display: inline-block; padding: 0 3px; border-radius: 3px; background: rgba(255, 255, 255, 0.14); font: 700 8.5px Inter, sans-serif; letter-spacing: 0.06em; vertical-align: 3px; }
+    .pk-msg { margin: 8px 0 0; min-height: 0; color: #ffb3aa; font-size: 13px; text-align: center; }
+    .pk-name { display: flex; align-items: center; gap: 10px; margin: 14px 0 0; font-size: 12.5px; color: var(--pk-muted); }
+    .pk-name input { flex: 1; min-width: 0; min-height: 40px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--pk-line); background: #0b1020; color: var(--pk-text); font: 500 15px Inter, sans-serif; }
+    .pk-actions { display: grid; gap: 8px; margin-top: 12px; text-align: center; }
+    .pk-btn { min-height: 50px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.3); background: transparent; color: var(--pk-text); font: 400 23px/1 var(--pk-display); letter-spacing: 0.08em; cursor: pointer; }
+    .pk-btn.is-main { border: 0; background: var(--pk-lime); color: #04060c; box-shadow: 0 0 30px rgba(198, 255, 61, 0.35); }
+    .pk-btn:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+    .pk-link { background: none; border: 0; padding: 8px; color: var(--pk-muted); font: 500 13px Inter, sans-serif; text-decoration: underline; cursor: pointer; }
+    .pk-copied { margin: 6px 0 0; min-height: 16px; text-align: center; font-size: 12.5px; color: var(--pk-lime); overflow-wrap: anywhere; }
+
+    .pk-sheet { position: fixed; inset: 0; z-index: 50; display: flex; align-items: flex-end; justify-content: center; max-width: none; }
+    .pk-sheet-back { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.7); }
+    .pk-sheet-card { position: relative; width: 100%; max-width: 560px; height: 86vh; height: 86svh; display: flex; flex-direction: column; padding: 12px 12px 0; box-sizing: border-box; border-radius: 18px 18px 0 0; background: #070a14; border: 1px solid var(--pk-line); border-bottom: 0; }
+    .pk-sheet-head { display: flex; align-items: center; justify-content: space-between; }
+    .pk-sheet-head h2 { margin: 0; font: 400 24px/1 var(--pk-display); letter-spacing: 0.05em; }
+    .pk-x { width: 40px; height: 40px; border: 0; border-radius: 50%; background: #10172a; color: var(--pk-text); font-size: 22px; cursor: pointer; }
+    .pk-filters { display: grid; grid-template-columns: 1fr 42%; gap: 8px; margin-top: 8px; }
+    .pk-filters input, .pk-filters select { min-width: 0; min-height: 42px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--pk-line); background: #0b1020; color: var(--pk-text); font: 500 15px Inter, sans-serif; }
+    .pk-count { margin: 6px 2px; font-size: 11px; color: var(--pk-dim); }
+    .pk-list { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 5px; padding-bottom: 14px; }
+    .pk-row { flex: none; display: flex; align-items: center; gap: 10px; min-height: 50px; padding: 6px 10px; text-align: left; cursor: pointer; border-radius: 10px; border: 1px solid var(--pk-line); background: linear-gradient(160deg, #18213a, #0b1020 62%); color: var(--pk-text); }
+    .pk-row.is-off { opacity: 0.42; cursor: default; }
+    .pk-row.is-here { border-color: var(--pk-lime); }
+    .pk-row-id { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+    .pk-row-name { font: 400 19px/1.02 var(--pk-display); letter-spacing: 0.03em; }
+    .pk-row-stats { flex: none; display: grid; grid-template-columns: repeat(4, 38px); gap: 0 4px; text-align: right; }
+    .pk-stat { display: flex; flex-direction: column; }
+    .pk-stat b { font: 400 16px/1 var(--pk-display); }
+    .pk-stat i { font: 500 8.5px Inter, sans-serif; font-style: normal; letter-spacing: 0.04em; text-transform: uppercase; color: var(--pk-dim); white-space: nowrap; }
+    .pk-empty { text-align: center; color: var(--pk-muted); }
+
+    .pk-score { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 4px; }
+    .pk-score div { display: flex; flex-direction: column; align-items: center; min-width: 110px; }
+    .pk-score b { font: 400 clamp(64px, 22vw, 96px)/0.9 var(--pk-display); }
+    .pk-score span { font: 600 10.5px Inter, sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--pk-muted); text-align: center; }
+    .pk-score i { font: 400 44px/1 var(--pk-display); font-style: normal; color: var(--pk-dim); margin-top: -14px; }
+    .pk-result.is-win .pk-score div:first-child b, .pk-result.is-win .pk-h1 { color: var(--pk-lime); }
+    .pk-result.is-loss .pk-score div:last-child b { color: var(--pk-loss); }
+    .pk-h2h { margin: 10px auto 0; width: fit-content; padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(198, 255, 61, 0.4); color: var(--pk-lime); font: 600 12.5px Inter, sans-serif; }
+    .pk-duels, .pk-tests { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+    .pk-duel { display: grid; grid-template-columns: 1fr 26px 1fr; align-items: center; gap: 6px; padding: 5px 8px; border-radius: 8px; background: rgba(255, 255, 255, 0.04); font: 400 16px/1.05 var(--pk-display); letter-spacing: 0.03em; opacity: 0.25; transition: opacity 0.25s; }
+    .pk-duel.is-shown { opacity: 1; }
+    .pk-duel-a { text-align: right; }
+    .pk-duel-n { text-align: center; font-size: 13px; color: var(--pk-dim); }
+    .pk-duel-a, .pk-duel-b { color: var(--pk-muted); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pk-duel.is-shown[data-res="w"] .pk-duel-a { color: var(--pk-lime); }
+    .pk-duel.is-shown[data-res="l"] .pk-duel-b { color: #ffb3aa; }
+    .pk-duel.is-shown[data-res="d"] .pk-duel-a, .pk-duel.is-shown[data-res="d"] .pk-duel-b { color: var(--pk-text); }
+    .pk-tally { margin: 6px 0 0; text-align: center; font: 600 12.5px Inter, sans-serif; color: var(--pk-text); min-height: 16px; }
+    .pk-test { display: grid; gap: 1px; padding: 6px 10px; border-radius: 10px; border: 1px solid var(--pk-line); border-left: 4px solid var(--pk-muted); background: linear-gradient(160deg, #16223a, #0b1020 70%); }
+    .pk-test.is-user { border-left-color: var(--pk-lime); }
+    .pk-test.is-house { border-left-color: var(--pk-loss); }
+    .pk-test-n { font: 400 15px/1 var(--pk-display); letter-spacing: 0.05em; }
+    .pk-test-sum { font-size: 12px; }
+    .pk-test-hero { font: 400 15px/1.1 var(--pk-display); letter-spacing: 0.04em; color: var(--pk-lime); }
+    .pk-test-hero em { font: 500 10.5px Inter, sans-serif; font-style: normal; color: var(--pk-muted); }
+    .pk-result:not(.is-done) .pk-tests, .pk-result:not(.is-done) .pk-strength, .pk-result:not(.is-done) .pk-badges { opacity: 0.15; }
+    .pk-strength { display: grid; gap: 8px; }
+    .pk-str { grid-template-columns: 70px 1fr 28px; row-gap: 3px; }
+    .pk-str span { grid-row: span 2; }
+    .pk-str i.is-them b { background: #c9d2ea; }
+    .pk-str-key { margin: 0; display: flex; gap: 14px; font: 600 10.5px Inter, sans-serif; letter-spacing: 0.1em; text-transform: uppercase; }
+    .pk-str-key span::before { content: ''; display: inline-block; width: 9px; height: 9px; margin-right: 5px; border-radius: 50%; background: var(--pk-lime); }
+    .pk-str-key .is-them::before { background: #c9d2ea; }
+    .pk-badges { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .pk-badge { padding: 6px 10px; border-radius: 10px; border: 1px solid rgba(198, 255, 61, 0.4); font-size: 11.5px; color: var(--pk-muted); }
+    .pk-badge b { display: block; font: 400 17px/1.1 var(--pk-display); letter-spacing: 0.05em; color: var(--pk-lime); }
+    @media (prefers-reduced-motion: reduce) { .pk *, .pk *::before { transition: none !important; } }
+  </style>
+</BaseLayout>
