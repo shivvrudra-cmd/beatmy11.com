@@ -6,3 +6,7 @@
 
 /og/*
   Cache-Control: public, max-age=86400
+
+# Keep preview/workers.dev copies out of search results (production is beatmy11.com).
+https://:version.:subdomain.workers.dev/*
+  X-Robots-Tag: noindex

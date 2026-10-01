@@ -4,7 +4,7 @@
   "main": "worker/index.ts",
   "compatibility_date": "2026-09-30",
   "workers_dev": false,
-  "preview_urls": false,
+  "preview_urls": true,
   "routes": [
     { "pattern": "beatmy11.com", "custom_domain": true },
     { "pattern": "www.beatmy11.com", "custom_domain": true }
