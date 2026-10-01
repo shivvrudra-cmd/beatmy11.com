@@ -29,7 +29,8 @@ export interface ResultFormat {
   shareLinks: boolean;
   /** Shown before "Daily Challenge" outside the Test game: "ODI", "T20I", "IPL". */
   dailyLabel?: string;
-  /** Test only for now: anonymous score and event counters (keeps the Test calibration clean). */
+  /** Test only: the anonymous SCORE of a finished series (keeps the Test calibration clean).
+   *  The daily page and event counters cover every format (see ../telemetry). */
   telemetry: boolean;
   /** Data credit (required by the data licence). Shown on /privacy, not on the result page. */
   credit?: string;
