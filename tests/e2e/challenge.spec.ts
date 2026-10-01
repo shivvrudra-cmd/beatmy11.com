@@ -55,7 +55,7 @@ test("challenge: a friend drafts from the same spins, can retry, and sees the tr
   await expect(p2.locator("#rs-challenge")).toContainText("attempt 1");
 
   // Retry: same spins again, and the try count goes up.
-  await p2.locator(".rs-again-bottom").click();
+  await p2.locator(".rs-p1 .rs-again-bottom").click();
   await p2.waitForURL("**/play**");
   const draws3 = await draftAndRecordDraws(p2);
   expect(draws3).toEqual(draws1);

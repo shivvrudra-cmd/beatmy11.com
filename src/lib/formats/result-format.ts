@@ -28,7 +28,7 @@ export interface ResultFormat {
   shareLinks: boolean;
   /** Test only for now: anonymous score and event counters (keeps the Test calibration clean). */
   telemetry: boolean;
-  /** Data credit shown under the ratings (required by the data licence). */
+  /** Data credit (required by the data licence). Shown on /privacy, not on the result page. */
   credit?: string;
   /** Difficulty for this format (see PAR_GAP in ../series); the Test game uses the default. */
   parGap?: number;
