@@ -1,0 +1,144 @@
+---
+/**
+ * FormatLanding.astro — the readable page for a format: /odi/, /t20i/, /ipl/ (owner, 2026-10-02).
+ *
+ * The game screens are built to be exactly one phone screen and load their content with
+ * JavaScript, so search engines find almost no text on them. This page says, in plain words,
+ * how the format's game works, and sends the visitor to the draft, the daily or Pick any XI.
+ * Every number and name on it comes from the game's own data and constants at build time.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FloodlitShell from './FloodlitShell.astro';
+import { wbResultProps } from '../lib/formats/white-ball-result';
+import { wbPlayers, wbSpinCombos, SQUAD_SIZE, type WbFormatId } from '../lib/formats/white-ball-store';
+import { WB_MIN_MATCHES } from '../lib/formats/white-ball-config';
+import { IPL_BLOCK_NAMES, IPL_TEAM_CODES } from '../lib/formats/ipl-config';
+import { MAX_OVERSEAS } from '../lib/player-logic';
+import type { ResultFormat } from '../lib/formats/result-format';
+
+export interface Props {
+  id: WbFormatId;
+  result: ResultFormat;
+  /** "ODI", "T20I", "IPL" */
+  label: string;
+  title: string;
+  description: string;
+  /** One or two opening sentences under the heading. */
+  lede: string;
+  /** What a spin draws, e.g. "a nation and a decade". */
+  spinDraws: string;
+  /** Batting and bowling measures, in plain words. */
+  batting: string;
+  bowling: string;
+  /** Format-specific notes (data coverage, special rules). */
+  notes: string[];
+}
+const { id, result, label, title, description, lede, spinDraws, batting, bowling, notes } = Astro.props;
+
+const ROLE_SHORT: Record<string, string> = { opener: 'OPN', 'middle-order': 'BAT', wicketkeeper: 'WK', 'all-rounder': 'AR', spinner: 'SPIN', 'fast-bowler': 'PACE' };
+const house = wbResultProps(id).houseXI.map((p) => ({
+  name: p.name,
+  role: ROLE_SHORT[p.primaryRole] ?? '',
+  // IPL: the stint the All-Star plays at.
+  where: id === 'ipl' ? `${IPL_TEAM_CODES[p.nation] ?? p.nation} ${IPL_BLOCK_NAMES[p.era] ?? p.era}` : '',
+}));
+const cards = wbPlayers(id).length;
+const draws = wbSpinCombos(id).length;
+const base = `/${id}`;
+const matchWord = result.matchPlural;
+---
+<BaseLayout title={title} description={description}>
+  <FloodlitShell>
+    <article class="fl-land">
+      <header class="fl-land-head">
+        <p class="fs-eyebrow">Beat My 11 · {label}</p>
+        <h1 class="fs-title">Can your {label} XI <span class="fs-hl">beat the {result.opponent}?</span></h1>
+        <p class="fs-lede">{lede}</p>
+        <a class="fs-cta" href={`${base}/play`}>Start drafting</a>
+        <p class="fl-land-alt">
+          <a href={`${base}/play?daily=1`}>Today’s {label} daily</a>
+          <span aria-hidden="true">·</span>
+          <a href={`${base}/pick`}>Pick any {label} XI</a>
+        </p>
+      </header>
+
+      <section aria-labelledby="fl-how">
+        <h2 id="fl-how">How it works</h2>
+        <ol class="fl-land-steps">
+          <li><b>Spin.</b> Each spin draws {spinDraws}. There are {draws} possible draws, and a spin never repeats one you have had.</li>
+          <li><b>Draft.</b> Six spins give you eleven picks: one from the first spin and two from each of the others. You fill fixed spots: two openers, three middle-order batters, one wicketkeeper, two all-rounders or spinners, and three fast bowlers.</li>
+          <li><b>Play the series.</b> Your XI plays five {matchWord} against the {result.opponent}. You see the scoreline, the story of each match, and how strong your batting, bowling and fielding were.</li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="fl-pool">
+        <h2 id="fl-pool">Who you can pick</h2>
+        <p>
+          The {label} game has {cards.toLocaleString('en-US')} player cards. A player needs at least {WB_MIN_MATCHES[id]} matches to be in it.
+          Each draw shows at most {SQUAD_SIZE} players: the ones who played most for that side in that period, with every role covered.
+          The cards show real career numbers only. No player rating is shown at any point, so the choice is your judgement.
+        </p>
+        <ul>{notes.map((n) => <li>{n}</li>)}</ul>
+      </section>
+
+      <section aria-labelledby="fl-score">
+        <h2 id="fl-score">What decides the result</h2>
+        <p>
+          Every player is compared with every other player in the {label} game. Batters are measured on {batting}.
+          Bowlers are measured on {bowling}. All-rounders are measured on both. Long careers count for more than short ones,
+          and a brilliant short career is pulled back toward the average.
+        </p>
+        <p>
+          A team’s score is 40% batting, 50% bowling and 10% fielding (catches and stumpings per match).
+          The gap between your score and the {result.opponent}’s decides the series, with a small element of luck
+          that is always the same for the same XI.
+        </p>
+      </section>
+
+      <section aria-labelledby="fl-opp">
+        <h2 id="fl-opp">The {result.opponent}</h2>
+        <p>The XI you have to beat. It is the same for everyone and does not change from game to game.</p>
+        <ol class="fl-land-xi">
+          {house.map((p, i) => (
+            <li><span class="fl-land-n">{i + 1}</span><span class="fl-land-name">{p.name}</span>{p.where && <span class="fl-land-where">{p.where}</span>}<span class="fl-land-role">{p.role}</span></li>
+          ))}
+        </ol>
+      </section>
+
+      <section aria-labelledby="fl-more">
+        <h2 id="fl-more">Other ways to play {label}</h2>
+        <ul>
+          <li><a href={`${base}/play?daily=1`}>The {label} Daily Challenge</a>: the same six spins for everyone that day, one scored attempt, and a streak if you come back tomorrow. New spins at 00:00 UTC.</li>
+          <li><a href={`${base}/pick`}>Pick any {label} XI</a>: no spins. Choose any eleven, send the link to a friend, and see whose XI wins the series.</li>
+          <li>Challenge a friend from the same spins: every result has a share link that lets a friend draft from the exact draws you had.</li>
+        </ul>
+        <p class="fl-land-alt"><a href="/">The Test game</a> <span aria-hidden="true">·</span> <a href="/odi/">ODI</a> <span aria-hidden="true">·</span> <a href="/t20i/">T20I</a> <span aria-hidden="true">·</span> <a href="/ipl/">IPL</a></p>
+        <a class="fs-cta" href={`${base}/play`}>Start drafting</a>
+      </section>
+      <p class="fl-land-credit">Match data: Cricsheet (cricsheet.org), Open Data Commons Attribution licence. See <a href="/privacy">Privacy</a> for what this site stores.</p>
+    </article>
+  </FloodlitShell>
+
+  <style is:global>
+    .fl-land { text-align: left; }
+    .fl-land-head { margin-top: 6vh; text-align: center; }
+    .fl-land section { margin-top: 40px; }
+    .fl-land h2 { margin: 0 0 10px; font: 400 30px/1 var(--fs-display); letter-spacing: 0.04em; }
+    .fl-land p, .fl-land li { color: #c9d2ea; font-size: 15.5px; line-height: 1.6; }
+    .fl-land p { margin: 0 0 10px; }
+    .fl-land ul, .fl-land-steps { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+    .fl-land b { color: var(--fs-text); }
+    .fl-land a:not(.fs-cta) { color: var(--fs-lime); text-underline-offset: 3px; }
+    .fl-land-alt { margin: 14px 0 0; text-align: center; font-size: 14px; }
+    .fl-land-alt span { margin: 0 6px; color: var(--fs-dim); }
+    .fl-land .fs-cta { display: block; width: fit-content; margin-left: auto; margin-right: auto; }
+    .fl-land-xi { list-style: none; margin: 12px 0 0; padding: 6px 14px; border-radius: 16px; background: var(--fs-card); border: 1px solid rgba(198, 255, 61, 0.25); }
+    .fl-land-xi li { display: flex; align-items: baseline; gap: 10px; padding: 7px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+    .fl-land-xi li:last-child { border-bottom: 0; }
+    .fl-land-n { width: 20px; flex: none; font: 400 20px/1 var(--fs-display); color: var(--fs-dim); }
+    .fl-land-name { flex: 1; font: 400 22px/1 var(--fs-display); letter-spacing: 0.04em; color: var(--fs-text); }
+    .fl-land-where { font: 600 10.5px Inter, sans-serif; letter-spacing: 0.06em; color: var(--fs-muted); white-space: nowrap; }
+    .fl-land-role { width: 38px; text-align: right; font: 700 10.5px Inter, sans-serif; letter-spacing: 0.1em; color: var(--fs-lime); }
+    .fl-land-credit { margin-top: 36px; font-size: 12.5px !important; color: var(--fs-dim) !important; text-align: center; }
+  </style>
+</BaseLayout>

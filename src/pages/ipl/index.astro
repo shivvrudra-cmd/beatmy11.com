@@ -1,0 +1,22 @@
+---
+/** /ipl/ — the readable page for the IPL game (components/FormatLanding.astro). */
+import FormatLanding from '../../components/FormatLanding.astro';
+import { IPL_RESULT } from '../../lib/formats/result-format';
+---
+<FormatLanding
+  id="ipl"
+  result={IPL_RESULT}
+  label="IPL"
+  title="IPL XI Draft Game: Build an All-Time IPL XI, Four Overseas Max | Beat My 11"
+  description="Spin for a franchise and its seasons, draft an all-time IPL XI with at most four overseas players, then play five matches against the All-Star XI."
+  lede="Spin for a franchise and a block of seasons, draft eleven from that squad, keep to four overseas players, then play five matches against the All-Star XI."
+  spinDraws="an IPL franchise and a block of seasons (2008–12, 2013–17, 2018–22 or 2023 onwards)"
+  batting="strike rate most of all (40%), then batting average, runs per match and how often they passed fifty (20% each)"
+  bowling="economy rate most of all (40%), then bowling average, wickets per match and balls per wicket (20% each)"
+  notes={[
+    'Each card is one stint: one player at one franchise in one block of seasons. It shows, and is scored on, only what he did for that team in those seasons. The same player can appear on several cards, but only once in your XI.',
+    'At most four overseas players in an XI, as in the real IPL. Overseas players are marked OS.',
+    'Franchises that changed their name count as one team: Delhi, Punjab and Bengaluru. Teams that no longer exist, such as Deccan Chargers and Kochi Tuskers Kerala, are in the game.',
+    'The All-Star XI uses each of its players at his best stint.',
+  ]}
+/>
