@@ -32,7 +32,7 @@ async function expectOneScreen(page: Page, label: string) {
       dock: box(".fl-dock"),
       cards: box("#fl-cards"),
       card: box(".fl-card"),
-      // The Spin button's label must fit inside it ("Spin next" on a narrow phone).
+      // The Spin button's label must fit inside it.
       spinOverflows: (() => {
         const b = document.getElementById("bm11-spin")!;
         return !b.hidden && b.scrollWidth > b.clientWidth + 1;
@@ -81,8 +81,10 @@ for (const phone of PHONES) {
         expect(await page.evaluate(() => window.scrollY)).toBe(0);
       }
       if (round === 2) {
-        await expect(spin).toHaveText("Spin next");
-        await expectOneScreen(page, "round done (Spin next)");
+        // Round done: the button still says "Spin" and lights up (enabled) as the cue.
+        await expect(spin).toHaveText("Spin");
+        await expect(spin).toBeEnabled();
+        await expectOneScreen(page, "round done, ready to spin");
       }
     }
     await expect(page.locator("#bm11-count")).toHaveText("11/11");

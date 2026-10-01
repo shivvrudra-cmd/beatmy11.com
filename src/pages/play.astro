@@ -424,8 +424,9 @@ const draftCombosJson = json(draftSpinCombos());
       const canGo = !spinningReel && !draft.gameComplete && canSpin(draft, unpickedCount(currentPool()));
       spinBtn.hidden = draft.gameComplete;
       spinBtn.disabled = !canGo;
-      spinBtn.textContent = spinningReel ? '…' : draft.currentRound > 0 && done ? 'Spin next' : 'Spin';
-      fitReel(spinBtn); // "Spin next" must fit the phone-sized button
+      // Always "Spin" (owner, 2026-10-01): the button lighting up is the cue to spin again.
+      spinBtn.textContent = spinningReel ? '…' : 'Spin';
+      fitReel(spinBtn); // keep the label inside the phone-sized button
       spinBtn.setAttribute(
         'aria-label',
         draft.currentRound === 0
