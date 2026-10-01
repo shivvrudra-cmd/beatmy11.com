@@ -32,6 +32,11 @@ async function expectOneScreen(page: Page, label: string) {
       dock: box(".fl-dock"),
       cards: box("#fl-cards"),
       card: box(".fl-card"),
+      // The Spin button's label must fit inside it ("Spin next" on a narrow phone).
+      spinOverflows: (() => {
+        const b = document.getElementById("bm11-spin")!;
+        return !b.hidden && b.scrollWidth > b.clientWidth + 1;
+      })(),
       // Cards whose text spills past their own bottom edge (clipped stats).
       overflowingCards: [...document.querySelectorAll(".fl-card")].filter(
         (c) => (c as HTMLElement).scrollHeight > (c as HTMLElement).clientHeight + 1
@@ -42,6 +47,7 @@ async function expectOneScreen(page: Page, label: string) {
   expect(m.scrollW, `${label}: page must not scroll sideways`).toBeLessThanOrEqual(m.vw + 1);
   expect(m.dock, `${label}: dock visible`).not.toBeNull();
   expect(m.dock!.bottom, `${label}: dock fully on screen`).toBeLessThanOrEqual(m.vh + 1);
+  expect(m.spinOverflows, `${label}: Spin button text fits`).toBe(false);
   expect(m.reels!.top, `${label}: reels on screen`).toBeGreaterThanOrEqual(0);
   expect(m.reels!.height, `${label}: reels are big`).toBeGreaterThanOrEqual(70);
   if (m.card) {
@@ -73,6 +79,10 @@ for (const phone of PHONES) {
         await placeNextPlayer(page);
         // Nothing may scroll the page for the player.
         expect(await page.evaluate(() => window.scrollY)).toBe(0);
+      }
+      if (round === 2) {
+        await expect(spin).toHaveText("Spin next");
+        await expectOneScreen(page, "round done (Spin next)");
       }
     }
     await expect(page.locator("#bm11-count")).toHaveText("11/11");
