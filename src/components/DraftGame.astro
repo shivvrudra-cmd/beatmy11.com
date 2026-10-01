@@ -621,11 +621,14 @@ const formatJson = json(format);
     }
 
     // ------------------------------------------------------------------ pool
-    // 'tabs' layout: one role at a time. The tab stays where the player put it, unless nothing
-    // in it can be picked any more; then it moves to the first role that still has a pick.
+    // 'tabs' layout: one role at a time. After a player is placed, the tab moves on by itself to
+    // the first role that still has a pick. A tab the player opened themselves (tap or swipe)
+    // stays open, even when everything in it is greyed out, until the next placement or spin.
     const TABS = FORMAT.poolLayout === 'tabs';
     const TAB_LABELS = { opener: 'Openers', 'middle-order': 'Middle order', wicketkeeper: 'Keepers', 'all-rounder': 'All-rounders', spinner: 'Spinners', 'fast-bowler': 'Fast bowlers' };
     let poolTab = null;
+    let poolTabPinned = false;
+    let poolTabRoles = [];
 
     // Players who could not be picked when the draw landed (already in the XI, or no place left
     // for their role) go to the end of the pool. Decided once per draw, not as you pick: choosing
@@ -637,6 +640,7 @@ const formatJson = json(format);
       const key = `${draft.currentRound}|${draft.currentEra}|${draft.currentNation}`;
       if (key !== poolOrderKey) {
         poolOrderKey = key;
+        poolTabPinned = false;
         let atLanding = draft;
         for (const id of draft.picksThisRound) atLanding = applyDraftDeselect(atLanding, id);
         const supply = supplyFor(atLanding, pool);
@@ -709,7 +713,8 @@ const formatJson = json(format);
       const open = (p) => !picked(p) && !validatePoolPick(draft, p, supply);
       const groups = XI_ROLE_ORDER.map((r) => ({ r, list: pool.filter((p) => p.primaryRole === r) })).filter((g) => g.list.length);
       const current = groups.find((g) => g.r === poolTab);
-      if (!current || (!done && !draft.gameComplete && !current.list.some(open) && !current.list.some((p) => p.uid === selectedUid))) {
+      poolTabRoles = groups.map((g) => g.r);
+      if (!current || (!poolTabPinned && !done && !draft.gameComplete && !current.list.some(open) && !current.list.some((p) => p.uid === selectedUid))) {
         poolTab = (groups.find((g) => g.list.some(open)) ?? current ?? groups[0])?.r ?? null;
       }
       cardsEl.innerHTML =
@@ -722,10 +727,34 @@ const formatJson = json(format);
 
     cardsEl.addEventListener('click', (e) => {
       const tab = e.target.closest('[data-bm11-tab]');
-      if (tab) { poolTab = tab.getAttribute('data-bm11-tab'); cardsEl.scrollTop = 0; renderPool(); return; }
+      if (tab) { openTab(tab.getAttribute('data-bm11-tab')); return; }
       const btn = e.target.closest('[data-bm11-select]');
       if (btn) onPoolClick(btn.getAttribute('data-bm11-select'), btn);
     });
+
+    function openTab(role) {
+      poolTab = role;
+      poolTabPinned = true;
+      cardsEl.scrollTop = 0;
+      renderPool();
+    }
+    // Swipe left or right on the list to move to the next or previous role.
+    if (TABS) {
+      let sx = 0, sy = 0, swiping = false;
+      cardsEl.addEventListener('touchstart', (e) => {
+        swiping = e.touches.length === 1 && !e.target.closest('.fl-tabs');
+        if (swiping) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }
+      }, { passive: true });
+      cardsEl.addEventListener('touchend', (e) => {
+        if (!swiping) return;
+        swiping = false;
+        const dx = e.changedTouches[0].clientX - sx;
+        const dy = e.changedTouches[0].clientY - sy;
+        if (Math.abs(dx) < 60 || Math.abs(dx) < 1.5 * Math.abs(dy)) return;
+        const next = poolTabRoles[poolTabRoles.indexOf(poolTab) + (dx < 0 ? 1 : -1)];
+        if (next) openTab(next);
+      }, { passive: true });
+    }
 
     function onPoolClick(uid, btn) {
       const p = uidIndex[uid];
@@ -777,6 +806,7 @@ const formatJson = json(format);
         return;
       }
       draft = applyDraftPick(draft, p, slotKey, role, supply);
+      poolTabPinned = false;
       if (draft.gameComplete) sfx.complete(); else sfx.place();
       selectedUid = null;
       flashMsg('');
