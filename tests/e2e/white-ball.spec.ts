@@ -21,7 +21,7 @@ for (const f of FORMATS) {
     await page.locator(".bm11-prow[data-bm11-select]").first().waitFor();
     await expect(page.locator("#fl-nation")).toHaveText(f.reel);
     await expect(page.locator("#fl-era")).toHaveText(/20\d\d/);
-    await expect(page.locator(".fl-card").first()).toContainText(/Matches|Strike rate|Economy/);
+    await expect(page.locator(".fl-card").first()).toContainText(/Mat|SR|Econ/);
 
     // This format's draft is separate from the Test draft.
     await page.goto("/play");

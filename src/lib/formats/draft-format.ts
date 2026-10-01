@@ -34,6 +34,9 @@ export interface DraftFormat {
   teamReel?: Record<string, string>;
   /** Round 1 always draws this era (Test: 'legends'); null = any draw. */
   round1FixedEra: string | null;
+  /** How the pool of a draw is shown. 'cards' (default): swipeable cards. 'tabs': one role at a
+   *  time behind role tabs, as compact rows (owner, 2026-10-01, for the 25-player white-ball squads). */
+  poolLayout?: 'cards' | 'tabs';
   matchupHref: string;
   homeHref: string;
   copy: {
@@ -118,6 +121,7 @@ export const IPL_FORMAT: DraftFormat = {
   teamCodes: IPL_TEAM_CODES,
   teamReel: IPL_TEAM_CODES,
   round1FixedEra: null,
+  poolLayout: 'tabs',
   matchupHref: '/ipl/matchup',
   homeHref: '/',
   copy: {
@@ -131,27 +135,27 @@ export const IPL_FORMAT: DraftFormat = {
   },
   stats: {
     batter: [
-      { label: 'Matches', kind: 'int', keys: ['matches'] },
+      { label: 'Mat', kind: 'int', keys: ['matches'] },
       { label: 'Runs', kind: 'int', keys: ['runs'] },
       { label: 'Avg', kind: 'avg', keys: ['battingAverage'] },
-      { label: 'Strike rate', kind: 'avg', keys: ['strikeRate'] },
+      { label: 'SR', kind: 'avg', keys: ['strikeRate'] },
     ],
     keeper: [
-      { label: 'Matches', kind: 'int', keys: ['matches'] },
+      { label: 'Mat', kind: 'int', keys: ['matches'] },
       { label: 'Runs', kind: 'int', keys: ['runs'] },
       { label: 'Avg', kind: 'avg', keys: ['battingAverage'] },
-      { label: 'Strike rate', kind: 'avg', keys: ['strikeRate'] },
+      { label: 'SR', kind: 'avg', keys: ['strikeRate'] },
     ],
     allRounder: [
       { label: 'Bat avg', kind: 'avg', keys: ['battingAverage'] },
-      { label: 'Strike rate', kind: 'avg', keys: ['strikeRate'] },
+      { label: 'SR', kind: 'avg', keys: ['strikeRate'] },
       { label: 'Wkts', kind: 'int', keys: ['wickets'] },
-      { label: 'Economy', kind: 'avg', keys: ['economy'] },
+      { label: 'Econ', kind: 'avg', keys: ['economy'] },
     ],
     bowler: [
-      { label: 'Matches', kind: 'int', keys: ['matches'] },
+      { label: 'Mat', kind: 'int', keys: ['matches'] },
       { label: 'Wkts', kind: 'int', keys: ['wickets'] },
-      { label: 'Economy', kind: 'avg', keys: ['economy'] },
+      { label: 'Econ', kind: 'avg', keys: ['economy'] },
       { label: 'Bowl avg', kind: 'avg', keys: ['bowlingAverage'] },
     ],
   },
@@ -172,6 +176,7 @@ function intlFormat(id: 'odi' | 't20i', label: string, matchWord: string): Draft
     teams: TEST_FORMAT.teams,
     teamCodes: TEST_FORMAT.teamCodes,
     round1FixedEra: null,
+    poolLayout: 'tabs',
     matchupHref: `/${id}/matchup`,
     homeHref: '/',
     copy: {
