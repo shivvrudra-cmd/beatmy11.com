@@ -55,7 +55,7 @@ for (const f of FORMATS) {
     await expect(page.locator(".rs-credit")).toContainText("Cricsheet");
 
     // "Draft again" returns to this format's draft, and the Test result page still works on its own.
-    await expect(page.locator(".rs-again-top")).toHaveAttribute("href", `/${f.id}/play`);
+    await expect(page.locator(".rs-again-bottom")).toHaveAttribute("href", `/${f.id}/play`);
     await page.goto("/matchup");
     await page.waitForURL((url) => url.pathname.startsWith("/play")); // no Test XI drafted
   });

@@ -1232,7 +1232,6 @@ export function applyDraftMove(
  * Idempotent no-op when the pick isn't removable.
  */
 export function applyDraftDeselect(state: DraftState, rawId: string): DraftState {
-  if (state.gameComplete) return state;
   const idx = state.selectedPlayers.findIndex(
     (p) => p.id === rawId && p.roundPicked === state.currentRound,
   );
@@ -1249,7 +1248,9 @@ export function applyDraftDeselect(state: DraftState, rawId: string): DraftState
       ? { ...s, picks: s.picks.filter((id) => id !== rawId) }
       : s,
   );
-  return { ...state, picksThisRound, selectedPlayers, slots, spinHistory };
+  // Removing a final-round pick reopens a completed XI (owner, 2026-10-02): the last draw can be
+  // changed right up to "Play the series".
+  return { ...state, picksThisRound, selectedPlayers, slots, spinHistory, gameComplete: false };
 }
 
 /**

@@ -592,6 +592,24 @@ const formatJson = json(format);
     const TAB_LABELS = { opener: 'Openers', 'middle-order': 'Middle order', wicketkeeper: 'Keepers', 'all-rounder': 'All-rounders', spinner: 'Spinners', 'fast-bowler': 'Fast bowlers' };
     let poolTab = null;
 
+    // Players who could not be picked when the draw landed (already in the XI, or no place left
+    // for their role) go to the end of the pool. Decided once per draw, not as you pick: choosing
+    // an opener must not shuffle the other openers away, because the pick can still be undone.
+    let poolOrderKey = null;
+    let poolBack = new Set();
+    function orderedPool() {
+      const pool = currentPool();
+      const key = `${draft.currentRound}|${draft.currentEra}|${draft.currentNation}`;
+      if (key !== poolOrderKey) {
+        poolOrderKey = key;
+        let atLanding = draft;
+        for (const id of draft.picksThisRound) atLanding = applyDraftDeselect(atLanding, id);
+        const supply = supplyFor(atLanding, pool);
+        poolBack = new Set(pool.filter((p) => atLanding.selectedPlayers.some((s) => s.id === p.id) || validatePoolPick(atLanding, p, supply)).map((p) => p.uid));
+      }
+      return [...pool.filter((p) => !poolBack.has(p.uid)), ...pool.filter((p) => poolBack.has(p.uid))];
+    }
+
     function renderPool() {
       const metaEl = $('fl-pool-meta');
       if (!draft.currentEra || !draft.currentNation) {
@@ -600,7 +618,7 @@ const formatJson = json(format);
           `<p class="fl-empty">${esc(FORMAT.copy.empty)}</p>`;
         return;
       }
-      const pool = currentPool();
+      const pool = orderedPool();
       metaEl.innerHTML = TABS ? '' : `${pool.length} players <span class="fl-swipe">· swipe for more →</span>`;
       const done = roundDone();
       const supply = draftSupply();
@@ -612,7 +630,7 @@ const formatJson = json(format);
         let label = accessibleName(p);
         let pressed = 'false';
         let disabled = false;
-        if (pick && pick.roundPicked === draft.currentRound && !draft.gameComplete) {
+        if (pick && pick.roundPicked === draft.currentRound) {
           cls = 'is-picked';
           tag = '<span class="fl-tag">In your XI · tap to remove</span>';
           label += ' (placed — activate to remove)';
@@ -679,7 +697,7 @@ const formatJson = json(format);
       if (!p || spinningReel) return;
       const existing = draft.selectedPlayers.find((s) => s.id === p.id);
       if (existing) {
-        if (existing.roundPicked !== draft.currentRound || draft.gameComplete) {
+        if (existing.roundPicked !== draft.currentRound) {
           const msg = `${p.name} is locked in from round ${existing.roundPicked}.`;
           flashMsg(msg);
           announce(msg);
@@ -763,7 +781,7 @@ const formatJson = json(format);
         classes.push('is-filled');
         top = ROLE_SHORT[occ.role] || '';
         bottom = dockName(occupant);
-        removable = !draft.gameComplete && occupant.roundPicked === draft.currentRound;
+        removable = occupant.roundPicked === draft.currentRound;
         if (moveFrom === slotKey) {
           classes.push('is-armed');
           aria = `${occupant.name}, ${XI_ROLE_LABELS[occ.role]}, spot ${n} — selected for moving. Activate a glowing spot to move them, or this one to cancel.`;
@@ -1188,7 +1206,7 @@ const formatJson = json(format);
 
     .fl-spin {
       display: block; margin: 16px auto 4px; width: 184px; height: 58px; border: 0; border-radius: 999px; cursor: pointer;
-      background: var(--fl-lime); color: #04060c; font: 400 30px/1 var(--fl-display); letter-spacing: 0.12em;
+      background: var(--fl-lime); color: #04060c; font: 400 30px/1 var(--fl-display); letter-spacing: 0.12em; text-indent: 0.12em;
       box-shadow: 0 0 0 6px rgba(198, 255, 61, 0.15), 0 0 40px rgba(198, 255, 61, 0.5);
       transition: transform 0.12s, box-shadow 0.2s;
     }

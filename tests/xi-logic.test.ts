@@ -150,6 +150,13 @@ ok(validatePoolPick(d, warne3) === 'Your XI already has its two spinners.', 'spi
 d = pick(d, f3, 'fast-3', 'fast-bowler');
 ok(d.gameComplete, 'draft complete');
 ok(isXIValid(d), '2SP XI valid');
+{
+  // The final round's picks can still be swapped after the XI is complete; earlier rounds cannot.
+  const reopened = applyDraftDeselect(d, 'f3');
+  ok(!reopened.gameComplete && reopened.selectedPlayers.length === 10 && reopened.slots['fast-3'] === null, 'removing a final-round pick reopens the XI');
+  ok(validatePoolPick(reopened, f4) === null, 'another player from the final draw can take the place');
+  ok(applyDraftDeselect(d, 'f1') === d, 'a pick from an earlier round stays locked');
+}
 const c = countsOf(d);
 ok(c.opener === 2 && c['middle-order'] === 3 && c.wicketkeeper === 1 && c.spinner === 2 && c['fast-bowler'] === 3, '2SP counts', c);
 
