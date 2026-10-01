@@ -1,0 +1,21 @@
+---
+/**
+ * /odi/play — the ODI draft (HIDDEN: not linked from anywhere and noindex until the owner approves
+ * the format; see docs/plans/white-ball-formats.md). Same screen and draft rules as /play; the
+ * spin draws a nation and a decade of ODI cricket.
+ */
+import DraftGame from '@/components/DraftGame.astro';
+import { wbPlayersByEra, wbSpinCombos } from '@/lib/formats/white-ball-store';
+import { ODI_FORMAT } from '@/lib/formats/draft-format';
+
+const combos = wbSpinCombos('odi');
+---
+<DraftGame
+  format={ODI_FORMAT}
+  title="Beat My 11 — ODI Draft (preview)"
+  description="Spin for a nation and a decade, draft eleven, then play five ODIs against the World XI."
+  playersByEra={wbPlayersByEra('odi')}
+  round1Combos={combos}
+  draftCombos={combos}
+  noindex
+/>

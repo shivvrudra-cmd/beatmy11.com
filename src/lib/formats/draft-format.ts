@@ -7,6 +7,7 @@
  * shows, whether round 1 is a fixed era, and where the result page is.
  */
 import { IPL_BLOCKS, IPL_BLOCK_NAMES, IPL_TEAM_CODES, IPL_TEAMS } from './ipl-config';
+import { INTL_ERAS, INTL_ERA_NAMES } from './white-ball-config';
 
 /** One stat on a player card. `keys`: the first present stat is shown (pairs use two keys). */
 export interface StatCell {
@@ -16,10 +17,10 @@ export interface StatCell {
 }
 
 export interface DraftFormat {
-  id: 'test' | 'ipl';
+  id: 'test' | 'ipl' | 'odi' | 't20i';
   /** Which saved-draft slot this format uses (see ../draft-slots). 'normal' = the Test game, which
    *  also has the daily and friend-challenge modes chosen by the link. */
-  slotMode: 'normal' | 'ipl';
+  slotMode: 'normal' | 'ipl' | 'odi' | 't20i';
   teamLabel: string;
   eraLabel: string;
   respinTeam: string;
@@ -155,3 +156,35 @@ export const IPL_FORMAT: DraftFormat = {
     ],
   },
 };
+
+/** ODI and T20I: nations and decades like the Test game, white-ball stats on the cards, no fixed
+ *  first round (there is no Legends era in this data). */
+function intlFormat(id: 'odi' | 't20i', label: string, matchWord: string): DraftFormat {
+  return {
+    id,
+    slotMode: id,
+    teamLabel: 'Nation',
+    eraLabel: 'Era',
+    respinTeam: 'New nation',
+    respinEra: 'New era',
+    eraNames: INTL_ERA_NAMES,
+    eraList: [...INTL_ERAS[id]],
+    teams: TEST_FORMAT.teams,
+    teamCodes: TEST_FORMAT.teamCodes,
+    round1FixedEra: null,
+    matchupHref: `/${id}/matchup`,
+    homeHref: '/',
+    copy: {
+      startTitle: 'Spin for your first pick',
+      startSub: `Each spin draws a nation and a decade of ${label} cricket.`,
+      round1Pick: 'Pick 1 player.',
+      readySub: `Eleven picked. Time to face the World XI over five ${matchWord}.`,
+      empty: 'Under the lights, fate picks the era and the nation. You pick the XI.',
+      spinAriaFirst: 'Spin to draw a random era and nation',
+      spinAria: 'Spin to draw a random era and nation',
+    },
+    stats: IPL_FORMAT.stats,
+  };
+}
+export const ODI_FORMAT: DraftFormat = intlFormat('odi', 'ODI', 'ODIs');
+export const T20I_FORMAT: DraftFormat = intlFormat('t20i', 'T20I', 'T20Is');

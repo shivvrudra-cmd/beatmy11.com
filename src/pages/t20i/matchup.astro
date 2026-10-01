@@ -1,0 +1,19 @@
+---
+/**
+ * /t20i/matchup — the T20I series result (HIDDEN preview; see docs/plans/white-ball-formats.md).
+ * Same screen as /matchup, with the white-ball engine and a CANDIDATE World XI.
+ */
+import SeriesResult from '../../components/SeriesResult.astro';
+import { wbResultProps } from '../../lib/formats/white-ball-result';
+import { T20I_RESULT } from '../../lib/formats/result-format';
+
+const r = wbResultProps('t20i');
+---
+<SeriesResult
+  format={{ ...T20I_RESULT, parGap: r.parGap }}
+  title="The T20I Series — Beat My 11 (preview)"
+  description="Your T20I XI against the World XI over five T20Is."
+  houseXI={r.houseXI}
+  scoringContext={r.scoringContext}
+  calibration={r.calibration}
+/>

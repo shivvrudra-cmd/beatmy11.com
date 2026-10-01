@@ -12,7 +12,10 @@
  * Nothing a player did earlier can turn a plain /play into a daily.
  */
 
-export type DraftMode = 'normal' | 'daily' | 'challenge' | 'ipl';
+export type DraftMode = 'normal' | 'daily' | 'challenge' | 'ipl' | 'odi' | 't20i';
+
+/** The other formats (each has one mode and its own saved draft). */
+export const FORMAT_MODES: readonly DraftMode[] = ['ipl', 'odi', 't20i'];
 
 const LIVE_DRAFT = 'beatmy11.draft.v1';
 const LIVE_XI = 'beatmy11.userXI.v1';
@@ -38,7 +41,7 @@ const set = (k: string, v: string | null): void => {
 /** The mode that currently owns the live draft keys (normal if never set). */
 export function currentMode(): DraftMode {
   const v = get(SLOT_KEY);
-  return v === 'daily' || v === 'challenge' || v === 'ipl' ? v : 'normal';
+  return v === 'daily' || v === 'challenge' || (FORMAT_MODES as readonly string[]).includes(v ?? '') ? (v as DraftMode) : 'normal';
 }
 
 /** Make `mode` the owner of the live keys, parking the previous owner's draft. */
