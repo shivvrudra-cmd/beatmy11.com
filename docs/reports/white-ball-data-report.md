@@ -13,9 +13,10 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 - Excluded, regular bowler, spin/pace unknown (owner to supply): 86
 - Excluded, never batted or bowled regularly: 4
 - Excluded, first Cricsheet ODI before 2004-01-01 and no official totals (career incomplete): 1
-- Role source: match-data 512, kaggle 449, test-data 166, match-data (stumpings) 3, owner 38, wikidata 10
+- Role source: match-data 512, kaggle 448, test-data 166, match-data (stumpings) 3, owner 39, wikidata 10
 - Kaggle profiles matched by surname + initial (one-to-one both ways): 18
 - Players with the official full-career batting line (strike rate, 50s, not outs): 292
+- Players with the official full-career bowling line (balls, bowling strike rate): 129
 - Official rows not used because they cover fewer matches than Cricsheet (the player also appeared for another side): 6
 
 ## T20I
@@ -38,7 +39,7 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 - Players kept: 739
 - Excluded, regular bowler, spin/pace unknown (owner to supply): 63
 - Excluded, never batted or bowled regularly: 7
-- Role source: match-data 336, match-data (stumpings) 3, owner 32, kaggle 290, test-data 75, wikidata 3
+- Role source: match-data 335, match-data (stumpings) 3, owner 33, kaggle 290, test-data 75, wikidata 3
 - Kaggle profiles matched by surname + initial (one-to-one both ways): 11
 
 ## Official totals (HowSTAT, supplied by the owner)
@@ -66,6 +67,7 @@ For paired ODI and T20I players, matches, innings, runs, hundreds, highest score
 - T20I Zimbabwe: 84 HowSTAT rows, 79 paired, 6 of ours unpaired
 - ODI batting strike-rate table: 484 rows (all countries), 292 paired with our players
 - T20I batting strike-rate table: 250 rows (all countries), 112 paired with our players
+- ODI bowling table (100+ wickets): 179 rows (all countries), 129 paired with our players
 
 ## Provisional role rules (owner to confirm)
 

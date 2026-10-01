@@ -248,7 +248,9 @@
  "c0790f82": {
   "bowlingType": "pace",
   "listedAs": "Lance Klusener",
-  "source": "owner, 2026-10-01 (second list)"
+  "source": "owner, 2026-10-01 (second list)",
+  "role": "all-rounder",
+  "roleSource": "owner, 2026-10-01"
  },
  "2e0fcc58": {
   "bowlingType": "pace",
@@ -286,5 +288,11 @@
   "listedAs": "JB Little",
   "source": "owner, 2026-10-01 (second list)",
   "name": "Josh Little"
+ },
+ "9a158001": {
+  "listedAs": "Azhar Mahmood",
+  "source": "owner, 2026-10-01",
+  "role": "all-rounder",
+  "roleSource": "owner, 2026-10-01"
  }
 }

@@ -22,7 +22,7 @@
 import { readFileSync, readdirSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { norm, sameIdentity } from './names.mjs';
-import { parseHowstat, parseStrikeRates, matchHowstat, careerFits } from './howstat.mjs';
+import { parseHowstat, parseStrikeRates, parseBowlingTable, matchHowstat, careerFits } from './howstat.mjs';
 
 export { norm, sameIdentity };
 
@@ -275,6 +275,23 @@ export function withOfficialBatting(stats, b) {
   return out;
 }
 
+/**
+ * Official full-career BOWLING line from HowSTAT's 100+ wickets table: balls, runs conceded,
+ * wickets, 4-wicket innings, average, economy and the bowling strike rate (balls per wicket).
+ * Batting and fielding are untouched.
+ */
+export function withOfficialBowling(stats, b) {
+  const out = { ...stats, bowlingSource: 'howstat-100-wickets', cricsheetMatches: stats.cricsheetMatches ?? stats.matches };
+  for (const k of ['ballsBowled', 'runsConceded', 'wickets', 'bowlingAverage', 'economy', 'ballsPerWicket']) {
+    if (b[k] !== null && b[k] !== undefined) out[k] = b[k];
+  }
+  if (b.fourW !== null && b.fourW !== undefined) out.fourWicketInnings = b.fourW;
+  // Full career (Asia XI / World XI matches included) can be a few matches more than the country table.
+  if (b.matches && b.matches > out.matches) out.matches = b.matches;
+  if (out.matches && b.fourW !== null && b.fourW !== undefined) out.fourWicketRate = round(b.fourW / out.matches, 4);
+  return out;
+}
+
 // ------------------------------------------------------------------ main
 function main() {
   const people = new Map(readCsv(join(RAW, 'cricsheet/people.csv')).map((r) => [r.identifier, r]));
@@ -432,6 +449,27 @@ function main() {
     }
     hsReport.push(`${id.toUpperCase()} batting strike-rate table: ${all.length} rows (all countries), ${paired} paired with our players`);
   }
+  // Full-career bowling lines (100+ wickets), all countries in one table per format.
+  const officialBowling = { odi: new Map(), t20i: new Map() };
+  for (const id of ['odi', 't20i']) {
+    const file = join(hsDir, `${id}-bowling-100-wickets.csv`);
+    if (!existsSync(file)) continue;
+    const all = parseBowlingTable(readFileSync(file, 'utf8'));
+    let paired = 0;
+    for (const nation of NATIONS) {
+      const rows = all.filter((r) => r.country === nation);
+      const ours = [...counted[id].acc.values()].filter((p) => mainTeam(p) === nation).map(identity);
+      // No career years here either: the row must agree with the per-country record, or (without
+      // one) be close to what the match files show for a full modern career.
+      const plausible = (o, b) => {
+        const hs = official[id].get(o.id);
+        if (hs) return b.matches >= hs.matches && b.matches <= hs.matches + 12 && b.wickets >= (hs.wickets ?? 0) && b.wickets <= (hs.wickets ?? 0) + 40;
+        return b.matches >= o.matches && b.matches <= o.matches * 1.2 + 5;
+      };
+      for (const { ours: o, theirs } of matchHowstat(rows, ours, plausible).pairs) { officialBowling[id].set(o.id, theirs); paired++; }
+    }
+    hsReport.push(`${id.toUpperCase()} bowling table (100+ wickets): ${all.length} rows (all countries), ${paired} paired with our players`);
+  }
   report.howstat = hsReport;
 
   // ---- pass 2: roles and output
@@ -467,6 +505,9 @@ function main() {
       // The strike-rate table holds full careers (World XI matches included), so it applies even
       // when the per-country row above was partial and could not be used.
       if (hb) { stats = withOfficialBatting(stats, hb); counts.officialBatting = (counts.officialBatting ?? 0) + 1; }
+      const hw0 = officialBowling[fmt.id]?.get(p.id) ?? null;
+      const hw = hw0 && hw0.matches !== null && hw0.matches >= p.matches ? hw0 : null;
+      if (hw) { stats = withOfficialBowling(stats, hw); counts.officialBowling = (counts.officialBowling ?? 0) + 1; }
 
       // --- role evidence
       // IPL players without an international side: Indian domestic players (the large majority).
@@ -540,7 +581,14 @@ function main() {
       const batSlots = p.positions.length >= 10 && otherShare >= 0.2 ? [batSlot, otherSlot] : [batSlot];
 
       let primaryRole, secondaryRoles = [], roleSource = 'match-data';
-      if (keeperEvidence && !regularBowler) {
+      // The owner can fix a role the small ball-by-ball sample got wrong (older ODI players whose
+      // careers were mostly before the match files begin, e.g. Klusener as an all-rounder).
+      const ownerRole = overrides[p.id]?.role;
+      if (ownerRole === 'all-rounder') {
+        primaryRole = 'all-rounder';
+        secondaryRoles = bowlingType.type ? [bowlingType.type === 'spin' ? 'spinner' : 'fast-bowler', ...batSlots] : [...batSlots];
+        roleSource = 'owner';
+      } else if (keeperEvidence && !regularBowler) {
         primaryRole = 'wicketkeeper';
         secondaryRoles = [...batSlots];
         roleSource = test ? 'test-data' : kg?.position === 'Wicketkeeper' ? 'kaggle' : 'match-data (stumpings)';
@@ -613,6 +661,7 @@ function writeReports(report) {
     L.push(`- Role source: ${Object.entries(c.roleSource).map(([k, v]) => `${k} ${v}`).join(', ')}`);
     L.push(`- Kaggle profiles matched by surname + initial (one-to-one both ways): ${c.fuzzy ?? 0}`);
     if (c.officialBatting) L.push(`- Players with the official full-career batting line (strike rate, 50s, not outs): ${c.officialBatting}`);
+    if (c.officialBowling) L.push(`- Players with the official full-career bowling line (balls, bowling strike rate): ${c.officialBowling}`);
     if (c.partialOfficial) L.push(`- Official rows not used because they cover fewer matches than Cricsheet (the player also appeared for another side): ${c.partialOfficial}`);
     L.push('');
   }

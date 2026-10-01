@@ -5,9 +5,9 @@
 // @ts-expect-error plain .mjs script
 import { parseHowstat, matchHowstat } from '../scripts/cricsheet/howstat-check.mjs';
 // @ts-expect-error plain .mjs script
-import { parseStrikeRates, careerFits } from '../scripts/cricsheet/howstat.mjs';
+import { parseStrikeRates, parseBowlingTable, careerFits } from '../scripts/cricsheet/howstat.mjs';
 // @ts-expect-error plain .mjs script
-import { withOfficialBatting } from '../scripts/cricsheet/build-white-ball.mjs';
+import { withOfficialBatting, withOfficialBowling } from '../scripts/cricsheet/build-white-ball.mjs';
 
 let pass = 0, fail = 0;
 const ok = (cond: boolean, name: string, extra?: unknown) => {
@@ -99,6 +99,22 @@ const after = withOfficialBatting(before, sr[0]);
 ok(after.matches === 463 && after.runs === 18426 && after.strikeRate === 86.24 && after.fifties === 96 && after.notOuts === 41 && after.hundreds === 49, 'official full-career batting line replaces the batting numbers', after);
 ok(after.wickets === 154 && after.economy === 5.1 && after.battingSource === 'howstat-strike-rates', 'bowling is untouched and the source is recorded', after);
 ok(Math.abs(after.fiftyRate - (96 + 49) / 463) < 0.0001, 'fifty rate follows the official numbers', after.fiftyRate);
+
+// ---- the all-countries bowling table (100+ wickets)
+const bowl = parseBowlingTable([
+  ',Player,Country,Mat,Balls,Runs,Wkts,BBI,4w,Avg,S/R,E/R,1 - 3,4 - 7,8 - 11,B,C,CB,LBW',
+  '1.0,M Muralitharan,Sri Lanka/ACC Asian XI,350.0,18811.0,12326.0,534.0,46233.0,25.0,23.08,35.23,3.93,24.3,51.5,24.2,22.8,46.1,8.2,12.2',
+  '178.0,D J Willey*,England,73.0,3236.0,2977.0,100.0,46172.0,5.0,29.77,32.36,5.52,54.0,28.0,18.0,19.0,54.0,17.0,10.0',
+].join('\n'));
+ok(bowl.length === 2 && bowl[0].name === 'M Muralitharan' && bowl[0].country === 'Sri Lanka', 'bowling table: "Sri Lanka/ACC Asian XI" is Sri Lanka', bowl[0]);
+ok(bowl[0].matches === 350 && bowl[0].ballsBowled === 18811 && bowl[0].runsConceded === 12326 && bowl[0].wickets === 534 && bowl[0].fourW === 25
+  && bowl[0].bowlingAverage === 23.08 && bowl[0].ballsPerWicket === 35.23 && bowl[0].economy === 3.93, 'bowling table: every number in the right column (Runs here is runs conceded; S/R is balls per wicket)', bowl[0]);
+ok(bowl[1].name === 'D J Willey', 'bowling table: current-player star dropped');
+const bBefore = { matches: 343, cricsheetMatches: 80, runs: 663, strikeRate: 77.5, battingAverage: 6.8, ballsBowled: 4200, runsConceded: 2900, wickets: 120, bowlingAverage: 24.2, economy: 4.1, ballsPerWicket: 35, fourWicketInnings: 5, fourWicketRate: 0.06, statsSource: 'howstat' };
+const bAfter = withOfficialBowling(bBefore, bowl[0]);
+ok(bAfter.wickets === 534 && bAfter.ballsBowled === 18811 && bAfter.ballsPerWicket === 35.23 && bAfter.economy === 3.93 && bAfter.fourWicketInnings === 25, 'official full-career bowling line replaces the bowling numbers', bAfter);
+ok(bAfter.matches === 350 && Math.abs(bAfter.fourWicketRate - 25 / 350) < 0.0001, 'full career can add matches (Asia XI); the 4-wicket rate follows', bAfter);
+ok(bAfter.runs === 663 && bAfter.strikeRate === 77.5 && bAfter.bowlingSource === 'howstat-100-wickets', 'batting is untouched and the source is recorded', bAfter);
 
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

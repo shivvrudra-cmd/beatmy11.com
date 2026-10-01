@@ -4,7 +4,7 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 ## ODI Australia
 
-- HowSTAT rows: 254; our players: 120; paired: 120; identical on matches, runs and wickets: 116
+- HowSTAT rows: 254; our players: 120; paired: 120; identical on matches, runs and wickets: 115
 - Ours without a HowSTAT match: 0
 - HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 134
 
@@ -12,9 +12,9 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 |---|---|---|---|---|---|---|
 | Ricky Ponting | 375 / 374 | 13704 / 13589 | 3 / 3 | 42.04 / 41.81 | 34.67 / 34.67 | 4.16 / 4.16 |
 | Adam Gilchrist | 287 / 286 | 9619 / 9595 | 0 / 0 | 35.89 / 35.94 | – / – | – / – |
-| Shane Warne | 194 / 193 | 1018 / 1016 | 291 / 291 | 13.05 / 13.03 | 25.82 / 25.82 | 4.25 / 4.25 |
+| Glenn McGrath | 250 / 249 | 115 / 115 | 381 / 380 | 3.97 / 3.97 | 22.02 / 21.98 | 3.88 / 3.88 |
+| Shane Warne | 194 / 193 | 1018 / 1016 | 293 / 291 | 13.05 / 13.03 | 25.74 / 25.82 | 4.25 / 4.25 |
 | Matthew Hayden | 161 / 160 | 6133 / 6131 | 0 / 0 | 43.81 / 44.11 | – / – | 18 / 18 |
-| Glenn McGrath | 249 / 249 | 115 / 115 | 380 / 380 | 3.97 / 3.97 | 21.98 / 21.98 | 3.88 / 3.88 |
 | Michael Clarke | 245 / 245 | 7981 / 7981 | 57 / 57 | 44.59 / 44.59 | 37.65 / 37.65 | 4.98 / 4.98 |
 | Michael Bevan | 232 / 232 | 6912 / 6912 | 36 / 36 | 53.58 / 53.58 | 45.97 / 45.97 | 5.05 / 5.05 |
 | Brett Lee | 221 / 221 | 1176 / 1176 | 380 / 380 | 17.82 / 17.82 | 23.36 / 23.36 | 4.76 / 4.76 |
@@ -59,9 +59,9 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
-| Mashrafe Mortaza | 220 / 218 | 1787 / 1773 | 269 / 269 | 13.75 / 13.85 | 32.66 / 32.66 | 4.87 / 4.87 |
+| Mashrafe Mortaza | 220 / 218 | 1787 / 1773 | 270 / 269 | 13.75 / 13.85 | 32.94 / 32.66 | 4.89 / 4.87 |
 | Mohammad Ashraful | 177 / 175 | 3468 / 3468 | 18 / 18 | 22.23 / 22.37 | 36.72 / 36.72 | 5.69 / 5.69 |
-| Mohammad Rafique | 125 / 123 | 1191 / 1190 | 119 / 119 | 13.38 / 13.52 | 38.76 / 38.76 | 4.4 / 4.4 |
+| Mohammad Rafique | 125 / 123 | 1191 / 1190 | 125 / 119 | 13.38 / 13.52 | 37.91 / 38.76 | 4.43 / 4.4 |
 | Mushfiqur Rahim | 274 / 274 | 7795 / 7795 | 0 / 0 | 36.43 / 36.43 | – / – | – / – |
 | Shakib Al Hasan | 247 / 247 | 7570 / 7570 | 317 / 317 | 37.29 / 37.29 | 29.53 / 29.53 | 4.47 / 4.47 |
 | Tamim Iqbal | 243 / 243 | 8357 / 8357 | 0 / 0 | 36.65 / 36.65 | – / – | 13 / 13 |
@@ -102,7 +102,7 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 ## ODI England
 
-- HowSTAT rows: 282; our players: 121; paired: 121; identical on matches, runs and wickets: 116
+- HowSTAT rows: 282; our players: 121; paired: 121; identical on matches, runs and wickets: 115
 - Ours without a HowSTAT match: 0
 - HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 161
 
@@ -110,8 +110,9 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 |---|---|---|---|---|---|---|
 | Eoin Morgan | 248 / 225 | 7701 / 6957 | 0 / 0 | 39.29 / 39.75 | – / – | – / – |
 | Gary Ballance | 21 / 16 | 454 / 297 | 0 / 0 | 25.22 / 21.21 | – / – | – / – |
-| Andrew Flintoff | 141 / 138 | 3394 / 3293 | 168 / 168 | 32.02 / 31.97 | 23.62 / 23.62 | 4.33 / 4.33 |
+| Andrew Flintoff | 141 / 138 | 3394 / 3293 | 169 / 168 | 32.02 / 31.97 | 24.38 / 23.62 | 4.4 / 4.33 |
 | Kevin Pietersen | 136 / 134 | 4440 / 4422 | 7 / 7 | 40.73 / 41.33 | 52.86 / 52.86 | 5.55 / 5.55 |
+| Darren Gough | 159 / 158 | 609 / 609 | 235 / 234 | 12.43 / 12.43 | 26.42 / 26.3 | 4.4 / 4.38 |
 | Luke Wood | 3 / 2 | 15 / 15 | 1 / 1 | 15 / 15 | 113 / 113 | 6.28 / 6.28 |
 | Jos Buttler | 204 / 204 | 5678 / 5678 | 0 / 0 | 39.16 / 39.16 | – / – | – / – |
 | Paul Collingwood | 197 / 197 | 5092 / 5092 | 111 / 111 | 35.36 / 35.36 | 38.68 / 38.68 | 4.97 / 4.97 |
@@ -120,7 +121,6 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Alec Stewart | 170 / 170 | 4677 / 4677 | 0 / 0 | 31.6 / 31.6 | – / – | – / – |
 | Adil Rashid | 164 / 164 | 972 / 972 | 243 / 243 | 16.47 / 16.47 | 31.7 / 31.7 | 5.64 / 5.64 |
 | Ian Bell | 161 / 161 | 5416 / 5416 | 6 / 6 | 37.87 / 37.87 | 14.67 / 14.67 | 6 / 6 |
-| Darren Gough | 158 / 158 | 609 / 609 | 234 / 234 | 12.43 / 12.43 | 26.3 / 26.3 | 4.38 / 4.38 |
 | Moeen Ali | 138 / 138 | 2355 / 2355 | 111 / 111 | 24.28 / 24.28 | 47.85 / 47.85 | 5.32 / 5.32 |
 | Andrew Strauss | 127 / 127 | 4205 / 4205 | 0 / 0 | 35.64 / 35.64 | – / – | 3 / 3 |
 | Marcus Trescothick | 123 / 123 | 4335 / 4335 | 4 / 4 | 37.37 / 37.37 | 54.75 / 54.75 | 5.66 / 5.66 |
@@ -151,26 +151,27 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 ## ODI India
 
-- HowSTAT rows: 265; our players: 133; paired: 132; identical on matches, runs and wickets: 126
+- HowSTAT rows: 265; our players: 133; paired: 132; identical on matches, runs and wickets: 123
 - Ours without a HowSTAT match: 1 (R P Singh)
 - HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 133
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
 | Virender Sehwag | 251 / 241 | 8273 / 7995 | 94 / 94 | 35.06 / 35.38 | 39.76 / 39.76 | 5.23 / 5.23 |
+| Zaheer Khan | 200 / 194 | 753 / 753 | 282 / 269 | 11.58 / 11.58 | 29.44 / 30.12 | 4.93 / 4.95 |
 | Rahul Dravid | 344 / 340 | 10889 / 10768 | 4 / 4 | 39.17 / 39.16 | 42.5 / 42.5 | 5.48 / 5.48 |
 | M S Dhoni | 350 / 347 | 10773 / 10599 | 1 / 1 | 50.58 / 50.23 | 31 / 31 | 5.17 / 5.17 |
-| Sourav Ganguly | 311 / 308 | 11363 / 11221 | 100 / 100 | 41.02 / 40.95 | 38.35 / 38.35 | 5.06 / 5.06 |
-| Yuvraj Singh | 304 / 301 | 8701 / 8609 | 110 / 110 | 36.56 / 36.48 | 38.43 / 38.43 | 5.08 / 5.08 |
-| Harbhajan Singh | 236 / 234 | 1237 / 1213 | 265 / 265 | 13.3 / 13.33 | 33.48 / 33.48 | 4.31 / 4.31 |
+| Sourav Ganguly | 311 / 308 | 11363 / 11221 | 100 / 100 | 41.02 / 40.95 | 38.49 / 38.35 | 5.06 / 5.06 |
+| Yuvraj Singh | 304 / 301 | 8701 / 8609 | 111 / 110 | 36.56 / 36.48 | 38.68 / 38.43 | 5.1 / 5.08 |
+| Ashish Nehra | 120 / 117 | 140 / 140 | 157 / 155 | 5.83 / 5.83 | 31.73 / 31.61 | 5.2 / 5.21 |
+| Anil Kumble | 271 / 269 | 903 / 903 | 337 / 334 | 10.38 / 10.38 | 30.9 / 30.84 | 4.31 / 4.3 |
+| Harbhajan Singh | 236 / 234 | 1237 / 1213 | 269 / 265 | 13.3 / 13.33 | 33.36 / 33.48 | 4.31 / 4.31 |
 | Sachin Tendulkar | 463 / 463 | 18426 / 18426 | 154 / 154 | 44.83 / 44.83 | 44.48 / 44.48 | 5.1 / 5.1 |
 | Virat Kohli | 316 / 316 | 15109 / 15109 | 5 / 5 | 59.02 / 59.02 | 136 / 136 | 6.16 / 6.16 |
 | Rohit Sharma | 290 / 290 | 12028 / 12028 | 9 / 9 | 49.09 / 49.09 | 59.22 / 59.22 | 5.24 / 5.24 |
-| Anil Kumble | 269 / 269 | 903 / 903 | 334 / 334 | 10.38 / 10.38 | 30.84 / 30.84 | 4.3 / 4.3 |
 | Javagal Srinath | 229 / 229 | 883 / 883 | 315 / 315 | 10.64 / 10.64 | 28.09 / 28.09 | 4.45 / 4.45 |
 | Suresh Raina | 226 / 226 | 5615 / 5615 | 36 / 36 | 35.31 / 35.31 | 50.31 / 50.31 | 5.11 / 5.11 |
 | Ravindra Jadeja | 212 / 212 | 2905 / 2905 | 234 / 234 | 32.28 / 32.28 | 36.78 / 36.78 | 4.91 / 4.91 |
-| Zaheer Khan | 194 / 194 | 753 / 753 | 269 / 269 | 11.58 / 11.58 | 30.12 / 30.12 | 4.95 / 4.95 |
 | Ajit Agarkar | 191 / 191 | 1269 / 1269 | 288 / 288 | 14.59 / 14.59 | 27.85 / 27.85 | 5.07 / 5.07 |
 | Shikhar Dhawan | 167 / 167 | 6793 / 6793 | 0 / 0 | 44.11 / 44.11 | – / – | – / – |
 | Gautam Gambhir | 147 / 147 | 5238 / 5238 | 0 / 0 | 39.68 / 39.68 | – / – | 13 / 13 |
@@ -178,7 +179,6 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Kuldeep Yadav | 123 / 123 | 215 / 215 | 200 / 200 | 9.77 / 9.77 | 26.76 / 26.76 | 5.08 / 5.08 |
 | Bhuvneshwar Kumar | 121 / 121 | 552 / 552 | 141 / 141 | 14.15 / 14.15 | 35.11 / 35.11 | 5.08 / 5.08 |
 | Irfan Pathan | 120 / 120 | 1544 / 1544 | 173 / 173 | 23.39 / 23.39 | 29.72 / 29.72 | 5.27 / 5.27 |
-| Ashish Nehra | 117 / 117 | 140 / 140 | 155 / 155 | 5.83 / 5.83 | 31.61 / 31.61 | 5.21 / 5.21 |
 | Ravichandran Ashwin | 116 / 116 | 707 / 707 | 156 / 156 | 16.44 / 16.44 | 33.21 / 33.21 | 4.93 / 4.93 |
 | Mohammed Shami | 108 / 108 | 225 / 225 | 206 / 206 | 7.76 / 7.76 | 24.05 / 24.05 | 5.58 / 5.58 |
 | KL Rahul | 100 / 100 | 3412 / 3412 | 0 / 0 | 49.45 / 49.45 | – / – | – / – |
@@ -206,11 +206,11 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
-| Daniel Vettori | 295 / 291 | 2253 / 2201 | 297 / 297 | 17.33 / 17.2 | 31.97 / 31.97 | 4.12 / 4.12 |
+| Daniel Vettori | 295 / 291 | 2253 / 2201 | 305 / 297 | 17.33 / 17.2 | 31.72 / 31.97 | 4.13 / 4.12 |
 | Luke Ronchi | 85 / 81 | 1397 / 1321 | 0 / 0 | 23.68 / 23.18 | – / – | – / – |
 | Mark Chapman | 37 / 35 | 1057 / 906 | 0 / 0 | 36.45 / 32.36 | – / – | – / – |
 | Stephen Fleming | 280 / 279 | 8037 / 8007 | 1 / 1 | 32.41 / 32.42 | 28 / 28 | 5.79 / 5.79 |
-| Chris Cairns | 215 / 214 | 4950 / 4881 | 200 / 200 | 29.46 / 29.23 | 32.79 / 32.79 | 4.84 / 4.84 |
+| Chris Cairns | 215 / 214 | 4950 / 4881 | 201 / 200 | 29.46 / 29.23 | 32.81 / 32.79 | 4.84 / 4.84 |
 | Brendon McCullum | 260 / 260 | 6083 / 6083 | 0 / 0 | 30.42 / 30.42 | – / – | – / – |
 | Chris Harris | 250 / 250 | 4379 / 4379 | 203 / 203 | 29 / 29 | 37.5 / 37.5 | 4.28 / 4.28 |
 | Ross Taylor | 236 / 236 | 8607 / 8607 | 0 / 0 | 47.55 / 47.55 | – / – | 5 / 5 |
@@ -249,15 +249,16 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 ## ODI Pakistan
 
-- HowSTAT rows: 262; our players: 134; paired: 131; identical on matches, runs and wickets: 126
+- HowSTAT rows: 262; our players: 134; paired: 131; identical on matches, runs and wickets: 125
 - Ours without a HowSTAT match: 3 (Agha Salman, Mohammad Wasim Jr, Shahnawaz Dhani)
 - HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 131
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
 | Mohammad Yousuf | 288 / 281 | 9720 / 9554 | 1 / 1 | 41.72 / 42.09 | 1 / 1 | 3 / 3 |
-| Shahid Afridi | 398 / 393 | 8064 / 8027 | 393 / 393 | 23.58 / 23.82 | 34.53 / 34.53 | 4.63 / 4.63 |
-| Abdul Razzaq | 265 / 261 | 5080 / 5031 | 268 / 268 | 29.71 / 29.95 | 31.54 / 31.54 | 4.67 / 4.67 |
+| Shahid Afridi | 398 / 393 | 8064 / 8027 | 395 / 393 | 23.58 / 23.82 | 34.51 / 34.53 | 4.63 / 4.63 |
+| Shoaib Akhtar | 163 / 158 | 361 / 361 | 247 / 241 | 8.8 / 8.8 | 24.98 / 24.7 | 4.77 / 4.76 |
+| Abdul Razzaq | 265 / 261 | 5080 / 5031 | 269 / 268 | 29.71 / 29.95 | 31.84 / 31.54 | 4.7 / 4.67 |
 | Inzamam-ul-Haq | 378 / 375 | 11739 / 11701 | 3 / 3 | 39.53 / 39.53 | 21.33 / 21.33 | 6.62 / 6.62 |
 | Ehsan Adil | 9 / 6 | 43 / 27 | 9 / 4 | 10.75 / 9 | 37.22 / 55.75 | 5.19 / 5.95 |
 | Wasim Akram | 356 / 356 | 3717 / 3717 | 502 / 502 | 16.52 / 16.52 | 23.53 / 23.53 | 3.9 / 3.9 |
@@ -270,7 +271,6 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Saqlain Mushtaq | 169 / 169 | 711 / 711 | 288 / 288 | 11.85 / 11.85 | 21.79 / 21.79 | 4.29 / 4.29 |
 | Rashid Latif | 166 / 166 | 1709 / 1709 | 0 / 0 | 19.42 / 19.42 | – / – | – / – |
 | Misbah-ul-Haq | 162 / 162 | 5122 / 5122 | 0 / 0 | 43.41 / 43.41 | – / – | 7.5 / 7.5 |
-| Shoaib Akhtar | 158 / 158 | 361 / 361 | 241 / 241 | 8.8 / 8.8 | 24.7 / 24.7 | 4.76 / 4.76 |
 | Kamran Akmal | 157 / 157 | 3236 / 3236 | 0 / 0 | 26.1 / 26.1 | – / – | – / – |
 | Mushtaq Ahmed | 144 / 144 | 399 / 399 | 161 / 161 | 9.5 / 9.5 | 33.3 / 33.3 | 4.26 / 4.26 |
 | Azhar Mahmood | 143 / 143 | 1521 / 1521 | 123 / 123 | 18.11 / 18.11 | 39.13 / 39.13 | 4.63 / 4.63 |
@@ -298,24 +298,25 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 ## ODI South Africa
 
-- HowSTAT rows: 169; our players: 113; paired: 113; identical on matches, runs and wickets: 100
+- HowSTAT rows: 169; our players: 113; paired: 113; identical on matches, runs and wickets: 99
 - Ours without a HowSTAT match: 0
 - HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 56
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
-| Shaun Pollock | 303 / 294 | 3519 / 3193 | 387 / 387 | 26.46 / 25.34 | 24.31 / 24.31 | 3.66 / 3.66 |
+| Shaun Pollock | 303 / 294 | 3519 / 3193 | 393 / 387 | 26.46 / 25.34 | 24.51 / 24.31 | 3.68 / 3.66 |
 | Boeta Dippenaar | 107 / 101 | 3421 / 3300 | 0 / 0 | 42.23 / 44 | – / – | – / – |
 | Justin Kemp | 85 / 79 | 1512 / 1371 | 29 / 29 | 31.5 / 32.64 | 31.55 / 31.55 | 4.69 / 4.69 |
-| Jacques Kallis | 328 / 323 | 11579 / 11550 | 269 / 269 | 44.36 / 45.12 | 31.85 / 31.85 | 4.83 / 4.83 |
+| Jacques Kallis | 328 / 323 | 11579 / 11550 | 273 / 269 | 44.36 / 45.12 | 31.79 / 31.85 | 4.84 / 4.83 |
 | Mark Boucher | 295 / 290 | 4686 / 4523 | 0 / 0 | 28.57 / 28.45 | – / – | – / – |
 | AB de Villiers | 228 / 223 | 9577 / 9427 | 7 / 7 | 53.5 / 54.18 | 25.71 / 25.71 | 6 / 6 |
+| Morne Morkel | 117 / 114 | 268 / 239 | 188 / 180 | 9.24 / 8.54 | 25.32 / 25.53 | 4.96 / 4.94 |
 | Ashwell Prince | 52 / 49 | 1018 / 940 | 0 / 0 | 35.1 / 34.81 | – / – | 1.5 / 1.5 |
-| Morne Morkel | 116 / 114 | 268 / 239 | 187 / 180 | 9.24 / 8.54 | 25.13 / 25.53 | 4.95 / 4.94 |
+| Dale Steyn | 125 / 123 | 365 / 361 | 196 / 194 | 9.36 / 9.76 | 25.95 / 26.01 | 4.88 / 4.89 |
 | Nico Boje | 115 / 113 | 1414 / 1410 | 95 / 95 | 26.68 / 27.65 | 35.27 / 35.27 | 4.51 / 4.51 |
 | Jacques Rudolph | 45 / 43 | 1174 / 1157 | 0 / 0 | 35.58 / 37.32 | – / – | 6.5 / 6.5 |
 | Graeme Smith | 197 / 196 | 6989 / 6989 | 18 / 18 | 37.98 / 38.19 | 52.83 / 52.83 | 5.56 / 5.56 |
-| Dale Steyn | 124 / 123 | 365 / 361 | 193 / 194 | 9.36 / 9.76 | 26.11 / 26.01 | 4.88 / 4.89 |
+| Makhaya Ntini | 173 / 172 | 199 / 199 | 266 / 265 | 8.65 / 8.65 | 24.66 / 24.53 | 4.53 / 4.51 |
 | Loots Bosman | 14 / 13 | 301 / 299 | 0 / 0 | 25.08 / 27.18 | – / – | – / – |
 | Herschelle Gibbs | 248 / 248 | 8094 / 8094 | 0 / 0 | 36.13 / 36.13 | – / – | – / – |
 | Jonty Rhodes | 245 / 245 | 5935 / 5935 | 0 / 0 | 35.12 / 35.12 | – / – | 1.71 / 1.71 |
@@ -323,7 +324,6 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Gary Kirsten | 185 / 185 | 6798 / 6798 | 0 / 0 | 40.95 / 40.95 | – / – | 4.6 / 4.6 |
 | Hashim Amla | 181 / 181 | 8113 / 8113 | 0 / 0 | 49.47 / 49.47 | – / – | – / – |
 | David Miller | 180 / 180 | 4762 / 4762 | 0 / 0 | 42.9 / 42.9 | – / – | – / – |
-| Makhaya Ntini | 172 / 172 | 199 / 199 | 265 / 265 | 8.65 / 8.65 | 24.53 / 24.53 | 4.51 / 4.51 |
 | Lance Klusener | 171 / 171 | 3576 / 3576 | 192 / 192 | 41.1 / 41.1 | 29.95 / 29.95 | 4.7 / 4.7 |
 | Allan Donald | 164 / 164 | 95 / 95 | 272 / 272 | 4.32 / 4.32 | 21.79 / 21.79 | 4.15 / 4.15 |
 | Quinton de Kock | 164 / 164 | 7152 / 7152 | 0 / 0 | 45.85 / 45.85 | – / – | – / – |
@@ -347,19 +347,20 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 ## ODI Sri Lanka
 
-- HowSTAT rows: 220; our players: 120; paired: 116; identical on matches, runs and wickets: 110
+- HowSTAT rows: 220; our players: 120; paired: 116; identical on matches, runs and wickets: 108
 - Ours without a HowSTAT match: 4 (Chamindu Wickramasinghe, KNM Fernando, P Rathnayake, RMMP Rathnayake)
 - HowSTAT players not in our data (before the ODI cut-off, unknown bowling type, or under the match minimum): 104
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
 | Kumar Sangakkara | 404 / 397 | 14234 / 13975 | 0 / 0 | 41.99 / 41.97 | – / – | – / – |
+| Muttiah Muralitharan | 350 / 343 | 674 / 674 | 534 / 523 | 6.88 / 6.88 | 23.08 / 23.07 | 3.93 / 3.93 |
 | Shehan Jayasuriya | 18 / 12 | 440 / 195 | 3 / 3 | 31.43 / 21.67 | 100.67 / 92.33 | 5.59 / 5.33 |
 | Mahela Jayawardene | 448 / 443 | 12650 / 12381 | 8 / 8 | 33.38 / 33.02 | 68 / 68 | 5.64 / 5.64 |
-| Sanath Jayasuriya | 445 / 441 | 13430 / 13364 | 320 / 320 | 32.36 / 32.52 | 36.68 / 36.68 | 4.78 / 4.78 |
-| Chaminda Vaas | 322 / 321 | 2025 / 2018 | 399 / 399 | 13.68 / 13.73 | 27.46 / 27.46 | 4.18 / 4.18 |
+| Sanath Jayasuriya | 445 / 441 | 13430 / 13364 | 323 / 320 | 32.36 / 32.52 | 36.75 / 36.68 | 4.79 / 4.78 |
+| Chaminda Vaas | 322 / 321 | 2025 / 2018 | 400 / 399 | 13.68 / 13.73 | 27.54 / 27.46 | 4.19 / 4.18 |
 | Upul Tharanga | 235 / 234 | 6951 / 6941 | 0 / 0 | 33.74 / 33.86 | – / – | – / – |
-| Muttiah Muralitharan | 343 / 343 | 674 / 674 | 523 / 523 | 6.88 / 6.88 | 23.07 / 23.07 | 3.93 / 3.93 |
+| Dilhara Fernando | 147 / 146 | 239 / 239 | 187 / 183 | 9.19 / 9.19 | 30.2 / 30.67 | 5.21 / 5.22 |
 | Tillakaratne Dilshan | 330 / 330 | 10290 / 10290 | 106 / 106 | 39.27 / 39.27 | 45.08 / 45.08 | 4.88 / 4.88 |
 | Aravinda de Silva | 308 / 308 | 9284 / 9284 | 106 / 106 | 34.9 / 34.9 | 39.41 / 39.41 | 4.87 / 4.87 |
 | Marvan Atapattu | 268 / 268 | 8529 / 8529 | 0 / 0 | 37.57 / 37.57 | – / – | 4.82 / 4.82 |
@@ -373,7 +374,6 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Kusal Mendis | 159 / 159 | 5160 / 5160 | 0 / 0 | 36.34 / 36.34 | – / – | 8.4 / 8.4 |
 | Dinesh Chandimal | 157 / 157 | 3854 / 3854 | 0 / 0 | 31.85 / 31.85 | – / – | – / – |
 | Upul Chandana | 147 / 147 | 1627 / 1627 | 151 / 151 | 17.31 / 17.31 | 31.91 / 31.91 | 4.71 / 4.71 |
-| Dilhara Fernando | 146 / 146 | 239 / 239 | 183 / 183 | 9.19 / 9.19 | 30.67 / 30.67 | 5.22 / 5.22 |
 | Lahiru Thirimanne | 127 / 127 | 3194 / 3194 | 3 / 3 | 34.72 / 34.72 | 31.33 / 31.33 | 5.42 / 5.42 |
 | Kusal Perera | 116 / 116 | 3237 / 3237 | 0 / 0 | 30.54 / 30.54 | – / – | – / – |
 | Farveez Maharoof | 109 / 109 | 1113 / 1113 | 135 / 135 | 19.53 / 19.53 | 28.07 / 28.07 | 4.9 / 4.9 |
@@ -403,7 +403,7 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
 | Brian Lara | 299 / 295 | 10405 / 10348 | 4 / 4 | 40.49 / 40.9 | 15.25 / 15.25 | 7.47 / 7.47 |
-| Chris Gayle | 301 / 298 | 10480 / 10425 | 167 / 167 | 37.83 / 38.05 | 35.14 / 35.14 | 4.77 / 4.77 |
+| Chris Gayle | 301 / 298 | 10480 / 10425 | 167 / 167 | 37.83 / 38.05 | 35.49 / 35.14 | 4.79 / 4.77 |
 | Xavier Marshall | 26 / 24 | 379 / 375 | 0 / 0 | 15.16 / 17.86 | – / – | 10 / 4 |
 | Shivnarine Chanderpaul | 268 / 268 | 8778 / 8778 | 14 / 14 | 41.6 / 41.6 | 45.43 / 45.43 | 5.16 / 5.16 |
 | Carl Hooper | 227 / 227 | 5761 / 5761 | 193 / 193 | 35.34 / 35.34 | 36.05 / 36.05 | 4.36 / 4.36 |
@@ -451,8 +451,8 @@ Generated 2026-10-01 by `scripts/cricsheet/howstat-check.mjs`. Read-only: nothin
 
 | Player | Matches (ours / HowSTAT) | Runs | Wickets | Bat avg | Bowl avg | Economy |
 |---|---|---|---|---|---|---|
-| Elton Chigumbura | 213 / 210 | 4340 / 4289 | 95 / 95 | 25.23 / 25.38 | 42.71 / 42.71 | 5.84 / 5.84 |
-| Heath Streak | 189 / 187 | 2943 / 2901 | 237 / 237 | 28.3 / 28.44 | 29.81 / 29.81 | 4.5 / 4.5 |
+| Elton Chigumbura | 213 / 210 | 4340 / 4289 | 101 / 95 | 25.23 / 25.38 | 42.32 / 42.71 | 5.91 / 5.84 |
+| Heath Streak | 189 / 187 | 2943 / 2901 | 239 / 237 | 28.3 / 28.44 | 29.83 / 29.81 | 4.52 / 4.5 |
 | Vusi Sibanda | 127 / 125 | 2994 / 2914 | 3 / 3 | 24.54 / 24.28 | 68 / 68 | 5.59 / 5.59 |
 | Tatenda Taibu | 150 / 149 | 3393 / 3383 | 2 / 2 | 29.25 / 29.42 | 30.5 / 30.5 | 4.36 / 4.36 |
 | Tony Munyonga | 9 / 8 | 145 / 145 | 0 / 0 | 24.17 / 24.17 | – / – | 10 / 10 |

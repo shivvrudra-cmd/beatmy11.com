@@ -141,6 +141,11 @@ for (const fmt of ['odi', 't20i', 'ipl']) {
   }
   ok(bad.length === 0, `${fmt}: every record is consistent`, bad.slice(0, 10));
   const has = (n: string) => data.some((p: { name: string }) => p.name === n);
+  if (fmt === 'odi') {
+    // Roles the owner corrected (the ball-by-ball sample for older players is too small to tell).
+    const role = (n: string) => data.find((p: { name: string }) => p.name === n)?.primaryRole;
+    ok(role('Lance Klusener') === 'all-rounder' && role('Azhar Mahmood') === 'all-rounder', 'odi: owner role corrections applied (Klusener, Azhar Mahmood)');
+  }
   ok(has('Pat Cummins') && has('Lasith Malinga') && has('Wanindu Hasaranga') && !has('Anderson Cummins'),
     `${fmt}: names resolve correctly (Cummins, Malinga by middle name, Hasaranga by alias)`);
 }

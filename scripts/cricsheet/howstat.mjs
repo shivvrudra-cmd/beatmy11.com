@@ -111,48 +111,71 @@ export function matchHowstat(rows, players, compatible = () => true) {
   return { pairs, unmatchedOurs: players.filter((p) => !usedPlayer.has(p)), unmatchedTheirs: rows.filter((h) => !usedRow.has(h)) };
 }
 
+/** Split one CSV/TSV line (quoted fields allowed). */
+function splitLine(l) {
+  const out = []; let cur = '', q = false;
+  for (let i = 0; i < l.length; i++) {
+    const ch = l[i];
+    if (q) { if (ch === '"' && l[i + 1] === '"') { cur += '"'; i++; } else if (ch === '"') q = false; else cur += ch; }
+    else if (ch === '"') q = true;
+    else if (ch === ',' || ch === '\t') { out.push(cur.trim()); cur = ''; }
+    else cur += ch;
+  }
+  out.push(cur.trim());
+  return out;
+}
+const numOrNull = (v) => { const x = Number(String(v ?? '').replace(/[,*]/g, '')); return String(v ?? '').trim() === '' || !Number.isFinite(x) ? null : x; };
+
 /**
- * Parse HowSTAT's "Batsman Strike Rates" table (all countries, batters with 1000+ runs):
- * Player, Country, Mat, Inns, NO, Runs, HS, 100s, 50s, Avg, S/R. These are FULL career totals
- * (they include ICC World XI / Asia XI matches) with the official strike rate.
- * A trailing "*" on a name marks a current player and is dropped.
+ * Shared reader for HowSTAT's all-countries tables. `columns` maps our field names to the
+ * possible header spellings. Handles a header row that sits one column left of the data (the rank
+ * column has no heading): the player name is the first non-numeric cell of a row, which gives the
+ * shift. A trailing "*" on a name marks a current player; "Sri Lanka/ACC Asian XI" is Sri Lanka.
  */
-export function parseStrikeRates(text) {
-  const lines = text.replace(/^\uFEFF/, '').split(/\r?\n/).filter((l) => l.trim() !== '');
+function parseAllCountriesTable(text, columns, label) {
+  const lines = text.replace(/^﻿/, '').split(/\r?\n/).filter((l) => l.trim() !== '');
   if (!lines.length) return [];
-  const split = (l) => {
-    const out = []; let cur = '', q = false;
-    for (let i = 0; i < l.length; i++) {
-      const ch = l[i];
-      if (q) { if (ch === '"' && l[i + 1] === '"') { cur += '"'; i++; } else if (ch === '"') q = false; else cur += ch; }
-      else if (ch === '"') q = true;
-      else if (ch === ',' || ch === '\t') { out.push(cur.trim()); cur = ''; }
-      else cur += ch;
-    }
-    out.push(cur.trim());
-    return out;
-  };
-  const head = split(lines[0]).map((h) => h.toLowerCase().replace(/[^a-z0-9/]/g, ''));
-  const col = (...names) => names.map((n) => head.indexOf(n)).find((i) => i >= 0) ?? -1;
-  const idx = { name: col('player', 'name'), country: col('country'), matches: col('mat', 'matches'), innings: col('inns'), notOuts: col('no'),
-    runs: col('runs'), highest: col('hs'), hundreds: col('100s'), fifties: col('50s'), battingAverage: col('avg', 'batavg'), strikeRate: col('s/r', 'sr') };
-  if (idx.name < 0 || idx.strikeRate < 0 || idx.country < 0) throw new Error(`Strike-rate file: could not find Player, Country and S/R columns (saw: ${lines[0]})`);
-  const num = (v) => { const x = Number(String(v ?? '').replace(/[,*]/g, '')); return String(v ?? '').trim() === '' || !Number.isFinite(x) ? null : x; };
-  // Some exports have the header one column to the left of the data (the rank column has no
-  // heading and the header row starts at "Player"). The player name is the first cell of a row
-  // that is not a number, so its position tells us the shift to apply to every column.
-  const body = lines.slice(1).map(split);
-  const firstName = body.length ? body[0].findIndex((c) => c !== '' && num(c) === null) : idx.name;
+  const head = splitLine(lines[0]).map((h) => h.toLowerCase().replace(/[^a-z0-9/]/g, ''));
+  const idx = {};
+  for (const [k, names] of Object.entries(columns)) idx[k] = names.map((n) => head.indexOf(n)).find((i) => i >= 0) ?? -1;
+  if (idx.name < 0 || idx.country < 0) throw new Error(`${label}: could not find the Player and Country columns (saw: ${lines[0]})`);
+  const body = lines.slice(1).map(splitLine);
+  const firstName = body.length ? body[0].findIndex((c) => c !== '' && numOrNull(c) === null) : idx.name;
   const shift = firstName >= 0 ? firstName - idx.name : 0;
   if (shift !== 0) for (const k of Object.keys(idx)) if (idx[k] >= 0) idx[k] += shift;
-  return body.map((r) => ({
-    name: String(r[idx.name] ?? '').replace(/\*+$/, '').trim(),
-    knownAs: '',
-    country: r[idx.country] ?? '',
-    matches: num(r[idx.matches]), innings: num(r[idx.innings]), notOuts: num(r[idx.notOuts]), runs: num(r[idx.runs]),
-    highest: num(r[idx.highest]), hundreds: num(r[idx.hundreds]), fifties: num(r[idx.fifties]),
-    battingAverage: num(r[idx.battingAverage]), strikeRate: num(r[idx.strikeRate]),
-  })).filter((p) => p.name);
+  return body.map((r) => {
+    const row = { name: String(r[idx.name] ?? '').replace(/\*+$/, '').trim(), knownAs: '', country: String(r[idx.country] ?? '').split('/')[0].trim() };
+    for (const k of Object.keys(columns)) if (k !== 'name' && k !== 'country') row[k] = idx[k] >= 0 ? numOrNull(r[idx[k]]) : null;
+    return row;
+  }).filter((p) => p.name);
+}
+
+/**
+ * HowSTAT's "Batsman Strike Rates" table (batters with 1000+ runs): Player, Country, Mat, Inns,
+ * NO, Runs, HS, 100s, 50s, Avg, S/R. FULL career totals (ICC World XI / Asia XI matches
+ * included) with the official strike rate.
+ */
+export function parseStrikeRates(text) {
+  const rows = parseAllCountriesTable(text, {
+    name: ['player', 'name'], country: ['country'], matches: ['mat', 'matches'], innings: ['inns'], notOuts: ['no'],
+    runs: ['runs'], highest: ['hs'], hundreds: ['100s'], fifties: ['50s'], battingAverage: ['avg', 'batavg'], strikeRate: ['s/r', 'sr'],
+  }, 'Strike-rate file');
+  if (rows.length && rows.every((r) => r.strikeRate === null)) throw new Error('Strike-rate file: no S/R column found');
+  return rows;
+}
+
+/**
+ * HowSTAT's "Players with 100+ wickets" table: Player, Country, Mat, Balls, Runs, Wkts, BBI, 4w,
+ * Avg, S/R, E/R (plus wicket breakdowns that are not used). FULL career bowling totals with the
+ * official bowling strike rate (balls per wicket) and economy.
+ */
+export function parseBowlingTable(text) {
+  const rows = parseAllCountriesTable(text, {
+    name: ['player', 'name'], country: ['country'], matches: ['mat', 'matches'], ballsBowled: ['balls'], runsConceded: ['runs'],
+    wickets: ['wkts'], fourW: ['4w'], bowlingAverage: ['avg', 'bowlavg'], ballsPerWicket: ['s/r', 'sr'], economy: ['e/r', 'er'],
+  }, 'Bowling file');
+  if (rows.length && rows.every((r) => r.wickets === null)) throw new Error('Bowling file: no Wkts column found');
+  return rows;
 }
 
 /**

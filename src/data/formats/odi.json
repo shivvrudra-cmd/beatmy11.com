@@ -387,12 +387,12 @@
    "ballsFaced": 2604,
    "fifties": 23,
    "hundreds": 3,
-   "ballsBowled": 10860,
-   "runsConceded": 8453,
-   "wickets": 268,
-   "bowlingAverage": 31.54,
-   "economy": 4.67,
-   "ballsPerWicket": 40.5,
+   "ballsBowled": 10941,
+   "runsConceded": 8564,
+   "wickets": 269,
+   "bowlingAverage": 31.84,
+   "economy": 4.7,
+   "ballsPerWicket": 40.67,
    "fourWicketInnings": 11,
    "fiveWicketInnings": 0,
    "catches": 18,
@@ -407,7 +407,8 @@
     1996,
     2011
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -539,12 +540,12 @@
    "ballsFaced": 854,
    "fifties": 1,
    "hundreds": 0,
-   "ballsBowled": 7963,
+   "ballsBowled": 7965,
    "runsConceded": 6065,
    "wickets": 207,
    "bowlingAverage": 29.3,
    "economy": 4.57,
-   "ballsPerWicket": 38.5,
+   "ballsPerWicket": 38.48,
    "fourWicketInnings": 9,
    "fiveWicketInnings": 4,
    "catches": 26,
@@ -558,7 +559,8 @@
    "officialCareer": [
     2004,
     2014
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -1247,12 +1249,12 @@
    "ballsFaced": 620,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 6614,
+   "ballsBowled": 6615,
    "runsConceded": 6140,
    "wickets": 207,
    "bowlingAverage": 29.66,
    "economy": 5.57,
-   "ballsPerWicket": 31.9,
+   "ballsPerWicket": 31.96,
    "fourWicketInnings": 13,
    "fiveWicketInnings": 1,
    "catches": 21,
@@ -1266,7 +1268,8 @@
    "officialCareer": [
     2016,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -1299,7 +1302,7 @@
    "ballsFaced": 1016,
    "fifties": 1,
    "hundreds": 0,
-   "ballsBowled": 8195,
+   "ballsBowled": 8189,
    "runsConceded": 7703,
    "wickets": 243,
    "bowlingAverage": 31.7,
@@ -1318,7 +1321,8 @@
    "officialCareer": [
     2009,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -1803,12 +1807,12 @@
    "ballsFaced": 261,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 4155,
+   "ballsBowled": 4154,
    "runsConceded": 3324,
    "wickets": 152,
    "bowlingAverage": 21.87,
    "economy": 4.8,
-   "ballsPerWicket": 27.3,
+   "ballsPerWicket": 27.33,
    "fourWicketInnings": 10,
    "fiveWicketInnings": 2,
    "catches": 15,
@@ -1822,7 +1826,8 @@
    "officialCareer": [
     2008,
     2015
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -1906,12 +1911,12 @@
    "ballsFaced": 539,
    "fifties": 3,
    "hundreds": 0,
-   "ballsBowled": 9492,
+   "ballsBowled": 9484,
    "runsConceded": 8021,
    "wickets": 288,
    "bowlingAverage": 27.85,
    "economy": 5.07,
-   "ballsPerWicket": 33,
+   "ballsPerWicket": 32.93,
    "fourWicketInnings": 12,
    "fiveWicketInnings": 2,
    "catches": 12,
@@ -1926,7 +1931,8 @@
     1998,
     2007
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -2921,12 +2927,12 @@
    "ballsFaced": 0,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 8569,
-   "runsConceded": 5927,
+   "ballsBowled": 8561,
+   "runsConceded": 5926,
    "wickets": 272,
    "bowlingAverage": 21.79,
    "economy": 4.15,
-   "ballsPerWicket": 31.5,
+   "ballsPerWicket": 31.47,
    "fourWicketInnings": 13,
    "fiveWicketInnings": 0,
    "catches": 0,
@@ -2940,7 +2946,8 @@
    "officialCareer": [
     1991,
     2003
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -3077,12 +3084,12 @@
    "ballsFaced": 633,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 4438,
-   "runsConceded": 4090,
+   "ballsBowled": 4436,
+   "runsConceded": 4089,
    "wickets": 142,
    "bowlingAverage": 28.8,
    "economy": 5.53,
-   "ballsPerWicket": 31.2,
+   "ballsPerWicket": 31.24,
    "fourWicketInnings": 7,
    "fiveWicketInnings": 1,
    "catches": 24,
@@ -3096,7 +3103,8 @@
    "officialCareer": [
     2016,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -3589,12 +3597,12 @@
    "ballsFaced": 156,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 3803,
+   "ballsBowled": 3801,
    "runsConceded": 2935,
    "wickets": 106,
    "bowlingAverage": 27.69,
    "economy": 4.63,
-   "ballsPerWicket": 35.9,
+   "ballsPerWicket": 35.86,
    "fourWicketInnings": 4,
    "fiveWicketInnings": 1,
    "catches": 13,
@@ -3608,7 +3616,8 @@
    "officialCareer": [
     2001,
     2008
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -3743,12 +3752,12 @@
    "ballsFaced": 2377,
    "fifties": 18,
    "hundreds": 3,
-   "ballsBowled": 5498,
-   "runsConceded": 3968,
-   "wickets": 168,
-   "bowlingAverage": 23.62,
-   "economy": 4.33,
-   "ballsPerWicket": 32.7,
+   "ballsBowled": 5624,
+   "runsConceded": 4121,
+   "wickets": 169,
+   "bowlingAverage": 24.38,
+   "economy": 4.4,
+   "ballsPerWicket": 33.28,
    "fourWicketInnings": 8,
    "fiveWicketInnings": 2,
    "catches": 25,
@@ -3763,7 +3772,8 @@
     1999,
     2009
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -4004,11 +4014,11 @@
    "fifties": 30,
    "hundreds": 6,
    "ballsBowled": 5935,
-   "runsConceded": 4956,
+   "runsConceded": 4955,
    "wickets": 133,
    "bowlingAverage": 37.26,
    "economy": 5.01,
-   "ballsPerWicket": 44.6,
+   "ballsPerWicket": 44.62,
    "fourWicketInnings": 3,
    "fiveWicketInnings": 1,
    "catches": 53,
@@ -4023,7 +4033,8 @@
     1998,
     2009
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -4310,12 +4321,12 @@
    "ballsFaced": 6741,
    "fifties": 40,
    "hundreds": 3,
-   "ballsBowled": 5326,
+   "ballsBowled": 5324,
    "runsConceded": 4110,
    "wickets": 126,
    "bowlingAverage": 32.62,
    "economy": 4.63,
-   "ballsPerWicket": 42.3,
+   "ballsPerWicket": 42.25,
    "fourWicketInnings": 3,
    "fiveWicketInnings": 1,
    "catches": 49,
@@ -4330,7 +4341,8 @@
     2008,
     null
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -4401,7 +4413,7 @@
   "firstMatch": "2002-06-29",
   "lastMatch": "2007-03-19",
   "stats": {
-   "matches": 269,
+   "matches": 271,
    "innings": 134,
    "runs": 903,
    "notOuts": 47,
@@ -4411,26 +4423,27 @@
    "ballsFaced": 254,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 14373,
-   "runsConceded": 10301,
-   "wickets": 334,
-   "bowlingAverage": 30.84,
-   "economy": 4.3,
-   "ballsPerWicket": 43,
+   "ballsBowled": 14496,
+   "runsConceded": 10412,
+   "wickets": 337,
+   "bowlingAverage": 30.9,
+   "economy": 4.31,
+   "ballsPerWicket": 43.01,
    "fourWicketInnings": 10,
    "fiveWicketInnings": 0,
    "catches": 5,
    "stumpings": 0,
    "dismissals": 5,
    "fiftyRate": 0,
-   "fourWicketRate": 0.0372,
+   "fourWicketRate": 0.0369,
    "dismissalsPerMatch": 0.1724,
    "statsSource": "howstat",
    "cricsheetMatches": 29,
    "officialCareer": [
     1990,
     2007
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -4864,12 +4877,12 @@
    "ballsFaced": 474,
    "fifties": 64,
    "hundreds": 11,
-   "ballsBowled": 5146,
+   "ballsBowled": 5148,
    "runsConceded": 4177,
    "wickets": 106,
    "bowlingAverage": 39.41,
    "economy": 4.87,
-   "ballsPerWicket": 48.6,
+   "ballsPerWicket": 48.57,
    "fourWicketInnings": 2,
    "fiveWicketInnings": 0,
    "catches": 6,
@@ -4884,7 +4897,8 @@
     1984,
     2003
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -5160,7 +5174,7 @@
   "firstMatch": "2002-12-29",
   "lastMatch": "2011-03-30",
   "stats": {
-   "matches": 117,
+   "matches": 120,
    "innings": 45,
    "runs": 140,
    "notOuts": 21,
@@ -5170,26 +5184,27 @@
    "ballsFaced": 171,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 5643,
-   "runsConceded": 4900,
-   "wickets": 155,
-   "bowlingAverage": 31.61,
-   "economy": 5.21,
-   "ballsPerWicket": 36.4,
+   "ballsBowled": 5751,
+   "runsConceded": 4981,
+   "wickets": 157,
+   "bowlingAverage": 31.73,
+   "economy": 5.2,
+   "ballsPerWicket": 36.63,
    "fourWicketInnings": 7,
    "fiveWicketInnings": 1,
    "catches": 11,
    "stumpings": 0,
    "dismissals": 11,
    "fiftyRate": 0,
-   "fourWicketRate": 0.0598,
+   "fourWicketRate": 0.0583,
    "dismissalsPerMatch": 0.1392,
    "statsSource": "howstat",
    "cricsheetMatches": 79,
    "officialCareer": [
     2001,
     2011
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -5863,11 +5878,14 @@
   "era": [
    "2000s"
   ],
-  "primaryRole": "fast-bowler",
-  "secondaryRoles": [],
+  "primaryRole": "all-rounder",
+  "secondaryRoles": [
+   "fast-bowler",
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
-  "roleSource": "kaggle",
+  "roleSource": "owner",
   "bowlingTypeSource": "kaggle",
   "firstMatch": "2003-03-04",
   "lastMatch": "2007-03-17",
@@ -5882,12 +5900,12 @@
    "ballsFaced": 156,
    "fifties": 3,
    "hundreds": 0,
-   "ballsBowled": 6237,
+   "ballsBowled": 6242,
    "runsConceded": 4813,
    "wickets": 123,
    "bowlingAverage": 39.13,
    "economy": 4.63,
-   "ballsPerWicket": 50.7,
+   "ballsPerWicket": 50.75,
    "fourWicketInnings": 5,
    "fiveWicketInnings": 0,
    "catches": 0,
@@ -5902,7 +5920,8 @@
     1996,
     2007
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -6905,12 +6924,12 @@
    "ballsFaced": 747,
    "fifties": 1,
    "hundreds": 0,
-   "ballsBowled": 5848,
+   "ballsBowled": 5847,
    "runsConceded": 4951,
    "wickets": 141,
    "bowlingAverage": 35.11,
    "economy": 5.08,
-   "ballsPerWicket": 41.5,
+   "ballsPerWicket": 41.47,
    "fourWicketInnings": 5,
    "fiveWicketInnings": 1,
    "catches": 29,
@@ -6924,7 +6943,8 @@
    "officialCareer": [
     2012,
     2022
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -7465,12 +7485,12 @@
    "ballsFaced": 802,
    "fifties": 2,
    "hundreds": 0,
-   "ballsBowled": 5561,
-   "runsConceded": 4189,
+   "ballsBowled": 5564,
+   "runsConceded": 4188,
    "wickets": 156,
    "bowlingAverage": 26.85,
    "economy": 4.52,
-   "ballsPerWicket": 35.6,
+   "ballsPerWicket": 35.67,
    "fourWicketInnings": 5,
    "fiveWicketInnings": 1,
    "catches": 26,
@@ -7484,7 +7504,8 @@
    "officialCareer": [
     1996,
     2008
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -8031,12 +8052,12 @@
    "ballsFaced": 1057,
    "fifties": 3,
    "hundreds": 0,
-   "ballsBowled": 11189,
+   "ballsBowled": 11185,
    "runsConceded": 8877,
    "wickets": 380,
    "bowlingAverage": 23.36,
    "economy": 4.76,
-   "ballsPerWicket": 29.4,
+   "ballsPerWicket": 29.43,
    "fourWicketInnings": 23,
    "fiveWicketInnings": 7,
    "catches": 46,
@@ -8051,7 +8072,8 @@
     2000,
     2012
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -8548,7 +8570,7 @@
    "ballsFaced": 118,
    "fifties": 29,
    "hundreds": 7,
-   "ballsBowled": 9575,
+   "ballsBowled": 9573,
    "runsConceded": 6958,
    "wickets": 193,
    "bowlingAverage": 36.05,
@@ -8568,7 +8590,8 @@
     1987,
     2003
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -9154,12 +9177,12 @@
    "ballsFaced": 844,
    "fifties": 1,
    "hundreds": 0,
-   "ballsBowled": 15728,
-   "runsConceded": 10957,
-   "wickets": 399,
-   "bowlingAverage": 27.46,
-   "economy": 4.18,
-   "ballsPerWicket": 39.4,
+   "ballsBowled": 15775,
+   "runsConceded": 11014,
+   "wickets": 400,
+   "bowlingAverage": 27.54,
+   "economy": 4.19,
+   "ballsPerWicket": 39.44,
    "fourWicketInnings": 13,
    "fiveWicketInnings": 1,
    "catches": 17,
@@ -9174,7 +9197,8 @@
     1994,
     2008
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -9403,12 +9427,12 @@
    "ballsFaced": 119,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 3492,
+   "ballsBowled": 3489,
    "runsConceded": 2962,
    "wickets": 100,
    "bowlingAverage": 29.62,
    "economy": 5.09,
-   "ballsPerWicket": 34.9,
+   "ballsPerWicket": 34.89,
    "fourWicketInnings": 3,
    "fiveWicketInnings": 1,
    "catches": 11,
@@ -9422,7 +9446,8 @@
    "officialCareer": [
     2001,
     2010
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -9756,12 +9781,12 @@
    "ballsFaced": 874,
    "fifties": 26,
    "hundreds": 4,
-   "ballsBowled": 8130,
-   "runsConceded": 6558,
-   "wickets": 200,
-   "bowlingAverage": 32.79,
+   "ballsBowled": 8168,
+   "runsConceded": 6594,
+   "wickets": 201,
+   "bowlingAverage": 32.81,
    "economy": 4.84,
-   "ballsPerWicket": 40.6,
+   "ballsPerWicket": 40.64,
    "fourWicketInnings": 4,
    "fiveWicketInnings": 0,
    "catches": 11,
@@ -9776,7 +9801,8 @@
     1991,
     2006
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -9808,12 +9834,12 @@
    "ballsFaced": 7190,
    "fifties": 54,
    "hundreds": 25,
-   "ballsBowled": 7381,
-   "runsConceded": 5868,
+   "ballsBowled": 7424,
+   "runsConceded": 5926,
    "wickets": 167,
-   "bowlingAverage": 35.14,
-   "economy": 4.77,
-   "ballsPerWicket": 44.2,
+   "bowlingAverage": 35.49,
+   "economy": 4.79,
+   "ballsPerWicket": 44.46,
    "fourWicketInnings": 4,
    "fiveWicketInnings": 1,
    "catches": 81,
@@ -9828,7 +9854,8 @@
     1999,
     2019
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -9861,12 +9888,12 @@
    "ballsFaced": 388,
    "fifties": 16,
    "hundreds": 1,
-   "ballsBowled": 10672,
+   "ballsBowled": 10667,
    "runsConceded": 7613,
    "wickets": 203,
    "bowlingAverage": 37.5,
    "economy": 4.28,
-   "ballsPerWicket": 52.6,
+   "ballsPerWicket": 52.55,
    "fourWicketInnings": 3,
    "fiveWicketInnings": 0,
    "catches": 5,
@@ -9881,7 +9908,8 @@
     1990,
     2004
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -10218,12 +10246,12 @@
    "ballsFaced": 1683,
    "fifties": 6,
    "hundreds": 0,
-   "ballsBowled": 5738,
+   "ballsBowled": 5737,
    "runsConceded": 5193,
    "wickets": 173,
    "bowlingAverage": 30.02,
    "economy": 5.43,
-   "ballsPerWicket": 33.2,
+   "ballsPerWicket": 33.16,
    "fourWicketInnings": 14,
    "fiveWicketInnings": 3,
    "catches": 49,
@@ -10238,7 +10266,8 @@
     2011,
     2023
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -11497,7 +11526,7 @@
   "firstMatch": "2005-08-17",
   "lastMatch": "2019-03-13",
   "stats": {
-   "matches": 124,
+   "matches": 125,
    "innings": 51,
    "runs": 365,
    "notOuts": 12,
@@ -11507,21 +11536,23 @@
    "ballsFaced": 562,
    "fifties": 1,
    "hundreds": 0,
-   "ballsBowled": 6195,
-   "runsConceded": 5039,
-   "wickets": 193,
-   "bowlingAverage": 26.11,
+   "ballsBowled": 6256,
+   "runsConceded": 5087,
+   "wickets": 196,
+   "bowlingAverage": 25.95,
    "economy": 4.88,
-   "ballsPerWicket": 32.1,
+   "ballsPerWicket": 31.92,
    "fourWicketInnings": 7,
    "fiveWicketInnings": 3,
    "catches": 28,
    "stumpings": 0,
    "dismissals": 28,
    "fiftyRate": 0.0081,
-   "fourWicketRate": 0.0565,
+   "fourWicketRate": 0.056,
    "dismissalsPerMatch": 0.2258,
-   "statsSource": "cricsheet"
+   "statsSource": "cricsheet",
+   "bowlingSource": "howstat-100-wickets",
+   "cricsheetMatches": 124
   }
  },
  {
@@ -11858,19 +11889,19 @@
    "ballsFaced": 1703,
    "fifties": 4,
    "hundreds": 0,
-   "ballsBowled": 13828,
-   "runsConceded": 9495,
-   "wickets": 297,
-   "bowlingAverage": 31.97,
-   "economy": 4.12,
-   "ballsPerWicket": 46.6,
-   "fourWicketInnings": 9,
+   "ballsBowled": 14060,
+   "runsConceded": 9674,
+   "wickets": 305,
+   "bowlingAverage": 31.72,
+   "economy": 4.13,
+   "ballsPerWicket": 46.1,
+   "fourWicketInnings": 10,
    "fiveWicketInnings": 2,
    "catches": 55,
    "stumpings": 0,
    "dismissals": 55,
    "fiftyRate": 0.0136,
-   "fourWicketRate": 0.0305,
+   "fourWicketRate": 0.0339,
    "dismissalsPerMatch": 0.3459,
    "statsSource": "howstat",
    "cricsheetMatches": 159,
@@ -11878,7 +11909,8 @@
     1997,
     2015
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -12406,7 +12438,7 @@
   "firstMatch": "2003-06-17",
   "lastMatch": "2006-09-02",
   "stats": {
-   "matches": 158,
+   "matches": 159,
    "innings": 87,
    "runs": 609,
    "notOuts": 38,
@@ -12416,26 +12448,27 @@
    "ballsFaced": 197,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 8430,
-   "runsConceded": 6154,
-   "wickets": 234,
-   "bowlingAverage": 26.3,
-   "economy": 4.38,
-   "ballsPerWicket": 36,
+   "ballsBowled": 8470,
+   "runsConceded": 6209,
+   "wickets": 235,
+   "bowlingAverage": 26.42,
+   "economy": 4.4,
+   "ballsPerWicket": 36.04,
    "fourWicketInnings": 12,
    "fiveWicketInnings": 0,
    "catches": 7,
    "stumpings": 0,
    "dismissals": 7,
    "fiftyRate": 0,
-   "fourWicketRate": 0.0759,
+   "fourWicketRate": 0.0755,
    "dismissalsPerMatch": 0.1795,
    "statsSource": "howstat",
    "cricsheetMatches": 39,
    "officialCareer": [
     1994,
     2006
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -12569,12 +12602,12 @@
    "ballsFaced": 194,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 4336,
+   "ballsBowled": 4333,
    "runsConceded": 3534,
    "wickets": 110,
    "bowlingAverage": 32.13,
    "economy": 4.89,
-   "ballsPerWicket": 39.4,
+   "ballsPerWicket": 39.39,
    "fourWicketInnings": 2,
    "fiveWicketInnings": 0,
    "catches": 6,
@@ -12588,7 +12621,8 @@
    "officialCareer": [
     2000,
     2010
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -13035,7 +13069,7 @@
    "wickets": 100,
    "bowlingAverage": 29.77,
    "economy": 5.52,
-   "ballsPerWicket": 32.4,
+   "ballsPerWicket": 32.36,
    "fourWicketInnings": 5,
    "fiveWicketInnings": 1,
    "catches": 27,
@@ -13049,7 +13083,8 @@
    "officialCareer": [
     2015,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -13950,7 +13985,7 @@
   "firstMatch": "2002-06-27",
   "lastMatch": "2012-01-11",
   "stats": {
-   "matches": 146,
+   "matches": 147,
    "innings": 61,
    "runs": 239,
    "notOuts": 35,
@@ -13960,26 +13995,27 @@
    "ballsFaced": 257,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 6452,
-   "runsConceded": 5613,
-   "wickets": 183,
-   "bowlingAverage": 30.67,
-   "economy": 5.22,
-   "ballsPerWicket": 35.3,
-   "fourWicketInnings": 3,
+   "ballsBowled": 6507,
+   "runsConceded": 5648,
+   "wickets": 187,
+   "bowlingAverage": 30.2,
+   "economy": 5.21,
+   "ballsPerWicket": 34.8,
+   "fourWicketInnings": 4,
    "fiveWicketInnings": 1,
    "catches": 10,
    "stumpings": 0,
    "dismissals": 10,
    "fiftyRate": 0,
-   "fourWicketRate": 0.0205,
+   "fourWicketRate": 0.0272,
    "dismissalsPerMatch": 0.1124,
    "statsSource": "howstat",
    "cricsheetMatches": 89,
    "officialCareer": [
     2001,
     2012
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -15135,12 +15171,12 @@
    "ballsFaced": 3398,
    "fifties": 10,
    "hundreds": 2,
-   "ballsBowled": 6515,
+   "ballsBowled": 6511,
    "runsConceded": 5874,
    "wickets": 199,
    "bowlingAverage": 29.52,
    "economy": 5.41,
-   "ballsPerWicket": 32.7,
+   "ballsPerWicket": 32.72,
    "fourWicketInnings": 7,
    "fiveWicketInnings": 0,
    "catches": 68,
@@ -15155,7 +15191,8 @@
     2004,
     2014
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -15535,12 +15572,12 @@
    "ballsFaced": 4143,
    "fifties": 19,
    "hundreds": 2,
-   "ballsBowled": 4168,
-   "runsConceded": 4057,
-   "wickets": 95,
-   "bowlingAverage": 42.71,
-   "economy": 5.84,
-   "ballsPerWicket": 43.9,
+   "ballsBowled": 4339,
+   "runsConceded": 4274,
+   "wickets": 101,
+   "bowlingAverage": 42.32,
+   "economy": 5.91,
+   "ballsPerWicket": 42.96,
    "fourWicketInnings": 1,
    "fiveWicketInnings": 0,
    "catches": 52,
@@ -15555,7 +15592,8 @@
     2004,
     2018
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -16446,7 +16484,7 @@
    "wickets": 135,
    "bowlingAverage": 28.07,
    "economy": 4.9,
-   "ballsPerWicket": 34.4,
+   "ballsPerWicket": 34.37,
    "fourWicketInnings": 6,
    "fiveWicketInnings": 2,
    "catches": 24,
@@ -16461,7 +16499,8 @@
     2004,
     2016
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -17751,7 +17790,7 @@
   "firstMatch": "2003-01-11",
   "lastMatch": "2007-04-28",
   "stats": {
-   "matches": 249,
+   "matches": 250,
    "innings": 67,
    "runs": 115,
    "notOuts": 38,
@@ -17761,26 +17800,27 @@
    "ballsFaced": 41,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 12915,
-   "runsConceded": 8352,
-   "wickets": 380,
-   "bowlingAverage": 21.98,
+   "ballsBowled": 12970,
+   "runsConceded": 8391,
+   "wickets": 381,
+   "bowlingAverage": 22.02,
    "economy": 3.88,
-   "ballsPerWicket": 34,
+   "ballsPerWicket": 34.04,
    "fourWicketInnings": 16,
    "fiveWicketInnings": 1,
    "catches": 13,
    "stumpings": 0,
    "dismissals": 13,
    "fiftyRate": 0,
-   "fourWicketRate": 0.0643,
+   "fourWicketRate": 0.064,
    "dismissalsPerMatch": 0.197,
    "statsSource": "howstat",
    "cricsheetMatches": 66,
    "officialCareer": [
     1993,
     2007
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -17865,12 +17905,12 @@
    "ballsFaced": 882,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 4731,
-   "runsConceded": 3651,
+   "ballsBowled": 4734,
+   "runsConceded": 3650,
    "wickets": 121,
    "bowlingAverage": 30.17,
    "economy": 4.63,
-   "ballsPerWicket": 39.1,
+   "ballsPerWicket": 39.12,
    "fourWicketInnings": 7,
    "fiveWicketInnings": 1,
    "catches": 25,
@@ -17884,7 +17924,8 @@
    "officialCareer": [
     2009,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -17968,12 +18009,12 @@
    "ballsFaced": 516,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 3808,
+   "ballsBowled": 3809,
    "runsConceded": 2888,
    "wickets": 104,
    "bowlingAverage": 27.77,
    "economy": 4.55,
-   "ballsPerWicket": 36.6,
+   "ballsPerWicket": 36.63,
    "fourWicketInnings": 4,
    "fiveWicketInnings": 1,
    "catches": 24,
@@ -17987,7 +18028,8 @@
    "officialCareer": [
     2000,
     2013
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -18227,12 +18269,12 @@
    "ballsFaced": 942,
    "fifties": 40,
    "hundreds": 6,
-   "ballsBowled": 5465,
-   "runsConceded": 4226,
+   "ballsBowled": 5462,
+   "runsConceded": 4225,
    "wickets": 104,
    "bowlingAverage": 40.63,
    "economy": 4.64,
-   "ballsPerWicket": 52.5,
+   "ballsPerWicket": 52.52,
    "fourWicketInnings": 2,
    "fiveWicketInnings": 0,
    "catches": 13,
@@ -18247,7 +18289,8 @@
     1992,
     2010
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -19183,12 +19226,12 @@
    "ballsFaced": 1119,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 12351,
-   "runsConceded": 8872,
-   "wickets": 265,
-   "bowlingAverage": 33.48,
+   "ballsBowled": 12479,
+   "runsConceded": 8973,
+   "wickets": 269,
+   "bowlingAverage": 33.36,
    "economy": 4.31,
-   "ballsPerWicket": 46.6,
+   "ballsPerWicket": 46.39,
    "fourWicketInnings": 5,
    "fiveWicketInnings": 2,
    "catches": 46,
@@ -19203,7 +19246,8 @@
     1998,
     2015
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -19294,7 +19338,7 @@
    "wickets": 107,
    "bowlingAverage": 25.7,
    "economy": 5.79,
-   "ballsPerWicket": 26.6,
+   "ballsPerWicket": 26.64,
    "fourWicketInnings": 7,
    "fiveWicketInnings": 1,
    "catches": 12,
@@ -19308,7 +19352,8 @@
    "officialCareer": [
     2020,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -19543,12 +19588,12 @@
    "ballsFaced": 327,
    "fifties": 2,
    "hundreds": 0,
-   "ballsBowled": 3289,
+   "ballsBowled": 3286,
    "runsConceded": 3179,
    "wickets": 102,
    "bowlingAverage": 31.17,
    "economy": 5.8,
-   "ballsPerWicket": 32.2,
+   "ballsPerWicket": 32.22,
    "fourWicketInnings": 6,
    "fiveWicketInnings": 4,
    "catches": 12,
@@ -19562,7 +19607,8 @@
    "officialCareer": [
     2016,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -19903,12 +19949,12 @@
    "ballsFaced": 1079,
    "fifties": 13,
    "hundreds": 0,
-   "ballsBowled": 9420,
-   "runsConceded": 7065,
-   "wickets": 237,
-   "bowlingAverage": 29.81,
-   "economy": 4.5,
-   "ballsPerWicket": 39.7,
+   "ballsBowled": 9468,
+   "runsConceded": 7129,
+   "wickets": 239,
+   "bowlingAverage": 29.83,
+   "economy": 4.52,
+   "ballsPerWicket": 39.62,
    "fourWicketInnings": 8,
    "fiveWicketInnings": 0,
    "catches": 10,
@@ -19923,7 +19969,8 @@
     1993,
     2005
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -20986,12 +21033,12 @@
    "ballsFaced": 225,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 5545,
+   "ballsBowled": 5541,
    "runsConceded": 4297,
    "wickets": 173,
    "bowlingAverage": 24.84,
    "economy": 4.65,
-   "ballsPerWicket": 32.1,
+   "ballsPerWicket": 32.03,
    "fourWicketInnings": 10,
    "fiveWicketInnings": 3,
    "catches": 24,
@@ -21005,7 +21052,8 @@
    "officialCareer": [
     2011,
     2019
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -21242,12 +21290,12 @@
    "ballsFaced": 1516,
    "fifties": 5,
    "hundreds": 0,
-   "ballsBowled": 5854,
+   "ballsBowled": 5855,
    "runsConceded": 5142,
    "wickets": 173,
    "bowlingAverage": 29.72,
    "economy": 5.27,
-   "ballsPerWicket": 33.8,
+   "ballsPerWicket": 33.84,
    "fourWicketInnings": 7,
    "fiveWicketInnings": 2,
    "catches": 19,
@@ -21262,7 +21310,8 @@
     2004,
     2012
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -21399,12 +21448,12 @@
    "ballsFaced": 203,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 3731,
+   "ballsBowled": 3733,
    "runsConceded": 3563,
    "wickets": 115,
    "bowlingAverage": 30.98,
    "economy": 5.73,
-   "ballsPerWicket": 32.4,
+   "ballsPerWicket": 32.46,
    "fourWicketInnings": 6,
    "fiveWicketInnings": 0,
    "catches": 18,
@@ -21418,7 +21467,8 @@
    "officialCareer": [
     2007,
     2016
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -21651,12 +21701,12 @@
    "ballsFaced": 1711,
    "fifties": 13,
    "hundreds": 1,
-   "ballsBowled": 6912,
-   "runsConceded": 5046,
+   "ballsBowled": 6911,
+   "runsConceded": 5047,
    "wickets": 173,
    "bowlingAverage": 29.17,
    "economy": 4.38,
-   "ballsPerWicket": 40,
+   "ballsPerWicket": 39.95,
    "fourWicketInnings": 5,
    "fiveWicketInnings": 1,
    "catches": 38,
@@ -21671,7 +21721,8 @@
     2001,
     2012
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -21706,12 +21757,12 @@
    "ballsFaced": 6453,
    "fifties": 86,
    "hundreds": 17,
-   "ballsBowled": 10643,
-   "runsConceded": 8568,
-   "wickets": 269,
-   "bowlingAverage": 31.85,
-   "economy": 4.83,
-   "ballsPerWicket": 39.6,
+   "ballsBowled": 10750,
+   "runsConceded": 8680,
+   "wickets": 273,
+   "bowlingAverage": 31.79,
+   "economy": 4.84,
+   "ballsPerWicket": 39.38,
    "fourWicketInnings": 4,
    "fiveWicketInnings": 0,
    "catches": 54,
@@ -21726,7 +21777,8 @@
     1996,
     2014
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -22113,12 +22165,12 @@
    "ballsFaced": 498,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 9585,
+   "ballsBowled": 9584,
    "runsConceded": 7860,
    "wickets": 269,
    "bowlingAverage": 29.22,
    "economy": 4.92,
-   "ballsPerWicket": 35.6,
+   "ballsPerWicket": 35.63,
    "fourWicketInnings": 13,
    "fiveWicketInnings": 2,
    "catches": 48,
@@ -22132,7 +22184,8 @@
    "officialCareer": [
     2002,
     2015
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -23088,12 +23141,12 @@
    "ballsFaced": 109,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 5146,
+   "ballsBowled": 5144,
    "runsConceded": 3611,
    "wickets": 142,
    "bowlingAverage": 25.43,
    "economy": 4.21,
-   "ballsPerWicket": 36.2,
+   "ballsPerWicket": 36.23,
    "fourWicketInnings": 6,
    "fiveWicketInnings": 1,
    "catches": 7,
@@ -23107,7 +23160,8 @@
    "officialCareer": [
     1996,
     2005
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -23139,12 +23193,12 @@
    "ballsFaced": 2395,
    "fifties": 12,
    "hundreds": 0,
-   "ballsBowled": 6401,
+   "ballsBowled": 6402,
    "runsConceded": 5878,
    "wickets": 159,
    "bowlingAverage": 36.97,
    "economy": 5.51,
-   "ballsPerWicket": 40.3,
+   "ballsPerWicket": 40.26,
    "fourWicketInnings": 7,
    "fiveWicketInnings": 2,
    "catches": 57,
@@ -23159,7 +23213,8 @@
     2013,
     2023
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -23394,12 +23449,12 @@
    "ballsFaced": 171,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 4697,
+   "ballsBowled": 4694,
    "runsConceded": 3585,
    "wickets": 151,
    "bowlingAverage": 23.74,
    "economy": 4.58,
-   "ballsPerWicket": 31.1,
+   "ballsPerWicket": 31.09,
    "fourWicketInnings": 8,
    "fiveWicketInnings": 2,
    "catches": 18,
@@ -23413,7 +23468,8 @@
    "officialCareer": [
     2016,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -23444,12 +23500,12 @@
    "ballsFaced": 81,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 11930,
-   "runsConceded": 8848,
+   "ballsBowled": 11935,
+   "runsConceded": 8847,
    "wickets": 315,
    "bowlingAverage": 28.09,
    "economy": 4.45,
-   "ballsPerWicket": 37.9,
+   "ballsPerWicket": 37.89,
    "fourWicketInnings": 10,
    "fiveWicketInnings": 0,
    "catches": 1,
@@ -23463,7 +23519,8 @@
    "officialCareer": [
     1991,
     2003
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -24056,12 +24113,12 @@
    "ballsFaced": 296,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 4345,
+   "ballsBowled": 4341,
    "runsConceded": 3780,
    "wickets": 128,
    "bowlingAverage": 29.53,
    "economy": 5.22,
-   "ballsPerWicket": 33.9,
+   "ballsPerWicket": 33.91,
    "fourWicketInnings": 4,
    "fiveWicketInnings": 1,
    "catches": 19,
@@ -24075,7 +24132,8 @@
    "officialCareer": [
     2003,
     2017
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -25542,12 +25600,12 @@
    "ballsFaced": 166,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 5153,
-   "runsConceded": 4097,
+   "ballsBowled": 5152,
+   "runsConceded": 4096,
    "wickets": 148,
    "bowlingAverage": 27.68,
    "economy": 4.77,
-   "ballsPerWicket": 34.8,
+   "ballsPerWicket": 34.81,
    "fourWicketInnings": 4,
    "fiveWicketInnings": 3,
    "catches": 31,
@@ -25561,7 +25619,8 @@
    "officialCareer": [
     2010,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -25899,12 +25958,12 @@
    "ballsFaced": 127,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 3600,
+   "ballsBowled": 3601,
    "runsConceded": 3216,
    "wickets": 110,
    "bowlingAverage": 29.24,
    "economy": 5.36,
-   "ballsPerWicket": 32.7,
+   "ballsPerWicket": 32.74,
    "fourWicketInnings": 4,
    "fiveWicketInnings": 0,
    "catches": 7,
@@ -25918,7 +25977,8 @@
    "officialCareer": [
     2011,
     2019
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -26314,7 +26374,7 @@
    "ballsFaced": 507,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 5438,
+   "ballsBowled": 5443,
    "runsConceded": 4613,
    "wickets": 168,
    "bowlingAverage": 27.46,
@@ -26333,7 +26393,8 @@
    "officialCareer": [
     2015,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -27181,12 +27242,12 @@
    "ballsFaced": 593,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 4580,
+   "ballsBowled": 4579,
    "runsConceded": 3885,
    "wickets": 125,
    "bowlingAverage": 31.08,
    "economy": 5.09,
-   "ballsPerWicket": 36.6,
+   "ballsPerWicket": 36.63,
    "fourWicketInnings": 6,
    "fiveWicketInnings": 3,
    "catches": 21,
@@ -27200,7 +27261,8 @@
    "officialCareer": [
     2008,
     2022
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -28550,12 +28612,12 @@
    "ballsFaced": 399,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 6321,
+   "ballsBowled": 6324,
    "runsConceded": 5352,
    "wickets": 200,
    "bowlingAverage": 26.76,
    "economy": 5.08,
-   "ballsPerWicket": 31.6,
+   "ballsPerWicket": 31.62,
    "fourWicketInnings": 12,
    "fiveWicketInnings": 2,
    "catches": 18,
@@ -28569,7 +28631,8 @@
    "officialCareer": [
     2017,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -29068,12 +29131,12 @@
    "ballsFaced": 966,
    "fifties": 2,
    "hundreds": 0,
-   "ballsBowled": 8226,
+   "ballsBowled": 8230,
    "runsConceded": 6485,
    "wickets": 240,
    "bowlingAverage": 27.02,
    "economy": 4.73,
-   "ballsPerWicket": 34.3,
+   "ballsPerWicket": 34.29,
    "fourWicketInnings": 9,
    "fiveWicketInnings": 1,
    "catches": 32,
@@ -29088,7 +29151,8 @@
     2001,
     2015
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -29455,8 +29519,11 @@
   "era": [
    "2000s"
   ],
-  "primaryRole": "fast-bowler",
-  "secondaryRoles": [],
+  "primaryRole": "all-rounder",
+  "secondaryRoles": [
+   "fast-bowler",
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "owner",
@@ -29474,12 +29541,12 @@
    "ballsFaced": 152,
    "fifties": 19,
    "hundreds": 2,
-   "ballsBowled": 7340,
-   "runsConceded": 5750,
+   "ballsBowled": 7336,
+   "runsConceded": 5751,
    "wickets": 192,
    "bowlingAverage": 29.95,
    "economy": 4.7,
-   "ballsPerWicket": 38.2,
+   "ballsPerWicket": 38.21,
    "fourWicketInnings": 7,
    "fiveWicketInnings": 0,
    "catches": 2,
@@ -29494,7 +29561,8 @@
     1996,
     2004
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -29576,12 +29644,12 @@
    "ballsFaced": 689,
    "fifties": 1,
    "hundreds": 0,
-   "ballsBowled": 10947,
-   "runsConceded": 9761,
+   "ballsBowled": 10936,
+   "runsConceded": 9760,
    "wickets": 338,
    "bowlingAverage": 28.88,
    "economy": 5.35,
-   "ballsPerWicket": 32.4,
+   "ballsPerWicket": 32.36,
    "fourWicketInnings": 19,
    "fiveWicketInnings": 7,
    "catches": 30,
@@ -29595,7 +29663,8 @@
    "officialCareer": [
     2004,
     2019
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -29932,12 +30001,12 @@
    "ballsFaced": 492,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 4134,
+   "ballsBowled": 4137,
    "runsConceded": 4010,
    "wickets": 135,
    "bowlingAverage": 29.7,
    "economy": 5.82,
-   "ballsPerWicket": 30.6,
+   "ballsPerWicket": 30.64,
    "fourWicketInnings": 7,
    "fiveWicketInnings": 1,
    "catches": 26,
@@ -29951,7 +30020,8 @@
    "officialCareer": [
     2005,
     2019
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -30637,7 +30707,7 @@
    "ballsFaced": 247,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 3460,
+   "ballsBowled": 3461,
    "runsConceded": 3350,
    "wickets": 115,
    "bowlingAverage": 29.13,
@@ -30656,7 +30726,8 @@
    "officialCareer": [
     2018,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -31188,7 +31259,7 @@
   "firstMatch": "2003-02-09",
   "lastMatch": "2009-04-17",
   "stats": {
-   "matches": 172,
+   "matches": 173,
    "innings": 46,
    "runs": 199,
    "notOuts": 23,
@@ -31198,26 +31269,27 @@
    "ballsFaced": 143,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 8647,
-   "runsConceded": 6500,
-   "wickets": 265,
-   "bowlingAverage": 24.53,
-   "economy": 4.51,
-   "ballsPerWicket": 32.6,
+   "ballsBowled": 8687,
+   "runsConceded": 6559,
+   "wickets": 266,
+   "bowlingAverage": 24.66,
+   "economy": 4.53,
+   "ballsPerWicket": 32.66,
    "fourWicketInnings": 12,
    "fiveWicketInnings": 2,
    "catches": 9,
    "stumpings": 0,
    "dismissals": 9,
    "fiftyRate": 0,
-   "fourWicketRate": 0.0698,
+   "fourWicketRate": 0.0694,
    "dismissalsPerMatch": 0.1011,
    "statsSource": "howstat",
    "cricsheetMatches": 89,
    "officialCareer": [
     1998,
     2009
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -32529,12 +32601,12 @@
    "ballsFaced": 1567,
    "fifties": 1,
    "hundreds": 0,
-   "ballsBowled": 10825,
-   "runsConceded": 8786,
-   "wickets": 269,
-   "bowlingAverage": 32.66,
-   "economy": 4.87,
-   "ballsPerWicket": 40.2,
+   "ballsBowled": 10922,
+   "runsConceded": 8893,
+   "wickets": 270,
+   "bowlingAverage": 32.94,
+   "economy": 4.89,
+   "ballsPerWicket": 40.45,
    "fourWicketInnings": 8,
    "fiveWicketInnings": 1,
    "catches": 43,
@@ -32549,7 +32621,8 @@
     2001,
     2020
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -32631,12 +32704,12 @@
    "ballsFaced": 290,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 4950,
+   "ballsBowled": 4946,
    "runsConceded": 4298,
    "wickets": 172,
    "bowlingAverage": 24.99,
    "economy": 5.21,
-   "ballsPerWicket": 28.8,
+   "ballsPerWicket": 28.76,
    "fourWicketInnings": 16,
    "fiveWicketInnings": 3,
    "catches": 31,
@@ -32650,7 +32723,8 @@
    "officialCareer": [
     2014,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -33345,12 +33419,12 @@
    "ballsFaced": 1779,
    "fifties": 7,
    "hundreds": 2,
-   "ballsBowled": 6115,
+   "ballsBowled": 6119,
    "runsConceded": 4800,
    "wickets": 131,
    "bowlingAverage": 36.64,
    "economy": 4.71,
-   "ballsPerWicket": 46.7,
+   "ballsPerWicket": 46.71,
    "fourWicketInnings": 5,
    "fiveWicketInnings": 0,
    "catches": 51,
@@ -33365,7 +33439,8 @@
     2017,
     null
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -33443,12 +33518,12 @@
    "ballsFaced": 52,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 5479,
-   "runsConceded": 4219,
+   "ballsBowled": 5480,
+   "runsConceded": 4218,
    "wickets": 130,
    "bowlingAverage": 32.45,
    "economy": 4.62,
-   "ballsPerWicket": 42.1,
+   "ballsPerWicket": 42.15,
    "fourWicketInnings": 6,
    "fiveWicketInnings": 1,
    "catches": 6,
@@ -33462,7 +33537,8 @@
    "officialCareer": [
     1997,
     2005
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -34465,12 +34541,12 @@
    "ballsFaced": 976,
    "fifties": 2,
    "hundreds": 0,
-   "ballsBowled": 7484,
-   "runsConceded": 6037,
+   "ballsBowled": 7489,
+   "runsConceded": 6038,
    "wickets": 239,
    "bowlingAverage": 25.26,
    "economy": 4.84,
-   "ballsPerWicket": 31.3,
+   "ballsPerWicket": 31.33,
    "fourWicketInnings": 12,
    "fiveWicketInnings": 3,
    "catches": 34,
@@ -34484,7 +34560,8 @@
    "officialCareer": [
     2005,
     2015
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -34670,12 +34747,12 @@
    "ballsFaced": 1784,
    "fifties": 3,
    "hundreds": 0,
-   "ballsBowled": 6153,
-   "runsConceded": 4871,
+   "ballsBowled": 6146,
+   "runsConceded": 4870,
    "wickets": 139,
    "bowlingAverage": 35.04,
    "economy": 4.75,
-   "ballsPerWicket": 44.3,
+   "ballsPerWicket": 44.22,
    "fourWicketInnings": 2,
    "fiveWicketInnings": 2,
    "catches": 54,
@@ -34690,7 +34767,8 @@
     2015,
     null
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -34722,12 +34800,12 @@
    "ballsFaced": 748,
    "fifties": 1,
    "hundreds": 0,
-   "ballsBowled": 6738,
-   "runsConceded": 5918,
+   "ballsBowled": 6734,
+   "runsConceded": 5919,
    "wickets": 247,
    "bowlingAverage": 23.96,
    "economy": 5.27,
-   "ballsPerWicket": 27.3,
+   "ballsPerWicket": 27.26,
    "fourWicketInnings": 21,
    "fiveWicketInnings": 9,
    "catches": 46,
@@ -34741,7 +34819,8 @@
    "officialCareer": [
     2010,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -34873,12 +34952,12 @@
    "ballsFaced": 2357,
    "fifties": 6,
    "hundreds": 3,
-   "ballsBowled": 5990,
+   "ballsBowled": 5988,
    "runsConceded": 5311,
    "wickets": 111,
    "bowlingAverage": 47.85,
    "economy": 5.32,
-   "ballsPerWicket": 54,
+   "ballsPerWicket": 53.95,
    "fourWicketInnings": 2,
    "fiveWicketInnings": 0,
    "catches": 48,
@@ -34893,7 +34972,8 @@
     2014,
     null
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -35238,7 +35318,7 @@
    "wickets": 139,
    "bowlingAverage": 38.85,
    "economy": 4.19,
-   "ballsPerWicket": 55.6,
+   "ballsPerWicket": 55.63,
    "fourWicketInnings": 1,
    "fiveWicketInnings": 0,
    "catches": 78,
@@ -35253,7 +35333,8 @@
     2003,
     2019
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -35638,19 +35719,19 @@
    "ballsFaced": 730,
    "fifties": 2,
    "hundreds": 0,
-   "ballsBowled": 6289,
-   "runsConceded": 4612,
-   "wickets": 119,
-   "bowlingAverage": 38.76,
-   "economy": 4.4,
-   "ballsPerWicket": 52.9,
-   "fourWicketInnings": 3,
+   "ballsBowled": 6414,
+   "runsConceded": 4739,
+   "wickets": 125,
+   "bowlingAverage": 37.91,
+   "economy": 4.43,
+   "ballsPerWicket": 51.31,
+   "fourWicketInnings": 4,
    "fiveWicketInnings": 0,
    "catches": 12,
    "stumpings": 0,
    "dismissals": 12,
    "fiftyRate": 0.016,
-   "fourWicketRate": 0.024,
+   "fourWicketRate": 0.032,
    "dismissalsPerMatch": 0.2069,
    "statsSource": "howstat",
    "cricsheetMatches": 58,
@@ -35658,7 +35739,8 @@
     1995,
     2007
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -35845,7 +35927,7 @@
    "ballsFaced": 357,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 4280,
+   "ballsBowled": 4284,
    "runsConceded": 3567,
    "wickets": 121,
    "bowlingAverage": 29.48,
@@ -35864,7 +35946,8 @@
    "officialCareer": [
     2001,
     2015
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -36048,12 +36131,12 @@
    "ballsFaced": 271,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 5327,
-   "runsConceded": 4954,
+   "ballsBowled": 5326,
+   "runsConceded": 4955,
    "wickets": 206,
    "bowlingAverage": 24.05,
    "economy": 5.58,
-   "ballsPerWicket": 25.9,
+   "ballsPerWicket": 25.85,
    "fourWicketInnings": 16,
    "fiveWicketInnings": 6,
    "catches": 32,
@@ -36067,7 +36150,8 @@
    "officialCareer": [
     2013,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -36495,7 +36579,7 @@
   "firstMatch": "2007-06-06",
   "lastMatch": "2018-02-16",
   "stats": {
-   "matches": 116,
+   "matches": 117,
    "innings": 47,
    "runs": 268,
    "notOuts": 18,
@@ -36505,21 +36589,23 @@
    "ballsFaced": 354,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 5700,
-   "runsConceded": 4700,
-   "wickets": 187,
-   "bowlingAverage": 25.13,
-   "economy": 4.95,
-   "ballsPerWicket": 30.5,
+   "ballsBowled": 5760,
+   "runsConceded": 4761,
+   "wickets": 188,
+   "bowlingAverage": 25.32,
+   "economy": 4.96,
+   "ballsPerWicket": 30.64,
    "fourWicketInnings": 9,
    "fiveWicketInnings": 2,
    "catches": 31,
    "stumpings": 0,
    "dismissals": 31,
    "fiftyRate": 0,
-   "fourWicketRate": 0.0776,
+   "fourWicketRate": 0.0769,
    "dismissalsPerMatch": 0.2672,
-   "statsSource": "cricsheet"
+   "statsSource": "cricsheet",
+   "bowlingSource": "howstat-100-wickets",
+   "cricsheetMatches": 116
   }
  },
  {
@@ -37215,12 +37301,12 @@
    "ballsFaced": 0,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 7551,
+   "ballsBowled": 7543,
    "runsConceded": 5361,
    "wickets": 161,
    "bowlingAverage": 33.3,
    "economy": 4.26,
-   "ballsPerWicket": 46.9,
+   "ballsPerWicket": 46.85,
    "fourWicketInnings": 4,
    "fiveWicketInnings": 0,
    "catches": 0,
@@ -37234,7 +37320,8 @@
    "officialCareer": [
     1989,
     2003
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -37266,12 +37353,12 @@
    "ballsFaced": 342,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 5901,
-   "runsConceded": 5075,
+   "ballsBowled": 5908,
+   "runsConceded": 5076,
    "wickets": 194,
    "bowlingAverage": 26.16,
    "economy": 5.16,
-   "ballsPerWicket": 30.4,
+   "ballsPerWicket": 30.45,
    "fourWicketInnings": 12,
    "fiveWicketInnings": 6,
    "catches": 16,
@@ -37285,7 +37372,8 @@
    "officialCareer": [
     2015,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -37358,7 +37446,7 @@
   "firstMatch": "2003-01-09",
   "lastMatch": "2011-04-02",
   "stats": {
-   "matches": 343,
+   "matches": 350,
    "innings": 161,
    "runs": 674,
    "notOuts": 63,
@@ -37368,26 +37456,27 @@
    "ballsFaced": 379,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 18421,
-   "runsConceded": 12066,
-   "wickets": 523,
-   "bowlingAverage": 23.07,
+   "ballsBowled": 18811,
+   "runsConceded": 12326,
+   "wickets": 534,
+   "bowlingAverage": 23.08,
    "economy": 3.93,
-   "ballsPerWicket": 35.2,
+   "ballsPerWicket": 35.23,
    "fourWicketInnings": 25,
    "fiveWicketInnings": 2,
    "catches": 32,
    "stumpings": 0,
    "dismissals": 32,
    "fiftyRate": 0,
-   "fourWicketRate": 0.0729,
+   "fourWicketRate": 0.0714,
    "dismissalsPerMatch": 0.254,
    "statsSource": "howstat",
    "cricsheetMatches": 126,
    "officialCareer": [
     1993,
     2011
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -38081,7 +38170,7 @@
    "ballsFaced": 263,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 5756,
+   "ballsBowled": 5759,
    "runsConceded": 4240,
    "wickets": 174,
    "bowlingAverage": 24.37,
@@ -38100,7 +38189,8 @@
    "officialCareer": [
     2001,
     2009
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -38636,12 +38726,12 @@
    "ballsFaced": 510,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 3463,
+   "ballsBowled": 3466,
    "runsConceded": 3221,
    "wickets": 110,
    "bowlingAverage": 29.28,
    "economy": 5.58,
-   "ballsPerWicket": 31.5,
+   "ballsPerWicket": 31.51,
    "fourWicketInnings": 7,
    "fiveWicketInnings": 0,
    "catches": 11,
@@ -38655,7 +38745,8 @@
    "officialCareer": [
     2003,
     2010
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -39606,12 +39697,12 @@
    "ballsFaced": 1611,
    "fifties": 4,
    "hundreds": 0,
-   "ballsBowled": 8265,
-   "runsConceded": 6750,
+   "ballsBowled": 8263,
+   "runsConceded": 6751,
    "wickets": 199,
    "bowlingAverage": 33.92,
    "economy": 4.9,
-   "ballsPerWicket": 41.5,
+   "ballsPerWicket": 41.52,
    "fourWicketInnings": 5,
    "fiveWicketInnings": 1,
    "catches": 45,
@@ -39626,7 +39717,8 @@
     2003,
     2017
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -39708,12 +39800,12 @@
    "ballsFaced": 55,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 4256,
+   "ballsBowled": 4259,
    "runsConceded": 3213,
    "wickets": 108,
    "bowlingAverage": 29.75,
    "economy": 4.53,
-   "ballsPerWicket": 39.4,
+   "ballsPerWicket": 39.44,
    "fourWicketInnings": 3,
    "fiveWicketInnings": 0,
    "catches": 3,
@@ -39727,7 +39819,8 @@
    "officialCareer": [
     1997,
     2007
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -40464,12 +40557,12 @@
    "ballsFaced": 635,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 4714,
+   "ballsBowled": 4713,
    "runsConceded": 4133,
    "wickets": 143,
    "bowlingAverage": 28.9,
    "economy": 5.26,
-   "ballsPerWicket": 33,
+   "ballsPerWicket": 32.96,
    "fourWicketInnings": 7,
    "fiveWicketInnings": 1,
    "catches": 24,
@@ -40483,7 +40576,8 @@
    "officialCareer": [
     2011,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -40669,12 +40763,12 @@
    "ballsFaced": 5413,
    "fifties": 26,
    "hundreds": 5,
-   "ballsBowled": 5183,
-   "runsConceded": 4293,
+   "ballsBowled": 5186,
+   "runsConceded": 4294,
    "wickets": 111,
    "bowlingAverage": 38.68,
    "economy": 4.97,
-   "ballsPerWicket": 46.7,
+   "ballsPerWicket": 46.72,
    "fourWicketInnings": 4,
    "fiveWicketInnings": 0,
    "catches": 89,
@@ -40689,7 +40783,8 @@
     2001,
     2011
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -42090,12 +42185,12 @@
    "ballsFaced": 1891,
    "fifties": 4,
    "hundreds": 0,
-   "ballsBowled": 8566,
+   "ballsBowled": 8571,
    "runsConceded": 6239,
    "wickets": 133,
    "bowlingAverage": 46.91,
    "economy": 4.37,
-   "ballsPerWicket": 64.4,
+   "ballsPerWicket": 64.44,
    "fourWicketInnings": 3,
    "fiveWicketInnings": 1,
    "catches": 31,
@@ -42110,7 +42205,8 @@
     2004,
     2015
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -43069,12 +43165,12 @@
    "ballsFaced": 438,
    "fifties": 1,
    "hundreds": 0,
-   "ballsBowled": 4032,
+   "ballsBowled": 4033,
    "runsConceded": 3434,
    "wickets": 117,
    "bowlingAverage": 29.35,
    "economy": 5.11,
-   "ballsPerWicket": 34.5,
+   "ballsPerWicket": 34.47,
    "fourWicketInnings": 10,
    "fiveWicketInnings": 2,
    "catches": 12,
@@ -43088,7 +43184,8 @@
    "officialCareer": [
     2003,
     2015
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -43120,8 +43217,8 @@
    "ballsFaced": 813,
    "fifties": 1,
    "hundreds": 0,
-   "ballsBowled": 6305,
-   "runsConceded": 5181,
+   "ballsBowled": 6303,
+   "runsConceded": 5180,
    "wickets": 156,
    "bowlingAverage": 33.21,
    "economy": 4.93,
@@ -43139,7 +43236,8 @@
    "officialCareer": [
     2010,
     2023
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -43175,12 +43273,12 @@
    "ballsFaced": 3362,
    "fifties": 13,
    "hundreds": 0,
-   "ballsBowled": 10518,
+   "ballsBowled": 10524,
    "runsConceded": 8607,
    "wickets": 234,
    "bowlingAverage": 36.78,
    "economy": 4.91,
-   "ballsPerWicket": 44.9,
+   "ballsPerWicket": 44.97,
    "fourWicketInnings": 9,
    "fiveWicketInnings": 2,
    "catches": 79,
@@ -43195,7 +43293,8 @@
     2009,
     null
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -43277,12 +43376,12 @@
    "ballsFaced": 527,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 5376,
+   "ballsBowled": 5374,
    "runsConceded": 3575,
    "wickets": 100,
    "bowlingAverage": 35.75,
    "economy": 3.99,
-   "ballsPerWicket": 53.8,
+   "ballsPerWicket": 53.74,
    "fourWicketInnings": 1,
    "fiveWicketInnings": 0,
    "catches": 11,
@@ -43296,7 +43395,8 @@
    "officialCareer": [
     2002,
     2012
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -45472,12 +45572,12 @@
    "ballsFaced": 224,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 4676,
+   "ballsBowled": 4678,
    "runsConceded": 4427,
    "wickets": 129,
    "bowlingAverage": 34.32,
    "economy": 5.68,
-   "ballsPerWicket": 36.3,
+   "ballsPerWicket": 36.26,
    "fourWicketInnings": 8,
    "fiveWicketInnings": 1,
    "catches": 18,
@@ -45491,7 +45591,8 @@
    "officialCareer": [
     2009,
     2021
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -46387,7 +46488,7 @@
    "ballsFaced": 7414,
    "fifties": 96,
    "hundreds": 49,
-   "ballsBowled": 8059,
+   "ballsBowled": 8054,
    "runsConceded": 6850,
    "wickets": 154,
    "bowlingAverage": 44.48,
@@ -46407,7 +46508,8 @@
     1989,
     2012
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -46593,12 +46695,12 @@
    "ballsFaced": 534,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 6003,
+   "ballsBowled": 6000,
    "runsConceded": 4182,
    "wickets": 184,
    "bowlingAverage": 22.73,
    "economy": 4.18,
-   "ballsPerWicket": 32.6,
+   "ballsPerWicket": 32.61,
    "fourWicketInnings": 8,
    "fiveWicketInnings": 2,
    "catches": 24,
@@ -46612,7 +46714,8 @@
    "officialCareer": [
     2008,
     2015
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -47462,12 +47565,12 @@
    "ballsFaced": 4625,
    "fifties": 68,
    "hundreds": 28,
-   "ballsBowled": 14734,
-   "runsConceded": 11738,
-   "wickets": 320,
-   "bowlingAverage": 36.68,
-   "economy": 4.78,
-   "ballsPerWicket": 46,
+   "ballsBowled": 14874,
+   "runsConceded": 11871,
+   "wickets": 323,
+   "bowlingAverage": 36.75,
+   "economy": 4.79,
+   "ballsPerWicket": 46.05,
    "fourWicketInnings": 12,
    "fiveWicketInnings": 1,
    "catches": 24,
@@ -47482,7 +47585,8 @@
     1989,
     2011
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -47767,12 +47871,12 @@
    "ballsFaced": 39,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 8778,
-   "runsConceded": 6276,
+   "ballsBowled": 8770,
+   "runsConceded": 6275,
    "wickets": 288,
    "bowlingAverage": 21.79,
    "economy": 4.29,
-   "ballsPerWicket": 30.5,
+   "ballsPerWicket": 30.45,
    "fourWicketInnings": 17,
    "fiveWicketInnings": 0,
    "catches": 0,
@@ -47786,7 +47890,8 @@
    "officialCareer": [
     1995,
     2003
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -48126,12 +48231,12 @@
    "ballsFaced": 3906,
    "fifties": 28,
    "hundreds": 4,
-   "ballsBowled": 6112,
+   "ballsBowled": 6114,
    "runsConceded": 4839,
    "wickets": 137,
    "bowlingAverage": 35.32,
    "economy": 4.75,
-   "ballsPerWicket": 44.6,
+   "ballsPerWicket": 44.63,
    "fourWicketInnings": 5,
    "fiveWicketInnings": 0,
    "catches": 53,
@@ -48146,7 +48251,8 @@
     1999,
     2011
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -48791,12 +48897,12 @@
    "ballsFaced": 375,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 3861,
+   "ballsBowled": 3859,
    "runsConceded": 3578,
    "wickets": 146,
    "bowlingAverage": 24.51,
    "economy": 5.56,
-   "ballsPerWicket": 26.4,
+   "ballsPerWicket": 26.43,
    "fourWicketInnings": 11,
    "fiveWicketInnings": 3,
    "catches": 19,
@@ -48810,7 +48916,8 @@
    "officialCareer": [
     2018,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -48842,12 +48949,12 @@
    "ballsFaced": 2878,
    "fifties": 39,
    "hundreds": 6,
-   "ballsBowled": 17585,
-   "runsConceded": 13570,
-   "wickets": 393,
-   "bowlingAverage": 34.53,
+   "ballsBowled": 17670,
+   "runsConceded": 13632,
+   "wickets": 395,
+   "bowlingAverage": 34.51,
    "economy": 4.63,
-   "ballsPerWicket": 44.7,
+   "ballsPerWicket": 44.73,
    "fourWicketInnings": 13,
    "fiveWicketInnings": 7,
    "catches": 58,
@@ -48862,7 +48969,8 @@
     1996,
     2015
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -49150,12 +49258,12 @@
    "ballsFaced": 7930,
    "fifties": 56,
    "hundreds": 9,
-   "ballsBowled": 12565,
-   "runsConceded": 9361,
+   "ballsBowled": 12575,
+   "runsConceded": 9360,
    "wickets": 317,
    "bowlingAverage": 29.53,
    "economy": 4.47,
-   "ballsPerWicket": 39.6,
+   "ballsPerWicket": 39.67,
    "fourWicketInnings": 14,
    "fiveWicketInnings": 3,
    "catches": 55,
@@ -49170,7 +49278,8 @@
     2006,
     null
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -49653,12 +49762,12 @@
    "ballsFaced": 266,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 4292,
-   "runsConceded": 3069,
+   "ballsBowled": 4295,
+   "runsConceded": 3070,
    "wickets": 147,
    "bowlingAverage": 20.88,
    "economy": 4.29,
-   "ballsPerWicket": 29.2,
+   "ballsPerWicket": 29.22,
    "fourWicketInnings": 11,
    "fiveWicketInnings": 2,
    "catches": 10,
@@ -49672,7 +49781,8 @@
    "officialCareer": [
     2002,
     2010
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -49755,12 +49865,12 @@
    "ballsFaced": 1,
    "fifties": 1,
    "hundreds": 0,
-   "ballsBowled": 10608,
-   "runsConceded": 7514,
-   "wickets": 291,
-   "bowlingAverage": 25.82,
+   "ballsBowled": 10642,
+   "runsConceded": 7541,
+   "wickets": 293,
+   "bowlingAverage": 25.74,
    "economy": 4.25,
-   "ballsPerWicket": 36.5,
+   "ballsPerWicket": 36.32,
    "fourWicketInnings": 13,
    "fiveWicketInnings": 0,
    "catches": 0,
@@ -49775,7 +49885,8 @@
     1993,
     2003
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -49811,12 +49922,12 @@
    "ballsFaced": 5844,
    "fifties": 33,
    "hundreds": 9,
-   "ballsBowled": 6462,
+   "ballsBowled": 6466,
    "runsConceded": 5342,
    "wickets": 168,
    "bowlingAverage": 31.8,
    "economy": 4.96,
-   "ballsPerWicket": 38.5,
+   "ballsPerWicket": 38.49,
    "fourWicketInnings": 3,
    "fiveWicketInnings": 0,
    "catches": 58,
@@ -49831,7 +49942,8 @@
     2002,
     2015
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -50070,12 +50182,12 @@
    "ballsFaced": 1450,
    "fifties": 14,
    "hundreds": 1,
-   "ballsBowled": 15423,
-   "runsConceded": 9408,
-   "wickets": 387,
-   "bowlingAverage": 24.31,
-   "economy": 3.66,
-   "ballsPerWicket": 39.9,
+   "ballsBowled": 15712,
+   "runsConceded": 9631,
+   "wickets": 393,
+   "bowlingAverage": 24.51,
+   "economy": 3.68,
+   "ballsPerWicket": 39.98,
    "fourWicketInnings": 17,
    "fiveWicketInnings": 1,
    "catches": 27,
@@ -50090,7 +50202,8 @@
     1996,
     2008
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -50723,7 +50836,7 @@
   "firstMatch": "2003-02-11",
   "lastMatch": "2011-03-08",
   "stats": {
-   "matches": 158,
+   "matches": 163,
    "innings": 80,
    "runs": 361,
    "notOuts": 39,
@@ -50733,26 +50846,27 @@
    "ballsFaced": 246,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 7504,
-   "runsConceded": 5953,
-   "wickets": 241,
-   "bowlingAverage": 24.7,
-   "economy": 4.76,
-   "ballsPerWicket": 31.1,
+   "ballsBowled": 7764,
+   "runsConceded": 6169,
+   "wickets": 247,
+   "bowlingAverage": 24.98,
+   "economy": 4.77,
+   "ballsPerWicket": 31.43,
    "fourWicketInnings": 10,
    "fiveWicketInnings": 0,
    "catches": 7,
    "stumpings": 0,
    "dismissals": 7,
    "fiftyRate": 0,
-   "fourWicketRate": 0.0633,
+   "fourWicketRate": 0.0613,
    "dismissalsPerMatch": 0.1,
    "statsSource": "howstat",
    "cricsheetMatches": 70,
    "officialCareer": [
     1998,
     2011
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -50787,12 +50901,12 @@
    "ballsFaced": 7192,
    "fifties": 44,
    "hundreds": 9,
-   "ballsBowled": 7955,
+   "ballsBowled": 7958,
    "runsConceded": 6192,
    "wickets": 158,
    "bowlingAverage": 39.19,
    "economy": 4.67,
-   "ballsPerWicket": 50.4,
+   "ballsPerWicket": 50.37,
    "fourWicketInnings": 1,
    "fiveWicketInnings": 0,
    "catches": 78,
@@ -50807,7 +50921,8 @@
     1999,
     2019
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -51709,12 +51824,12 @@
    "ballsFaced": 3405,
    "fifties": 72,
    "hundreds": 22,
-   "ballsBowled": 4547,
-   "runsConceded": 3835,
+   "ballsBowled": 4561,
+   "runsConceded": 3849,
    "wickets": 100,
-   "bowlingAverage": 38.35,
+   "bowlingAverage": 38.49,
    "economy": 5.06,
-   "ballsPerWicket": 45.5,
+   "ballsPerWicket": 45.61,
    "fourWicketInnings": 3,
    "fiveWicketInnings": 0,
    "catches": 18,
@@ -51729,7 +51844,8 @@
     1992,
     2007
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -52117,7 +52233,7 @@
    "ballsFaced": 223,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 3553,
+   "ballsBowled": 3550,
    "runsConceded": 2996,
    "wickets": 102,
    "bowlingAverage": 29.37,
@@ -52136,7 +52252,8 @@
    "officialCareer": [
     2011,
     2017
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -52221,12 +52338,12 @@
    "ballsFaced": 665,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 6106,
-   "runsConceded": 5363,
+   "ballsBowled": 6109,
+   "runsConceded": 5364,
    "wickets": 178,
    "bowlingAverage": 30.13,
    "economy": 5.27,
-   "ballsPerWicket": 34.3,
+   "ballsPerWicket": 34.32,
    "fourWicketInnings": 10,
    "fiveWicketInnings": 1,
    "catches": 26,
@@ -52240,7 +52357,8 @@
    "officialCareer": [
     2006,
     2016
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -52983,12 +53101,12 @@
    "ballsFaced": 391,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 3884,
+   "ballsBowled": 3881,
    "runsConceded": 3534,
    "wickets": 109,
    "bowlingAverage": 32.42,
    "economy": 5.46,
-   "ballsPerWicket": 35.6,
+   "ballsPerWicket": 35.61,
    "fourWicketInnings": 3,
    "fiveWicketInnings": 0,
    "catches": 19,
@@ -53002,7 +53120,8 @@
    "officialCareer": [
     2009,
     2021
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -53995,12 +54114,12 @@
    "ballsFaced": 423,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 4458,
+   "ballsBowled": 4455,
    "runsConceded": 3968,
    "wickets": 137,
    "bowlingAverage": 28.96,
    "economy": 5.34,
-   "ballsPerWicket": 32.5,
+   "ballsPerWicket": 32.52,
    "fourWicketInnings": 9,
    "fiveWicketInnings": 2,
    "catches": 11,
@@ -54014,7 +54133,8 @@
    "officialCareer": [
     2014,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -54358,12 +54478,12 @@
    "ballsFaced": 360,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 4256,
+   "ballsBowled": 4254,
    "runsConceded": 3752,
    "wickets": 115,
    "bowlingAverage": 32.63,
    "economy": 5.29,
-   "ballsPerWicket": 37,
+   "ballsPerWicket": 36.99,
    "fourWicketInnings": 1,
    "fiveWicketInnings": 0,
    "catches": 5,
@@ -54377,7 +54497,8 @@
    "officialCareer": [
     2013,
     2023
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -54764,12 +54885,12 @@
    "ballsFaced": 1980,
    "fifties": 10,
    "hundreds": 1,
-   "ballsBowled": 5877,
+   "ballsBowled": 5882,
    "runsConceded": 5740,
    "wickets": 175,
    "bowlingAverage": 32.8,
    "economy": 5.86,
-   "ballsPerWicket": 33.6,
+   "ballsPerWicket": 33.61,
    "fourWicketInnings": 9,
    "fiveWicketInnings": 3,
    "catches": 57,
@@ -54784,7 +54905,8 @@
     2009,
     2021
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -54868,12 +54990,12 @@
    "ballsFaced": 10538,
    "fifties": 47,
    "hundreds": 22,
-   "ballsBowled": 5875,
+   "ballsBowled": 5880,
    "runsConceded": 4778,
    "wickets": 106,
    "bowlingAverage": 45.08,
    "economy": 4.88,
-   "ballsPerWicket": 55.4,
+   "ballsPerWicket": 55.47,
    "fourWicketInnings": 3,
    "fiveWicketInnings": 0,
    "catches": 98,
@@ -54888,7 +55010,8 @@
     1999,
     2016
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -54925,7 +55048,7 @@
    "wickets": 109,
    "bowlingAverage": 34.98,
    "economy": 5.42,
-   "ballsPerWicket": 38.7,
+   "ballsPerWicket": 38.72,
    "fourWicketInnings": 4,
    "fiveWicketInnings": 1,
    "catches": 20,
@@ -54939,7 +55062,8 @@
    "officialCareer": [
     2006,
     2015
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -55179,12 +55303,12 @@
    "ballsFaced": 750,
    "fifties": 1,
    "hundreds": 0,
-   "ballsBowled": 8081,
+   "ballsBowled": 8075,
    "runsConceded": 7448,
    "wickets": 221,
    "bowlingAverage": 33.7,
    "economy": 5.53,
-   "ballsPerWicket": 36.6,
+   "ballsPerWicket": 36.54,
    "fourWicketInnings": 8,
    "fiveWicketInnings": 3,
    "catches": 44,
@@ -55198,7 +55322,8 @@
    "officialCareer": [
     2008,
     2023
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -56253,12 +56378,12 @@
    "ballsFaced": 279,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 6175,
+   "ballsBowled": 6180,
    "runsConceded": 5146,
    "wickets": 211,
    "bowlingAverage": 24.39,
    "economy": 5,
-   "ballsPerWicket": 29.3,
+   "ballsPerWicket": 29.29,
    "fourWicketInnings": 16,
    "fiveWicketInnings": 6,
    "catches": 43,
@@ -56272,7 +56397,8 @@
    "officialCareer": [
     2012,
     null
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -56560,12 +56686,12 @@
    "ballsFaced": 630,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 6062,
-   "runsConceded": 5254,
+   "ballsBowled": 6064,
+   "runsConceded": 5253,
    "wickets": 179,
    "bowlingAverage": 29.35,
    "economy": 5.2,
-   "ballsPerWicket": 33.9,
+   "ballsPerWicket": 33.88,
    "fourWicketInnings": 6,
    "fiveWicketInnings": 1,
    "catches": 14,
@@ -56579,7 +56705,8 @@
    "officialCareer": [
     2003,
     2016
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -56610,12 +56737,12 @@
    "ballsFaced": 134,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 3559,
+   "ballsBowled": 3558,
    "runsConceded": 3565,
    "wickets": 106,
    "bowlingAverage": 33.63,
    "economy": 6.01,
-   "ballsPerWicket": 33.6,
+   "ballsPerWicket": 33.57,
    "fourWicketInnings": 4,
    "fiveWicketInnings": 0,
    "catches": 22,
@@ -56629,7 +56756,8 @@
    "officialCareer": [
     2010,
     2018
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -56710,12 +56838,12 @@
    "ballsFaced": 393,
    "fifties": 5,
    "hundreds": 0,
-   "ballsBowled": 6138,
+   "ballsBowled": 6142,
    "runsConceded": 4818,
    "wickets": 151,
    "bowlingAverage": 31.91,
    "economy": 4.71,
-   "ballsPerWicket": 40.6,
+   "ballsPerWicket": 40.68,
    "fourWicketInnings": 5,
    "fiveWicketInnings": 1,
    "catches": 10,
@@ -56730,7 +56858,8 @@
     1994,
     2007
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -58034,12 +58163,12 @@
    "ballsFaced": 840,
    "fifties": 3,
    "hundreds": 0,
-   "ballsBowled": 4326,
+   "ballsBowled": 4327,
    "runsConceded": 4117,
    "wickets": 120,
    "bowlingAverage": 34.31,
    "economy": 5.71,
-   "ballsPerWicket": 36.1,
+   "ballsPerWicket": 36.06,
    "fourWicketInnings": 6,
    "fiveWicketInnings": 1,
    "catches": 29,
@@ -58053,7 +58182,8 @@
    "officialCareer": [
     2008,
     2020
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -58085,12 +58215,12 @@
    "ballsFaced": 965,
    "fifties": 5,
    "hundreds": 0,
-   "ballsBowled": 3288,
-   "runsConceded": 2811,
+   "ballsBowled": 3287,
+   "runsConceded": 2812,
    "wickets": 113,
    "bowlingAverage": 24.88,
    "economy": 5.13,
-   "ballsPerWicket": 29.1,
+   "ballsPerWicket": 29.09,
    "fourWicketInnings": 9,
    "fiveWicketInnings": 4,
    "catches": 16,
@@ -58105,7 +58235,8 @@
     2017,
     null
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -58136,12 +58267,12 @@
    "ballsFaced": 23,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 12687,
-   "runsConceded": 9917,
+   "ballsBowled": 12698,
+   "runsConceded": 9919,
    "wickets": 416,
    "bowlingAverage": 23.84,
    "economy": 4.69,
-   "ballsPerWicket": 30.5,
+   "ballsPerWicket": 30.52,
    "fourWicketInnings": 27,
    "fiveWicketInnings": 0,
    "catches": 3,
@@ -58155,7 +58286,8 @@
    "officialCareer": [
     1989,
     2003
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -58237,12 +58369,12 @@
    "ballsFaced": 69,
    "fifties": 6,
    "hundreds": 0,
-   "ballsBowled": 18172,
+   "ballsBowled": 18186,
    "runsConceded": 11812,
    "wickets": 502,
    "bowlingAverage": 23.53,
    "economy": 3.9,
-   "ballsPerWicket": 36.2,
+   "ballsPerWicket": 36.23,
    "fourWicketInnings": 23,
    "fiveWicketInnings": 1,
    "catches": 0,
@@ -58257,7 +58389,8 @@
     1984,
     2003
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -59505,12 +59638,12 @@
    "ballsFaced": 7889,
    "fifties": 52,
    "hundreds": 14,
-   "ballsBowled": 4993,
-   "runsConceded": 4227,
-   "wickets": 110,
-   "bowlingAverage": 38.43,
-   "economy": 5.08,
-   "ballsPerWicket": 45.4,
+   "ballsBowled": 5048,
+   "runsConceded": 4294,
+   "wickets": 111,
+   "bowlingAverage": 38.68,
+   "economy": 5.1,
+   "ballsPerWicket": 45.48,
    "fourWicketInnings": 3,
    "fiveWicketInnings": 1,
    "catches": 68,
@@ -59525,7 +59658,8 @@
     2000,
     2017
    ],
-   "battingSource": "howstat-strike-rates"
+   "battingSource": "howstat-strike-rates",
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -59557,7 +59691,7 @@
    "ballsFaced": 141,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 3738,
+   "ballsBowled": 3739,
    "runsConceded": 3283,
    "wickets": 121,
    "bowlingAverage": 27.13,
@@ -59576,7 +59710,8 @@
    "officialCareer": [
     2016,
     2023
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
@@ -59648,7 +59783,7 @@
   "firstMatch": "2002-06-29",
   "lastMatch": "2012-08-04",
   "stats": {
-   "matches": 194,
+   "matches": 200,
    "innings": 96,
    "runs": 753,
    "notOuts": 31,
@@ -59658,26 +59793,27 @@
    "ballsFaced": 745,
    "fifties": 0,
    "hundreds": 0,
-   "ballsBowled": 9821,
-   "runsConceded": 8102,
-   "wickets": 269,
-   "bowlingAverage": 30.12,
-   "economy": 4.95,
-   "ballsPerWicket": 36.5,
+   "ballsBowled": 10097,
+   "runsConceded": 8301,
+   "wickets": 282,
+   "bowlingAverage": 29.44,
+   "economy": 4.93,
+   "ballsPerWicket": 35.8,
    "fourWicketInnings": 8,
    "fiveWicketInnings": 1,
    "catches": 29,
    "stumpings": 0,
    "dismissals": 29,
    "fiftyRate": 0,
-   "fourWicketRate": 0.0412,
+   "fourWicketRate": 0.04,
    "dismissalsPerMatch": 0.2197,
    "statsSource": "howstat",
    "cricsheetMatches": 132,
    "officialCareer": [
     2000,
     2012
-   ]
+   ],
+   "bowlingSource": "howstat-100-wickets"
   }
  },
  {
