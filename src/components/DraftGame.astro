@@ -700,7 +700,7 @@ const formatJson = json(format);
           `<button type="button" class="fl-card bm11-prow ${cls}" data-bm11-select="${esc(p.uid)}"` +
           ` aria-pressed="${pressed}" aria-label="${esc(label)}"${title ? ` title="${esc(title)}"` : ''}` +
           `${disabled ? ' aria-disabled="true"' : ''}>` +
-          `<span class="fl-card-role">${esc(roleTag(p))}</span>` +
+          `<span class="fl-card-role">${esc(roleTag(p))}${p.overseas ? ' <b class="fl-os-tag" title="Overseas player">OS</b>' : ''}</span>` +
           `<span class="fl-card-id"><span class="fl-card-name">${esc(p.name)}</span>` +
           `<span class="fl-card-from">${esc(NATION_CODES[p.nation] || p.nation)} · ${esc(eraName(draft.currentEra))}</span></span>` +
           `<span class="fl-card-stats">${statCells(p)}</span>` +
@@ -717,8 +717,11 @@ const formatJson = json(format);
       if (!current || (!poolTabPinned && !done && !draft.gameComplete && !current.list.some(open) && !current.list.some((p) => p.uid === selectedUid))) {
         poolTab = (groups.find((g) => g.list.some(open)) ?? current ?? groups[0])?.r ?? null;
       }
+      // IPL: at most four overseas players; the running count sits at the start of the tab row.
+      const osCount = draft.selectedPlayers.filter((p) => p.overseas).length;
+      const osChip = FORMAT.id === 'ipl' ? `<span class="fl-os${osCount >= 4 ? ' is-full' : ''}" aria-label="Overseas players picked: ${osCount} of 4">Overseas ${osCount}/4</span>` : '';
       cardsEl.innerHTML =
-        `<div class="fl-tabs" role="tablist" aria-label="Roles">` + groups.map((g) =>
+        `<div class="fl-tabs" role="tablist" aria-label="Roles">` + osChip + groups.map((g) =>
           `<button type="button" role="tab" class="fl-tab${g.r === poolTab ? ' is-on' : ''}" data-bm11-tab="${g.r}" aria-selected="${g.r === poolTab}">` +
           `${esc(TAB_LABELS[g.r])} <b>${g.list.filter((p) => !picked(p)).length}</b></button>`).join('') + `</div>` +
         (groups.find((g) => g.r === poolTab)?.list ?? []).map(cardHtml).join('');
@@ -1530,6 +1533,9 @@ const formatJson = json(format);
     .fl-tabs::-webkit-scrollbar { display: none; }
     .fl-tab { flex: none; min-height: 34px; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--fl-line); background: #10172a; color: var(--fl-muted); font: 700 12px Inter, sans-serif; cursor: pointer; }
     .fl-tab b { color: var(--fl-dim); margin-left: 3px; }
+    .fl-os { position: sticky; left: 0; z-index: 1; background: #070a14; flex: none; align-self: center; padding: 5px 9px; border-radius: 8px; border: 1px dashed var(--fl-line); color: var(--fl-muted); font: 700 10.5px Inter, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+    .fl-os.is-full { border-color: rgba(255, 107, 94, 0.6); color: #ffb3aa; }
+    .fl-os-tag { display: inline-block; margin-left: 2px; padding: 0 3px; border-radius: 3px; background: rgba(255, 255, 255, 0.14); color: var(--fl-text); font: 700 8.5px Inter, sans-serif; letter-spacing: 0.06em; }
     .fl-tab.is-on { background: var(--fl-lime); color: #04060c; border-color: var(--fl-lime); }
     .fl-tab.is-on b { color: #04060c; }
     .fl[data-pool="tabs"] .fl-card {

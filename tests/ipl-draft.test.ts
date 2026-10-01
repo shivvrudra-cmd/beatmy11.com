@@ -6,7 +6,7 @@ import { iplPlayers, iplPlayersByBlock, iplSpinCombos } from '../src/lib/formats
 import { IPL_BLOCKS, IPL_TEAM_CODES, IPL_MIN_MATCHES } from '../src/lib/formats/ipl-config';
 import { upcomingCombos, mulberry32 } from '../src/lib/daily';
 import { WB_FORMATS, buildWbContext, scoreWbPlayer, type WbRole } from '../src/lib/white-ball-metrics';
-import { playerGroups, type NormalizedPlayer } from '../src/lib/player-logic';
+import { playerGroups, createDraft, validatePoolPick, type NormalizedPlayer } from '../src/lib/player-logic';
 import { achievable } from './oracle';
 
 let pass = 0, fail = 0;
@@ -21,7 +21,9 @@ const combos = iplSpinCombos();
 ok(players.length > 300, 'a real pool of IPL players', players.length);
 ok(players.every((p) => (p.stats.matches ?? 0) >= IPL_MIN_MATCHES), `every player has ${IPL_MIN_MATCHES}+ IPL matches`);
 ok(combos.length >= 35 && combos.every((c) => (IPL_BLOCKS as readonly string[]).includes(c.era) && c.nation in IPL_TEAM_CODES), 'combos are franchise × season block', combos.length);
-ok(combos.every((c) => c.count >= 11), 'every draw has at least 11 players', combos.filter((c) => c.count < 11));
+// Stints need 10+ matches for that team in that block, so one-season teams have small squads.
+ok(combos.every((c) => c.count >= 8), 'every draw has at least 8 players', combos.filter((c) => c.count < 8));
+ok(combos.filter((c) => c.count < 11).length <= 4, 'at most four draws are under 11 players', combos.filter((c) => c.count < 11));
 
 const poolFor = (era: string, nation: string): NormalizedPlayer[] => byBlock[era].filter((p) => p.nation === nation);
 ok(combos.every((c) => poolFor(c.era, c.nation).some((p) => p.primaryRole === 'wicketkeeper')), 'every draw has a wicketkeeper');
@@ -40,6 +42,28 @@ for (const p of Object.values(byBlock).flat()) {
   }
 }
 ok(unscorable === 0, 'every declarable role of every player can be scored', unscorable);
+
+// stints: a card carries only that franchise's matches in that block, and every draft card says
+// whether the player is overseas
+{
+  const cummins = players.filter((p) => p.name === 'Pat Cummins');
+  ok(cummins.length >= 2 && new Set(cummins.map((p) => `${p.stint!.team}|${p.stint!.block}`)).size === cummins.length, 'a player has one record per stint', cummins.length);
+  const kkr = cummins.find((p) => p.stint!.team === 'Kolkata Knight Riders' && p.stint!.block === '2018-22');
+  const career = cummins.reduce((n, p) => n + (p.stats.matches ?? 0), 0);
+  ok(!!kkr && (kkr.stats.matches ?? 0) < career, 'a stint shows fewer matches than the career', { kkr: kkr?.stats.matches, career });
+  ok(players.every((p) => typeof p.overseas === 'boolean'), 'every draftable IPL player is known to be Indian or overseas');
+  ok(players.some((p) => p.name === 'Rashid Khan' && p.overseas === true) && players.some((p) => p.name === 'Virat Kohli' && p.overseas === false), 'overseas flags: Rashid Khan yes, Kohli no');
+}
+// the four-overseas rule
+{
+  const os = Object.values(byBlock).flat().filter((p) => p.overseas);
+  const five = [...new Map(os.map((p) => [p.id, p])).values()].slice(0, 5);
+  let d = { ...createDraft(), currentRound: 3, currentEra: 'x', currentNation: 'y' };
+  d = { ...d, selectedPlayers: five.slice(0, 4).map((p) => ({ ...p, roundPicked: 1, draftEra: 'x' })) };
+  ok(validatePoolPick(d, five[4]) === 'Your XI already has four overseas players.', 'a fifth overseas player is blocked');
+  const local = Object.values(byBlock).flat().find((p) => !p.overseas)!;
+  ok(validatePoolPick(d, local) !== 'Your XI already has four overseas players.', 'an Indian player is not blocked by the overseas rule');
+}
 
 // random spin sequences under the live spin rules: how many can make a legal XI?
 const TRIALS = 300;

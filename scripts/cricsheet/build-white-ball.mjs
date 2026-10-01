@@ -90,12 +90,19 @@ const round = (v, d = 2) => (v == null || !Number.isFinite(v) ? null : Math.roun
 const decade = (year) => `${Math.floor(year / 10) * 10}s`;
 
 // ------------------------------------------------------------------ count one format
-export function aggregate(matches, fmt) {
-  const P = new Map(); // cricsheet id -> accumulator
-  const get = (id, name) => {
+/**
+ * `opts.stints` (IPL): count each player separately per franchise and season block, so a record
+ * is one stint ("Pat Cummins, KKR, 2018-22"). The map is then keyed `${id}|${team}|${block}`.
+ */
+export function aggregate(matches, fmt, opts = {}) {
+  const P = new Map(); // cricsheet id (or stint key) -> accumulator
+  let stintOf = null; // scorecard name -> stint key, for the match being counted
+  const get = (rawId, name) => {
+    const id = stintOf ? stintOf.get(name) : rawId;
+    if (id === undefined) return null;
     if (!P.has(id)) {
       P.set(id, {
-        id, scoreName: name, names: new Set([name]), teams: new Map(), years: new Set(), blocks: new Set(), periodMatches: new Map(), firstDate: null, lastDate: null,
+        id: rawId, scoreName: name, names: new Set([name]), teams: new Map(), years: new Set(), blocks: new Set(), periodMatches: new Map(), firstDate: null, lastDate: null,
         matches: 0, innings: 0, runs: 0, ballsFaced: 0, outs: 0, fifties: 0, hundreds: 0, highest: 0,
         positions: [], ballsBowled: 0, runsConceded: 0, wickets: 0, fourPlusInnings: 0, fiveWInnings: 0,
         catches: 0, stumpings: 0, keptMatches: 0,
@@ -109,6 +116,13 @@ export function aggregate(matches, fmt) {
     const reg = info.registry.people;
     const date = info.dates[0];
     const year = Number(date.slice(0, 4));
+    if (opts.stints) {
+      const b = IPL_BLOCKS.find((x) => year >= x.from && year <= x.to);
+      stintOf = new Map();
+      for (const [team, players] of Object.entries(info.players)) {
+        for (const name of players) stintOf.set(name, `${reg[name]}|${IPL_FRANCHISE[team] ?? team}|${b.id}`);
+      }
+    }
     for (const [team, players] of Object.entries(info.players)) {
       const t = fmt.intl ? team : IPL_FRANCHISE[team] ?? team;
       for (const name of players) {
@@ -146,9 +160,10 @@ export function aggregate(matches, fmt) {
           const noball = 'noballs' in ex;
           // batting
           batRuns.set(d.batter, (batRuns.get(d.batter) ?? 0) + d.runs.batter);
-          if (!wide) get(reg[d.batter], d.batter).ballsFaced += 1;
-          // bowling
-          const bw = get(reg[d.bowler], d.bowler);
+          const bt = get(reg[d.batter], d.batter);
+          if (!wide && bt) bt.ballsFaced += 1;
+          // bowling (a name outside both XIs can only happen in stint mode; it is skipped)
+          const bw = get(reg[d.bowler], d.bowler) ?? { ballsBowled: 0, runsConceded: 0, wickets: 0, catches: 0 };
           if (!wide && !noball) bw.ballsBowled += 1;
           bw.runsConceded += d.runs.batter + (ex.wides ?? 0) + (ex.noballs ?? 0);
           for (const w of d.wickets ?? []) {
@@ -172,6 +187,7 @@ export function aggregate(matches, fmt) {
       order.forEach((name, i) => {
         if (!reg[name]) return;
         const p = get(reg[name], name);
+        if (!p) return;
         const r = batRuns.get(name) ?? 0;
         p.innings += 1;
         p.runs += r;
@@ -183,6 +199,7 @@ export function aggregate(matches, fmt) {
       });
       for (const [name, w] of bowlerW) {
         const p = get(reg[name], name);
+        if (!p) continue;
         if (w >= 4) p.fourPlusInnings += 1;
         if (w >= 5) p.fiveWInnings += 1;
       }
@@ -384,6 +401,12 @@ function main() {
 
   // Facts the owner supplied (spin/pace, display names), keyed by Cricsheet id. Highest priority.
   const overrides = JSON.parse(readFileSync(join(ROOT, 'scripts/cricsheet/owner-overrides.json'), 'utf8'));
+  // IPL overseas status for players with no international record in our data: the owner went
+  // through them (docs/reports/ipl-overseas-check.md). Anyone not on either list stays unknown.
+  const osFile = join(ROOT, 'scripts/cricsheet/owner-ipl-overseas.json');
+  const ownerOverseas = existsSync(osFile) ? JSON.parse(readFileSync(osFile, 'utf8')) : { overseas: [], indian: [] };
+  const osIds = new Set(ownerOverseas.overseas.map((x) => x.id));
+  const inIds = new Set(ownerOverseas.indian.map((x) => x.id));
   const report = { formats: {}, rolesNeeded: [], ambiguous: [] };
   // Resolved from ODI/T20I (same Cricsheet id): nation and bowling type, reused for IPL players.
   const intlKnown = new Map();
@@ -401,6 +424,8 @@ function main() {
       matches.push(m);
     }
     counted[fmt.id] = { matches: matches.length, acc: aggregate(matches, fmt) };
+    // IPL cards are stints: the same matches again, counted per franchise and season block.
+    if (fmt.id === 'ipl') counted.ipl.stints = aggregate(matches, fmt, { stints: true });
   }
 
   // ---- who is who: each Cricsheet player's nation (international side; IPL-only players are
@@ -670,8 +695,14 @@ function main() {
         nation: intlNation ?? undefined,
         era: fmt.intl ? [...new Set(years.map(decade))] : undefined,
         eraMatches: fmt.intl ? Object.fromEntries([...p.periodMatches].sort()) : undefined,
-        iplSpells: fmt.intl ? undefined : [...p.blocks].sort().map((s) => { const [team, block] = s.split('|'); return { team, block, matches: p.periodMatches.get(s) }; }),
+        // One entry per stint, with the numbers for that franchise in those seasons only.
+        iplSpells: fmt.intl ? undefined : [...p.blocks].sort().map((s) => {
+          const [team, block] = s.split('|');
+          return { team, block, matches: p.periodMatches.get(s), stats: careerStats(counted.ipl.stints.get(`${p.id}|${s}`), fmt) };
+        }),
         iplTeams: fmt.intl ? undefined : [...p.teams.keys()],
+        // Overseas for the IPL's four-overseas rule: from the international side, else the owner's list.
+        overseas: fmt.intl ? undefined : intlNation ? intlNation !== 'India' : osIds.has(p.id) ? true : inIds.has(p.id) ? false : null,
         primaryRole,
         secondaryRoles,
         isWicketkeeper: primaryRole === 'wicketkeeper',
