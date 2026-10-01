@@ -1,0 +1,21 @@
+---
+/** /t20i/ — the readable page for the T20I game (components/FormatLanding.astro). */
+import FormatLanding from '../../components/FormatLanding.astro';
+import { T20I_RESULT } from '../../lib/formats/result-format';
+---
+<FormatLanding
+  id="t20i"
+  result={T20I_RESULT}
+  label="T20I"
+  title="T20I XI Draft Game: Can Your T20 XI Beat the World XI? | Beat My 11"
+  description="Spin for a nation and a decade, draft a T20 international XI where strike rate and economy matter most, then play five T20Is against the World XI."
+  lede="Spin for a nation and a decade, draft eleven T20 international players from what comes up, then play five T20Is against the World XI."
+  spinDraws="a nation and a decade (the 2000s, 2010s or 2020s)"
+  batting="strike rate most of all (40%), then batting average, runs per match and how often they passed fifty (20% each)"
+  bowling="economy rate most of all (40%), then bowling average, wickets per match and balls per wicket (20% each)"
+  notes={[
+    'Ten nations can be drawn: Australia, Bangladesh, England, India, New Zealand, Pakistan, South Africa, Sri Lanka, West Indies and Zimbabwe.',
+    'Afghanistan players cannot be drafted, because their matches are missing from the match data. Rashid Khan is in the World XI all the same, from his official career figures.',
+    'T20 internationals began in 2005, so the 2000s draws are smaller than the later ones.',
+  ]}
+/>

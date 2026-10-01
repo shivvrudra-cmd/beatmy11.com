@@ -12,8 +12,9 @@ import SiteLinks from '@/components/SiteLinks.astro';
 import { getHouseXI } from '@/lib/opponent-xi';
 
 const title = 'Beat My 11 — Can Your All-Time Test XI Beat the World XI?';
+// Owner-approved 2026-10-02: the description names all the games; the title stays on the Test game.
 const description =
-  "Spin for an era and a nation, draft an all-time Test XI, then play a five-Test series against the World XI at Lord's, the MCG, Eden Gardens, Newlands and Kensington Oval.";
+  'Spin for an era and a nation, draft an all-time XI and play a five-match series against the World XI. Test, ODI, T20I and IPL, or pick any eleven and challenge a friend.';
 
 const ROLE_SHORT: Record<string, string> = {
   opener: 'OPN',
@@ -70,6 +71,11 @@ const steps = [
           <li><a class="hm-game" href="/ipl/play"><span class="hm-game-tag">New</span><b>IPL XI</b><i>Spin a franchise and its seasons. Four overseas players at most.</i></a></li>
           <li><a class="hm-game is-pick" href="/pick"><span class="hm-game-tag">New</span><b>Pick any XI</b><i>No spins. Choose any eleven and dare a friend to beat it.</i></a></li>
         </ul>
+        <p class="hm-dailies">How each game works:
+          <a class="is-plain" href="/odi/">ODI</a>
+          <a class="is-plain" href="/t20i/">T20I</a>
+          <a class="is-plain" href="/ipl/">IPL</a>
+        </p>
         <p class="hm-dailies">Today’s other dailies:
           <a href="/odi/play?daily=1" data-hm-daily="odi">ODI</a>
           <a href="/t20i/play?daily=1" data-hm-daily="t20i">T20I</a>
@@ -265,6 +271,7 @@ const steps = [
     .hm-game-tag { align-self: flex-start; padding: 2px 7px; border-radius: 5px; background: var(--hm-lime); color: #04060c; font: 700 9.5px Inter, sans-serif; letter-spacing: 0.12em; text-transform: uppercase; }
     .hm-dailies { margin: 16px 0 0; font: 600 13px/1.6 Inter, sans-serif; color: var(--hm-muted); }
     .hm-dailies a { display: inline-block; margin-left: 6px; padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(198, 255, 61, 0.45); color: var(--hm-lime); text-decoration: none; }
+    .hm-dailies a.is-plain { border-color: rgba(255, 255, 255, 0.18); color: var(--hm-text, #eaf0ff); }
     .hm-dailies a.is-done { border-color: rgba(255, 255, 255, 0.18); color: var(--hm-muted); }
     .hm-daily-eyebrow { margin: 0; font: 600 12px/1 Inter, sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--hm-lime); }
     .hm-daily-title { margin: 10px 0 0; font: 400 clamp(26px, 6vw, 34px)/1.05 var(--hm-display); letter-spacing: 0.03em; }

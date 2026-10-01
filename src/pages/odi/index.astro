@@ -1,0 +1,22 @@
+---
+/** /odi/ — the readable page for the ODI game (components/FormatLanding.astro). */
+import FormatLanding from '../../components/FormatLanding.astro';
+import { ODI_RESULT } from '../../lib/formats/result-format';
+---
+<FormatLanding
+  id="odi"
+  result={ODI_RESULT}
+  label="ODI"
+  title="ODI XI Draft Game: Can Your One-Day XI Beat the World XI? | Beat My 11"
+  description="Spin for a nation and a decade, draft an all-time ODI XI from real career numbers, then play five ODIs against the World XI. Free, no sign-up."
+  lede="Spin for a nation and a decade, draft eleven one-day players from what comes up, then play a five-match ODI series against the World XI."
+  spinDraws="a nation and a decade (the 2000s, 2010s or 2020s)"
+  batting="batting average, runs per match, strike rate and how often they made a hundred, each counting equally"
+  bowling="bowling average, wickets per match, economy rate and how often they took four or more wickets in an innings, each counting equally"
+  notes={[
+    'Ten nations can be drawn: Australia, Bangladesh, England, India, New Zealand, Pakistan, South Africa, Sri Lanka, West Indies and Zimbabwe.',
+    'Ball-by-ball records of ODIs start around 2003. Players whose careers began earlier are included where official career totals were available for them.',
+    'Afghanistan players are not in the game, because their matches are missing from the match data.',
+    'Viv Richards is in the World XI but cannot be drafted: he played before the match records begin.',
+  ]}
+/>

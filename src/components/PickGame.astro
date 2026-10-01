@@ -82,6 +82,32 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
         <button type="button" class="pk-link" id="pk-clear">Clear my XI</button>
       </div>
       <p class="pk-copied" id="pk-copied" role="status"></p>
+
+      <!-- Readable text for visitors and search engines (this page scrolls, unlike the draft). -->
+      <section class="pk-about" aria-labelledby="pk-about-title">
+        <h2 id="pk-about-title">How Pick any XI works</h2>
+        <p>
+          There are no spins here. Tap any of the eleven spots, search for a player by name, or filter by
+          {format.teamLabel.toLowerCase()}, and put them in. The spots are fixed: two openers, three
+          middle-order batters, one wicketkeeper, two all-rounders or spinners, and three fast bowlers.
+          The rows show real career numbers; no player rating is shown.
+        </p>
+        <p>
+          When all eleven are in, press “Challenge a friend”. The link you send carries your XI. Your friend
+          sees it, picks their own, and the two XIs play a five-match series. Anyone who opens the result
+          link sees the same series: the five matches, each side’s batting, bowling and fielding strength,
+          and a spot-by-spot comparison. Your record against each friend is kept on your own phone.
+        </p>
+        <p>
+          Between friends neither side gets a head start: two XIs within a point of each other draw the
+          series 2–2, and the bigger the gap, the bigger the win. Nothing is sent to a server and there is
+          no sign-up.
+        </p>
+        <p class="pk-about-links">
+          Prefer the luck of the draw? <a href={path === '/pick' ? '/play' : path.replace('/pick', '/play')}>Play the spin draft</a>
+          or read <a href={path === '/pick' ? '/' : path.replace('/pick', '/')}>how this game works</a>.
+        </p>
+      </section>
     </main>
 
     <!-- ============ picker sheet ============ -->
@@ -566,6 +592,10 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
     .pk-btn.is-main { border: 0; background: var(--pk-lime); color: #04060c; box-shadow: 0 0 30px rgba(198, 255, 61, 0.35); }
     .pk-btn:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
     .pk-link { background: none; border: 0; padding: 8px; color: var(--pk-muted); font: 500 13px Inter, sans-serif; text-decoration: underline; cursor: pointer; }
+    .pk-about { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--pk-line); }
+    .pk-about h2 { margin: 0 0 8px; font: 400 26px/1 var(--pk-display); letter-spacing: 0.04em; }
+    .pk-about p { margin: 0 0 10px; color: #c9d2ea; font-size: 14.5px; line-height: 1.6; }
+    .pk-about a { color: var(--pk-lime); text-underline-offset: 3px; }
     .pk-copied { margin: 6px 0 0; min-height: 16px; text-align: center; font-size: 12.5px; color: var(--pk-lime); overflow-wrap: anywhere; }
 
     .pk-sheet { position: fixed; inset: 0; z-index: 50; display: flex; align-items: flex-end; justify-content: center; max-width: none; }
