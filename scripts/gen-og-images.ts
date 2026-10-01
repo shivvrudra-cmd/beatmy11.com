@@ -16,7 +16,8 @@
  */
 import { mkdirSync } from 'node:fs';
 import { chromium } from '@playwright/test';
-import { SHARE_RESULTS, type ShareResult } from '../src/lib/share-results';
+import { SHARE_RESULTS, shareResultsFor, type ShareResult } from '../src/lib/share-results';
+import { IPL_RESULT, ODI_RESULT, T20I_RESULT } from '../src/lib/formats/result-format';
 import { floodlightSvg, FLOODLIGHT_VIEWBOX } from '../src/lib/floodlight';
 
 const LIME = '#c6ff3d';
@@ -87,7 +88,8 @@ function defaultImage(): string {
   );
 }
 
-function resultImage(r: ShareResult): string {
+/** `words`: the series label, the opponent and the XI noun of the format (defaults: the Test game). */
+function resultImage(r: ShareResult, words = { series: 'The five-Test series', opponent: 'World XI', xi: 'all-time XI' }): string {
   const pips = [
     ...Array(r.user).fill('w'),
     ...Array(r.draws).fill('d'),
@@ -98,17 +100,17 @@ function resultImage(r: ShareResult): string {
   const won = r.user > r.house;
   const lost = r.user < r.house;
   return page(
-    `<div class="brand">Beat My 11 · The five-Test series</div>
+    `<div class="brand">Beat My 11 · ${words.series}</div>
      <div class="hero">
        <h1 class="display head">${r.imageHeadline}</h1>
        <div class="score display">
          <div class="side ${won ? 'win' : ''}"><span class="num">${r.user}</span><span class="lab">Me</span></div>
          <span class="dash">–</span>
-         <div class="side ${lost ? 'loss' : ''}"><span class="num">${r.house}</span><span class="lab">World XI</span></div>
+         <div class="side ${lost ? 'loss' : ''}"><span class="num">${r.house}</span><span class="lab">${words.opponent}</span></div>
        </div>
        <div class="pips">${pips}</div>
      </div>
-     <div class="foot">Can your all-time XI do better? <b>beatmy11.com</b></div>`,
+     <div class="foot">Can your ${words.xi} do better? <b>beatmy11.com</b></div>`,
     `
     .hero { position: absolute; inset: 96px 190px 88px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
     .head { max-width: 820px; white-space: nowrap; font-size: ${r.imageHeadline.length > 20 ? 76 : 88}px; line-height: 0.9; letter-spacing: 0.03em;
@@ -139,8 +141,17 @@ async function main() {
     await tab.screenshot({ path, type: 'png' });
     console.log('wrote', path);
   };
-  await shoot(defaultImage(), 'public/og-image.png');
-  for (const r of SHARE_RESULTS) await shoot(resultImage(r), `public/og/${r.slug}.png`);
+  // FORMATS_ONLY=1 leaves the default image and the Test images alone.
+  if (!process.env.FORMATS_ONLY) {
+    await shoot(defaultImage(), 'public/og-image.png');
+    for (const r of SHARE_RESULTS) await shoot(resultImage(r), `public/og/${r.slug}.png`);
+  }
+  // ODI, T20I and IPL share pages: public/og/<format>/<slug>.png
+  for (const f of [ODI_RESULT, T20I_RESULT, IPL_RESULT]) {
+    mkdirSync(`public/og/${f.id}`, { recursive: true });
+    const words = { series: f.eyebrow, opponent: f.opponent, xi: f.xiNoun };
+    for (const r of shareResultsFor({ opponent: f.opponent, xiNoun: f.xiNoun })) await shoot(resultImage(r, words), `public/og/${f.id}/${r.slug}.png`);
+  }
   await browser.close();
 }
 

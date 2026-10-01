@@ -171,18 +171,25 @@ export function dailySpins(day: string, legendCombos: SpinCombo[], draftCombos: 
 
 // ---------------------------------------------------------------- sharing
 
-export function dailyShareText(day: string, r: DailyResult, streak: number): string {
+export function dailyShareText(day: string, r: DailyResult, streak: number, words: { label?: string; xiNoun?: string; opponent?: string } = {}): string {
   const n = dayNumber(day);
   const verdict = r.user === 5 ? 'whitewashed' : r.user > r.house ? 'beat' : r.user === r.house ? 'drew with' : 'lost to';
   const fire = streak > 1 ? ` 🔥${streak}` : '';
-  return `Beat My 11 Daily #${n}: my all-time Test XI ${verdict} the World XI ${r.user}–${r.house}${fire} 🏏 Same spins for everyone today. Can you do better?`;
+  const label = words.label ? `${words.label} ` : '';
+  return `Beat My 11 ${label}Daily #${n}: my ${words.xiNoun ?? 'all-time Test XI'} ${verdict} the ${words.opponent ?? 'World XI'} ${r.user}–${r.house}${fire} 🏏 Same spins for everyone today. Can you do better?`;
 }
+
+/**
+ * Each format has its own daily (its own spins, result and streak). `scope` is the format id;
+ * the Test game ('test' or absent) keeps the original keys, so existing streaks are untouched.
+ */
+const scoped = (key: string, scope?: string) => (scope && scope !== 'test' ? `${key}.${scope}` : key);
 
 // ---------------------------------------------------------------- browser storage
 
-export function loadDaily(): DailyState {
+export function loadDaily(scope?: string): DailyState {
   try {
-    const raw = JSON.parse(localStorage.getItem(DAILY_STORAGE_KEY) || 'null');
+    const raw = JSON.parse(localStorage.getItem(scoped(DAILY_STORAGE_KEY, scope)) || 'null');
     if (raw && typeof raw === 'object' && typeof raw.streak === 'number' && raw.results && typeof raw.results === 'object') {
       return {
         lastDay: typeof raw.lastDay === 'string' ? raw.lastDay : '',
@@ -197,26 +204,26 @@ export function loadDaily(): DailyState {
   return emptyDaily();
 }
 
-export function saveDaily(s: DailyState): void {
+export function saveDaily(s: DailyState, scope?: string): void {
   try {
-    localStorage.setItem(DAILY_STORAGE_KEY, JSON.stringify(s));
+    localStorage.setItem(scoped(DAILY_STORAGE_KEY, scope), JSON.stringify(s));
   } catch {
     /* storage unavailable: the streak just won't persist */
   }
 }
 
-export function activeDailyDay(): string | null {
+export function activeDailyDay(scope?: string): string | null {
   try {
-    return localStorage.getItem(DAILY_ACTIVE_KEY);
+    return localStorage.getItem(scoped(DAILY_ACTIVE_KEY, scope));
   } catch {
     return null;
   }
 }
 
-export function setActiveDaily(day: string | null): void {
+export function setActiveDaily(day: string | null, scope?: string): void {
   try {
-    if (day) localStorage.setItem(DAILY_ACTIVE_KEY, day);
-    else localStorage.removeItem(DAILY_ACTIVE_KEY);
+    if (day) localStorage.setItem(scoped(DAILY_ACTIVE_KEY, scope), day);
+    else localStorage.removeItem(scoped(DAILY_ACTIVE_KEY, scope));
   } catch {
     /* storage unavailable */
   }

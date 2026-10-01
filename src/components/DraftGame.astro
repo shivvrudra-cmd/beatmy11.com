@@ -169,9 +169,9 @@ const formatJson = json(format);
     import {
       utcDayKey, dayNumber, loadDaily, hasPlayed, activeDailyDay, setActiveDaily, dailySpinIndex, upcomingCombos, finalSpinOptions,
     } from '../lib/daily';
-    import { switchMode } from '../lib/draft-slots';
+    import { switchMode, modeFor } from '../lib/draft-slots';
     import {
-      decodeSpins, parseScoreline, scorelineText, loadChallenge, saveChallenge,
+      decodeSpins, decodeSpinsWith, parseScoreline, scorelineText, loadChallenge, saveChallenge,
     } from '../lib/challenge';
 
     // ------------------------------------------------------------------ data
@@ -300,6 +300,14 @@ const formatJson = json(format);
     // slot), moveFrom (slot armed for a move), chooserState (role chooser).
     let draft = createDraft();
     // Daily Challenge (/play?daily=1): same spins for everyone each UTC day, no respins.
+    // Every format has its own daily, friend's challenge and saved drafts (owner, 2026-10-02).
+    const SCOPE = FORMAT.id;
+    const PLAY_HREF = FORMAT.id === 'test' ? '/play' : `/${FORMAT.id}/play`;
+    const TELEMETRY = FORMAT.id === 'test'; // counters stay Test-only (the worker's fixed event list)
+    // Spins in a challenge link: the Test encoding, or `<era index><team code>` for the others.
+    const readSpins = (raw) => (FORMAT.id === 'test'
+      ? decodeSpins(raw, LEGEND_COMBOS, DRAFT_COMBOS)
+      : decodeSpinsWith(raw, { eras: Object.keys(FORMAT.eraNames), teamCodes: FORMAT.teamCodes }, LEGEND_COMBOS, DRAFT_COMBOS));
     let isDaily = false;
     // Challenge-a-friend (/play?c=…&vs=3-2): the friend's six spins, no respins, beat their scoreline.
     let challenge = null;
@@ -560,9 +568,9 @@ const formatJson = json(format);
       if (challenge && draft.currentRound === 0) {
         // A new draft on this challenge: count the try.
         challenge = { ...challenge, tries: challenge.tries + 1 };
-        saveChallenge(challenge);
+        saveChallenge(challenge, SCOPE);
         showChallengeBanner();
-        reportEvent('challenge_started');
+        if (TELEMETRY) reportEvent('challenge_started');
       }
       selectedUid = null;
       moveFrom = null;
@@ -1101,57 +1109,56 @@ const formatJson = json(format);
       $('fl-leave').hidden = false;
     }
     $('fl-leave').addEventListener('click', () => {
-      saveChallenge(null);
+      saveChallenge(null, SCOPE);
       clearUserXI();
       clearDraft();
-      location.href = '/play';
+      location.href = PLAY_HREF;
     });
 
     (function restore() {
       // The link decides the mode; each mode keeps its own saved draft (src/lib/draft-slots.ts),
       // so a daily or a friend's challenge never touches the normal game's draft, or the reverse.
       const qs = new URLSearchParams(location.search);
-      let mode = FORMAT.slotMode;
+      let kind = 'normal';
       let newChallenge = null;
-      if (FORMAT.slotMode !== 'normal') {
-        // Other formats (IPL) have one mode and their own saved draft; no daily or challenge yet.
-      } else if (qs.get('daily') === '1') {
-        if (hasPlayed(loadDaily(), dailyDay)) {
-          location.replace('/');
+      if (qs.get('daily') === '1') {
+        if (hasPlayed(loadDaily(SCOPE), dailyDay)) {
+          location.replace(FORMAT.homeHref);
           return;
         }
-        mode = 'daily';
+        kind = 'daily';
       } else if (qs.get('c')) {
-        const spins = decodeSpins(qs.get('c'), LEGEND_COMBOS, DRAFT_COMBOS);
+        const spins = readSpins(qs.get('c'));
         const vs = parseScoreline(qs.get('vs'));
         if (spins && vs) {
-          mode = 'challenge';
-          const existing = loadChallenge();
-          if (existing && existing.spins === qs.get('c')) saveChallenge({ ...existing, vs }); // same spins: keep the tries
+          kind = 'challenge';
+          const existing = loadChallenge(SCOPE);
+          if (existing && existing.spins === qs.get('c')) saveChallenge({ ...existing, vs }, SCOPE); // same spins: keep the tries
           else newChallenge = { spins: qs.get('c'), vs, tries: 0, best: null };
         }
       }
-      switchMode(mode);
-      if (mode === 'daily' && activeDailyDay() !== dailyDay) {
+      const mode = kind;
+      switchMode(modeFor(FORMAT.id, kind));
+      if (mode === 'daily' && activeDailyDay(SCOPE) !== dailyDay) {
         clearUserXI(); // a draft left over from an earlier day
         clearDraft();
-        setActiveDaily(dailyDay);
+        setActiveDaily(dailyDay, SCOPE);
       }
       if (newChallenge) {
         const saved = loadDraft();
         if (saved && Array.isArray(saved.picks) && saved.picks.length > 0 &&
             !window.confirm('Taking this challenge will replace your earlier challenge draft in progress. Continue?')) {
-          location.replace('/play');
+          location.replace(PLAY_HREF);
           return;
         }
         clearUserXI();
         clearDraft();
-        saveChallenge(newChallenge);
+        saveChallenge(newChallenge, SCOPE);
       }
-      challenge = mode === 'challenge' ? loadChallenge() : null;
-      fixedSpins = challenge ? decodeSpins(challenge.spins, LEGEND_COMBOS, DRAFT_COMBOS) : null;
+      challenge = mode === 'challenge' ? loadChallenge(SCOPE) : null;
+      fixedSpins = challenge ? readSpins(challenge.spins) : null;
       if (challenge && !fixedSpins) {
-        saveChallenge(null);
+        saveChallenge(null, SCOPE);
         challenge = null;
       }
       isDaily = mode === 'daily';
@@ -1160,10 +1167,10 @@ const formatJson = json(format);
         draft = { ...draft, eraRespinsLeft: 0, nationRespinsLeft: 0 };
       } else if (isDaily) {
         const tag = $('fl-daily');
-        tag.textContent = `Daily Challenge #${dayNumber(dailyDay)} · same spins for everyone · no respins`;
+        tag.textContent = `${FORMAT.id === 'test' ? '' : `${FORMAT.id.toUpperCase()} `}Daily Challenge #${dayNumber(dailyDay)} · same spins for everyone · no respins`;
         $('fl-mode').hidden = false;
         draft = { ...draft, eraRespinsLeft: 0, nationRespinsLeft: 0 };
-        reportEvent('daily_started');
+        if (TELEMETRY) reportEvent('daily_started');
       }
       const raw = loadDraft();
       if (raw) {

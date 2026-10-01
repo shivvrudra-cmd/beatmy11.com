@@ -6,7 +6,12 @@ import { readFileSync } from 'node:fs';
 import {
   encodeSpins, decodeSpins, parseScoreline, challengeOutcome, betterOf, challengeShareText,
 } from '../src/lib/challenge';
-import { dailySpins } from '../src/lib/daily';
+import { dailySpins, dailyShareText } from '../src/lib/daily';
+import { encodeSpinsWith, decodeSpinsWith } from '../src/lib/challenge';
+import { wbSpinCombos } from '../src/lib/formats/white-ball-store';
+import { IPL_FORMAT, ODI_FORMAT } from '../src/lib/formats/draft-format';
+import { modeFor, formatOfMode, kindOfMode } from '../src/lib/draft-slots';
+import { shareResultsFor } from '../src/lib/share-results';
 import { normalizePlayer, type NormalizedPlayer } from '../src/lib/player-logic';
 
 let pass = 0, fail = 0;
@@ -74,6 +79,28 @@ const t = challengeShareText({ user: 3, house: 2 }, { user: 4, house: 1 }, 3);
 ok(t.includes('beat your 3–2') && t.includes('4–1') && t.includes('3 tries'), 'beat text with tries', t);
 ok(challengeShareText({ user: 3, house: 2 }, { user: 4, house: 1 }, 1).includes('first go'), 'first-go wording');
 ok(challengeShareText({ user: 3, house: 2 }, { user: 1, house: 4 }, 2).includes('you had 3–2'), 'short text names the target');
+
+// ---- other formats: their own spin encoding, saved-draft modes, share wording
+for (const f of [IPL_FORMAT, ODI_FORMAT]) {
+  const combos = wbSpinCombos(f.id as 'ipl' | 'odi');
+  const codec = { eras: Object.keys(f.eraNames), teamCodes: f.teamCodes };
+  const spins = dailySpins('2026-10-02', combos, combos);
+  const enc = encodeSpinsWith(spins, codec);
+  const dec = decodeSpinsWith(enc, codec, combos, combos);
+  ok(spins.length === 6 && /^(\d[A-Z]{2,4}\.){5}\d[A-Z]{2,4}$/.test(enc), `${f.id}: six spins encode as <era index><team code>`, enc);
+  ok(JSON.stringify(dec) === JSON.stringify(spins.map((c) => ({ era: c.era, nation: c.nation }))), `${f.id}: spins survive the link`, { enc, dec });
+  ok(decodeSpinsWith(enc.replace(/^\d/, '9'), codec, combos, combos) === null, `${f.id}: an unknown era is rejected`);
+  ok(decodeSpinsWith(`${enc.split('.')[0]}.${enc.split('.').slice(0, 5).join('.')}`, codec, combos, combos) === null, `${f.id}: a repeated draw is rejected`);
+  ok(decodeSpinsWith(enc.split('.').slice(0, 5).join('.'), codec, combos, combos) === null, `${f.id}: five spins are rejected`);
+}
+ok(modeFor('test', 'daily') === 'daily' && modeFor('ipl', 'normal') === 'ipl' && modeFor('odi', 'challenge') === 'odi-challenge', 'saved-draft modes per format');
+ok(formatOfMode('t20i-daily') === 't20i' && formatOfMode('challenge') === 'test' && kindOfMode('ipl-challenge') === 'challenge' && kindOfMode('ipl') === 'normal', 'mode → format and kind');
+{
+  const ipl = shareResultsFor({ opponent: 'All-Star XI', xiNoun: 'IPL XI' });
+  ok(ipl.length === 7 && ipl.every((r) => !/World XI|Test XI/.test(r.title + r.challenge + r.imageHeadline)), 'IPL share pages never say World XI or Test XI', ipl.map((r) => r.title));
+  const t = dailyShareText('2026-10-02', { user: 3, house: 2, draws: 0 }, 2, { label: 'IPL', xiNoun: 'IPL XI', opponent: 'All-Star XI' });
+  ok(t.includes('IPL Daily #2') && t.includes('my IPL XI beat the All-Star XI 3–2') && dailyShareText('2026-10-02', { user: 3, house: 2, draws: 0 }, 1).includes('all-time Test XI beat the World XI'), 'daily share text per format', t);
+}
 
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

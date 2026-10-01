@@ -12,10 +12,31 @@
  * Nothing a player did earlier can turn a plain /play into a daily.
  */
 
-export type DraftMode = 'normal' | 'daily' | 'challenge' | 'ipl' | 'odi' | 't20i';
+type OtherFormat = 'ipl' | 'odi' | 't20i';
+export type ModeKind = 'normal' | 'daily' | 'challenge';
+/** Test: 'normal' | 'daily' | 'challenge'. Other formats: 'ipl', 'ipl-daily', 'ipl-challenge', … */
+export type DraftMode = ModeKind | OtherFormat | `${OtherFormat}-daily` | `${OtherFormat}-challenge`;
 
-/** The other formats (each has one mode and its own saved draft). */
-export const FORMAT_MODES: readonly DraftMode[] = ['ipl', 'odi', 't20i'];
+const OTHER_FORMATS: readonly OtherFormat[] = ['ipl', 'odi', 't20i'];
+/** The other formats' base modes (kept for callers that list them). */
+export const FORMAT_MODES: readonly DraftMode[] = OTHER_FORMATS;
+
+/** The saved-draft mode for a format and a kind of game. */
+export function modeFor(format: string, kind: ModeKind): DraftMode {
+  if (format === 'test') return kind;
+  return (kind === 'normal' ? format : `${format}-${kind}`) as DraftMode;
+}
+/** Which format a mode belongs to ('test' for the three original modes). */
+export function formatOfMode(mode: DraftMode): string {
+  return mode === 'normal' || mode === 'daily' || mode === 'challenge' ? 'test' : mode.split('-')[0];
+}
+/** Normal, daily or challenge. */
+export function kindOfMode(mode: DraftMode): ModeKind {
+  if (mode === 'daily' || mode.endsWith('-daily')) return 'daily';
+  if (mode === 'challenge' || mode.endsWith('-challenge')) return 'challenge';
+  return 'normal';
+}
+const ALL_MODES = new Set<string>(['daily', 'challenge', ...OTHER_FORMATS.flatMap((f) => [f, `${f}-daily`, `${f}-challenge`])]);
 
 const LIVE_DRAFT = 'beatmy11.draft.v1';
 const LIVE_XI = 'beatmy11.userXI.v1';
@@ -41,7 +62,7 @@ const set = (k: string, v: string | null): void => {
 /** The mode that currently owns the live draft keys (normal if never set). */
 export function currentMode(): DraftMode {
   const v = get(SLOT_KEY);
-  return v === 'daily' || v === 'challenge' || (FORMAT_MODES as readonly string[]).includes(v ?? '') ? (v as DraftMode) : 'normal';
+  return v && ALL_MODES.has(v) ? (v as DraftMode) : 'normal';
 }
 
 /** Make `mode` the owner of the live keys, parking the previous owner's draft. */

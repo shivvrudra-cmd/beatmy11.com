@@ -24,6 +24,15 @@ export interface ShareResult {
   challenge: string;
 }
 
+/** Wording for a format's share pages; the Test game's is the default. */
+export interface ShareWords { opponent: string; xiNoun: string }
+
+/** The seven share results worded for another format (opponent name and "IPL XI" etc.). */
+export function shareResultsFor(words: ShareWords): ShareResult[] {
+  const swap = (t: string) => t.replace(/all-time Test XI/g, words.xiNoun).replace(/World XI/g, words.opponent);
+  return SHARE_RESULTS.map((r) => ({ ...r, imageHeadline: swap(r.imageHeadline), title: swap(r.title), challenge: swap(r.challenge) }));
+}
+
 function describe(user: number, house: number): Pick<ShareResult, 'imageHeadline' | 'title' | 'challenge'> {
   const score = `${user}–${house}`;
   if (user === 5)
