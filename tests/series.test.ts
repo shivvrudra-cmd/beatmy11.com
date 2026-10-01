@@ -12,11 +12,12 @@ import {
   mulberry32,
   xiSeed,
   testOrder,
-  playSeries,
+  playSeries, headlineName,
   normCdf,
   normInv,
   type SeriesPlayer,
 } from '../src/lib/series';
+import { gradeFor, gradeTitle, shapeTitle, tipsFor, pickTip } from '../src/lib/result-insights';
 
 let pass = 0, fail = 0;
 const ok = (cond: boolean, name: string, extra?: unknown) => {
@@ -120,14 +121,54 @@ const calibration = { scores: sample, source: 'test', generated: 'test' };
     for (const t of s.tests) {
       if (t.result === 'draw') continue;
       const side = t.result === 'user' ? userXI : houseXI;
-      if (t.heroSide !== t.result || !side.some((p) => t.hero.startsWith(p.name.split(' ').slice(-1)[0]))) bad++;
+      if (t.heroSide !== t.result || !side.some((p) => t.hero.startsWith(headlineName(p.name)))) bad++;
       if (!t.summary.startsWith(t.result === 'user' ? 'Your XI win' : 'World XI win')) bad++;
     }
   }
   ok(bad === 0, 'every hero and summary matches the side that won the Test', bad);
+}
+{
+  // headlines: initials + surname; two or three batting heroes, never lopsided; a second
+  // performer from the other side with the other skill; a player of the series
+  ok(headlineName('Muttiah Muralitharan') === 'M Muralitharan', 'initial + surname');
+  ok(headlineName('AB de Villiers') === 'AB de Villiers' && headlineName('V V S Laxman') === 'VVS Laxman', 'existing initials are kept together');
+  ok(headlineName('Inzamam-ul-Haq') === 'Inzamam-ul-Haq' && headlineName('Faf du Plessis') === 'F du Plessis', 'single names and particles');
+  let lopsided = 0, badAlso = 0, noStar = 0, wrongStar = 0;
+  for (let seed = 1; seed <= 300; seed++) {
+    const s = playSeries({ userScore: 60 + (seed % 25), houseScore: 80, userXI, houseXI, calibration, seed });
+    const played = s.tests.filter((t) => t.heroKind !== null);
+    const bat = played.filter((t) => t.heroKind === 'bat').length;
+    const bowl = played.length - bat;
+    if (bat > 3 || bowl > 3) lopsided++;
+    for (const t of played) {
+      const other = t.heroSide === 'user' ? houseXI : userXI;
+      if (!t.also || t.alsoSide === t.heroSide || !other.some((p) => t.also.startsWith(headlineName(p.name)))) badAlso++;
+      if (/\d\/\d/.test(t.hero) === /\d\/\d/.test(t.also)) badAlso++; // one batting line, one bowling line
+    }
+    if (played.length && !s.playerOfSeries) noStar++;
+    const winner = s.user > s.house ? 'user' : s.house > s.user ? 'house' : null;
+    if (s.playerOfSeries && winner && s.tests.some((t) => t.result === winner && t.hero) && s.playerOfSeries.side !== winner) wrongStar++;
+  }
+  ok(lopsided === 0, 'never more than three batting or three bowling headlines', lopsided);
+  ok(badAlso === 0, 'each played match has a second performer from the other side with the other skill', badAlso);
+  ok(noStar === 0 && wrongStar === 0, 'player of the series comes from the side that won it', { noStar, wrongStar });
   const hi = playSeries({ userScore: 1000, houseScore: 80, userXI, houseXI, calibration, seed: 5 });
   const lo = playSeries({ userScore: 0, houseScore: 80, userXI, houseXI, calibration, seed: 5 });
   ok(hi.topPercent <= 1 && lo.topPercent >= 99, 'top-% figure tracks the rank');
+}
+
+{
+  // result-insights: grade from the rank among drafts, titles, tips
+  ok(gradeFor(0.96) === 'A+' && gradeFor(0.95) === 'A+' && gradeFor(0.8) === 'A' && gradeFor(0.5) === 'B' && gradeFor(0.49) === 'C' && gradeFor(0) === 'C', 'grades: top 5% / 20% / 50% / rest, never below C');
+  ok(gradeTitle('A+', 3) === 'Dynasty' && gradeTitle('C', 0) === 'Work in progress' && gradeTitle('A', 5) === 'Unbeatable', 'grade titles; a 5-0 is Unbeatable');
+  ok(shapeTitle(90, 70) === 'Batting heavy' && shapeTitle(70, 80) === 'Bowling attack' && shapeTitle(80, 75) === 'Well balanced', 'shape titles');
+  for (const f of ['test', 'odi', 't20i', 'ipl'] as const) {
+    const n = tipsFor(f).length;
+    ok(n >= 15 && n <= 20, `${f}: 15 to 20 tips`, n);
+    const tip = pickTip(f, { batting: 2, bowling: 20, fielding: 5 }, () => 0.1);
+    ok(tipsFor(f).some((t) => t.text === tip && t.aspect === 'bowling'), `${f}: the tip leans to the weakest part`, tip);
+  }
+  ok(!tipsFor('test').some((t) => /T20|ODI/.test(t.text)) && tipsFor('ipl').some((t) => /strike rate matters most/.test(t.text)), 'tips are format-specific');
 }
 
 console.log(`\n${pass} passed, ${fail} failed`);

@@ -145,6 +145,17 @@ export interface TestMatch {
   hero: string;
   /** Which side the hero played for. */
   heroSide: 'user' | 'house' | null;
+  /** Was the hero line a batting or a bowling performance? Null for a washout. */
+  heroKind: 'bat' | 'bowl' | null;
+  /** A second performance, of the other kind, from the OTHER side ("" when none). */
+  also: string;
+  alsoSide: 'user' | 'house' | null;
+}
+
+export interface SeriesStar {
+  /** Headline name, e.g. "M Muralitharan". */
+  name: string;
+  side: 'user' | 'house';
 }
 
 export interface SeriesResult {
@@ -156,6 +167,9 @@ export interface SeriesResult {
   /** "Top X%" figure for display: share of drafts at or above this XI. */
   topPercent: number;
   tests: TestMatch[];
+  /** Player of the series: a match-winning hero from the side that won the series (either side
+   *  when it is level). Null when no match had a hero. */
+  playerOfSeries: SeriesStar | null;
 }
 
 // ---------------------------------------------------------------- randomness
@@ -291,12 +305,24 @@ const BAT_ROLES = new Set(['opener', 'middle-order', 'wicketkeeper', 'all-rounde
 const BOWL_ROLES = new Set(['spinner', 'fast-bowler', 'all-rounder']);
 /** Last name for headlines, keeping particles: "AB de Villiers" -> "de Villiers", "Faf du Plessis" -> "du Plessis". */
 const PARTICLES = new Set(['de', 'du', 'van', 'der', 'den', 'le', 'la', 'ten']);
-const surname = (name: string) => {
-  const words = name.trim().split(/\s+/);
+const surnameStart = (words: string[]) => {
   let i = words.length - 1;
   while (i > 1 && PARTICLES.has(words[i - 1].toLowerCase())) i--;
-  return words.slice(i).join(' ');
+  return i;
 };
+/**
+ * Headline name: initials + last name (owner, 2026-10-02: a bare surname is ambiguous).
+ * "Muttiah Muralitharan" -> "M Muralitharan", "AB de Villiers" -> "AB de Villiers",
+ * "V V S Laxman" -> "VVS Laxman", "Inzamam-ul-Haq" stays as it is.
+ */
+export const headlineName = (name: string) => {
+  const words = name.trim().split(/\s+/);
+  if (words.length < 2) return name.trim();
+  const i = surnameStart(words);
+  const initials = words.slice(0, i).map((w) => (w.length <= 3 && w === w.toUpperCase() ? w : w[0].toUpperCase())).join('');
+  return `${initials} ${words.slice(i).join(' ')}`;
+};
+const surname = headlineName;
 const intIn = (rng: () => number, lo: number, hi: number) => lo + Math.floor(rng() * (hi - lo + 1));
 
 /** Rating-weighted pick (weight = rating²), avoiding repeat heroes when possible. */
@@ -356,8 +382,7 @@ function odiBowlingLine(p: SeriesPlayer, rng: () => number): string {
   return `${surname(p.name)} ${intIn(rng, 3, 6)}/${Math.round(10 * econ * (0.55 + 0.3 * rng()))}`;
 }
 
-function t20HeroLine(side: SeriesPlayer[], used: Set<string>, rng: () => number, odi = false): string {
-  const bowl = rng() < 0.5;
+function t20HeroLine(side: SeriesPlayer[], used: Set<string>, rng: () => number, odi: boolean, bowl: boolean): string {
   const pool = side.filter((p) =>
     bowl ? BOWL_ROLES.has(p.role) && Number(p.stats.economy) > 0 : BAT_ROLES.has(p.role) && Number(p.stats.battingAverage) > 0,
   );
@@ -372,8 +397,7 @@ function t20WinSummary(team: string, rng: () => number, odi = false): string {
   return rng() < 0.5 ? `${team} win by ${intIn(rng, odi ? 6 : 4, odi ? 148 : 62)} runs` : `${team} win by ${intIn(rng, 3, 9)} wickets`;
 }
 
-function heroLine(side: SeriesPlayer[], used: Set<string>, rng: () => number, battingOnly = false): string {
-  const bowl = !battingOnly && rng() < 0.5;
+function heroLine(side: SeriesPlayer[], used: Set<string>, rng: () => number, bowl: boolean): string {
   const pool = side.filter((p) =>
     bowl
       ? BOWL_ROLES.has(p.role) && Number(p.stats.testBowlingAverage ?? p.stats.bowlingAverage) > 0
@@ -417,41 +441,45 @@ export function playSeries(input: {
   const band = bandFor(wobble(input.userScore - input.houseScore, rng), input.parGap ?? PAR_GAP);
   const order = testOrder(band, rng);
   const used = new Set<string>();
+  // Headline balance (owner, 2026-10-02): of the five matches, two or three are headed by a
+  // batter and the rest by a bowler, never four or five of one kind.
+  const bowlHeads = shuffle([true, true, false, false, rng() < 0.5], rng);
+  const xiOf = (s: 'user' | 'house') => (s === 'user' ? input.userXI : input.houseXI);
+  const line = (s: 'user' | 'house', bowl: boolean) =>
+    t20 ? t20HeroLine(xiOf(s), used, rng, odi, bowl) : heroLine(xiOf(s), used, rng, bowl);
   const tests: TestMatch[] = order.map((result, i) => {
+    const bowl = bowlHeads[i];
+    const base = { number: i + 1, venue: flavour.venues[i], result };
+    const none = { hero: '', heroSide: null, heroKind: null, also: '', alsoSide: null } as const;
+    let heroSide: 'user' | 'house';
+    let summary: string;
     if (result === 'draw') {
       const washout = rng() < 0.5;
-      const heroSide: 'user' | 'house' = rng() < 0.5 ? 'user' : 'house';
-      if (t20) {
-        // No draws in T20: the level match is a tie (with a hero) or a washout.
-        return {
-          number: i + 1,
-          venue: flavour.venues[i],
-          result,
-          summary: washout ? 'Rain — no result' : 'Match tied',
-          hero: washout ? '' : t20HeroLine(heroSide === 'user' ? input.userXI : input.houseXI, used, rng, odi),
-          heroSide: washout ? null : heroSide,
-        };
-      }
-      return {
-        number: i + 1,
-        venue: flavour.venues[i],
-        result,
-        summary: washout ? 'Rain wipes out day five — match drawn' : 'Match drawn',
-        hero: washout ? '' : heroLine(heroSide === 'user' ? input.userXI : input.houseXI, used, rng, true),
-        heroSide: washout ? null : heroSide,
-      };
+      heroSide = rng() < 0.5 ? 'user' : 'house';
+      // No draws in limited overs: the level match is a tie or a washout.
+      summary = t20 ? (washout ? 'Rain — no result' : 'Match tied') : washout ? 'Rain wipes out day five — match drawn' : 'Match drawn';
+      if (washout) return { ...base, summary, ...none };
+    } else {
+      heroSide = result;
+      const team = result === 'user' ? 'Your XI' : flavour.opponent;
+      summary = t20 ? t20WinSummary(team, rng, odi) : winSummary(team, rng);
     }
-    const side = result === 'user' ? input.userXI : input.houseXI;
-    const team = result === 'user' ? 'Your XI' : flavour.opponent;
+    const otherSide = heroSide === 'user' ? 'house' : 'user';
+    const hero = line(heroSide, bowl);
+    // The other side's best effort, with the other skill, so each card has a batter and a bowler.
+    const also = line(otherSide, !bowl);
     return {
-      number: i + 1,
-      venue: flavour.venues[i],
-      result,
-      summary: t20 ? t20WinSummary(team, rng, odi) : winSummary(team, rng),
-      hero: t20 ? t20HeroLine(side, used, rng, odi) : heroLine(side, used, rng),
-      heroSide: result,
+      ...base, summary,
+      hero, heroSide: hero ? heroSide : null, heroKind: hero ? (bowl ? 'bowl' : 'bat') : null,
+      also, alsoSide: also ? otherSide : null,
     };
   });
+  const seriesSide = band.user > band.house ? 'user' : band.house > band.user ? 'house' : null;
+  const starOf = (t: TestMatch) => t.hero.replace(/\s+\d.*$/, '');
+  const starMatch =
+    tests.find((t) => t.hero && t.heroSide !== null && t.result !== 'draw' && (seriesSide === null || t.heroSide === seriesSide)) ??
+    tests.find((t) => t.hero && t.heroSide !== null);
+  const playerOfSeries: SeriesStar | null = starMatch && starMatch.heroSide ? { name: starOf(starMatch), side: starMatch.heroSide } : null;
   return {
     user: band.user,
     house: band.house,
@@ -459,5 +487,6 @@ export function playSeries(input: {
     percentile,
     topPercent: Math.max(1, Math.min(100, Math.round((1 - percentile) * 100))),
     tests,
+    playerOfSeries,
   };
 }

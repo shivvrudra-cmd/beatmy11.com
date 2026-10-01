@@ -61,13 +61,26 @@ const formatJson = safe(format);
           </div>
           <p class="rs-sub" id="rs-sub" aria-live="polite"></p>
           <p class="rs-rank" id="rs-rank" hidden></p>
+          <p class="rs-pots" id="rs-pots" hidden></p>
           <button type="button" class="rs-skip" id="rs-skip">Skip to result</button>
         </section>
 
         <ol class="rs-tests" id="rs-tests" aria-label={`The five ${format.matchPlural}`}></ol>
         <a class="rs-again-bottom" href={format.playHref} data-rs-again>Draft again</a>
-        <a class="rs-more" id="rs-more-1" href="#rs-p2" hidden>Your share card <span aria-hidden="true">↓</span></a>
+        <a class="rs-more" id="rs-more-1" href="#rs-grade-panel" hidden>How strong was your XI <span aria-hidden="true">↓</span></a>
       </div>
+
+      <!-- Screen 2: the XI's strength, grade and a tip (owner, 2026-10-02). -->
+      <section class="rs-panel rs-pg" id="rs-grade-panel" hidden aria-labelledby="rs-grade-title">
+        <h2 class="rs-h2" id="rs-grade-title">How your XI measures up</h2>
+        <p class="rs-note">Strength out of 100 for each part of the game.</p>
+        <div class="rs-strength" id="rs-strength"></div>
+        <div class="rs-overall" id="rs-overall"></div>
+        <div class="rs-grade" id="rs-grade" aria-live="polite"></div>
+        <p class="rs-tip" id="rs-tip"></p>
+        <a class="rs-again-bottom" href={format.playHref} data-rs-again>Draft again</a>
+        <a class="rs-more" href="#rs-p2">Your share card <span aria-hidden="true">↓</span></a>
+      </section>
 
       <div class="rs-panel rs-p2" id="rs-p2" hidden>
         <p class="rs-error" id="rs-error" hidden></p>
@@ -78,7 +91,7 @@ const formatJson = safe(format);
         </div>
 
         <figure class="rs-card" id="rs-card" hidden>
-          <img id="rs-card-img" width="1080" height="1350" alt="Your share card: the series scoreline and your XI" />
+          <img id="rs-card-img" width="1080" height="1350" alt="Your share card: the series scoreline and both XIs" />
         </figure>
 
         <div class="rs-actions" id="rs-actions" hidden>
@@ -87,25 +100,9 @@ const formatJson = safe(format);
           <a class="rs-save" id="rs-save" hidden>Save the card</a>
           <p class="rs-copied" id="rs-copied" role="status"></p>
         </div>
-        <a class="rs-more" id="rs-more-2" href="#rs-xis" hidden>Both XIs <span aria-hidden="true">↓</span></a>
+        {format.credit && <p class="rs-note rs-credit">{format.credit}</p>}
       </div>
 
-      <section class="rs-panel rs-xis" id="rs-xis" hidden aria-labelledby="rs-xis-title">
-        <h2 class="rs-h2" id="rs-xis-title">How your XI measures up</h2>
-        <p class="rs-note">Strength out of 100 for each part of the game.</p>
-        <div class="rs-strength" id="rs-strength"></div>
-        <div class="rs-cols">
-          <div class="rs-col">
-            <h3 class="rs-h3">Your XI</h3>
-            <ol class="rs-list" id="rs-user-xi"></ol>
-          </div>
-          <div class="rs-col">
-            <h3 class="rs-h3">{format.opponent}</h3>
-            <ol class="rs-list" id="rs-house-xi"></ol>
-          </div>
-        </div>
-        {format.credit && <p class="rs-note rs-credit">{format.credit}</p>}
-      </section>
     </main>
   </div>
 
@@ -121,6 +118,7 @@ const formatJson = safe(format);
     import { SHARE_RESULTS, encodeXI } from '../lib/share-results';
     import { drawShareCard, cardBlob } from '../lib/share-card';
     import { reportScore, reportEvent } from '../lib/telemetry';
+    import { gradeFor, gradeTitle, shapeTitle, pickTip } from '../lib/result-insights';
     import {
       utcDayKey, dayNumber, loadDaily, saveDaily, recordResult, hasPlayed, currentStreak,
       activeDailyDay, dailyShareText,
@@ -241,24 +239,11 @@ const formatJson = safe(format);
         `<p class="rs-test-sum">${esc(t.summary)}</p>` +
         `<div class="rs-test-foot">` +
         (t.hero ? `<p class="rs-test-hero"><span aria-hidden="true">★</span> ${esc(t.hero)}${t.heroSide === 'house' ? ` <em>(${esc(OPP)})</em>` : ''}</p>` : '') +
-        `<p class="rs-test-run">Series ${running}</p>` +
+        `<p class="rs-test-run">${running}</p>` +
+        `</div>` +
+        (t.also ? `<p class="rs-test-also">${esc(t.also)}${t.alsoSide === 'house' ? ` <em>(${esc(OPP)})</em>` : ' <em>(you)</em>'}</p>` : '') +
         `</li>`
       );
-    }
-
-    // Per-player ratings are NOT shown (owner, 2026-10-02): they taught players which names to
-    // pick. Only the "Best pick" badge survives, without its number.
-    function listHTML(rows, marks) {
-      return rows
-        .map((r, i) => {
-          const mark = marks[r.id] ? `<span class="rs-badge ${marks[r.id].cls}">${marks[r.id].text}</span>` : '';
-          return (
-            `<li class="rs-row"><span class="rs-pos">${i + 1}</span>` +
-            `<span class="rs-who"><span class="rs-name"><span class="rs-nm">${esc(r.name)}</span>${mark}</span>` +
-            `<span class="rs-meta">${[ROLE_SHORT[r.role] || r.role, NATION_CODES[r.nation] || r.nation, FORMAT.eraNames[r.era] || r.era].filter(Boolean).map(esc).join(' · ')}</span></span></li>`
-          );
-        })
-        .join('');
     }
 
     function run() {
@@ -370,28 +355,63 @@ const formatJson = safe(format);
         for (const a of document.querySelectorAll('[data-rs-again]')) a.setAttribute('href', `/play?c=${encodeURIComponent(ch.spins)}&vs=${ch.vs.user}-${ch.vs.house}`);
       }
 
-      // Strength of each part of the game (the three units behind the team score), as bars.
-      // PREVIEW (owner to choose, then the other goes): ?strength=you shows only the user's XI,
-      // ?strength=both (default) puts the opponent's next to it.
+      // ---- screen 2: strength bars, overall score, grade, titles and a tip ----
+      // Per-player ratings are NOT shown anywhere (owner, 2026-10-02): they taught players which
+      // names to pick. The three unit strengths and the overall team score are.
       const blend = (entries) => (FORMAT.id === 'test' ? teamBlend(entries, SCORING_CONTEXT) : wbTeamBlend(entries, SCORING_CONTEXT, WB_FORMATS[FORMAT.id]));
       const mine = blend(userEntries);
       const theirs = blend(houseEntries);
-      const both = new URLSearchParams(location.search).get('strength') !== 'you';
-      const bar = (v, cls) => `<span class="rs-bar ${cls}"><span class="rs-bar-fill" style="width:${Math.max(0, Math.min(100, v))}%"></span></span><b class="rs-bar-val">${Math.round(v)}</b>`;
-      $('rs-strength').classList.toggle('is-both', both);
-      $('rs-strength').innerHTML = [['Batting', 'teamBatting'], ['Bowling', 'teamBowling'], ['Fielding', 'teamFielding']].map(([label, k]) =>
-        `<div class="rs-str"><span class="rs-str-lab">${label}</span>` +
-        `<span class="rs-str-row" aria-label="Your XI ${label.toLowerCase()} ${Math.round(mine[k])} out of 100">${both ? '<i>You</i>' : ''}${bar(mine[k], 'is-you')}</span>` +
-        (both ? `<span class="rs-str-row" aria-label="${esc(OPP)} ${label.toLowerCase()} ${Math.round(theirs[k])} out of 100"><i>${esc(OPP)}</i>${bar(theirs[k], 'is-opp')}</span>` : '') +
-        `</div>`).join('');
+      const clamp = (v) => Math.max(0, Math.min(100, v));
+      const barRow = (label, v, cls) =>
+        `<div class="rs-str ${cls}" role="img" aria-label="${label} ${Math.round(v)} out of 100"><span class="rs-str-lab">${label}</span>` +
+        `<span class="rs-bar"><span class="rs-bar-fill" data-rs-fill="${clamp(v)}"></span></span><b class="rs-bar-val" data-rs-count="${Math.round(v)}">0</b></div>`;
+      $('rs-strength').innerHTML = barRow('Batting', mine.teamBatting, '') + barRow('Bowling', mine.teamBowling, '') + barRow('Fielding', mine.teamFielding, '');
+      $('rs-overall').innerHTML = barRow('Overall', cmp.userScore, 'is-overall');
+      const grade = gradeFor(series.percentile);
+      $('rs-grade').innerHTML =
+        `<span class="rs-grade-letter">${grade}</span>` +
+        `<span class="rs-grade-words"><b>${esc(gradeTitle(grade, series.user))}</b><i>${esc(shapeTitle(mine.teamBatting, mine.teamBowling))}</i></span>`;
+      $('rs-tip').innerHTML = `<b>Tip</b> ${esc(pickTip(FORMAT.id, {
+        batting: theirs.teamBatting - mine.teamBatting,
+        bowling: theirs.teamBowling - mine.teamBowling,
+        fielding: theirs.teamFielding - mine.teamFielding,
+      }))}`;
+      // The three bars fill together, then the overall bar, then the grade appears. Runs once,
+      // when the screen scrolls into view.
+      let barsPlayed = false;
+      function playBars() {
+        if (barsPlayed) return;
+        barsPlayed = true;
+        const fill = (root, ms) => {
+          for (const el of root.querySelectorAll('[data-rs-fill]')) {
+            el.style.transitionDuration = `${ms}ms`;
+            el.style.width = `${el.getAttribute('data-rs-fill')}%`;
+          }
+          for (const el of root.querySelectorAll('[data-rs-count]')) {
+            const to = Number(el.getAttribute('data-rs-count'));
+            if (!ms) { el.textContent = String(to); continue; }
+            const t0 = performance.now();
+            const tick = (now) => {
+              const k = Math.min(1, (now - t0) / ms);
+              el.textContent = String(Math.round(to * k));
+              if (k < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+          }
+        };
+        const d = reduceMotion ? 0 : 1200;
+        fill($('rs-strength'), d);
+        window.setTimeout(() => fill($('rs-overall'), d), d ? d + 200 : 0);
+        window.setTimeout(() => $('rs-grade-panel').classList.add('is-graded'), d ? 2 * d + 400 : 0);
+      }
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver((entries, obs) => {
+          if (entries.some((e) => e.isIntersecting)) { playBars(); obs.disconnect(); }
+        }, { threshold: 0.5 }).observe($('rs-grade-panel'));
+      }
 
-      // The best pick in the user's XI (badge only, no number).
-      const sorted = [...userXI].sort((a, b) => b.rating - a.rating);
-      const marks = {
-        [sorted[0].id]: { text: 'Best pick', cls: 'is-best' },
-      };
-      $('rs-user-xi').innerHTML = listHTML(userXI, marks);
-      $('rs-house-xi').innerHTML = listHTML(houseXI, {});
+      // The best pick in the user's XI: marked on the share card, without a number.
+      const bestId = [...userXI].sort((a, b) => b.rating - a.rating)[0].id;
 
       const copy = verdictCopy(series);
       const pct = Math.round(series.percentile * 100);
@@ -419,8 +439,12 @@ const formatJson = safe(format);
         $('rs-p2').hidden = false;
         $('rs-more-1').hidden = false;
         $('rs-actions').hidden = false;
-        $('rs-xis').hidden = false;
-        $('rs-more-2').hidden = false;
+        $('rs-grade-panel').hidden = false;
+        if (!('IntersectionObserver' in window)) playBars();
+        if (series.playerOfSeries) {
+          $('rs-pots').textContent = `Player of the series: ${series.playerOfSeries.name}${series.playerOfSeries.side === 'house' ? ` (${OPP})` : ''}`;
+          $('rs-pots').hidden = false;
+        }
         revealed = true;
         showCard();
         document.querySelector('.rs-verdict').classList.add(
@@ -490,7 +514,8 @@ const formatJson = safe(format);
         seriesLabel: FORMAT.eyebrow,
         opponent: OPP,
         challengeLine: FORMAT.id === 'test' ? undefined : `Can your ${XI} do better?`,
-        xi: userXI.map((p) => ({ name: p.name, role: ROLE_SHORT[p.role] || '', nation: NATION_CODES[p.nation] || p.nation })),
+        xi: userXI.map((p) => ({ name: p.name, role: ROLE_SHORT[p.role] || '', nation: NATION_CODES[p.nation] || p.nation, best: p.id === bestId })),
+        opponentXI: houseXI.map((p) => ({ name: p.name, role: ROLE_SHORT[p.role] || '', nation: NATION_CODES[p.nation] || p.nation })),
         rank: series.topPercent <= 50 ? `Top ${series.topPercent}% of drafts` : '',
       })
         .then(cardBlob)
@@ -499,6 +524,7 @@ const formatJson = safe(format);
           cardFile = new File([blob], fileName, { type: 'image/png' });
           const href = URL.createObjectURL(blob);
           $('rs-card-img').src = href;
+          $('rs-card-img').alt = `Your share card: ${series.user}–${series.house}. My XI: ${userXI.map((x) => x.name).join(', ')}. ${OPP}: ${houseXI.map((x) => x.name).join(', ')}.`;
           $('rs-save').href = href;
           $('rs-save').download = fileName;
           showCard();
@@ -649,32 +675,8 @@ const formatJson = safe(format);
       border: 1px solid rgba(198, 255, 61, 0.3); box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(198, 255, 61, 0.12);
     }
 
-    .rs-xis { max-width: 900px; margin: 34px auto 0; }
-    .rs-xis[hidden] { display: none; }
     .rs-h2 { margin: 0; text-align: center; font: 400 34px/1 var(--rs-display); letter-spacing: 0.04em; }
     .rs-note { margin: 6px 0 16px; text-align: center; color: var(--rs-muted); font-size: 13.5px; }
-    .rs-strength { display: grid; gap: 8px; width: 100%; max-width: 760px; margin: 0 auto 12px; }
-    .rs-str { display: grid; grid-template-columns: 76px 1fr; align-items: center; gap: 3px 10px; }
-    .rs-str-lab { grid-row: span 2; font: 400 20px/1 var(--rs-display); letter-spacing: 0.06em; }
-    .rs-strength:not(.is-both) .rs-str-lab { grid-row: auto; }
-    .rs-str-row { display: flex; align-items: center; gap: 8px; min-width: 0; }
-    .rs-str-row i { flex: none; width: 74px; font: 600 9.5px Inter, sans-serif; font-style: normal; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rs-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .rs-bar { flex: 1; height: 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.09); overflow: hidden; }
-    .rs-bar-fill { display: block; height: 100%; border-radius: 999px; background: var(--rs-lime); }
-    .rs-bar.is-opp .rs-bar-fill { background: #c9d2ea; }
-    .rs-bar-val { flex: none; width: 30px; text-align: right; font: 400 20px/1 var(--rs-display); }
-    .rs-pos { flex: none; width: 22px; text-align: center; font: 400 18px/1 var(--rs-display); color: var(--rs-muted); }
-    .rs-cols { display: grid; gap: 22px; }
-    .rs-h3 { margin: 0 0 8px; font: 600 12px Inter, sans-serif; letter-spacing: 0.24em; text-transform: uppercase; color: var(--rs-muted); }
-    .rs-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-    .rs-row { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: 12px; background: rgba(255, 255, 255, 0.04); }
-    .rs-who { display: flex; flex-direction: column; min-width: 0; }
-    .rs-name { font-weight: 600; font-size: 15px; }
-    .rs-meta { font-size: 12px; color: var(--rs-muted); letter-spacing: 0.03em; }
-    .rs-name { display: flex; align-items: center; min-width: 0; }
-    .rs-nm { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .rs-badge { flex: none; margin-left: 4px; font: 700 9.5px Inter, sans-serif; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; vertical-align: 2px; }
-    .rs-badge.is-best { background: var(--rs-lime); color: #04060c; }
     .rs-daily { max-width: 560px; margin: 14px auto 0; padding: 12px 16px; text-align: center; font: 600 15px/1.4 Inter, sans-serif; color: #c6ff3d; background: rgba(198, 255, 61, 0.1); border: 1px solid rgba(198, 255, 61, 0.35); border-radius: 14px; }
     .rs-daily span { display: block; margin-top: 4px; font: 400 12px/1.4 Inter, sans-serif; color: #9aa6c4; }
     .rs-daily[hidden] { display: none; }
@@ -682,7 +684,6 @@ const formatJson = safe(format);
     .rs-leave { margin-top: 8px; background: none; border: 0; color: #9aa6c4; text-decoration: underline; font: 500 12px Inter, sans-serif; cursor: pointer; }
     .rs-error { max-width: 560px; margin: 18px auto 0; text-align: center; color: #ffd2cc; }
     @media (min-width: 760px) {
-      .rs-cols { grid-template-columns: 1fr 1fr; }
       .rs-actions { grid-template-columns: 1fr 1fr; }
       .rs-copied, .rs-save { grid-column: 1 / -1; }
     }
@@ -716,6 +717,37 @@ const formatJson = safe(format);
     .rs-more span { display: inline-block; animation: rs-nudge 1.4s ease-in-out infinite; }
     @keyframes rs-nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
     .rs-tests { flex: 1; width: 100%; grid-template-rows: repeat(5, minmax(0, 1fr)); }
+    .rs-pots { margin: 6px 0 0; font: 600 12px Inter, sans-serif; letter-spacing: 0.04em; color: var(--rs-text); }
+    .rs-pots[hidden] { display: none; }
+    .rs-test-also { margin: 0; font: 500 11.5px Inter, sans-serif; color: var(--rs-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rs-test-also em { font-style: normal; color: var(--rs-dim); }
+
+    /* Screen 2: strength bars, overall, grade, tip */
+    .rs-pg { align-items: center; justify-content: center; gap: 14px; }
+    .rs-pg .rs-note { margin: 0; }
+    .rs-strength, .rs-overall { display: grid; gap: 14px; width: 100%; max-width: 560px; }
+    .rs-str { display: grid; grid-template-columns: 92px 1fr 46px; align-items: center; gap: 10px; }
+    .rs-str-lab { font: 400 24px/1 var(--rs-display); letter-spacing: 0.06em; }
+    .rs-bar { height: 16px; border-radius: 999px; background: rgba(255, 255, 255, 0.09); overflow: hidden; }
+    .rs-bar-fill { display: block; width: 0; height: 100%; border-radius: 999px; background: var(--rs-lime); transition: width 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .rs-bar-val { text-align: right; font: 400 30px/1 var(--rs-display); }
+    .rs-overall { padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.14); }
+    .rs-str.is-overall .rs-bar { height: 22px; }
+    .rs-str.is-overall .rs-bar-fill { box-shadow: 0 0 22px rgba(198, 255, 61, 0.6); }
+    .rs-str.is-overall .rs-str-lab { color: var(--rs-lime); }
+    .rs-str.is-overall .rs-bar-val { font-size: 40px; color: var(--rs-lime); }
+    .rs-grade { display: flex; align-items: center; justify-content: center; gap: 16px; min-height: 96px; opacity: 0; transform: scale(0.9); transition: opacity 0.4s, transform 0.4s cubic-bezier(0.2, 1.6, 0.4, 1); }
+    .rs-pg.is-graded .rs-grade { opacity: 1; transform: none; }
+    .rs-grade-letter {
+      flex: none; min-width: 96px; height: 96px; padding: 0 10px; box-sizing: border-box; display: grid; place-items: center; border-radius: 22px;
+      background: var(--rs-lime); color: #04060c; font: 400 68px/1 var(--rs-display); box-shadow: 0 0 40px rgba(198, 255, 61, 0.45);
+    }
+    .rs-grade-words { display: flex; flex-direction: column; gap: 4px; text-align: left; }
+    .rs-grade-words b { font: 400 34px/1 var(--rs-display); letter-spacing: 0.04em; }
+    .rs-grade-words i { font: 600 12px Inter, sans-serif; font-style: normal; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rs-muted); }
+    .rs-tip { margin: 0; width: 100%; max-width: 560px; box-sizing: border-box; padding: 10px 14px; border-radius: 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--rs-text); font: 500 13.5px/1.4 Inter, sans-serif; }
+    .rs-tip b { margin-right: 6px; color: var(--rs-lime); font: 700 10.5px Inter, sans-serif; letter-spacing: 0.14em; text-transform: uppercase; }
+    .rs-pg .rs-again-bottom { max-width: 560px; }
     .rs-test { display: flex; flex-direction: column; justify-content: center; min-height: 0; }
     .rs-test-sum { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .rs-test-foot { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
@@ -725,14 +757,6 @@ const formatJson = safe(format);
     .rs-card { margin: 0; width: 100%; display: flex; justify-content: center; }
     .rs-card img { width: auto; max-width: 100%; aspect-ratio: 4 / 5; object-fit: contain; }
     .rs-actions { margin: 0; width: 100%; }
-    .rs-xis { margin: 0 auto; }
-    .rs-cols { flex: 1; min-height: 0; grid-template-columns: 1fr 1fr; }
-    .rs-col { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
-    .rs-h3 { text-align: center; }
-    .rs-list { flex: 1; min-height: 0; grid-template-rows: repeat(11, minmax(0, 1fr)); }
-    .rs-row { min-height: 0; }
-    .rs-who { flex: 1; }
-    .rs-meta { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     /* Wide screens */
     @media (min-width: 760px) {
@@ -741,7 +765,7 @@ const formatJson = safe(format);
       .rs-verdict { margin-top: 4px; margin-bottom: 0; }
       .rs-title { margin: 2px 0 0; font-size: clamp(30px, 5.5vh, 52px); }
       .rs-score { margin: 0; }
-      .rs-num { font-size: clamp(46px, 9vh, 88px); }
+      .rs-num { font-size: clamp(60px, 12vh, 116px); }
       .rs-dash { font-size: 48px; margin-top: -14px; }
       .rs-sub { margin: 2px 0 0; min-height: 20px; }
       .rs-rank { margin-top: 4px; }
@@ -755,15 +779,8 @@ const formatJson = safe(format);
       .rs-card img { max-height: calc(100vh - 210px); max-height: calc(100svh - 210px); }
       .rs-actions { max-width: 640px; gap: 10px; }
       .rs-share, .rs-again { min-height: 52px; line-height: 52px; }
-      .rs-xis { max-width: 1000px; width: 100%; }
       .rs-h2 { padding-top: 4px; }
       .rs-note { margin: 4px 0 10px; }
-      .rs-cols { gap: 28px; }
-      .rs-h3 { margin: 0 0 6px; }
-      .rs-list { gap: 4px; }
-      .rs-row { gap: 10px; padding: 2px 12px; }
-      .rs-name { font-size: 14px; line-height: 1.2; }
-      .rs-meta { font-size: 11.5px; }
     }
 
     /* Phones */
@@ -774,21 +791,29 @@ const formatJson = safe(format);
       .rs-title { margin: 2px 0 0; font-size: clamp(30px, 9.5vw, 40px); }
       .rs-score { margin: 0; gap: 10px; }
       .rs-side { min-width: 72px; }
-      .rs-num { font-size: clamp(46px, 15vw, 64px); }
+      .rs-num { font-size: clamp(60px, 21vw, 92px); }
       .rs-lab { font-size: 10px; }
-      .rs-dash { font-size: 36px; margin-top: -12px; }
+      .rs-dash { font-size: 44px; margin-top: -14px; }
       .rs-sub { margin: 2px 0 0; min-height: 18px; font-size: 13px; }
       .rs-rank { margin-top: 4px; padding: 3px 10px; font-size: 12px; }
       .rs-skip { margin-top: 2px; min-height: 32px; font-size: 12px; }
       .rs-tests { margin: 6px auto 0; gap: 6px; }
-      .rs-test { gap: 2px; padding: 4px 10px; border-radius: 10px; }
-      .rs-test-n { font-size: 16px; }
+      .rs-test { gap: 1px; padding: 3px 10px; border-radius: 10px; }
+      .rs-test-n { font-size: 15px; }
+      .rs-test-also { font-size: 10.5px; }
+      .rs-pots { margin-top: 3px; font-size: 11px; }
+      .rs-str { grid-template-columns: 76px 1fr 40px; }
+      .rs-str-lab { font-size: 20px; }
+      .rs-bar-val { font-size: 26px; }
+      .rs-grade-letter { min-width: 80px; height: 80px; font-size: 56px; }
+      .rs-grade-words b { font-size: 28px; }
       .rs-chip { padding: 2px 6px; font-size: 9.5px; }
-      .rs-test-sum { margin: 0; font-size: 12px; line-height: 1.25; }
+      .rs-test-sum { margin: 0; font-size: 11.5px; line-height: 1.2; -webkit-line-clamp: 1; }
       .rs-test-hero { margin: 0; font-size: 15px; }
       .rs-test-run { margin: 0; font-size: 9.5px; }
 
       .rs-p2 { gap: 8px; padding-left: 0; padding-right: 0; }
+      .rs-card { max-width: none; }
       .rs-card img { max-height: calc(100vh - 150px); max-height: calc(100svh - 150px); border-radius: 0; }
       .rs-p2 .rs-actions, .rs-p2 .rs-daily, .rs-p2 .rs-error { box-sizing: border-box; padding-left: 12px; padding-right: 12px; }
       .rs-actions { gap: 8px; }
@@ -796,23 +821,8 @@ const formatJson = safe(format);
       .rs-save { padding: 2px; }
       .rs-copied { min-height: 16px; font-size: 12px; }
 
-      .rs-xis { max-width: none; }
       .rs-h2 { font-size: 26px; padding-top: 4px; }
-      .rs-strength { gap: 5px; margin-bottom: 6px; }
-      .rs-str { grid-template-columns: 62px 1fr; gap: 2px 8px; }
-      .rs-str-lab { font-size: 16px; }
-      .rs-str-row i { width: 58px; font-size: 8.5px; letter-spacing: 0.06em; }
-      .rs-bar { height: 8px; }
-      .rs-bar-val { width: 24px; font-size: 17px; }
-      .rs-pos { width: 16px; font-size: 15px; }
       .rs-note { margin: 2px 0 6px; font-size: 11px; }
-      .rs-cols { gap: 8px; }
-      .rs-h3 { margin: 0 0 4px; font-size: 10px; letter-spacing: 0.18em; }
-      .rs-list { gap: 3px; }
-      .rs-row { gap: 6px; padding: 2px 6px; border-radius: 8px; }
-      .rs-name { font-size: 11.5px; line-height: 1.2; }
-      .rs-meta { font-size: 9.5px; letter-spacing: 0; }
-      .rs-badge { margin-left: 3px; padding: 1px 3px; font-size: 7.5px; }
     }
     @media (prefers-reduced-motion: reduce) {
       .rs *, .rs *::before, .rs *::after { animation: none !important; transition: none !important; }

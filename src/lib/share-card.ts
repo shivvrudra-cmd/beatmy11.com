@@ -15,6 +15,8 @@ export interface CardPlayer {
   role: string;
   /** Short nation code, e.g. "AUS". */
   nation: string;
+  /** The user's best pick: marked on the card (no number). */
+  best?: boolean;
 }
 
 export interface CardData {
@@ -24,6 +26,8 @@ export interface CardData {
   /** "I beat the World XI" etc. (share-results.ts). */
   headline: string;
   xi: CardPlayer[];
+  /** The opponent's XI. When given, the card lists both XIs side by side (owner, 2026-10-02). */
+  opponentXI?: CardPlayer[];
   /** e.g. "Top 12% of all drafts"; omitted when empty. */
   rank?: string;
   /** Per-format wording; defaults are the Test game's. */
@@ -150,12 +154,14 @@ export async function drawShareCard(d: CardData): Promise<HTMLCanvasElement> {
     c.shadowBlur = 40;
   }
   c.fillStyle = won ? LIME : TEXT;
-  c.fillText(headline, W / 2, 250);
+  // With both XIs listed, the top of the card tightens up to give the names more room.
+  const two = !!d.opponentXI?.length;
+  c.fillText(headline, W / 2, two ? 222 : 250);
   c.shadowBlur = 0;
 
   // Scoreline.
-  const numY = 480;
-  c.font = `400 230px ${DISPLAY}`;
+  const numY = two ? 422 : 480;
+  c.font = `400 ${two ? 200 : 230}px ${DISPLAY}`;
   spaced(c, 0);
   const side = (n: number, x: number, color: string, glow: boolean) => {
     if (glow) {
@@ -197,7 +203,107 @@ export async function drawShareCard(d: CardData): Promise<HTMLCanvasElement> {
     px += pw + gap;
   }
 
-  // The XI.
+  if (d.opponentXI?.length) drawBothXIs(c, d);
+  else drawOwnXI(c, d);
+
+  // Footer.
+  c.textAlign = 'center';
+  c.font = `600 24px ${BODY}`;
+  spaced(c, 5);
+  c.fillStyle = MUTED;
+  c.fillText((d.challengeLine ?? 'Can your all-time XI do better?').toUpperCase(), W / 2, H - 78);
+  c.font = `700 30px ${BODY}`;
+  spaced(c, 6);
+  c.fillStyle = LIME;
+  c.fillText('BEATMY11.COM', W / 2, H - 34);
+
+  return canvas;
+}
+
+/** Both XIs side by side: the user's on the left, the opponent's on the right. */
+function drawBothXIs(c: CanvasRenderingContext2D, d: CardData) {
+  const panelX = 40, panelY = 566, panelW = W - 80, rowH = 54;
+  const rows = Math.max(d.xi.length, d.opponentXI!.length);
+  const panelH = 80 + rows * rowH;
+  roundRect(c, panelX, panelY, panelW, panelH, 22);
+  const card = c.createLinearGradient(panelX, panelY, panelX + panelW * 0.4, panelY + panelH);
+  card.addColorStop(0, 'rgba(22, 34, 58, 0.94)');
+  card.addColorStop(0.7, 'rgba(11, 16, 32, 0.94)');
+  c.fillStyle = card;
+  c.fill();
+  c.strokeStyle = 'rgba(198, 255, 61, 0.3)';
+  c.lineWidth = 2;
+  c.stroke();
+  // Centre rule between the two XIs.
+  c.fillStyle = 'rgba(255, 255, 255, 0.12)';
+  c.fillRect(W / 2, panelY + 24, 1, panelH - 48);
+
+  const colW = panelW / 2;
+  const column = (xi: CardPlayer[], x: number, title: string, mine: boolean) => {
+    c.textAlign = 'left';
+    c.font = `600 20px ${BODY}`;
+    spaced(c, 5);
+    c.fillStyle = mine ? LIME : MUTED;
+    c.fillText(title.toUpperCase(), x + 24, panelY + 46);
+    if (mine && d.rank) {
+      c.textAlign = 'right';
+      c.font = `600 15px ${BODY}`;
+      spaced(c, 2);
+      c.fillStyle = MUTED;
+      c.fillText(d.rank.toUpperCase(), x + colW - 22, panelY + 45);
+    }
+    xi.forEach((p, i) => {
+      const y = panelY + 104 + i * rowH;
+      if (i > 0) {
+        c.fillStyle = 'rgba(255, 255, 255, 0.07)';
+        c.fillRect(x + 20, y - 39, colW - 40, 1);
+      }
+      c.textAlign = 'left';
+      spaced(c, 0);
+      c.fillStyle = DIM;
+      c.font = `400 28px ${DISPLAY}`;
+      c.fillText(String(i + 1), x + 24, y);
+      // Role tag on the right; the name takes what is left, shrinking to fit.
+      c.textAlign = 'right';
+      c.fillStyle = mine ? LIME : MUTED;
+      c.font = `700 17px ${BODY}`;
+      spaced(c, 2);
+      c.fillText(p.role, x + colW - 22, y - 4);
+      const roleW = c.measureText(p.role).width;
+      c.textAlign = 'left';
+      const name = p.name.toUpperCase();
+      const badge = p.best ? 'BEST PICK' : '';
+      c.font = `700 12px ${BODY}`;
+      spaced(c, 1.5);
+      const badgeW = badge ? c.measureText(badge).width + 18 : 0;
+      spaced(c, 1);
+      const room = colW - 62 - 22 - roleW - 14 - (badgeW ? badgeW + 10 : 0);
+      let size = 40;
+      c.font = `400 ${size}px ${DISPLAY}`;
+      while (size > 20 && c.measureText(name).width > room) {
+        size -= 1;
+        c.font = `400 ${size}px ${DISPLAY}`;
+      }
+      c.fillStyle = TEXT;
+      c.fillText(name, x + 62, y);
+      if (badge) {
+        const bx = x + 62 + c.measureText(name).width + 10;
+        roundRect(c, bx, y - 27, badgeW, 24, 5);
+        c.fillStyle = LIME;
+        c.fill();
+        c.fillStyle = '#04060c';
+        c.font = `700 12px ${BODY}`;
+        spaced(c, 1.5);
+        c.fillText(badge, bx + 9, y - 10);
+      }
+    });
+  };
+  column(d.xi, panelX, 'My XI', true);
+  column(d.opponentXI!, panelX + colW, d.opponent ?? 'World XI', false);
+}
+
+/** The original card: the user's XI only. */
+function drawOwnXI(c: CanvasRenderingContext2D, d: CardData) {
   const panelX = 90, panelY = 628, panelW = W - 180, rowH = 46;
   const panelH = 80 + d.xi.length * rowH;
   roundRect(c, panelX, panelY, panelW, panelH, 22);
@@ -248,19 +354,6 @@ export async function drawShareCard(d: CardData): Promise<HTMLCanvasElement> {
     spaced(c, 3);
     c.fillText(p.role, panelX + panelW - 32, y - 2);
   });
-
-  // Footer.
-  c.textAlign = 'center';
-  c.font = `600 24px ${BODY}`;
-  spaced(c, 5);
-  c.fillStyle = MUTED;
-  c.fillText((d.challengeLine ?? 'Can your all-time XI do better?').toUpperCase(), W / 2, H - 78);
-  c.font = `700 30px ${BODY}`;
-  spaced(c, 6);
-  c.fillStyle = LIME;
-  c.fillText('BEATMY11.COM', W / 2, H - 34);
-
-  return canvas;
 }
 
 export function cardBlob(canvas: HTMLCanvasElement): Promise<Blob | null> {
