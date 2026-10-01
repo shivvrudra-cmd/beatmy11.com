@@ -167,8 +167,8 @@ export interface SeriesResult {
   /** "Top X%" figure for display: share of drafts at or above this XI. */
   topPercent: number;
   tests: TestMatch[];
-  /** Player of the series: a match-winning hero from the side that won the series (either side
-   *  when it is level). Null when no match had a hero. */
+  /** Player of the series: a performer from the side that won the series, or from the user's XI
+   *  when it is level (owner, 2026-10-02). Null when no match had a performer. */
   playerOfSeries: SeriesStar | null;
 }
 
@@ -474,12 +474,14 @@ export function playSeries(input: {
       also, alsoSide: also ? otherSide : null,
     };
   });
-  const seriesSide = band.user > band.house ? 'user' : band.house > band.user ? 'house' : null;
-  const starOf = (t: TestMatch) => t.hero.replace(/\s+\d.*$/, '');
-  const starMatch =
-    tests.find((t) => t.hero && t.heroSide !== null && t.result !== 'draw' && (seriesSide === null || t.heroSide === seriesSide)) ??
-    tests.find((t) => t.hero && t.heroSide !== null);
-  const playerOfSeries: SeriesStar | null = starMatch && starMatch.heroSide ? { name: starOf(starMatch), side: starMatch.heroSide } : null;
+  const starSide: 'user' | 'house' = band.house > band.user ? 'house' : 'user';
+  const nameOf = (line: string) => line.replace(/\s+\d.*$/, '');
+  // A match-winning headline from that side if there is one, else any performance from it.
+  const starLine =
+    tests.find((t) => t.hero && t.heroSide === starSide && t.result === starSide)?.hero ??
+    tests.find((t) => t.hero && t.heroSide === starSide)?.hero ??
+    tests.find((t) => t.also && t.alsoSide === starSide)?.also;
+  const playerOfSeries: SeriesStar | null = starLine ? { name: nameOf(starLine), side: starSide } : null;
   return {
     user: band.user,
     house: band.house,

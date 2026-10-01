@@ -146,12 +146,13 @@ const calibration = { scores: sample, source: 'test', generated: 'test' };
       if (/\d\/\d/.test(t.hero) === /\d\/\d/.test(t.also)) badAlso++; // one batting line, one bowling line
     }
     if (played.length && !s.playerOfSeries) noStar++;
-    const winner = s.user > s.house ? 'user' : s.house > s.user ? 'house' : null;
-    if (s.playerOfSeries && winner && s.tests.some((t) => t.result === winner && t.hero) && s.playerOfSeries.side !== winner) wrongStar++;
+    const starSide = s.house > s.user ? 'house' : 'user';
+    if (s.playerOfSeries && s.playerOfSeries.side !== starSide) wrongStar++;
+    if (s.playerOfSeries && !(starSide === 'user' ? userXI : houseXI).some((p) => headlineName(p.name) === s.playerOfSeries!.name)) wrongStar++;
   }
   ok(lopsided === 0, 'never more than three batting or three bowling headlines', lopsided);
   ok(badAlso === 0, 'each played match has a second performer from the other side with the other skill', badAlso);
-  ok(noStar === 0 && wrongStar === 0, 'player of the series comes from the side that won it', { noStar, wrongStar });
+  ok(noStar === 0 && wrongStar === 0, 'player of the series comes from the side that won it (your XI when level)', { noStar, wrongStar });
   const hi = playSeries({ userScore: 1000, houseScore: 80, userXI, houseXI, calibration, seed: 5 });
   const lo = playSeries({ userScore: 0, houseScore: 80, userXI, houseXI, calibration, seed: 5 });
   ok(hi.topPercent <= 1 && lo.topPercent >= 99, 'top-% figure tracks the rank');

@@ -61,11 +61,11 @@ const formatJson = safe(format);
           </div>
           <p class="rs-sub" id="rs-sub" aria-live="polite"></p>
           <p class="rs-rank" id="rs-rank" hidden></p>
-          <p class="rs-pots" id="rs-pots" hidden></p>
           <button type="button" class="rs-skip" id="rs-skip">Skip to result</button>
         </section>
 
         <ol class="rs-tests" id="rs-tests" aria-label={`The five ${format.matchPlural}`}></ol>
+        <p class="rs-pots" id="rs-pots" hidden></p>
         <a class="rs-again-bottom" href={format.playHref} data-rs-again>Draft again</a>
         <a class="rs-more" id="rs-more-1" href="#rs-grade-panel" hidden>How strong was your XI <span aria-hidden="true">↓</span></a>
       </div>
@@ -100,7 +100,6 @@ const formatJson = safe(format);
           <a class="rs-save" id="rs-save" hidden>Save the card</a>
           <p class="rs-copied" id="rs-copied" role="status"></p>
         </div>
-        {format.credit && <p class="rs-note rs-credit">{format.credit}</p>}
       </div>
 
     </main>
@@ -241,7 +240,7 @@ const formatJson = safe(format);
         (t.hero ? `<p class="rs-test-hero"><span aria-hidden="true">★</span> ${esc(t.hero)}${t.heroSide === 'house' ? ` <em>(${esc(OPP)})</em>` : ''}</p>` : '') +
         `<p class="rs-test-run">${running}</p>` +
         `</div>` +
-        (t.also ? `<p class="rs-test-also">${esc(t.also)}${t.alsoSide === 'house' ? ` <em>(${esc(OPP)})</em>` : ' <em>(you)</em>'}</p>` : '') +
+        (t.also ? `<p class="rs-test-also">${esc(t.also)}${t.alsoSide === 'house' ? ` <em>(${esc(OPP)})</em>` : ' <em>(Your XI)</em>'}</p>` : '') +
         `</li>`
       );
     }
@@ -442,7 +441,7 @@ const formatJson = safe(format);
         $('rs-grade-panel').hidden = false;
         if (!('IntersectionObserver' in window)) playBars();
         if (series.playerOfSeries) {
-          $('rs-pots').textContent = `Player of the series: ${series.playerOfSeries.name}${series.playerOfSeries.side === 'house' ? ` (${OPP})` : ''}`;
+          $('rs-pots').innerHTML = `<span>Player of the series</span><b>${esc(series.playerOfSeries.name)}</b><em>${series.playerOfSeries.side === 'house' ? esc(OPP) : 'Your XI'}</em>`;
           $('rs-pots').hidden = false;
         }
         revealed = true;
@@ -717,7 +716,13 @@ const formatJson = safe(format);
     .rs-more span { display: inline-block; animation: rs-nudge 1.4s ease-in-out infinite; }
     @keyframes rs-nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
     .rs-tests { flex: 1; width: 100%; grid-template-rows: repeat(5, minmax(0, 1fr)); }
-    .rs-pots { margin: 6px 0 0; font: 600 12px Inter, sans-serif; letter-spacing: 0.04em; color: var(--rs-text); }
+    .rs-pots {
+      flex: none; box-sizing: border-box; width: 100%; max-width: 760px; margin: 8px auto 0; padding: 7px 12px; display: flex; align-items: baseline; gap: 10px;
+      border-radius: 10px; border: 1px solid rgba(198, 255, 61, 0.35); background: linear-gradient(160deg, #16223a, #0b1020 70%);
+    }
+    .rs-pots span { font: 700 10px Inter, sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rs-lime); }
+    .rs-pots b { flex: 1; min-width: 0; font: 400 19px/1 var(--rs-display); letter-spacing: 0.04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rs-pots em { font: 600 10.5px Inter, sans-serif; font-style: normal; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rs-muted); }
     .rs-pots[hidden] { display: none; }
     .rs-test-also { margin: 0; font: 500 11.5px Inter, sans-serif; color: var(--rs-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .rs-test-also em { font-style: normal; color: var(--rs-dim); }
@@ -745,6 +750,8 @@ const formatJson = safe(format);
     .rs-grade-words { display: flex; flex-direction: column; gap: 4px; text-align: left; }
     .rs-grade-words b { font: 400 34px/1 var(--rs-display); letter-spacing: 0.04em; }
     .rs-grade-words i { font: 600 12px Inter, sans-serif; font-style: normal; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rs-muted); }
+    .rs-tip { opacity: 0; transition: opacity 0.5s 0.25s; }
+    .rs-pg.is-graded .rs-tip { opacity: 1; }
     .rs-tip { margin: 0; width: 100%; max-width: 560px; box-sizing: border-box; padding: 10px 14px; border-radius: 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--rs-text); font: 500 13.5px/1.4 Inter, sans-serif; }
     .rs-tip b { margin-right: 6px; color: var(--rs-lime); font: 700 10.5px Inter, sans-serif; letter-spacing: 0.14em; text-transform: uppercase; }
     .rs-pg .rs-again-bottom { max-width: 560px; }
@@ -801,7 +808,7 @@ const formatJson = safe(format);
       .rs-test { gap: 1px; padding: 3px 10px; border-radius: 10px; }
       .rs-test-n { font-size: 15px; }
       .rs-test-also { font-size: 10.5px; }
-      .rs-pots { margin-top: 3px; font-size: 11px; }
+      .rs-pots { margin-top: 6px; padding: 5px 10px; }
       .rs-str { grid-template-columns: 76px 1fr 40px; }
       .rs-str-lab { font-size: 20px; }
       .rs-bar-val { font-size: 26px; }

@@ -74,8 +74,8 @@ async function floodlightLayer(): Promise<HTMLCanvasElement> {
   // Fade the masts and beams out before the XI panel.
   c.globalCompositeOperation = 'destination-in';
   const fade = c.createLinearGradient(0, 0, 0, vh * scale);
-  fade.addColorStop(0.5, '#000');
-  fade.addColorStop(1, 'rgba(0,0,0,0)');
+  fade.addColorStop(0.15, '#000');
+  fade.addColorStop(0.8, 'rgba(0,0,0,0)');
   c.fillStyle = fade;
   c.fillRect(0, 0, W, H);
   return layer;
@@ -128,7 +128,10 @@ export async function drawShareCard(d: CardData): Promise<HTMLCanvasElement> {
   c.fillStyle = grass;
   c.fillRect(0, 0, W, H);
   try {
+    // Dimmed (owner, 2026-10-02): at full strength the beams washed out the headline and score.
+    c.globalAlpha = 0.38;
     c.drawImage(await floodlightLayer(), 0, 0);
+    c.globalAlpha = 1;
   } catch {
     /* no floodlights if the SVG can't be drawn — the card still works */
   }

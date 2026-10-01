@@ -58,7 +58,6 @@ for (const f of FORMATS) {
     await expect(page.locator("#rs-card-img")).toHaveAttribute("alt", /My XI: .+\. .+ XI: .+/);
     if (f.inHouse) await expect(page.locator("#rs-card-img")).toHaveAttribute("alt", new RegExp(f.inHouse));
     await expect(page.locator("#rs-rank")).toContainText("% of all drafts");
-    await expect(page.locator(".rs-credit")).toContainText("Cricsheet");
 
     // "Draft again" returns to this format's draft, and the Test result page still works on its own.
     await expect(page.locator(".rs-p1 .rs-again-bottom")).toHaveAttribute("href", `/${f.id}/play`);
