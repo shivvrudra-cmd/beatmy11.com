@@ -40,7 +40,7 @@ export function reportScore(r: ScoreReport): void {
   });
 }
 
-export type EventName = 'shared' | 'view_home' | 'view_play' | 'view_result' | 'view_shared' | 'daily_started' | 'daily_completed';
+export type EventName = 'shared' | 'view_home' | 'view_play' | 'view_result' | 'view_shared' | 'daily_started' | 'daily_completed' | 'challenge_started' | 'challenge_completed';
 
 export function reportEvent(name: EventName): void {
   post('/api/events', { name });

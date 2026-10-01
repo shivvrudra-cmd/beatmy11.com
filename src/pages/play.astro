@@ -51,6 +51,7 @@ const draftCombosJson = json(draftSpinCombos());
     <main>
       <section class="fl-stage" aria-labelledby="fl-status-title">
         <p class="fl-daily" id="fl-daily" hidden></p>
+        <button type="button" class="fl-link fl-leave" id="fl-leave" hidden>Leave challenge, play normally</button>
         <div class="fl-reels">
           <div class="fl-reel" id="fl-reel-nation">
             <span class="fl-reel-cap">Nation</span>
@@ -147,6 +148,9 @@ const draftCombosJson = json(draftSpinCombos());
     import {
       utcDayKey, dayNumber, loadDaily, hasPlayed, activeDailyDay, setActiveDaily, dailySpinIndex, upcomingCombos,
     } from '../lib/daily';
+    import {
+      decodeSpins, parseScoreline, scorelineText, loadChallenge, saveChallenge,
+    } from '../lib/challenge';
 
     // ------------------------------------------------------------------ data
     const read = (id) => JSON.parse(document.getElementById(id).textContent || 'null');
@@ -279,6 +283,9 @@ const draftCombosJson = json(draftSpinCombos());
     let draft = createDraft();
     // Daily Challenge (/play?daily=1): same spins for everyone each UTC day, no respins.
     let isDaily = false;
+    // Challenge-a-friend (/play?c=…&vs=3-2): the friend's six spins, no respins, beat their scoreline.
+    let challenge = null;
+    let fixedSpins = null;
     const dailyDay = utcDayKey();
     let selectedUid = null;
     let moveFrom = null;
@@ -478,9 +485,19 @@ const draftCombosJson = json(draftSpinCombos());
       const options = combosForUpcomingRound();
       if (!options.length) return;
       // Daily Challenge: the spin is fixed by the date, so every player draws the same.
-      const combo = isDaily
-        ? options[dailySpinIndex(dailyDay, draft.currentRound, options.length)]
-        : options[Math.floor(Math.random() * options.length)];
+      const combo = fixedSpins
+        ? fixedSpins[draft.currentRound]
+        : isDaily
+          ? options[dailySpinIndex(dailyDay, draft.currentRound, options.length)]
+          : options[Math.floor(Math.random() * options.length)];
+      if (!combo) return;
+      if (challenge && draft.currentRound === 0) {
+        // A new draft on this challenge: count the try.
+        challenge = { ...challenge, tries: challenge.tries + 1 };
+        saveChallenge(challenge);
+        showChallengeBanner();
+        reportEvent('challenge_started');
+      }
       selectedUid = null;
       moveFrom = null;
       flashMsg('');
@@ -921,7 +938,51 @@ const draftCombosJson = json(draftSpinCombos());
       renderFinish();
     }
 
+    function showChallengeBanner() {
+      const tag = $('fl-daily');
+      const n = Math.max(1, challenge.tries);
+      tag.textContent = `Challenge: beat ${scorelineText(challenge.vs)} · same spins as your friend · no respins · attempt ${n}`;
+      tag.hidden = false;
+      $('fl-leave').hidden = false;
+    }
+    $('fl-leave').addEventListener('click', () => {
+      saveChallenge(null);
+      clearUserXI();
+      clearDraft();
+      location.href = '/play';
+    });
+
     (function restore() {
+      const qs = new URLSearchParams(location.search);
+      if (qs.get('daily') === '1') {
+        saveChallenge(null); // the daily takes over from a friend's challenge
+      } else if (qs.get('c')) {
+        const spins = decodeSpins(qs.get('c'), LEGEND_COMBOS, DRAFT_COMBOS);
+        const vs = parseScoreline(qs.get('vs'));
+        if (spins && vs) {
+          const existing = loadChallenge();
+          if (existing && existing.spins === qs.get('c')) {
+            saveChallenge({ ...existing, vs }); // same spins again: keep the try count
+          } else {
+            const saved = loadDraft();
+            const inProgress = saved && Array.isArray(saved.picks) && saved.picks.length > 0;
+            if (inProgress && !window.confirm('Taking your friend’s challenge will replace your draft in progress. Continue?')) {
+              location.replace('/play');
+              return;
+            }
+            clearUserXI();
+            clearDraft();
+            setActiveDaily(null);
+            saveChallenge({ spins: qs.get('c'), vs, tries: 0, best: null });
+          }
+        }
+      }
+      challenge = loadChallenge();
+      fixedSpins = challenge ? decodeSpins(challenge.spins, LEGEND_COMBOS, DRAFT_COMBOS) : null;
+      if (challenge && !fixedSpins) {
+        saveChallenge(null);
+        challenge = null;
+      }
       if (new URLSearchParams(location.search).get('daily') === '1') {
         if (hasPlayed(loadDaily(), dailyDay)) {
           location.replace('/');
@@ -940,8 +1001,11 @@ const draftCombosJson = json(draftSpinCombos());
           setActiveDaily(dailyDay);
         }
       }
-      isDaily = activeDailyDay() === dailyDay;
-      if (isDaily) {
+      isDaily = !challenge && activeDailyDay() === dailyDay;
+      if (challenge) {
+        showChallengeBanner();
+        draft = { ...draft, eraRespinsLeft: 0, nationRespinsLeft: 0 };
+      } else if (isDaily) {
         const tag = $('fl-daily');
         tag.textContent = `Daily Challenge #${dayNumber(dailyDay)} · same spins for everyone today · no respins`;
         tag.hidden = false;
@@ -952,7 +1016,7 @@ const draftCombosJson = json(draftSpinCombos());
       if (raw) {
         const restored = deserializeDraft(raw, (uid) => uidIndex[uid] || uidIndex[legacyUid(uid)] || null);
         if (restored && restored.selectedPlayers.length) {
-          draft = isDaily ? { ...restored, eraRespinsLeft: 0, nationRespinsLeft: 0 } : restored;
+          draft = isDaily || challenge ? { ...restored, eraRespinsLeft: 0, nationRespinsLeft: 0 } : restored;
           renderAll();
           announce(
             draft.gameComplete
@@ -1122,6 +1186,8 @@ const draftCombosJson = json(draftSpinCombos());
     .fl-cta[hidden] { display: none; }
     .fl-daily { margin: 0 auto 10px; max-width: 520px; text-align: center; font: 600 12px/1.4 Inter, sans-serif; letter-spacing: 0.04em; color: var(--fl-lime); background: var(--fl-lime-soft); border: 1px solid rgba(198, 255, 61, 0.35); border-radius: 999px; padding: 6px 14px; }
     .fl-daily[hidden] { display: none; }
+    .fl-leave { margin: 0 auto 8px; min-height: 28px; font-size: 12px; }
+    .fl-leave[hidden] { display: none; }
     .fl-link { display: block; margin: 12px auto 0; background: none; border: 0; color: var(--fl-muted); text-decoration: underline; cursor: pointer; font: 500 14px Inter, sans-serif; min-height: 40px; }
 
     .fl-dock {

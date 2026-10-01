@@ -80,6 +80,10 @@ const calibrationJson = safe(calibration);
       <div class="rs-panel rs-p2" id="rs-p2" hidden>
         <p class="rs-error" id="rs-error" hidden></p>
         <p class="rs-daily" id="rs-daily" hidden></p>
+        <div class="rs-daily" id="rs-challenge" hidden>
+          <p id="rs-challenge-text"></p>
+          <button type="button" class="rs-leave" id="rs-leave">Leave the challenge</button>
+        </div>
 
         <figure class="rs-card" id="rs-card" hidden>
           <img id="rs-card-img" width="1080" height="1350" alt="Your share card: the series scoreline and your XI" />
@@ -124,6 +128,9 @@ const calibrationJson = safe(calibration);
       utcDayKey, dayNumber, loadDaily, saveDaily, recordResult, hasPlayed, currentStreak,
       activeDailyDay, setActiveDaily, dailyShareText,
     } from '../lib/daily';
+    import {
+      encodeSpins, loadChallenge, saveChallenge, betterOf, challengeOutcome, challengeShareText, scorelineText,
+    } from '../lib/challenge';
 
     const read = (id) => JSON.parse(document.getElementById(id).textContent || 'null');
     const HOUSE_XI = read('bm11-house-xi') || [];
@@ -321,6 +328,29 @@ const calibrationJson = safe(calibration);
         el.hidden = false;
       }
 
+      // Challenge-a-friend: compare with the scoreline to beat, count the tries.
+      let challengeShare = '';
+      const ch = loadChallenge();
+      if (ch) {
+        const mine = { user: series.user, house: series.house };
+        const best = betterOf(ch.best, mine);
+        saveChallenge({ ...ch, best });
+        const out = challengeOutcome(ch.vs, mine);
+        const tries = Math.max(1, ch.tries);
+        const head =
+          out === 'beat' ? `You beat your friend’s ${scorelineText(ch.vs)}!`
+          : out === 'matched' ? `You matched your friend’s ${scorelineText(ch.vs)}.`
+          : `Your friend’s ${scorelineText(ch.vs)} still stands.`;
+        const el = $('rs-challenge-text');
+        el.innerHTML =
+          `<strong>${head}</strong> You got ${scorelineText(mine)} on attempt ${tries}` +
+          (tries > 1 ? ` (best ${scorelineText(best)})` : '') +
+          `<span>Same six spins as your friend. ${out === 'short' ? 'Redraft and try to top it.' : 'Share it back, or redraft for a better one.'}</span>`;
+        $('rs-challenge').hidden = false;
+        challengeShare = challengeShareText(ch.vs, mine, tries);
+        reportEvent('challenge_completed');
+      }
+
       // Ratings, revealed: the best pick in the user's XI.
       const sorted = [...userXI].sort((a, b) => b.rating - a.rating);
       const marks = {
@@ -385,8 +415,16 @@ const calibrationJson = safe(calibration);
       // shows that result) and carries the XI so the page can list it. The
       // XI itself travels as a picture: the share card, drawn here.
       const slug = `${series.user}-${series.house}`;
-      const url = `${location.origin}/r/${slug}?xi=${encodeXI(userXI.map((p) => ({ id: p.id, role: p.role })))}`;
-      const shareText = dailyShare ||
+      // The six spins this XI was drafted from ride along, so a friend can draft from the same draws.
+      let spinsParam = '';
+      try {
+        const hist = JSON.parse(localStorage.getItem('beatmy11.draft.v1') || 'null')?.spinHistory;
+        if (Array.isArray(hist) && hist.length === 6) spinsParam = encodeSpins(hist.map((h) => ({ era: h.era, nation: h.nation })));
+      } catch {
+        /* no spins: the link still works as a normal share */
+      }
+      const url = `${location.origin}/r/${slug}?xi=${encodeXI(userXI.map((p) => ({ id: p.id, role: p.role })))}${spinsParam ? `&c=${spinsParam}` : ''}`;
+      const shareText = challengeShare || dailyShare ||
         (series.user === 5
           ? `I whitewashed the World XI 5–0 with my all-time Test XI 🏏 Can you?`
           : series.user > series.house
@@ -458,7 +496,12 @@ const calibrationJson = safe(calibration);
       });
     }
 
-    // "Draft again" starts a fresh draft.
+    $('rs-leave')?.addEventListener('click', () => {
+      saveChallenge(null);
+      $('rs-challenge').hidden = true;
+    });
+
+    // "Draft again" starts a fresh draft (a challenge stays on, with the same spins).
     for (const a of document.querySelectorAll('[data-rs-again]')) {
       a.addEventListener('click', () => {
         try {
@@ -578,6 +621,8 @@ const calibrationJson = safe(calibration);
     .rs-daily { max-width: 560px; margin: 14px auto 0; padding: 12px 16px; text-align: center; font: 600 15px/1.4 Inter, sans-serif; color: #c6ff3d; background: rgba(198, 255, 61, 0.1); border: 1px solid rgba(198, 255, 61, 0.35); border-radius: 14px; }
     .rs-daily span { display: block; margin-top: 4px; font: 400 12px/1.4 Inter, sans-serif; color: #9aa6c4; }
     .rs-daily[hidden] { display: none; }
+    .rs-daily p { margin: 0; }
+    .rs-leave { margin-top: 8px; background: none; border: 0; color: #9aa6c4; text-decoration: underline; font: 500 12px Inter, sans-serif; cursor: pointer; }
     .rs-error { max-width: 560px; margin: 18px auto 0; text-align: center; color: #ffd2cc; }
     @media (min-width: 760px) {
       .rs-cols { grid-template-columns: 1fr 1fr; }

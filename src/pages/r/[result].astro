@@ -54,7 +54,8 @@ const lost = r.user < r.house;
         <h2 class="sr-h2">Their XI</h2>
         <ol class="sr-sheet" id="sr-sheet"></ol>
       </div>
-      <a class="fs-cta" href="/play">Draft your XI</a>
+      <a class="fs-cta" href="/play" id="sr-cta" data-slug={r.slug}>Draft your XI</a>
+      <a class="fs-link" href="/play" id="sr-own" hidden>Or draft your own, random spins</a>
       <a class="fs-link" href="/">How it works</a>
     </section>
   </FloodlitShell>
@@ -66,6 +67,14 @@ const lost = r.user < r.house;
     const ROLE_SHORT = { opener: 'OPN', 'middle-order': 'BAT', wicketkeeper: 'WK', 'all-rounder': 'AR', spinner: 'SPIN', 'fast-bowler': 'PACE' };
     const names = JSON.parse(document.getElementById('sr-names')?.textContent || '{}');
     const picks = decodeXI(new URLSearchParams(location.search).get('xi'), (id) => Object.hasOwn(names, id));
+    // A challenge link carries the sender's six spins: offer them as the main action.
+    const spins = new URLSearchParams(location.search).get('c');
+    if (spins && /^[A-Za-z0-9.\-]{10,200}$/.test(spins)) {
+      const cta = document.getElementById('sr-cta');
+      cta.textContent = 'Take the challenge: same spins';
+      cta.setAttribute('href', `/play?c=${encodeURIComponent(spins)}&vs=${cta.dataset.slug}`);
+      document.getElementById('sr-own').hidden = false;
+    }
     if (picks) {
       const sheet = document.getElementById('sr-sheet');
       picks.forEach((p, i) => {
