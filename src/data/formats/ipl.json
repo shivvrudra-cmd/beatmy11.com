@@ -14,7 +14,9 @@
    "Chennai Super Kings"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": null,
   "roleSource": "match-data",
@@ -249,7 +251,9 @@
    "Mumbai Indians"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -938,7 +942,9 @@
    "Sunrisers Hyderabad"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -985,7 +991,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -1420,7 +1427,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -1529,7 +1537,9 @@
    "Lucknow Super Giants"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -1665,7 +1675,9 @@
    "Mumbai Indians"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -3827,7 +3839,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -4827,7 +4840,9 @@
    "Sunrisers Hyderabad"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -5156,7 +5171,9 @@
    "Gujarat Titans"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -5685,7 +5702,8 @@
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
@@ -7166,7 +7184,9 @@
    "Punjab Kings"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -7218,7 +7238,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -7791,7 +7812,9 @@
    "Kolkata Knight Riders"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -9293,7 +9316,9 @@
    "Lucknow Super Giants"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -10620,7 +10645,9 @@
    "Chennai Super Kings"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -10842,7 +10869,9 @@
    "Lucknow Super Giants"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": null,
   "roleSource": "match-data",
@@ -12497,7 +12526,9 @@
    "Sunrisers Hyderabad"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -12799,7 +12830,9 @@
    "Mumbai Indians"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -13288,7 +13321,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -13866,7 +13900,8 @@
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
@@ -14128,7 +14163,9 @@
    "Mumbai Indians"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -14182,7 +14219,8 @@
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
@@ -15336,7 +15374,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -15446,7 +15485,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -15746,7 +15786,9 @@
    "Punjab Kings"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": null,
   "roleSource": "match-data",
@@ -15818,7 +15860,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -16152,7 +16195,9 @@
    "Gujarat Titans"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -16499,7 +16544,9 @@
    "Royal Challengers Bengaluru"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -19005,7 +19052,9 @@
    "Delhi Capitals"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -19291,7 +19340,9 @@
    "Lucknow Super Giants"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -19415,7 +19466,9 @@
    "Kolkata Knight Riders"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": null,
   "roleSource": "match-data",
@@ -19831,7 +19884,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -20601,7 +20655,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": "pace",
@@ -20677,7 +20732,9 @@
    "Delhi Capitals"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": null,
   "roleSource": "match-data",
@@ -21270,7 +21327,9 @@
    "Rising Pune Supergiant"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -21532,7 +21591,9 @@
    "Pune Warriors"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": null,
   "roleSource": "match-data",
@@ -23123,7 +23184,9 @@
    "Punjab Kings"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": null,
   "roleSource": "match-data",
@@ -23235,7 +23298,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -23335,7 +23399,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -26723,7 +26788,9 @@
    "Rajasthan Royals"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -26980,7 +27047,9 @@
    "Chennai Super Kings"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -27810,7 +27879,9 @@
    "Sunrisers Hyderabad"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -28981,7 +29052,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": "pace",
@@ -29147,7 +29219,9 @@
    "Deccan Chargers"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -30392,7 +30466,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -30890,7 +30965,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -31958,7 +32034,8 @@
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
@@ -32199,7 +32276,9 @@
    "Punjab Kings"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -32958,7 +33037,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -33595,7 +33675,9 @@
    "Punjab Kings"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -33790,7 +33872,9 @@
    "Pune Warriors"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -33845,7 +33929,9 @@
    "Sunrisers Hyderabad"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": null,
   "roleSource": "match-data",
@@ -35544,7 +35630,9 @@
    "Royal Challengers Bengaluru"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -36611,7 +36699,9 @@
    "Mumbai Indians"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -37029,7 +37119,9 @@
    "Royal Challengers Bengaluru"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -37380,7 +37472,9 @@
    "Royal Challengers Bengaluru"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -37637,7 +37731,9 @@
    "Kochi Tuskers Kerala"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": null,
   "roleSource": "match-data",
@@ -38138,7 +38234,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -38641,7 +38738,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,

@@ -344,16 +344,20 @@ function main() {
         (kg && kg.position === 'Wicketkeeper') ||
         (p.stumpings >= 3 && p.stumpings / p.matches >= 0.05);
       const batSlot = openerShare >= 0.5 ? 'opener' : 'middle-order';
+      // The other batting position also counts if he batted there in 20%+ of his innings (10+ innings).
+      const otherSlot = batSlot === 'opener' ? 'middle-order' : 'opener';
+      const otherShare = batSlot === 'opener' ? 1 - openerShare : openerShare;
+      const batSlots = p.positions.length >= 10 && otherShare >= 0.2 ? [batSlot, otherSlot] : [batSlot];
 
       let primaryRole, secondaryRoles = [], roleSource = 'match-data';
       if (keeperEvidence && !regularBowler) {
         primaryRole = 'wicketkeeper';
-        secondaryRoles = [batSlot];
+        secondaryRoles = [...batSlots];
         roleSource = test ? 'test-data' : kg?.position === 'Wicketkeeper' ? 'kaggle' : 'match-data (stumpings)';
       } else if (regularBowler && genuineBatter) {
         primaryRole = 'all-rounder';
-        if (bowlingType.type) secondaryRoles = [bowlingType.type === 'spin' ? 'spinner' : 'fast-bowler', batSlot];
-        else secondaryRoles = [batSlot];
+        if (bowlingType.type) secondaryRoles = [bowlingType.type === 'spin' ? 'spinner' : 'fast-bowler', ...batSlots];
+        else secondaryRoles = [...batSlots];
         roleSource = 'match-data';
       } else if (regularBowler) {
         if (!bowlingType.type) {
@@ -365,6 +369,7 @@ function main() {
         roleSource = bowlingType.source;
       } else if (p.innings >= 1) {
         primaryRole = batSlot;
+        secondaryRoles = batSlots.slice(1);
       } else {
         exclude('never batted or bowled regularly');
         continue;
@@ -421,7 +426,7 @@ function writeReports(report) {
     '- Regular bowler: averages at least 40% of the format\'s bowling quota per match (ODI 24 balls, T20 9.6 balls).',
     '- Genuine batter: batting average at least 25 (ODI) / 18 (T20), batting in the top 7 in at least half their innings, 5+ innings.',
     '- All-rounder: regular bowler AND genuine batter.',
-    '- Opener: batted at 1 or 2 in at least half their innings; otherwise middle order.',
+    '- Opener: batted at 1 or 2 in at least half their innings; otherwise middle order. The other batting position is added as a second role when the player batted there in at least 20% of 10+ innings.',
     '- Wicketkeeper: keeper in the owner\'s Test data, or "Wicketkeeper" in the Kaggle profile, or 3+ stumpings at 1 per 20 matches; and not a regular bowler.',
     '- Spin or pace: Test data, then Kaggle bowling style, then Wikidata. Never guessed: unknown regular bowlers are left out and listed in white-ball-roles-needed.md.',
     '- ODI: players whose first Cricsheet ODI is before 2004 are left out: Cricsheet ODIs begin in late 2002, and players first seen in 2003 are mostly earlier debutants (Ponting, Gayle). Real 2003 debutants (e.g. Michael Clarke) are lost unless the owner confirms them.',

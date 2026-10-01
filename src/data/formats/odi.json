@@ -1378,7 +1378,9 @@
    "2020s"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -1543,7 +1545,9 @@
    "2010s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -2084,7 +2088,9 @@
    "2010s"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -2380,7 +2386,9 @@
    "2010s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -3418,7 +3426,9 @@
    "2010s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -3460,7 +3470,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -3710,7 +3721,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": true,
   "bowlingType": "spin",
@@ -4379,7 +4391,9 @@
    "2020s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": null,
   "roleSource": "match-data",
@@ -4669,7 +4683,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -4752,7 +4767,9 @@
    "2020s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": null,
   "roleSource": "match-data",
@@ -4879,7 +4896,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": "spin",
@@ -5045,7 +5063,9 @@
    "2020s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -6506,7 +6526,9 @@
    "2010s"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -6547,7 +6569,9 @@
    "2010s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -6629,7 +6653,9 @@
    "2020s"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -6841,7 +6867,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": true,
   "bowlingType": "spin",
@@ -8050,7 +8077,9 @@
    "2020s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -8091,7 +8120,9 @@
    "2010s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -8852,7 +8883,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -10973,7 +11005,9 @@
    "2010s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -11015,7 +11049,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -11808,7 +11843,9 @@
    "2010s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -12561,7 +12598,9 @@
    "2020s"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -12810,7 +12849,9 @@
    "2010s"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -13191,7 +13232,9 @@
    "2020s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -13358,7 +13401,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -14363,7 +14407,9 @@
    "2020s"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -14446,7 +14492,9 @@
    "2010s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -14488,7 +14536,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -15242,7 +15291,9 @@
    "2010s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -15371,7 +15422,9 @@
    "2020s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -15913,7 +15966,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": true,
   "bowlingType": "pace",
@@ -16501,7 +16555,9 @@
    "2010s"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -16586,7 +16642,9 @@
    "2020s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -16627,7 +16685,9 @@
    "2020s"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -16753,7 +16813,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -17960,7 +18021,9 @@
    "2010s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -18124,7 +18187,9 @@
    "2010s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -18375,7 +18440,9 @@
    "2020s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": null,
   "roleSource": "match-data",
@@ -18665,7 +18732,8 @@
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "fast-bowler",
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
@@ -19082,7 +19150,9 @@
    "2010s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -19455,7 +19525,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -19708,7 +19779,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -21086,7 +21158,9 @@
    "2020s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -21294,7 +21368,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -21586,7 +21661,9 @@
    "2000s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -22213,7 +22290,9 @@
    "2020s"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -25086,7 +25165,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -26164,7 +26244,9 @@
    "2000s"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -26499,7 +26581,9 @@
    "2010s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": null,
   "roleSource": "match-data",
@@ -27043,7 +27127,8 @@
   "primaryRole": "all-rounder",
   "secondaryRoles": [
    "spinner",
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
@@ -27836,7 +27921,9 @@
    "2020s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -27879,7 +27966,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": "spin",
@@ -28047,7 +28135,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": "spin",
@@ -28089,7 +28178,9 @@
    "2010s"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -28380,7 +28471,9 @@
    "2010s"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -28505,7 +28598,9 @@
    "2020s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -29086,7 +29181,9 @@
    "2010s"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": null,
   "roleSource": "match-data",
@@ -31428,7 +31525,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": null,
@@ -32014,7 +32112,9 @@
    "2010s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -33177,7 +33277,9 @@
    "2010s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -33260,7 +33362,9 @@
    "2020s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -34886,7 +34990,9 @@
    "2020s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -35387,7 +35493,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "opener"
+   "opener",
+   "middle-order"
   ],
   "isWicketkeeper": true,
   "bowlingType": "pace",
@@ -35977,7 +36084,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": "spin",
@@ -36063,7 +36171,8 @@
   ],
   "primaryRole": "wicketkeeper",
   "secondaryRoles": [
-   "middle-order"
+   "middle-order",
+   "opener"
   ],
   "isWicketkeeper": true,
   "bowlingType": "pace",
@@ -36105,7 +36214,9 @@
    "2020s"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -36229,7 +36340,9 @@
    "2010s"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -36271,7 +36384,9 @@
    "2020s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -36731,7 +36846,9 @@
    "2010s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "pace",
   "roleSource": "match-data",
@@ -37809,7 +37926,9 @@
    "2020s"
   ],
   "primaryRole": "middle-order",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "opener"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
@@ -37891,7 +38010,9 @@
    "2020s"
   ],
   "primaryRole": "opener",
-  "secondaryRoles": [],
+  "secondaryRoles": [
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "match-data",
