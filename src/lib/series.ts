@@ -156,6 +156,12 @@ export interface SeriesStar {
   /** Headline name, e.g. "M Muralitharan". */
   name: string;
   side: 'user' | 'house';
+  /** Series totals, e.g. "412 runs", "20 wickets" or "268 runs, 9 wickets" (owner, 2026-10-02).
+   *  Generated flavour like the match headlines; never below what the match cards show. */
+  stat: string;
+  /** The same totals as numbers (null when the player has no line of that kind). */
+  runs: number | null;
+  wickets: number | null;
 }
 
 export interface SeriesResult {
@@ -416,6 +422,53 @@ function winSummary(team: string, rng: () => number): string {
   return `${team} win by ${intIn(rng, 18, 260)} runs`;
 }
 
+/** Runs and wickets a headline line shows: "X 187" / "X 87 (44)" → runs, "X 7/86" → wickets. */
+export function lineFigures(line: string): { runs: number; wickets: number } {
+  const bowl = /\s(\d+)\/\d+$/.exec(line);
+  if (bowl) return { runs: 0, wickets: Number(bowl[1]) };
+  const bat = /\s(\d+)(?: \(\d+\))?$/.exec(line);
+  return { runs: bat ? Number(bat[1]) : 0, wickets: 0 };
+}
+
+/**
+ * Series totals for the player of the series. The figures on the match cards are the floor
+ * (every run and wicket shown for him counts); the matches where he is not on a card add a
+ * modest, seeded amount sized for the format and scaled from his career average. PROVISIONAL
+ * ranges (flavour, like the headlines; they do not touch the scoreline):
+ *   runs    per other match: career average x 0.7–1.8 (Test, two innings), x 0.5–1.4 (ODI, T20)
+ *   wickets per other match: 2–5 (Test), 0–3 (ODI, T20)
+ * A limited-overs washout adds nothing; totals are capped at 900 runs / 34 wickets (Test),
+ * 500 / 18 (ODI), 350 / 16 (T20).
+ */
+function seriesTotals(
+  star: SeriesPlayer | undefined, name: string, side: 'user' | 'house', tests: TestMatch[], kind: SeriesFlavour['kind'], rng: () => number,
+): Pick<SeriesStar, 'stat' | 'runs' | 'wickets'> {
+  const test = kind === 'test';
+  let runs = 0, wickets = 0, batOthers = 0, bowlOthers = 0, bats = false, bowls = false;
+  for (const t of tests) {
+    const lines = [t.heroSide === side ? t.hero : '', t.alsoSide === side ? t.also : ''].filter((l) => l && l.replace(/\s+\d.*$/, '') === name);
+    const f = lines.map(lineFigures);
+    const r = f.reduce((s, x) => s + x.runs, 0), w = f.reduce((s, x) => s + x.wickets, 0);
+    runs += r; wickets += w;
+    if (r) bats = true;
+    if (w) bowls = true;
+    const rained = !test && t.result === 'draw' && !t.hero; // limited-overs washout: nobody played
+    if (!r && !rained) batOthers++;
+    if (!w && !rained) bowlOthers++;
+  }
+  if (bats) {
+    const avg = Number(test ? star?.stats.testAverage : star?.stats.battingAverage) || (test ? 30 : 25);
+    for (let i = 0; i < batOthers; i++) runs += Math.round(avg * (test ? 0.7 + 1.1 * rng() : 0.5 + 0.9 * rng()));
+    runs = Math.min(runs, test ? 900 : kind === 'odi' ? 500 : 350);
+  }
+  if (bowls) {
+    for (let i = 0; i < bowlOthers; i++) wickets += test ? intIn(rng, 2, 5) : intIn(rng, 0, 3);
+    wickets = Math.min(wickets, test ? 34 : kind === 'odi' ? 18 : 16);
+  }
+  const parts = [bats ? `${runs} runs` : '', bowls ? `${wickets} wickets` : ''].filter(Boolean);
+  return { stat: parts.join(', '), runs: bats ? runs : null, wickets: bowls ? wickets : null };
+}
+
 /**
  * Play the series. `userScore` and `houseScore` are the two XIs' team scores
  * from the seven-metric engine; `seed` comes from xiSeed(user XI).
@@ -490,7 +543,14 @@ export function playSeries(input: {
     tests.find((t) => t.hero && t.heroSide === starSide && t.result === starSide)?.hero ??
     tests.find((t) => t.hero && t.heroSide === starSide)?.hero ??
     tests.find((t) => t.also && t.alsoSide === starSide)?.also;
-  const playerOfSeries: SeriesStar | null = starLine ? { name: nameOf(starLine), side: starSide } : null;
+  // The totals use their own seeded stream, so adding them left every existing series unchanged.
+  const starName = starLine ? nameOf(starLine) : '';
+  const playerOfSeries: SeriesStar | null = starLine
+    ? {
+        name: starName, side: starSide,
+        ...seriesTotals(xiOf(starSide).find((p) => surname(p.name) === starName), starName, starSide, tests, flavour.kind, mulberry32((input.seed ^ 0x5e71e5) >>> 0)),
+      }
+    : null;
   return {
     user: band.user,
     house: band.house,

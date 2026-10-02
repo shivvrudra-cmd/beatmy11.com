@@ -12,7 +12,7 @@ import {
   mulberry32,
   xiSeed,
   testOrder,
-  playSeries, headlineName,
+  playSeries, headlineName, lineFigures,
   normCdf,
   normInv,
   type SeriesPlayer,
@@ -101,6 +101,8 @@ const mkP = (id: string, role: string, rating: number, avg?: number, bowl?: numb
 const userXI = [mkP('u1', 'opener', 80, 45), mkP('u2', 'middle-order', 70, 50), mkP('u3', 'fast-bowler', 85, 12, 23), mkP('u4', 'spinner', 60, 10, 29)];
 const houseXI = [mkP('h1', 'opener', 99, 99.9), mkP('h2', 'middle-order', 98, 52), mkP('h3', 'spinner', 99, 11, 22.7), mkP('h4', 'fast-bowler', 91, 22, 23.6)];
 const calibration = { scores: sample, source: 'test', generated: 'test' };
+/** Recorded before the series stat was added (2026-10-02): results, first headline, first summary. */
+const SERIES_1234 = 'uuhhh|P U2 123|Your XI win by 5 wickets';
 {
   const a = playSeries({ userScore: 70, houseScore: 80, userXI, houseXI, calibration, seed: 1234 });
   const b = playSeries({ userScore: 70, houseScore: 80, userXI, houseXI, calibration, seed: 1234 });
@@ -156,6 +158,58 @@ const calibration = { scores: sample, source: 'test', generated: 'test' };
   const hi = playSeries({ userScore: 1000, houseScore: 80, userXI, houseXI, calibration, seed: 5 });
   const lo = playSeries({ userScore: 0, houseScore: 80, userXI, houseXI, calibration, seed: 5 });
   ok(hi.topPercent <= 1 && lo.topPercent >= 99, 'top-% figure tracks the rank');
+}
+
+{
+  // Player of the series: series totals fit for the format and never below what the cards show.
+  ok(lineFigures('M Muralitharan 7/86').wickets === 7 && lineFigures('B Lara 213').runs === 213 && lineFigures('C Gayle 87 (44)').runs === 87, 'figures read off a headline');
+  const wbP = (id: string, role: string, rating: number, avg: number, sr: number, econ: number): SeriesPlayer => ({
+    id, name: `Player ${id.toUpperCase()}`, role, rating, stats: { battingAverage: avg, strikeRate: sr, economy: econ },
+  });
+  const wbUser = [wbP('u1', 'opener', 80, 38, 140, 0), wbP('u2', 'middle-order', 70, 30, 150, 0), wbP('u3', 'fast-bowler', 85, 8, 90, 7.2), wbP('u4', 'all-rounder', 75, 27, 145, 8.1)];
+  const wbHouse = [wbP('h1', 'opener', 95, 42, 150, 0), wbP('h2', 'middle-order', 92, 36, 160, 0), wbP('h3', 'spinner', 96, 9, 100, 6.4), wbP('h4', 'fast-bowler', 94, 7, 80, 6.9)];
+  const LIMITS = { test: { runs: [52, 900], wkts: [5, 34] }, odi: { runs: [62, 500], wkts: [3, 18] }, t20: { runs: [48, 350], wkts: [3, 16] } } as const;
+  for (const kind of ['test', 'odi', 't20'] as const) {
+    let below = 0, implausible = 0, empty = 0, unstable = 0, n = 0;
+    const seen = new Set<string>();
+    for (let seed = 1; seed <= 400; seed++) {
+      const args = {
+        userScore: 60 + (seed % 30), houseScore: 80, calibration, seed,
+        userXI: kind === 'test' ? userXI : wbUser, houseXI: kind === 'test' ? houseXI : wbHouse,
+        flavour: { venues: VENUES, opponent: 'World XI', kind },
+      };
+      const s = playSeries(args);
+      const star = s.playerOfSeries;
+      if (!star) continue;
+      n++;
+      if (JSON.stringify(playSeries(args).playerOfSeries) !== JSON.stringify(star)) unstable++;
+      // Everything the cards show for him.
+      let shownRuns = 0, shownWkts = 0;
+      for (const t of s.tests) {
+        for (const [line, side] of [[t.hero, t.heroSide], [t.also, t.alsoSide]] as const) {
+          if (!line || side !== star.side || !line.startsWith(`${star.name} `)) continue;
+          const f = lineFigures(line);
+          shownRuns += f.runs; shownWkts += f.wickets;
+        }
+      }
+      if (!star.stat || (star.runs === null && star.wickets === null)) empty++;
+      if ((shownRuns > 0) !== (star.runs !== null) || (shownWkts > 0) !== (star.wickets !== null)) below++;
+      if ((star.runs ?? Infinity) < shownRuns || (star.wickets ?? Infinity) < shownWkts) below++;
+      const L = LIMITS[kind];
+      if (star.runs !== null && (star.runs < L.runs[0] || star.runs > L.runs[1])) implausible++;
+      if (star.wickets !== null && (star.wickets < L.wkts[0] || star.wickets > L.wkts[1])) implausible++;
+      if (star.runs !== null && !star.stat.includes(`${star.runs} runs`)) empty++;
+      if (star.wickets !== null && !star.stat.includes(`${star.wickets} wickets`)) empty++;
+      seen.add(star.stat);
+    }
+    ok(n > 300 && empty === 0, `${kind}: the player of the series always has a series stat`, { n, empty });
+    ok(below === 0, `${kind}: the series stat is never below the figures on the match cards`, below);
+    ok(implausible === 0, `${kind}: series totals are plausible for five matches`, implausible);
+    ok(unstable === 0 && seen.size > 20, `${kind}: same XI, same stat; different XIs vary`, { unstable, distinct: seen.size });
+  }
+  // Adding the stat did not change the series itself (separate seeded stream).
+  const s = playSeries({ userScore: 70, houseScore: 80, userXI, houseXI, calibration, seed: 1234 });
+  ok(s.tests.map((t) => t.result[0]).join('') + '|' + s.tests[0].hero + '|' + s.tests[0].summary === SERIES_1234, 'the series for a known seed is unchanged', s.tests.map((t) => t.result[0]).join('') + '|' + s.tests[0].hero + '|' + s.tests[0].summary);
 }
 
 {
