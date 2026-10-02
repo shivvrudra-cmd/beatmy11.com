@@ -38,7 +38,22 @@ export interface BadgePlayer {
   /** Every era (decade, "legends", or IPL season block) the player belongs to. */
   eras: string[];
   overseas?: boolean;
+  /** Career matches in this format (an IPL card: matches in that stint). Absent = unknown. */
+  matches?: number | null;
+  /** The role the player fills in this XI (the slot's role). */
+  role?: string;
 }
+
+/**
+ * Match counts for the two career-length badges. PROVISIONAL (badges only; they never touch
+ * scoring): "Cult heroes" = nobody above `few`; "Iron men" = everybody at or above `many`.
+ */
+export const BADGE_MATCHES: Record<'test' | 'odi' | 't20i' | 'ipl', { few: number; many: number; noun: string }> = {
+  test: { few: 30, many: 100, noun: 'Tests' },
+  odi: { few: 60, many: 200, noun: 'ODIs' },
+  t20i: { few: 30, many: 75, noun: 'T20Is' },
+  ipl: { few: 30, many: 50, noun: 'matches in the stint' },
+};
 export interface Badge { id: string; name: string; why: string }
 
 /**
@@ -58,6 +73,17 @@ export function badgesFor(xi: BadgePlayer[], opts: { format: 'test' | 'odi' | 't
   if (xi.every((p) => p.eras.some((e) => opts.modern.includes(e)))) out.push({ id: 'new-generation', name: 'New generation', why: 'Every player from the modern eras' });
   if (opts.format === 'test' && xi.every((p) => !p.eras.includes('legends'))) out.push({ id: 'no-legends', name: 'No legends', why: 'Not one player from the Legends era' });
   if (ipl && xi.every((p) => !p.overseas)) out.push({ id: 'homegrown', name: 'Homegrown', why: 'No overseas players' });
+  // 2026-10-02: four more, each from data the site holds (eras, match counts, slot roles).
+  const shared = opts.allEras.filter((e) => xi.every((p) => p.eras.includes(e)));
+  if (shared.length) out.push({ id: 'one-era', name: ipl ? 'One season block' : 'One era', why: `All eleven played in ${shared[0] === 'legends' ? 'the Legends era' : ipl ? shared[0] : `the ${shared[0]}`}` });
+  const m = BADGE_MATCHES[opts.format];
+  // Unknown match counts never earn a badge.
+  if (xi.every((p) => typeof p.matches === 'number')) {
+    if (xi.every((p) => (p.matches as number) <= m.few)) out.push({ id: 'cult-heroes', name: 'Cult heroes', why: `Nobody with more than ${m.few} ${m.noun}` });
+    if (xi.every((p) => (p.matches as number) >= m.many)) out.push({ id: 'iron-men', name: 'Iron men', why: `Everyone with ${m.many} or more ${m.noun}` });
+  }
+  const flex = (role: string) => xi.filter((p) => p.role === role).length;
+  if (flex('spinner') === 2) out.push({ id: 'spin-twins', name: 'Spin twins', why: 'Two spinners at 7 and 8' });
   return out;
 }
 
