@@ -816,7 +816,21 @@ const formatJson = json(format);
     // that role becomes the open tab (and stays open, like a tapped tab).
     if (TABS) {
       const userTakesOver = () => { pagerTarget = null; window.clearTimeout(pagerFix); };
-      cardsEl.addEventListener('touchstart', userTakesOver, { passive: true });
+      // A finger on the list: the browser snaps when it lifts. If the list is ever left between
+      // two roles once scrolling has stopped, it is nudged onto the nearer one.
+      let touching = false, pagerSettle = 0;
+      const settleSoon = (pager) => {
+        window.clearTimeout(pagerSettle);
+        pagerSettle = window.setTimeout(() => {
+          if (touching || pagerTarget !== null || !pager.isConnected || !pager.clientWidth) return;
+          const left = Math.round(pager.scrollLeft / pager.clientWidth) * pager.clientWidth;
+          if (Math.abs(pager.scrollLeft - left) > 1) pager.scrollTo({ left, behavior: reduceMotion() ? 'auto' : 'smooth' });
+        }, 300);
+      };
+      cardsEl.addEventListener('touchstart', () => { touching = true; userTakesOver(); }, { passive: true });
+      const lifted = () => { touching = false; const p = $('fl-pager'); if (p) settleSoon(p); };
+      cardsEl.addEventListener('touchend', lifted, { passive: true });
+      cardsEl.addEventListener('touchcancel', lifted, { passive: true });
       cardsEl.addEventListener('wheel', userTakesOver, { passive: true });
       cardsEl.addEventListener('scroll', (e) => {
         const pager = e.target;
@@ -826,6 +840,7 @@ const formatJson = json(format);
           if (Math.abs(pager.scrollLeft - pagerTarget * pager.clientWidth) < 2) { pagerTarget = null; window.clearTimeout(pagerFix); }
           return;
         }
+        settleSoon(pager);
         const role = poolTabRoles[Math.round(pager.scrollLeft / pager.clientWidth)];
         if (!role || role === poolTab) return;
         poolTab = role;
