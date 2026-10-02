@@ -186,6 +186,9 @@ function run(id: WbFormatId) {
   }
   console.log(`scorelines (par ${parGap}${OWNER_DIFFICULTY.has(id) ? ', owner: fine for now' : `, PROVISIONAL: tuned to ~${TARGET_WIN * 100}% wins; Test ladder would give ${(winShare(PAR_GAP) * 100).toFixed(1)}%`}): ` + OUTCOME_BANDS.map((b) => `${b.user}-${b.house} ${(((tally.get(`${b.user}-${b.house}`) ?? 0) / scores.length) * 100).toFixed(0)}%`).join(', '));
   console.log(`series wins: ${((wins / scores.length) * 100).toFixed(1)}% of simulated drafts`);
+  // CHECK_PAR=<par>: also print the win rate at a given par (to compare scoring variants like for like).
+  if (process.env.CHECK_PAR) console.log(`at par ${process.env.CHECK_PAR}: ${(winShare(Number(process.env.CHECK_PAR)) * 100).toFixed(1)}% series wins`);
+  if (process.env.DRY) return;
 
   const today = new Date().toISOString().slice(0, 10);
   writeFileSync(
