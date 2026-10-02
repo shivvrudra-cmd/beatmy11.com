@@ -60,6 +60,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
     <main class="pk-build" id="pk-build">
       <div class="pk-vs" id="pk-vs" hidden>
         <p class="pk-vs-title" id="pk-vs-title"></p>
+        <p class="pk-chain" id="pk-vs-chain" hidden></p>
         <details class="pk-vs-xi"><summary>See their XI</summary><ol id="pk-vs-list"></ol></details>
       </div>
       <h1 class="pk-h1" id="pk-h1">Pick your {result.xiNoun}</h1>
@@ -137,6 +138,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
         <div><b id="pk-r-them">0</b><span id="pk-r-them-lab"></span></div>
       </div>
       <p class="pk-h2h" id="pk-h2h" hidden></p>
+      <p class="pk-chain is-result" id="pk-chain" hidden></p>
 
       <ol class="pk-tests" id="pk-tests"></ol>
       <button type="button" class="pk-btn is-main pk-share-top" id="pk-share-top">Share the result</button>
@@ -170,7 +172,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
     import { compareWbXIs, wbTeamBlend, WB_FORMATS } from '../lib/white-ball-metrics';
     import { playSeries } from '../lib/series';
     import { encodeXI, decodeXI } from '../lib/share-results';
-    import { DUEL_CUTS, duelSeed, cleanName, xiLabel, badgesFor, recordH2H, h2hLine } from '../lib/pick-xi';
+    import { DUEL_CUTS, duelSeed, cleanName, xiLabel, badgesFor, recordH2H, h2hLine, parseChain, nextChain, chainText } from '../lib/pick-xi';
     import { sfx } from '../lib/sfx';
     import { reportEvent } from '../lib/telemetry';
 
@@ -244,6 +246,8 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
     const theirXI = fromLink(params.get('vs'));
     const theirName = theirXI ? cleanName(params.get('n')) : '';
     const linkedMine = theirXI ? fromLink(params.get('me')) : null;
+    // Chain challenges: how many XIs in a row the XI in the link has beaten.
+    const chainIn = theirXI ? parseChain(params.get('k')) : 0;
     const linkOf = (m) => encodeXI(picks(m).map((e) => ({ id: e.key, role: e.role })));
 
     // ------------------------------------------------------------ scoring
@@ -473,13 +477,22 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       }
 
       // Buttons.
-      const resultUrl = `${location.origin}${PATH}?${withName(withName(`vs=${linkOf(theirs)}`, 'n', theirsName) + `&me=${linkOf(mine)}`, 'm', mineName)}`;
+      // Chain: the winner of this series is who the next person takes on, with the run carried on.
+      const chain = nextChain(chainIn, series.user, series.house);
+      const chainWinnerLab = chain.winner === 'challenger' ? meLab : themLab;
+      $('pk-chain').textContent = chain.chain >= 1 ? `${chainWinnerLab} ${chainText(chain.chain)}. Who is next?` : '';
+      $('pk-chain').hidden = chain.chain < 1;
+      const resultUrl = `${location.origin}${PATH}?${withName(withName(`vs=${linkOf(theirs)}`, 'n', theirsName) + `&me=${linkOf(mine)}`, 'm', mineName)}${chainIn ? `&k=${chainIn}` : ''}`;
       const shareLab = played ? 'My XI' : meLab;
       const shareText = `${shareLab} ${won ? 'beat' : lost ? 'lost to' : 'drew with'} ${xiLabel(theirsName, "a friend's XI")} ${series.user}–${series.house} 🏏 Pick yours and take on the winner.`;
       $('pk-share').onclick = $('pk-share-top').onclick = () => shareLink(resultUrl, shareText, $('pk-r-copied'));
       $('pk-again').textContent = played ? 'Change my XI' : 'Pick my own XI';
       $('pk-again').onclick = () => {
-        if (!played) { location.href = `${PATH}?${withName(`vs=${linkOf(series.user >= series.house ? mine : theirs)}`, 'n', series.user >= series.house ? mineName : theirsName)}`; return; }
+        if (!played) {
+          const w = chain.winner === 'challenger';
+          location.href = `${PATH}?${withName(`vs=${linkOf(w ? mine : theirs)}`, 'n', w ? mineName : theirsName)}${chain.chain ? `&k=${chain.chain}` : ''}`;
+          return;
+        }
         $('pk-result').hidden = true;
         $('pk-build').hidden = false;
         window.scrollTo(0, 0);
@@ -521,6 +534,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
     if (theirXI) {
       $('pk-vs').hidden = false;
       $('pk-vs-title').textContent = `Can you beat ${xiLabel(theirName, "your friend's XI")}?`;
+      if (chainIn >= 1) { $('pk-vs-chain').textContent = `It ${chainText(chainIn)}. End the run.`; $('pk-vs-chain').hidden = false; }
       $('pk-vs-list').innerHTML = picks(theirXI).map((e) => { const p = byKey.get(e.key); return `<li><b>${ROLE_SHORT[e.role]}</b> ${esc(p.name)} <i>${esc(code(p.nation))}</i></li>`; }).join('');
     }
     renderBuild();
@@ -545,6 +559,8 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
     .pk-sub { margin: 0 0 10px; text-align: center; color: var(--pk-muted); font-size: 13.5px; }
     .pk-vs { margin-top: 12px; padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(198, 255, 61, 0.4); background: rgba(198, 255, 61, 0.06); }
     .pk-vs-title { margin: 0; font: 400 22px/1.1 var(--pk-display); letter-spacing: 0.04em; color: var(--pk-lime); }
+    .pk-chain { margin: 4px 0 0; font: 600 12.5px Inter, sans-serif; color: var(--pk-text); }
+    .pk-chain.is-result { margin: 8px auto 0; text-align: center; color: var(--pk-lime); }
     .pk-vs-xi summary { margin-top: 6px; cursor: pointer; font-size: 12.5px; color: var(--pk-muted); }
     .pk-vs-xi ol { margin: 6px 0 0; padding-left: 22px; font-size: 13px; line-height: 1.6; }
     .pk-vs-xi li b { display: inline-block; width: 40px; font-size: 10px; color: var(--pk-lime); }

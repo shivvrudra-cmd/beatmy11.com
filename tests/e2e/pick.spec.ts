@@ -85,6 +85,15 @@ for (const f of FORMATS) {
     await expect(viewer.locator("#pk-r-me-lab")).toHaveText("Ravi's XI");
     await expect(viewer.locator("#pk-r-me")).toHaveText(fu!);
     await expect(viewer.locator("#pk-r-them")).toHaveText(fh!);
+    // Chain challenge: the link says Asha's XI had beaten 2 in a row. The result names the
+    // winner's run, and "Pick my own XI" takes on that winner with the run carried on.
+    await viewer.goto(`${link}&me=${mine.map((e) => `${e.key}.${code[e.role]}`).join(",")}&m=Ravi&k=2`);
+    await expect(viewer.locator("#pk-result")).toHaveClass(/is-done/, { timeout: 10_000 });
+    const expectRun = fuN > fhN ? 1 : fhN > fuN ? 3 : 2;
+    await expect(viewer.locator("#pk-chain")).toContainText(`${fuN > fhN ? "Ravi" : "Asha"}'s XI has beaten ${expectRun} XI`);
+    await viewer.locator("#pk-again").click();
+    await viewer.waitForURL(new RegExp(`vs=.*k=${expectRun}`));
+    await expect(viewer.locator("#pk-vs-chain")).toContainText(`has beaten ${expectRun} XI`);
     // A broken link falls back to a normal empty page.
     await viewer.goto(`${f.path}?vs=not-a-real-xi`);
     await expect(viewer.locator("#pk-vs")).toBeHidden();
