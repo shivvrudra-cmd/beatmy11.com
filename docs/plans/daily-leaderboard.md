@@ -1,9 +1,9 @@
 # Daily leaderboard: design (2026-10-02)
 
-**Status: designed, and the server half is built on an open pull request. Not merged, not live,
-and the database migration has NOT been applied.** The owner must (1) agree to storing display
-names, (2) apply the migration to production, (3) approve the privacy wording. Until then nothing
-changes for players.
+**Status: designed and built on an open pull request (#39), server and pages. Not merged, not
+live, and the database migration has NOT been applied.** The owner must (1) agree to storing
+display names, (2) apply the migration to production, (3) approve the privacy wording. Until the
+migration is applied the board answers with an error and all leaderboard UI stays hidden.
 
 ## What the owner asked for
 
@@ -50,7 +50,7 @@ Not stored: IP address, user agent, cookie, account, the list of players in the 
   (`Cache-Control: public, max-age=60`), so a busy day does not hit the database on every view.
   Days in the future or before launch return 404.
 
-### The page (not built yet)
+### The pages (built on the PR; the home page line is not)
 
 - Result page, daily mode only: after the series, a small form "Add your score to today's board"
   with the optional name, off by default (the player chooses to post). Then the top 10, the

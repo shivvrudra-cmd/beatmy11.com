@@ -14,7 +14,7 @@ export default defineConfig({
     sitemap({
       changefreq: 'weekly',
       priority: 0.7,
-      filter: (page) => !page.includes('/404') && !page.includes('/matchup') && !page.includes('/share-demo') && !page.includes('/r/'),
+      filter: (page) => !page.includes('/404') && !page.includes('/matchup') && !page.includes('/share-demo') && !page.includes('/daily-board') && !page.includes('/r/'),
     }),
   ],
   build: {
