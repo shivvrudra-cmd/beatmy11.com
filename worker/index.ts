@@ -6,6 +6,13 @@
  *   POST /api/scores  { xi, userScore, houseScore, user, house, draws }
  *       one finished series, for recalibrating the series bands.
  *   POST /api/events  { name }   name ∈ EVENT_NAMES, counted per day.
+ *   GET  /api/health  { ok: true }   "is the Worker up?" (no database call).
+ *
+ * Guards: POSTs only from the two site origins, JSON bodies of at most MAX_BODY bytes (an
+ * oversized Content-Length is refused before the body is read), strict validation of every
+ * field. There is no per-visitor rate limit here, because the Worker keeps nothing that
+ * identifies a visitor; a Cloudflare rate-limiting rule on /api/* is the place for that
+ * (docs/reports/launch-audit-2026-10-02.md).
  *
  * Nothing identifying is stored: no IP, cookie, user agent or account.
  */
@@ -30,7 +37,7 @@ const MAX_BODY = 1024;
 const json = (status: number, body: unknown = {}) =>
   new Response(status === 204 ? null : JSON.stringify(body), {
     status,
-    headers: { 'content-type': 'application/json' },
+    headers: { 'content-type': 'application/json', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' },
   });
 
 const isInt = (v: unknown, lo: number, hi: number): v is number =>
@@ -83,11 +90,15 @@ export default {
     const { pathname } = new URL(req.url);
     if (!pathname.startsWith('/api/')) return env.ASSETS.fetch(req);
 
+    if (pathname === '/api/health') return req.method === 'GET' || req.method === 'HEAD' ? json(200, { ok: true }) : json(405);
     if (req.method !== 'POST') return json(405);
     // Browsers always send Origin on cross-origin POSTs; reject other sites.
     const origin = req.headers.get('origin');
     if (!origin || !ALLOWED_ORIGINS.has(origin)) return json(403);
 
+    // Refuse an oversized body before reading it.
+    const declared = Number(req.headers.get('content-length'));
+    if (Number.isFinite(declared) && declared > MAX_BODY) return json(413, { error: 'too large' });
     const body = await readBody(req);
     if (!body) return json(400, { error: 'invalid' });
     try {
