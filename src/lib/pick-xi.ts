@@ -31,6 +31,32 @@ export function cleanName(raw: string | null | undefined): string {
 }
 export const xiLabel = (name: string, fallback: string) => (name ? `${name}'s XI` : fallback);
 
+// ---------------------------------------------------------------- chain challenges
+// A challenge that travels through a group (2026-10-02). The link carries `k`: how many XIs the
+// XI in `vs` has beaten in a row. Whoever opens a result and picks their own XI takes on the
+// winner, with the count carried on. It is a number in a link: anyone can edit it, so it is a
+// friendly count, not a record.
+
+/** `k` from a link: a whole number from 0 to 99, anything else is 0. */
+export function parseChain(raw: string | null | undefined): number {
+  const n = Number(raw);
+  return /^\d{1,2}$/.test(String(raw ?? '')) && Number.isInteger(n) ? n : 0;
+}
+
+/**
+ * After a series between the holder (the XI in `vs`, with `k` wins in a row) and a challenger:
+ * who the next person faces and that XI's run. The holder winning adds one; the challenger
+ * winning starts a run of one; a drawn series keeps the holder, whose run stays as it was.
+ * `challenger`/`holder`: matches won by each.
+ */
+export function nextChain(k: number, challenger: number, holder: number): { winner: 'holder' | 'challenger'; chain: number } {
+  if (challenger > holder) return { winner: 'challenger', chain: 1 };
+  return { winner: 'holder', chain: holder > challenger ? Math.min(99, k + 1) : k };
+}
+
+/** "has beaten 3 XIs in a row" ('' for none). */
+export const chainText = (chain: number) => (chain >= 1 ? `has beaten ${chain} XI${chain === 1 ? '' : 's'} in a row` : '');
+
 // ---------------------------------------------------------------- badges
 export interface BadgePlayer {
   /** Nation (Test, ODI, T20I) or franchise (IPL). */

@@ -2,7 +2,7 @@
  * "Pick any XI" rules (src/lib/pick-xi.ts): the symmetric friend-duel ladder, one seed per pair of
  * XIs, name cleaning, badges and the head-to-head record.
  */
-import { DUEL_CUTS, duelBand, duelSeed, cleanName, xiLabel, badgesFor, recordH2H, h2hLine, type BadgePlayer } from '../src/lib/pick-xi';
+import { DUEL_CUTS, duelBand, duelSeed, cleanName, xiLabel, badgesFor, recordH2H, h2hLine, parseChain, nextChain, chainText, type BadgePlayer } from '../src/lib/pick-xi';
 import { playSeries } from '../src/lib/series';
 
 let pass = 0, fail = 0;
@@ -39,6 +39,14 @@ ok(duelSeed(['a:o'], ['b:o']) === duelSeed(['a:o'], ['b:o']) && duelSeed(['a:o']
 // ---- names are plain text
 ok(cleanName('  <b>Shiva</b> 🏏  ') === 'bShivab' && cleanName('a'.repeat(40)).length === 20 && cleanName(null) === '', 'names: tags and symbols stripped, 20 characters at most', cleanName('  <b>Shiva</b> 🏏  '));
 ok(xiLabel('Asha', 'Your friend') === "Asha's XI" && xiLabel('', "Your friend's XI") === "Your friend's XI", 'XI labels');
+
+// ---- chain challenges
+ok(parseChain('3') === 3 && parseChain(null) === 0 && parseChain('-1') === 0 && parseChain('1e3') === 0 && parseChain('abc') === 0 && parseChain('100') === 0 && parseChain('2.5') === 0, 'chain count from a link: 0 to 99, anything else is 0');
+ok(JSON.stringify(nextChain(2, 1, 4)) === '{"winner":"holder","chain":3}', 'the holder wins: the run grows by one');
+ok(JSON.stringify(nextChain(2, 3, 2)) === '{"winner":"challenger","chain":1}', 'the challenger wins: a new run of one');
+ok(JSON.stringify(nextChain(2, 2, 2)) === '{"winner":"holder","chain":2}' && nextChain(0, 2, 2).chain === 0, 'a drawn series keeps the holder and the run');
+ok(nextChain(99, 0, 5).chain === 99, 'the run stops counting at 99');
+ok(chainText(0) === '' && chainText(1) === 'has beaten 1 XI in a row' && chainText(3) === 'has beaten 3 XIs in a row', 'chain wording');
 
 // ---- badges
 {
