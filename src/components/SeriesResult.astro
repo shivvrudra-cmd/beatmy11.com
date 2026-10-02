@@ -130,7 +130,8 @@ const formatJson = safe(format);
     import { shareResultsFor, shareTextFor, encodeXI } from '../lib/share-results';
     import { drawShareCard, cardBlob } from '../lib/share-card';
     import { reportScore, reportEvent } from '../lib/telemetry';
-    import { gradeFor, gradeTitle, shapeTitle, pickTip } from '../lib/result-insights';
+    import { gradeFor, gradeTitle, shapeTitle, pickTip, pickXiTip, FULL_CREDIT_MATCHES } from '../lib/result-insights';
+    import { mulberry32 } from '../lib/series';
     import {
       utcDayKey, dayNumber, loadDaily, saveDaily, recordResult, hasPlayed, currentStreak,
       activeDailyDay, dailyShareText,
@@ -385,11 +386,34 @@ const formatJson = safe(format);
       $('rs-grade').innerHTML =
         `<span class="rs-grade-letter">${grade}</span>` +
         `<span class="rs-grade-words"><b>${esc(gradeTitle(grade, series.user))}</b><i>${esc(shapeTitle(mine.teamBatting, mine.teamBowling))}</i></span>`;
-      $('rs-tip').innerHTML = `<b>Tip</b> ${esc(pickTip(FORMAT.id, {
-        batting: theirs.teamBatting - mine.teamBatting,
-        bowling: theirs.teamBowling - mine.teamBowling,
-        fielding: theirs.teamFielding - mine.teamFielding,
-      }))}`;
+      // The tip is about THIS XI (owner, 2026-10-02): the unit that costs most against the
+      // opponent, or another true fact about the eleven. Counts and unit scores only: it never
+      // names a player or shows a single rating. The same XI always reads the same tip.
+      let tipText;
+      try {
+        const matchesOf = (e) => Number(FORMAT.id === 'test' ? e.player.stats.testMatches : e.player.stats.matches);
+        const keeperAt = cmp.userPlayers.findIndex((p) => p.role === 'wicketkeeper');
+        const ks = keeperAt >= 0 ? userEntries[keeperAt].player.stats : null;
+        const km = ks ? Number(FORMAT.id === 'test' ? ks.testMatches : ks.matches) : 0;
+        const keeperPerMatch = !ks ? null : Number.isFinite(Number(ks.dismissalsPerMatch)) && ks.dismissalsPerMatch !== null ? Number(ks.dismissalsPerMatch) : km > 0 && Number.isFinite(Number(ks.dismissals)) && ks.dismissals !== null ? Number(ks.dismissals) / km : null;
+        tipText = pickXiTip(FORMAT.id, {
+          mine: { batting: mine.teamBatting, bowling: mine.teamBowling, fielding: mine.teamFielding },
+          theirs: { batting: theirs.teamBatting, bowling: theirs.teamBowling, fielding: theirs.teamFielding },
+          opponent: OPP,
+          shortCareers: userEntries.filter((e) => Number.isFinite(matchesOf(e)) && matchesOf(e) < FULL_CREDIT_MATCHES[FORMAT.id]).length,
+          allRounders: cmp.userPlayers.filter((p) => p.role === 'all-rounder').length,
+          overseasUsed: FORMAT.id === 'ipl' ? userRaw.filter((p) => p.overseas === true).length : undefined,
+          keeperPerMatch,
+        }, mulberry32(xiSeed(userEntries.map((e, i) => ({ id: e.player.id, role: cmp.userPlayers[i].role }))) ^ 0x71b5));
+      } catch {
+        // Fallback: a general, true statement about how scoring works.
+        tipText = pickTip(FORMAT.id, {
+          batting: theirs.teamBatting - mine.teamBatting,
+          bowling: theirs.teamBowling - mine.teamBowling,
+          fielding: theirs.teamFielding - mine.teamFielding,
+        });
+      }
+      $('rs-tip').innerHTML = `<b>Tip</b> ${esc(tipText)}`;
       // The three bars fill together, then the overall bar, then the grade appears. Runs once,
       // when the screen scrolls into view.
       let barsPlayed = false;
