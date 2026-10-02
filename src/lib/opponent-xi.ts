@@ -1,5 +1,6 @@
 /**
- * opponent-xi.ts — the fixed house XI ("My XI").
+ * opponent-xi.ts — the fixed Test opponent, the World XI (team score 89.4 under the live
+ * engine; any "Blend 80.8" figure further down predates it).
  *
  * The opponent is isolated in this one module so that replacing it later
  * (a different fixed XI, a seeded random XI, …) is a single-file change:
