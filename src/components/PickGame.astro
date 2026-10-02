@@ -65,6 +65,11 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       </div>
       <h1 class="pk-h1" id="pk-h1">Pick your {result.xiNoun}</h1>
       <p class="pk-sub" id="pk-sub">Any player, no spins. Tap a slot to choose.</p>
+      <!-- Beat the clock (opt-in, never on by itself): 90 seconds to pick eleven. -->
+      <div class="pk-clock" id="pk-clock">
+        <button type="button" class="pk-clock-btn" id="pk-clock-btn" aria-pressed="false">Beat the clock: 90 seconds</button>
+        <span class="pk-clock-time" id="pk-clock-time" role="timer" aria-live="off" hidden></span>
+      </div>
 
       <section class="pk-meter" id="pk-meter" aria-label="Your XI's strength">
         <div class="pk-m" data-m="bat"><span>Batting</span><i><b></b></i><em>–</em></div>
@@ -223,6 +228,56 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
         myName = cleanName(saved.name);
       }
     } catch { /* fresh start */ }
+    // ------------------------------------------------------------ beat the clock (opt-in)
+    // PROVISIONAL (future idea 1): 90 seconds to pick eleven. Off unless the player turns it on,
+    // not remembered between visits, and it changes nothing about scoring. Turning it on starts
+    // from an empty XI; when time runs out the XI is locked as it stands.
+    const CLOCK_SECONDS = 90;
+    /** null = clock off; otherwise { deadline, timer, locked, left } */
+    let clock = null;
+    const clockLocked = () => !!clock && clock.locked;
+    function renderClock() {
+      const btn = $('pk-clock-btn'), out = $('pk-clock-time');
+      btn.setAttribute('aria-pressed', clock ? 'true' : 'false');
+      btn.textContent = clock ? 'Turn the clock off' : `Beat the clock: ${CLOCK_SECONDS} seconds`;
+      out.hidden = !clock;
+      if (!clock) return;
+      const s = clock.left;
+      out.textContent = clock.locked && s <= 0 ? 'Time’s up' : `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+      out.classList.toggle('is-low', !clock.locked && s <= 10);
+      out.classList.toggle('is-done', clock.locked);
+    }
+    function stopClock(msg) {
+      if (!clock) return;
+      window.clearInterval(clock.timer);
+      clock.locked = true;
+      renderClock();
+      if (msg) $('pk-msg').textContent = msg;
+    }
+    function tickClock() {
+      if (!clock || clock.locked) return;
+      clock.left = Math.max(0, Math.ceil((clock.deadline - Date.now()) / 1000));
+      if (clock.left <= 0) {
+        closeSheet();
+        const n = filled().length;
+        stopClock(n === 11 ? '' : `Time’s up with ${n} of 11 in. Clear your XI to try again, or turn the clock off to finish it.`);
+        sfx.blocked();
+        renderBuild();
+        return;
+      }
+      renderClock();
+    }
+    $('pk-clock-btn').addEventListener('click', () => {
+      if (clock) { window.clearInterval(clock.timer); clock = null; $('pk-msg').textContent = ''; renderClock(); renderBuild(); return; }
+      xi = {};
+      persist();
+      clock = { deadline: Date.now() + CLOCK_SECONDS * 1000, left: CLOCK_SECONDS, locked: false, timer: window.setInterval(tickClock, 250) };
+      $('pk-msg').textContent = '';
+      sfx.select();
+      renderClock();
+      renderBuild();
+    });
+
     const persist = () => { try { localStorage.setItem(STORE, JSON.stringify({ slots: xi, name: myName })); } catch { /* not remembered */ } };
     const filled = () => XI_SLOTS.filter((s) => xi[s.key]);
     const complete = () => filled().length === 11;
@@ -289,7 +344,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       renderMeter();
       const done = complete();
       const n = filled().length;
-      $('pk-sub').textContent = done ? 'Eleven in. Ready when you are.' : n ? `${11 - n} to go. Tap a slot to choose.` : 'Any player, no spins. Tap a slot to choose.';
+      $('pk-sub').textContent = done ? 'Eleven in. Ready when you are.' : clockLocked() ? 'Time’s up. Clear your XI to go again, or turn the clock off.' : n ? `${11 - n} to go. Tap a slot to choose.` : 'Any player, no spins. Tap a slot to choose.';
       $('pk-go-friend').disabled = !done;
       $('pk-go-friend').textContent = theirXI ? `Play ${xiLabel(theirName, "your friend's XI")}` : 'Challenge a friend';
     }
@@ -354,13 +409,22 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       persist();
       closeSheet();
       if (complete()) sfx.complete(); else sfx.place();
+      // Eleven in before the clock ran out: it stops there.
+      if (clock && !clock.locked && complete()) { tickClock(); stopClock(`Eleven in with ${clock.left} second${clock.left === 1 ? '' : 's'} left.`); }
       renderBuild();
     });
     $('pk-slots').addEventListener('click', (e) => {
       const b = e.target.closest('[data-pk-slot]');
-      if (b) { sfx.select(); openSheet(b.getAttribute('data-pk-slot')); }
+      if (!b) return;
+      if (clockLocked()) { sfx.blocked(); $('pk-msg').textContent = 'The clock has stopped, so this XI is locked. Clear your XI to go again, or turn the clock off.'; return; }
+      sfx.select(); openSheet(b.getAttribute('data-pk-slot'));
     });
-    $('pk-clear').addEventListener('click', () => { xi = {}; persist(); sfx.remove(); renderBuild(); });
+    $('pk-clear').addEventListener('click', () => {
+      xi = {}; persist(); sfx.remove();
+      // Clearing with the clock on starts a fresh 90 seconds.
+      if (clock) { window.clearInterval(clock.timer); clock = { deadline: Date.now() + CLOCK_SECONDS * 1000, left: CLOCK_SECONDS, locked: false, timer: window.setInterval(tickClock, 250) }; $('pk-msg').textContent = ''; renderClock(); }
+      renderBuild();
+    });
     $('pk-name').value = myName;
     $('pk-name').addEventListener('input', () => { myName = cleanName($('pk-name').value); persist(); });
 
@@ -561,6 +625,12 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
     .pk-vs-title { margin: 0; font: 400 22px/1.1 var(--pk-display); letter-spacing: 0.04em; color: var(--pk-lime); }
     .pk-chain { margin: 4px 0 0; font: 600 12.5px Inter, sans-serif; color: var(--pk-text); }
     .pk-chain.is-result { margin: 8px auto 0; text-align: center; color: var(--pk-lime); }
+    .pk-clock { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0 0 10px; }
+    .pk-clock-btn { min-height: 32px; padding: 4px 12px; border-radius: 999px; border: 1px solid var(--pk-line); background: transparent; color: var(--pk-muted); font: 600 12px Inter, sans-serif; cursor: pointer; }
+    .pk-clock-btn[aria-pressed="true"] { border-color: rgba(198, 255, 61, 0.5); color: var(--pk-text); }
+    .pk-clock-time { min-width: 52px; text-align: center; font: 400 26px/1 var(--pk-display); letter-spacing: 0.06em; color: var(--pk-lime); }
+    .pk-clock-time.is-low { color: var(--pk-loss); }
+    .pk-clock-time.is-done { color: var(--pk-muted); font-size: 18px; }
     .pk-vs-xi summary { margin-top: 6px; cursor: pointer; font-size: 12.5px; color: var(--pk-muted); }
     .pk-vs-xi ol { margin: 6px 0 0; padding-left: 22px; font-size: 13px; line-height: 1.6; }
     .pk-vs-xi li b { display: inline-block; width: 40px; font-size: 10px; color: var(--pk-lime); }
