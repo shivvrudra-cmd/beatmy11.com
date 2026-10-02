@@ -46,10 +46,19 @@ ok(xiLabel('Asha', 'Your friend') === "Asha's XI" && xiLabel('', "Your friend's 
   const opts = { format: 'test' as const, allEras: ['legends', '1970s', '1980s'], modern: ['1980s'] };
   const one = Array.from({ length: 11 }, () => mk('India', ['1980s']));
   const ids = (b: { id: string }[]) => b.map((x) => x.id).sort().join(',');
-  ok(ids(badgesFor(one, opts)) === 'new-generation,no-legends,one-team', 'one nation, modern, no legends', ids(badgesFor(one, opts)));
+  ok(ids(badgesFor(one, opts)) === 'new-generation,no-legends,one-era,one-team', 'one nation, one era, modern, no legends', ids(badgesFor(one, opts)));
   const tour = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'A', 'B', 'C', 'D'].map((t, i) => mk(t, [opts.allEras[i % 3]]));
   ok(ids(badgesFor(tour, opts)) === 'time-traveller,world-tour', 'world tour and time traveller', ids(badgesFor(tour, opts)));
   ok(badgesFor(one.slice(0, 10), opts).length === 0, 'no badges for an incomplete XI');
+  // The 2026-10-02 badges: career length (never from unknown counts) and the flex pair.
+  const withM = (n: (number | null)[], roles: string[] = []) => one.map((p, i) => ({ ...p, matches: n[i % n.length], role: roles[i] }));
+  const has = (xi: BadgePlayer[], id: string, format: 'test' | 'odi' | 'ipl' = 'test') => badgesFor(xi, { ...opts, format }).some((b) => b.id === id);
+  ok(has(withM([12, 30]), 'cult-heroes') && !has(withM([12, 31]), 'cult-heroes') && !has(withM([12, null]), 'cult-heroes'), 'cult heroes: nobody above 30 Tests; unknown counts never qualify');
+  ok(has(withM([100, 168]), 'iron-men') && !has(withM([99, 168]), 'iron-men') && !has(one, 'iron-men'), 'iron men: everyone on 100 or more Tests');
+  ok(has(withM([60]), 'cult-heroes', 'odi') && !has(withM([60]), 'cult-heroes', 'test'), 'thresholds are per format');
+  const roles = ['opener', 'opener', 'middle-order', 'middle-order', 'middle-order', 'wicketkeeper', 'spinner', 'spinner', 'fast-bowler', 'fast-bowler', 'fast-bowler'];
+  ok(has(withM([50], roles), 'spin-twins') && !has(withM([50], roles.map((r, i) => (i === 6 ? 'all-rounder' : r))), 'spin-twins'), 'spin twins: two spinners at 7 and 8');
+  ok(!has(tour, 'one-era') && badgesFor(one, opts).find((b) => b.id === 'one-era')!.why === 'All eleven played in the 1980s', 'one era names the shared era');
   const ipl = Array.from({ length: 11 }, (_, i) => mk(i < 6 ? 'MI' : 'CSK', ['2018-22']));
   ok(badgesFor(ipl, { format: 'ipl', allEras: ['2008-12', '2013-17', '2018-22', '2023+'], modern: ['2018-22', '2023+'] }).some((b) => b.id === 'homegrown'), 'IPL: homegrown');
 }

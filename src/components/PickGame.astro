@@ -459,7 +459,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
         row('Fielding', myBlend.teamFielding, theirBlend.teamFielding) + row('Overall', cmp.userScore, cmp.opponentScore);
 
       // 4. Badges for the XI on the left.
-      const badges = badgesFor(picks(mine).map((e) => { const p = byKey.get(e.key); return { team: p.nation, eras: p.eras, overseas: p.overseas }; }),
+      const badges = badgesFor(picks(mine).map((e) => { const p = byKey.get(e.key); const n = Number(TEST ? p.stats?.testMatches : p.stats?.matches); return { team: p.nation, eras: p.eras, overseas: p.overseas, matches: Number.isFinite(n) && n > 0 ? n : null, role: e.role }; }),
         { format: FORMAT.id, allEras: TEST ? ['legends', ...FORMAT.eraList] : Object.keys(FORMAT.eraNames), modern: MODERN });
       $('pk-badges').hidden = !badges.length;
       $('pk-badges').innerHTML = badges.map((b) => `<span class="pk-badge" title="${esc(b.why)}"><b>${esc(b.name)}</b>${esc(b.why)}</span>`).join('');
