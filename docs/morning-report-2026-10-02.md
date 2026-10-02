@@ -24,18 +24,26 @@ build after each merge succeeded and the live site answered.
 | #34 | Four more Pick any XI badges. |
 | #35 | Chain challenges: "has beaten 3 XIs in a row". |
 | #37 | Pick any XI: an optional 90-second clock (off unless turned on). |
+| #38 | **IPL ratings adjusted for the season block** (merged on the owner's instruction, "merge PR #38"). Strike rate and economy are scaled to the league level of the stint's block before ranking. All-Star XI 92.8 → 93.0, Kohli's stint RCB 2023–now → RCB 2013–17, par −18.5 → −19. |
+| #42, #43 | (docs) this report, the project notes, the ads plan, proposals. |
 
 Second site, **freeproteincalculator.com** (pushed to `origin/main`, live): each of the 12
 `/protein-intake/<weight>-kg/` pages has a bar chart drawn from that page's own numbers and a
 step-by-step sum a reader can check. An audit with the list of what only you can supply is in
 that repo: `docs/launch-audit-2026-10-02.md`.
 
+**Citations on the protein site.** All 32 distinct references in its 14 articles were looked up in
+PubMed. Eight match. **Four were wrong and are corrected** (a title that belonged to a different
+paper, wrong authors and journal, two titles that did not match the linked paper). **Eleven more
+are wrong or could not be found** and are listed for you in that repo's
+`docs/citation-check-2026-10-02.md`; I did not guess which paper was meant. This is the most
+important thing to fix on that site: unfindable sources on a health page.
+
 ## 2. Open pull requests waiting for you (not merged, on purpose)
 
 | PR | What | What you decide |
 |---|---|---|
-| **#38** | IPL ratings adjusted for the season block. Your point is true in the data: league strike rate 123 → 150 and economy 7.7 → 9.4 from 2008–12 to 2023–now; today a recent batter rates about 20 points higher than an early one of the same standing. The PR scales strike rate and economy to the block's league level. | Adopt or not; this method or ranking inside each block; par −19; whether to look at T20I too. |
-| **#39** | Daily leaderboard: design and the server half. The database migration is **not applied**; no page yet. | Names or scores only; that scores can be faked (a friendly board); apply the migration; privacy wording. |
+| **#39** | Daily leaderboard, now complete on the PR: server, an opt-in "Add my score to today's board" on the daily result, and a `/daily-board` page. The database migration is **not applied**; until it is, all of it stays hidden. | Names or scores only; that scores can be faked (a friendly board); privacy wording; then: rate-limit rule, apply the migration, merge. |
 | **#40** | Draft terms page; three additions to the privacy page that describe what the site already does. | Read every line; fill in the governing-law line; approve or change. |
 | **#41** | Four logo sketches: https://design-logo-concepts-beatmy11.shivvrudra.workers.dev/logo-concepts | Pick a direction. My view: A (floodlight eleven). C reads as a pause button. They are sketches, not finished artwork. |
 
@@ -89,7 +97,9 @@ bars; grade).
 
 **Contrast**: the dim grey `#6b7694` became `#7f8aa9`.
 
-**Proposed scoring (PR #38, not live)**: `IPL_ERA_NORMALISATION = 'scaled'`, par −19.
+**IPL era adjustment (PR #38, live since the owner said to merge it)**:
+`IPL_ERA_NORMALISATION = 'scaled'`; par −19 is still PROVISIONAL (tuned to about 15% simulated
+wins, 14.4%). Still open from that report: T20I has the same effect at about a third the size.
 
 ## 4. Things that went wrong (and what was done)
 
@@ -113,7 +123,8 @@ bars; grade).
 
 ## 5. What needs you
 
-- The four open pull requests (section 2).
+- The three open pull requests (section 2): #39 leaderboard, #40 terms, #41 logo.
+- The eleven citations on the protein site (see section 1).
 - Cloudflare dashboard: a rate-limiting rule for `/api/*` (one free rule), and an uptime monitor
   on `https://beatmy11.com/api/health`.
 - Ads: `docs/plans/ads-plan.md`. Short answer: not on the game screens; room on the text pages;
@@ -142,6 +153,7 @@ bars; grade).
 
 ## 7. Numbers at the end of the run
 
-`npm test`: 16 suites, 1,318 assertions, all pass. `npx vitest run`: 5 pass. `npx playwright
-test`: 31 pass. `npm run build`: 59 pages. `node scripts/site-audit.mjs`: 0 problems.
+`npm test`: 16 suites, 1,326 assertions, all pass. `npx vitest run`: 5 pass. `npx playwright
+test`: 31 pass. `npm run build`: 59 pages. (On the leaderboard branch: 17 suites, 34 browser
+tests, 60 pages.) `node scripts/site-audit.mjs`: 0 problems.
 `node scripts/check-live-headers.mjs https://beatmy11.com`: 0 problems.
