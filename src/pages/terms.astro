@@ -1,0 +1,101 @@
+---
+/**
+ * /terms — DRAFT for the owner to review (2026-10-02). Plain terms for a free game with no
+ * accounts. This is legal text written by an AI assistant, not by a lawyer: the owner should
+ * read it, change what is wrong for them (especially the governing-law line, left open on
+ * purpose) and only then publish. Kept out of search results until approved.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FloodlitShell from '../components/FloodlitShell.astro';
+
+const title = 'Terms of use | Beat My 11';
+const description = 'The terms for using Beat My 11: a free cricket game with no accounts. Plain language, one page.';
+---
+
+<BaseLayout title={title} description={description}>
+  <meta name="robots" content="noindex" slot="head" />
+  <FloodlitShell>
+    <article class="pv">
+      <p class="fs-eyebrow">Terms of use</p>
+      <h1 class="fs-title">Free to play. <span class="fs-hl">A few plain rules.</span></h1>
+      <p class="fs-lede">Draft for review. Not yet in force.</p>
+
+      <h2>What this is</h2>
+      <p>
+        Beat My 11 is a free cricket game. You draft or pick an XI and the site plays an imaginary series
+        for it. There are no accounts, nothing is sold and there are no prizes. By using the site you
+        agree to these terms; if you do not agree, please do not use it.
+      </p>
+
+      <h2>It is a game, not a record</h2>
+      <p>
+        The series results, scorecards, “player of the series” figures and strength scores are made up by
+        the game from real career statistics. They are for fun. They are not predictions, not betting
+        advice and not statements about any real player or match.
+      </p>
+
+      <h2>The statistics</h2>
+      <p>
+        Career numbers come from the sources named on the <a href="/privacy">privacy page</a>. We work to
+        keep them right, but some are incomplete or out of date and they are provided as they are. If you
+        spot a mistake, please tell us at <a href="mailto:hello@beatmy11.com">hello@beatmy11.com</a>.
+      </p>
+
+      <h2>Not affiliated</h2>
+      <p>
+        Beat My 11 is an independent fan project. It is not connected to, endorsed by or sponsored by the
+        ICC, the BCCI, the IPL, any cricket board, franchise, player or broadcaster. Team and competition
+        names are used only to describe real matches and careers.
+      </p>
+
+      <h2>Using the site fairly</h2>
+      <p>
+        Please do not try to break the site, overload it, send it automated requests or misuse the links
+        you share (for example to put offensive text in a name). We may block traffic that does.
+      </p>
+
+      <h2>What you share</h2>
+      <p>
+        Share links and share cards are yours to send to anyone. A link shows the XI inside it, and a name
+        if you typed one, to whoever opens it. See the <a href="/privacy">privacy page</a> for what is and
+        is not stored.
+      </p>
+
+      <h2>Our content</h2>
+      <p>
+        The game, its design, text and code belong to Beat My 11. You may share your results and
+        screenshots freely. Please do not copy the site or its data files wholesale.
+      </p>
+
+      <h2>No warranty</h2>
+      <p>
+        The site is provided as it is, without any promise that it will always be available, free of
+        errors or fit for a particular purpose. As far as the law allows, we are not liable for any loss
+        arising from using it.
+      </p>
+
+      <h2>Changes</h2>
+      <p>
+        We may change the game or these terms. The date below shows the latest version. If the site adds
+        advertising, analytics that use cookies, accounts or a leaderboard, this page and the privacy
+        page will be updated first.
+      </p>
+
+      <h2>Governing law</h2>
+      <p>[OWNER TO COMPLETE: the country or state whose law applies, and where disputes are heard.]</p>
+
+      <h2>Contact</h2>
+      <p>Questions: <a href="mailto:hello@beatmy11.com">hello@beatmy11.com</a>.</p>
+      <p class="pv-updated">Draft of 2 October 2026.</p>
+    </article>
+  </FloodlitShell>
+
+  <style is:global>
+    .pv { margin: 6vh auto 0; text-align: left; }
+    .pv .fs-eyebrow, .pv .fs-title, .pv .fs-lede { text-align: center; }
+    .pv h2 { margin: 28px 0 6px; font: 600 15px Inter, sans-serif; letter-spacing: 0.04em; color: var(--fs-text); }
+    .pv p { margin: 0 0 8px; color: var(--fs-muted); font-size: 15px; line-height: 1.6; }
+    .pv a { color: var(--fs-lime); }
+    .pv .pv-updated { margin-top: 28px; color: var(--fs-dim); font-size: 13px; }
+  </style>
+</BaseLayout>
