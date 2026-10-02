@@ -51,6 +51,20 @@ test("pick any XI: the clock is opt-in, locks the XI at zero, and stops when ele
   for (let i = 0; i < 11; i++) await pick(page, i);
   await expect(page.locator("#pk-msg")).toContainText(/Eleven in with \d+ seconds? left/);
   await expect(page.locator("#pk-go-friend")).toBeEnabled();
+  // A challenge sent now says it was picked against the clock, and the friend sees that.
+  const sharedUrl = await page.evaluate(() => {
+    let url = "";
+    (navigator as any).share = (d: { url?: string }) => { url = d.url ?? ""; return Promise.resolve(); };
+    document.getElementById("pk-go-friend")!.click();
+    return url;
+  });
+  expect(sharedUrl).toMatch(/[?&]vs=.+&t=1$/);
+  const friend = await context.newPage();
+  await friend.goto(sharedUrl.replace(/^https?:\/\/[^/]+/, ""));
+  await expect(friend.locator("#pk-vs-clock")).toBeVisible();
+  await friend.goto(sharedUrl.replace(/^https?:\/\/[^/]+/, "").replace("&t=1", ""));
+  await expect(friend.locator("#pk-vs-clock")).toBeHidden();
+  await friend.close();
   const stopped = await page.locator("#pk-clock-time").textContent();
   await page.clock.fastForward(120_000);
   await expect(page.locator("#pk-clock-time")).toHaveText(stopped!);

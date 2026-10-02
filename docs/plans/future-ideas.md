@@ -11,7 +11,6 @@ with the date; move an idea out of this file when it gets built.
 | 6 | Taller 9:16 share card for phone screens and stories | Result page | 2026-10-02 | Owner said no for now. |
 | 8 | "% of players who beat the World XI today" on the daily | Daily challenge | 2026-10-01 | Designed into the daily leaderboard (PR #39, `docs/plans/daily-leaderboard.md` on that branch); waits for that decision. |
 | 10 | A "Boss XI" for Pick any XI | Pick any XI | 2026-10-02 | Options and a recommendation in `docs/plans/themes-and-boss-xi.md`. No fair unrestricted rule exists; needs the owner. |
-| 14 | Say in the challenge link that an XI was picked against the 90-second clock | Pick any XI | 2026-10-02 | The clock (built) does not mark the link. |
 | 15 | T20I ratings adjusted for the decade, like the IPL proposal | Scoring | 2026-10-02 | The effect exists (strike rate 123 → 133, economy 7.7 → 8.3 from the 2000s to the 2020s). Needs per-decade numbers per player; see `docs/reports/ipl-era-normalisation.md` on PR #38. Owner decides. |
 | 16 | Re-score daily results on the server so a leaderboard cannot be faked | Daily leaderboard | 2026-10-02 | Means moving the engine and player data into the Worker. Not small. |
 | 17 | A sponsor line or affiliate links instead of display ads | Money | 2026-10-02 | No cookies or consent banner needed; see `docs/plans/ads-plan.md`. |
@@ -26,3 +25,4 @@ with the date; move an idea out of this file when it gets built.
 | 4 | More badges (One era, Cult heroes, Iron men, Spin twins) | PR #34, 2026-10-02 |
 | 9 | Sounds on the result page | PR #33, 2026-10-02 |
 | 13 | A landing page per format | PR #22, 2026-10-02 |
+| 14 | The challenge link says when an XI was picked against the clock | PR #46, 2026-10-02 |

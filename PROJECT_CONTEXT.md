@@ -119,7 +119,7 @@ src/
     PickGame.astro         THE "Pick any XI" screen, shared by all four formats
     SharedResult.astro     THE shared-result page (/r and /<format>/r)
     FormatLanding.astro    The /odi/, /t20i/, /ipl/ landing pages
-    SiteLinks.astro, seo/, ui/ and older unused pieces
+    SiteLinks.astro, seo/
   lib/
     player-logic.ts        Draft rules: slots, shapes, placement, moves, respins, persistence,
                            the IPL four-overseas rule
@@ -505,7 +505,8 @@ tests use emulated touch in Chrome).
 
 **Pull requests waiting for the owner (open, not merged)**
 - **#39 Daily leaderboard** (new stored data + migration 0002, not applied): design in
-  `docs/plans/daily-leaderboard.md` (on that branch); server half only, no page yet.
+  `docs/plans/daily-leaderboard.md` (on that branch). Server and pages are built there; the UI
+  hides itself until the migration is applied.
 - **#40 Terms page draft and privacy corrections** (legal text). The governing-law line is blank.
 - **#41 Logo concepts** (preview page only; pick a direction, then close it).
 
@@ -521,13 +522,14 @@ tests use emulated touch in Chrome).
   in `docs/morning-report-2026-10-02.md`.
 
 **Not built**
-- The leaderboard's page and "% who beat the World XI today" (after #39 is decided).
+- The leaderboard's home-page line (after #39 is decided).
 - Daily themes for Pick any XI and a "Boss XI": proposals in `docs/plans/themes-and-boss-xi.md`.
 - T20I era normalisation (the effect exists, about a third the size of the IPL's).
 - Parked ideas: `docs/plans/future-ideas.md`.
 
 **Known leftovers**
-- Unused components remain in `src/components/` (EraCard, Hero, Navbar and others).
+- No page uses React any more (the old React components were removed on 2026-10-02), but the
+  React integration and packages are still installed. Removing them is a separate decision.
 - `buildWbContext` keeps one record per player id, so an IPL player with several stints
   contributes only his first to the ranking lists (noted in the IPL era report; unchanged).
 - Page weight: the game pages carry their player data in the HTML (`/odi/pick` 637 KB
