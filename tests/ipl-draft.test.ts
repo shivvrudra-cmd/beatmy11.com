@@ -84,5 +84,33 @@ console.log(`IPL: ${stalled} of ${TRIALS} random spin sequences cannot make a le
 ok(smallLast === 0, 'the final spin never lands on a squad of fewer than 11', smallLast);
 ok(stalled === 0, 'every random IPL spin sequence can be drafted into a legal XI', stalled);
 
+// ---- era normalisation (PROPOSED rule; docs/reports/ipl-era-normalisation.md)
+{
+  const { wbPlayers, iplLeagueRates, IPL_ERA_NORMALISATION } = require('../src/lib/formats/white-ball-store') as typeof import('../src/lib/formats/white-ball-store');
+  const league = iplLeagueRates();
+  ok(league['2008-12'].strikeRate < league['2013-17'].strikeRate && league['2018-22'].strikeRate < league['2023+'].strikeRate && league['2008-12'].economy < league['2023+'].economy, 'the league got faster block by block (from the data)', league);
+  const withMode = (mode: string) => { process.env.IPL_ERA_MODE = mode; const out = wbPlayers('ipl'); delete process.env.IPL_ERA_MODE; return out; };
+  const none = withMode('none'), scaled = withMode('scaled');
+  ok(none.length === scaled.length && none.every((p) => !Object.keys(p.stats).some((k) => k.startsWith('era:'))), 'mode none: no adjusted numbers, the old behaviour');
+  ok(scaled.every((p, i) => p.stats.strikeRate === none[i].stats.strikeRate && p.stats.economy === none[i].stats.economy), 'the real numbers on the cards are never changed');
+  const early = scaled.find((p) => p.stint!.block === '2008-12' && (p.stats.strikeRate ?? 0) > 0)!;
+  const late = scaled.find((p) => p.stint!.block === '2023+' && (p.stats.strikeRate ?? 0) > 0)!;
+  ok(early.stats['era:strikeRate']! > early.stats.strikeRate! && late.stats['era:strikeRate']! < late.stats.strikeRate!, 'a 2008-12 strike rate is scaled up, a 2023+ one down');
+  ok(Math.abs(early.stats['era:strikeRate']! - early.stats.strikeRate! * league.all.strikeRate / league['2008-12'].strikeRate) < 1e-9, 'scaled = real x league overall / league in the block');
+  const lateBowler = scaled.find((p) => p.stint!.block === '2023+' && (p.stats.economy ?? 0) > 0)!;
+  ok(lateBowler.stats['era:economy']! < lateBowler.stats.economy!, 'a 2023+ economy rate is scaled down (bowlers in a faster era are not punished)');
+  // Same strike rate, different blocks: the earlier one ranks higher under the proposed rule only.
+  const FMT = WB_FORMATS.ipl;
+  const pct = (list: typeof scaled, block: string) => {
+    const ctx = buildWbContext(list, FMT);
+    const base = list.find((p) => p.stint!.block === block && p.primaryRole === 'middle-order')!;
+    const twin = { ...base, stats: { ...base.stats, strikeRate: 135 } };
+    if ('era:strikeRate' in base.stats) twin.stats['era:strikeRate'] = 135 * league.all.strikeRate / league[block].strikeRate;
+    return scoreWbPlayer(twin, 'middle-order', ctx, FMT).normalized.strikeRate;
+  };
+  ok(pct(scaled, '2008-12') > pct(scaled, '2023+') + 15, 'a strike rate of 135 is worth much more in 2008-12 than in 2023+', [pct(scaled, '2008-12'), pct(scaled, '2023+')]);
+  ok(IPL_ERA_NORMALISATION === 'scaled', 'this branch proposes the scaled rule');
+}
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

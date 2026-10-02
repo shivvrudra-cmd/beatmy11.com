@@ -108,6 +108,17 @@ const T20_BOWLING: WbMetric[] = [
   { ...BOWL_AVG, weight: T20_OTHER }, { ...WKTS_PM, weight: T20_OTHER }, { ...ECON, weight: T20_HEADLINE }, { ...BALLS_PW, weight: T20_OTHER },
 ];
 
+/**
+ * IPL era normalisation (PROPOSED, owner to decide: docs/reports/ipl-era-normalisation.md).
+ * An IPL stint may carry era-adjusted copies of its numbers under `era:<metric key>`, written
+ * by the store (formats/white-ball-store.ts). When one is present the engine ranks on it; the
+ * card still shows the real number. Without them the engine behaves exactly as before.
+ */
+export const ERA_FIELD = (key: string) => `era:${key}`;
+const eraAware = (defs: WbMetric[]): WbMetric[] => defs.map((d) => ({ ...d, value: (s) => n(s[ERA_FIELD(d.key)]) ?? d.value(s) }));
+/** The IPL metrics reading the real numbers only (the store uses these to build the adjusted ones). */
+export const IPL_RAW_METRICS: WbMetric[] = [...T20_BATTING, ...T20_BOWLING];
+
 export const WB_FORMATS: Record<WbFormat['id'], WbFormat> = {
   odi: {
     id: 'odi', label: 'ODI',
@@ -124,7 +135,7 @@ export const WB_FORMATS: Record<WbFormat['id'], WbFormat> = {
     teamShares: TEAM_SHARES,
   },
   ipl: {
-    id: 'ipl', label: 'IPL', batting: T20_BATTING, bowling: T20_BOWLING,
+    id: 'ipl', label: 'IPL', batting: eraAware(T20_BATTING), bowling: eraAware(T20_BOWLING),
     // IPL cards are stints (one franchise, one block of seasons; owner, 2026-10-02), so the
     // long-career credit is sized to a block: full at 40 matches, the bonus complete at 75.
     priorMatches: 30, longevityWeight: 0.25, longevityFullMatches: 40, longevityBonusFill: 0.8, longevityBonusMatches: 75,
