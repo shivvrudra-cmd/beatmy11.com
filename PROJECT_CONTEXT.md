@@ -119,7 +119,7 @@ src/
     PickGame.astro         THE "Pick any XI" screen, shared by all four formats
     SharedResult.astro     THE shared-result page (/r and /<format>/r)
     FormatLanding.astro    The /odi/, /t20i/, /ipl/ landing pages
-    SiteLinks.astro, seo/, ui/ and older unused pieces
+    SiteLinks.astro, seo/
   lib/
     player-logic.ts        Draft rules: slots, shapes, placement, moves, respins, persistence,
                            the IPL four-overseas rule
@@ -528,7 +528,8 @@ tests use emulated touch in Chrome).
 - Parked ideas: `docs/plans/future-ideas.md`.
 
 **Known leftovers**
-- Unused components remain in `src/components/` (EraCard, Hero, Navbar and others).
+- No page uses React any more (the old React components were removed on 2026-10-02), but the
+  React integration and packages are still installed. Removing them is a separate decision.
 - `buildWbContext` keeps one record per player id, so an IPL player with several stints
   contributes only his first to the ranking lists (noted in the IPL era report; unchanged).
 - Page weight: the game pages carry their player data in the HTML (`/odi/pick` 637 KB
