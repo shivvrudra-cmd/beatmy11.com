@@ -74,6 +74,11 @@ test("result page on a phone: never scrolls by itself, three steady screens, bra
       expect(p.brandHref).toBe("/");
     });
 
+    // Player of the series carries a series stat, and no match card is cut off by it.
+    await expect(page.locator("#rs-pots em i")).toHaveText(/^\d+ (runs|wickets)(, \d+ wickets)?$/);
+    const clipped = await page.evaluate(() =>
+      [...document.querySelectorAll<HTMLElement>(".rs-p1 .rs-test, .rs-pots")].filter((c) => c.scrollHeight > c.clientHeight + 1 || c.scrollWidth > c.clientWidth + 1).length);
+    expect(clipped, `${label}: no match card or the player-of-the-series card is cut off`).toBe(0);
     // The bars have not filled while the player was still on screen 1...
     expect(await page.locator("#rs-grade-panel").getAttribute("class")).not.toContain("is-graded");
     expect(await page.locator("#rs-strength .rs-bar-val").first().textContent()).toBe("0");

@@ -455,7 +455,7 @@ const formatJson = safe(format);
         if (!('IntersectionObserver' in window)) playBars();
         if (series.playerOfSeries) {
           $('rs-pots').classList.toggle('is-house', series.playerOfSeries.side === 'house');
-          $('rs-pots').innerHTML = `<span>Player of the series</span><b>${esc(series.playerOfSeries.name)}</b><em>${series.playerOfSeries.side === 'house' ? esc(OPP) : 'Your XI'}</em>`;
+          $('rs-pots').innerHTML = `<span>Player of the series</span><b>${esc(series.playerOfSeries.name)}</b><em><i>${esc(series.playerOfSeries.stat)}</i>${series.playerOfSeries.side === 'house' ? esc(OPP) : 'Your XI'}</em>`;
           $('rs-pots').hidden = false;
         }
         revealed = true;
@@ -747,6 +747,11 @@ const formatJson = safe(format);
     @media (max-height: 700px) { .rs-p1 .rs-test-also, .rs-p1 .rs-test-sum, .rs-p1 .rs-sub { display: none; } }
     .rs-pots em { font: 600 10.5px Inter, sans-serif; font-style: normal; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rs-muted); }
     .rs-pots[hidden] { display: none; }
+    /* The label wraps onto two lines so the series stat fits beside the name without extra height. */
+    .rs-pots { align-items: center; }
+    .rs-pots span { flex: none; max-width: 78px; line-height: 1.15; }
+    .rs-pots em { flex: none; display: flex; flex-direction: column; align-items: flex-end; line-height: 1.2; }
+    .rs-pots em i { font-style: normal; font-weight: 700; color: var(--rs-text); letter-spacing: 0.04em; }
     .rs-test-also { margin: 0; font: 500 11.5px Inter, sans-serif; color: var(--rs-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .rs-test-also em { font-style: normal; color: var(--rs-dim); }
 
