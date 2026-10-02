@@ -509,6 +509,8 @@ tests use emulated touch in Chrome).
   hides itself until the migration is applied.
 - **#40 Terms page draft and privacy corrections** (legal text). The governing-law line is blank.
 - **#41 Logo concepts** (preview page only; pick a direction, then close it).
+- **#47 SEO pages**: publish the remaining 14 phase-1 pages (59 → 73 pages). The published set
+  is the owner's list (`PUBLISHED_XI_SLUGS`, `PUBLISHED_ROLES` in `seo-pages.ts`).
 
 **Waiting on the owner**
 - Difficulty: play each white-ball format, especially the IPL after the stint change.
@@ -569,7 +571,9 @@ tests use emulated touch in Chrome).
 - #33 sounds on the result page. #34 four more Pick any XI badges. #35 chain challenges. #37 the
   optional 90-second clock.
 - #38 IPL era adjustment for strike rate and economy (merged by the owner's instruction).
-- Open for the owner: #39, #40, #41 (§13).
+- #44 the intermittent role-tab tap in the browser tests is retried and logged (cause unknown).
+  #45 unused components removed. #46 challenge links say when an XI was picked against the clock.
+- Open for the owner: #39, #40, #41, #47 (§13).
 
 **Earlier history** (2026-09-24 → 2026-10-01: the game-flow rebuild, positional XI, engine V1 →
 V2, five-Test series, share cards, Cloudflare Workers, telemetry, SEO foundation, par −7) is in
