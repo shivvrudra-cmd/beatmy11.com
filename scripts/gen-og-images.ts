@@ -113,7 +113,7 @@ function resultImage(r: ShareResult, words = { series: 'The five-Test series', o
      <div class="foot">Can your ${words.xi} do better? <b>beatmy11.com</b></div>`,
     `
     .hero { position: absolute; inset: 96px 190px 88px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-    .head { max-width: 820px; white-space: nowrap; font-size: ${r.imageHeadline.length > 20 ? 76 : 88}px; line-height: 0.9; letter-spacing: 0.03em;
+    .head { max-width: 820px; white-space: nowrap; font-size: ${r.imageHeadline.length > 30 ? 60 : r.imageHeadline.length > 20 ? 76 : 88}px; line-height: 0.9; letter-spacing: 0.03em;
       color: ${won ? LIME : '#eaf0ff'}; ${won ? 'text-shadow: 0 0 44px rgba(198, 255, 61, 0.55);' : ''} }
     .score { display: flex; align-items: center; gap: 34px; margin-top: 6px; }
     .side { display: flex; flex-direction: column; align-items: center; min-width: 170px; }
@@ -150,7 +150,7 @@ async function main() {
   for (const f of [ODI_RESULT, T20I_RESULT, IPL_RESULT]) {
     mkdirSync(`public/og/${f.id}`, { recursive: true });
     const words = { series: f.eyebrow, opponent: f.opponent, xi: f.xiNoun };
-    for (const r of shareResultsFor({ opponent: f.opponent, xiNoun: f.xiNoun })) await shoot(resultImage(r, words), `public/og/${f.id}/${r.slug}.png`);
+    for (const r of shareResultsFor({ opponent: f.opponent, xiNoun: f.xiNoun, matchNoun: f.matchNoun })) await shoot(resultImage(r, words), `public/og/${f.id}/${r.slug}.png`);
   }
   await browser.close();
 }

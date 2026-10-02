@@ -24,13 +24,31 @@ export interface ShareResult {
   challenge: string;
 }
 
-/** Wording for a format's share pages; the Test game's is the default. */
-export interface ShareWords { opponent: string; xiNoun: string }
+/** Wording for a format's share pages; the Test game's is the default. `matchNoun`: "Test",
+ *  "ODI", "T20I", "match". */
+export interface ShareWords { opponent: string; xiNoun: string; matchNoun?: string }
 
 /** The seven share results worded for another format (opponent name and "IPL XI" etc.). */
 export function shareResultsFor(words: ShareWords): ShareResult[] {
-  const swap = (t: string) => t.replace(/all-time Test XI/g, words.xiNoun).replace(/World XI/g, words.opponent);
+  const swap = (t: string) =>
+    t.replace(/all-time Test XI/g, words.xiNoun).replace(/World XI/g, words.opponent).replace(/fifth Test/g, `fifth ${words.matchNoun ?? 'match'}`);
   return SHARE_RESULTS.map((r) => ({ ...r, imageHeadline: swap(r.imageHeadline), title: swap(r.title), challenge: swap(r.challenge) }));
+}
+
+/**
+ * The message sent with a shared result. A lost series is worded as something a player would
+ * still send (owner, 2026-10-02: nobody shares "I lost"); the scoreline is always in it, so it
+ * stays true. A 2–3 is always level going into the fifth match (testOrder in series.ts).
+ * PROVISIONAL wording.
+ */
+export function shareTextFor(user: number, house: number, words: ShareWords): string {
+  const score = `${user}–${house}`;
+  const { xiNoun: xi, opponent: opp } = words;
+  if (user === 5) return `I whitewashed the ${opp} 5–0 with my ${xi} 🏏 Can you?`;
+  if (user > house) return `My ${xi} beat the ${opp} ${score} 🏏 Can yours?`;
+  if (user === house) return `My ${xi} drew ${score} with the ${opp} 🏏 Can you beat it?`;
+  if (house === 3) return `My ${xi} took the ${opp} to the fifth ${words.matchNoun ?? 'match'}: ${score} 🏏 Can yours do better?`;
+  return `My ${xi} went ${score} with the ${opp} 🏏 Can yours do better?`;
 }
 
 function describe(user: number, house: number): Pick<ShareResult, 'imageHeadline' | 'title' | 'challenge'> {
@@ -53,9 +71,16 @@ function describe(user: number, house: number): Pick<ShareResult, 'imageHeadline
       title: `I drew with the World XI ${score}`,
       challenge: `Their all-time Test XI drew the series ${score}. Can yours win it?`,
     };
+  // Lost series (owner, 2026-10-02): worded as a dare, never "I lost". PROVISIONAL wording.
+  if (house === 3)
+    return {
+      imageHeadline: 'I took the World XI to the decider',
+      title: `I took the World XI to the fifth Test: ${score}. Can you beat it?`,
+      challenge: `Their all-time Test XI was level 2–2 with the World XI going into the fifth Test, and the World XI took the series ${house}–${user}. Can yours win it?`,
+    };
   return {
     imageHeadline: 'Can you beat the World XI?',
-    title: `The World XI beat me ${house}–${user}. Can you beat it?`,
+    title: `My XI went ${score} with the World XI. Can yours do better?`,
     challenge: `The World XI won the series ${house}–${user}. Can your all-time Test XI do better?`,
   };
 }

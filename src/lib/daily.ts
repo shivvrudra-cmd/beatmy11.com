@@ -173,10 +173,13 @@ export function dailySpins(day: string, legendCombos: SpinCombo[], draftCombos: 
 
 export function dailyShareText(day: string, r: DailyResult, streak: number, words: { label?: string; xiNoun?: string; opponent?: string } = {}): string {
   const n = dayNumber(day);
-  const verdict = r.user === 5 ? 'whitewashed' : r.user > r.house ? 'beat' : r.user === r.house ? 'drew with' : 'lost to';
+  // A lost daily reads "went 1–4 with", never "lost to" (owner, 2026-10-02); the score is still there.
+  const score = `${r.user}–${r.house}`;
+  const opp = `the ${words.opponent ?? 'World XI'}`;
+  const verdict = r.user === 5 ? `whitewashed ${opp} ${score}` : r.user > r.house ? `beat ${opp} ${score}` : r.user === r.house ? `drew with ${opp} ${score}` : `went ${score} with ${opp}`;
   const fire = streak > 1 ? ` 🔥${streak}` : '';
   const label = words.label ? `${words.label} ` : '';
-  return `Beat My 11 ${label}Daily #${n}: my ${words.xiNoun ?? 'all-time Test XI'} ${verdict} the ${words.opponent ?? 'World XI'} ${r.user}–${r.house}${fire} 🏏 Same spins for everyone today. Can you do better?`;
+  return `Beat My 11 ${label}Daily #${n}: my ${words.xiNoun ?? 'all-time Test XI'} ${verdict}${fire} 🏏 Same spins for everyone today. Can you do better?`;
 }
 
 /**
