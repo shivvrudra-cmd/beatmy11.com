@@ -63,7 +63,7 @@ link to a friend, who picks their own XI; both see the same five-match series. S
    | Test | −7 (`PAR_GAP`) | 89.4 | 6.7% (smart drafter 26.6%); figures from 2026-10-01, not re-run | owner-approved |
    | ODI | −10 | 92.4 | 16.2% | PROVISIONAL, tuned to about 15% |
    | T20I | −12.5 | 93.8 | 14.0% | PROVISIONAL, tuned to about 15% |
-   | IPL | −18.5 | 92.8 | 14.8% | PROVISIONAL, tuned to about 15% |
+   | IPL | −19 | 93.0 | 14.4% | PROVISIONAL, tuned to about 15% (re-tuned 2026-10-02 with the era adjustment, §6) |
 
    White-ball pars are written by `scripts/cricsheet/calibrate-white-ball.ts` into
    `src/data/formats/<format>-series.json`. The owner said "ok" to about 15% for ODI and T20I;
@@ -239,10 +239,11 @@ Scoring never selects players; each opponent is a fixed list.
 - **T20I World XI** (`owner-allstar-t20i.json`): Rohit Sharma, Abhishek Sharma, Suryakumar Yadav,
   Kohli, Maxwell, Buttler (wk), Rashid Khan, Hasaranga, Bumrah, Malinga, Umar Gul. Score 93.8.
 - **IPL All-Star XI** (`owner-allstar-ipl.json`): the owner's eleven players, each at his
-  **best-rated stint** (chosen by the calibrate script): Kohli RCB 2023+, Gayle RCB 2013–17, Rohit
+  **best-rated stint** (chosen by the calibrate script): Kohli RCB 2013–17 (it was RCB 2023+
+  before the era adjustment of 2026-10-02), Gayle RCB 2013–17, Rohit
   MI 2013–17, Suryakumar MI 2023+, Raina CSK 2008–12, de Villiers RCB 2013–17 (wk), Chahal RCB
   2018–22, Rashid Khan SRH 2018–22, Malinga MI 2008–12, Bumrah MI 2018–22, Bhuvneshwar SRH
-  2013–17. Score 92.8. Exactly four overseas.
+  2013–17. Score 93.0. Exactly four overseas.
 - **Opponent-only players** (`owner-opponent-only.json` → `opponent-only.json`): Viv Richards
   (ODI) and Rashid Khan (T20I) have no ball-by-ball matches in the data. Their career line comes
   from the owner's HowSTAT tables and their catches from the owner (100 and 49; run outs are not
@@ -282,6 +283,13 @@ long-career bonus fill 0.8, all-rounder formula, 40/50/10 team blend), with per-
 - The 40/20 T20 split is owner-confirmed (2026-10-01). IPL "40 matches" is owner-approved;
   **"75" is `UNCONFIRMED - owner to confirm`**.
 - Populations are never mixed across formats. Draftable minimum: 10 matches (`WB_MIN_MATCHES`).
+- **IPL era adjustment** (owner approved by merging PR #38, 2026-10-02): the IPL got faster
+  (league strike rate 123.4 → 128.9 → 132.9 → 150.3 and economy 7.66 → 8.00 → 8.26 → 9.36 across
+  the four blocks), so before ranking a stint's strike rate and economy are scaled to its block:
+  `adjusted = real × (league over all seasons ÷ league in that block)`. Cards show the real
+  numbers. The other six metrics are untouched; ODI and T20I are untouched.
+  `IPL_ERA_NORMALISATION = 'scaled'` in `formats/white-ball-store.ts` (`'none'` restores the old
+  behaviour). Analysis: `docs/reports/ipl-era-normalisation.md`.
 - **IPL cards are stints** (owner, 2026-10-02): one player, one franchise, one block of seasons
   (2008–12, 2013–17, 2018–22, 2023+), carrying only the numbers from those matches. 947 draftable
   stints (10+ matches in the stint). A player has one record per stint (same `id`) and can be in
@@ -427,7 +435,7 @@ link-preview images (`public/og/`, `public/og/<format>/`), showing the sender's 
 
 ## 11. Tests (run 2026-10-02 on `d6be47e`)
 
-`npm test` — **16 suites, all pass, 1,318 assertions:**
+`npm test` — **16 suites, all pass, 1,326 assertions:**
 
 | Suite | Passed | Covers |
 |---|---|---|
@@ -441,7 +449,7 @@ link-preview images (`public/og/`, `public/og/<format>/`), showing the sender's 
 | `challenge` | 35 | challenge links, per-format dailies |
 | `white-ball-data` | 28 | aggregation on hand-checked matches, generated data sanity |
 | `white-ball-metrics` | 32 | white-ball engine |
-| `ipl-draft` | 16 | stints, overseas flags and rule, squads, final spin, achievability |
+| `ipl-draft` | 24 | stints, overseas flags and rule, squads, final spin, achievability |
 | `intl-draft` | 27 | ODI/T20I pools, squad cut, opponent-only players |
 | `howstat` | 36 | HowSTAT readers and pairing |
 | `pick-xi` | 34 | duel ladder, names, badges, chain challenges, head-to-head record |
@@ -496,8 +504,6 @@ tests use emulated touch in Chrome).
 ## 13. Open items
 
 **Pull requests waiting for the owner (open, not merged)**
-- **#38 IPL era normalisation** (scoring): scale strike rate and economy to the league level of
-  the stint's block. Analysis in `docs/reports/ipl-era-normalisation.md` (on that branch).
 - **#39 Daily leaderboard** (new stored data + migration 0002, not applied): design in
   `docs/plans/daily-leaderboard.md` (on that branch); server half only, no page yet.
 - **#40 Terms page draft and privacy corrections** (legal text). The governing-law line is blank.
@@ -560,7 +566,8 @@ tests use emulated touch in Chrome).
   missing; the game was unaffected). #32 untracked two local reports committed by mistake in #31.
 - #33 sounds on the result page. #34 four more Pick any XI badges. #35 chain challenges. #37 the
   optional 90-second clock.
-- Open for the owner: #38, #39, #40, #41 (§13).
+- #38 IPL era adjustment for strike rate and economy (merged by the owner's instruction).
+- Open for the owner: #39, #40, #41 (§13).
 
 **Earlier history** (2026-09-24 → 2026-10-01: the game-flow rebuild, positional XI, engine V1 →
 V2, five-Test series, share cards, Cloudflare Workers, telemetry, SEO foundation, par −7) is in

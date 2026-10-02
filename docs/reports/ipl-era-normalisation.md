@@ -1,7 +1,7 @@
 # IPL: should players be rated against their own seasons? (2026-10-02)
 
-**Status: a proposal on an open pull request. Nothing here is live. It is a scoring-rule change,
-so the owner decides.**
+**Status: adopted. The owner said "merge PR #38" on 2026-10-02, so option (c) below is live.
+The open questions at the end (par −19, T20I) are still the owner's to revisit.**
 
 ## The owner's point
 
