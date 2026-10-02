@@ -44,6 +44,17 @@ function audio(): AudioContext | null {
   }
 }
 
+/**
+ * True when a sound would be heard right now: not muted and the audio context is running.
+ * A page that plays sounds by itself (the result page's reveal) must check this first: browsers
+ * keep audio suspended until the visitor taps the page, and notes queued while suspended would
+ * all play at once on that first tap.
+ */
+export function soundReady(): boolean {
+  const c = audio();
+  return !!c && c.state === 'running';
+}
+
 /** One short note: `from` → `to` Hz over `ms`, starting `at` seconds from now. */
 function tone(type: OscillatorType, from: number, to: number, ms: number, vol = 1, at = 0): void {
   const c = audio();
@@ -85,6 +96,18 @@ export const sfx = {
   remove: () => tone('triangle', 520, 330, 110, 0.5),
   /** A pick that cannot be made. */
   blocked: () => tone('sawtooth', 150, 110, 140, 0.35),
+  // ---- result page (2026-10-02). Call only when soundReady(). ----
+  /** A match card appears: won, lost, or level. */
+  matchWon: () => { tone('triangle', 660, 660, 80, 0.5); tone('triangle', 990, 990, 140, 0.5, 0.08); },
+  matchLost: () => tone('sine', 260, 170, 200, 0.6),
+  matchLevel: () => tone('triangle', 440, 440, 120, 0.4),
+  /** The series verdict. */
+  seriesWon: () => [523, 659, 784, 1047, 1319].forEach((f, i) => tone('triangle', f, f, 200, 0.6, i * 0.1)),
+  seriesLost: () => [392, 330, 262].forEach((f, i) => tone('sine', f, f, 220, 0.5, i * 0.14)),
+  seriesLevel: () => [523, 523].forEach((f, i) => tone('triangle', f, f, 160, 0.5, i * 0.16)),
+  /** The strength bars filling (`ms` long), then the grade appearing. */
+  bars: (ms: number) => tone('sine', 220, 660, ms, 0.25),
+  grade: () => { tone('triangle', 784, 784, 120, 0.6); tone('triangle', 1175, 1175, 260, 0.6, 0.1); },
   /** The eleventh player placed. */
   complete: () => [523, 659, 784, 1047].forEach((f, i) => tone('triangle', f, f, 170, 0.6, i * 0.09)),
 };
