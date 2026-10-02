@@ -43,6 +43,9 @@ test("daily result: with no board available nothing about it is shown or sent", 
   await page.waitForTimeout(800);
   await expect(page.locator("#rs-board")).toBeHidden();
   expect(calls).toBe(1); // one read to see whether a board exists; nothing posted
+  await page.goto("/");
+  await page.waitForTimeout(500);
+  await expect(page.locator("#hm-daily-board")).toBeHidden();
 });
 
 test("daily result: adding a score is the player's choice, sends only the result, then shows the standing", async ({ page }) => {
@@ -87,6 +90,11 @@ test("daily result: adding a score is the player's choice, sends only the result
   await expect(page.locator("#db-list")).toContainText("<img src=x onerror=alert(1)>");
   expect(await page.locator("#db-list img").count()).toBe(0);
   await expect(page.locator("#db-line")).toContainText("6 on today’s board. 33% beat the World XI.");
+  // The home page Daily card shows today's best and links to the board.
+  await page.goto("/");
+  await expect(page.locator("#hm-daily-board a")).toHaveText("Today’s best: 99.0 · 6 on the board");
+  await page.locator("#hm-daily-board a").click();
+  await page.waitForURL("**/daily-board**");
   await page.locator('.db-tab[data-db-format="ipl"]').click();
   await expect(page.locator("#db-play")).toHaveAttribute("href", "/ipl/play?daily=1");
 });

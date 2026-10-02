@@ -60,6 +60,7 @@ const steps = [
         <p class="hm-daily-streak" id="hm-daily-streak" hidden></p>
         <a class="hm-daily-cta" href="/play?daily=1" id="hm-daily-cta">Play today’s challenge</a>
         <p class="hm-daily-note" id="hm-daily-note">One scored attempt a day. New spins at 00:00 UTC. Keep your streak alive.</p>
+        <p class="hm-daily-board" id="hm-daily-board" hidden></p>
       </section>
       <!-- Directly under the Daily Challenge card (owner, 2026-10-02). -->
       <p class="hm-dailies hm-dailies--under" id="hm-other-dailies">Today’s other dailies:
@@ -118,6 +119,17 @@ const steps = [
   <script>
     // Daily Challenge card: today's number, your streak, and whether you've played.
     import { utcDayKey, dayNumber, loadDaily, hasPlayed, currentStreak, activeDailyDay, msUntilReset, formatCountdown } from '../lib/daily';
+    import { fetchBoard } from '../lib/leaderboard';
+    // Daily leaderboard (PROPOSAL): today's best score, shown only when the board answers and has entries.
+    fetchBoard('test', utcDayKey()).then((b) => {
+      const el = document.getElementById('hm-daily-board');
+      if (!b || !b.total || !b.entries.length || !el) return;
+      const a = document.createElement('a');
+      a.href = '/daily-board';
+      a.textContent = `Today’s best: ${b.entries[0].score.toFixed(1)} · ${b.total} on the board`;
+      el.replaceChildren(a);
+      el.hidden = false;
+    });
     // The other formats' dailies: mark the ones already played today (each has its own result and streak).
     for (const a of document.querySelectorAll('[data-hm-daily]')) {
       const st = loadDaily(a.getAttribute('data-hm-daily'));
@@ -270,6 +282,9 @@ const steps = [
     .hm-game b { font: 400 28px/1 var(--hm-display); letter-spacing: 0.04em; }
     .hm-game i { font: 400 13px/1.4 Inter, sans-serif; font-style: normal; color: var(--hm-muted); }
     .hm-game-tag { align-self: flex-start; padding: 2px 7px; border-radius: 5px; background: var(--hm-lime); color: #04060c; font: 700 9.5px Inter, sans-serif; letter-spacing: 0.12em; text-transform: uppercase; }
+    .hm-daily-board { margin: 8px 0 0; font: 600 13px Inter, sans-serif; }
+    .hm-daily-board[hidden] { display: none; }
+    .hm-daily-board a { color: var(--hm-lime); }
     .hm-dailies--under { max-width: 640px; margin: 14px auto 0 !important; text-align: center; }
     .hm-dailies { margin: 16px 0 0; font: 600 13px/1.6 Inter, sans-serif; color: var(--hm-muted); }
     .hm-dailies a { display: inline-block; margin-left: 6px; padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(198, 255, 61, 0.45); color: var(--hm-lime); text-decoration: none; }
