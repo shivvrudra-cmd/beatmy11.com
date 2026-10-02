@@ -8,14 +8,17 @@
 #   Content-Security-Policy    scripts, styles, fonts and images load from this site only; data: and
 #                              blob: images are the share card; API calls go to this site only.
 #                              'unsafe-inline' is needed because Astro inlines small scripts and
-#                              styles. Adding ads or analytics later means adding their hosts here.
+#                              styles. Cloudflare Web Analytics is allowed: on the live domain Cloudflare
+#                              adds its cookieless beacon (static.cloudflareinsights.com) to every page;
+#                              preview builds do not have it. Adding ads or other analytics later means
+#                              adding their hosts here.
 /*
   Strict-Transport-Security: max-age=31536000
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), accelerometer=(), gyroscope=(), magnetometer=(), browsing-topics=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
 
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
