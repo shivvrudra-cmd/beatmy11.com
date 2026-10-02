@@ -9,7 +9,7 @@ import { T20I_FORMAT } from '../../../lib/formats/draft-format';
 import { T20I_RESULT } from '../../../lib/formats/result-format';
 
 export function getStaticPaths() {
-  return shareResultsFor({ opponent: T20I_RESULT.opponent, xiNoun: T20I_RESULT.xiNoun }).map((r) => ({ params: { result: r.slug }, props: { r } }));
+  return shareResultsFor({ opponent: T20I_RESULT.opponent, xiNoun: T20I_RESULT.xiNoun, matchNoun: T20I_RESULT.matchNoun }).map((r) => ({ params: { result: r.slug }, props: { r } }));
 }
 
 const { r } = Astro.props as { r: ShareResult };

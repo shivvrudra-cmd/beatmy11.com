@@ -127,7 +127,7 @@ const formatJson = safe(format);
     import { compareXIs, teamBlend } from '../lib/seven-metrics';
     import { compareWbXIs, wbTeamBlend, WB_FORMATS } from '../lib/white-ball-metrics';
     import { playSeries, xiSeed } from '../lib/series';
-    import { SHARE_RESULTS, encodeXI } from '../lib/share-results';
+    import { shareResultsFor, shareTextFor, encodeXI } from '../lib/share-results';
     import { drawShareCard, cardBlob } from '../lib/share-card';
     import { reportScore, reportEvent } from '../lib/telemetry';
     import { gradeFor, gradeTitle, shapeTitle, pickTip } from '../lib/result-insights';
@@ -505,20 +505,10 @@ const formatJson = safe(format);
         ? `${location.origin}${FORMAT.id === 'test' ? '' : `/${FORMAT.id}`}/r/${slug}?xi=${encodeXI(userXI.map((p) => ({ id: p.id, role: p.role })))}${spinsParam ? `&c=${spinsParam}` : ''}`
         : `${location.origin}${FORMAT.homeHref}`;
       const XI = FORMAT.xiNoun;
-      const shareText = challengeShare || dailyShare ||
-        (series.user === 5
-          ? `I whitewashed the ${OPP} 5–0 with my ${XI} 🏏 Can you?`
-          : series.user > series.house
-            ? `My ${XI} beat the ${OPP} ${series.user}–${series.house} 🏏 Can yours?`
-            : series.user === series.house
-              ? `My ${XI} drew ${series.user}–${series.house} with the ${OPP} 🏏 Can you beat it?`
-              : `My ${XI} lost ${series.user}–${series.house} to the ${OPP} 🏏 Can you beat it?`);
-      const cardHeadline = FORMAT.id === 'test'
-        ? SHARE_RESULTS.find((r) => r.slug === slug)?.imageHeadline ?? 'Beat My 11'
-        : series.user === 5 ? `I whitewashed the ${OPP}`
-          : series.user > series.house ? `I beat the ${OPP}`
-            : series.user === series.house ? `I drew with the ${OPP}`
-              : `I lost to the ${OPP}`;
+      // One wording for the card, the message and the /r pages (src/lib/share-results.ts).
+      const words = { opponent: OPP, xiNoun: XI, matchNoun: FORMAT.matchNoun };
+      const shareText = challengeShare || dailyShare || shareTextFor(series.user, series.house, words);
+      const cardHeadline = shareResultsFor(words).find((r) => r.slug === slug)?.imageHeadline ?? 'Beat My 11';
 
       // Drawn straight away so it's ready when the reveal ends; the share
       // sheet must open within the tap's activation window.
