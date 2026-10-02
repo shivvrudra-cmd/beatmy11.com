@@ -26,6 +26,11 @@ test("the home page and the pick page link to the landing pages", async ({ page 
   await page.goto("/");
   await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Test, ODI, T20I and IPL/);
   for (const id of ["odi", "t20i", "ipl"]) await expect(page.locator(`.hm-dailies a[href="/${id}/"]`)).toBeVisible();
+  // "Today's other dailies" sits directly under the Daily Challenge card, above "More ways to play".
+  const y = (sel: string) => page.locator(sel).evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
+  expect(await page.locator("#hm-other-dailies").evaluate((el) => el.previousElementSibling?.className)).toBe("hm-daily");
+  expect(await y("#hm-other-dailies")).toBeLessThan(await y(".hm-more"));
+  await expect(page.locator("#hm-other-dailies a")).toHaveCount(3);
   await page.goto("/ipl/pick");
   await expect(page.locator(".pk-about")).toContainText("How Pick any XI works");
   await expect(page.locator('.pk-about a[href="/ipl/"]')).toBeVisible();
