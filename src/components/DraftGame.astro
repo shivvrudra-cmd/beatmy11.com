@@ -634,11 +634,22 @@ const formatJson = json(format);
     // 'tabs' layout: one role at a time. After a player is placed, the tab moves on by itself to
     // the first role that still has a pick. A tab the player opened themselves (tap or swipe)
     // stays open, even when everything in it is greyed out, until the next placement or spin.
+    // The roles sit side by side in a native horizontal scroll-snap pager (owner, 2026-10-02):
+    // the list follows the finger, like the Test player cards, and the lit tab follows the list.
     const TABS = FORMAT.poolLayout === 'tabs';
     const TAB_LABELS = { opener: 'Openers', 'middle-order': 'Middle order', wicketkeeper: 'Keepers', 'all-rounder': 'All-rounders', spinner: 'Spinners', 'fast-bowler': 'Fast bowlers' };
     let poolTab = null;
     let poolTabPinned = false;
     let poolTabRoles = [];
+    /** The tab the pager showed after the last render (to slide from it to the next one). */
+    let pagerShown = null;
+    let pagerKey = null;
+    /** The page the code is moving the pager to (null when it is at rest or under the finger),
+     *  so that movement is not read as a swipe. */
+    let pagerTarget = null;
+    let pagerFix = 0;
+    const SWIPE_HINT_KEY = 'beatmy11.swipeHint.v1';
+    let swipeHintSeen = (() => { try { return localStorage.getItem(SWIPE_HINT_KEY) === '1'; } catch { return false; } })();
 
     // Players who could not be picked when the draw landed (already in the XI, or no place left
     // for their role) go to the end of the pool. Decided once per draw, not as you pick: choosing
@@ -730,12 +741,60 @@ const formatJson = json(format);
       // IPL: at most four overseas players; the running count sits at the start of the tab row.
       const osCount = draft.selectedPlayers.filter((p) => p.overseas).length;
       const osChip = FORMAT.id === 'ipl' ? `<span class="fl-os${osCount >= 4 ? ' is-full' : ''}" aria-label="Overseas players picked: ${osCount} of 4">Overseas ${osCount}/4</span>` : '';
+      // Keep each role's own scroll position across a redraw of the same draw.
+      const sameDraw = pagerKey === poolOrderKey;
+      const tops = {};
+      if (sameDraw) for (const pg of cardsEl.querySelectorAll('[data-bm11-page]')) tops[pg.getAttribute('data-bm11-page')] = pg.scrollTop;
       cardsEl.innerHTML =
         `<div class="fl-tabs" role="tablist" aria-label="Roles">` + osChip + groups.map((g) =>
           `<button type="button" role="tab" class="fl-tab${g.r === poolTab ? ' is-on' : ''}" data-bm11-tab="${g.r}" aria-selected="${g.r === poolTab}">` +
           `${esc(TAB_LABELS[g.r])} <b>${g.list.filter((p) => !picked(p)).length}</b></button>`).join('') + `</div>` +
-        (groups.find((g) => g.r === poolTab)?.list ?? []).map(cardHtml).join('');
-      cardsEl.querySelector('.fl-tab.is-on')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+        `<div class="fl-pager" id="fl-pager">` + groups.map((g) =>
+          `<div class="fl-page" role="tabpanel" aria-label="${esc(TAB_LABELS[g.r])}" data-bm11-page="${g.r}">${g.list.map(cardHtml).join('')}</div>`).join('') + `</div>` +
+        (groups.length > 1 && !swipeHintSeen ? `<p class="fl-swipe-hint" id="fl-swipe-hint" aria-hidden="true"><span>‹</span> swipe for other roles <span>›</span></p>` : '');
+      const pager = $('fl-pager');
+      for (const pg of pager.children) pg.scrollTop = tops[pg.getAttribute('data-bm11-page')] ?? 0;
+      // Start where the pager was, then slide to the new tab if it changed (auto-advance).
+      const to = poolTabRoles.indexOf(poolTab);
+      const from = sameDraw && poolTabRoles.includes(pagerShown) ? poolTabRoles.indexOf(pagerShown) : to;
+      pagerMove(pager, from, false);
+      if (from !== to) pagerMove(pager, to, true);
+      pagerKey = poolOrderKey;
+      pagerShown = poolTab;
+      showActiveTab();
+    }
+
+    /** Move the pager to a page from code (not a swipe). */
+    function pagerMove(pager, index, smooth) {
+      const left = index * pager.clientWidth;
+      window.clearTimeout(pagerFix);
+      if (Math.abs(pager.scrollLeft - left) < 1) { pagerTarget = null; return; }
+      pagerTarget = index;
+      pager.scrollTo({ left, behavior: smooth && !reduceMotion() ? 'smooth' : 'auto' });
+      // Safety net: if the slide was cut short (a tap landing while a swipe was still settling),
+      // rest exactly on the open role's page.
+      pagerFix = window.setTimeout(() => {
+        const p = $('fl-pager');
+        if (!p || pagerTarget === null) return;
+        const want = pagerTarget * p.clientWidth;
+        if (Math.abs(p.scrollLeft - want) > 1) p.scrollTo({ left: want, behavior: 'auto' });
+        window.setTimeout(() => { pagerTarget = null; }, 120);
+      }, 1100);
+    }
+    /** Light the current tab and bring it into view in the tab row (never moves the page). */
+    function showActiveTab() {
+      const row = cardsEl.querySelector('.fl-tabs');
+      for (const t of cardsEl.querySelectorAll('[data-bm11-tab]')) {
+        const on = t.getAttribute('data-bm11-tab') === poolTab;
+        t.classList.toggle('is-on', on);
+        t.setAttribute('aria-selected', String(on));
+        if (on && row) {
+          // Clear of the "Overseas n/4" chip, which stays pinned at the left of the row (IPL).
+          const pad = (row.querySelector('.fl-os')?.offsetWidth ?? 0) + 8;
+          const l = t.offsetLeft - row.offsetLeft;
+          if (l < row.scrollLeft + pad || l + t.offsetWidth > row.scrollLeft + row.clientWidth) row.scrollLeft = Math.max(0, l - pad);
+        }
+      }
     }
 
     cardsEl.addEventListener('click', (e) => {
@@ -748,25 +807,38 @@ const formatJson = json(format);
     function openTab(role) {
       poolTab = role;
       poolTabPinned = true;
-      cardsEl.scrollTop = 0;
-      renderPool();
+      pagerShown = role;
+      const pager = $('fl-pager');
+      if (pager) pagerMove(pager, poolTabRoles.indexOf(role), true);
+      showActiveTab();
     }
-    // Swipe left or right on the list to move to the next or previous role.
+    // Swiping the list sideways is the pager's own scrolling. When it settles on another role,
+    // that role becomes the open tab (and stays open, like a tapped tab).
     if (TABS) {
-      let sx = 0, sy = 0, swiping = false;
-      cardsEl.addEventListener('touchstart', (e) => {
-        swiping = e.touches.length === 1 && !e.target.closest('.fl-tabs');
-        if (swiping) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }
-      }, { passive: true });
-      cardsEl.addEventListener('touchend', (e) => {
-        if (!swiping) return;
-        swiping = false;
-        const dx = e.changedTouches[0].clientX - sx;
-        const dy = e.changedTouches[0].clientY - sy;
-        if (Math.abs(dx) < 60 || Math.abs(dx) < 1.5 * Math.abs(dy)) return;
-        const next = poolTabRoles[poolTabRoles.indexOf(poolTab) + (dx < 0 ? 1 : -1)];
-        if (next) openTab(next);
-      }, { passive: true });
+      const userTakesOver = () => { pagerTarget = null; window.clearTimeout(pagerFix); };
+      cardsEl.addEventListener('touchstart', userTakesOver, { passive: true });
+      cardsEl.addEventListener('wheel', userTakesOver, { passive: true });
+      cardsEl.addEventListener('scroll', (e) => {
+        const pager = e.target;
+        if (!(pager instanceof HTMLElement) || pager.id !== 'fl-pager' || !pager.clientWidth) return;
+        if (pagerTarget !== null) {
+          // Moving under the code's control: done when it arrives; nothing on the way counts.
+          if (Math.abs(pager.scrollLeft - pagerTarget * pager.clientWidth) < 2) { pagerTarget = null; window.clearTimeout(pagerFix); }
+          return;
+        }
+        const role = poolTabRoles[Math.round(pager.scrollLeft / pager.clientWidth)];
+        if (!role || role === poolTab) return;
+        poolTab = role;
+        poolTabPinned = true;
+        pagerShown = role;
+        showActiveTab();
+        // The first swipe retires the "swipe" cue for good.
+        if (!swipeHintSeen) {
+          swipeHintSeen = true;
+          try { localStorage.setItem(SWIPE_HINT_KEY, '1'); } catch { /* storage unavailable */ }
+          $('fl-swipe-hint')?.remove();
+        }
+      }, { capture: true, passive: true });
     }
 
     function onPoolClick(uid, btn) {
@@ -1533,12 +1605,36 @@ const formatJson = json(format);
 
     /* ============ 'tabs' pool layout (white-ball formats): role tabs + compact rows ============ */
     .fl[data-pool="tabs"] .fl-cards {
-      flex-direction: column; flex-wrap: nowrap; align-items: stretch; justify-content: flex-start; gap: 5px; padding: 0 2px 10px;
-      overflow-x: hidden; overflow-y: auto; scroll-snap-type: none; touch-action: pan-y; overscroll-behavior: contain;
+      position: relative; flex-direction: column; flex-wrap: nowrap; align-items: stretch; justify-content: flex-start; gap: 0; padding: 0 2px;
+      overflow: hidden; scroll-snap-type: none; touch-action: auto;
       max-height: 62vh; width: 100%; max-width: 680px; margin: 6px auto 0;
     }
+    /* The pager: one page per role, side by side. Native scrolling and snapping, so the list
+       follows the finger; each page scrolls up and down on its own. */
+    .fl-pager {
+      flex: 1 1 auto; min-height: 0; display: flex; overflow-x: auto; overflow-y: hidden;
+      scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none;
+    }
+    .fl-pager::-webkit-scrollbar { display: none; }
+    .fl-page {
+      flex: none; width: 100%; box-sizing: border-box; scroll-snap-align: start; scroll-snap-stop: always;
+      display: flex; flex-direction: column; gap: 5px; padding: 6px 1px 10px;
+      overflow-x: hidden; overflow-y: auto; overscroll-behavior-y: contain;
+    }
+    /* First-time cue that the list swipes sideways; touch screens only, gone after one swipe. */
+    .fl-swipe-hint {
+      display: none; position: absolute; left: 50%; bottom: 8px; z-index: 4; transform: translateX(-50%); margin: 0; padding: 6px 12px;
+      border-radius: 999px; background: rgba(4, 6, 12, 0.92); border: 1px solid rgba(198, 255, 61, 0.5); color: var(--fl-lime);
+      font: 700 10.5px Inter, sans-serif; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; pointer-events: none;
+    }
+    .fl-swipe-hint span { display: inline-block; font-size: 14px; line-height: 1; animation: fl-swipe-l 1.2s ease-in-out infinite; }
+    .fl-swipe-hint span:last-child { animation-name: fl-swipe-r; }
+    @keyframes fl-swipe-l { 50% { transform: translateX(-4px); } }
+    @keyframes fl-swipe-r { 50% { transform: translateX(4px); } }
+    @media (hover: none) and (pointer: coarse) { .fl-swipe-hint { display: block; } }
+    @media (prefers-reduced-motion: reduce) { .fl-swipe-hint span { animation: none; } }
     .fl[data-pool="tabs"] .fl-pool { justify-content: flex-start; }
-    .fl-tabs { position: sticky; top: 0; z-index: 3; flex: none; display: flex; gap: 6px; overflow-x: auto; padding: 6px 0; background: #070a14; scrollbar-width: none; }
+    .fl-tabs { position: relative; z-index: 3; flex: none; display: flex; gap: 6px; overflow-x: auto; padding: 6px 0; background: #070a14; scrollbar-width: none; }
     .fl-tabs::-webkit-scrollbar { display: none; }
     .fl-tab { flex: none; min-height: 34px; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--fl-line); background: #10172a; color: var(--fl-muted); font: 700 12px Inter, sans-serif; cursor: pointer; }
     .fl-tab b { color: var(--fl-dim); margin-left: 3px; }
