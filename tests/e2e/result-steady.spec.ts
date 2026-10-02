@@ -87,7 +87,10 @@ test("result page on a phone: never scrolls by itself, three steady screens, bra
     await expect(page.locator("#rs-grade-panel")).toHaveClass(/is-graded/, { timeout: 8000 });
     // The share card arrives without moving anything on screen 3.
     await expect.poll(() => page.locator("#rs-card-img").evaluate((img: HTMLImageElement) => img.naturalWidth)).toBe(1080);
+    // The longest tip allowed (TIP_MAX_CHARS in result-insights.ts) still fits screen 2.
+    await page.evaluate(() => { document.getElementById("rs-tip")!.innerHTML = "<b>Tip</b> " + "Your bowling scored 64 and. ".repeat(7).slice(0, 170); });
     const after = await layout(page);
+    expect(after.panels[1].spill, `${label}: the longest tip fits screen 2`).toBeLessThanOrEqual(1);
     expect(after.scrollH).toBe(3 * after.vh);
     expect(after.panels[2].spill, `${label}: card and buttons fit screen 3`).toBeLessThanOrEqual(1);
     const card = await page.locator("#rs-card-img").boundingBox();

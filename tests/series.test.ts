@@ -17,7 +17,7 @@ import {
   normInv,
   type SeriesPlayer,
 } from '../src/lib/series';
-import { gradeFor, gradeTitle, shapeTitle, tipsFor, pickTip } from '../src/lib/result-insights';
+import { gradeFor, gradeTitle, shapeTitle, tipsFor, pickTip, xiTips, pickXiTip, costliestUnit, TIP_MAX_CHARS, type XiFacts } from '../src/lib/result-insights';
 
 let pass = 0, fail = 0;
 const ok = (cond: boolean, name: string, extra?: unknown) => {
@@ -224,6 +224,37 @@ const SERIES_1234 = 'uuhhh|P U2 123|Your XI win by 5 wickets';
     ok(tipsFor(f).some((t) => t.text === tip && t.aspect === 'bowling'), `${f}: the tip leans to the weakest part`, tip);
   }
   ok(!tipsFor('test').some((t) => /T20|ODI/.test(t.text)) && tipsFor('ipl').some((t) => /strike rate matters most/.test(t.text)), 'tips are format-specific');
+}
+
+{
+  // Tips about this XI: the unit that costs most against the opponent, in the numbers on the bars.
+  const base: XiFacts = {
+    mine: { batting: 88.4, bowling: 63.6, fielding: 55 }, theirs: { batting: 98, bowling: 88.9, fielding: 57.2 },
+    opponent: 'World XI', shortCareers: 0, allRounders: 1,
+  };
+  ok(costliestUnit(base) === 'bowling', 'bowling 25 behind at half the score costs most');
+  const t = xiTips('test', base);
+  ok(t[0].includes('Your bowling scored 64 and your batting 88') && t[0].includes('half the overall score'), 'main tip uses the rounded numbers on the bars', t[0]);
+  // Batting 10 behind (x0.4 = 4) outweighs bowling 6 behind (x0.5 = 3).
+  const batFacts = { ...base, mine: { batting: 88, bowling: 82.9, fielding: 57 } };
+  ok(costliestUnit(batFacts) === 'batting' && xiTips('test', batFacts)[0].includes('That is where you lose most ground to the World XI'), 'weighted by each unit\u2019s share of the score', xiTips('test', batFacts)[0]);
+  const fieldFacts = { ...base, mine: { batting: 98, bowling: 88.9, fielding: 30 }, theirs: { ...base.theirs } };
+  ok(costliestUnit(fieldFacts) === 'fielding' && xiTips('odi', fieldFacts)[0].includes('Your fielding scored 30'), 'fielding when it is the only gap');
+  const ahead = { ...base, mine: { batting: 99, bowling: 95, fielding: 70 } };
+  ok(costliestUnit(ahead) === null && xiTips('test', ahead)[0].includes('ahead of the World XI in every part'), 'an XI ahead everywhere is told so');
+  // Other facts appear only when they are true for this XI.
+  ok(!xiTips('test', base).some((x) => /played fewer than/.test(x)) && xiTips('test', { ...base, shortCareers: 4 }).some((x) => x.startsWith('4 of your eleven played fewer than 50 Tests')), 'short careers: counted, from three players');
+  ok(xiTips('ipl', { ...base, shortCareers: 3, opponent: 'All-Star XI' }).some((x) => x.includes('40 matches in that IPL stint')), 'short careers are worded per format');
+  ok(xiTips('test', { ...base, allRounders: 2 }).some((x) => x.startsWith('Both your all-rounders')) && xiTips('test', { ...base, allRounders: 0 }).some((x) => x.includes('no all-rounder')), 'all-rounder facts follow the XI\u2019s shape');
+  ok(!xiTips('test', batFacts).some((x) => /all-rounder counts in your bowling/.test(x)), 'the all-rounder bowling tip only when bowling is the problem');
+  ok(xiTips('ipl', { ...base, overseasUsed: 2 }).some((x) => x.startsWith('You used 2 of your 4 overseas places')) && !xiTips('ipl', { ...base, overseasUsed: 4 }).some((x) => /overseas/.test(x)) && !xiTips('odi', { ...base, overseasUsed: 0 }).some((x) => /overseas/.test(x)), 'overseas places: IPL only, only when some are unused');
+  ok(xiTips('test', { ...fieldFacts, keeperPerMatch: 1.94 }).some((x) => x.includes('Your keeper took 1.9 catches and stumpings a match')) && !xiTips('test', { ...base, keeperPerMatch: 1.94 }).some((x) => /keeper/.test(x)), 'keeper fact only when fielding is well behind');
+  // Never a player name or a single rating: only the three unit scores and small counts appear.
+  const every = (['test', 'odi', 't20i', 'ipl'] as const).flatMap((f) => xiTips(f, { ...fieldFacts, shortCareers: 5, allRounders: 2, overseasUsed: 1, keeperPerMatch: 2.2 }).concat(xiTips(f, { ...base, shortCareers: 5, allRounders: 0, overseasUsed: 1 })));
+  ok(every.every((x) => !/Player [A-Z]|Bradman|rating/.test(x)) && every.every((x) => x.length <= TIP_MAX_CHARS) && (['test', 'odi', 't20i', 'ipl'] as const).every((f) => tipsFor(f).every((x) => x.text.length <= TIP_MAX_CHARS)), 'tips name no player, show no rating, and stay short', every.filter((x) => x.length > TIP_MAX_CHARS));
+  ok(pickXiTip('test', base, () => 0.1) === t[0] && pickXiTip('test', { ...base, shortCareers: 4 }, () => 0.9) !== t[0], 'the main tip most of the time, another true fact otherwise');
+  const seeded = () => pickXiTip('ipl', { ...base, shortCareers: 4, overseasUsed: 1 }, mulberry32(77));
+  ok(seeded() === seeded(), 'same XI (same seed) reads the same tip');
 }
 
 console.log(`\n${pass} passed, ${fail} failed`);
