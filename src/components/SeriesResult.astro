@@ -51,6 +51,7 @@ const formatJson = safe(format);
       <div class="rs-panel rs-p1">
         <header class="rs-top">
           <a class="rs-brand" href={format.homeHref} aria-label="Beat My 11 home">BEAT MY 11</a>
+          <button type="button" class="rs-sound" id="rs-sound" aria-pressed="true" aria-label="Sound on. Turn sound off"></button>
         </header>
 
         <section class="rs-verdict" aria-labelledby="rs-title">
@@ -132,6 +133,7 @@ const formatJson = safe(format);
     import { reportScore, reportEvent } from '../lib/telemetry';
     import { gradeFor, gradeTitle, shapeTitle, pickTip, pickXiTip, FULL_CREDIT_MATCHES } from '../lib/result-insights';
     import { mulberry32 } from '../lib/series';
+    import { sfx, isMuted, setMuted, soundReady } from '../lib/sfx';
     import {
       utcDayKey, dayNumber, loadDaily, saveDaily, recordResult, hasPlayed, currentStreak,
       activeDailyDay, dailyShareText,
@@ -231,6 +233,24 @@ const formatJson = safe(format);
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const $ = (id) => document.getElementById(id);
     const ROOT = document.querySelector('.rs');
+
+    // Sounds (same mute setting as the draft). The page plays them by itself, so each one checks
+    // that audio is actually running: browsers keep it suspended until the visitor taps the page.
+    const play = (name, arg) => { if (soundReady()) sfx[name](arg); };
+    const SOUND_ON = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 10v4h4l5 4V6L7 10H3z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>';
+    const SOUND_OFF = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M3 10v4h4l5 4V6L7 10H3z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9l5 6M21 9l-5 6"/></svg>';
+    function renderSound() {
+      const on = !isMuted();
+      const b = $('rs-sound');
+      b.innerHTML = on ? SOUND_ON : SOUND_OFF;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.setAttribute('aria-label', on ? 'Sound on. Turn sound off' : 'Sound off. Turn sound on');
+      b.classList.toggle('is-off', !on);
+    }
+    $('rs-sound').addEventListener('click', () => { setMuted(!isMuted()); renderSound(); sfx.select(); });
+    renderSound();
+    // Any tap on the page wakes the audio, so the sounds that follow can be heard.
+    document.addEventListener('pointerup', () => { soundReady(); }, { once: true });
 
     function verdictCopy(s) {
       if (s.user === 5) return { title: 'Whitewash.', sub: `You beat the ${OPP} five–nil. That almost never happens.` };
@@ -439,8 +459,9 @@ const formatJson = safe(format);
         };
         const d = reduceMotion ? 0 : 1200;
         fill($('rs-strength'), d);
-        window.setTimeout(() => fill($('rs-overall'), d), d ? d + 200 : 0);
-        window.setTimeout(() => $('rs-grade-panel').classList.add('is-graded'), d ? 2 * d + 400 : 0);
+        if (d) play('bars', d);
+        window.setTimeout(() => { fill($('rs-overall'), d); if (d) play('bars', d); }, d ? d + 200 : 0);
+        window.setTimeout(() => { $('rs-grade-panel').classList.add('is-graded'); play('grade'); }, d ? 2 * d + 400 : 0);
       }
       if ('IntersectionObserver' in window) {
         new IntersectionObserver((entries, obs) => {
@@ -483,6 +504,7 @@ const formatJson = safe(format);
           $('rs-pots').hidden = false;
         }
         revealed = true;
+        play(series.user > series.house ? 'seriesWon' : series.user < series.house ? 'seriesLost' : 'seriesLevel');
         document.querySelector('.rs-verdict').classList.add(
           series.user > series.house ? 'is-win' : series.user < series.house ? 'is-loss' : 'is-draw',
           ...(series.user === 5 ? ['is-whitewash'] : []),
@@ -498,6 +520,7 @@ const formatJson = safe(format);
         testsEl.insertAdjacentHTML('beforeend', testHTML(t, `${u}–${h}`));
         const li = testsEl.lastElementChild;
         if (!instant && !reduceMotion) li.classList.add('is-new');
+        if (!instant) play(t.result === 'user' ? 'matchWon' : t.result === 'house' ? 'matchLost' : 'matchLevel');
         $('rs-sub').textContent = shown < 5 ? `After the ${ORDINAL[shown - 1]} ${FORMAT.matchNoun} at ${t.venue}: ${u}–${h}` : '';
         if (!instant && shown < 5) timer = window.setTimeout(() => step(false), 1100);
         else if (!instant) timer = window.setTimeout(finish, 900);
@@ -641,6 +664,11 @@ const formatJson = safe(format);
     .rs > *:not(.rs-lights) { position: relative; z-index: 1; }
     .rs :focus-visible { outline: 3px solid var(--rs-lime); outline-offset: 2px; }
     .rs-top { display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto; }
+    .rs-sound {
+      flex: none; width: 28px; height: 28px; padding: 0; display: grid; place-items: center; border-radius: 50%; cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.18); background: transparent; color: var(--rs-text);
+    }
+    .rs-sound.is-off { color: var(--rs-dim); }
     .rs-brand { font: 400 26px/1 var(--rs-display); letter-spacing: 0.08em; color: var(--rs-text); text-decoration: none; }
 
     .rs-verdict { text-align: center; max-width: 640px; margin: 22px auto 8px; }
