@@ -211,7 +211,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       return { ...p, stats: {
         testAverage: pos(s.testAverage), testRuns: fin(s.testRuns), testMatches: fin(s.testMatches), testCenturies: fin(s.testCenturies),
         testWickets: fin(s.testWickets), testBowlingAverage: pos(s.testBowlingAverage), bowlingAverage: pos(s.bowlingAverage),
-        fiveWs: fin(s.fiveWs), tenWs: fin(s.tenWs), dismissals: fin(s.dismissals),
+        fiveWs: fin(s.fiveWs), tenWs: fin(s.tenWs), dismissals: s.dismissalsUnknown === 1 ? null : fin(s.dismissals), ...(s.dismissalsUnknown === 1 ? { dismissalsUnknown: 1 } : {}),
       } };
     };
 

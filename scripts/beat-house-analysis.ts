@@ -235,7 +235,7 @@ function spinCombos(eras: string[]) {
       byNation.get(p.nation)!.add(p.id);
     }
     for (const [nation, seen] of byNation)
-      if (seen.size > 0) combos.push({ era: eraId, nation });
+      if (seen.size >= (eraId === 'legends' ? 1 : 5)) combos.push({ era: eraId, nation }); // MIN_DRAW_POOL
   }
   return combos;
 }

@@ -668,6 +668,17 @@ export function rawFielding(player: NormalizedPlayer): number | null {
 }
 
 /**
+ * A player whose dismissals are KNOWN to be unknown (owner, 2026-10-03): HowSTAT's catches list
+ * only covers players with 50 or more catches, so a player added from the owner's tables with
+ * fewer has no exact figure. His data carries `dismissalsUnknown: 1` (and no `dismissals`); the
+ * rating then counts him as an average fielder (the population's prior mean) instead of throwing.
+ * Any other player with no dismissals is still an error: nothing is guessed silently.
+ */
+export const dismissalsUnknown = (player: NormalizedPlayer): boolean => Number(player.stats?.dismissalsUnknown) === 1;
+/** True when the fielding score can be produced: real dismissals, or flagged as unknown. */
+export const hasFieldingData = (player: NormalizedPlayer): boolean => rawFielding(player) !== null || dismissalsUnknown(player);
+
+/**
  * Fielding score on the 0–100 scale: dismissals per match with the same
  * prior-match shrinkage toward the full-population prior mean, percentile-ranked
  * against the fielding population (higher is better). Null when
@@ -678,7 +689,10 @@ export function fieldingScore(
   ctx: ScoringContext,
 ): number | null {
   const raw = rawFielding(player);
-  if (raw === null) return null;
+  if (raw === null) {
+    // Flagged unknown: exactly the average fielder.
+    return dismissalsUnknown(player) ? percentileRank(ctx.fieldingPriorMean, ctx.fieldingPopulation, true) : null;
+  }
   const m = matchesOf(player);
   const adjusted =
     (m * raw + ctx.priorMatches * ctx.fieldingPriorMean) / (m + ctx.priorMatches);

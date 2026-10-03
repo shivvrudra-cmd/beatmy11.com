@@ -26,6 +26,7 @@ import {
   ROLE_METRICS,
   auditMetrics,
   buildScoringContext,
+  hasFieldingData,
   rawFielding,
   scorePlayer,
   teamBlend,
@@ -327,7 +328,7 @@ export function buildSeoData(
       excluded.push({ id: p.id, name: p.name, reason: 'score uncomputable' });
       continue;
     }
-    ranked.push({ uni, player: p, role, score, xiEligible: rawFielding(p) !== null });
+    ranked.push({ uni, player: p, role, score, xiEligible: hasFieldingData(p) });
   }
   ranked.sort(compareRanked);
   return { ctx, populationSize: players.length, ranked, excluded, conflicts };

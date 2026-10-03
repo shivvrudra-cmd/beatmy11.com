@@ -76,7 +76,7 @@ export interface SpinCombo {
  * split the pool — round 1 draws only from the Legends era, the remaining
  * rounds from every other era.
  */
-export function spinCombos(eraIds: readonly string[] = ERA_IDS): SpinCombo[] {
+export function spinCombos(eraIds: readonly string[] = ERA_IDS, minPool = 1): SpinCombo[] {
   const all = allPlayersByEra();
   const flat: NormalizedPlayer[] = [];
   for (const eraId of eraIds) flat.push(...all[eraId]);
@@ -88,7 +88,7 @@ export function spinCombos(eraIds: readonly string[] = ERA_IDS): SpinCombo[] {
         const eras = Array.isArray(p.era) ? p.era : [p.era];
         if (eras.includes(eraId) && p.nation === nation) seen.add(p.id);
       }
-      if (seen.size > 0) combos.push({ era: eraId, nation, count: seen.size });
+      if (seen.size >= minPool) combos.push({ era: eraId, nation, count: seen.size });
     }
   }
   return combos;
@@ -99,7 +99,15 @@ export function legendsSpinCombos(): SpinCombo[] {
   return spinCombos(['legends']);
 }
 
-/** Rounds 2–6 spin pool: every era except Legends. */
+/**
+ * A draw needs at least this many players: a round asks for two picks, and the XI needs a mix of
+ * roles. Every combo the data had held 10 or more, until adding the owner's players (2026-10-03)
+ * created a one-player 1980s Sri Lanka draw that made some daily challenges undraftable. The
+ * white-ball formats use the same minimum (white-ball-store.ts).
+ */
+export const MIN_DRAW_POOL = 5;
+
+/** Rounds 2–6 spin pool: every era except Legends, a draw needing at least MIN_DRAW_POOL players. */
 export function draftSpinCombos(): SpinCombo[] {
-  return spinCombos(ERA_IDS.filter((e) => e !== 'legends'));
+  return spinCombos(ERA_IDS.filter((e) => e !== 'legends'), MIN_DRAW_POOL);
 }

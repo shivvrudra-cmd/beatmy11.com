@@ -3,6 +3,7 @@
  * and rejects tampering, scoreline comparison, and share text.
  */
 import { readFileSync } from 'node:fs';
+import { MIN_DRAW_POOL } from '../src/lib/player-store';
 import {
   encodeSpins, decodeSpins, parseScoreline, challengeOutcome, betterOf, challengeShareText,
 } from '../src/lib/challenge';
@@ -28,12 +29,15 @@ for (const era of ERAS) {
 function spinCombos(eras: string[]) {
   const combos: { era: string; nation: string }[] = [];
   for (const eraId of eras) {
-    const nations = new Set<string>();
+    const byNation = new Map<string, Set<string>>();
     for (const p of byEra[eraId]) {
       const erasOf = Array.isArray(p.era) ? p.era : [p.era];
-      if (erasOf.includes(eraId)) nations.add(p.nation);
+      if (!erasOf.includes(eraId)) continue;
+      if (!byNation.has(p.nation)) byNation.set(p.nation, new Set());
+      byNation.get(p.nation)!.add(p.id);
     }
-    for (const nation of nations) combos.push({ era: eraId, nation });
+    // Same rule as player-store.ts: a draft draw needs MIN_DRAW_POOL players (Legends round 1 needs one).
+    for (const [nation, seen] of byNation) if (seen.size >= (eraId === 'legends' ? 1 : MIN_DRAW_POOL)) combos.push({ era: eraId, nation });
   }
   return combos;
 }

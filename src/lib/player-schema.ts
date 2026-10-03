@@ -18,8 +18,10 @@ export const playerStatsSchema = z.object({
   testBowlingAverage: z.number(),
   battingStrikeRate: z.number(),
   bowlingStrikeRate: z.number(),
-  dismissals: z.number(),
-});
+  /** Absent only when dismissalsUnknown is 1 (owner, 2026-10-03; see seven-metrics.ts). */
+  dismissals: z.number().optional(),
+  dismissalsUnknown: z.number().optional(),
+}).refine((s) => s.dismissals !== undefined || s.dismissalsUnknown === 1, { message: "dismissals missing and not flagged dismissalsUnknown" });
 
 export const playerRecordSchema = z.object({
   id: z.string().min(1),
