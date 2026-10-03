@@ -1,0 +1,177 @@
+---
+/**
+ * /logo-concepts — THROWAWAY preview page (2026-10-02): four original logo concepts for the owner
+ * to choose from. Not linked from anywhere, noindex, not in the sitemap. The live logo, favicon
+ * and app icons are untouched. Delete this page once a concept is chosen and built properly.
+ *
+ * Every mark is drawn here from basic shapes: no copied marks, no board or franchise look-alikes.
+ * Palette: lime #c6ff3d on night #04060c. Motif: floodlights.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const concepts = [
+  {
+    id: 'pylons',
+    name: 'A. Floodlight eleven',
+    idea: 'The two strokes of “11” are floodlight pylons with lamp heads. The site’s own motif, and it still reads as 11 at favicon size.',
+  },
+  {
+    id: 'wicket',
+    name: 'B. Broken wicket',
+    idea: 'Two stumps make the 11; the bail is flying off. “Beat” is the bail leaving the stumps.',
+  },
+  {
+    id: 'ball',
+    name: 'C. Night ball',
+    idea: 'A ball under lights with the 11 cut through it and a single seam arc. The simplest shape; strongest as an app icon.',
+  },
+  {
+    id: 'beam',
+    name: 'D. Light cone',
+    idea: 'One lamp at the top, its beam falling as a cone onto the 11. Most atmospheric, least legible when tiny.',
+  },
+];
+---
+
+<BaseLayout title="Logo concepts (preview) | Beat My 11" description="Four original logo concepts for Beat My 11, for the owner to choose from. A preview page, not a live design.">
+  <meta name="robots" content="noindex" slot="head" />
+
+  <!-- The four marks, each on a 64x64 grid. `currentColor` is the lime; the tile is drawn by the user of the symbol. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="lc-pylons" viewBox="0 0 64 64">
+        <!-- lamp heads -->
+        <rect x="13" y="10" width="16" height="9" rx="2" fill="currentColor" />
+        <rect x="35" y="10" width="16" height="9" rx="2" fill="currentColor" />
+        <!-- lamps -->
+        <g fill="#04060c">
+          <circle cx="17.5" cy="14.5" r="1.6" /><circle cx="21" cy="14.5" r="1.6" /><circle cx="24.5" cy="14.5" r="1.6" />
+          <circle cx="39.5" cy="14.5" r="1.6" /><circle cx="43" cy="14.5" r="1.6" /><circle cx="46.5" cy="14.5" r="1.6" />
+        </g>
+        <!-- masts: the two strokes of 11 -->
+        <rect x="18" y="19" width="6" height="35" fill="currentColor" />
+        <rect x="40" y="19" width="6" height="35" fill="currentColor" />
+        <!-- ground line -->
+        <rect x="10" y="54" width="44" height="3" rx="1.5" fill="currentColor" opacity="0.55" />
+      </symbol>
+
+      <symbol id="lc-wicket" viewBox="0 0 64 64">
+        <rect x="19" y="20" width="7" height="36" rx="2" fill="currentColor" />
+        <rect x="38" y="20" width="7" height="36" rx="2" fill="currentColor" />
+        <!-- the bail, knocked off and spinning away -->
+        <rect x="27" y="8" width="20" height="5" rx="2.5" fill="currentColor" transform="rotate(-24 37 10.5)" />
+        <circle cx="52" cy="9" r="1.6" fill="currentColor" opacity="0.6" />
+        <circle cx="56" cy="14" r="1.1" fill="currentColor" opacity="0.4" />
+      </symbol>
+
+      <symbol id="lc-ball" viewBox="0 0 64 64">
+        <mask id="lc-ball-cut">
+          <rect width="64" height="64" fill="#fff" />
+          <rect x="22" y="17" width="7" height="30" rx="1.5" fill="#000" />
+          <rect x="35" y="17" width="7" height="30" rx="1.5" fill="#000" />
+        </mask>
+        <circle cx="32" cy="32" r="24" fill="currentColor" mask="url(#lc-ball-cut)" />
+        <!-- seam -->
+        <path d="M12.5 46 C 24 54, 40 54, 51.5 46" fill="none" stroke="#04060c" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 4" />
+      </symbol>
+
+      <symbol id="lc-beam" viewBox="0 0 64 64">
+        <rect x="24" y="6" width="16" height="7" rx="2" fill="currentColor" />
+        <path d="M27 13 L37 13 L54 58 L10 58 Z" fill="currentColor" opacity="0.22" />
+        <rect x="23" y="28" width="6" height="26" rx="1.5" fill="currentColor" />
+        <rect x="35" y="28" width="6" height="26" rx="1.5" fill="currentColor" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <main class="lc">
+    <p class="lc-eyebrow">Preview for the owner · nothing here is live</p>
+    <h1 class="lc-h1">Four logo concepts</h1>
+    <p class="lc-lede">
+      Each is shown the four ways a logo gets used: as the browser-tab icon (at 32 and 16 pixels), as the
+      header wordmark, in the corner of the share card, and as a phone app icon. Pick one, mix two, or
+      say none: these are sketches, and the chosen one would be redrawn carefully before it replaces
+      anything.
+    </p>
+
+    {
+      concepts.map((c) => (
+        <section class="lc-concept" aria-labelledby={`lc-${c.id}-t`}>
+          <h2 class="lc-h2" id={`lc-${c.id}-t`}>{c.name}</h2>
+          <p class="lc-idea">{c.idea}</p>
+          <div class="lc-grid">
+            <figure class="lc-cell">
+              <div class="lc-tab">
+                <span class="lc-fav lc-fav-32"><svg width="32" height="32" role="img" aria-label={`${c.name} at 32 pixels`}><use href={`#lc-${c.id}`} /></svg></span>
+                <span class="lc-fav lc-fav-16"><svg width="16" height="16" role="img" aria-label={`${c.name} at 16 pixels`}><use href={`#lc-${c.id}`} /></svg></span>
+                <span class="lc-tab-text">Beat My 11</span>
+              </div>
+              <figcaption>Browser tab: 32px and 16px</figcaption>
+            </figure>
+
+            <figure class="lc-cell">
+              <div class="lc-header">
+                <svg width="34" height="34" aria-hidden="true"><use href={`#lc-${c.id}`} /></svg>
+                <span class="lc-word">BEAT MY <b>11</b></span>
+              </div>
+              <figcaption>Header wordmark</figcaption>
+            </figure>
+
+            <figure class="lc-cell">
+              <div class="lc-card">
+                <span class="lc-card-brand"><svg width="22" height="22" aria-hidden="true"><use href={`#lc-${c.id}`} /></svg>BEAT MY 11 · THE FIVE-TEST SERIES</span>
+                <span class="lc-card-score">3 <i>–</i> 2</span>
+                <span class="lc-card-foot">BEATMY11.COM</span>
+              </div>
+              <figcaption>Share card corner</figcaption>
+            </figure>
+
+            <figure class="lc-cell">
+              <div class="lc-app">
+                <svg width="88" height="88" role="img" aria-label={`${c.name} as an app icon`}><use href={`#lc-${c.id}`} /></svg>
+              </div>
+              <figcaption>App icon</figcaption>
+            </figure>
+          </div>
+        </section>
+      ))
+    }
+
+    <p class="lc-note">
+      How to answer: “A”, “C but with the lamp heads from A”, “none, try rounder shapes”, and so on. The live
+      favicon and icons have not been touched.
+    </p>
+  </main>
+
+  <style is:global>
+    body:has(.lc) { background: #04060c; }
+    .lc { max-width: 880px; margin: 0 auto; padding: 28px 16px 64px; color: #eaf0ff; font-family: Inter, system-ui, sans-serif; }
+    .lc-eyebrow { margin: 0; font: 700 11px Inter, sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: #c6ff3d; }
+    .lc-h1 { margin: 8px 0 8px; font: 400 clamp(36px, 9vw, 56px)/1 'Bebas Neue', 'Arial Narrow', sans-serif; letter-spacing: 0.04em; }
+    .lc-lede, .lc-idea, .lc-note { margin: 0 0 8px; color: #9aa6c4; font-size: 15px; line-height: 1.6; max-width: 62ch; }
+    .lc-concept { margin-top: 36px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.12); }
+    .lc-h2 { margin: 0 0 4px; font: 400 30px/1 'Bebas Neue', 'Arial Narrow', sans-serif; letter-spacing: 0.05em; color: #c6ff3d; }
+    .lc-grid { margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
+    .lc-cell { margin: 0; }
+    .lc-cell figcaption { margin-top: 8px; font: 600 11px Inter, sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: #7f8aa9; }
+    .lc-cell > div { height: 132px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.12); display: flex; align-items: center; justify-content: center; }
+    .lc svg { color: #c6ff3d; display: block; }
+    /* browser tab mock-up (light, as most tab bars are) */
+    .lc-tab { gap: 10px; background: #dfe3ea; color: #1a1f2b; }
+    .lc-fav { display: grid; place-items: center; border-radius: 22%; background: #04060c; }
+    .lc-fav-32 { width: 32px; height: 32px; }
+    .lc-fav-16 { width: 16px; height: 16px; }
+    .lc-tab-text { font: 500 13px Inter, sans-serif; }
+    .lc-header { gap: 10px; background: #04060c; }
+    .lc-word { font: 400 30px/1 'Bebas Neue', 'Arial Narrow', sans-serif; letter-spacing: 0.08em; }
+    .lc-word b { font-weight: 400; color: #c6ff3d; }
+    .lc-card { position: relative; flex-direction: column; gap: 4px; background: radial-gradient(120% 90% at 50% -20%, rgba(180, 220, 255, 0.22), transparent 60%), #04060c; }
+    .lc-card-brand { position: absolute; top: 10px; left: 12px; display: flex; align-items: center; gap: 6px; font: 400 12px/1 'Bebas Neue', 'Arial Narrow', sans-serif; letter-spacing: 0.12em; }
+    .lc-card-score { margin-top: 14px; font: 400 54px/1 'Bebas Neue', 'Arial Narrow', sans-serif; color: #c6ff3d; }
+    .lc-card-score i { font-style: normal; color: #7f8aa9; }
+    .lc-card-foot { font: 700 10px Inter, sans-serif; letter-spacing: 0.2em; color: #c6ff3d; }
+    .lc-app { background: #10172a; }
+    .lc-app svg { padding: 14px; box-sizing: content-box; border-radius: 26px; background: linear-gradient(160deg, #16223a, #04060c 70%); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(198, 255, 61, 0.25); }
+    .lc-note { margin-top: 36px; }
+  </style>
+</BaseLayout>
