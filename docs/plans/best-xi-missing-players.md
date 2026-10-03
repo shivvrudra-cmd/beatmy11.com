@@ -55,3 +55,15 @@ the SEO pages only; the game is unaffected.
 1. Owner supplies (or approves a source for) the missing players' career figures; add them.
 2. Choose a fix for causes 2 and 3.
 3. Re-run this check, then publish (PR #47 stays open until then).
+
+## Update 2026-10-03: owner decisions on causes 2 and 3
+
+- **Cause 2 (all-rounders): decided.** Every best XI keeps exactly one all-rounder (the shape with one
+  all-rounder and one spinner) when the pool can fill it. If it cannot (Australia has no all-rounder
+  with 50+ Tests in the data), the page falls back to the other shapes.
+- **Cause 3 (short careers): decided.** Best-XI pages only use players with 50 or more Tests
+  (`SEO_MIN_TESTS`). Role list pages are unchanged. With this, **Bangladesh, Sri Lanka and Zimbabwe cannot
+  fill an XI** (too few players with 50+ Tests, and Sri Lanka also lacks fast bowlers such as Vaas until the
+  bowlers with no career years are added), so those pages stay unpublished.
+- Cause 1 (missing players): 28 post-1968 players were added (`docs/reports/test-data-howstat-2026-10-03.md`);
+  the pre-1970 greats are not being added (owner).

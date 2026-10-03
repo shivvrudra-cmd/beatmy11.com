@@ -12,8 +12,10 @@
  *   maths. Ratings are used only to ORDER players; they are never put in the
  *   page models (the owner decided these pages show rank + real career
  *   stats, not numbers; ratings stay a reveal on /play and the result page).
- * - XI selection: the highest-rated players in each position for each of the
- *   three XI_SHAPES; the shape with the best existing `teamBlend` wins.
+ * - XI selection: the highest-rated players in each position for each XI_SHAPE; the shape with
+ *   the best existing `teamBlend` wins. Owner, 2026-10-03: every best XI keeps exactly one
+ *   all-rounder (the shape with one all-rounder and one spinner) when the pool can fill it, and
+ *   the best-XI pages only consider players with at least SEO_MIN_TESTS Tests.
  * - Missing data: players with an invalid role or an uncomputable metric are
  *   EXCLUDED and reported (`SeoData.excluded`); nothing is zero-filled.
  * - Copy is generated only from real data fields and counts.
@@ -146,6 +148,9 @@ export const PUBLISHED_ROLES: readonly EvaluationRole[] = [
   'fast-bowler',
   'spinner',
 ];
+
+/** Best-XI pages only consider players with at least this many Tests (owner, 2026-10-03). Page rule only: the game is unaffected. */
+export const SEO_MIN_TESTS = 50;
 
 export const XI_HUB_PATH = '/best-xi/';
 export const ROLE_HUB_PATH = '/best/';
@@ -383,7 +388,17 @@ export function pickXI(candidates: RankedPlayer[], ctx: ScoringContext): XiPick 
   const byRole = new Map<EvaluationRole, RankedPlayer[]>();
   for (const r of ROLES) byRole.set(r, pool.filter((c) => c.role === r));
   let best: { score: number; xi: RankedPlayer[]; shape: XiCounts } | null = null;
-  for (const shape of XI_SHAPES) {
+  // Exactly one all-rounder (owner, 2026-10-03): try the one-all-rounder shapes first, and only fall
+  // back to the others if the pool cannot fill one of them.
+  const oneAllRounder = XI_SHAPES.filter((sh) => sh['all-rounder'] === 1);
+  const orders = [oneAllRounder, XI_SHAPES];
+  for (const shapes of orders) {
+    if (best !== null) break;
+    best = bestShape(shapes);
+  }
+  function bestShape(shapes: readonly XiCounts[]): { score: number; xi: RankedPlayer[]; shape: XiCounts } | null {
+  let found: { score: number; xi: RankedPlayer[]; shape: XiCounts } | null = null;
+  for (const shape of shapes) {
     let feasible = true;
     const xi: RankedPlayer[] = [];
     for (const role of SHAPE_ORDER) {
@@ -400,7 +415,9 @@ export function pickXI(candidates: RankedPlayer[], ctx: ScoringContext): XiPick 
       xi.map((x) => ({ player: x.player, declaredRole: x.role })),
       ctx,
     ).score;
-    if (best === null || score > best.score) best = { score, xi, shape };
+    if (found === null || score > found.score) found = { score, xi, shape };
+  }
+  return found;
   }
   if (!best) return null;
   const used = new Set(best.xi.map((x) => x.player.id));
@@ -668,7 +685,7 @@ export function buildXiPage(
   scope: XiScope,
   date: string,
 ): XiPage | null {
-  const pool = data.ranked.filter((r) => matchesScope(r, scope));
+  const pool = data.ranked.filter((r) => matchesScope(r, scope) && (r.player.stats.testMatches ?? 0) >= SEO_MIN_TESTS);
   const pick = pickXI(pool, data.ctx);
   if (!pick) return null;
   const slug = scopeSlug(scope);
@@ -682,20 +699,20 @@ export function buildXiPage(
   if (scope.kind === 'all-time') {
     title = `Best All-Time Test XI, by Our Ratings | ${SITE_NAME}`;
     h1 = 'Best All-Time Test XI';
-    description = `Our highest-rated all-time Test XI from ${pool.length} players, with career stats for each pick. Then draft your own and see if it beats mine.`;
-    scopeLine = `This is the top-rated player at each position from all ${pool.length} Test players in the ${SITE_NAME} database.`;
+    description = `Our highest-rated all-time Test XI from ${pool.length} players with ${SEO_MIN_TESTS}+ Tests, with career stats for each pick. Then draft your own and see if it beats mine.`;
+    scopeLine = `This is the top-rated player at each position from the ${pool.length} Test players in the ${SITE_NAME} database who played at least ${SEO_MIN_TESTS} Tests, with one all-rounder in the side.`;
   } else if (scope.kind === 'era') {
     const el = eraLabel(scope.era);
     title = `Best Test XI of ${el}, by Our Ratings | ${SITE_NAME}`;
     h1 = `Best Test XI of ${el}`;
-    description = `Our highest-rated Test XI of players who played in ${el}, from ${pool.length} players, with career stats for each pick. Draft yours and see if it beats mine.`;
-    scopeLine = `Players are included if they played in ${el}: ${pool.length} players in the ${SITE_NAME} database. Ratings use each player's full Test career, not only those years.`;
+    description = `Our highest-rated Test XI of ${el}, from ${pool.length} players with ${SEO_MIN_TESTS}+ Tests, with career stats for each pick. Draft yours and see if it beats mine.`;
+    scopeLine = `Players are included if they played in ${el} and have at least ${SEO_MIN_TESTS} Tests: ${pool.length} players in the ${SITE_NAME} database, with one all-rounder in the side. Ratings use each player's full Test career, not only those years.`;
   } else {
     const adj = NATION_ADJECTIVE[scope.nation];
     title = `Best ${adj} Test XI, by Our Ratings | ${SITE_NAME}`;
     h1 = `Best ${adj} Test XI`;
-    description = `Our highest-rated ${adj} Test XI from ${pool.length} ${adj} players, with career stats for each pick. Draft yours and see if it beats mine.`;
-    scopeLine = `The pool is the ${pool.length} ${adj} players in the ${SITE_NAME} database, across every era.`;
+    description = `Our highest-rated ${adj} Test XI from ${pool.length} ${adj} players with ${SEO_MIN_TESTS}+ Tests, with career stats for each pick. Draft yours and see if it beats mine.`;
+    scopeLine = `The pool is the ${pool.length} ${adj} players in the ${SITE_NAME} database with at least ${SEO_MIN_TESTS} Tests, across every era, with one all-rounder in the side.`;
   }
 
   const xi = pick.xi.map((r) => toRow(r, columnsForRole(r.role)));
