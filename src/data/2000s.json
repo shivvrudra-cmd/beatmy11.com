@@ -851,15 +851,15 @@
     "primaryRole": "Spinner",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 18.2,
-      "testRuns": 2224,
+      "testAverage": 18.24,
+      "testRuns": 2225,
       "testWickets": 417,
       "testMatches": 103,
       "testCenturies": 2,
       "testFifties": 9,
       "fiveWs": 25,
       "tenWs": 5,
-      "testBowlingAverage": 32.5,
+      "testBowlingAverage": 32.46,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 48
@@ -1379,8 +1379,8 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 32.6,
-      "testRuns": 3564,
+      "testAverage": 32.64,
+      "testRuns": 3917,
       "testWickets": 41,
       "testMatches": 71,
       "testCenturies": 7,
@@ -1687,7 +1687,7 @@
   },
   {
     "id": "craig-mcmilan",
-    "name": "Craig Mcmilan",
+    "name": "Craig McMillan",
     "nation": "New Zealand",
     "era": "2000s",
     "primaryRole": "Middle-order",
@@ -1813,7 +1813,7 @@
       "testFifties": 0,
       "fiveWs": 10,
       "tenWs": 1,
-      "testBowlingAverage": 33.8,
+      "testBowlingAverage": 33.64,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 14
@@ -1915,7 +1915,7 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 42,
+      "testAverage": 37.39,
       "testRuns": 3253,
       "testWickets": 0,
       "testMatches": 58,
@@ -2208,7 +2208,7 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 44.4,
+      "testAverage": 39.02,
       "testRuns": 5502,
       "testWickets": 1,
       "testMatches": 90,
@@ -2254,7 +2254,7 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 50,
+      "testAverage": 49.85,
       "testRuns": 11814,
       "testWickets": 6,
       "testMatches": 149,
@@ -3109,6 +3109,120 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 119
+    }
+  },
+  {
+    "id": "mark-butcher",
+    "name": "Mark Butcher",
+    "nation": "England",
+    "era": "2000s",
+    "primaryRole": "opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 34.58,
+      "testRuns": 4288,
+      "testWickets": 0,
+      "testMatches": 71,
+      "testCenturies": 8,
+      "testFifties": 23,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 61
+    }
+  },
+  {
+    "id": "shane-watson",
+    "name": "Shane Watson",
+    "nation": "Australia",
+    "era": ["2000s","2010s"],
+    "primaryRole": "opener",
+    "secondaryRoles": [
+      "middle-order"
+    ],
+    "stats": {
+      "testAverage": 35.2,
+      "testRuns": 3731,
+      "testWickets": 0,
+      "testMatches": 59,
+      "testCenturies": 4,
+      "testFifties": 24,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "jacques-rudolph",
+    "name": "Jacques Rudolph",
+    "nation": "South Africa",
+    "era": "2000s",
+    "primaryRole": "opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 35.43,
+      "testRuns": 2622,
+      "testWickets": 0,
+      "testMatches": 48,
+      "testCenturies": 6,
+      "testFifties": 11,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "wavell-hinds",
+    "name": "Wavell Hinds",
+    "nation": "West Indies",
+    "era": "2000s",
+    "primaryRole": "opener",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 33.01,
+      "testRuns": 2608,
+      "testWickets": 0,
+      "testMatches": 45,
+      "testCenturies": 5,
+      "testFifties": 14,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "ridley-jacobs",
+    "name": "Ridley Jacobs",
+    "nation": "West Indies",
+    "era": "2000s",
+    "primaryRole": "wicketkeeper",
+    "secondaryRoles": [
+      "middle-order"
+    ],
+    "stats": {
+      "testAverage": 28.32,
+      "testRuns": 2577,
+      "testWickets": 0,
+      "testMatches": 65,
+      "testCenturies": 3,
+      "testFifties": 14,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 219
     }
   }
 ]

@@ -469,11 +469,11 @@
     "primaryRole": "All-rounder",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 34.5,
+      "testAverage": 34.47,
       "testRuns": 7273,
       "testWickets": 252,
       "testMatches": 122,
-      "testCenturies": 12,
+      "testCenturies": 14,
       "testFifties": 37,
       "fiveWs": 6,
       "tenWs": 0,
@@ -755,7 +755,7 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": "opener",
     "stats": {
-      "testAverage": 42.9,
+      "testAverage": 43.47,
       "testRuns": 3043,
       "testWickets": 0,
       "testMatches": 43,
@@ -961,7 +961,7 @@
       "testFifties": 14,
       "fiveWs": 37,
       "tenWs": 8,
-      "testBowlingAverage": 24,
+      "testBowlingAverage": 23.91,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 41
@@ -1071,7 +1071,7 @@
       "testFifties": 0,
       "fiveWs": 5,
       "tenWs": 0,
-      "testBowlingAverage": 29.6,
+      "testBowlingAverage": 30.11,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 24
@@ -2075,8 +2075,8 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 35.5,
-      "testRuns": 3192,
+      "testAverage": 35.67,
+      "testRuns": 3175,
       "testWickets": 6,
       "testMatches": 50,
       "testCenturies": 8,
@@ -3488,8 +3488,8 @@
     "primaryRole": "Middle-order",
     "secondaryRoles": "wicketkeeper",
     "stats": {
-      "testAverage": 28,
-      "testRuns": 2518,
+      "testAverage": 27.99,
+      "testRuns": 2519,
       "testWickets": 0,
       "testMatches": 49,
       "testCenturies": 5,
@@ -3514,13 +3514,13 @@
     "stats": {
       "testAverage": 4.2,
       "testRuns": 229,
-      "testWickets": 166,
+      "testWickets": 165,
       "testMatches": 59,
       "testCenturies": 0,
       "testFifties": 0,
       "fiveWs": 6,
       "tenWs": 1,
-      "testBowlingAverage": 32.2,
+      "testBowlingAverage": 32.41,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 17
@@ -3548,6 +3548,28 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 23
+    }
+  },
+  {
+    "id": "mitchell-marsh",
+    "name": "Mitchell Marsh",
+    "nation": "Australia",
+    "era": ["2010s","2020s"],
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 28.53,
+      "testRuns": 2083,
+      "testWickets": 0,
+      "testMatches": 46,
+      "testCenturies": 3,
+      "testFifties": 9,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
     }
   }
 ]

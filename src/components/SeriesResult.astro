@@ -220,7 +220,8 @@ const formatJson = safe(format);
           bowlingAverage: posOrNull(s.bowlingAverage),
           fiveWs: finOrNull(s.fiveWs),
           tenWs: finOrNull(s.tenWs),
-          dismissals: finOrNull(s.dismissals),
+          dismissals: s.dismissalsUnknown === 1 ? null : finOrNull(s.dismissals),
+          ...(s.dismissalsUnknown === 1 ? { dismissalsUnknown: 1 } : {}),
         },
       };
     }

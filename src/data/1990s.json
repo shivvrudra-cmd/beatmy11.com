@@ -1636,8 +1636,8 @@
       "testCenturies": 2,
       "testFifties": 16,
       "fiveWs": 16,
-      "tenWs": 0,
-      "testBowlingAverage": 23.1,
+      "tenWs": 1,
+      "testBowlingAverage": 23.12,
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 78
@@ -1717,7 +1717,7 @@
     "primaryRole": "Opener",
     "secondaryRoles": [],
     "stats": {
-      "testAverage": 44.4,
+      "testAverage": 39.02,
       "testRuns": 5502,
       "testWickets": 1,
       "testMatches": 90,
@@ -1733,7 +1733,7 @@
   },
   {
     "id": "roshan-mahanama",
-    "name": "Roshan Mahnama",
+    "name": "Roshan Mahanama",
     "nation": "Sri Lanka",
     "era": "1990s",
     "primaryRole": "Opener",
@@ -2645,6 +2645,182 @@
       "battingStrikeRate": 0,
       "bowlingStrikeRate": 0,
       "dismissals": 66
+    }
+  },
+  {
+    "id": "richie-richardson",
+    "name": "Richie Richardson",
+    "nation": "West Indies",
+    "era": ["1980s","1990s"],
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 44.4,
+      "testRuns": 5949,
+      "testWickets": 0,
+      "testMatches": 86,
+      "testCenturies": 16,
+      "testFifties": 27,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 90
+    }
+  },
+  {
+    "id": "graeme-hick",
+    "name": "Graeme Hick",
+    "nation": "England",
+    "era": "1990s",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 31.32,
+      "testRuns": 3383,
+      "testWickets": 0,
+      "testMatches": 65,
+      "testCenturies": 6,
+      "testFifties": 18,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissals": 90
+    }
+  },
+  {
+    "id": "ijaz-ahmed",
+    "name": "Ijaz Ahmed",
+    "nation": "Pakistan",
+    "era": "1990s",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 37.67,
+      "testRuns": 3315,
+      "testWickets": 0,
+      "testMatches": 60,
+      "testCenturies": 12,
+      "testFifties": 12,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "greg-blewett",
+    "name": "Greg Blewett",
+    "nation": "Australia",
+    "era": "1990s",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 34.03,
+      "testRuns": 2552,
+      "testWickets": 0,
+      "testMatches": 46,
+      "testCenturies": 4,
+      "testFifties": 15,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "ken-rutherford",
+    "name": "Ken Rutherford",
+    "nation": "New Zealand",
+    "era": ["1980s","1990s"],
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 27.09,
+      "testRuns": 2465,
+      "testWickets": 0,
+      "testMatches": 56,
+      "testCenturies": 3,
+      "testFifties": 18,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "asanka-gurusinha",
+    "name": "Asanka Gurusinha",
+    "nation": "Sri Lanka",
+    "era": ["1980s","1990s"],
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 38.92,
+      "testRuns": 2452,
+      "testWickets": 0,
+      "testMatches": 41,
+      "testCenturies": 7,
+      "testFifties": 8,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "guy-whittall",
+    "name": "Guy Whittall",
+    "nation": "Zimbabwe",
+    "era": "1990s",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 29.43,
+      "testRuns": 2207,
+      "testWickets": 0,
+      "testMatches": 46,
+      "testCenturies": 4,
+      "testFifties": 10,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "sanjay-manjrekar",
+    "name": "Sanjay Manjrekar",
+    "nation": "India",
+    "era": "1990s",
+    "primaryRole": "middle-order",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 37.15,
+      "testRuns": 2043,
+      "testWickets": 0,
+      "testMatches": 37,
+      "testCenturies": 4,
+      "testFifties": 9,
+      "fiveWs": 0,
+      "tenWs": 0,
+      "testBowlingAverage": 0,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
     }
   }
 ]

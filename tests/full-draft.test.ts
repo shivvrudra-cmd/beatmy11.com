@@ -19,6 +19,7 @@
  *  - no completed draft is ever invalid (isXIValid).
  */
 import { readFileSync } from 'node:fs';
+import { MIN_DRAW_POOL } from '../src/lib/player-store';
 import {
   createDraft,
   applySpinResult,
@@ -66,7 +67,7 @@ function spinCombos(eras: string[]) {
       byNation.get(p.nation)!.add(p.id);
     }
     for (const [nation, seen] of byNation) {
-      if (seen.size > 0) combos.push({ era: eraId, nation });
+      if (seen.size >= (eraId === 'legends' ? 1 : MIN_DRAW_POOL)) combos.push({ era: eraId, nation });
     }
   }
   return combos;
@@ -129,6 +130,12 @@ function oracleFrom(
 ): boolean {
   const memo = new Set<string>();
   const countsKey = (c: XiCounts) => XI_ROLES.map((r) => c[r]).join(',');
+  // A pick can only affect the search later if the same player is offered in another pool, so the
+  // memo key lists only picked players who appear in more than one pool. (With the pools larger,
+  // listing every pick made the memo outgrow a JavaScript Set; the answers are the same.)
+  const occurrences = new Map<string, number>();
+  for (const pool of pools) for (const p of pool) occurrences.set(p.id, (occurrences.get(p.id) ?? 0) + 1);
+  const shared = (id: string) => (occurrences.get(id) ?? 0) > 1;
   function dfs(
     round: number, idx: number, total: number,
     counts: XiCounts, picked: string[],
@@ -136,7 +143,7 @@ function oracleFrom(
     if (total === 11) return shapeMatch(counts);
     if (round >= 6) return false;
     if (idx >= ROUND_LIMITS[round]) return dfs(round + 1, 0, total, counts, picked);
-    const key = `${round}:${idx}:${countsKey(counts)}:${[...picked].sort().join(',')}`;
+    const key = `${round}:${idx}:${countsKey(counts)}:${picked.filter(shared).sort().join(',')}`;
     if (memo.has(key)) return false;
     const pickedSet = new Set(picked);
     // Try deficit-filling roles first (massive prune).

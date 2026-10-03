@@ -55,7 +55,8 @@ const ctx = buildScoringContext(unique);
 
 function combos(eras: string[]) {
   const out: { era: string; nation: string }[] = [];
-  for (const era of eras) for (const nation of NATIONS) if (poolFor(era, nation).length) out.push({ era, nation });
+  // A draft draw needs at least 5 players (MIN_DRAW_POOL in src/lib/player-store.ts); Legends round 1 needs one.
+  for (const era of eras) for (const nation of NATIONS) if (poolFor(era, nation).length >= (era === 'legends' ? 1 : 5)) out.push({ era, nation });
   return out;
 }
 function poolFor(era: string, nation: string): NormalizedPlayer[] {

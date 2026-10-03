@@ -4,6 +4,7 @@
  * XI (the daily has no respins, so an undraftable day would hurt everyone).
  */
 import { readFileSync } from 'node:fs';
+import { MIN_DRAW_POOL } from '../src/lib/player-store';
 import {
   LAUNCH_DAY, utcDayKey, previousDay, dayNumber, msUntilReset, formatCountdown, emptyDaily,
   recordResult, currentStreak, hasPlayed, dailySpinIndex, dailySpins, upcomingCombos, dailyShareText,
@@ -75,12 +76,15 @@ for (const era of ERAS) {
 function spinCombos(eras: string[]) {
   const combos: { era: string; nation: string }[] = [];
   for (const eraId of eras) {
-    const nations = new Set<string>();
+    const byNation = new Map<string, Set<string>>();
     for (const p of byEra[eraId]) {
       const erasOf = Array.isArray(p.era) ? p.era : [p.era];
-      if (erasOf.includes(eraId)) nations.add(p.nation);
+      if (!erasOf.includes(eraId)) continue;
+      if (!byNation.has(p.nation)) byNation.set(p.nation, new Set());
+      byNation.get(p.nation)!.add(p.id);
     }
-    for (const nation of nations) combos.push({ era: eraId, nation });
+    // Same rule as player-store.ts: a draft draw needs MIN_DRAW_POOL players (Legends round 1 needs one).
+    for (const [nation, seen] of byNation) if (seen.size >= (eraId === 'legends' ? 1 : MIN_DRAW_POOL)) combos.push({ era: eraId, nation });
   }
   return combos;
 }
@@ -127,11 +131,15 @@ const shapeMatch = (c: XiCounts) => XI_SHAPES.some((sh) => XI_ROLES.every((r) =>
 function achievable(pools: NormalizedPlayer[][]): boolean {
   const memo = new Set<string>();
   const key = (c: XiCounts) => XI_ROLES.map((r) => c[r]).join(',');
+  // Only picks that can matter later (a player offered in more than one pool) go into the memo key.
+  const occurrences = new Map<string, number>();
+  for (const pool of pools) for (const q of pool) occurrences.set(q.id, (occurrences.get(q.id) ?? 0) + 1);
+  const shared = (id: string) => (occurrences.get(id) ?? 0) > 1;
   function dfs(round: number, idx: number, total: number, counts: XiCounts, picked: string[]): boolean {
     if (total === 11) return shapeMatch(counts);
     if (round >= 6) return false;
     if (idx >= ROUND_LIMITS[round]) return dfs(round + 1, 0, total, counts, picked);
-    const k = `${round}:${idx}:${key(counts)}:${[...picked].sort().join(',')}`;
+    const k = `${round}:${idx}:${key(counts)}:${picked.filter(shared).sort().join(',')}`;
     if (memo.has(k)) return false;
     const taken = new Set(picked);
     for (const p of pools[round]) {

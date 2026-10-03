@@ -28,6 +28,8 @@ import {
   adjustedMetrics,
   buildPopulations,
   buildScoringContext,
+  dismissalsUnknown,
+  hasFieldingData,
   SHRINKAGE_PRIOR_MATCHES,
   percentileRank,
   normalizeMetrics,
@@ -391,7 +393,20 @@ ok(
     fieldingScore(P('adam-gilchrist'), CTX) === fieldingScore(P('adam-gilchrist'), CTX),
     'fielding score deterministic',
   );
-  ok(CTX.fieldingPopulation.length === 536, 'fielding population = all 536 unique players', CTX.fieldingPopulation.length);
+  // The fielding population is every unique player with a KNOWN dismissals figure; a player flagged
+  // dismissalsUnknown (owner, 2026-10-03) is left out of it and counts as an average fielder.
+  const knownFielders = [...byId.values()].filter((p) => rawFielding(p) !== null).length;
+  ok(CTX.fieldingPopulation.length === knownFielders && knownFielders > 500, 'fielding population = every unique player with known dismissals', { pop: CTX.fieldingPopulation.length, knownFielders });
+  {
+    const unknown = [...byId.values()].filter((p) => dismissalsUnknown(p));
+    ok(unknown.length > 0 && unknown.every((p) => rawFielding(p) === null && p.stats.dismissals === undefined), 'players flagged dismissalsUnknown have no dismissals figure', unknown.length);
+    const avgScore = percentileRank(CTX.fieldingPriorMean, CTX.fieldingPopulation, true);
+    ok(unknown.every((p) => fieldingScore(p, CTX) === avgScore), 'an unknown fielder scores exactly as the average fielder', avgScore);
+    ok(avgScore > 20 && avgScore < 80, 'the average fielder sits mid-table', avgScore);
+    const noFlag = f({ testMatches: 100 });
+    ok(!dismissalsUnknown(noFlag) && fieldingScore(noFlag, CTX) === null, 'no dismissals and no flag is still an error, never an average');
+    ok(hasFieldingData(unknown[0]) && !hasFieldingData(noFlag), 'hasFieldingData: known or flagged');
+  }
   // Missing fielding data is an honest error at the XI level.
   const missingF = blendXI.map((e, i) =>
     i === 0
