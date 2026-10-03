@@ -524,8 +524,9 @@ after two fixes; the tests use emulated touch in Chrome and, by hand, iPhone-sty
 **Waiting on the owner**
 - Difficulty: the owner set the white-ball pars on 2026-10-03 (ODI −6, T20I −8, IPL −15, §1); how
   real players fare is not yet known. Report: `docs/reports/difficulty-analysis-white-ball-2026-10-03.md`.
-- Player roles and spin/pace data for all players (the owner will do these together, so the three
-  role decisions on Afridi, Streak and Saim Ayub are parked, checklist item 9).
+- Player roles: no full review (the owner cannot go through every player). Decisions given by name are
+  applied (Afridi all-rounder, Streak all-rounder and pace, Saim Ayub spinner, five IPL bowling
+  types, PRs #73 and #74); any other wrong role is fixed when the owner names the player.
 - IPL long-career bonus complete at 75 matches in a stint (proposed, not approved).
 - Old ODI roles; spin/pace and names (`docs/reports/white-ball-owner-list.md`).
 - Missing players in the best-XI pages (checklist item 17) and the logo direction (item 13).

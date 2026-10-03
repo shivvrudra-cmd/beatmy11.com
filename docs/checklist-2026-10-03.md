@@ -18,7 +18,8 @@ E (older open items).
 | 6 Era respin on spin 1 (ODI, T20I, IPL) | Done. | merged, PR #56 |
 | 7 Respun-away draws never return | Done (saved with the draft). | merged, PR #56 |
 | 8 Same player twice in the IPL | Already impossible; test added (Jos Buttler). | merged, PR #56 |
-| 9, 10, 12, 13, 17 | Waiting on the owner (facts or decisions). | |
+| 9 Roles | Done as far as the owner wants: the three named decisions are applied (PRs #73, #74); the rest keep the roles the game derives from matches; no per-player review (a sheet was tried and dropped). | merged |
+| 10, 12, 13, 17 | Waiting on the owner (facts or decisions). | |
 | 11 ODI too easy? | Measured, nothing changed. Report: `docs/reports/difficulty-analysis-white-ball-2026-10-03.md`. **Owner decision needed: target win rate.** | merged, PR #60 |
 | 14 Phone check of the result page | Done: confirmed fixed on the iPhone (see below). | |
 | 15 to 23 | Untouched (owner items, or small notes). | |
