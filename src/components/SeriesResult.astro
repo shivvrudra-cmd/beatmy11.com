@@ -125,10 +125,17 @@ const formatJson = safe(format);
   <script id="bm11-result-format" type="application/json" set:html={formatJson} />
 
   <script>
-    // Always open on the first screen: never inherit the scroll position of the draft page.
+    // Always open on the first screen, whatever screen "Draft again" was tapped on (owner,
+    // 2026-10-03, iPhone). iOS Safari can put a remembered scroll position back AFTER the page has
+    // loaded, so the reset repeats for the first moments, until the visitor touches the page.
     try { history.scrollRestoration = 'manual'; } catch { /* old browsers */ }
-    window.scrollTo(0, 0);
-    window.addEventListener('pageshow', (e) => { if (e.persisted) window.scrollTo(0, 0); });
+    let userMoved = false;
+    for (const ev of ['touchstart', 'pointerdown', 'wheel', 'keydown']) window.addEventListener(ev, () => { userMoved = true; }, { passive: true, once: true });
+    const toTop = () => { if (!userMoved && window.scrollY !== 0) window.scrollTo(0, 0); };
+    toTop();
+    for (const ms of [0, 60, 150, 300, 600, 1000, 1600]) window.setTimeout(toTop, ms);
+    window.addEventListener('load', toTop);
+    window.addEventListener('pageshow', toTop);
     import { compareXIs, teamBlend } from '../lib/seven-metrics';
     import { compareWbXIs, wbTeamBlend, WB_FORMATS } from '../lib/white-ball-metrics';
     import { playSeries, xiSeed } from '../lib/series';
@@ -562,7 +569,7 @@ const formatJson = safe(format);
       }
       $('rs-skip').addEventListener('click', finish);
       // Swiping down before the reveal has ended ends it, so the next screen is never blank.
-      window.addEventListener('scroll', () => { if (!revealed && window.scrollY > 24) finish(); }, { passive: true });
+      window.addEventListener('scroll', () => { if (!revealed && userMoved && window.scrollY > 24) finish(); }, { passive: true });
       if (reduceMotion) finish();
       else timer = window.setTimeout(() => step(false), 600);
 
