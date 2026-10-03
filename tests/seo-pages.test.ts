@@ -4,6 +4,7 @@
  * players, XI validity and URL / metadata generation.
  */
 import {
+  PINNED_XIS,
   PUBLISHED_ROLES,
   PUBLISHED_XI_SLUGS,
   ROLES,
@@ -190,7 +191,15 @@ ok(new Set(descs).size === descs.length, 'meta descriptions are unique');
 ok(new Set(h1s).size === h1s.length, 'H1s are unique');
 ok(titles.every((t) => t.length <= 70 && t.includes('Beat My 11')), 'titles are short and branded', titles.filter((t) => t.length > 70));
 ok(descs.every((d) => d.length <= 165 && d.length >= 70), 'descriptions are 70-165 chars', descs.filter((d) => d.length > 165));
-ok(pages.all.filter((p) => p.kind !== 'hub').every((p) => /by our ratings/i.test(p.title)), 'non-hub titles say "by our ratings"');
+ok(pages.all.filter((p) => p.kind !== 'hub' && !(p.kind === 'xi' && PINNED_XIS[p.slug])).every((p) => /by our ratings/i.test(p.title)), 'non-hub titles say "by our ratings" (except an XI the owner picked by hand)');
+{
+  // Owner, 2026-10-03: the all-time XI is picked by hand: Gavaskar and Bradman open, Tendulkar bats at four.
+  const at = buildXiPage(data, { kind: 'all-time' }, DATE)!;
+  const names = at.xi.map((r) => r.name);
+  ok(names.slice(0, 4).join(',') === 'Sunil Gavaskar,Don Bradman,Kumar Sangakkara,Sachin Tendulkar', 'all-time XI batting order starts Gavaskar, Bradman, Sangakkara, Tendulkar', names);
+  ok(!names.includes('Matthew Hayden') && at.xi.length === 11 && new Set(names).size === 11, 'all-time XI: Hayden is out, eleven distinct players', names);
+  ok(at.intro.join(' ').includes('by hand') && !/by our ratings/i.test(at.title + at.eyebrow), 'the all-time page says it was picked by hand, not by ratings');
+}
 ok(pages.all.every((p) => !/objectively|greatest ever|best ever/i.test(p.title + p.description + p.intro.join(' '))), 'no "objectively best" claims');
 for (const p of pages.all) {
   const text = JSON.stringify(p);
