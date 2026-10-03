@@ -14,6 +14,23 @@ const imageAlt = ogImageAlt ?? 'Beat My 11 — can your all-time Test XI beat th
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Google Analytics 4 (owner, 2026-10-03). Same tag as Google gives, loaded only when the browser
+         does not send "Do Not Track", as with the site's own anonymous counters (see /privacy). -->
+    <script is:inline>
+      (function () {
+        var dnt = navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.msDoNotTrack === '1';
+        if (dnt) return;
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-N196X2FYC1');
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-N196X2FYC1';
+        document.head.appendChild(s);
+      })();
+    </script>
     <slot name="head" />
     <title>{title}</title>
     <meta name="description" content={description} />
