@@ -25,12 +25,19 @@ build after each merge succeeded and the live site answered.
 | #35 | Chain challenges: "has beaten 3 XIs in a row". |
 | #37 | Pick any XI: an optional 90-second clock (off unless turned on). |
 | #38 | **IPL ratings adjusted for the season block** (merged on the owner's instruction, "merge PR #38"). Strike rate and economy are scaled to the league level of the stint's block before ranking. All-Star XI 92.8 → 93.0, Kohli's stint RCB 2023–now → RCB 2013–17, par −18.5 → −19. |
-| #42, #43 | (docs) this report, the project notes, the ads plan, proposals. |
+| #42, #43, #48 | (docs) this report, the project notes, the ads plan, proposals. |
+| #44 | (test only) the intermittent role-tab tap is retried and logged instead of failing the run. |
+| #45 | 20 unused files from the first version of the site removed. Nothing a player sees changes. |
+| #46 | Pick any XI: the challenge link says when the XI was picked against the 90-second clock. |
 
 Second site, **freeproteincalculator.com** (pushed to `origin/main`, live): each of the 12
 `/protein-intake/<weight>-kg/` pages has a bar chart drawn from that page's own numbers and a
 step-by-step sum a reader can check. An audit with the list of what only you can supply is in
 that repo: `docs/launch-audit-2026-10-02.md`.
+
+Also live there since: a line chart on the hub page (`/protein-intake/`) drawn from its own
+table, and three security headers (HTTPS-only for a year, no framing, a permissions policy). No
+content policy was added: it could silently block that site's Google Analytics.
 
 **Citations on the protein site.** All 32 distinct references in its 14 articles were looked up in
 PubMed. Eight match. **Four were wrong and are corrected** (a title that belonged to a different
@@ -45,6 +52,7 @@ important thing to fix on that site: unfindable sources on a health page.
 |---|---|---|
 | **#39** | Daily leaderboard, now complete on the PR: server, an opt-in "Add my score to today's board" on the daily result, and a `/daily-board` page. The database migration is **not applied**; until it is, all of it stays hidden. | Names or scores only; that scores can be faked (a friendly board); privacy wording; then: rate-limit rule, apply the migration, merge. |
 | **#40** | Draft terms page; three additions to the privacy page that describe what the site already does. | Read every line; fill in the governing-law line; approve or change. |
+| **#47** | Publish the other 14 pages of the SEO plan's first phase (four more decades, eight more nations, middle-order batters and all-rounders), from the same templates as the 12 live ones. Preview: https://seo-publish-remaining-best-pages-beatmy11.shivvrudra.workers.dev/best-xi/ | Yes or no; whether to leave out Bangladesh and Zimbabwe (small pools give odd picks, such as an opener with 3 Tests). |
 | **#41** | Four logo sketches: https://design-logo-concepts-beatmy11.shivvrudra.workers.dev/logo-concepts | Pick a direction. My view: A (floodlight eleven). C reads as a pause button. They are sketches, not finished artwork. |
 
 ## 3. Every PROVISIONAL choice, with its exact value
@@ -117,16 +125,23 @@ wins, 14.4%). Still open from that report: T20I has the same effect at about a t
    starting, and my command chain went on to merge). I ran the full suite on `master` straight
    after: 30 passed. The gate script now retries a slow start and the merge step cannot run
    unless the gate passed; it did stop the next bad run (#37 waited for the #36 fix).
+5. **One role-tab test fails about one full run in six** (a tap on a tab straight after a swipe
+   does not move the list). I could not reproduce it alone in 28 runs, so the cause is unknown: an
+   emulated-touch timing quirk, or a real rare case. The test now taps again and logs
+   `RETRY: role-tab tap needed N taps` (PR #44). Not fixed, made visible. If a tab tap ever does
+   nothing on your phone right after swiping, this is the lead.
+6. **A whole test run failed once because two runs overlapped** and one shut down the shared test
+   server. Nothing was merged from it; I re-ran it alone and it passed.
 4. **The handoff named the wrong remote for the protein site.** The `group` remote's `main` is an
    old, different tree. The live site is built from `origin/main`, so I pushed there and left
    `group` alone.
 
 ## 5. What needs you
 
-- The three open pull requests (section 2): #39 leaderboard, #40 terms, #41 logo.
+- The four open pull requests (section 2): #39 leaderboard, #40 terms, #41 logo, #47 SEO pages.
 - The eleven citations on the protein site (see section 1).
-- Cloudflare dashboard: a rate-limiting rule for `/api/*` (one free rule), and an uptime monitor
-  on `https://beatmy11.com/api/health`.
+- An uptime monitor on `https://beatmy11.com/api/health`. (The API rate limit is done, in code:
+  PR #49, 2026-10-03.)
 - Ads: `docs/plans/ads-plan.md`. Short answer: not on the game screens; room on the text pages;
   needs your account, a consent banner and a looser security policy. Nothing was added.
 - Daily themes and a Boss XI: `docs/plans/themes-and-boss-xi.md`. "Left-handers only" cannot be

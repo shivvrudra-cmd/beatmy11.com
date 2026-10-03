@@ -91,6 +91,13 @@ wording is in the pull request description.
   it is still left unmerged because the handoff says anything with a migration or new stored data
   waits for the owner.
 
+## Decisions made (2026-10-03)
+
+- **Names are allowed** (owner): an optional name, shown publicly; the owner moderates. The
+  privacy page now says so (this PR).
+- The Cloudflare rate limit is done in code (PR #49); `POST /api/daily` is covered by it.
+- Still open: apply the migration, then merge.
+
 ## For the owner to decide
 
 1. Names: allow (and moderate), or scores only.
