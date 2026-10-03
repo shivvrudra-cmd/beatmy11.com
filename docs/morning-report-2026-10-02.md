@@ -140,8 +140,8 @@ wins, 14.4%). Still open from that report: T20I has the same effect at about a t
 
 - The four open pull requests (section 2): #39 leaderboard, #40 terms, #41 logo, #47 SEO pages.
 - The eleven citations on the protein site (see section 1).
-- Cloudflare dashboard: a rate-limiting rule for `/api/*` (one free rule), and an uptime monitor
-  on `https://beatmy11.com/api/health`.
+- An uptime monitor on `https://beatmy11.com/api/health`. (The API rate limit is done, in code:
+  PR #49, 2026-10-03.)
 - Ads: `docs/plans/ads-plan.md`. Short answer: not on the game screens; room on the text pages;
   needs your account, a consent banner and a looser security policy. Nothing was added.
 - Daily themes and a Boss XI: `docs/plans/themes-and-boss-xi.md`. "Left-handers only" cannot be

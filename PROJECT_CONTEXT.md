@@ -421,10 +421,10 @@ link-preview images (`public/og/`, `public/og/<format>/`), showing the sender's 
     the same names with the format appended (`view_play_ipl`).
   - `GET /api/health` — `{"ok":true}`, no database call (2026-10-02).
   - Not stored: IP, cookie, user agent, account, player list. Requests must come from the two
-    site origins; bodies over 1 KB are refused. Series **scores** are sent by the Test draft only
-    (`telemetry: false` elsewhere); Pick any XI never sends an XI. There is no per-visitor rate
-    limit in the Worker (it keeps nothing that identifies a visitor): a Cloudflare rate-limiting
-    rule on `/api/*` is an open owner task (`docs/reports/launch-audit-2026-10-02.md`).
+    site origins; bodies over 1 KB are refused; writes are rate-limited to 120 a minute per network
+    address with Cloudflare's rate-limiting binding (`API_LIMIT` in `wrangler.jsonc`; previews have
+    their own entry because they do not inherit the production one). Series **scores** are sent by the Test draft only
+    (`telemetry: false` elsewhere); Pick any XI never sends an XI.
   - **Cloudflare Web Analytics** (cookieless page views) is switched on in the owner's
     Cloudflare account and injected on the live domain only.
   - Row counts and whether the migration is applied in production:
@@ -516,8 +516,8 @@ tests use emulated touch in Chrome).
 - Difficulty: play each white-ball format, especially the IPL after the stint change.
 - IPL long-career bonus complete at 75 matches in a stint (proposed, not approved).
 - Old ODI roles; spin/pace and names (`docs/reports/white-ball-owner-list.md`).
-- From the launch audit (`docs/reports/launch-audit-2026-10-02.md`): a Cloudflare rate-limiting
-  rule for `/api/*`, an uptime monitor on `/api/health`, HSTS preload yes or no.
+- From the launch audit (`docs/reports/launch-audit-2026-10-02.md`): an uptime monitor on
+  `/api/health`, HSTS preload yes or no. (The API rate limit is done: PR #49.)
 - Ads (`docs/plans/ads-plan.md`): a decision, an ad network account, consent choices.
 - PROVISIONAL wording and numbers from 2026-10-02 (share wording, tips, series-stat ranges, badge
   thresholds, chain rules, the 90-second clock, the result sounds): listed with their exact values
