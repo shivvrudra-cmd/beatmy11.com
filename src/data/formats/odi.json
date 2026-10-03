@@ -21248,12 +21248,13 @@
   },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
+   "fast-bowler",
    "middle-order"
   ],
   "isWicketkeeper": false,
-  "bowlingType": null,
-  "roleSource": "match-data",
-  "bowlingTypeSource": null,
+  "bowlingType": "pace",
+  "roleSource": "owner",
+  "bowlingTypeSource": "owner",
   "firstMatch": "2003-02-10",
   "lastMatch": "2005-08-31",
   "stats": {
@@ -50104,13 +50105,12 @@
   },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
-   "fast-bowler",
    "opener"
   ],
   "isWicketkeeper": false,
-  "bowlingType": "pace",
+  "bowlingType": null,
   "roleSource": "match-data",
-  "bowlingTypeSource": "kaggle",
+  "bowlingTypeSource": "owner",
   "firstMatch": "2024-11-04",
   "lastMatch": "2025-11-14",
   "stats": {
@@ -52184,8 +52184,11 @@
    "2000s": 99,
    "2010s": 108
   },
-  "primaryRole": "spinner",
-  "secondaryRoles": [],
+  "primaryRole": "all-rounder",
+  "secondaryRoles": [
+   "spinner",
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "owner",

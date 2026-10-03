@@ -85,7 +85,9 @@
  "0dc00542": {
   "bowlingType": "spin",
   "listedAs": "Shahid Afridi",
-  "source": "owner, 2026-10-01 (second list)"
+  "source": "owner, 2026-10-01 (second list)",
+  "role": "all-rounder",
+  "roleSource": "owner, 2026-10-03"
  },
  "33f28243": {
   "bowlingType": "pace",
@@ -294,5 +296,17 @@
   "source": "owner, 2026-10-01",
   "role": "all-rounder",
   "roleSource": "owner, 2026-10-01"
+ },
+ "37f501d7": {
+  "bowlingType": "pace",
+  "listedAs": "Heath Streak",
+  "source": "owner, 2026-10-03",
+  "role": "all-rounder",
+  "roleSource": "owner, 2026-10-03"
+ },
+ "33609a8c": {
+  "bowlingType": "unknown",
+  "listedAs": "Saim Ayub",
+  "source": "owner, 2026-10-03 (not a pacer; spin or pace not given, so no bowling type)"
  }
 }

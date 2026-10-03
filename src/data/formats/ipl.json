@@ -76064,8 +76064,11 @@
    "Deccan Chargers"
   ],
   "overseas": true,
-  "primaryRole": "spinner",
-  "secondaryRoles": [],
+  "primaryRole": "all-rounder",
+  "secondaryRoles": [
+   "spinner",
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "owner",

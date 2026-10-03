@@ -82,6 +82,7 @@ test("daily result: adding a score is the player's choice, sends only the result
   await expect(page.locator("#rs-board-add")).toHaveCount(0);
 
   // The board page lists the entries; a name is shown as text, never run as markup.
+  await fingerDown(page); // after a reload the page is waiting for a finger again
   await page.locator('#rs-board a').click();
   await page.waitForURL("**/daily-board**");
   await expect(page.locator("#db-list li")).toHaveCount(6);
