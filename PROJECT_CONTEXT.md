@@ -3,9 +3,10 @@
 > **Purpose of this file:** give any AI assistant (or human) the full picture of what
 > BeatMy11 is and what has actually been built, so it can work on the project without
 > guessing. Facts here come from the code in this repo, not from memory.
-> Last updated: 2026-10-02 (second pass, after the overnight run) — **brought up to date with
-> `origin/master` at PR #37** (`d6be47e`). Sections 5 to 7 are unchanged from the regeneration at
-> `5030e14`; everything else was checked against the code and the test counts were re-run.
+> Last updated: 2026-10-03 (end of day) — **brought up to date with `origin/master` at PR #66**
+> (`e740313`): §1 (no draws in limited overs, the pars), §11 (tests re-run), §13 and §14 (open
+> items and changelog through PR #66). Sections 2 to 10 were checked on 2026-10-02 and are
+> otherwise unchanged except where a line above says so.
 > Anything the code could not settle is marked `UNCONFIRMED - owner to confirm`.
 > Other documents: `docs/plans/` (decisions and plans), `docs/plans/future-ideas.md` (parked
 > ideas), `docs/reports/` (generated data reports), `beatmy11.md` (the original vision, largely
@@ -91,7 +92,7 @@ text, which always wait for the owner (`docs/handoff-2026-10-02.md`).
 
 ## 2. Tech stack & repo layout
 
-- **Astro 7** (static, **59 pages built**), **React 19** islands, **Tailwind 4**, TypeScript.
+- **Astro 7** (static, **61 pages built**), **React 19** islands, **Tailwind 4**, TypeScript.
   Node 24 (`.node-version`).
 - **Hosting:** Cloudflare Workers with static assets (`wrangler.jsonc`): worker `beatmy11`,
   entry `worker/index.ts`, assets from `./dist`, the Worker runs only for `/api/*`, custom
@@ -104,7 +105,7 @@ text, which always wait for the owner (`docs/handoff-2026-10-02.md`).
   (this site only, plus Cloudflare Web Analytics, which Cloudflare injects on the live domain but
   **not** on previews). Any new third-party host (ads, other analytics) must be added to the
   policy or it will not load. Check a deployed copy with `node scripts/check-live-headers.mjs <url>`.
-- **Tests:** `npm test` (16 esbuild-bundled node suites), `npx vitest run`, `npx playwright test`.
+- **Tests:** `npm test` (17 esbuild-bundled node suites), `npx vitest run`, `npx playwright test`.
   `npm run build` must pass before any change is done. `node scripts/site-audit.mjs` checks the
   built site for broken links, missing alt text and third-party resources.
 
@@ -441,45 +442,47 @@ link-preview images (`public/og/`, `public/og/<format>/`), showing the sender's 
 
 ---
 
-## 11. Tests (run 2026-10-02 on `d6be47e`)
+## 11. Tests (run 2026-10-03 on `e740313`)
 
-`npm test` — **16 suites, all pass, 1,326 assertions:**
+`npm test` — **17 suites, all pass, 1,376 assertions:**
 
 | Suite | Passed | Covers |
 |---|---|---|
-| `xi-logic` | 195 | slots, roles, blocking, moves, persistence, final-round changes |
+| `xi-logic` | 200 | slots, roles, blocking, moves, persistence, final-round changes |
 | `full-draft` | 242 | 120-trial real-data draft simulation, achievability oracle |
 | `seven-metrics` | 147 | Test engine |
-| `series` | 91 | ladder, wobble, headlines and balance, player of the series and its stat, grades, titles, tips about the XI |
+| `series` | 102 | ladder, wobble, headlines and balance, player of the series and its stat, grades, titles, tips about the XI |
 | `share` | 137 | share slugs, XI encode/decode, share wording for every format and scoreline |
 | `seo-pages` | 246 | /best-xi and /best page models |
-| `daily` | 29 | daily spins, streaks |
+| `daily` | 30 | daily spins, streaks |
 | `challenge` | 35 | challenge links, per-format dailies |
 | `white-ball-data` | 28 | aggregation on hand-checked matches, generated data sanity |
 | `white-ball-metrics` | 32 | white-ball engine |
-| `ipl-draft` | 24 | stints, overseas flags and rule, squads, final spin, achievability |
+| `ipl-draft` | 31 | stints, overseas flags and rule, squads, final spin, achievability |
 | `intl-draft` | 27 | ODI/T20I pools, squad cut, opponent-only players |
 | `howstat` | 36 | HowSTAT readers and pairing |
-| `pick-xi` | 34 | duel ladder, names, badges, chain challenges, head-to-head record |
+| `pick-xi` | 35 | duel ladder, names, badges, chain challenges, head-to-head record |
 | `telemetry` | 4 | every event the pages send is on the Worker's allow-list |
-| `worker` | 19 | API guards: origin, size, validation, health, nothing identifying stored |
+| `worker` | 38 | API guards: origin, size, validation, health, rate limit, nothing identifying stored |
+| `leaderboard` | 6 | daily leaderboard rules |
 
 `npx vitest run`: 2 files, **5 passed** (the schema-test failure noted in the previous version
 of this file was fixed in PR #6).
 
-`npx playwright test`: **31 passed** — draft, share, XI-complete, daily, challenge, per-format
+`npx playwright test`: **43 passed** — draft, share, XI-complete, daily, challenge, per-format
 dailies and share pages, landing pages, modes isolated, mobile one-screen fit (several phone
 sizes), white-ball draft-to-result for all three formats, the Pick any XI flow for all four, the
 result page staying still on phones (`result-steady`), result sounds, the role-tab pager
-(`role-tabs`, with emulated touch drags) and the Pick any XI clock.
+(`role-tabs`, with emulated touch drags) the Pick any XI clock and card pictures, the era respin on the first spin, and the result page on an
+iPhone-style WebKit (run by hand, see the checklist).
 
-`npm run build`: passes, **59 pages** plus `sitemap-index.xml`. The sitemap leaves out `/404`,
+`npm run build`: passes, **61 pages** plus `sitemap-index.xml`. The sitemap leaves out `/404`,
 `/matchup` pages, `/share-demo` and `/r/*`; the white-ball play pages and the pick pages are in
 it and indexable since 2026-10-02.
 
-Not verified by a machine: how the sounds sound (a human ear), and how the role-tab swipe and the
-result page feel under a real finger and with a real browser toolbar sliding in and out (the
-tests use emulated touch in Chrome).
+Not verified by a machine: how the sounds sound (a human ear), and how the role-tab swipe feels
+under a real finger. The result page was confirmed on the owner's iPhone (Safari) on 2026-10-03
+after two fixes; the tests use emulated touch in Chrome and, by hand, iPhone-style WebKit.
 
 ---
 
@@ -512,18 +515,20 @@ tests use emulated touch in Chrome).
 ## 13. Open items
 
 **Pull requests waiting for the owner (open, not merged)**
-- **#39 Daily leaderboard** (new stored data + migration 0002, not applied): design in
-  `docs/plans/daily-leaderboard.md` (on that branch). Server and pages are built there; the UI
-  hides itself until the migration is applied.
-- **#40 Terms page draft and privacy corrections** (legal text). The governing-law line is blank.
+- (The daily leaderboard #39 and the terms page #40 are merged; the leaderboard table was applied
+  to production by the owner.)
 - **#41 Logo concepts** (preview page only; pick a direction, then close it).
 - **#47 SEO pages**: publish the remaining 14 phase-1 pages (59 → 73 pages). The published set
   is the owner's list (`PUBLISHED_XI_SLUGS`, `PUBLISHED_ROLES` in `seo-pages.ts`).
 
 **Waiting on the owner**
-- Difficulty: play each white-ball format, especially the IPL after the stint change.
+- Difficulty: the owner set the white-ball pars on 2026-10-03 (ODI −6, T20I −8, IPL −15, §1); how
+  real players fare is not yet known. Report: `docs/reports/difficulty-analysis-white-ball-2026-10-03.md`.
+- Player roles and spin/pace data for all players (the owner will do these together, so the three
+  role decisions on Afridi, Streak and Saim Ayub are parked, checklist item 9).
 - IPL long-career bonus complete at 75 matches in a stint (proposed, not approved).
 - Old ODI roles; spin/pace and names (`docs/reports/white-ball-owner-list.md`).
+- Missing players in the best-XI pages (checklist item 17) and the logo direction (item 13).
 - From the launch audit (`docs/reports/launch-audit-2026-10-02.md`): an uptime monitor on
   `/api/health`, HSTS preload yes or no. (The API rate limit is done: PR #49.)
 - Ads (`docs/plans/ads-plan.md`): a decision, an ad network account, consent choices.
@@ -581,7 +586,21 @@ tests use emulated touch in Chrome).
 - #38 IPL era adjustment for strike rate and economy (merged by the owner's instruction).
 - #44 the intermittent role-tab tap in the browser tests is retried and logged (cause unknown).
   #45 unused components removed. #46 challenge links say when an XI was picked against the clock.
-- Open for the owner: #39, #40, #41, #47 (§13).
+- Open for the owner: #41, #47 (§13).
+
+**2026-10-03** (PR numbers; the day's checklist is `docs/checklist-2026-10-03.md`)
+- #48 to #52 reports, the API rate limit (#49, #50 fresh limiter ids), the ranked checklist.
+- #54 IPL: a saved draft with more than four overseas players is dropped on load.
+- #55 result page: opens on screen 1, room under the last screen for the phone toolbar, match cards
+  fit on wide screens. #59 and #61 two iPhone Safari fixes (screens 2 and 3 can never stay blank;
+  confirmed by the owner on the phone).
+- #56 era respin on spin 1 for ODI, T20I and IPL; respun-away draws never return in a draft; a test
+  that a player counts once across IPL franchises.
+- #57 no draws in ODI, T20I and IPL (six scorelines, rare super overs, friend duels follow it).
+- #58 Pick any XI shares a card picture (challenge and result) with the link.
+- #60 difficulty report for the white-ball formats. #64, #65, #66 the owner's pars:
+  ODI −6, T20I −8, IPL −15.
+- #62, #63 handoff and checklist status.
 
 **Earlier history** (2026-09-24 → 2026-10-01: the game-flow rebuild, positional XI, engine V1 →
 V2, five-Test series, share cards, Cloudflare Workers, telemetry, SEO foundation, par −7) is in
