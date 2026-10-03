@@ -62,8 +62,8 @@ link to a friend, who picks their own XI; both see the same five-match series. S
    |---|---|---|---|---|
    | Test | −7 (`PAR_GAP`) | 89.4 | 6.7% (smart drafter 26.6%); figures from 2026-10-01, not re-run | owner-approved |
    | ODI | −6 | 92.4 | 4.8% (a drafter who sees the hidden ratings: 35%) | owner-set 2026-10-03 (was −9, 16.2%; −7 for a few hours) |
-   | T20I | −6.5 | 93.8 | 2.0% (hidden-ratings drafter: 34%) | owner-set 2026-10-03 (was −11.5, 14.0%) |
-   | IPL | −12 | 93.0 | 1.2% (hidden-ratings drafter: 35%) | owner-set 2026-10-03 (was −18, 14.4%, re-tuned 2026-10-02 with the era adjustment, §6) |
+   | T20I | −8 | 93.8 | 3.3% (hidden-ratings drafter: 46%) | owner-set 2026-10-03 (was −11.5, 14.0%; −6.5 for a few hours) |
+   | IPL | −15 | 93.0 | 4.6% (hidden-ratings drafter: 53%) | owner-set 2026-10-03 (was −18, 14.4%, re-tuned 2026-10-02 with the era adjustment, §6; −12 for a few hours) |
 
    White-ball pars are written by `scripts/cricsheet/calibrate-white-ball.ts` into
    `src/data/formats/<format>-series.json`. The owner set the ODI par to −7 on 2026-10-03 and said "ok" to about 15% for T20I;
