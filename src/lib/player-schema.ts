@@ -12,7 +12,8 @@ export const playerStatsSchema = z.object({
   testWickets: z.number(),
   testMatches: z.number(),
   testCenturies: z.number(),
-  testFifties: z.number(),
+  /** Absent for bowlers added from the per-country tables, which have no fifties column (owner, 2026-10-03). */
+  testFifties: z.number().optional(),
   fiveWs: z.number(),
   tenWs: z.number(),
   testBowlingAverage: z.number(),

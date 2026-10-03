@@ -36,13 +36,25 @@ Tools: `scripts/add-test-players.mjs`, `scripts/fix-test-numbers.mjs` (both re-r
 Test World XI score 89.4 (unchanged); 600 simulated human-like drafts win the series 6.7% before and
 6.8% after at par -7 (unchanged). Draw sizes grew by one to four players in 27 era and nation draws.
 
+## Second batch: 18 bowlers (same day)
+
+The owner then exported the per-country Test tables (all Test players per nation, with Known As, Career,
+matches, runs, wickets, five-wicket hauls, averages: `data-raw/howstat/test-players-by-country.csv`). They gave
+full names and career years. Of the "about 60" bowlers first thought missing, most were already in the game
+(the first name matching missed misspellings) or are pre-1968 (not added); **18 were added**: Holder, Lance
+Cairns, Hogg, Dilley, Doshi, Nandlal Yadav, John Bracewell, McDermott, De Freitas, Malcolm, Reiffel,
+Kasprowicz, Collins, Razzaq (all-rounder), Nel, Paul Harris, Ojha, Finn. Spin or pace: Kaggle confirms six;
+the other twelve are the owner-approved proposal. All have fielding unknown (fewer than 50 catches), and no
+`testFifties` (not in any table; bowlers are scored on bowling only; the schema now allows it to be absent).
+Measured: Test World XI 89.5 (was 89.4, the population grew), simulated series wins still 6.8% at par -7;
+no daily challenge became undraftable. Unique Test players: 582, records 848.
+
 ## Not done, and why
 
 - **Pre-1970 greats** (Hammond, Lindwall, Benaud, Trueman, Worrell, Headley...): the owner decided
   against adding more Legends.
-- **About 60 bowlers** (Broad, Willis, McDermott, Dilley, Cairns, Malcolm, Finn, Kasprowicz and
-  others) are in the bowlers file but no file gives their career years, so they cannot be placed in an
-  era. Needs the per-country Test career tables with a Career column.
+- **Pre-1968 bowlers** from the bowlers file (45, for example Trueman, Statham, Lindwall, Benaud, Grimmett):
+  not added, by the owner's decision.
 - **Not in the batting file** (under 2,000 runs): Sammy, Solkar, Brearley, R Arnold: skipped.
 - **Possible data issue, not changed:** Kepler Wessels is listed under Australia with 40 Tests (his
   South Africa count; he played 24 for Australia and 40 for South Africa).

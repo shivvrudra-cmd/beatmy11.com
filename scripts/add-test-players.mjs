@@ -15,6 +15,10 @@
  *  - Roles: wicketkeepers are confirmed by the keepers file; openers and middle-order are the
  *    owner-approved proposal (the tables do not say where a batter batted).
  *
+ * Second batch (owner-approved the same day): 18 bowlers whose full names and career years come from the
+ * per-country tables (data-raw/howstat/test-players-by-country.csv). Their batting fifties are not in any
+ * table, so `testFifties` is left out (bowlers are scored on bowling only).
+ *
  * Run: node scripts/add-test-players.mjs
  */
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
@@ -59,6 +63,17 @@ const APPROVED = [
   ['S V Manjrekar', 'India', 'Sanjay Manjrekar', 'middle-order', ''],
 ];
 
+// Owner-approved bowlers (2026-10-03): [HowSTAT name, country, type]. Spin or pace: Kaggle confirms Kasprowicz,
+// Collins, Razzaq, Nel, Ojha and Finn; the rest is the proposal the owner approved.
+const BOWLERS = [
+  ['V A Holder', 'West Indies', 'pace'], ['B L Cairns', 'New Zealand', 'pace'], ['R M Hogg', 'Australia', 'pace'], ['G R Dilley', 'England', 'pace'],
+  ['D R Doshi', 'India', 'spin'], ['N S Yadav', 'India', 'spin'], ['J G Bracewell', 'New Zealand', 'spin'], ['C J McDermott', 'Australia', 'pace'],
+  ['P A J De Freitas', 'England', 'pace'], ['D E Malcolm', 'England', 'pace'], ['P R Reiffel', 'Australia', 'pace'], ['M S Kasprowicz', 'Australia', 'pace'],
+  ['P T Collins', 'West Indies', 'pace'], ['Abdul Razzaq', 'Pakistan', 'allrounder'], ['A Nel', 'South Africa', 'pace'], ['P L Harris', 'South Africa', 'spin'],
+  ['P P Ojha', 'India', 'spin'], ['S T Finn', 'England', 'pace'],
+];
+const byCountry = new Map(csv('test-players-by-country.csv').map((r) => [r[1] + '|' + r[0], r]));
+
 const erasOf = (career) => {
   const [a, b] = career.split('-');
   const last = b ? Number(b) : new Date().getFullYear();
@@ -88,6 +103,21 @@ const records = APPROVED.map(([how, country, full, role, sec]) => {
   const eras = erasOf(career);
   return { id: slug(full), name: full, nation: country, era: eras.length === 1 ? eras[0] : eras, primaryRole: role, secondaryRoles: sec ? [sec] : [], stats, _eras: eras };
 });
+
+for (const [how, country, type] of BOWLERS) {
+  const pc = byCountry.get(how + '|' + country), w = bowl.get(how + '|' + country);
+  if (!pc) throw new Error(`not in the per-country table: ${how} ${country}`);
+  if (!w) throw new Error(`not in the bowling file: ${how} ${country}`);
+  const [, , known, career, , , runs, tons, batAvg] = pc;
+  const [, , mat, , , wk, w5, w10, bavg] = w;
+  const stats = {
+    testAverage: num(batAvg), testRuns: num(runs), testWickets: num(wk), testMatches: num(mat), testCenturies: num(tons),
+    fiveWs: num(w5), tenWs: num(w10), testBowlingAverage: num(bavg), battingStrikeRate: 0, bowlingStrikeRate: 0, dismissalsUnknown: 1,
+  };
+  const eras = erasOf(career);
+  const [role, secondary] = type === 'spin' ? ['spinner', []] : type === 'pace' ? ['fast-bowler', []] : ['all-rounder', ['fast-bowler']];
+  records.push({ id: slug(known), name: known, nation: country, era: eras.length === 1 ? eras[0] : eras, primaryRole: role, secondaryRoles: secondary, stats, _eras: eras });
+}
 
 const text = (r) => {
   const { _eras, ...rec } = r;

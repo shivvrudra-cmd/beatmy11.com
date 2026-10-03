@@ -1850,5 +1850,47 @@
       "bowlingStrikeRate": 0,
       "dismissalsUnknown": 1
     }
+  },
+  {
+    "id": "vanburn-holder",
+    "name": "Vanburn Holder",
+    "nation": "West Indies",
+    "era": "1970s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 14.21,
+      "testRuns": 682,
+      "testWickets": 109,
+      "testMatches": 40,
+      "testCenturies": 0,
+      "fiveWs": 3,
+      "tenWs": 0,
+      "testBowlingAverage": 33.28,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "lance-cairns",
+    "name": "Lance Cairns",
+    "nation": "New Zealand",
+    "era": ["1970s","1980s"],
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 16.28,
+      "testRuns": 928,
+      "testWickets": 130,
+      "testMatches": 43,
+      "testCenturies": 0,
+      "fiveWs": 6,
+      "tenWs": 1,
+      "testBowlingAverage": 32.92,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
   }
 ]

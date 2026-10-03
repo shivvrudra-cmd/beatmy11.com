@@ -3224,5 +3224,112 @@
       "bowlingStrikeRate": 0,
       "dismissals": 219
     }
+  },
+  {
+    "id": "michael-kasprowicz",
+    "name": "Michael Kasprowicz",
+    "nation": "Australia",
+    "era": ["1990s","2000s"],
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 10.6,
+      "testRuns": 445,
+      "testWickets": 113,
+      "testMatches": 38,
+      "testCenturies": 0,
+      "fiveWs": 4,
+      "tenWs": 0,
+      "testBowlingAverage": 32.88,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "pedro-collins",
+    "name": "Pedro Collins",
+    "nation": "West Indies",
+    "era": "2000s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 5.88,
+      "testRuns": 235,
+      "testWickets": 106,
+      "testMatches": 32,
+      "testCenturies": 0,
+      "fiveWs": 3,
+      "tenWs": 0,
+      "testBowlingAverage": 34.63,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "abdul-razzaq",
+    "name": "Abdul Razzaq",
+    "nation": "Pakistan",
+    "era": "2000s",
+    "primaryRole": "all-rounder",
+    "secondaryRoles": [
+      "fast-bowler"
+    ],
+    "stats": {
+      "testAverage": 28.62,
+      "testRuns": 1946,
+      "testWickets": 100,
+      "testMatches": 46,
+      "testCenturies": 3,
+      "fiveWs": 1,
+      "tenWs": 0,
+      "testBowlingAverage": 36.94,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "andre-nel",
+    "name": "Andre Nel",
+    "nation": "South Africa",
+    "era": "2000s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 9.91,
+      "testRuns": 337,
+      "testWickets": 123,
+      "testMatches": 36,
+      "testCenturies": 0,
+      "fiveWs": 3,
+      "tenWs": 1,
+      "testBowlingAverage": 31.86,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "paul-harris",
+    "name": "Paul Harris",
+    "nation": "South Africa",
+    "era": "2000s",
+    "primaryRole": "spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 10.7,
+      "testRuns": 460,
+      "testWickets": 103,
+      "testMatches": 37,
+      "testCenturies": 0,
+      "fiveWs": 3,
+      "tenWs": 0,
+      "testBowlingAverage": 37.87,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
   }
 ]

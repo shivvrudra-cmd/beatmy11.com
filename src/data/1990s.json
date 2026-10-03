@@ -2822,5 +2822,110 @@
       "bowlingStrikeRate": 0,
       "dismissalsUnknown": 1
     }
+  },
+  {
+    "id": "craig-mcdermott",
+    "name": "Craig McDermott",
+    "nation": "Australia",
+    "era": ["1980s","1990s"],
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 12.21,
+      "testRuns": 940,
+      "testWickets": 291,
+      "testMatches": 71,
+      "testCenturies": 0,
+      "fiveWs": 14,
+      "tenWs": 2,
+      "testBowlingAverage": 28.63,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "phillip-de-freitas",
+    "name": "Phillip De Freitas",
+    "nation": "England",
+    "era": ["1980s","1990s"],
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 14.83,
+      "testRuns": 934,
+      "testWickets": 140,
+      "testMatches": 44,
+      "testCenturies": 0,
+      "fiveWs": 4,
+      "tenWs": 0,
+      "testBowlingAverage": 33.57,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "devon-malcolm",
+    "name": "Devon Malcolm",
+    "nation": "England",
+    "era": "1990s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 6.05,
+      "testRuns": 236,
+      "testWickets": 128,
+      "testMatches": 40,
+      "testCenturies": 0,
+      "fiveWs": 5,
+      "tenWs": 2,
+      "testBowlingAverage": 37.09,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "paul-reiffel",
+    "name": "Paul Reiffel",
+    "nation": "Australia",
+    "era": "1990s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 26.53,
+      "testRuns": 955,
+      "testWickets": 104,
+      "testMatches": 35,
+      "testCenturies": 0,
+      "fiveWs": 5,
+      "tenWs": 0,
+      "testBowlingAverage": 26.96,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "michael-kasprowicz",
+    "name": "Michael Kasprowicz",
+    "nation": "Australia",
+    "era": ["1990s","2000s"],
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 10.6,
+      "testRuns": 445,
+      "testWickets": 113,
+      "testMatches": 38,
+      "testCenturies": 0,
+      "fiveWs": 4,
+      "tenWs": 0,
+      "testBowlingAverage": 32.88,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
   }
 ]
