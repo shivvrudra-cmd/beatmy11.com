@@ -4,7 +4,7 @@ import FloodlitShell from '../components/FloodlitShell.astro';
 
 const title = 'Privacy: what Beat My 11 stores | Beat My 11';
 const description =
-  'What Beat My 11 stores: your draft stays in your browser; we keep only anonymous scores and daily page counts.';
+  'What Beat My 11 stores: your draft stays in your browser; we keep anonymous scores and page counts, and a leaderboard name only if you choose to add one.';
 ---
 
 <BaseLayout title={title} description={description}>
@@ -40,6 +40,19 @@ const description =
         home, draft, result, pick and shared-link pages were opened, how often the share button was
         tapped, and how many daily challenges and friend challenges were started and finished. These
         are plain counters, not tied to a person.
+      </p>
+
+      <h2>Daily leaderboard</h2>
+      <p>
+        After a Daily Challenge you can choose to add your result to that day’s leaderboard. Nothing is
+        sent unless you press the button. If you do, we store your overall score, the series scoreline, a
+        short fingerprint of your XI, the name you typed and the time. The name is optional and
+        <strong>is shown publicly</strong> on the leaderboard; leave it blank to appear as “Anonymous”.
+        Your browser also keeps a random code (not linked to you) so the same browser cannot enter the
+        same day twice. We do not store your IP address with the entry. To have an entry or a name
+        removed, email <a href="mailto:hello@beatmy11.com">hello@beatmy11.com</a> with the day and the
+        name you used. Scores are worked out on your device and cannot be checked, so the leaderboard is
+        for fun. If your browser sends “Do Not Track”, the button is not offered.
       </p>
 
       <h2>Sharing</h2>
