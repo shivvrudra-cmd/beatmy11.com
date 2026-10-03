@@ -61,14 +61,22 @@ link to a friend, who picks their own XI; both see the same five-match series. S
    | Format | Par | Opponent score | Simulated series wins (human-like drafter, 600 drafts) | Status |
    |---|---|---|---|---|
    | Test | −7 (`PAR_GAP`) | 89.4 | 6.7% (smart drafter 26.6%); figures from 2026-10-01, not re-run | owner-approved |
-   | ODI | −10 | 92.4 | 16.2% | PROVISIONAL, tuned to about 15% |
-   | T20I | −12.5 | 93.8 | 14.0% | PROVISIONAL, tuned to about 15% |
-   | IPL | −19 | 93.0 | 14.4% | PROVISIONAL, tuned to about 15% (re-tuned 2026-10-02 with the era adjustment, §6) |
+   | ODI | −9 | 92.4 | 16.2% | PROVISIONAL, tuned to about 15% |
+   | T20I | −11.5 | 93.8 | 14.0% | PROVISIONAL, tuned to about 15% |
+   | IPL | −18 | 93.0 | 14.4% | PROVISIONAL, tuned to about 15% (re-tuned 2026-10-02 with the era adjustment, §6) |
 
    White-ball pars are written by `scripts/cricsheet/calibrate-white-ball.ts` into
    `src/data/formats/<format>-series.json`. The owner said "ok" to about 15% for ODI and T20I;
    the IPL figure was reset after the stint change (§6) and **is `UNCONFIRMED - owner to confirm`**.
    How often real players win is `UNCONFIRMED - owner to confirm` (production D1 was not read).
+
+   **No draws in ODI, T20I and IPL** (owner, 2026-10-03, `NO_DRAW_BANDS`, `noDrawCuts` in `series.ts`):
+   the 2–2 band is removed; the two cuts around it merge into one at par, so the scorelines are
+   0–5, 1–4, 2–3, 3–2, 4–1, 5–0 and every match has a winner. Par was moved up by one point in each
+   format so the simulated win rate stays the same (16.2%, 14.0%, 14.4%). The Pick any XI friend duel
+   follows the same rule in these formats (its middle cuts −1/+1 become 0). In T20I and IPL about 1
+   match in 20 is described as won in a super over (wording only, PROVISIONAL). Test keeps its draw.
+   Old shared `/<format>/r/2-2` pages still exist for links already sent.
 
 5. Each match gets a venue, a result consistent with the scoreline, a headline performer and a
    second performer. It is **not** a ball-by-ball simulation (§8).

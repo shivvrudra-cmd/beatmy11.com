@@ -34,6 +34,13 @@ ok(duelSeed(['a:o'], ['b:o']) === duelSeed(['a:o'], ['b:o']) && duelSeed(['a:o']
   ok(routs < 20, 'equal XIs rarely produce a whitewash', routs);
   const big = playSeries({ userScore: 95, houseScore: 70, userXI: xi, houseXI: xi, calibration: cal, seed: 7, gapCuts: DUEL_CUTS });
   ok(big.user === 5, 'a much stronger XI sweeps the series', big.user);
+  // limited overs: the friend duel has no draws either (owner, 2026-10-03)
+  let draws = 0;
+  for (let seed = 1; seed <= 400; seed++) {
+    const s2 = playSeries({ userScore: 80, houseScore: 80.2, userXI: xi, houseXI: xi, calibration: cal, seed, gapCuts: DUEL_CUTS, flavour: { venues: ['a', 'b', 'c', 'd', 'e'], opponent: 'Them', kind: 't20' } });
+    if (s2.draws || s2.user === s2.house) draws++;
+  }
+  ok(draws === 0, 'limited-overs friend duels never end level', draws);
 }
 
 // ---- names are plain text
