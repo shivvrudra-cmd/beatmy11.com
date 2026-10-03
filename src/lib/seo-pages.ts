@@ -131,22 +131,40 @@ export function allXiScopes(): XiScope[] {
 }
 
 /**
- * The MVP set the owner approved: 12 pages. Anything else the generator can
- * build stays unpublished until added here.
+ * The published set. The owner approved the first 12 pages (all-time, legends, 1990s, 2000s,
+ * India, England; openers, wicketkeepers, fast bowlers, spinners; two hubs).
+ * PROPOSED 2026-10-02, waiting for the owner (docs/seo-content-plan.md, phase 1): the rest of
+ * phase 1, 14 more pages from the same templates and the same rules: the other four decades,
+ * the other eight nations, and the two remaining roles. Anything else the generator can build
+ * stays unpublished until added here.
  */
 export const PUBLISHED_XI_SLUGS: readonly string[] = [
   ALL_TIME_SLUG,
+  'legends',
+  '1970s',
+  '1980s',
   '1990s',
   '2000s',
-  'legends',
+  '2010s',
+  '2020s',
   'india',
   'england',
+  'australia',
+  'pakistan',
+  'south-africa',
+  'west-indies',
+  'new-zealand',
+  'sri-lanka',
+  'bangladesh',
+  'zimbabwe',
 ];
 export const PUBLISHED_ROLES: readonly EvaluationRole[] = [
   'opener',
+  'middle-order',
   'wicketkeeper',
-  'fast-bowler',
+  'all-rounder',
   'spinner',
+  'fast-bowler',
 ];
 
 /** Best-XI pages only consider players with at least this many Tests (owner, 2026-10-03). Page rule only: the game is unaffected. */

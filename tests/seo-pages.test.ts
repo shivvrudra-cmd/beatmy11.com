@@ -167,12 +167,15 @@ ok(feasibleScopes >= 12, 'most scopes can fill an XI', feasibleScopes);
 const pages = buildPublishedPages(data, DATE);
 const paths = pages.all.map((p) => p.path).sort();
 const expectedPaths = [
-  '/best-xi/', '/best-xi/all-time/', '/best-xi/1990s/', '/best-xi/2000s/', '/best-xi/legends/',
-  '/best-xi/india/', '/best-xi/england/', '/best/', '/best/openers/', '/best/wicketkeepers/',
+  '/best-xi/', '/best-xi/all-time/', '/best-xi/legends/', '/best-xi/1970s/', '/best-xi/1980s/', '/best-xi/1990s/',
+  '/best-xi/2000s/', '/best-xi/2010s/', '/best-xi/2020s/',
+  '/best-xi/india/', '/best-xi/england/', '/best-xi/australia/', '/best-xi/pakistan/', '/best-xi/south-africa/',
+  '/best-xi/west-indies/', '/best-xi/new-zealand/', '/best-xi/sri-lanka/', '/best-xi/bangladesh/', '/best-xi/zimbabwe/',
+  '/best/', '/best/openers/', '/best/middle-order-batters/', '/best/wicketkeepers/', '/best/all-rounders/',
   '/best/fast-bowlers/', '/best/spinners/',
 ].sort();
-ok(JSON.stringify(paths) === JSON.stringify(expectedPaths), 'exactly the 12 approved URLs', paths);
-ok(pages.all.length === 12 && PUBLISHED_XI_SLUGS.length + PUBLISHED_ROLES.length + 2 === 12, 'MVP is 12 pages');
+ok(JSON.stringify(paths) === JSON.stringify(expectedPaths), 'exactly the 26 phase-1 URLs', paths);
+ok(pages.all.length === 26 && PUBLISHED_XI_SLUGS.length + PUBLISHED_ROLES.length + 2 === 26, 'phase 1 is 26 pages');
 ok(new Set(paths).size === paths.length, 'URLs are unique');
 ok(paths.every((p) => /^\/best(-xi)?\/([a-z0-9-]+\/)?$/.test(p)), 'URLs are lowercase, hyphenated, trailing slash');
 {
