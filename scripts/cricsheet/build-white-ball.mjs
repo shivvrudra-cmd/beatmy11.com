@@ -622,7 +622,8 @@ function main() {
 
       const bowlingType = (() => {
         const ov = overrides[p.id];
-        if (ov?.bowlingType) return { type: ov.bowlingType, source: 'owner' };
+        // "unknown" is the owner saying what he is NOT (Saim Ayub is not a pacer) without giving a type: no type.
+        if (ov?.bowlingType) return { type: ov.bowlingType === 'unknown' ? null : ov.bowlingType, source: 'owner' };
         if (known?.bowlingType) return { type: known.bowlingType, source: known.bowlingTypeSource };
         const tr = test ? [test.primaryRole, ...(Array.isArray(test.secondaryRoles) ? test.secondaryRoles : [])].map((x) => String(x).toLowerCase()) : [];
         if (tr.some((r) => r.includes('spin'))) return { type: 'spin', source: 'test-data' };

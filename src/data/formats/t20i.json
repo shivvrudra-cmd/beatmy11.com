@@ -43344,9 +43344,9 @@
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
-  "bowlingType": "pace",
+  "bowlingType": null,
   "roleSource": "match-data",
-  "bowlingTypeSource": "kaggle",
+  "bowlingTypeSource": "owner",
   "firstMatch": "2023-04-14",
   "lastMatch": "2026-02-24",
   "stats": {
@@ -44968,8 +44968,11 @@
    "2000s": 23,
    "2010s": 72
   },
-  "primaryRole": "spinner",
-  "secondaryRoles": [],
+  "primaryRole": "all-rounder",
+  "secondaryRoles": [
+   "spinner",
+   "middle-order"
+  ],
   "isWicketkeeper": false,
   "bowlingType": "spin",
   "roleSource": "owner",
