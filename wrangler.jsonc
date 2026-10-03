@@ -34,7 +34,7 @@
     ],
     // Previews do not inherit the production limiter below; same limit, its own counter.
     "ratelimits": [
-      { "name": "API_LIMIT", "namespace_id": "48118", "simple": { "limit": 120, "period": 60 } }
+      { "name": "API_LIMIT", "namespace_id": "3418", "simple": { "limit": 120, "period": 60 } }
     ]
   },
   // The ids must be unique in the whole Cloudflare account: on 2026-10-03 production with id 1101 refused
@@ -43,7 +43,7 @@
   // minute; nothing is stored by the site. Generous on purpose: many phone users in India share one
   // address (carrier-grade NAT), and the counters are fire-and-forget anyway.
   "ratelimits": [
-    { "name": "API_LIMIT", "namespace_id": "48117", "simple": { "limit": 120, "period": 60 } }
+    { "name": "API_LIMIT", "namespace_id": "3417", "simple": { "limit": 120, "period": 60 } }
   ],
   "observability": { "enabled": true }
 }
