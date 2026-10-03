@@ -9,6 +9,7 @@ import {
   ROLES,
   ROLE_OVERRIDES,
   ROLE_SLUGS,
+  SEO_MIN_TESTS,
   allXiScopes,
   buildListPage,
   buildPopulation,
@@ -142,9 +143,15 @@ for (const scope of allXiScopes()) {
   const page = buildXiPage(data, scope, DATE);
   if (!page) continue;
   feasibleScopes++;
-  const pool = data.ranked.filter((r) => matchesScope(r, scope));
+  const pool = data.ranked.filter((r) => matchesScope(r, scope) && (r.player.stats.testMatches ?? 0) >= SEO_MIN_TESTS);
   const pick = pickXI(pool, data.ctx)!;
   const slug = scopeSlug(scope);
+  // Owner, 2026-10-03: best-XI pages only use players with SEO_MIN_TESTS+ Tests, and keep exactly one
+  // all-rounder whenever the pool can fill a one-all-rounder shape.
+  ok(pick.xi.every((p) => (p.player.stats.testMatches ?? 0) >= SEO_MIN_TESTS), `${slug}: every player has ${SEO_MIN_TESTS}+ Tests`);
+  const eligible = pool.filter((c) => c.xiEligible);
+  const canOneAR = XI_SHAPES.some((sh) => sh['all-rounder'] === 1 && ROLES.every((r) => eligible.filter((c) => c.role === r).length >= (sh[r] ?? 0)));
+  if (canOneAR) ok(pick.xi.filter((p) => p.role === 'all-rounder').length === 1, `${slug}: exactly one all-rounder when the pool allows`);
   ok(pick.xi.length === 11 && new Set(pick.xi.map((p) => p.player.id)).size === 11, `${slug}: 11 distinct players`);
   const counts: Record<string, number> = {};
   for (const p of pick.xi) counts[p.role] = (counts[p.role] ?? 0) + 1;
