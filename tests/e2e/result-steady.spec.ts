@@ -122,3 +122,22 @@ test("result page: swiping down before the reveal ends shows the result instead 
   await expect(page.locator("#rs-grade-title")).toBeVisible();
   await context.close();
 });
+
+// Owner, 2026-10-03: after a long draft the result page opened on the last screen. It must always
+// open on the first screen, even when the browser tries to restore an old scroll position.
+test("result page opens on the first screen even after a scrolled reload", async ({ browser }) => {
+  test.setTimeout(240_000);
+  const context = await browser.newContext({ viewport: SIZES[0], isMobile: true, hasTouch: true, reducedMotion: "reduce" });
+  const page = await context.newPage();
+  await page.goto("/play");
+  await draftFullXI(page);
+  await expect(page.locator("#bm11-count")).toHaveText("11/11");
+  await page.goto("/matchup");
+  await expect(page.locator("#rs-tests li")).toHaveCount(5, { timeout: 15_000 });
+  await page.evaluate(() => window.scrollTo(0, 2 * window.innerHeight));
+  expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(300);
+  await page.reload();
+  await expect(page.locator("#rs-tests li")).toHaveCount(5, { timeout: 15_000 });
+  expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  await context.close();
+});

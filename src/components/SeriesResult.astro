@@ -125,6 +125,10 @@ const formatJson = safe(format);
   <script id="bm11-result-format" type="application/json" set:html={formatJson} />
 
   <script>
+    // Always open on the first screen: never inherit the scroll position of the draft page.
+    try { history.scrollRestoration = 'manual'; } catch { /* old browsers */ }
+    window.scrollTo(0, 0);
+    window.addEventListener('pageshow', (e) => { if (e.persisted) window.scrollTo(0, 0); });
     import { compareXIs, teamBlend } from '../lib/seven-metrics';
     import { compareWbXIs, wbTeamBlend, WB_FORMATS } from '../lib/white-ball-metrics';
     import { playSeries, xiSeed } from '../lib/series';
@@ -796,6 +800,13 @@ const formatJson = safe(format);
       padding: 8px 12px max(10px, env(safe-area-inset-bottom));
       scroll-snap-align: start; scroll-snap-stop: always;
     }
+    /* Phone browsers slide their toolbar away, so the tall viewport (lvh) is taller than the short
+       one (svh) the panels are sized to. Without this spare room under the last panel, its snap
+       point can sit out of reach, and the screen loads low and then jumps up (owner, 2026-10-03).
+       Zero in any browser where the two heights are equal. */
+    @supports (height: 100lvh) {
+      .rs-p2 { margin-bottom: calc(100lvh - 100svh); }
+    }
     .rs-top { flex: none; width: 100%; }
     .rs-mid { flex: 1; min-height: 0; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     .rs:not(.is-revealed) .rs-pg .rs-mid, .rs:not(.is-revealed) .rs-p2 .rs-mid { visibility: hidden; }
@@ -902,6 +913,14 @@ const formatJson = safe(format);
       .rs-test-sum { margin: 0; font-size: 13px; line-height: 1.25; }
       .rs-test-hero { margin: 0; font-size: 17px; }
       .rs-test-run { margin: 0; }
+      /* Wide screens: the first performer, the other side's best effort and the running score share
+         one row, so the card is three rows tall and nothing is clipped (owner, 2026-10-03). */
+      .rs-test { display: grid; grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto; column-gap: 14px; align-items: baseline; }
+      .rs-test-head, .rs-test-sum { grid-column: 1 / -1; }
+      .rs-test-foot { display: contents; }
+      .rs-test-hero { grid-column: 1; grid-row: 3; }
+      .rs-test-also { grid-column: 2; grid-row: 3; min-width: 0; }
+      .rs-test-run { grid-column: 3; grid-row: 3; text-align: right; }
       .rs-p2 .rs-mid { gap: 16px; }
       .rs-actions { max-width: 640px; gap: 10px; }
       .rs-share, .rs-again { min-height: 52px; line-height: 52px; }
