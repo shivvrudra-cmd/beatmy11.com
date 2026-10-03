@@ -800,6 +800,13 @@ const formatJson = safe(format);
       padding: 8px 12px max(10px, env(safe-area-inset-bottom));
       scroll-snap-align: start; scroll-snap-stop: always;
     }
+    /* Phone browsers slide their toolbar away, so the tall viewport (lvh) is taller than the short
+       one (svh) the panels are sized to. Without this spare room under the last panel, its snap
+       point can sit out of reach, and the screen loads low and then jumps up (owner, 2026-10-03).
+       Zero in any browser where the two heights are equal. */
+    @supports (height: 100lvh) {
+      .rs-p2 { margin-bottom: calc(100lvh - 100svh); }
+    }
     .rs-top { flex: none; width: 100%; }
     .rs-mid { flex: 1; min-height: 0; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     .rs:not(.is-revealed) .rs-pg .rs-mid, .rs:not(.is-revealed) .rs-p2 .rs-mid { visibility: hidden; }
