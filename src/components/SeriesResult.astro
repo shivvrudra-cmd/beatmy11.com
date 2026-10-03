@@ -125,6 +125,10 @@ const formatJson = safe(format);
   <script id="bm11-result-format" type="application/json" set:html={formatJson} />
 
   <script>
+    // Always open on the first screen: never inherit the scroll position of the draft page.
+    try { history.scrollRestoration = 'manual'; } catch { /* old browsers */ }
+    window.scrollTo(0, 0);
+    window.addEventListener('pageshow', (e) => { if (e.persisted) window.scrollTo(0, 0); });
     import { compareXIs, teamBlend } from '../lib/seven-metrics';
     import { compareWbXIs, wbTeamBlend, WB_FORMATS } from '../lib/white-ball-metrics';
     import { playSeries, xiSeed } from '../lib/series';
