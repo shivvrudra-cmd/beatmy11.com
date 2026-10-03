@@ -188,14 +188,16 @@ const formatJson = json(format);
 
     // A spin never re-lands on an era×nation combo already drawn, and a
     // nation lands at most twice per draft (unchanged live rules).
-    const usedComboKeys = () => new Set(draft.spinHistory.map((s) => `${s.era}|${s.nation}`));
+    const usedComboKeys = () => new Set([...draft.spinHistory.map((s) => `${s.era}|${s.nation}`), ...(draft.respunAway || [])]);
+    // Test round 1 always draws Legends, so only the other formats may respin the era on spin 1.
+    const eraRespinFirstRound = !FORMAT.round1FixedEra;
     const nationCounts = () => {
       const counts = {};
       for (const s of draft.spinHistory) counts[s.nation] = (counts[s.nation] || 0) + 1;
       return counts;
     };
     const combosForUpcomingRound = () =>
-      finalSpinOptions(upcomingCombos(draft.currentRound, draft.spinHistory, LEGEND_COMBOS, DRAFT_COMBOS), draft.currentRound, FORMAT.finalSpinMinPool, DRAFT_ROUNDS);
+      finalSpinOptions(upcomingCombos(draft.currentRound, draft.spinHistory, LEGEND_COMBOS, DRAFT_COMBOS, draft.respunAway || []), draft.currentRound, FORMAT.finalSpinMinPool, DRAFT_ROUNDS);
     // A respin in the final round follows the same rule (currentRound is already 6 there).
     const finalRespin = (list) => finalSpinOptions(list, draft.currentRound - 1, FORMAT.finalSpinMinPool, DRAFT_ROUNDS);
     // Respins: a nation respin keeps the era; an era respin keeps the nation
@@ -456,7 +458,7 @@ const formatJson = json(format);
       // Respins: only after a draw lands and before any pick from it.
       const base = !spinningReel && !draft.gameComplete && draft.currentRound >= 1 && draft.picksThisRound.length === 0;
       const showNation = base && canRespinNation(draft, nationRedrawOptions().length);
-      const showEra = base && canRespinEra(draft, eraRedrawOptions().length);
+      const showEra = base && canRespinEra(draft, eraRedrawOptions().length, eraRespinFirstRound);
       respinNationBtn.hidden = !showNation;
       respinEraBtn.hidden = !showEra;
       $('fl-respins').hidden = !(showNation || showEra);
@@ -590,13 +592,13 @@ const formatJson = json(format);
     function runRespin(kind) {
       if (spinningReel) return;
       const opts = kind === 'nation' ? nationRedrawOptions() : eraRedrawOptions();
-      const allowed = kind === 'nation' ? canRespinNation(draft, opts.length) : canRespinEra(draft, opts.length);
+      const allowed = kind === 'nation' ? canRespinNation(draft, opts.length) : canRespinEra(draft, opts.length, eraRespinFirstRound);
       if (!allowed || !opts.length) return;
       const choice = opts[Math.floor(Math.random() * opts.length)];
       selectedUid = null;
       scrollToTop();
       rollReels(kind, choice, () => {
-        draft = kind === 'nation' ? applyNationRespin(draft, choice.nation) : applyEraRespin(draft, choice.era);
+        draft = kind === 'nation' ? applyNationRespin(draft, choice.nation) : applyEraRespin(draft, choice.era, eraRespinFirstRound);
         persist();
         renderAll();
         scrollToPool();

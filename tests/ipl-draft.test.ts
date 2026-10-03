@@ -145,5 +145,16 @@ ok(stalled === 0, 'every random IPL spin sequence can be drafted into a legal XI
   ok(IPL_ERA_NORMALISATION === 'scaled', 'this branch proposes the scaled rule');
 }
 
+// item 8: one player, many franchises: Jos Buttler can be in an XI only once
+{
+  const buttler = Object.values(byBlock).flat().filter((p) => p.name === 'Jos Buttler');
+  const teams = new Set(buttler.map((p) => p.nation));
+  ok(buttler.length >= 2 && teams.size >= 2, 'Jos Buttler has cards for more than one franchise', [...teams]);
+  const a = buttler[0], b = buttler.find((p) => p.nation !== a.nation)!;
+  let d = { ...createDraft(), currentRound: 2, currentEra: 'x', currentNation: 'y' };
+  d = { ...d, selectedPlayers: [{ ...a, roundPicked: 1, draftEra: 'x' }] };
+  ok(validatePoolPick(d, b)?.includes('already in your XI') === true, 'the same player from another franchise is blocked: already in your XI');
+}
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

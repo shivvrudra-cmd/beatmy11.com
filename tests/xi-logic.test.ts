@@ -538,6 +538,16 @@ ok(rsE2.currentEra === '2000s' && rsE2.currentNation === 'Australia', 'era respi
 ok(rsE2.eraRespinsLeft === 0 && rsE2.nationRespinsLeft === 1, 'era token consumed');
 ok(applyEraRespin(rsE, 'legends') === rsE, 'era respin onto an already-drawn pair is rejected');
 
+// item 6 (owner, 2026-10-03): formats with no fixed first era may respin the era on the first spin
+ok(canRespinEra(rs0, 3, true) === true, 'era respin allowed in round 1 when the format has no fixed first era');
+const rs1E = applyEraRespin(rs0, '1990s', true);
+ok(rs1E.currentEra === '1990s' && rs1E.currentNation === 'Australia' && rs1E.eraRespinsLeft === 0, 'round-1 era respin keeps the nation, replaces the era');
+// item 7: the draw respun away from is remembered, for both kinds of respin
+ok(JSON.stringify(rs1E.respunAway) === JSON.stringify(['legends|Australia']), 'era respin remembers the pair it left');
+ok(JSON.stringify(rsN.respunAway) === JSON.stringify(['legends|Australia']), 'nation respin remembers the pair it left');
+const rsBack = deserializeDraft(JSON.parse(JSON.stringify(serializeDraft(rsN))), () => null);
+ok(!!rsBack && JSON.stringify(rsBack.respunAway) === JSON.stringify(['legends|Australia']), 'respun-away pairs survive save and restore');
+
 let rsP = applyDraftPick(freshStarted(), hobbs, 'opener-1', 'opener');
 ok(rsP.picksThisRound.length === 1, 'pick recorded for respin guard');
 ok(applyNationRespin(rsP, 'England') === rsP, 'respin after a pick is a no-op');
