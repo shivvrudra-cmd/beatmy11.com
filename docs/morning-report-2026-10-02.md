@@ -136,6 +136,20 @@ wins, 14.4%). Still open from that report: T20I has the same effect at about a t
    old, different tree. The live site is built from `origin/main`, so I pushed there and left
    `group` alone.
 
+## 4b. Follow-up, 2026-10-03
+
+- **#40 terms** merged and live (Indian law). **#49 rate limit** merged (done in code, no dashboard).
+- **#39 leaderboard** merged, **but its database table is not in the live database yet**: a check
+  after the first attempt said nothing was pending, yet the live database holds only the first
+  migration. Until `0002_daily_scores.sql` is applied the board answers with an error and the
+  leaderboard UI stays hidden (the home page makes one failing request per visit).
+- **The limiter id `1101` was already taken** in the Cloudflare account: production refused from
+  the 11th write, not the 120th (the preview, on `1102`, allowed about 137). #50 moves both to fresh
+  ids (`48117`, `48118`). Its first production build reported a failure; see the notes below for the
+  retry. A visitor makes one write per page view, so the effect while it was strict was a few lost
+  page counts and, for people behind a busy shared address, a possible refusal when adding a
+  leaderboard score (which could not happen yet).
+
 ## 5. What needs you
 
 - The four open pull requests (section 2): #39 leaderboard, #40 terms, #41 logo, #47 SEO pages.
