@@ -48,6 +48,7 @@ for (const f of FORMATS) {
     expect(u + h).toBeLessThanOrEqual(5);
     // Screen 2: no player ratings; three strength bars, the overall score, a grade and a tip.
     await expect(page.locator(".rs-rating")).toHaveCount(0);
+    await page.evaluate(() => window.dispatchEvent(new Event("touchstart"))); // a finger first: the page ignores scrolls nobody touched
     await page.locator("#rs-grade-panel").scrollIntoViewIfNeeded();
     await expect(page.locator(".rs-bar-val")).toHaveCount(4);
     await expect(page.locator("#rs-grade-panel")).toHaveClass(/is-graded/, { timeout: 8000 });

@@ -129,11 +129,20 @@ const formatJson = safe(format);
     // 2026-10-03, iPhone). iOS Safari can put a remembered scroll position back AFTER the page has
     // loaded, so the reset repeats for the first moments, until the visitor touches the page.
     try { history.scrollRestoration = 'manual'; } catch { /* old browsers */ }
+    // Screens 2 and 3 stay blank until the reveal ends, so a page that lands on one of them must
+    // never be left waiting: after 3 seconds it ends the reveal whatever happens (see below).
     let userMoved = false;
-    for (const ev of ['touchstart', 'pointerdown', 'wheel', 'keydown']) window.addEventListener(ev, () => { userMoved = true; }, { passive: true, once: true });
-    const toTop = () => { if (!userMoved && window.scrollY !== 0) window.scrollTo(0, 0); };
+    let settled = false;
+    const snapRoot = document.documentElement;
+    snapRoot.style.scrollSnapType = 'none'; // no snapping back to a remembered screen while it settles
+    const settle = () => { settled = true; snapRoot.style.scrollSnapType = ''; };
+    for (const ev of ['touchstart', 'pointerdown', 'click', 'wheel', 'keydown']) window.addEventListener(ev, () => { userMoved = true; snapRoot.style.scrollSnapType = ''; }, { passive: true, once: true });
+    const toTop = () => { if (!userMoved && !settled && window.scrollY > 0) window.scrollTo(0, 0); };
     toTop();
-    for (const ms of [0, 60, 150, 300, 600, 1000, 1600]) window.setTimeout(toTop, ms);
+    // A position put back at any moment before the first touch is undone straight away.
+    window.addEventListener('scroll', toTop, { passive: true });
+    for (const ms of [0, 60, 150, 300, 600, 1000, 1600, 2400]) window.setTimeout(toTop, ms);
+    window.setTimeout(settle, 3000);
     window.addEventListener('load', toTop);
     window.addEventListener('pageshow', toTop);
     import { compareXIs, teamBlend } from '../lib/seven-metrics';
@@ -569,7 +578,10 @@ const formatJson = safe(format);
       }
       $('rs-skip').addEventListener('click', finish);
       // Swiping down before the reveal has ended ends it, so the next screen is never blank.
-      window.addEventListener('scroll', () => { if (!revealed && userMoved && window.scrollY > 24) finish(); }, { passive: true });
+      window.addEventListener('scroll', () => { if (!revealed && (userMoved || settled) && window.scrollY > 24) finish(); }, { passive: true });
+      // Safety net: if the page is still somewhere below screen 1 after 3 seconds (a browser that
+      // would not go back to the top), end the reveal so screens 2 and 3 are never blank.
+      window.setTimeout(() => { if (!revealed && window.scrollY > 24) finish(); }, 3100);
       if (reduceMotion) finish();
       else timer = window.setTimeout(() => step(false), 600);
 

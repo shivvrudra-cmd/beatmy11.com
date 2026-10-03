@@ -135,7 +135,7 @@ test("result page opens on the first screen even after a scrolled reload", async
   await expect(page.locator("#bm11-count")).toHaveText("11/11");
   await page.goto("/matchup");
   await expect(page.locator("#rs-tests li")).toHaveCount(5, { timeout: 15_000 });
-  await page.evaluate(() => window.scrollTo(0, 2 * window.innerHeight));
+  await page.evaluate(() => { window.dispatchEvent(new Event("touchstart")); window.scrollTo(0, 2 * window.innerHeight); }); // a finger, then a scroll
   expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(300);
   await page.reload();
   await expect(page.locator("#rs-tests li")).toHaveCount(5, { timeout: 15_000 });
@@ -159,5 +159,24 @@ test("result page: a scroll position restored after load is put back at the top"
   await page.waitForTimeout(1500);
   expect(await page.evaluate(() => window.scrollY)).toBe(0);
   await expect(page.locator("#rs-tests li").first()).toBeVisible();
+  await context.close();
+});
+
+// Owner, 2026-10-03 (iPhone Safari): the result opened on screen 2 and screens 2 and 3 never
+// loaded. Even if a browser refuses to go back to the top, the reveal must end so nothing is blank.
+test("result page: a browser that will not return to the top still shows screens 2 and 3", async ({ browser }) => {
+  test.setTimeout(240_000);
+  const context = await browser.newContext({ viewport: SIZES[0], isMobile: true, hasTouch: true });
+  const page = await context.newPage();
+  await page.goto("/play");
+  await draftFullXI(page);
+  await page.addInitScript(() => {
+    window.scrollTo = (() => undefined) as typeof window.scrollTo; // ignores every "go to the top"
+    window.addEventListener("load", () => setTimeout(() => { document.scrollingElement!.scrollTop = 2 * window.innerHeight; }, 120));
+  });
+  await page.goto("/matchup");
+  await expect(page.locator(".rs")).toHaveClass(/is-revealed/, { timeout: 8000 });
+  await expect(page.locator("#rs-grade-title")).toBeVisible();
+  await expect(page.locator("#rs-card")).toBeVisible();
   await context.close();
 });
