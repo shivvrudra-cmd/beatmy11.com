@@ -913,6 +913,14 @@ const formatJson = safe(format);
       .rs-test-sum { margin: 0; font-size: 13px; line-height: 1.25; }
       .rs-test-hero { margin: 0; font-size: 17px; }
       .rs-test-run { margin: 0; }
+      /* Wide screens: the first performer, the other side's best effort and the running score share
+         one row, so the card is three rows tall and nothing is clipped (owner, 2026-10-03). */
+      .rs-test { display: grid; grid-template-columns: minmax(0, auto) minmax(0, 1fr) auto; column-gap: 14px; align-items: baseline; }
+      .rs-test-head, .rs-test-sum { grid-column: 1 / -1; }
+      .rs-test-foot { display: contents; }
+      .rs-test-hero { grid-column: 1; grid-row: 3; }
+      .rs-test-also { grid-column: 2; grid-row: 3; min-width: 0; }
+      .rs-test-run { grid-column: 3; grid-row: 3; text-align: right; }
       .rs-p2 .rs-mid { gap: 16px; }
       .rs-actions { max-width: 640px; gap: 10px; }
       .rs-share, .rs-again { min-height: 52px; line-height: 52px; }
