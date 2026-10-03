@@ -4,7 +4,6 @@ These regular bowlers are left out of the game until their bowling type is known
 
 | Format | Name | Nation / teams | Matches | Wickets | Cricsheet id | type |
 |---|---|---|---|---|---|---|
-| ipl | AM Ghazanfar | Mumbai Indians | 11 | 15 | 9ca68676 | |
 | ipl | YA Abdulla | Punjab Kings | 11 | 15 | 4353bba5 | |
 | odi | PM Liyanagamage | Sri Lanka | 10 | 8 | 3ee0050f | |
 | odi | Blessing Mahwire | Zimbabwe | 10 | 7 | 0cc343b0 | |
@@ -12,10 +11,6 @@ These regular bowlers are left out of the game until their bowling type is known
 | odi | Iain O'Brien | New Zealand | 10 | 14 | 78f34e15 | |
 | odi | Ronald Irani | England | 10 | 8 | f011dfa3 | |
 | t20i | Aminul Islam Biplob | Bangladesh | 10 | 12 | f8ce577b | |
-| ipl | S Kaushik | Gujarat Lions | 10 | 6 | 1da489ff | |
-| ipl | Zeeshan Ansari | Sunrisers Hyderabad | 10 | 6 | 36619795 | |
-| ipl | Ashwani Kumar | Mumbai Indians | 10 | 17 | d45c29b1 | |
-| ipl | J Theron | Punjab Kings, Deccan Chargers, Rajasthan Royals | 10 | 9 | dec8e038 | |
 | odi | Prabath Nissanka | Sri Lanka | 9 | 11 | 6cc006ef | |
 | odi | Richard Johnson | England | 9 | 9 | 3967930c | |
 | ipl | Yudhvir Singh | Lucknow Super Giants, Rajasthan Royals | 9 | 8 | 4885bbe6 | |
