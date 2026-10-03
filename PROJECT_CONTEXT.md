@@ -61,12 +61,12 @@ link to a friend, who picks their own XI; both see the same five-match series. S
    | Format | Par | Opponent score | Simulated series wins (human-like drafter, 600 drafts) | Status |
    |---|---|---|---|---|
    | Test | −7 (`PAR_GAP`) | 89.4 | 6.7% (smart drafter 26.6%); figures from 2026-10-01, not re-run | owner-approved |
-   | ODI | −9 | 92.4 | 16.2% | PROVISIONAL, tuned to about 15% |
+   | ODI | −7 | 92.4 | 7.3% (a drafter who sees the hidden ratings: 42%) | owner-set 2026-10-03 (was −9, 16.2%) |
    | T20I | −11.5 | 93.8 | 14.0% | PROVISIONAL, tuned to about 15% |
    | IPL | −18 | 93.0 | 14.4% | PROVISIONAL, tuned to about 15% (re-tuned 2026-10-02 with the era adjustment, §6) |
 
    White-ball pars are written by `scripts/cricsheet/calibrate-white-ball.ts` into
-   `src/data/formats/<format>-series.json`. The owner said "ok" to about 15% for ODI and T20I;
+   `src/data/formats/<format>-series.json`. The owner set the ODI par to −7 on 2026-10-03 and said "ok" to about 15% for T20I;
    the IPL figure was reset after the stint change (§6) and **is `UNCONFIRMED - owner to confirm`**.
    How often real players win is `UNCONFIRMED - owner to confirm` (production D1 was not read).
 
