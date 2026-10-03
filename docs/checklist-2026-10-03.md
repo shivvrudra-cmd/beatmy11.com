@@ -20,10 +20,11 @@ E (older open items).
 | 8 Same player twice in the IPL | Already impossible; test added (Jos Buttler). | merged, PR #56 |
 | 9, 10, 12, 13, 17 | Waiting on the owner (facts or decisions). | |
 | 11 ODI too easy? | Measured, nothing changed. Report: `docs/reports/difficulty-analysis-white-ball-2026-10-03.md`. **Owner decision needed: target win rate.** | merged, PR #60 |
-| 14 Phone check of the result page | **Open and important, see below.** | |
+| 14 Phone check of the result page | Done: confirmed fixed on the iPhone (see below). | |
 | 15 to 23 | Untouched (owner items, or small notes). | |
 
-**iPhone bug, still open (owner's iPhone 17 Pro Max, Safari):** after tapping "Draft again" on
+**iPhone bug, FIXED: the owner confirmed it on their phone after PR #61 (2026-10-03). History
+(owner's iPhone 17 Pro Max, Safari):** after tapping "Draft again" on
 result screen 2 and playing again, the new result opens on screen 2, and screens 2 and 3 were
 blank (they stay hidden until the reveal on screen 1 ends). Fixed twice, **not reproduced in an
 iPhone-style WebKit (Playwright, installed locally with `npx playwright install webkit`)**, so the
@@ -32,9 +33,8 @@ cause on the real phone is unknown:
   untouched scroll no longer ended the reveal).
 - PR #61: before the first touch any scroll away from the top is undone at once and snapping is
   off; after 3 seconds, if the page is still below screen 1, the reveal ends so nothing is blank.
-  **The owner has not yet confirmed on the phone.** If it still opens on screen 2: is the content
-  visible now? Private tab the same? Next ideas: give each result its own address
-  (`/matchup?r=<time>`), or drop `scroll-snap-type` on iOS.
+  **Confirmed fixed on the owner's phone.** (Ideas that were not needed: give each result its own
+  address, or drop `scroll-snap-type` on iOS.)
 - How to test in WebKit: temporarily change the `chromium` project in `playwright.config.ts` to
   `devices["iPhone 15 Pro Max"]` and run the result-steady spec (do not commit that change).
 
