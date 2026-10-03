@@ -26,7 +26,8 @@ const load = (f) => {
 const leftOut = [];
 for (const line of readFileSync('docs/reports/white-ball-roles-needed.md', 'utf8').split(/\r?\n/)) {
   const m = line.match(/^\| (odi|t20i|ipl) \| (.+?) \| (.*?) \| (\d+) \| (\d+) \| ([0-9a-f]+) \|/);
-  if (m) leftOut.push({ format: m[1], name: m[2], teams: m[3], matches: Number(m[4]), wickets: Number(m[5]), id: m[6] });
+  // Owner, 2026-10-03: players with fewer than 10 matches are not listed at all.
+  if (m && Number(m[4]) >= MIN_MATCHES[m[1]]) leftOut.push({ format: m[1], name: m[2], teams: m[3], matches: Number(m[4]), wickets: Number(m[5]), id: m[6] });
 }
 
 // The three decisions the owner has already given (checklist item 9, 2026-10-03), filled in so they

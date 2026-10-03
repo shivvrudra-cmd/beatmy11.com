@@ -1,15 +1,16 @@
 # Player review sheet: how to use it
 
 File: `docs/reports/player-review-sheet.csv` (opens in Excel or Google Sheets).
-2,085 rows: every ODI, T20I and IPL player with 10 or more matches, plus the bowlers the game
-leaves out because their spin or pace is unknown. It shows only data the game already holds. Nothing
+1,895 rows: every ODI, T20I and IPL player with 10 or more matches (players with fewer matches are
+not listed: owner, 2026-10-03), including the bowlers the game leaves out because their spin or pace
+is unknown. It shows only data the game already holds. Nothing
 in it is a guess; the "Why it is flagged" column is only a hint about where to look first.
 
 ## Order of the rows
 
 | Group | Rows | What it means |
 |---|---|---|
-| 1 Left out of the game | 202 | Regular bowlers with no known spin or pace. They are not in the game until you give a type. |
+| 1 Left out of the game | 12 | Regular bowlers with no known spin or pace. They are not in the game until you give a type. |
 | 2 Check the role | 39 | Takes many wickets but is listed as a batter, or bats well but is listed as a bowler. |
 | 3 Older ODI career | 191 | Career started before 2003, so the ball-by-ball data for his role is thin. |
 | 4 Weaker source | 606 | The role came from Kaggle or Wikidata, not from his matches. |
