@@ -116,7 +116,8 @@ test("result page: swiping down before the reveal ends shows the result instead 
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/matchup");
   await expect(page.locator("#rs-tests li")).toHaveCount(1, { timeout: 5000 });
-  await page.evaluate(() => window.scrollTo(0, window.innerHeight));
+  // A finger lands first (the page ignores scrolls nobody touched), then the page moves.
+  await page.evaluate(() => { window.dispatchEvent(new Event("touchstart")); window.scrollTo(0, window.innerHeight); });
   await expect(page.locator(".rs")).toHaveClass(/is-revealed/);
   await expect(page.locator("#rs-tests li")).toHaveCount(5);
   await expect(page.locator("#rs-grade-title")).toBeVisible();
@@ -139,5 +140,24 @@ test("result page opens on the first screen even after a scrolled reload", async
   await page.reload();
   await expect(page.locator("#rs-tests li")).toHaveCount(5, { timeout: 15_000 });
   expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  await context.close();
+});
+
+// Owner, 2026-10-03 (iPhone): tapping "Draft again" on screen 2 and playing again opened the result
+// on screen 2. A scroll position put back by the browser after load must not skip the reveal.
+test("result page: a scroll position restored after load is put back at the top", async ({ browser }) => {
+  test.setTimeout(240_000);
+  const context = await browser.newContext({ viewport: SIZES[0], isMobile: true, hasTouch: true });
+  const page = await context.newPage();
+  await page.goto("/play");
+  await draftFullXI(page);
+  await page.addInitScript(() => {
+    // Mimic Safari: scroll down a moment after the page has loaded, with no touch.
+    window.addEventListener("load", () => setTimeout(() => window.scrollTo(0, 2 * window.innerHeight), 120));
+  });
+  await page.goto("/matchup");
+  await page.waitForTimeout(1500);
+  expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  await expect(page.locator("#rs-tests li").first()).toBeVisible();
   await context.close();
 });
