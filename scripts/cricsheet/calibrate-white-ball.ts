@@ -34,7 +34,9 @@ const gaussian = (rng: () => number) => Math.sqrt(-2 * Math.log(Math.max(rng(), 
 const MISJUDGE = Number(process.env.MISJUDGE ?? 0.12);
 /** Formats whose difficulty the owner has fixed. None now: the IPL's "good for now" (2026-10-01) was for
  *  career stats; with stint stats (2026-10-02) its par is tuned like the others until the owner decides. */
-const OWNER_DIFFICULTY = new Set<string>([]);
+/** Pars the owner has set (not tuned by the script). ODI -7: owner, 2026-10-03 (simulated ordinary drafters win about 7%). */
+const OWNER_PAR: Record<string, number> = { odi: -7 };
+const OWNER_DIFFICULTY = new Set<string>(Object.keys(OWNER_PAR));
 /** Provisional target for the others: about the IPL's simulated series-win rate. */
 const TARGET_WIN = 0.15;
 const TRIALS = Number(process.env.TRIALS ?? 600);
@@ -180,7 +182,7 @@ function run(id: WbFormatId) {
     }
     return w / scores.length;
   };
-  let parGap = PAR_GAP;
+  let parGap = OWNER_PAR[id] ?? PAR_GAP;
   if (!OWNER_DIFFICULTY.has(id)) {
     let bestDiff = Infinity;
     for (let par = -5; par >= -40; par -= 0.5) {
@@ -196,7 +198,7 @@ function run(id: WbFormatId) {
     tally.set(k, (tally.get(k) ?? 0) + 1);
     if (band.user > band.house) wins++;
   }
-  console.log(`scorelines (par ${parGap}${OWNER_DIFFICULTY.has(id) ? ', owner: fine for now' : `, PROVISIONAL: tuned to ~${TARGET_WIN * 100}% wins; Test ladder would give ${(winShare(PAR_GAP) * 100).toFixed(1)}%`}): ` + NO_DRAW_BANDS.map((b) => `${b.user}-${b.house} ${(((tally.get(`${b.user}-${b.house}`) ?? 0) / scores.length) * 100).toFixed(0)}%`).join(', '));
+  console.log(`scorelines (par ${parGap}${OWNER_DIFFICULTY.has(id) ? ', owner-set' : `, PROVISIONAL: tuned to ~${TARGET_WIN * 100}% wins; Test ladder would give ${(winShare(PAR_GAP) * 100).toFixed(1)}%`}): ` + NO_DRAW_BANDS.map((b) => `${b.user}-${b.house} ${(((tally.get(`${b.user}-${b.house}`) ?? 0) / scores.length) * 100).toFixed(0)}%`).join(', '));
   console.log(`series wins: ${((wins / scores.length) * 100).toFixed(1)}% of simulated drafts`);
   // CHECK_PAR=<par>: also print the win rate at a given par (to compare scoring variants like for like).
   if (process.env.CHECK_PAR) console.log(`at par ${process.env.CHECK_PAR}: ${(winShare(Number(process.env.CHECK_PAR)) * 100).toFixed(1)}% series wins`);
