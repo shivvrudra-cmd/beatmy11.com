@@ -7,7 +7,7 @@ import { IPL_BLOCKS, IPL_TEAM_CODES, IPL_MIN_MATCHES } from '../src/lib/formats/
 import { upcomingCombos, finalSpinOptions, mulberry32 } from '../src/lib/daily';
 import { IPL_FORMAT } from '../src/lib/formats/draft-format';
 import { WB_FORMATS, buildWbContext, scoreWbPlayer, type WbRole } from '../src/lib/white-ball-metrics';
-import { playerGroups, createDraft, validatePoolPick, type NormalizedPlayer } from '../src/lib/player-logic';
+import { playerGroups, createDraft, validatePoolPick, applySpinResult, applyDraftPick, applyDraftDeselect, placementOptions, serializeDraft, deserializeDraft, overseasCount, XI_SLOTS, type NormalizedPlayer } from '../src/lib/player-logic';
 import { achievable } from './oracle';
 
 let pass = 0, fail = 0;
@@ -64,6 +64,39 @@ ok(unscorable === 0, 'every declarable role of every player can be scored', unsc
   ok(validatePoolPick(d, five[4]) === 'Your XI already has four overseas players.', 'a fifth overseas player is blocked');
   const local = Object.values(byBlock).flat().find((p) => !p.overseas)!;
   ok(validatePoolPick(d, local) !== 'Your XI already has four overseas players.', 'an Indian player is not blocked by the overseas rule');
+}
+
+// the rule through real picks: 4 overseas fill up, a fifth is refused, and removing one of this
+// round's picks allows a swap (4 -> 3 -> 4, never 5); a saved draft with five is not restored
+{
+  const combo = iplSpinCombos().find((c) => poolFor(c.era, c.nation).filter((p) => p.overseas).length >= 6)!;
+  const pool = poolFor(combo.era, combo.nation);
+  const osPool = pool.filter((p) => p.overseas);
+  let d = applySpinResult(createDraft(), combo.era, combo.nation);
+  // pretend four overseas picks are already in the XI from earlier rounds
+  d = { ...d, currentRound: 5, selectedPlayers: osPool.slice(0, 4).map((p) => ({ ...p, roundPicked: 1, draftEra: combo.era })) };
+  const slotFor = (st: typeof d, p: NormalizedPlayer) => { for (const s of XI_SLOTS) { if (st.slots[s.key]) continue; const o = placementOptions(st, p, s.key).find((x) => !x.reason); if (o) return { s, o }; } return null; };
+  const before = d.selectedPlayers.length;
+  const fifth = osPool[4];
+  for (const s of XI_SLOTS) for (const role of ['opener','middle-order','wicketkeeper','all-rounder','spinner','fast-bowler'] as const) d = applyDraftPick(d, fifth, s.key, role as never);
+  ok(d.selectedPlayers.length === before && overseasCount(d.selectedPlayers) === 4, 'applyDraftPick never lets a fifth overseas player in');
+  // swap: a picked-this-round overseas player is removed, another goes in
+  const six = { ...applySpinResult(createDraft(), combo.era, combo.nation) };
+  let e = { ...six, currentRound: 2, selectedPlayers: osPool.slice(0, 3).map((p) => ({ ...p, roundPicked: 1, draftEra: combo.era })) };
+  const pick = slotFor(e, osPool[3]);
+  if (pick) {
+    e = applyDraftPick(e, osPool[3], pick.s.key, pick.o.role);
+    ok(overseasCount(e.selectedPlayers) === 4, 'fourth overseas player is allowed');
+    e = applyDraftDeselect(e, osPool[3].id);
+    ok(overseasCount(e.selectedPlayers) === 3, 'removing an overseas pick from this round frees the place');
+    const again = slotFor(e, osPool[4]);
+    if (again) e = applyDraftPick(e, osPool[4], again.s.key, again.o.role);
+    ok(overseasCount(e.selectedPlayers) <= 4, 'the swap never makes it five');
+  }
+  // a saved draft with five overseas players is dropped
+  const bad = { ...d, selectedPlayers: osPool.slice(0, 5).map((p) => ({ ...p, roundPicked: 1, draftEra: combo.era })), slots: {} as typeof d.slots };
+  const ser = JSON.parse(JSON.stringify(serializeDraft(bad)));
+  ok(deserializeDraft(ser, (uid) => osPool.find((p) => p.uid === uid) ?? null) === null, 'a saved draft with five overseas players is not restored');
 }
 
 // random spin sequences under the live spin rules: how many can make a legal XI?
