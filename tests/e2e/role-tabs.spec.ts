@@ -20,6 +20,23 @@ const pagerState = (page: Page) =>
     };
   });
 
+/**
+ * Waits until the pager has really stopped: its position unchanged for 250 ms. "Within 2 px of a
+ * page" is not enough: a swipe's glide can still be running, and on a phone a tap that lands on a
+ * gliding list only stops the glide, it does not press the tab (the cause of the old intermittent
+ * failure, found 2026-10-03; it is how touch screens work, not a bug in the page).
+ */
+const waitIdle = async (page: Page) => {
+  let same = 0;
+  let last = -1;
+  for (let i = 0; i < 80 && same < 5; i++) {
+    const now = await page.evaluate(() => document.getElementById("fl-pager")!.scrollLeft);
+    same = now === last ? same + 1 : 0;
+    last = now;
+    await page.waitForTimeout(50);
+  }
+};
+
 test("role tabs: swipe between roles, the tab follows, the cue goes away for good", async ({ browser }) => {
   test.setTimeout(150_000);
   const context = await browser.newContext({ viewport: { width: 393, height: 760 }, isMobile: true, hasTouch: true });
@@ -62,11 +79,10 @@ test("role tabs: swipe between roles, the tab follows, the cue goes away for goo
   await expect.poll(async () => (await pagerState(page)).lit).toBe(start.pages[0]);
   await expect.poll(async () => (await pagerState(page)).settled).toBe(true);
 
-  // Tapping a tab slides the list to that role.
+  // Tapping a tab slides the list to that role. Wait until the swipe's glide has fully stopped:
+  // a tap on a gliding list only stops it (see waitIdle). The retry stays as a logged safety net.
   const last = start.pages[start.pages.length - 1]!;
-  // Known intermittent (about 1 full-suite run in 6, never reproduced alone in 16 stressed runs):
-  // right after a swipe has settled, one tap on a tab sometimes does not move the list. A second
-  // tap always has. The retry is logged so it stays visible; see docs/morning-report-2026-10-02.md.
+  await waitIdle(page);
   let taps = 0;
   await expect(async () => {
     taps++;
@@ -93,6 +109,7 @@ test("role tabs: swipe between roles, the tab follows, the cue goes away for goo
   if (tall) {
     await page.locator(`[data-bm11-tab="${tall}"]`).tap();
     await expect.poll(async () => (await pagerState(page)).settled && (await pagerState(page)).shown === tall).toBe(true);
+    await waitIdle(page);
     await page.evaluate((r) => { document.querySelector<HTMLElement>(`[data-bm11-page="${r}"]`)!.scrollTop = 30; }, tall);
     const pick = page.locator(`[data-bm11-page="${tall}"] .bm11-prow:not(.is-blocked)`).nth(2);
     await pick.tap();
