@@ -10,9 +10,9 @@
  *
  * Guards: POSTs only from the two site origins, JSON bodies of at most MAX_BODY bytes (an
  * oversized Content-Length is refused before the body is read), strict validation of every
- * field. There is no per-visitor rate limit here, because the Worker keeps nothing that
- * identifies a visitor; a Cloudflare rate-limiting rule on /api/* is the place for that
- * (docs/reports/launch-audit-2026-10-02.md).
+ * field, and a rate limit on writes (2026-10-03): at most 120 a minute from one network address,
+ * counted by Cloudflare's rate-limiting binding (API_LIMIT in wrangler.jsonc). The address is
+ * only the counter's key inside Cloudflare for up to a minute; the site never stores it.
  *
  * Nothing identifying is stored: no IP, cookie, user agent or account.
  */
@@ -22,6 +22,8 @@ interface D1Statement { bind(...v: unknown[]): D1Result }
 interface Env {
   ASSETS: { fetch(req: Request): Promise<Response> };
   DB: { prepare(sql: string): D1Statement };
+  /** Cloudflare rate-limiting binding (wrangler.jsonc). Absent in tests and local dev. */
+  API_LIMIT?: { limit(o: { key: string }): Promise<{ success: boolean }> };
 }
 
 const ALLOWED_ORIGINS = new Set(['https://beatmy11.com', 'https://www.beatmy11.com']);
@@ -92,6 +94,14 @@ export default {
 
     if (pathname === '/api/health') return req.method === 'GET' || req.method === 'HEAD' ? json(200, { ok: true }) : json(405);
     if (req.method !== 'POST') return json(405);
+    // Too many writes from one address in the last minute: refuse. If the binding is missing (local
+    // tests) or fails, the request goes through: telemetry must never break the game.
+    if (env.API_LIMIT) {
+      try {
+        const { success } = await env.API_LIMIT.limit({ key: `w:${req.headers.get('cf-connecting-ip') ?? 'unknown'}` });
+        if (!success) return json(429, { error: 'slow down' });
+      } catch { /* fail open */ }
+    }
     // Browsers always send Origin on cross-origin POSTs; reject other sites.
     const origin = req.headers.get('origin');
     if (!origin || !ALLOWED_ORIGINS.has(origin)) return json(403);
