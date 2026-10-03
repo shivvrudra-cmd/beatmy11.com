@@ -7,6 +7,9 @@ import {
   GAP_CUTS,
   PAR_GAP,
   bandFor,
+  NO_DRAW_BANDS,
+  noDrawCuts,
+  gapCutsFor,
   rankPercentile,
   wobble,
   mulberry32,
@@ -255,6 +258,32 @@ const SERIES_1234 = 'uuhhh|P U2 123|Your XI win by 5 wickets';
   ok(pickXiTip('test', base, () => 0.1) === t[0] && pickXiTip('test', { ...base, shortCareers: 4 }, () => 0.9) !== t[0], 'the main tip most of the time, another true fact otherwise');
   const seeded = () => pickXiTip('ipl', { ...base, shortCareers: 4, overseasUsed: 1 }, mulberry32(77));
   ok(seeded() === seeded(), 'same XI (same seed) reads the same tip');
+}
+
+// ---- limited overs: no draws (owner, 2026-10-03) ----
+{
+  ok(NO_DRAW_BANDS.length === 6 && NO_DRAW_BANDS.every((b) => b.draws === 0 && b.user + b.house === 5), 'six scorelines, none drawn');
+  ok(NO_DRAW_BANDS.map((b) => `${b.user}-${b.house}`).join() === '0-5,1-4,2-3,3-2,4-1,5-0', 'the six limited-overs scorelines');
+  const par = -10;
+  const cuts = noDrawCuts(gapCutsFor(par));
+  ok(cuts.length === 5 && cuts.every((c, i) => i === 0 || c > cuts[i - 1]), 'five ascending cuts');
+  ok(bandFor(par - 0.01, par, true).user === 2 && bandFor(par + 0.01, par, true).user === 3, 'par itself splits 2-3 from 3-2');
+  ok(bandFor(par - 40, par, true).house === 5 && bandFor(par + 40, par, true).user === 5, 'extremes still 0-5 and 5-0');
+  ok(bandFor(par, par, false).draws === 1, 'the Test ladder still has its drawn 2-2');
+  const wins = (draws: boolean) => { let w = 0; for (let g = -30; g <= 30; g += 0.5) { const b = bandFor(g, par, !draws); if (b.user > b.house) w++; } return w; };
+  ok(wins(false) > wins(true), 'dropping the draw band hands those gaps to the win/loss sides (win line moves down by 1)');
+  // a whole series in each limited-overs flavour: five matches, a winner each, never a draw
+  for (const kind of ['odi', 't20'] as const) {
+    let anyDraw = 0, superOvers = 0, n = 0;
+    for (let seed = 1; seed <= 400; seed++) {
+      const r = playSeries({ userScore: 60 + (seed % 30), houseScore: 80, userXI, houseXI, calibration, seed, parGap: -10, flavour: { venues: VENUES, opponent: 'World XI', kind } });
+      n++;
+      if (r.draws !== 0 || r.tests.some((t) => t.result === 'draw') || r.user + r.house !== 5) anyDraw++;
+      superOvers += r.tests.filter((t) => /super over/.test(t.summary)).length;
+    }
+    ok(anyDraw === 0, `${kind}: every match has a winner in 400 series`, anyDraw);
+    ok(kind === 't20' ? superOvers > 20 && superOvers < 250 : superOvers === 0, `${kind}: super overs only in T20 formats, and rare (${superOvers} of ${n * 5} matches)`);
+  }
 }
 
 console.log(`\n${pass} passed, ${fail} failed`);

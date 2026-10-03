@@ -26,7 +26,7 @@ import { wbPlayers, wbOpponentPool, wbPlayersByEra, wbSpinCombos, type WbFormatI
 import { WB_FORMATS, buildWbContext, scoreWbPlayer, wbTeamBlend, type WbEntry } from '../../src/lib/white-ball-metrics';
 import { upcomingCombos, finalSpinOptions } from '../../src/lib/daily';
 import { IPL_FORMAT } from '../../src/lib/formats/draft-format';
-import { mulberry32, OUTCOME_BANDS, bandFor, wobble, PAR_GAP } from '../../src/lib/series';
+import { mulberry32, NO_DRAW_BANDS, bandFor, wobble, PAR_GAP } from '../../src/lib/series';
 
 const clamp01 = (x: number) => Math.max(0, Math.min(1, x));
 const num = (v: unknown, d: number) => (Number.isFinite(Number(v)) && v != null ? Number(v) : d);
@@ -163,7 +163,7 @@ function run(id: WbFormatId) {
   const winShare = (par: number) => {
     let w = 0;
     for (let i = 0; i < scores.length; i++) {
-      const b = bandFor(wobble(scores[i] - oppScore, mulberry32(i + 1)), par);
+      const b = bandFor(wobble(scores[i] - oppScore, mulberry32(i + 1)), par, true);
       if (b.user > b.house) w++;
     }
     return w / scores.length;
@@ -179,12 +179,12 @@ function run(id: WbFormatId) {
   let wins = 0;
   const tally = new Map<string, number>();
   for (let i = 0; i < scores.length; i++) {
-    const band = bandFor(wobble(scores[i] - oppScore, mulberry32(i + 1)), parGap);
+    const band = bandFor(wobble(scores[i] - oppScore, mulberry32(i + 1)), parGap, true);
     const k = `${band.user}-${band.house}`;
     tally.set(k, (tally.get(k) ?? 0) + 1);
     if (band.user > band.house) wins++;
   }
-  console.log(`scorelines (par ${parGap}${OWNER_DIFFICULTY.has(id) ? ', owner: fine for now' : `, PROVISIONAL: tuned to ~${TARGET_WIN * 100}% wins; Test ladder would give ${(winShare(PAR_GAP) * 100).toFixed(1)}%`}): ` + OUTCOME_BANDS.map((b) => `${b.user}-${b.house} ${(((tally.get(`${b.user}-${b.house}`) ?? 0) / scores.length) * 100).toFixed(0)}%`).join(', '));
+  console.log(`scorelines (par ${parGap}${OWNER_DIFFICULTY.has(id) ? ', owner: fine for now' : `, PROVISIONAL: tuned to ~${TARGET_WIN * 100}% wins; Test ladder would give ${(winShare(PAR_GAP) * 100).toFixed(1)}%`}): ` + NO_DRAW_BANDS.map((b) => `${b.user}-${b.house} ${(((tally.get(`${b.user}-${b.house}`) ?? 0) / scores.length) * 100).toFixed(0)}%`).join(', '));
   console.log(`series wins: ${((wins / scores.length) * 100).toFixed(1)}% of simulated drafts`);
   // CHECK_PAR=<par>: also print the win rate at a given par (to compare scoring variants like for like).
   if (process.env.CHECK_PAR) console.log(`at par ${process.env.CHECK_PAR}: ${(winShare(Number(process.env.CHECK_PAR)) * 100).toFixed(1)}% series wins`);

@@ -66,6 +66,16 @@ export const OUTCOME_BANDS: OutcomeBand[] = [
   { user: 5, house: 0, draws: 0, share: 0.05 },
 ];
 
+/** Limited-overs scorelines: every match has a winner, so there is no 2-2 with a draw (owner, 2026-10-03). */
+export const NO_DRAW_BANDS: OutcomeBand[] = OUTCOME_BANDS.filter((b) => b.draws === 0);
+
+/**
+ * The limited-overs ladder from a ladder that has a drawn band: the two cuts around the draw merge
+ * into one, halfway between them (par itself for the standard ladder), so a level XI is no longer
+ * a draw and the other cuts stay where they were. PROVISIONAL placement, owner asked for no draws.
+ */
+export const noDrawCuts = (cuts: readonly number[]): number[] => [cuts[0], cuts[1], (cuts[2] + cuts[3]) / 2, cuts[4], cuts[5]];
+
 /** Luck: standard deviation of the seeded wobble, in team-score points. */
 export const WOBBLE_SIGMA = 2.5;
 
@@ -269,11 +279,12 @@ export function wobble(gap: number, rng: () => number, sigma: number = WOBBLE_SI
 }
 
 /** Scoreline for a (wobbled) score gap: user − World XI. `parGap` defaults to the Test game's. */
-export function bandFor(gap: number, parGap: number = PAR_GAP): OutcomeBand {
-  const cuts = parGap === PAR_GAP ? GAP_CUTS : gapCutsFor(parGap);
+export function bandFor(gap: number, parGap: number = PAR_GAP, noDraws = false): OutcomeBand {
+  const cuts = noDraws ? noDrawCuts(gapCutsFor(parGap)) : parGap === PAR_GAP ? GAP_CUTS : gapCutsFor(parGap);
+  const bands = noDraws ? NO_DRAW_BANDS : OUTCOME_BANDS;
   let i = 0;
   while (i < cuts.length && gap >= cuts[i]) i++;
-  return OUTCOME_BANDS[i];
+  return bands[i];
 }
 
 // ---------------------------------------------------------------- the series
@@ -495,11 +506,15 @@ export function playSeries(input: {
   const rng = mulberry32(input.seed);
   const percentile = rankPercentile(input.userScore, input.calibration.scores);
   const wobbled = wobble(input.userScore - input.houseScore, rng);
-  let band = bandFor(wobbled, input.parGap ?? PAR_GAP);
+  // ODI, T20I and IPL have no drawn matches, so no drawn 2-2 series either (owner, 2026-10-03).
+  const noDraws = flavour.kind !== 'test';
+  let band = bandFor(wobbled, input.parGap ?? PAR_GAP, noDraws);
   if (input.gapCuts) {
+    const cuts = noDraws ? noDrawCuts(input.gapCuts) : input.gapCuts;
+    const bands = noDraws ? NO_DRAW_BANDS : OUTCOME_BANDS;
     let i = 0;
-    while (i < input.gapCuts.length && wobbled >= input.gapCuts[i]) i++;
-    band = OUTCOME_BANDS[i];
+    while (i < cuts.length && wobbled >= cuts[i]) i++;
+    band = bands[i];
   }
   const order = testOrder(band, rng);
   const used = new Set<string>();
@@ -525,6 +540,9 @@ export function playSeries(input: {
       heroSide = result;
       const team = result === 'user' ? 'Your XI' : flavour.opponent;
       summary = t20 ? t20WinSummary(team, rng, odi) : winSummary(team, rng);
+      // T20I and IPL: now and then a match is level on the night and a super over decides it
+      // (wording only; its own random stream, so nothing else in the series changes). PROVISIONAL, about 1 in 20.
+      if (t20 && !odi && mulberry32((input.seed ^ (0x50e0 + i * 7919)) >>> 0)() < 0.05) summary = `${team} win in a super over`;
     }
     const otherSide = heroSide === 'user' ? 'house' : 'user';
     const hero = line(heroSide, bowl);
