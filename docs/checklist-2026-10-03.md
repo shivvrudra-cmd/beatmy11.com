@@ -5,6 +5,39 @@ yet fixed), the size of the job, and what is needed from the owner. Tick items o
 Order of work: A (result page and cards) → B (rules you asked for) → C (data) → D (decisions) →
 E (older open items).
 
+## STATUS at the end of 2026-10-03 (read this first; the items below keep their original text)
+
+| Item | State | Where |
+|---|---|---|
+| 0 IPL more than four overseas | **Not reproduced.** 400 simulated drafts never passed four; the five players the owner named are all flagged correctly. Closed the one gap found: a saved draft with five overseas players is discarded on load. If it happens again, ask for a screenshot of the XI and the "Overseas n/4" chip. | merged, PR #54 |
+| 1 Result page lands on the last screen | Fixed in Chrome (scroll reset). | merged, PR #55 |
+| 2 Last screen loads low and shifts | Best guess fixed (room under the last screen for the sliding phone toolbar). **Unconfirmed on the owner's phone.** | merged, PR #55 |
+| 3 Match cards clipped on desktop | Fixed (performers share one row at 760px and wider). | merged, PR #55 |
+| 4 Pick any XI share card | Done: challenge card ("Can your all-time XI beat my XI?"), result card with both XIs, "Making your card" state. | merged, PR #58 |
+| 5 No draws in ODI, T20I, IPL | Done: six scorelines, par +1 in each format, win rates unchanged (16.2 / 14.0 / 14.4%), super overs about 1 in 20 in T20I and IPL (PROVISIONAL). Friend duels follow it. | merged, PR #57 |
+| 6 Era respin on spin 1 (ODI, T20I, IPL) | Done. | merged, PR #56 |
+| 7 Respun-away draws never return | Done (saved with the draft). | merged, PR #56 |
+| 8 Same player twice in the IPL | Already impossible; test added (Jos Buttler). | merged, PR #56 |
+| 9, 10, 12, 13, 17 | Waiting on the owner (facts or decisions). | |
+| 11 ODI too easy? | Measured, nothing changed. Report: `docs/reports/difficulty-analysis-white-ball-2026-10-03.md`. **Owner decision needed: target win rate.** | merged, PR #60 |
+| 14 Phone check of the result page | **Open and important, see below.** | |
+| 15 to 23 | Untouched (owner items, or small notes). | |
+
+**iPhone bug, still open (owner's iPhone 17 Pro Max, Safari):** after tapping "Draft again" on
+result screen 2 and playing again, the new result opens on screen 2, and screens 2 and 3 were
+blank (they stay hidden until the reveal on screen 1 ends). Fixed twice, **not reproduced in an
+iPhone-style WebKit (Playwright, installed locally with `npx playwright install webkit`)**, so the
+cause on the real phone is unknown:
+- PR #59 reset the scroll position repeatedly until a touch. It made the blank screens worse (an
+  untouched scroll no longer ended the reveal).
+- PR #61: before the first touch any scroll away from the top is undone at once and snapping is
+  off; after 3 seconds, if the page is still below screen 1, the reveal ends so nothing is blank.
+  **The owner has not yet confirmed on the phone.** If it still opens on screen 2: is the content
+  visible now? Private tab the same? Next ideas: give each result its own address
+  (`/matchup?r=<time>`), or drop `scroll-snap-type` on iOS.
+- How to test in WebKit: temporarily change the `chromium` project in `playwright.config.ts` to
+  `devices["iPhone 15 Pro Max"]` and run the result-steady spec (do not commit that change).
+
 ## A. Bugs and polish you can see (fix first)
 
 - [ ] **1. Result page lands on the last screen after an IPL draft (phone).** After drafting in
