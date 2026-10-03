@@ -1,9 +1,8 @@
 ---
 /**
- * /terms — DRAFT for the owner to review (2026-10-02). Plain terms for a free game with no
- * accounts. This is legal text written by an AI assistant, not by a lawyer: the owner should
- * read it, change what is wrong for them (especially the governing-law line, left open on
- * purpose) and only then publish. Kept out of search results until approved.
+ * /terms — plain terms for a free game with no accounts. Drafted 2026-10-02 by an AI assistant,
+ * not a lawyer; governing law set by the owner on 2026-10-03 (India). Publish only after the
+ * owner has read it.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FloodlitShell from '../components/FloodlitShell.astro';
@@ -13,12 +12,11 @@ const description = 'The terms for using Beat My 11: a free cricket game with no
 ---
 
 <BaseLayout title={title} description={description}>
-  <meta name="robots" content="noindex" slot="head" />
   <FloodlitShell>
     <article class="pv">
       <p class="fs-eyebrow">Terms of use</p>
       <h1 class="fs-title">Free to play. <span class="fs-hl">A few plain rules.</span></h1>
-      <p class="fs-lede">Draft for review. Not yet in force.</p>
+      <p class="fs-lede">The terms for using Beat My 11, in plain language.</p>
 
       <h2>What this is</h2>
       <p>
@@ -82,11 +80,15 @@ const description = 'The terms for using Beat My 11: a free cricket game with no
       </p>
 
       <h2>Governing law</h2>
-      <p>[OWNER TO COMPLETE: the country or state whose law applies, and where disputes are heard.]</p>
+      <p>
+        These terms are governed by the laws of India. Any dispute about the site or these terms will be
+        handled by the courts of India. If any part of these terms cannot be enforced, the rest still
+        applies.
+      </p>
 
       <h2>Contact</h2>
       <p>Questions: <a href="mailto:hello@beatmy11.com">hello@beatmy11.com</a>.</p>
-      <p class="pv-updated">Draft of 2 October 2026.</p>
+      <p class="pv-updated">Last updated 3 October 2026.</p>
     </article>
   </FloodlitShell>
 
