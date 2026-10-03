@@ -7,6 +7,22 @@ E (older open items).
 
 ## A. Bugs and polish you can see (fix first)
 
+- [ ] **0. IPL: more than four overseas players can be picked (reported 2026-10-03; rule
+  violation, so first).** The rule: once an XI has four overseas players, a fifth can never be
+  picked. If the player who made the count four was picked in the current round, he can be removed
+  and swapped for another overseas player in that round (count goes 4 → 3 → 4, never 5).
+  *What the code does today:* the rule is checked when a player is picked, in the draft
+  (`validatePoolPick` in `src/lib/player-logic.ts`) and in Pick any XI (`PickGame.astro`), and the
+  tests cover it, so the failure is probably elsewhere. *Hypotheses, in order:* (a) a **wrong
+  overseas flag in the data**: 332 stints' players are flagged overseas, 278 are flagged not
+  overseas (of which 129 came from the owner's "assumed Indian" list, not from an international
+  record), so a foreign player flagged Indian would be counted as home-grown; (b) a path that
+  skips the check (moving a player between slots, changing a final-round pick, a restored saved
+  draft); (c) the "OS" count in the header counts something different from the rule. *First step:*
+  reproduce (ask: draft or Pick any XI, which players), then find which hypothesis it is. Add
+  tests for the exact rule above (a fifth is blocked; 4 → remove → swap works). **Small to
+  medium; data fix needs the owner's facts if it is (a).**
+
 - [ ] **1. Result page lands on the last screen after an IPL draft (phone).** After drafting in
   the IPL and playing the series, the page opens on the share-card screen, skipping the first two.
   *Likely cause:* the result page never resets its scroll position, so it inherits the position
