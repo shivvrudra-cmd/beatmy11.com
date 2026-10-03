@@ -38,6 +38,10 @@ const OWNER_DIFFICULTY = new Set<string>([]);
 /** Provisional target for the others: about the IPL's simulated series-win rate. */
 const TARGET_WIN = 0.15;
 const TRIALS = Number(process.env.TRIALS ?? 600);
+/** DRAFTER=rating: a drafter that can see the hidden ratings (the best a player could do by skill).
+ *  ANALYZE=1: print win rates at the par now in the series file and write nothing (item 11, 2026-10-03). */
+const DRAFTER = process.env.DRAFTER ?? 'human';
+const ANALYZE = !!process.env.ANALYZE;
 
 /** What "looks good" on a card differs by format: ODI strike rates and economies are lower. */
 const LOOKS: Record<WbFormatId, { sr: [number, number]; econ: [number, number]; matches: number }> = {
@@ -131,7 +135,8 @@ function run(id: WbFormatId) {
             for (const o of placementOptions(draft, p, s.key, supply)) {
               if (o.reason) continue;
               const needed = shapes.some((sh) => counts[o.role] < sh[o.role]) ? 0.05 : 0;
-              const v = visibleValue(p, o.role) + (noise.get(p.id) ?? 0) + needed;
+              const seen = DRAFTER === 'rating' ? scoreWbPlayer(p, o.role, ctx, FMT).score / 100 : visibleValue(p, o.role);
+              const v = seen + (noise.get(p.id) ?? 0) + needed;
               if (!pick || v > pick.v) pick = { p, slot: s.key, role: o.role, v };
             }
           }
@@ -157,6 +162,13 @@ function run(id: WbFormatId) {
   scores.sort((a, b) => a - b);
   const q = (p: number) => scores[Math.min(scores.length - 1, Math.floor(p * scores.length))];
   console.log(`human-like drafts: ${scores.length} complete, ${stalled} stalled; team scores p10 ${q(0.1)}, median ${q(0.5)}, p90 ${q(0.9)}, best ${scores[scores.length - 1]}`);
+  if (ANALYZE) {
+    const cur = JSON.parse(readFileSync(`src/data/formats/${id}-series.json`, 'utf8')).parGap as number;
+    const winsAt = (par: number) => { let w = 0; for (let i = 0; i < scores.length; i++) { const b = bandFor(wobble(scores[i] - oppScore, mulberry32(i + 1)), par, true); if (b.user > b.house) w++; } return w / scores.length; };
+    const pct = (x: number) => (x * 100).toFixed(1) + '%';
+    console.log(`ANALYSIS ${id} drafter=${DRAFTER} misjudge=${MISJUDGE}: opponent ${oppScore}, par now ${cur}, series wins ${pct(winsAt(cur))}; best simulated draft ${scores[scores.length - 1]}, p90 ${q(0.9)}, median ${q(0.5)}; wins at par ${Array.from({ length: 4 + Number(process.env.PAR_SPAN ?? 3) }, (_, k) => cur - 3 + k).map((x) => `${x}:${pct(winsAt(x))}`).join(' ')}`);
+    return;
+  }
   // Difficulty. IPL: the owner said the Test ladder is fine for now. ODI/T20I: under that ladder
   // nobody wins (their pools sit much further below a World XI), so until the owner decides, par is
   // set where simulated drafts win about as often as in the IPL (TARGET_WIN). PROVISIONAL.
