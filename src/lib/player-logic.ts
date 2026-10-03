@@ -1467,6 +1467,8 @@ export function deserializeDraft(
     if (!done) return null;
   }
   void byUid;
+  // A saved draft that breaks the four-overseas rule is never restored (start clean instead).
+  if (overseasCount(selectedPlayers) > MAX_OVERSEAS) return null;
   const spinHistory: SpinRecord[] = Array.isArray(d.spinHistory)
     ? d.spinHistory
         .filter(
