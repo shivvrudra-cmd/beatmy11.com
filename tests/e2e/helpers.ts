@@ -61,3 +61,10 @@ export async function draftFullXI(page: Page): Promise<void> {
     }
   }
 }
+
+/** A finger lands on the page. The result page undoes any scroll nobody touched during its first
+ *  3 seconds (an iPhone Safari fix, 2026-10-03), so a test that scrolls or clicks lower down the
+ *  result page sends this first, as a real visitor's touch would. */
+export async function fingerDown(page: Page): Promise<void> {
+  await page.evaluate(() => window.dispatchEvent(new Event("touchstart")));
+}

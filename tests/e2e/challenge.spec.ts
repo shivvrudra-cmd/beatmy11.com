@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { placeNextPlayer } from "./helpers";
+import { fingerDown, placeNextPlayer } from "./helpers";
 
 /** Plays a full draft, returning the six draws (nation + era) in order. */
 async function draftAndRecordDraws(page: Page): Promise<string[]> {
@@ -64,6 +64,7 @@ test("challenge: a friend drafts from the same spins, can retry, and sees the tr
   await expect(p2.locator("#rs-challenge")).toContainText("attempt 2");
 
   // Leaving the challenge goes back to the normal game.
+  await fingerDown(p2);
   await p2.locator("#rs-leave").click();
   expect(await p2.evaluate(() => localStorage.getItem("bm11.challenge.v1"))).toBeNull();
 
