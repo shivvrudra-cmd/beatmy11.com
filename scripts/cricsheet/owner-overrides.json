@@ -1,4 +1,9 @@
 {
+ "36619795": {
+  "bowlingType": "spin",
+  "listedAs": "Zeeshan Ansari",
+  "source": "owner, 2026-10-03"
+ },
  "5f547c8b": {
   "bowlingType": "spin",
   "listedAs": "Rashid Khan",
@@ -305,8 +310,28 @@
   "roleSource": "owner, 2026-10-03"
  },
  "33609a8c": {
-  "bowlingType": "unknown",
+  "bowlingType": "spin",
   "listedAs": "Saim Ayub",
-  "source": "owner, 2026-10-03 (not a pacer; spin or pace not given, so no bowling type)"
+  "source": "owner, 2026-10-03 (not a pacer; a spinner)"
+ },
+ "9ca68676": {
+  "bowlingType": "spin",
+  "listedAs": "AM Ghazanfar",
+  "source": "owner, 2026-10-03"
+ },
+ "1da489ff": {
+  "bowlingType": "spin",
+  "listedAs": "S Kaushik",
+  "source": "owner, 2026-10-03"
+ },
+ "d45c29b1": {
+  "bowlingType": "pace",
+  "listedAs": "Ashwani Kumar",
+  "source": "owner, 2026-10-03"
+ },
+ "dec8e038": {
+  "bowlingType": "pace",
+  "listedAs": "J Theron",
+  "source": "owner, 2026-10-03"
  }
 }

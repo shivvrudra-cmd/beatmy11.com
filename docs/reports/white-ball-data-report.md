@@ -37,10 +37,10 @@ Data: Cricsheet (cricsheet.org, ODC-By), men's matches. Roles: owner Test data, 
 
 - Matches counted: 1243
 - Players seen: 809
-- Players kept: 739
-- Excluded, regular bowler, spin/pace unknown (owner to supply): 63
+- Players kept: 744
+- Excluded, regular bowler, spin/pace unknown (owner to supply): 58
 - Excluded, never batted or bowled regularly: 7
-- Role source: match-data 335, match-data (stumpings) 3, owner 33, kaggle 290, test-data 75, wikidata 3
+- Role source: match-data 335, match-data (stumpings) 3, owner 38, kaggle 290, test-data 75, wikidata 3
 - Kaggle profiles matched by surname + initial (one-to-one both ways): 11
 
 ## Official totals (HowSTAT, supplied by the owner)

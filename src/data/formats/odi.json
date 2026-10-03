@@ -50105,10 +50105,11 @@
   },
   "primaryRole": "all-rounder",
   "secondaryRoles": [
+   "spinner",
    "opener"
   ],
   "isWicketkeeper": false,
-  "bowlingType": null,
+  "bowlingType": "spin",
   "roleSource": "match-data",
   "bowlingTypeSource": "owner",
   "firstMatch": "2024-11-04",

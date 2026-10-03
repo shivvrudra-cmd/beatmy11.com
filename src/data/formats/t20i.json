@@ -43344,7 +43344,7 @@
   "primaryRole": "opener",
   "secondaryRoles": [],
   "isWicketkeeper": false,
-  "bowlingType": null,
+  "bowlingType": "spin",
   "roleSource": "match-data",
   "bowlingTypeSource": "owner",
   "firstMatch": "2023-04-14",
