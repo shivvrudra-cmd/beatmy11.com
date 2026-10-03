@@ -52,12 +52,14 @@ test("pick any XI: the clock is opt-in, locks the XI at zero, and stops when ele
   await expect(page.locator("#pk-msg")).toContainText(/Eleven in with \d+ seconds? left/);
   await expect(page.locator("#pk-go-friend")).toBeEnabled();
   // A challenge sent now says it was picked against the clock, and the friend sees that.
-  const sharedUrl = await page.evaluate(() => {
-    let url = "";
-    (navigator as any).share = (d: { url?: string }) => { url = d.url ?? ""; return Promise.resolve(); };
+  // (The card picture is drawn first, so the share call arrives a moment after the tap.)
+  await page.evaluate(() => {
+    (window as any).__sharedUrl = "";
+    (navigator as any).share = (d: { url?: string }) => { (window as any).__sharedUrl = d.url ?? ""; return Promise.resolve(); };
     document.getElementById("pk-go-friend")!.click();
-    return url;
   });
+  await expect.poll(() => page.evaluate(() => (window as any).__sharedUrl)).not.toBe("");
+  const sharedUrl: string = await page.evaluate(() => (window as any).__sharedUrl);
   expect(sharedUrl).toMatch(/[?&]vs=.+&t=1$/);
   const friend = await context.newPage();
   await friend.goto(sharedUrl.replace(/^https?:\/\/[^/]+/, ""));

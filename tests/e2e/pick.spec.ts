@@ -99,3 +99,64 @@ for (const f of FORMATS) {
     await expect(viewer.locator("#pk-vs")).toBeHidden();
   });
 }
+
+// Owner, 2026-10-03: "Challenge a friend" sends a picture of the XI (the share card) with the link,
+// and shows a "making your card" state while it is drawn.
+for (const path of ["/pick", "/ipl/pick"]) {
+  test(`pick any XI ${path}: the challenge shares a card picture with the link`, async ({ page }) => {
+    test.setTimeout(120_000);
+    await page.addInitScript(() => {
+      const w = window as unknown as { __shared: unknown };
+      Object.defineProperty(navigator, "canShare", { value: () => true, configurable: true });
+      Object.defineProperty(navigator, "share", {
+        configurable: true,
+        value: async (d: { files?: File[]; text?: string; url?: string }) => {
+          w.__shared = { files: (d.files || []).map((f) => ({ type: f.type, size: f.size, name: f.name })), text: d.text || "", url: d.url || "" };
+        },
+      });
+    });
+    await page.goto(path);
+    await fillXI(page);
+    await page.locator("#pk-go-friend").click();
+    await expect.poll(() => page.evaluate(() => (window as unknown as { __shared?: unknown }).__shared)).toBeTruthy();
+    const shared = (await page.evaluate(() => (window as unknown as { __shared: { files: { type: string; size: number }[]; text: string } }).__shared));
+    expect(shared.files).toHaveLength(1);
+    expect(shared.files[0].type).toBe("image/png");
+    expect(shared.files[0].size).toBeGreaterThan(20_000);
+    expect(shared.text).toContain("?vs=");
+    await expect(page.locator("#pk-go-friend")).toHaveText("Challenge a friend");
+    await expect(page.locator(".pk-cardprev img")).toBeVisible();
+    // The picture shows 11 names: take a look at it when debugging.
+    await page.locator(".pk-cardprev img").screenshot({ path: `.test-dist/pick-card${path.replace(/\//g, "-")}.png` });
+  });
+}
+
+test("pick any XI: the result is shared as a card showing both XIs", async ({ page, context }) => {
+  test.setTimeout(150_000);
+  await page.goto("/odi/pick");
+  await fillXI(page);
+  const vs = await page.evaluate(() => {
+    const s = JSON.parse(localStorage.getItem(Object.keys(localStorage).find((k) => k.startsWith("beatmy11.pick."))!)!);
+    return Object.values(s.slots as Record<string, { key: string; role: string }>);
+  });
+  const code: Record<string, string> = { opener: "o", "middle-order": "b", wicketkeeper: "w", "all-rounder": "a", spinner: "s", "fast-bowler": "f" };
+  const friend = await context.newPage();
+  await friend.addInitScript(() => {
+    const w = window as unknown as { __shared: unknown };
+    Object.defineProperty(navigator, "canShare", { value: () => true, configurable: true });
+    Object.defineProperty(navigator, "share", { configurable: true, value: async (d: { files?: File[]; text?: string }) => { w.__shared = { n: (d.files || []).length, type: d.files?.[0]?.type, size: d.files?.[0]?.size, text: d.text }; } });
+  });
+  await friend.goto(`/odi/pick?vs=${vs.map((e) => `${e.key}.${code[e.role]}`).join(",")}&n=Asha`);
+  await friend.evaluate(() => localStorage.clear());
+  await friend.reload();
+  await fillXI(friend, 2);
+  await friend.locator("#pk-go-friend").click();
+  await expect(friend.locator("#pk-result")).toBeVisible();
+  await friend.locator("#pk-share").click();
+  await expect.poll(() => friend.evaluate(() => (window as unknown as { __shared?: unknown }).__shared)).toBeTruthy();
+  const shared = await friend.evaluate(() => (window as unknown as { __shared: { n: number; type: string; size: number; text: string } }).__shared);
+  expect(shared.n).toBe(1);
+  expect(shared.type).toBe("image/png");
+  expect(shared.size).toBeGreaterThan(20_000);
+  await friend.locator(".pk-cardprev img").screenshot({ path: ".test-dist/pick-result-card.png" });
+});

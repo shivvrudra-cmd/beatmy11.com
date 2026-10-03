@@ -106,9 +106,10 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
           and a spot-by-spot comparison. Your record against each friend is kept on your own phone.
         </p>
         <p>
-          Between friends neither side gets a head start: two XIs within a point of each other draw the
-          series 2–2, and the bigger the gap, the bigger the win. Nothing is sent to a server and there is
-          no sign-up.
+          Between friends neither side gets a head start: {format.id === 'test'
+            ? 'two XIs within a point of each other draw the series 2–2, and the bigger the gap, the bigger the win.'
+            : 'every match has a winner, the closer the two XIs the closer the series, and the bigger the gap, the bigger the win.'} Nothing
+          is sent to a server and there is no sign-up.
         </p>
         <p class="pk-about-links">
           Prefer the luck of the draw? <a href={path === '/pick' ? '/play' : path.replace('/pick', '/play')}>Play the spin draft</a>
@@ -181,6 +182,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
     import { DUEL_CUTS, duelSeed, cleanName, xiLabel, badgesFor, recordH2H, h2hLine, parseChain, nextChain, chainText } from '../lib/pick-xi';
     import { sfx } from '../lib/sfx';
     import { reportEvent } from '../lib/telemetry';
+    import { drawShareCard, cardBlob } from '../lib/share-card';
 
     const read = (id) => JSON.parse(document.getElementById(id).textContent);
     const PLAYERS = read('pk-players');
@@ -351,6 +353,8 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       $('pk-sub').textContent = done ? 'Eleven in. Ready when you are.' : clockLocked() ? 'Time’s up. Clear your XI to go again, or turn the clock off.' : n ? `${11 - n} to go. Tap a slot to choose.` : 'Any player, no spins. Tap a slot to choose.';
       $('pk-go-friend').disabled = !done;
       $('pk-go-friend').textContent = theirXI ? `Play ${xiLabel(theirName, "your friend's XI")}` : 'Challenge a friend';
+      // Draw the challenge card ahead of the tap (the share sheet must open right after it).
+      if (done && !theirXI && typeof cardFor === 'function') cardFor(`c|${linkOf(xi)}`, challengeCard(xi));
     }
 
     // ------------------------------------------------------------ picker sheet
@@ -443,6 +447,52 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
         outEl.textContent = url;
       }
     }
+    // The share card (a picture of the XI, drawn here in the browser) travels with the link. It is
+    // drawn ahead of the tap where possible, because phones only open the share sheet shortly after one.
+    const cardPlayers = (m) => picks(m).map((e) => { const p = byKey.get(e.key); return { name: p.name, role: ROLE_SHORT[e.role] || '', nation: code(p.nation) }; });
+    const challengeCard = (m) => ({
+      user: 0, house: 0, draws: 0, mode: 'challenge', seriesLabel: 'Pick any XI', headline: 'Can your all-time XI\nbeat my XI?',
+      challengeLine: 'Pick yours and take on mine', xi: cardPlayers(m),
+    });
+    var cardCache = new Map();
+    var cardFor = (key, data) => {
+      if (!cardCache.has(key)) cardCache.set(key, drawShareCard(data).then(cardBlob).catch(() => null));
+      return cardCache.get(key);
+    };
+    function showCardPreview(outEl, blob, fileName, alt) {
+      let fig = outEl.previousElementSibling;
+      if (!fig || !fig.classList.contains('pk-cardprev')) {
+        fig = document.createElement('figure');
+        fig.className = 'pk-cardprev';
+        fig.innerHTML = '<img width="1080" height="1350" alt=""><a>Save the card</a>';
+        outEl.before(fig);
+      }
+      const href = URL.createObjectURL(blob);
+      const img = fig.querySelector('img'), a = fig.querySelector('a');
+      img.src = href; img.alt = alt; a.href = href; a.download = fileName;
+    }
+    async function shareWithCard({ key, data, fileName, url, text, buttons, outEl }) {
+      const labels = buttons.map((b) => b.textContent);
+      buttons.forEach((b) => { b.disabled = true; b.textContent = 'Making your card…'; });
+      outEl.textContent = 'Drawing your card…';
+      const message = `${text} ${url}`;
+      try {
+        const blob = await cardFor(key, data);
+        const file = blob ? new File([blob], fileName, { type: 'image/png' }) : null;
+        if (blob) showCardPreview(outEl, blob, fileName, `Share card: ${data.xi.map((x) => x.name).join(', ')}`);
+        outEl.textContent = '';
+        if (file && navigator.canShare?.({ files: [file] })) { await navigator.share({ files: [file], title: 'Beat My 11', text: message }); return; }
+        if (navigator.share) { await navigator.share({ title: 'Beat My 11', text, url }); return; }
+        await navigator.clipboard.writeText(message);
+        outEl.textContent = file ? 'Link copied. Save the card above and send both.' : 'Link copied. Paste it to your friend.';
+      } catch (err) {
+        if (err && err.name === 'AbortError') return;
+        outEl.textContent = url;
+      } finally {
+        buttons.forEach((b, i) => { b.disabled = false; b.textContent = labels[i]; });
+        if (outEl.textContent === 'Drawing your card…') outEl.textContent = '';
+      }
+    }
     const withName = (q, key, name) => (name ? `${q}&${key}=${encodeURIComponent(name)}` : q);
 
     $('pk-go-friend').addEventListener('click', () => {
@@ -452,7 +502,10 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       const beatClock = !!clock && clock.locked && clock.left > 0;
       const url = `${location.origin}${PATH}?${withName(`vs=${linkOf(xi)}`, 'n', myName)}${beatClock ? '&t=1' : ''}`;
       reportEvent('pick_sent', FORMAT.id);
-      shareLink(url, `I picked my ${RESULT.xiNoun}. Pick yours and beat it 🏏`, $('pk-copied'));
+      shareWithCard({
+        key: `c|${linkOf(xi)}`, data: challengeCard(xi), fileName: 'beat-my-11-challenge.png', url,
+        text: `I picked my ${RESULT.xiNoun}. Can yours beat it? 🏏`, buttons: [$('pk-go-friend')], outEl: $('pk-copied'),
+      });
     });
 
     // ------------------------------------------------------------ result view
@@ -555,7 +608,18 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       const resultUrl = `${location.origin}${PATH}?${withName(withName(`vs=${linkOf(theirs)}`, 'n', theirsName) + `&me=${linkOf(mine)}`, 'm', mineName)}${chainIn ? `&k=${chainIn}` : ''}${theirClock ? '&t=1' : ''}`;
       const shareLab = played ? 'My XI' : meLab;
       const shareText = `${shareLab} ${won ? 'beat' : lost ? 'lost to' : 'drew with'} ${xiLabel(theirsName, "a friend's XI")} ${series.user}–${series.house} 🏏 Pick yours and take on the winner.`;
-      $('pk-share').onclick = $('pk-share-top').onclick = () => shareLink(resultUrl, shareText, $('pk-r-copied'));
+      const resultCard = {
+        user: series.user, house: series.house, draws: series.draws, seriesLabel: 'Pick any XI',
+        headline: `${shareLab} ${won ? 'beat' : lost ? 'lost to' : 'drew with'} ${themLab}`,
+        challengeLine: 'Pick yours and take on the winner', opponent: themLab,
+        xi: cardPlayers(mine), opponentXI: cardPlayers(theirs),
+      };
+      const resultKey = `r|${linkOf(theirs)}|${linkOf(mine)}`;
+      cardFor(resultKey, resultCard);
+      $('pk-share').onclick = $('pk-share-top').onclick = () => shareWithCard({
+        key: resultKey, data: resultCard, fileName: 'beat-my-11-result.png', url: resultUrl, text: shareText,
+        buttons: [$('pk-share'), $('pk-share-top')], outEl: $('pk-r-copied'),
+      });
       $('pk-again').textContent = played ? 'Change my XI' : 'Pick my own XI';
       $('pk-again').onclick = () => {
         if (!played) {
@@ -689,6 +753,9 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
     .pk-about h2 { margin: 0 0 8px; font: 400 26px/1 var(--pk-display); letter-spacing: 0.04em; }
     .pk-about p { margin: 0 0 10px; color: #c9d2ea; font-size: 14.5px; line-height: 1.6; }
     .pk-about a { color: var(--pk-lime); text-underline-offset: 3px; }
+    .pk-cardprev { margin: 12px auto 0; max-width: 300px; text-align: center; }
+    .pk-cardprev img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.15); }
+    .pk-cardprev a { display: inline-block; margin-top: 8px; color: var(--pk-lime); font: 600 13px Inter, sans-serif; text-decoration: underline; }
     .pk-copied { margin: 6px 0 0; min-height: 16px; text-align: center; font-size: 12.5px; color: var(--pk-lime); overflow-wrap: anywhere; }
 
     .pk-sheet { position: fixed; inset: 0; z-index: 50; display: flex; align-items: flex-end; justify-content: center; max-width: none; }

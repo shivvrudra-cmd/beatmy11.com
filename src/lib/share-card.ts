@@ -34,6 +34,9 @@ export interface CardData {
   seriesLabel?: string;
   opponent?: string;
   challengeLine?: string;
+  /** 'challenge' (Pick any XI, before anyone has played): no scoreline, just the XI and the
+   *  challenge. The headline may hold a line break. */
+  mode?: 'challenge';
 }
 
 const W = 1080;
@@ -145,6 +148,11 @@ export async function drawShareCard(d: CardData): Promise<HTMLCanvasElement> {
   spaced(c, 5);
   c.fillText(`BEAT MY 11 · ${(d.seriesLabel ?? 'The five-Test series').toUpperCase()}`, W / 2, 84);
 
+  if (d.mode === 'challenge') {
+    drawChallengeCard(c, d);
+    return canvas;
+  }
+
   // Headline.
   const won = d.user > d.house;
   const lost = d.user < d.house;
@@ -221,6 +229,34 @@ export async function drawShareCard(d: CardData): Promise<HTMLCanvasElement> {
   c.fillText('BEATMY11.COM', W / 2, H - 34);
 
   return canvas;
+}
+
+/** The card for a challenge link: the challenge in big letters, then the XI that was picked. */
+function drawChallengeCard(c: CanvasRenderingContext2D, d: CardData) {
+  const lines = d.headline.toUpperCase().split('\n');
+  spaced(c, 2);
+  c.fillStyle = LIME;
+  c.shadowColor = 'rgba(198, 255, 61, 0.45)';
+  c.shadowBlur = 36;
+  let y = 214;
+  for (const line of lines) {
+    const size = fitFont(c, line, DISPLAY, 112, 900);
+    c.font = `400 ${size}px ${DISPLAY}`;
+    c.fillText(line, W / 2, y);
+    y += size * 0.95;
+  }
+  c.shadowBlur = 0;
+  drawOwnXI(c, d, { panelY: Math.max(y - 30, 380), rowH: 56 });
+  // The footer is drawn by the caller path below, so repeat it here.
+  c.textAlign = 'center';
+  c.font = `600 24px ${BODY}`;
+  spaced(c, 5);
+  c.fillStyle = MUTED;
+  c.fillText((d.challengeLine ?? 'Pick yours and take on mine').toUpperCase(), W / 2, H - 78);
+  c.font = `700 30px ${BODY}`;
+  spaced(c, 6);
+  c.fillStyle = LIME;
+  c.fillText('BEATMY11.COM', W / 2, H - 34);
 }
 
 /** Both XIs side by side: the user's on the left, the opponent's on the right. */
@@ -306,8 +342,8 @@ function drawBothXIs(c: CanvasRenderingContext2D, d: CardData) {
 }
 
 /** The original card: the user's XI only. */
-function drawOwnXI(c: CanvasRenderingContext2D, d: CardData) {
-  const panelX = 90, panelY = 628, panelW = W - 180, rowH = 46;
+function drawOwnXI(c: CanvasRenderingContext2D, d: CardData, at?: { panelY: number; rowH: number }) {
+  const panelX = 90, panelY = at?.panelY ?? 628, panelW = W - 180, rowH = at?.rowH ?? 46;
   const panelH = 80 + d.xi.length * rowH;
   roundRect(c, panelX, panelY, panelW, panelH, 22);
   const card = c.createLinearGradient(panelX, panelY, panelX + panelW * 0.4, panelY + panelH);
