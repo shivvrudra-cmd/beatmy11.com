@@ -27,7 +27,7 @@ async function main() {
 
   // health
   const health = await call('/api/health');
-  ok(health.status === 200 && (await health.json()).ok === true, 'GET /api/health answers ok');
+  { const h = await health.json(); ok(health.status === 200 && h.ok === true && h.limiter === false, 'GET /api/health answers ok and says whether the rate limiter is attached', h); }
   ok(health.headers.get('cache-control') === 'no-store' && health.headers.get('x-content-type-options') === 'nosniff', 'API answers are never cached or sniffed');
   ok((await call('/api/health', { method: 'POST', headers: { origin: 'https://beatmy11.com' } })).status === 405, 'health is read-only');
   ok(writes.length === 0, 'health does not touch the database');

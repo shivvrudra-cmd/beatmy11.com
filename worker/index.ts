@@ -92,7 +92,7 @@ export default {
     const { pathname } = new URL(req.url);
     if (!pathname.startsWith('/api/')) return env.ASSETS.fetch(req);
 
-    if (pathname === '/api/health') return req.method === 'GET' || req.method === 'HEAD' ? json(200, { ok: true }) : json(405);
+    if (pathname === '/api/health') return req.method === 'GET' || req.method === 'HEAD' ? json(200, { ok: true, limiter: !!env.API_LIMIT }) : json(405);
     if (req.method !== 'POST') return json(405);
     // Too many writes from one address in the last minute: refuse. If the binding is missing (local
     // tests) or fails, the request goes through: telemetry must never break the game.
