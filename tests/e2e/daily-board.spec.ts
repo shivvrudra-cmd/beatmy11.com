@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { draftFullXI } from "./helpers";
+import { draftFullXI, fingerDown } from "./helpers";
 
 // Daily leaderboard pages (PROPOSAL, docs/plans/daily-leaderboard.md). The dev server has no
 // Worker, so /api/daily is stood in for here; the Worker itself is tested in tests/worker.test.ts.
@@ -62,6 +62,7 @@ test("daily result: adding a score is the player's choice, sends only the result
   await expect(page.locator("#rs-board-add")).toBeVisible();
   expect(posts.length, "nothing is sent before the button is pressed").toBe(0);
 
+  await fingerDown(page);
   await page.locator("#rs-board-name").fill("Shiva");
   await page.locator("#rs-board-add").click();
   await expect(page.locator("#rs-board")).toContainText("You are 2nd of 6 today.");
