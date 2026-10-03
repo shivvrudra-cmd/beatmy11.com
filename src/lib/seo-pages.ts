@@ -152,6 +152,28 @@ export const PUBLISHED_ROLES: readonly EvaluationRole[] = [
 /** Best-XI pages only consider players with at least this many Tests (owner, 2026-10-03). Page rule only: the game is unaffected. */
 export const SEO_MIN_TESTS = 50;
 
+/**
+ * XIs the owner picked by hand (2026-10-03: "there cannot be an all-time XI without Sachin"). The
+ * generator's choice is replaced by this batting order; every player must be in the data, and each
+ * role must be one the data lists for him (Bradman is an opener in the data, which this uses).
+ * Other pages stay generated.
+ */
+export const PINNED_XIS: Record<string, { id: string; role: EvaluationRole }[]> = {
+  [ALL_TIME_SLUG]: [
+    { id: 'sunil-gavaskar', role: 'opener' },
+    { id: 'don-bradman', role: 'opener' },
+    { id: 'kumar-sangakkara', role: 'middle-order' },
+    { id: 'sachin-tendulkar', role: 'middle-order' },
+    { id: 'steve-smith', role: 'middle-order' },
+    { id: 'andy-flower', role: 'wicketkeeper' },
+    { id: 'jacques-kallis', role: 'all-rounder' },
+    { id: 'muttiah-muralitharan', role: 'spinner' },
+    { id: 'malcolm-marshall', role: 'fast-bowler' },
+    { id: 'glenn-mcgrath', role: 'fast-bowler' },
+    { id: 'dale-steyn', role: 'fast-bowler' },
+  ],
+};
+
 export const XI_HUB_PATH = '/best-xi/';
 export const ROLE_HUB_PATH = '/best/';
 export const xiPath = (slug: string): string => `/best-xi/${slug}/`;
@@ -686,9 +708,24 @@ export function buildXiPage(
   date: string,
 ): XiPage | null {
   const pool = data.ranked.filter((r) => matchesScope(r, scope) && (r.player.stats.testMatches ?? 0) >= SEO_MIN_TESTS);
-  const pick = pickXI(pool, data.ctx);
+  let pick = pickXI(pool, data.ctx);
   if (!pick) return null;
   const slug = scopeSlug(scope);
+  const pinned = PINNED_XIS[slug];
+  if (pinned) {
+    const xi = pinned.map((pin) => {
+      const r = data.ranked.find((x) => x.player.id === pin.id);
+      if (!r) throw new Error(`[seo-pages] pinned XI "${slug}": ${pin.id} is not a ranked player`);
+      const listed = [r.player.primaryRole, ...r.player.secondaryRoles, ...r.uni.records.map((rec) => rec.role)];
+      if (pin.role !== r.role && !listed.includes(pin.role)) {
+        throw new Error(`[seo-pages] pinned XI "${slug}": ${pin.id} is not listed as ${pin.role} in the data`);
+      }
+      return { ...r, role: pin.role };
+    });
+    const used = new Set(xi.map((x) => x.player.id));
+    pick = { xi, bench: pick.bench.filter((b) => !used.has(b.player.id)), shape: pick.shape };
+  }
+  const pickedByHand = !!pinned;
   const path = xiPath(slug);
   const label = xiLabelForSlug(slug);
 
@@ -697,10 +734,10 @@ export function buildXiPage(
   let h1: string;
   let scopeLine: string;
   if (scope.kind === 'all-time') {
-    title = `Best All-Time Test XI, by Our Ratings | ${SITE_NAME}`;
+    title = pickedByHand ? `Best All-Time Test XI | ${SITE_NAME}` : `Best All-Time Test XI, by Our Ratings | ${SITE_NAME}`;
     h1 = 'Best All-Time Test XI';
-    description = `Our highest-rated all-time Test XI from ${pool.length} players with ${SEO_MIN_TESTS}+ Tests, with career stats for each pick. Then draft your own and see if it beats mine.`;
-    scopeLine = `This is the top-rated player at each position from the ${pool.length} Test players in the ${SITE_NAME} database who played at least ${SEO_MIN_TESTS} Tests, with one all-rounder in the side.`;
+    description = `Our all-time Test XI, chosen from ${pool.length} players with ${SEO_MIN_TESTS}+ Tests, with career stats for each pick. Then draft your own and see if it beats mine.`;
+    scopeLine = `The pool is the ${pool.length} Test players in the ${SITE_NAME} database who played at least ${SEO_MIN_TESTS} Tests, with one all-rounder in the side.`;
   } else if (scope.kind === 'era') {
     const el = eraLabel(scope.era);
     title = `Best Test XI of ${el}, by Our Ratings | ${SITE_NAME}`;
@@ -734,7 +771,9 @@ export function buildXiPage(
 
   const shapeText = shapeTextOf(pick.shape);
   const intro = [
-    `${scopeLine} The XI has ${shapeText}, picked by our ratings: the highest-rated players at each position, in whichever of the three XI shapes in the game rates best as a team.`,
+    pickedByHand
+      ? `${scopeLine} The XI has ${shapeText}. It starts from our ratings, then we made the final choice by hand: Don Bradman opens with Sunil Gavaskar and Sachin Tendulkar bats at four, because an all-time XI needs both.`
+      : `${scopeLine} The XI has ${shapeText}, picked by our ratings: the highest-rated players at each position, in whichever of the three XI shapes in the game rates best as a team.`,
     nationsLine,
   ];
 
@@ -743,7 +782,7 @@ export function buildXiPage(
     { name: 'Best Test XIs', path: XI_HUB_PATH },
     { name: label, path },
   ];
-  const itemName = `${label}, by our ratings`;
+  const itemName = pickedByHand ? label : `${label}, by our ratings`;
   const jsonLd = [
     breadcrumbLd(breadcrumbs),
     itemListLd(
@@ -761,7 +800,7 @@ export function buildXiPage(
     title,
     description,
     h1,
-    eyebrow: 'Test XI, by our ratings',
+    eyebrow: pickedByHand ? 'Test XI' : 'Test XI, by our ratings',
     breadcrumbs,
     intro,
     xi,
