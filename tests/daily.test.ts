@@ -113,6 +113,11 @@ for (let i = 0; i < 60; i++) {
 }
 ok(distinct.size > 55, 'different days give different spins', distinct.size);
 ok(upcomingCombos(0, [], legend, draft).every((c) => c.era === 'legends'), 'upcomingCombos: round 1 pool is Legends');
+{
+  const first = draft[0];
+  const key = `${first.era}|${first.nation}`;
+  ok(upcomingCombos(2, [], legend, draft, [key]).every((c) => `${c.era}|${c.nation}` !== key), 'upcomingCombos: a respun-away draw never comes back');
+}
 
 // ---- every upcoming day is draftable (oracle: backtracking over role counts)
 const ROUND_LIMITS = [1, 2, 2, 2, 2, 2];

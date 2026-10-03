@@ -65,3 +65,23 @@ for (const f of FORMATS) {
     await page.waitForURL((url) => url.pathname.startsWith("/play")); // no Test XI drafted
   });
 }
+
+// Owner, 2026-10-03: ODI, T20I and IPL may respin the era on the very first spin; Test may not
+// (its first draw is always the Legends era).
+for (const [path, shown] of [["/odi/play", true], ["/t20i/play", true], ["/ipl/play", true], ["/play", false]] as const) {
+  test(`${path}: era respin on the first spin is ${shown ? "offered" : "not offered"}`, async ({ page }) => {
+    test.setTimeout(60_000);
+    await page.goto(path);
+    await page.locator("#bm11-spin").click();
+    await page.locator(".bm11-prow[data-bm11-select], .fl-card").first().waitFor();
+    if (shown) {
+      await expect(page.locator("#fl-respin-era")).toBeVisible();
+      const before = await page.locator("#fl-era").textContent();
+      await page.locator("#fl-respin-era").click();
+      await expect(page.locator("#fl-respin-era")).toBeHidden({ timeout: 10_000 }); // the one token is used
+      expect(await page.locator("#fl-era").textContent()).not.toBe(before);
+    } else {
+      await expect(page.locator("#fl-respin-era")).toBeHidden();
+    }
+  });
+}

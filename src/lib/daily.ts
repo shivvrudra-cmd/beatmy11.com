@@ -137,9 +137,11 @@ export function upcomingCombos(
   history: SpinCombo[],
   legendCombos: SpinCombo[],
   draftCombos: SpinCombo[],
+  /** Draws the player respun away from ("era|nation"): they do not come back (owner, 2026-10-03). */
+  respunAway: string[] = [],
 ): SpinCombo[] {
   const base = round === 0 ? legendCombos : draftCombos;
-  const used = new Set(history.map((s) => `${s.era}|${s.nation}`));
+  const used = new Set([...history.map((s) => `${s.era}|${s.nation}`), ...respunAway]);
   const counts: Record<string, number> = {};
   for (const s of history) counts[s.nation] = (counts[s.nation] || 0) + 1;
   const fresh = base.filter((c) => !used.has(`${c.era}|${c.nation}`) && (counts[c.nation] || 0) < 2);
