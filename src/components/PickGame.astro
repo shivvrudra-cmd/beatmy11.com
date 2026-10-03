@@ -61,6 +61,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       <div class="pk-vs" id="pk-vs" hidden>
         <p class="pk-vs-title" id="pk-vs-title"></p>
         <p class="pk-chain" id="pk-vs-chain" hidden></p>
+        <p class="pk-chain" id="pk-vs-clock" hidden>Picked against the 90-second clock.</p>
         <details class="pk-vs-xi"><summary>See their XI</summary><ol id="pk-vs-list"></ol></details>
       </div>
       <h1 class="pk-h1" id="pk-h1">Pick your {result.xiNoun}</h1>
@@ -303,6 +304,9 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
     const linkedMine = theirXI ? fromLink(params.get('me')) : null;
     // Chain challenges: how many XIs in a row the XI in the link has beaten.
     const chainIn = theirXI ? parseChain(params.get('k')) : 0;
+    // `t=1`: the XI in the link was picked against the 90-second clock (future idea 14). Like the
+    // chain count it is a note in a link, not a proof.
+    const theirClock = !!theirXI && params.get('t') === '1';
     const linkOf = (m) => encodeXI(picks(m).map((e) => ({ id: e.key, role: e.role })));
 
     // ------------------------------------------------------------ scoring
@@ -444,7 +448,9 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
     $('pk-go-friend').addEventListener('click', () => {
       if (!complete()) return;
       if (theirXI) { reportEvent('pick_played', FORMAT.id); showResult(xi, theirXI, myName, theirName, true); return; }
-      const url = `${location.origin}${PATH}?${withName(`vs=${linkOf(xi)}`, 'n', myName)}`;
+      // Eleven in before the clock ran out: the link says so.
+      const beatClock = !!clock && clock.locked && clock.left > 0;
+      const url = `${location.origin}${PATH}?${withName(`vs=${linkOf(xi)}`, 'n', myName)}${beatClock ? '&t=1' : ''}`;
       reportEvent('pick_sent', FORMAT.id);
       shareLink(url, `I picked my ${RESULT.xiNoun}. Pick yours and beat it 🏏`, $('pk-copied'));
     });
@@ -546,7 +552,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       const chainWinnerLab = chain.winner === 'challenger' ? meLab : themLab;
       $('pk-chain').textContent = chain.chain >= 1 ? `${chainWinnerLab} ${chainText(chain.chain)}. Who is next?` : '';
       $('pk-chain').hidden = chain.chain < 1;
-      const resultUrl = `${location.origin}${PATH}?${withName(withName(`vs=${linkOf(theirs)}`, 'n', theirsName) + `&me=${linkOf(mine)}`, 'm', mineName)}${chainIn ? `&k=${chainIn}` : ''}`;
+      const resultUrl = `${location.origin}${PATH}?${withName(withName(`vs=${linkOf(theirs)}`, 'n', theirsName) + `&me=${linkOf(mine)}`, 'm', mineName)}${chainIn ? `&k=${chainIn}` : ''}${theirClock ? '&t=1' : ''}`;
       const shareLab = played ? 'My XI' : meLab;
       const shareText = `${shareLab} ${won ? 'beat' : lost ? 'lost to' : 'drew with'} ${xiLabel(theirsName, "a friend's XI")} ${series.user}–${series.house} 🏏 Pick yours and take on the winner.`;
       $('pk-share').onclick = $('pk-share-top').onclick = () => shareLink(resultUrl, shareText, $('pk-r-copied'));
@@ -599,6 +605,7 @@ const safe = (v: unknown) => JSON.stringify(v).replace(/</g, '\\u003c');
       $('pk-vs').hidden = false;
       $('pk-vs-title').textContent = `Can you beat ${xiLabel(theirName, "your friend's XI")}?`;
       if (chainIn >= 1) { $('pk-vs-chain').textContent = `It ${chainText(chainIn)}. End the run.`; $('pk-vs-chain').hidden = false; }
+      $('pk-vs-clock').hidden = !theirClock;
       $('pk-vs-list').innerHTML = picks(theirXI).map((e) => { const p = byKey.get(e.key); return `<li><b>${ROLE_SHORT[e.role]}</b> ${esc(p.name)} <i>${esc(code(p.nation))}</i></li>`; }).join('');
     }
     renderBuild();

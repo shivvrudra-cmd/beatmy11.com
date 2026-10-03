@@ -1,5 +1,11 @@
 # White-ball formats (ODI, T20I, IPL): plan and decisions
 
+> **Superseded in part (2026-10-02).** This is the original plan, kept for the owner's decisions.
+> Since then: the three formats are public, with dailies, friend links, share pages and landing
+> pages; IPL cards are stints (one franchise, one block of seasons) with a four-overseas rule;
+> older ODI stars were added from HowSTAT totals; the T20 weights (40/20/20/20) and the IPL
+> longevity mark (40 matches) are decided. `PROJECT_CONTEXT.md` describes what is live.
+
 Status: approved 2026-10-01 for an overnight build. Nothing here ships to players until the owner
 reviews it. Everything new stays behind a hidden switch on branch `formats/white-ball`.
 

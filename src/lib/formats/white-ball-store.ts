@@ -13,7 +13,7 @@ import t20iData from '../../data/formats/t20i.json';
 import iplData from '../../data/formats/ipl.json';
 import opponentOnlyData from '../../data/formats/opponent-only.json';
 import { normalizePlayer, type NormalizedPlayer, type RawPlayer } from '../player-logic';
-import { WB_FORMATS, buildWbContext, canScoreAs, scoreWbPlayer, wbRole, type WbFormat, type WbRole } from '../white-ball-metrics';
+import { WB_FORMATS, ERA_FIELD, IPL_RAW_METRICS, buildWbContext, canScoreAs, scoreWbPlayer, wbRole, type WbFormat, type WbRole } from '../white-ball-metrics';
 import { IPL_BLOCKS, IPL_TEAM_CODES } from './ipl-config';
 import { INTL_ERAS, WB_MIN_MATCHES } from './white-ball-config';
 
@@ -52,10 +52,73 @@ function iplStints(): WbRecord[] {
   for (const p of DATA.ipl) {
     if (p.overseas == null) continue; // country not confirmed: cannot apply the overseas rule
     for (const s of p.iplSpells ?? []) {
-      if (s.stats) out.push({ ...p, iplSpells: undefined, stats: s.stats, stint: { team: s.team, block: s.block } });
+      if (s.stats) out.push({ ...p, iplSpells: undefined, stats: { ...s.stats }, stint: { team: s.team, block: s.block } });
     }
   }
-  return out;
+  return eraAdjust(out);
+}
+
+/**
+ * IPL era normalisation. PROPOSED scoring rule, NOT approved: the owner decides
+ * (docs/reports/ipl-era-normalisation.md). The IPL has got faster: the league strike rate was
+ * 123 in 2008-12 and 150 in 2023+, the economy rate 7.7 and 9.4. Ranking every stint against one
+ * population therefore favours recent batters and older bowlers.
+ *
+ *   'none'    today's behaviour: one population, real numbers.
+ *   'scaled'  strike rate and economy are scaled to the league's level in the stint's block
+ *             before ranking: adjusted = real x (league figure over all seasons / league figure
+ *             in that block). The other six metrics are untouched.
+ *   'within'  analysis only: every metric is ranked within its own block (done by mapping each
+ *             value to the value at the same rank in the pooled list).
+ *
+ * The league figures come from every ball in the data for the block, all players included.
+ * Cards always show the real numbers; only the ranking uses the adjusted ones.
+ */
+export type IplEraMode = 'none' | 'scaled' | 'within';
+export const IPL_ERA_NORMALISATION: IplEraMode = 'scaled';
+const eraMode = (): IplEraMode => {
+  const env = typeof process !== 'undefined' ? process.env?.IPL_ERA_MODE : undefined;
+  return env === 'none' || env === 'scaled' || env === 'within' ? env : IPL_ERA_NORMALISATION;
+};
+
+/** League strike rate and economy per block and over all seasons, from every spell in the data. */
+export function iplLeagueRates(): Record<string, { strikeRate: number; economy: number }> {
+  const sum: Record<string, { r: number; bf: number; rc: number; bb: number }> = {};
+  const add = (k: string, s: Record<string, number | null>) => {
+    const t = (sum[k] ??= { r: 0, bf: 0, rc: 0, bb: 0 });
+    t.r += s.runs ?? 0; t.bf += s.ballsFaced ?? 0; t.rc += s.runsConceded ?? 0; t.bb += s.ballsBowled ?? 0;
+  };
+  for (const p of DATA.ipl) for (const s of p.iplSpells ?? []) if (s.stats) { add(s.block, s.stats); add('all', s.stats); }
+  return Object.fromEntries(Object.entries(sum).map(([k, t]) => [k, { strikeRate: (t.r / t.bf) * 100, economy: (t.rc / t.bb) * 6 }]));
+}
+
+function eraAdjust(stints: WbRecord[]): WbRecord[] {
+  const mode = eraMode();
+  if (mode === 'none') return stints;
+  if (mode === 'scaled') {
+    const league = iplLeagueRates();
+    for (const p of stints) {
+      const b = league[p.stint!.block];
+      if (!b) continue;
+      const s = p.stats;
+      if (typeof s.strikeRate === 'number' && s.strikeRate > 0) s[ERA_FIELD('strikeRate')] = s.strikeRate * (league.all.strikeRate / b.strikeRate);
+      if (typeof s.economy === 'number' && s.economy > 0) s[ERA_FIELD('economy')] = s.economy * (league.all.economy / b.economy);
+    }
+    return stints;
+  }
+  // 'within': per metric, each stint takes the pooled value at its rank inside its own block.
+  const eligible = stints.filter((p) => (p.stats.matches ?? 0) >= WB_MIN_MATCHES.ipl);
+  for (const def of IPL_RAW_METRICS) {
+    const vals = eligible.map((p) => ({ p, v: def.value(p.stats) })).filter((x): x is { p: WbRecord; v: number } => x.v !== null);
+    const pooled = vals.map((x) => x.v).sort((a, b) => a - b);
+    const byBlock = new Map<string, typeof vals>();
+    for (const x of vals) { if (!byBlock.has(x.p.stint!.block)) byBlock.set(x.p.stint!.block, []); byBlock.get(x.p.stint!.block)!.push(x); }
+    for (const list of byBlock.values()) {
+      list.sort((a, b) => a.v - b.v);
+      list.forEach((x, i) => { x.p.stats[ERA_FIELD(def.key)] = pooled[Math.min(pooled.length - 1, Math.round(((i + 0.5) / list.length) * pooled.length - 0.5))]; });
+    }
+  }
+  return stints;
 }
 
 /** Draftable players (IPL: stints): enough matches, and every role they can be declared as is scorable. */
