@@ -72,9 +72,15 @@ for (const f of FORMATS) {
 for (const [path, shown] of [["/odi/play", true], ["/t20i/play", true], ["/ipl/play", true], ["/play", false]] as const) {
   test(`${path}: era respin on the first spin is ${shown ? "offered" : "not offered"}`, async ({ page }) => {
     test.setTimeout(60_000);
-    await page.goto(path);
-    await page.locator("#bm11-spin").click();
-    await page.locator(".bm11-prow[data-bm11-select], .fl-card").first().waitFor();
+    // A few draws have no other era to switch to (a franchise with one block of seasons), so a
+    // draw like that is spun again rather than failing the test.
+    for (let attempt = 0; attempt < 8; attempt++) {
+      await page.goto(path);
+      await page.locator("#bm11-spin").click();
+      await page.locator(".bm11-prow[data-bm11-select], .fl-card").first().waitFor();
+      if (!shown || (await page.locator("#fl-respin-era").isVisible())) break;
+      await page.evaluate(() => { localStorage.clear(); });
+    }
     if (shown) {
       await expect(page.locator("#fl-respin-era")).toBeVisible();
       const before = await page.locator("#fl-era").textContent();

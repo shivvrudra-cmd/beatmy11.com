@@ -34,8 +34,10 @@ const gaussian = (rng: () => number) => Math.sqrt(-2 * Math.log(Math.max(rng(), 
 const MISJUDGE = Number(process.env.MISJUDGE ?? 0.12);
 /** Formats whose difficulty the owner has fixed. None now: the IPL's "good for now" (2026-10-01) was for
  *  career stats; with stint stats (2026-10-02) its par is tuned like the others until the owner decides. */
-/** Pars the owner has set (not tuned by the script). ODI -7: owner, 2026-10-03 (simulated ordinary drafters win about 7%). */
-const OWNER_PAR: Record<string, number> = { odi: -7 };
+/** Pars the owner has set (not tuned by the script). 2026-10-03: the owner asked for about 35% series
+ *  wins for a drafter who sees the hidden ratings (DRAFTER=rating MISJUDGE=0) in every white-ball format:
+ *  ODI -6 (35.3%), T20I -6.5 (34.3%), IPL -12 (34.7%). Ordinary drafters then win about 5%, 2% and 1%. */
+const OWNER_PAR: Record<string, number> = { odi: -6, t20i: -6.5, ipl: -12 };
 const OWNER_DIFFICULTY = new Set<string>(Object.keys(OWNER_PAR));
 /** Provisional target for the others: about the IPL's simulated series-win rate. */
 const TARGET_WIN = 0.15;
