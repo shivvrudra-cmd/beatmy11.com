@@ -155,7 +155,7 @@ src/
       white-ball-result.ts Opponent XI, scoring context and calibration for a result page
       white-ball-config.ts, ipl-config.ts, ipl-store.ts
   data/
-    legends.json 1970s.json … 2020s.json     Test: 826 records, 564 unique players
+    legends.json 1970s.json … 2020s.json     Test: 848 records, 582 unique players
     series-calibration.json                   Test: 600 simulated-drafter team scores
     formats/odi.json t20i.json ipl.json       1,178 / 1,029 / 739 players
     formats/<format>-series.json              opponent XI, par, calibration sample
@@ -267,7 +267,7 @@ Scoring never selects players; each opponent is a fixed list.
   ten-wicket rate. Rates use `testMatches`.
 - **Role → metrics:** openers, middle order, keepers → batting; spinners, fast bowlers → bowling
   only; all-rounders → both halves. The **declared role** (slot) is the scoring role.
-- **Percentiles** against the full eligible population (564 unique players; fielding: those with known dismissals), never split by era
+- **Percentiles** against the full eligible population (582 unique players; fielding: those with known dismissals), never split by era
   or nation. **Shrinkage:** `(matches·raw + 30·mean) / (matches + 30)`.
 - **Half score** = 75% weighted metrics + 25% longevity (`min(1, Tests/50)`), then the long-career
   bonus (fills up to 80% of the remaining gap, complete at 200 Tests).
@@ -308,7 +308,7 @@ long-career bonus fill 0.8, all-rounder formula, 40/50/10 team blend), with per-
 
 ## 7. Data
 
-**Test:** 7 era files, 826 records, 564 unique players, edited by hand and (2026-10-03) extended from the owner's HowSTAT exports, see `docs/reports/test-data-howstat-2026-10-03.md`; the JSON files are the
+**Test:** 7 era files, 848 records, 582 unique players, edited by hand and (2026-10-03) extended from the owner's HowSTAT exports, see `docs/reports/test-data-howstat-2026-10-03.md`; the JSON files are the
 source of truth. `series-calibration.json` holds 600 simulated team scores for the "top X% of
 drafts" line and the grade.
 

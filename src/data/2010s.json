@@ -4119,5 +4119,47 @@
       "bowlingStrikeRate": 0,
       "dismissalsUnknown": 1
     }
+  },
+  {
+    "id": "pragyan-ojha",
+    "name": "Pragyan Ojha",
+    "nation": "India",
+    "era": "2010s",
+    "primaryRole": "spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 8.9,
+      "testRuns": 89,
+      "testWickets": 113,
+      "testMatches": 24,
+      "testCenturies": 0,
+      "fiveWs": 7,
+      "tenWs": 1,
+      "testBowlingAverage": 30.27,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "steven-finn",
+    "name": "Steven Finn",
+    "nation": "England",
+    "era": "2010s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 11.16,
+      "testRuns": 279,
+      "testWickets": 125,
+      "testMatches": 36,
+      "testCenturies": 0,
+      "fiveWs": 5,
+      "tenWs": 0,
+      "testBowlingAverage": 30.4,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
   }
 ]

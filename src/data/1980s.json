@@ -2145,5 +2145,173 @@
       "bowlingStrikeRate": 0,
       "dismissalsUnknown": 1
     }
+  },
+  {
+    "id": "lance-cairns",
+    "name": "Lance Cairns",
+    "nation": "New Zealand",
+    "era": ["1970s","1980s"],
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 16.28,
+      "testRuns": 928,
+      "testWickets": 130,
+      "testMatches": 43,
+      "testCenturies": 0,
+      "fiveWs": 6,
+      "tenWs": 1,
+      "testBowlingAverage": 32.92,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "rodney-hogg",
+    "name": "Rodney Hogg",
+    "nation": "Australia",
+    "era": "1980s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 9.76,
+      "testRuns": 439,
+      "testWickets": 123,
+      "testMatches": 38,
+      "testCenturies": 0,
+      "fiveWs": 6,
+      "tenWs": 2,
+      "testBowlingAverage": 28.48,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "graham-dilley",
+    "name": "Graham Dilley",
+    "nation": "England",
+    "era": "1980s",
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 13.36,
+      "testRuns": 521,
+      "testWickets": 138,
+      "testMatches": 41,
+      "testCenturies": 0,
+      "fiveWs": 6,
+      "tenWs": 0,
+      "testBowlingAverage": 29.76,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "dilip-doshi",
+    "name": "Dilip Doshi",
+    "nation": "India",
+    "era": "1980s",
+    "primaryRole": "spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 4.61,
+      "testRuns": 129,
+      "testWickets": 114,
+      "testMatches": 33,
+      "testCenturies": 0,
+      "fiveWs": 6,
+      "tenWs": 0,
+      "testBowlingAverage": 30.72,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "nandlal-yadav",
+    "name": "Nandlal Yadav",
+    "nation": "India",
+    "era": "1980s",
+    "primaryRole": "spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 14.39,
+      "testRuns": 403,
+      "testWickets": 102,
+      "testMatches": 35,
+      "testCenturies": 0,
+      "fiveWs": 3,
+      "tenWs": 0,
+      "testBowlingAverage": 35.1,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "john-bracewell",
+    "name": "John Bracewell",
+    "nation": "New Zealand",
+    "era": "1980s",
+    "primaryRole": "spinner",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 20.43,
+      "testRuns": 1001,
+      "testWickets": 102,
+      "testMatches": 41,
+      "testCenturies": 1,
+      "fiveWs": 4,
+      "tenWs": 1,
+      "testBowlingAverage": 35.81,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "craig-mcdermott",
+    "name": "Craig McDermott",
+    "nation": "Australia",
+    "era": ["1980s","1990s"],
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 12.21,
+      "testRuns": 940,
+      "testWickets": 291,
+      "testMatches": 71,
+      "testCenturies": 0,
+      "fiveWs": 14,
+      "tenWs": 2,
+      "testBowlingAverage": 28.63,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
+  },
+  {
+    "id": "phillip-de-freitas",
+    "name": "Phillip De Freitas",
+    "nation": "England",
+    "era": ["1980s","1990s"],
+    "primaryRole": "fast-bowler",
+    "secondaryRoles": [],
+    "stats": {
+      "testAverage": 14.83,
+      "testRuns": 934,
+      "testWickets": 140,
+      "testMatches": 44,
+      "testCenturies": 0,
+      "fiveWs": 4,
+      "tenWs": 0,
+      "testBowlingAverage": 33.57,
+      "battingStrikeRate": 0,
+      "bowlingStrikeRate": 0,
+      "dismissalsUnknown": 1
+    }
   }
 ]
