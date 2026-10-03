@@ -60,7 +60,7 @@ file. **Owner** = only the owner can do it. **N/A** = does not apply, with the r
 
 | Item | Status | Detail |
 |---|---|---|
-| Rate limiting on `/api/*` | Owner | The Worker deliberately stores nothing that identifies a visitor, so it cannot count requests per visitor. The right tool is a Cloudflare rate-limiting rule (dashboard: Security → WAF → Rate limiting rules), for example "more than 60 requests a minute to `/api/*` from one IP: block for a minute". One rule is free. Today the worst a script can do is inflate the anonymous counters; it cannot read anything. |
+| Rate limiting on `/api/*` | **Done 2026-10-03** (PR #49) | Done in code with Cloudflare's rate-limiting binding (no dashboard setting needed): writes to the API are limited to 120 a minute per network address, then answer 429 until the minute passes. Reads (`/api/health`, pages) are never limited. Tested on the preview build: requests one after another were refused after about 130 and recovered after a minute. A very fast parallel burst can slip through before Cloudflare's counters catch up (Cloudflare documents the counting as approximate), so this stops sustained hammering rather than every instant burst. The address is only the counter's key inside Cloudflare for up to a minute; the site stores nothing new. `GET /api/health` now also says whether the limiter is attached (`"limiter":true`). The 120 is PROVISIONAL (many phone users in India share one address through their carrier, so it is kept generous). |
 | Counters can be inflated | Known | A non-browser client can fake the `Origin` header. The data is only used for tuning and rough traffic counts. Treat it as approximate. |
 | Privacy page wording | PR only | Three things the page does not say: (0) Cloudflare Web Analytics counts page views (cookieless); (1) the optional name typed in "Pick any XI" travels in the challenge link; (2) the browser also remembers the sound setting, daily streaks, friend records and the swipe hint. Drafted on the terms-page pull request for the owner to review (legal text is not merged unattended). |
 | Terms page | PR only | Drafted, not merged: see the terms-page pull request. |
@@ -68,7 +68,7 @@ file. **Owner** = only the owner can do it. **N/A** = does not apply, with the r
 | Image sizes | Note | 38 images, 13.7 MB in total, but 29 of them are link-preview images (about 490 KB each) that only social networks fetch. Pages themselves load almost no images. Converting OG images to JPEG would roughly halve them; not urgent. |
 | HSTS preload / includeSubDomains | Owner | Left off on purpose. Turn on only if every subdomain of beatmy11.com will always be HTTPS. |
 | Dependency updates | Owner or next session | Four minor updates, none security-related. |
-| Monitoring | Owner | `/api/health` exists; nothing pings it yet. A free uptime monitor pointed at `https://beatmy11.com/api/health` would do. |
+| Monitoring | Owner | `/api/health` exists (now with `"limiter":true`); nothing pings it yet. A free uptime monitor pointed at `https://beatmy11.com/api/health` would do. |
 
 ## 5. What the site stores in the browser (for the cookie question)
 

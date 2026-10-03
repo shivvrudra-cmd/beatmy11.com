@@ -27,7 +27,7 @@ async function main() {
 
   // health
   const health = await call('/api/health');
-  ok(health.status === 200 && (await health.json()).ok === true, 'GET /api/health answers ok');
+  { const h = await health.json(); ok(health.status === 200 && h.ok === true && h.limiter === false, 'GET /api/health answers ok and says whether the rate limiter is attached', h); }
   ok(health.headers.get('cache-control') === 'no-store' && health.headers.get('x-content-type-options') === 'nosniff', 'API answers are never cached or sniffed');
   ok((await call('/api/health', { method: 'POST', headers: { origin: 'https://beatmy11.com' } })).status === 405, 'health is read-only');
   ok(writes.length === 0, 'health does not touch the database');
@@ -60,6 +60,28 @@ async function main() {
   ok(refused === bad.length && writes.length === before + 1, 'malformed scores are refused and never stored', refused);
   ok(writes[before].length === 6 && !writes.flat().some((v) => typeof v === 'string' && /\d+\.\d+\.\d+\.\d+|Mozilla/.test(v)), 'only the six score fields are stored: no IP, no user agent');
   ok((await post('/api/nothing', {})).status === 404, 'unknown API path: 404');
+
+  // ---- rate limit (Cloudflare binding; a stand-in that allows three writes per address)
+  {
+    const seen = new Map<string, number>();
+    const limited = {
+      ...env,
+      API_LIMIT: { limit: async ({ key }: { key: string }) => { const n = (seen.get(key) ?? 0) + 1; seen.set(key, n); return { success: n <= 3 }; } },
+    };
+    const hit = (ip: string) => worker.fetch(new Request('https://beatmy11.com/api/events', {
+      method: 'POST', headers: { origin: 'https://beatmy11.com', 'cf-connecting-ip': ip, 'content-type': 'application/json' }, body: JSON.stringify({ name: 'shared' }),
+    }), limited);
+    const codes = [];
+    for (let i = 0; i < 5; i++) codes.push((await hit('203.0.113.7')).status);
+    ok(codes.join() === '204,204,204,429,429', 'writes beyond the limit from one address get 429', codes);
+    ok((await hit('198.51.100.2')).status === 204, 'another address is not affected');
+    ok([...seen.keys()].every((k) => k.startsWith('w:')), 'the counter key is the address, held by Cloudflare only');
+    const health = await worker.fetch(new Request('https://beatmy11.com/api/health'), limited);
+    ok(health.status === 200 && !seen.has('w:unknown'), 'reading /api/health is not counted');
+    const failing = { ...env, API_LIMIT: { limit: async () => { throw new Error('binding down'); } } };
+    const r = await worker.fetch(new Request('https://beatmy11.com/api/events', { method: 'POST', headers: { origin: 'https://beatmy11.com' }, body: JSON.stringify({ name: 'shared' }) }), failing);
+    ok(r.status === 204, 'if the limiter fails, the request still goes through');
+  }
 
   // a database failure never leaks details
   const broken = { ...env, DB: { prepare: () => ({ bind: () => ({ run: async () => { throw new Error('D1 down: secret detail'); } }) }) } };

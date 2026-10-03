@@ -31,7 +31,17 @@
         "binding": "DB",
         "database_id": "e118ee36-991e-478e-904c-749a73a9bfdb"
       }
+    ],
+    // Previews do not inherit the production limiter below; same limit, its own counter.
+    "ratelimits": [
+      { "name": "API_LIMIT", "namespace_id": "1102", "simple": { "limit": 120, "period": 60 } }
     ]
   },
+  // Rate limiting for /api/* (worker/index.ts). Counted by Cloudflare per location, for at most a
+  // minute; nothing is stored by the site. Generous on purpose: many phone users in India share one
+  // address (carrier-grade NAT), and the counters are fire-and-forget anyway.
+  "ratelimits": [
+    { "name": "API_LIMIT", "namespace_id": "1101", "simple": { "limit": 120, "period": 60 } }
+  ],
   "observability": { "enabled": true }
 }
