@@ -7,7 +7,8 @@
  * corrections into the three "YOUR ..." columns; a later script reads them into
  * scripts/cricsheet/owner-overrides.json (it does not exist yet).
  *
- * Run: node scripts/cricsheet/player-review-sheet.mjs
+ * The sheet lists only the doubtful players (groups 1 to 3) with 25 or more matches, in few columns
+ * (owner's choice, 2026-10-03: "option A"). Run: node scripts/cricsheet/player-review-sheet.mjs
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 
@@ -60,6 +61,7 @@ for (const f of ['odi', 't20i', 'ipl']) {
     rows.push({
       priority, format: f, name: p.name, teams, matches,
       runs: s.runs ?? '', avg: s.battingAverage ?? '', sr: s.strikeRate ?? '', wickets: s.wickets ?? '', econ: s.economy ?? '',
+      bowlAvg: s.bowlingAverage ?? '', bowlSr: s.ballsPerWicket ?? '',
       role: p.primaryRole, other: (p.secondaryRoles ?? []).join(' / '), roleSource: p.roleSource ?? '',
       bowling: p.bowlingType ?? '', bowlingSource: p.bowlingTypeSource ?? '',
       hint: [hint, notInGame].filter(Boolean).join('; '),
@@ -69,7 +71,7 @@ for (const f of ['odi', 't20i', 'ipl']) {
 }
 for (const l of leftOut) {
   rows.push({
-    priority: 1, format: l.format, name: l.name, teams: l.teams, matches: l.matches, runs: '', avg: '', sr: '', wickets: l.wickets, econ: '',
+    priority: 1, format: l.format, name: l.name, teams: l.teams, matches: l.matches, runs: '', avg: '', sr: '', wickets: l.wickets, econ: '', bowlAvg: '', bowlSr: '',
     role: '(left out)', other: '', roleSource: '', bowling: '(unknown)', bowlingSource: '', hint: 'LEFT OUT OF THE GAME: spin or pace needed',
   });
 }
@@ -77,17 +79,24 @@ const order = { odi: 0, t20i: 1, ipl: 2 };
 rows.sort((a, b) => a.priority - b.priority || order[a.format] - order[b.format] || b.matches - a.matches);
 
 const PRIORITY = { 1: '1 Left out of the game', 2: '2 Check the role', 3: '3 Older ODI career', 4: '4 Weaker source', 5: '5 No flag', 6: '6 Your earlier decision' };
-const head = ['Priority', 'Format', 'Player', 'Nation / teams', 'Matches', 'Runs', 'Bat avg', 'Strike rate', 'Wickets', 'Economy',
-  'Role in the game now', 'Other roles', 'Role source', 'Bowling now', 'Bowling source', 'Why it is flagged',
-  'YOUR ROLE', 'YOUR BOWLING TYPE', 'YOUR NOTE'];
+
+// Option A (owner, 2026-10-03): only the players the data flags as doubtful (groups 1 to 3) who have
+// played 25 or more matches. Few columns: who, how many matches, the batting numbers together, the
+// bowling numbers together, the role the game has now, and room for the owner's answer.
+const SHEET_MIN_MATCHES = 25;
+const picked = rows.filter((r) => r.priority <= 3 && r.matches >= SHEET_MIN_MATCHES);
+const head = ['Format', 'Player', 'Matches',
+  'Runs', 'Bat avg', 'Bat strike rate',
+  'Wickets', 'Bowl avg', 'Economy', 'Bowl strike rate',
+  'Role in the game now', 'YOUR ROLE', 'YOUR BOWLING TYPE'];
 const cell = (v) => { const t = String(v ?? ''); return /[",\n]/.test(t) ? `"${t.replace(/"/g, '""')}"` : t; };
 const lines = [head.join(',')];
-for (const r of rows) {
-  lines.push([PRIORITY[r.priority], FORMAT_LABEL[r.format], r.name, r.teams, r.matches, r.runs, r.avg, r.sr, r.wickets, r.econ,
-    r.role, r.other, r.roleSource, r.bowling, r.bowlingSource, r.hint, r.given?.role ?? '', r.given?.bowling ?? '', r.given?.note ?? ''].map(cell).join(','));
+for (const r of picked) {
+  lines.push([FORMAT_LABEL[r.format], r.name, r.matches, r.runs, r.avg, r.sr, r.wickets, r.bowlAvg, r.econ, r.bowlSr,
+    r.role, r.given?.role ?? '', r.given?.bowling ?? ''].map(cell).join(','));
 }
 // UTF-8 with a byte order mark so Excel reads names with accents correctly.
-writeFileSync('docs/reports/player-review-sheet.csv', '﻿' + lines.join('\r\n') + '\r\n');
+writeFileSync('docs/reports/player-review-sheet.csv', String.fromCharCode(0xfeff) + lines.join(String.fromCharCode(13, 10)) + String.fromCharCode(13, 10));
 const by = {};
-for (const r of rows) by[r.priority] = (by[r.priority] ?? 0) + 1;
-console.log(`rows: ${rows.length}`, Object.entries(by).map(([k, v]) => `${PRIORITY[k]}: ${v}`).join(' | '));
+for (const r of picked) by[r.priority] = (by[r.priority] ?? 0) + 1;
+console.log(`rows: ${picked.length} of ${rows.length}`, Object.entries(by).map(([k, v]) => `${PRIORITY[k]}: ${v}`).join(' | '));
